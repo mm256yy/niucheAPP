@@ -1,0 +1,148 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			//首页
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom" ,
+				"navigationBarTitleText": " "
+			}
+		},
+		{//我的消息
+			"path": "pages/mymessage/mymessage",
+			"style": {
+				"navigationStyle": "custom" ,
+				"navigationBarTitleText": ""
+			}
+		},
+		{//我的收藏
+			"path": "pages/mycollect/mycollect",
+			"style": {
+				"navigationStyle": "custom" ,
+				"navigationBarTitleText": ""
+			}
+		},
+		{//我的
+			"path": "pages/mycenter/mycenter",
+			"style": {
+				"app-plus":{
+					"scrollIndicator":"none"
+				},
+				"navigationStyle": "custom" ,
+				// "backgroundColor":"#F5F5F8",
+				"navigationBarTitleText": ""
+			}
+		}
+	    ,{//登录
+            "path" : "pages/login/login",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//公司注册协议
+            "path" : "pages/company/registrationAgreement/registrationAgreement",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//公司基本信息
+            "path" : "pages/company/basicInfo/basicInfo",
+            "style" : {
+            	"navigationStyle": "custom" ,
+			   "backgroundColor":"#F5F5F8"
+            }
+        }
+        ,{//公司基本信息
+            "path" : "pages/company/identityAuth/identityAuth",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//联系人认证
+            "path" : "pages/company/personAuth/personAuth",
+            "style" : {
+					"navigationStyle": "custom" 
+			}
+        }//发布首页公司
+        ,{
+            "path" : "pages/company/release/release",
+            "style" : {
+					"navigationStyle": "custom" 
+			}
+        }
+        ,{//车辆租赁
+            "path" : "pages/company/lease/lease",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//司机招募
+            "path" : "pages/company/recruit/recruit",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//车辆转卖
+            "path" : "pages/company/resell/resell",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//购车需求
+            "path" : "pages/company/demand/demand",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//公司我的发布
+            "path" : "pages/company/myPublish/myPublish",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#FE9217",
+		"backgroundColor": "#FA3534"
+	},
+	"tabBar": {
+		"height":60,
+	    "color": "#000000",
+	    "selectedColor": "#41B36D",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [{
+	        "pagePath": "pages/index/index",
+	        "iconPath": "static/tabbar/index.png",
+	        "selectedIconPath": "static/tabbar/index-select.png",
+	        "text": "首页"
+	    }, {
+	        "pagePath": "pages/mymessage/mymessage",
+	        "iconPath": "static/tabbar/message.png",
+	        "selectedIconPath": "static/tabbar/message-select.png",
+	        "text": "消息"
+	    }, {
+	        "pagePath": "pages/mycollect/mycollect",
+	        "iconPath": "static/tabbar/collect.png",
+	        "selectedIconPath": "static/tabbar/collect-select.png",
+	        "text": "收藏"
+	    }, {
+	        "pagePath": "pages/mycenter/mycenter",
+	        "iconPath": "static/tabbar/mycenter.png",
+	        "selectedIconPath": "static/tabbar/mycenter-select.png",
+	        "text": "我的"
+	    }],
+		"midButton": {
+			"width": "66px",
+			"height": "55px",
+			"iconPath": "static/tabbar/midbutton.png",
+			"iconWidth": "50px"
+					// "backgroundImage":"static/center-selected.png"
+			}
+	}
+}
