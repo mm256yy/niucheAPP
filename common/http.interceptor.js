@@ -1,6 +1,6 @@
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
-	Vue.prototype.$u.http.setConfig({
+	const config = {
 		loadingText: '努力加载中~',
 		method: 'POST',
 		// 设置为json，返回后会对数据进行一次JSON.parse()
@@ -13,7 +13,8 @@ const install = (Vue, vm) => {
 		// header: {
 		// 	'content-type': 'application/x-www-form-urlencoded'
 		// },
-	});
+	};
+	Vue.prototype.$u.http.setConfig(config);
 	
 	// 请求拦截，配置Token等参数
 	Vue.prototype.$u.http.interceptor.request = (config) => {
@@ -30,11 +31,16 @@ const install = (Vue, vm) => {
 		
 		// 方式四，如果token放在了Storage本地存储中，拦截是每次请求都执行的
 		// 所以哪怕您重新登录修改了Storage，下一次的请求将会是最新值
+ 
+           if(config.url === '/user/login/login' || config.url === '/captchaImage'){
+			   // config.header.Authorization = null
+		   } else{
+			 const token = uni.getStorageSync('token');
+			 if (token) {
+			 	config.header.Authorization ='Bearer '+ token;
+			 }  
+		   }
 
-			const token = uni.getStorageSync('token');
-			if (token) {
-				config.header.Authorization ='Bearer '+ token;
-			}
 		
 		
 		// config.header.Token = '1111';

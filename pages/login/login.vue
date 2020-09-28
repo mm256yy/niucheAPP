@@ -48,7 +48,7 @@
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('companyNumChange')" style="position: absolute;right: 10rpx;">{{companyNumText}}</u-button>
 					</u-form-item>
 					<u-form-item label="密码" prop="password">
-						<u-input v-model="formPwd.password" placeholder="" border style="border-radius: 18px;"/>
+						<u-input v-model="formPwd.password" type="password" placeholder="" border style="border-radius: 18px;"/>
 					</u-form-item>
 					<u-form-item label="登录身份" prop="role" label-width='100pt'>
 						<u-radio-group v-model="formPwd.role" :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" style="text-align: right;">
@@ -220,7 +220,7 @@
 							 obj.captcha_codes = this.captcha_codes;
 						} else{
 							obj.telephone = this.formPwd.telephone;
-							obj.code = this.formPwd.Password;
+							obj.code = this.formPwd.password;
 							obj.role = this.formPwd.role;
 							obj.uuid = this.uuid;
 							obj.captcha_codes = this.captcha_codes;
@@ -230,8 +230,16 @@
 									let userInfo = obj;
 									userInfo.token = res.token;
 									this.Login(userInfo)
-									// this.$u.route({url:'/pages/index/index',type:'switchTab'})
-									// this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+									if(res.userstate === 0){
+										this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+									}
+									if(userInfo.role === '1'){
+										this.$u.route({url:'/pages/index/index',type:'switchTab'})
+									} else {
+										this.$u.route({url:'/pages/index/index',type:'switchTab'})
+									}
+									
+									
 									this.$u.api.geList().then(res=>{
 										console.log(res)
 									})
