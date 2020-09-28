@@ -17,8 +17,8 @@
 			</view>
 			<view class="" style="padding: 5pt 30pt">
 				<u-form :model="form" :label-style="labelStyle" :error-type="errorType" ref='uForm'>
-					<u-form-item label="" prop="phone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
-						<u-input v-model="form.phone" placeholder="请输入手机号" placeholder-style="color:'#7F7F7F'"/>
+					<u-form-item label="" prop="telephone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
+						<u-input v-model="form.telephone" placeholder="请输入手机号" placeholder-style="color:'#7F7F7F'"/>
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('dirverCodeChange')">{{driverNumText}}</u-button>
 					</u-form-item>
 					<u-form-item label="" prop="code" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
@@ -43,8 +43,8 @@
 			</view>
 			<view class="" style="padding: 5pt 30pt">
 				<u-form :model="formPwd" :label-style="labelStyle1" ref="uFormPwd" :error-type="errorType" label-width='50pt'>
-					<u-form-item label="手机号" prop="phone" >
-						<u-input v-model="formPwd.phone" placeholder="" border style="border-radius: 18px;"/>
+					<u-form-item label="手机号" prop="telephone" >
+						<u-input v-model="formPwd.telephone" placeholder="" border style="border-radius: 18px;"/>
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('companyNumChange')" style="position: absolute;right: 10rpx;">{{companyNumText}}</u-button>
 					</u-form-item>
 					<u-form-item label="密码" prop="password">
@@ -100,18 +100,18 @@
 				list: [{name: '验证码登录'},
 					   {name: '密码登录'}],
 				form:{
-					phone:'',
+					telephone:'',
 					code:'',
 					role:1
 				},
 				formPwd:{
-					phone:'',
+					telephone:'',
 					password:'',
 					role:1
 				},
 				codeTips: '',
 				rules:{
-					phone:phoneRule,
+					telephone:phoneRule,
 					password:passwordRule,
 					code:codeRule,
 				},
@@ -153,9 +153,9 @@
 					this.$u.api.getTelephone().then(res=>{			
 						 if (res.code === 1){
 							 if(ref === 'dirverCodeChange'){
-								 this.form.phone = res.text;
+								 this.form.telephone = res.text;
 							 } else {
-								this.formPwd.phone = res.text; 
+								this.formPwd.telephone = res.text; 
 							 }
 							// uni.showLoading({title: '正在获取手机号'})
 							  setTimeout(() => {
@@ -175,8 +175,8 @@
 			// 获取验证码
 			getCode() {
 				if(this.$refs.uCode.canGetCode) {
-					this.$u.api.getIdentifyCode({phone:this.form.phone}).then(res=>{			
-						 if (res.code === 200){
+					this.$u.api.getIdentifyCode({phone:this.form.telephone}).then(res=>{			
+						 if (res.code === 1){
 							uni.showLoading({
 								title: '正在获取验证码'
 							})
@@ -208,7 +208,7 @@
 				this.$refs[ref].validate(valid=>{
 					if(valid) {
 						let obj = {
-							phone:'',
+							telephone:'',
 							code:'',
 							role:'',
 							uuid:'',
@@ -219,17 +219,22 @@
 							 obj.uuid = this.uuid;
 							 obj.captcha_codes = this.captcha_codes;
 						} else{
-							obj.phone = this.formPwd.phone;
+							obj.telephone = this.formPwd.telephone;
 							obj.code = this.formPwd.Password;
 							obj.role = this.formPwd.role;
 							obj.uuid = this.uuid;
 							obj.captcha_codes = this.captcha_codes;
 						}
 						this.$u.api.loginSubmit(obj).then(res => {
-								if(res.code === 200) {
-									// this.Login(this.form)
+								if(res.code === '1') {
+									let userInfo = obj;
+									userInfo.token = res.token;
+									this.Login(userInfo)
 									// this.$u.route({url:'/pages/index/index',type:'switchTab'})
 									// this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+									this.$u.api.geList().then(res=>{
+										console.log(res)
+									})
 								}
 							}).catch(res=>{
 								console.log(res)

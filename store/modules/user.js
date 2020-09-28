@@ -22,7 +22,7 @@ const user = {
       state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
-      state.role = role
+      state.role = roles
     },
 	SET_UUID: (state,UUid) =>{
 		state.UUid = UUid
@@ -32,10 +32,7 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      // const username = userInfo.username.trim()
-      // const password = userInfo.password
-      // const code = userInfo.code
-      // const uuid = userInfo.uuid
+	  console.log(userInfo)
 	 uni.setStorageSync('telephone', userInfo.telephone);
 	 uni.setStorageSync('token', userInfo.token);
 	 uni.setStorageSync('role', userInfo.role);

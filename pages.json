@@ -103,11 +103,17 @@
 				"navigationStyle": "custom" 
 			}
         }
+        ,{
+            "path" : "pages/company/myPublish/zucheView/zucheView",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "",
-		"navigationBarBackgroundColor": "#FE9217",
+		// "navigationBarBackgroundColor": "#FE9217",
 		"backgroundColor": "#FA3534"
 	},
 	"tabBar": {

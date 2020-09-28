@@ -20,6 +20,11 @@ module.exports = {
 			　　　　 "changeOrigin" : true, //是否跨域
 			　　　　  "secure" : false // 设置支持https协议的代理
 			　　　　 },
+			     "/system" : {
+			　　　　 "target" : "http://192.168.3.5:9007", //目标接口域名
+			　　　　 "changeOrigin" : true, //是否跨域
+			　　　　  "secure" : false // 设置支持https协议的代理
+			　　　　 },
 			　　　　}
 			　　}
 		}

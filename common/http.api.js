@@ -8,8 +8,13 @@ const install  = (Vue, vm) => {
 	//登录
 	const loginSubmit = (params = {}) => vm.$u.post('/user/login/login', params);
 	
+	const  geList =  (params = {}) => vm.$u.get('/system/tag/list', params);
+	
+	const geListIMg =  (params = {}) => vm.$u.get('//user/image/recognicedrivecard', params);
+	
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		geList,
 		GetUUID,
 		getTelephone,
 		getIdentifyCode,
