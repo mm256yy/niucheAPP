@@ -8,9 +8,6 @@
 			</view>
 		 </u-navbar>
 		 <view class="" style="padding: 10pt;">
-			<view>
-				<image :src="goodsUrl" style="width: 100%;" mode="aspectFill"></image>
-			</view>
 			<view class="">	
 				<u-row gutter="16">
 					<u-col span="12">
@@ -28,37 +25,13 @@
 				</u-row>
 		 	</view>
 			<view>
-				 <!-- <u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs> -->
-                 <v-tabs v-model="current" :scroll="false" fontSize="30rpx" bgColor="c" lineHeight='5rpx' lineColor="#40B36C" color="#7F7F7F" activeColor="#40B36C" :tabs="['租车价格', '租车常见问题', '参数配置']"></v-tabs>
+                 <v-tabs v-model="current" :scroll="false" bgColor="#40B36C" lineHeight='0rpx' color="#ffffff" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#000000" :tabs="['12个月', '6个月', '3个月','1个月']"></v-tabs>
 			     <view class="" style="padding-top: 10pt;" v-show="current === 0">
-                    <v-tabs v-model="firstCurrent" :scroll="false" bgColor="#40B36C" lineHeight='0rpx' color="#ffffff" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#000000" :tabs="['12个月', '6个月', '3个月','1个月']"></v-tabs>
-			         <view class="" v-show="firstCurrent === 0">
-			         	0
-			         </view>
-					 <view class="" v-show="firstCurrent === 1">
-						1
-					 </view>
-					 <view class="" v-show="firstCurrent === 2">
-					 	2					
-					 </view>
-					 <view class="" v-show="firstCurrent === 3">
-					 	3					
-					 </view>
-					 <view class="" style="margin: 20pt 0;padding: 2pt 10pt;background: #fff;">
-					 	<text style="color:#40B36C;">优惠</text><text>租满12个月，免费送3个月！</text>
-					 </view>
-					 <view class="" style="background: #fff;text-align: center;">
-					 	111
-					 </view>
+
 				 </view>
 				 <view class="" v-show="current === 1">
 				 	<view v-for="index in 10" :key="index">
 				 		index
-				 	</view>
-				 </view>
-				 <view class="" v-show="current === 2">
-				 	<view v-for="index in 10" :key="index">
-				 		23ab
 				 	</view>
 				 </view>
 			</view>
@@ -73,9 +46,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
-				current: 0,
-				firstCurrent:0
+				current: 0
 			}
 		},
 		methods: {

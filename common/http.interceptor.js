@@ -31,9 +31,13 @@ const install = (Vue, vm) => {
 		
 		// 方式四，如果token放在了Storage本地存储中，拦截是每次请求都执行的
 		// 所以哪怕您重新登录修改了Storage，下一次的请求将会是最新值
- 
+    debugger
            if(config.url === '/user/login/login' || config.url === '/captchaImage'){
 			   // config.header.Authorization = null
+			   console.log(config)
+			   let headers = config.header;
+			   config.header = {"Content-Type":"application/json"};
+                console.log(config)
 		   } else{
 			 const token = uni.getStorageSync('token');
 			 if (token) {
@@ -57,7 +61,6 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.interceptor.response = (res) => {
 		
 		if(res.code == 200) {
-			console.log(res)
 			// res为服务端返回值，可能有code，result等字段
 			// 这里对res.result进行返回，将会在this.$u.post(url).then(res => {})的then回调中的res的到
 			// 如果配置了originalData为true，请留意这里的返回值

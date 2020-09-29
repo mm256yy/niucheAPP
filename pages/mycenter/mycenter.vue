@@ -73,9 +73,12 @@
 							<u-col span="3">
 								<u-avatar :src="comnpanySrc" mode="circle" size="large" ></u-avatar>
 							</u-col>
-							<u-col span="8">
+							<u-col span="8" v-if="companyName === ''">
 								<view @click="toLogin" style="color: #fff;font-size: 14pt;">请登录/注册</view>
-								<!-- <view class="colorF">2222</view> -->
+							</u-col>
+							<u-col span="8" v-else>
+								<view @click="toLogin" style="color: #fff;font-size: 14pt;">{{companyName}}</view>
+								<view class="colorF">{{companyStatus}}</view>
 							</u-col>
 						</u-row>
 					</view>
@@ -150,10 +153,11 @@
 
 <script>
 	export default {
-
 		data() {
 			return {
 				wagesheight:0,
+				companyName:'',
+				companyStatus:'',
 				imageURL:'../../static/gongsi@2x.png',
 				titleStyle:{'fontSize': '12pt','padding-left':'5pt','color':'#000000'},
 				comnpanySrc: '../../static/touxx.png',
@@ -168,6 +172,21 @@
 	      uni.setStorageSync('storage_key', 'hello');
 		},
 		methods: {
+			getUser(){
+				let phone = '';
+				uni.getStorage({
+				    key: 'storage_key',
+				    success: function (res) {
+						 phone = res.data;
+				    }
+				});
+				if (phone) {
+					this.$u.api.getUserInfo({phone:phone}).then(res=>{
+						
+						
+					})
+				}
+			},
 			toAboutUs(){
 				// this.$u.route('/pages/about/about');
 				this.$u.route('/pages/company/registrationAgreement/registrationAgreement')

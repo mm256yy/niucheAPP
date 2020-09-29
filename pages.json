@@ -109,6 +109,10 @@
 				"navigationStyle": "custom" 
 			}
         }
+        ,{
+            "path" : "pages/company/myPublish/zhaopinView/zhaopinView",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

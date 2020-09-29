@@ -6,7 +6,7 @@
 			<view class="top-content-base" >公司logo或经营场所照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" :action="action" upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -50,7 +50,9 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				action: 'http://www.example.com/upload',
+				action: '/user/image/BusinessImagedemo',
+				headerObj:{Authorization:''},
+				formDataObj:{phone:''},
 				fileList: [],
 				rules: {
 					companyEasyName: requiredRule,
@@ -76,22 +78,52 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
+		mounted() {
+			
+		},
 		methods: {
+			setPicToken(){
+				let that = this;
+				uni.getStorage({
+				    key: 'token',
+				    success: function (res) {
+						let Authorization ='Bearer '+ res.data;
+						that.headerObj.Authorization =Authorization
+				    }
+				});
+				uni.getStorage({
+				    key: 'telephone',
+				    success: function (res) {
+						that.formDataObj.phone =res.data
+				    }
+				});
+			},
+			setForm(){
+				let that = this;
+				let data = this.form;
+				uni.setStorage({
+					key: 'companySecond',
+					data:data ,
+					success: function () {
+						that.$u.route("/pages/company/personAuth/personAuth")
+					}
+				});
+			},
 			toPage(){
 				
 			},
 			radioGroupChange(e) {
 				this.form.mainBusiness = e;
 			},
+			uploadChange(res,index,lists,name){
+				console.log(res.data)
+				let data = res.data;
+
+			},
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
-						this.$u.route("/pages/company/personAuth/personAuth")
-						// this.$u.api.getSearch().then(res => {
-						// 		console.log(res);
-						// 	}).catch(res=>{
-						// 		console.log(res)
-						// 	})
+                        this.setForm()
 					} else {
 						
 					}

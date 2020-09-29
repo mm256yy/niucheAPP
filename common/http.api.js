@@ -7,6 +7,8 @@ const install  = (Vue, vm) => {
 	const GetUUID = (params = {}) => vm.$u.get('/captchaImage', params);
 	//登录
 	const loginSubmit = (params = {}) => vm.$u.post('/user/login/login', params);
+	//获取用户信息
+	const getUserInfo = (params = {}) => vm.$u.post('/user/login/list', params);
 	
 	const  geList =  (params = {}) => vm.$u.get('/system/tag/list', params);
 	
@@ -14,6 +16,7 @@ const install  = (Vue, vm) => {
 	
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getUserInfo,
 		geList,
 		GetUUID,
 		getTelephone,
