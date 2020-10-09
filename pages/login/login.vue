@@ -18,11 +18,11 @@
 			<view class="" style="padding: 5pt 30pt">
 				<u-form :model="form" :label-style="labelStyle" :error-type="errorType" ref='uForm'>
 					<u-form-item label="" prop="telephone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
-						<u-input v-model="form.telephone" placeholder="请输入手机号" placeholder-style="color:'#7F7F7F'"/>
+						<u-input v-model="form.telephone" type="number" placeholder="请输入手机号" placeholder-style="color:'#7F7F7F'"/>
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('dirverCodeChange')">{{driverNumText}}</u-button>
 					</u-form-item>
 					<u-form-item label="" prop="code" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
-						<u-input v-model="form.code" placeholder="请输入验证码" placeholder-style="color:'#7F7F7F'"/>
+						<u-input v-model="form.code" type="number" placeholder="请输入验证码" maxlength="4" placeholder-style="color:'#7F7F7F'"/>
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini " shape='circle' @click="getCode" class="btnFcd">{{codeTips}}</u-button>
 					</u-form-item>
 					<u-form-item label="登录身份" prop="role" label-width='100pt'>
@@ -44,7 +44,7 @@
 			<view class="" style="padding: 5pt 30pt">
 				<u-form :model="formPwd" :label-style="labelStyle1" ref="uFormPwd" :error-type="errorType" label-width='50pt'>
 					<u-form-item label="手机号" prop="telephone" >
-						<u-input v-model="formPwd.telephone" placeholder="" border style="border-radius: 18px;"/>
+						<u-input v-model="formPwd.telephone" type="number" placeholder="" border style="border-radius: 18px;"/>
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('companyNumChange')" style="position: absolute;right: 10rpx;">{{companyNumText}}</u-button>
 					</u-form-item>
 					<u-form-item label="密码" prop="password">
