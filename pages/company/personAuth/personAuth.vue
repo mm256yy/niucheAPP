@@ -98,16 +98,34 @@
 					hour: false,
 					minute: false,
 					second: false
-					},
+				},
+				companyFirst:{},
+				companySecond:{}
 			}
 		},
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		methods: {
+			getStorage(){
+				let that = this;
+				uni.getStorage({
+				    key: 'companyFirst',
+				    success: function (res) {
+						that.companyFirst =res.data
+				    }
+				});
+				uni.getStorage({
+				    key: 'companySecond',
+				    success: function (res) {
+						that.companySecond =res.data
+				    }
+				});
+			},
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
+						this.getStorage();
 						// this.$u.api.getSearch().then(res => {
 						// 		console.log(res);
 						// 	}).catch(res=>{

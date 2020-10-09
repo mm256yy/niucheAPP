@@ -169,7 +169,7 @@
 			}
 		},
 		mounted() {
-	      uni.setStorageSync('storage_key', 'hello');
+	      // uni.setStorageSync('storage_key', 'hello');
 		},
 		methods: {
 			getUser(){

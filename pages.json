@@ -113,6 +113,36 @@
             "path" : "pages/company/myPublish/zhaopinView/zhaopinView",
             "style" : {}
         }
+        ,{//租车标签
+            "path" : "pages/company/lease/step/stepLabel/stepLabel",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//租车价格
+            "path" : "pages/company/lease/step/stepCost/stepCost",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//车辆内饰
+            "path" : "pages/company/lease/step/stepInterior/stepInterior",
+			"style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//车辆外观
+            "path" : "pages/company/lease/step/stepAppearance/stepAppearance",
+			"style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//车辆其他
+            "path" : "pages/company/lease/step/stepOther/stepOther",
+           "style" : {
+           	"navigationStyle": "custom" 
+           }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

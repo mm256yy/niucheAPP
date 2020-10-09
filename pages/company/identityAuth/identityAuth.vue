@@ -6,7 +6,7 @@
 			<view class="top-content-base" style="font-size: 12pt;">营业执照照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="2" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="2" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -19,7 +19,7 @@
 			<u-form :model="form" ref="uForm" label-width="260" :error-type="errorType" :border-bottom="false">
 				<u-form-item label="公司名称" prop="companyName"><u-input v-model="form.companyName" :border="true"/></u-form-item>
 				<u-form-item label="社会统一信用代码" prop="socialCode"><u-input v-model="form.socialCode" :border="true"/></u-form-item>
-				<u-form-item label="成立日期" prop="companyCreateTime"><u-input v-model="form.companyCreateTime" :border="true" :disabled="true" @click="show = true" placeholder=""/><u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon></u-form-item>
+				
 				<u-form-item label="注册资本" prop="registeredPrice"><u-input v-model="form.registeredPrice" :border="true"/><text class="middle-content-label">万元</text></u-form-item>
 				<u-form-item label="法人姓名" prop="legalPerson"><u-input v-model="form.legalPerson" :border="true"/></u-form-item>
 				<u-form-item label="所在地区" prop="area"><u-input v-model="form.area" :border="true"/></u-form-item>
@@ -36,11 +36,10 @@
 </template>
 
 <script>
-		import {requiredRule} from '@/common/rule.js'
+	import {requiredRule} from '@/common/rule.js'
 	export default {
 		data() {
 			return {
-				
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
 				action: '/user/image/BusinessImagedemo',
@@ -79,7 +78,6 @@
 		},
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
-
 		},
 		mounted() {
 	      this.setPicToken()

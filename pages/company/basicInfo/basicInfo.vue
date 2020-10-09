@@ -6,13 +6,13 @@
 			<view class="top-content-base" >公司logo或经营场所照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
 				</u-upload>
 			</view>
-			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过8M</view>
+			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过4M</view>
 			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
 		</view>
 		<view class="middle-content">
@@ -21,11 +21,12 @@
 				<u-form-item label="公司成员" prop="memberNumber"><u-input maxlength='7' :clearable='false' type="number" v-model="form.memberNumber" :border="true"/><text class="middle-content-label">人</text></u-form-item>
 				<u-form-item label="经营车辆" prop="carNum"><u-input maxlength="8" :clearable='false' type="number" v-model="form.carNum" :border="true"/><text class="middle-content-label">辆</text></u-form-item>
 				<u-form-item label="主营业务" prop="mainBusiness" label-position="top">
-					<u-checkbox-group active-color="#6DD99C"  @change="radioGroupChange" shape="circle">
+					<u-checkbox-group active-color="#6DD99C" width="33%"  @change="radioGroupChange" shape="circle">
 						<u-checkbox v-model="item.checked" v-for="(item, index) in checkboxList" :key="index" :name="item.name">
 							{{ item.name }}
 						</u-checkbox>
 					</u-checkbox-group>
+					<text style="position: absolute;top: 8pt;left: 50pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 				</u-form-item>
 				<u-form-item label="公司介绍" label-position="top" prop="companyIntroduce">
 					<u-input v-model="form.companyIntroduce" type="textarea" :border="true" :height="150" :auto-height="true" />
@@ -69,9 +70,10 @@
 					companyIntroduce:''
 				},
 				checkboxList: [
-							{name: '网约车',checked: false,disabled: false},
-							{name: '出租车',checked: false,disabled: false},
-							{name: '长短组',checked: false,disabled: false}
+							{name: '网约车',checked: false,disabled: false},{name: '出租车',checked: false,disabled: false},{name: '长短组',checked: false,disabled: false},
+							{name: '汽车生产',checked: false,disabled: false},{name: '车辆销售',checked: false,disabled: false},{name: '维修与保养',checked: false,disabled: false},
+							{name: '汽车金融',checked: false,disabled: false},{name: '汽车保险',checked: false,disabled: false},{name: '装修与美容',checked: false,disabled: false},
+							{name: '其他',checked: false,disabled: false}
 						]
 			}
 		},
