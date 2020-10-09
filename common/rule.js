@@ -27,6 +27,14 @@ export const passwordRule = [{
 	required: true, 
 	message: '请输入登录密码', 
 	trigger: ['blur'],
+},
+{
+pattern: /^[a-zA-Z]\w{5,17}$/,
+transform(value) {
+	return String(value);
+},
+trigger: ['blur'],
+message: '密码以字母开头，长度在6-18之间，只能包含字符、数字和下划线'
 }];
 export const requiredRule = [{
 	required: true, 

@@ -48,7 +48,7 @@
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('companyNumChange')" style="position: absolute;right: 10rpx;">{{companyNumText}}</u-button>
 					</u-form-item>
 					<u-form-item label="密码" prop="password">
-						<u-input v-model="formPwd.password" type="password" placeholder="" border style="border-radius: 18px;"/>
+						<u-input v-model="formPwd.password" type="password" maxlength="18" placeholder="" border style="border-radius: 18px;"/>
 					</u-form-item>
 					<u-form-item label="登录身份" prop="role" label-width='100pt'>
 						<u-radio-group v-model="formPwd.role" :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" style="text-align: right;">
@@ -127,6 +127,7 @@
 			this.$refs.uFormPwd.setRules(this.rules);
 		},
 		mounted() {
+			console.log(passwordRule)
 			this.getUid()
 		},
 		methods: {
