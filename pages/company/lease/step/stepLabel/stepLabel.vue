@@ -1,6 +1,6 @@
 <template>
     <view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="车辆特色标签" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="车辆特色标签" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" >
 		   <view class="zlcontent-mid" style="margin: 20pt 0;">
 			 <view style="font-size:10pt;">* 根据您已经提交的车辆信息，您已经获得如下标签。</view>
@@ -69,7 +69,7 @@ export default {
 	   this.show = false;
     },
 	toNext(){
-		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
+		this.$u.route("/pages/company/lease/step/stepCost/stepCost")
 	}
   }
 }
@@ -77,9 +77,10 @@ export default {
 <style lang="scss">
 .scroll-container {height: 100%;}
 page{
-	background-image: url(@/static/lease.png);
-	background-position: 40% 40%;
+	// background-image: url(@/static/lease.png);
+	background-size: cover;
 	background-repeat: no-repeat;
+	background-color:#f5f5f8 ;
 	height: 100%;
 }
 .zlyjdr{

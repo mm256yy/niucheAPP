@@ -143,6 +143,18 @@
            	"navigationStyle": "custom" 
            }
         }
+        ,{//车辆证件
+            "path" : "pages/company/lease/step/stepCards/stepCards",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//车辆参数
+            "path" : "pages/company/lease/step/stepNumber/stepNumber",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

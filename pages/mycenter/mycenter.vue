@@ -170,18 +170,19 @@
 		},
 		mounted() {
 	      // uni.setStorageSync('storage_key', 'hello');
+		  this.getUser()
 		},
 		methods: {
 			getUser(){
 				let phone = '';
 				uni.getStorage({
-				    key: 'storage_key',
+				    key: 'telephone',
 				    success: function (res) {
 						 phone = res.data;
 				    }
 				});
 				if (phone) {
-					this.$u.api.getUserInfo({phone:phone}).then(res=>{
+					this.$u.api.getUserInfo({telephone:phone}).then(res=>{
 						
 						
 					})

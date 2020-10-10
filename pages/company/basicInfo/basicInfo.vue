@@ -18,7 +18,7 @@
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item label="公司简称" prop="companyEasyName"><u-input v-model="form.companyEasyName" :border="true"/></u-form-item>
-				<u-form-item label="公司成员" prop="memberNumber"><u-input maxlength='7' :clearable='false' type="number" v-model="form.memberNumber" :border="true"/><text class="middle-content-label">人</text></u-form-item>
+				<u-form-item label="公司成员" prop="memberNumber"><u-input maxlength='7'  :clearable='false' type="number" v-model="form.memberNumber" :border="true"/><text class="middle-content-label">人</text></u-form-item>
 				<u-form-item label="经营车辆" prop="carNum"><u-input maxlength="8" :clearable='false' type="number" v-model="form.carNum" :border="true"/><text class="middle-content-label">辆</text></u-form-item>
 				<u-form-item label="主营业务" prop="mainBusiness" label-position="top">
 					<u-checkbox-group active-color="#6DD99C" width="33%"  @change="radioGroupChange" shape="circle">

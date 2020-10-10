@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆外观" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆外观" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="view-content">
 		   <view class="top-content-upload" >
 			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
@@ -80,7 +80,9 @@
 			}
 		},
 		methods: {
-			
+			toNext(){
+				this.$u.route("/pages/company/lease/step/stepOther/stepOther")
+			}
 		}
 	}
 </script>
@@ -88,9 +90,10 @@
 <style lang="scss">
 .scroll-container {height: 100%;}
 page{
-	background-image: url(@/static/lease.png);
-	background-position: 40% 40%;
+	// background-image: url(@/static/lease.png);
+	background-size: cover;
 	background-repeat: no-repeat;
+	background-color:#f5f5f8 ;
 	height: 100%;
 }
 /deep/ .u-border-bottom:after{

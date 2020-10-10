@@ -69,12 +69,25 @@
 		},
 		methods: {
 			toPage(type){
+				let that = this;
 				if(type ===1 ){
-					this.$u.route('/pages/company/lease/lease')
+					uni.setStorage({
+						key: 'publishType',
+						data:1 ,
+						success: function () {
+							that.$u.route('/pages/company/lease/lease',{type:1})
+						}
+					});
 				} else if(type === 2){
 					this.$u.route('/pages/company/recruit/recruit')
 				}else if(type === 3){
-					this.$u.route('/pages/company/resell/resell')
+					uni.setStorage({
+						key: 'publishType',
+						data:3 ,
+						success: function () {
+							that.$u.route('/pages/company/lease/lease',{type:3})
+						}
+					});
 				}else{
 					this.$u.route('/pages/company/demand/demand')
 				}
@@ -129,7 +142,7 @@
 // 	text-align: center;
 // }
 page{
-	background-image: url(../../../static/release1x.png);
+	background-image: url(@/static/release1x.png);
 	background-position: 50% 20%;
 	background-repeat: no-repeat;
 	height: 100%;

@@ -127,7 +127,6 @@
 			this.$refs.uFormPwd.setRules(this.rules);
 		},
 		mounted() {
-			console.log(passwordRule)
 			this.getUid()
 		},
 		methods: {
@@ -237,13 +236,8 @@
 									if(userInfo.role === '1'){
 										this.$u.route({url:'/pages/index/index',type:'switchTab'})
 									} else {
-										this.$u.route({url:'/pages/index/index',type:'switchTab'})
+										this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 									}
-									
-									
-									this.$u.api.geList().then(res=>{
-										console.log(res)
-									})
 								}
 							}).catch(res=>{
 								console.log(res)

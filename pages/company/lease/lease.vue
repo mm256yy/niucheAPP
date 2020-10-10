@@ -1,6 +1,6 @@
 <template>
-    <view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="租赁车辆发布" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+    <view class="wrap">
+		<u-navbar back-text="返回"  back-icon-size="0" title="租赁车辆发布" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent">
 		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
 		   <view class="zlcontent-mid">
@@ -10,15 +10,18 @@
 		   	 <u-form :model="form" ref='uForm'>
 		   	 	<u-form-item label="" prop="phone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 					<u-input v-model="form.phone" style="background: #FFFFFF;border-radius: 40rpx;" type="select" :border="true" placeholder="请选择车辆品牌" :placeholder-style="style" @click="show = true" />
-					<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
+					<!-- <u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet> -->
 		   	 	</u-form-item>
 				<u-form-item label="" prop="phone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 					<u-input v-model="form.phone" style="background: #FFFFFF;border-radius: 40rpx;" type="select" :border="true" placeholder="请选择车系" :placeholder-style="style" @click="show = true" />
-					<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
+					<!-- <u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet> -->
 				</u-form-item>
 				<u-form-item label="" prop="phone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 					<u-input v-model="form.phone" style="background: #FFFFFF;border-radius: 40rpx;" type="select" :border="true" placeholder="请选择车辆型号" :placeholder-style="style" @click="show = true" />
-					<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
+					<!-- <u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet> -->
+				</u-form-item>
+				<u-form-item label="" prop="phone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
+					<u-input v-model="form.phone" style="background: #FFFFFF;border-radius: 40rpx;" type="select" :border="true" placeholder="请选择车辆类型" :placeholder-style="style" @click="show = true" />
 				</u-form-item>
 				<u-form-item label="" prop="phone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 					<u-input v-model="form.phone" style="background: #FFFFFF;border-radius: 40rpx;" type="select" :border="true" placeholder="请选择动力类型" :placeholder-style="style" @click="show = true" />
@@ -42,7 +45,7 @@
 					 <u-form-item label="行驶里程" prop="phone">
 					 	<u-input v-model="form.phone" style="border-radius: 40rpx;" :border="true" placeholder="请输入网约车行驶里程" />
 					 </u-form-item>
-					 <u-form-item label="车辆在租总数" prop="registeredPrice">
+					 <u-form-item :label="type === 1?'车辆在租总数':'车辆在售总数'" prop="registeredPrice">
 						 <u-input v-model="form.registeredPrice" :border="true"/><text style="position: absolute;right: 10px;">辆</text>
 					 </u-form-item>
 			      </u-form>	
@@ -51,22 +54,17 @@
 					<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
 				</view>
 			</view>
-	 </view>
-        <uni-drawer ref="drawer">
-          <scroll-view class="scroll-container" scroll-y="true">
-			  // 使用scroll-view才可以区域滚动 且配置scroll-y为true时,需要给scroll-view设置高度
-          </scroll-view>
-        </uni-drawer>
+	    </view>
+			<u-popup v-model="importShow">
+				<view>出淤泥而不染，濯清涟而不妖</view>
+			</u-popup>
      </view>
 </template>
 
 <script>
-import uniDrawer from "@/components/uni-drawer/uni-drawer.vue";
 
 export default {
-  components: {
-    uniDrawer
-  },
+
   data(){
 	return {
 		backTextStyle:{
@@ -86,8 +84,10 @@ export default {
 			minute: false,
 			second: false
 		},
+		type:1,
 		show: false,
 		timeShow:false,
+		importShow:false,
 		list: [
 			{
 				value: '1',
@@ -100,6 +100,10 @@ export default {
 		],
 	}  
   },
+  onLoad(option) {
+  	let index  = Number(option.type)
+  	this.type = index;
+  },
   methods: {
 	actionSheetCallback(index) {
 		this.value = this.list[index].text;
@@ -109,7 +113,7 @@ export default {
 		this.form.companyCreateTime = companyDate;
 	},
     handleClick(){
-        this.$refs.drawer.open();
+        this.importShow = true;
     },
 	toNext(){
 		this.$u.route('/pages/company/lease/step/stepLabel/stepLabel')
@@ -119,10 +123,17 @@ export default {
 </script>
 <style lang="scss">
 .scroll-container {height: 100%;}
+.wrap {
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - var(--window-top));
+	width: 100%;
+}
 page{
-	background-image: url(../../../static/lease.png);
-	background-position: 40% 40%;
+	// background-image: url(../../../static/lease.png);
+	background-size: cover;
 	background-repeat: no-repeat;
+	background-color:#f5f5f8 ;
 	height: 100%;
 }
 .zlyjdr{

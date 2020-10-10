@@ -8,7 +8,7 @@ const install  = (Vue, vm) => {
 	//登录
 	const loginSubmit = (params = {}) => vm.$u.post('/user/login/login', params);
 	//获取用户信息
-	const getUserInfo = (params = {}) => vm.$u.post('/user/login/list', params);
+	const getUserInfo = (params = {}) => vm.$u.get('/user/personal/personall', params);
 	
 	const  geList =  (params = {}) => vm.$u.get('/system/tag/list', params);
 	

@@ -34,7 +34,7 @@
 
 		methods: {
 			toPage(){
-				
+				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			toNext(){
 				this.$u.route("/pages/company/identityAuth/identityAuth")

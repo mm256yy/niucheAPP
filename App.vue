@@ -4,15 +4,18 @@
 			console.log('App Launch')
 			uni.onTabBarMidButtonTap(function(e){
 				console.log(e)
-				uni.getStorage({
-				    key: 'role',
-				    success: function (res) {
-				        console.log(res.data);
-						uni.navigateTo({
-						    url: '/pages/company/release/release'
-						});
-				    }
-				})
+				uni.navigateTo({
+				    url: '/pages/company/release/release'
+				});
+				// uni.getStorage({
+				//     key: 'role',
+				//     success: function (res) {
+				//         console.log(res.data);
+				// 		uni.navigateTo({
+				// 		    url: '/pages/company/release/release'
+				// 		});
+				//     }
+				// })
 
 			})
 		},

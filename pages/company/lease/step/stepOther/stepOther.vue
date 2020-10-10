@@ -48,7 +48,9 @@
 			}
 		},
 		methods: {
-			
+			toNext(){
+				this.$u.route("/pages/company/lease/step/stepCards/stepCards")
+			}
 		}
 	}
 </script>
@@ -57,12 +59,23 @@
 .scroll-container {height: 100%;}
 page{
 	background-image: url(@/static/lease.png);
-	background-position: 40% 40%;
+	background-size: cover;
 	background-repeat: no-repeat;
+	background-color:#f5f5f8 ;
 	height: 100%;
 }
 /deep/ .u-border-bottom:after{
 	border-bottom-width:0;
+}
+.navbar-right {
+	margin-right: 24rpx;
+	display: flex;
+}
+.right-item {
+	margin: 0 12rpx;
+	position: relative;
+	color: #ffffff;
+	display: flex;
 }
 .view-content{
 	margin-top: 20pt;padding: 0 10pt;
