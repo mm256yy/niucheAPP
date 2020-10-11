@@ -1,12 +1,6 @@
 <template>
 	<view :class="curThemeType ==='driver'?'driver-content':'company-content'">
-        <u-navbar back-text="返回" back-icon-size="0" title="登录/注册" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
-         	<view class="navbar-right" slot="right">
-         		<view class="message-box right-item">
-					<text>跳过</text>
-         		</view>
-         	</view>
-         </u-navbar>
+        <u-navbar back-text="返回" back-icon-size="0" title="登录/注册" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		 
 		<view class="u-tabs-box" >
 		    <u-tabs :list="list" :is-scroll="false" bg-color='c' bar-height='0' active-color="#ffffff" inactive-color="#e5e5e5" :current="current" @change="change"></u-tabs>

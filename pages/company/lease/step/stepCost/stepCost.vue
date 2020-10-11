@@ -4,18 +4,18 @@
 		<view class="zlcontent" >
 		   <view class="zlcontent-mid" style="margin: 20pt 0;">
 			   <u-form-item label="押金">
-			   	 <u-input v-model="value" :clearable="false" style="background: #FFFFFF;border-radius: 20pt;" :border="true" placeholder="请输入"/><text style="position: absolute;right: 10px;">元</text>
+			   	 <u-input v-model="deposit" :clearable="false" class="input-radius" :border="true" placeholder="请输入"/><text style="position: absolute;right: 10px;">元</text>
 			   </u-form-item>
 			 <view style="font-size:10pt;">*“拼租价”为2人拼单（1人1辆车）时的价格。建议拼单时给予一定 </view>
 			 <view style="font-size:10pt;">优惠有利于成交。拼单时长为发起后的3天。3天后未拼满则失败。</view>
 		   </view>
 		   
-		   <view class="zlcontent-mid" style="margin: 10pt 20pt;padding:10pt;background: #FFFFFF;" v-for="(item,index) in priceList">
+		   <view class="zlcontent-mid price-list" v-for="(item,index) in priceList" :key='index'>
 			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
 			   <view>
 				<u-form :model="item" label-width="150">
 				 <u-form-item label="租赁周期">
-				 	<u-input v-model="item.name" style="background: #FFFFFF;border-radius: 40rpx;" type="select" :border="true" placeholder="请选择车辆品牌" @click="showDialog(index)" />
+				 	<u-input v-model="item.name" class="input-radius" type="select" :border="true" placeholder="请选择租赁周期" @click="showDialog(index)" />
 				 </u-form-item>
 				 <u-form-item label="租金">
 				 	 <u-input v-model="item.text" type="number" :clearable="false" :border="true" placeholder="请输入"/><text style="position: absolute;right: 10px;">元/月</text>
@@ -52,7 +52,7 @@ export default {
 		],
 		priceIndex:0,
 		show:false,
-		value:''
+		deposit:''
 		
 	}  
   },
@@ -94,6 +94,12 @@ page{
 }
 .zlcontent-mid{
 	padding: 0 20pt;
+}
+.input-radius{
+	background: #FFFFFF;border-radius: 20pt;
+}
+.price-list{
+	margin: 10pt 20pt;padding:10pt;background: #FFFFFF;
 }
  .btn-agree{
 	background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC);

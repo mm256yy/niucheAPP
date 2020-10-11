@@ -33,7 +33,7 @@
 		  		其他参数
 		  	</view>
 			<u-form-item :label="item.label" prop="name" label-width="180" v-for="(item,index) in otherList" :key='index'>
-				<u-input v-model="item.model" type="number" :clearable="false" maxlength="30" :border="true" class="form_input"/>
+				<u-input v-model="item.model" :clearable="false" maxlength="30" :border="true" class="form_input"/>
 				<text class="middle-content-label">{{item.text}}</text>
 			</u-form-item>
 		  </view>
@@ -49,13 +49,19 @@
 				<u-input v-model="addForm.text" :border="true" placeholder="请输入参数单位"/>
 			</view>
 		</u-modal>
-				<u-row>
-					<u-col span="6">
-						<u-button type="success" class="btn-agree" @click="toNext">预览</u-button>
-					</u-col><u-col span="6">
-						<u-button type="success" class="btn-agree" @click="toNext">提交审核</u-button>
-					</u-col>
-				</u-row>
+		<u-row>
+			<u-col span="6">
+				<u-button type="success" class="btn-agree" @click="toNext">预览</u-button>
+			</u-col><u-col span="6">
+				<u-button type="success" class="btn-agree" @click="toNext">提交审核</u-button>
+			</u-col>
+		</u-row>
+		<u-modal v-model="showTips" @confirm="tipsConfirm" @cancel="tipsCancel" :show-cancel-button="true" confirm-text="现在开始编辑" cancel-text="跳过">
+			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+				您是第一次发布租车信息，需要完成贵公司租车常见问题编辑。编辑后贵公司其他在租车辆可直接使用。
+				您可在问题模板基础上编辑，也可自行编辑。是否现在开始？
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -70,6 +76,7 @@
 					name:''
 				},
 				show:false,
+				showTips:false,
 				dialogShow:false,
 				addForm:{
 					label:'',
@@ -90,6 +97,12 @@
 				this.addForm = {label:'',model:'',text:''};
 				this.dialogShow = true
 			},
+			tipsConfirm(){
+				this.$u.route('/pages/company/lease/step/setpQuestion/setpQuestion')
+			},
+			tipsCancel(){
+				this.$u.route('/pages/company/myPublish/myPublish', {index: 1});
+			},
 			confirm(){
 				if(this.addForm === ''){
 				   this.$u.toast('请输入新内容')
@@ -102,6 +115,8 @@
 				this.dialogShow = false
 			},
 			toNext(){
+				console.log(this.otherList)
+				this.showTips = true;
 				// this.$u.route("/pages/company/lease/step/stepCards/stepCards")
 			}
 		}

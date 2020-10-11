@@ -155,6 +155,18 @@
 				"navigationStyle": "custom" 
 			}
         }
+        ,{//问题
+            "path" : "pages/company/lease/step/setpQuestion/setpQuestion",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
+        ,{//公司信息
+            "path" : "pages/company/information/information",
+            "style" : {
+				"navigationStyle": "custom" 
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

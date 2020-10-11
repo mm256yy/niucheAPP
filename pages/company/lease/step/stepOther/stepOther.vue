@@ -1,14 +1,14 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆外观" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆外观" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
-				<view class="message-box right-item">
+				<view class="message-box right-item" @click="toNext">
 					<text>跳过</text>
 				</view>
 			</view>
 		</u-navbar>
-		<view class="view-content">
-		   <view class="top-content-upload" >
+		<view class="view-content" >
+		   <view class="top-content-upload">
 			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="5" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -58,7 +58,7 @@
 <style lang="scss">
 .scroll-container {height: 100%;}
 page{
-	background-image: url(@/static/lease.png);
+	// background-image: url(@/static/lease.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-color:#f5f5f8 ;
