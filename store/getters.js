@@ -5,6 +5,19 @@ const getters = {
   avatar:state => state.user.avatar,
   role:state => state.user.role,
   UUid:state => state.user.UUid,
-  curThemeType: state => state.theme.curThemeType,
+  curThemeType: state =>{
+	    let val = state.user.curThemeType;
+		if(val) return val
+		try {
+			const value = uni.getStorageSync('curThemeType');
+			if (value) {
+				return value
+			} else{
+				return 'driver1'
+			}
+		} catch (e) {
+			return 'dirver'
+	}
+  }
 }
 export default getters

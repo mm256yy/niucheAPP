@@ -1,5 +1,6 @@
 const user = {
   state: {
+	 curThemeType: '',    
 	telephone:'',
     token:'' ,
     name: '',
@@ -9,24 +10,27 @@ const user = {
   },
 
   mutations: {
-	SET_TELEPHONE: (state, telephone) => {
+	SET_TELEPHONE(state, telephone){
 	  state.telephone = telephone
 	},  
-    SET_TOKEN: (state, token) => {
+    SET_TOKEN(state, token){
       state.token = token
     },
-    SET_NAME: (state, name) => {
+    SET_NAME(state, name){
       state.name = name
     },
-    SET_AVATAR: (state, avatar) => {
+    SET_AVATAR(state, avatar){
       state.avatar = avatar
     },
-    SET_ROLES: (state, roles) => {
+    SET_ROLES(state, roles){
       state.role = roles
     },
-	SET_UUID: (state,UUid) =>{
+	SET_UUID(state,UUid){
 		state.UUid = UUid
-	}
+	},
+	SET_THEME_TYPE(state,data) {
+	    state.curThemeType = data
+	},  
   },
 
   actions: {
@@ -45,6 +49,10 @@ const user = {
 	 commit('SET_UUID', UUid);
 
     },
+	CurThemeType({ commit }, state) {
+	 uni.setStorageSync('curThemeType', state);
+	 commit('SET_THEME_TYPE', state);
+	},
     // 退出系统
     LogOut({ commit, state }) {
 	  commit('SET_TOKEN', '')

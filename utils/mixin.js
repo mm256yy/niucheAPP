@@ -1,4 +1,4 @@
-import {mapGetters,mapMutations} from 'vuex'
+import {mapGetters} from 'vuex'
 // export let themeMixin = {
 // 	computed:{
 // 		...mapGetters(['curThemeType'])
@@ -28,9 +28,7 @@ export default {
           	...mapGetters(['curThemeType'])
           },
           methods:{
-          	...mapMutations([
-          		'SET_THEME_TYPE'
-          	])
+
           }
        })
    }

@@ -38,8 +38,10 @@
 		</view>
 		<view class="" style="height: 40pt;"></view>
 		<view class="fixed-btn">
-			<u-button type="success" class="btn-agree btn-inline" @click="toNext">添加新问题</u-button>
-			<u-button type="success" class="btn-agree btn-inline" @click="toNext">完成</u-button>
+			<view class=" btn-inline">
+			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">添加新问题</u-button>
+			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">完成</u-button>	
+			</view>
 		</view>
 
 	</view>
@@ -105,16 +107,21 @@ page{
 	margin-top: 20pt;padding: 0 10pt;
 }
 .fixed-btn{
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	z-index: 10;
+     box-sizing: border-box;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 998;
 }
 .btn-inline{
-	display: inline-block;
-	width: 50%;
+	display: flex;
+	justify-content: center;
+	 flex-direction: row;
+	// width: 40%;
 }
  .btn-agree{
+	 width: 50%;
 	background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC);
  }
 </style>

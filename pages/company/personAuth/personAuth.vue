@@ -5,7 +5,7 @@
 			<view class="top-content-base">企业联系人身份认证</view>
 			<view class="top-content-base" style="font-size: 12pt;">身份证照片</view>
 			<view class="top-content-upload">
-				<u-upload :custom-btn="true" :action="action" upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -26,7 +26,9 @@
 				<u-form-item label="出生日期" prop="brithday"><u-input v-model="form.brithday" :border="true" :disabled="true" @click="show = true" placeholder=""/><u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon></u-form-item>
 				<u-form-item label="身份证号" prop="IDNumber"><u-input maxlength="24" v-model="form.IDNumber" :border="true"/></u-form-item>
 				<u-form-item label="手机号码" prop="telephone"><u-input type="number" maxlength="11" v-model="form.telephone" :border="true"/></u-form-item>
-				<u-form-item label="输入验证码" prop="identifyCode"><u-input v-model="form.identifyCode" type="number" maxlength="6" :border="true" /><u-button type="success" size="mini" shape='circle' class="btnFcd" style=";position: absolute;right: 10rpx;">获取验证码</u-button>
+				<u-form-item label="输入验证码" prop="identifyCode"><u-input v-model="form.identifyCode" type="number" maxlength="6" :border="true" />
+				<!-- <u-button type="success" size="mini" shape='circle' class="btnFcd" style=";position: absolute;right: 10rpx;">获取验证码</u-button> -->
+				<u-button type="success" size="mini " shape='circle' @click="getCode" style="position: absolute;right: 10rpx;">{{codeTips}}</u-button>
 				</u-form-item>
 			</u-form>
 			<u-picker v-model="show" mode="time" :params="params" @confirm="dataChange"></u-picker>
@@ -44,7 +46,8 @@
 					</u-row>
 			</view>
 			<view class="top-content-upload">
-				<u-upload :custom-btn="true" :action="action" upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange'
+				 upload-text="" :file-list="fileList1" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -53,6 +56,12 @@
 			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过8M</view>
 			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
 		</view>
+		<u-verification-code seconds="60" ref="uCode" unique-key="page-a" @change="codeChange"></u-verification-code>
+		<u-modal v-model="showTips" @confirm="confirm" confirm-text="我知道了">
+				<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+					您的信息已提交审核
+				</view>
+		</u-modal>
 		<view style="text-align: center; padding: 12pt 20pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">提交审核</u-button>
 		</view>
@@ -71,15 +80,20 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				action: 'http://www.example.com/upload',
+				action: '/user/image/carotherphoto',
+				headerObj:{Authorization:''},
+				formDataObj:{phone:''},
 				fileList: [],
+				fileList1:[],
 				form: {
+					idcardphoto:'',
 					name: '',
 					brithday: '',
 					sex: '',
 					telephone:'',
 					IDNumber:'',
-					identifyCode:''
+					identifyCode:'',
+					comparypeoplephoto:''
 				},
 				// rules:rules,
 				rules:{
@@ -99,6 +113,8 @@
 					minute: false,
 					second: false
 				},
+				codeTips: '',
+				showTips:false,
 				companyFirst:{},
 				companySecond:{}
 			}
@@ -106,7 +122,56 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
+		mounted() {
+			this.setPicToken()
+		},
 		methods: {
+			// 获取验证码
+			getCode() {
+				if(this.$refs.uCode.canGetCode) {
+					if(this.form.telephone === ''){
+						this.$u.toast('请输入手机号码');
+						return
+					}
+					this.$u.api.getPubSendMsg({phone:this.form.telephone}).then(res=>{			
+						 if (res.code === 1){
+							uni.showLoading({
+								title: '正在获取验证码'
+							})
+							 setTimeout(() => {
+								uni.hideLoading();
+								this.$u.toast('验证码已发送');
+								this.$refs.uCode.start();
+							 }, 2000);
+							} else {
+								this.$u.toast(res.msg);
+							} 
+						}).catch(res=>{
+					      this.$u.toast(res.msg);
+					  })
+					} else {
+					 this.$u.toast('倒计时结束后再发送');
+				  }
+			},
+			codeChange(text) {
+				this.codeTips = text;
+			},
+			setPicToken(){
+				let that = this;
+				uni.getStorage({
+				    key: 'token',
+				    success: function (res) {
+						let Authorization ='Bearer '+ res.data;
+						that.headerObj.Authorization =Authorization
+				    }
+				});
+				uni.getStorage({
+				    key: 'telephone',
+				    success: function (res) {
+						that.formDataObj.phone =res.data
+				    }
+				});
+			},
 			getStorage(){
 				let that = this;
 				uni.getStorage({
@@ -122,19 +187,62 @@
 				    }
 				});
 			},
+			uploadChange(res,index,lists,name){
+               if(res.code === 200) {
+				   this.form.comparypeoplephoto = res.text;
+			   }
+			},
 			toNext(){
+			// this.getStorage();
+			// 	const obj = Object.assign(this.companyFirst,this.companySecond,this.form);
+			// 	console.log(obj)
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
 						this.getStorage();
-						// this.$u.api.getSearch().then(res => {
-						// 		console.log(res);
-						// 	}).catch(res=>{
-						// 		console.log(res)
-						// 	})
+						this.saveSubmit()
 					} else {
 						
 					}
 				})
+			},
+			saveSubmit(){
+				let obj = {businesscard:'',comparyname:'',societyid:'',chuangjiantime:'',registeredcapital:'',faname:'',area:'',
+				comparylogophoto:'',comparynickname:'',comparypeoplenum:'',comparycarnum:'',mainbusiness:'',
+				comparytext:'',idcardphoto:'',username:'',sex:'',birthday:'',idcardid:'',telephone:'',comparypeoplephoto:'',identifyCode:''};
+				obj.businesscard = this.companyFirst.businesscard;//营业执照
+				obj.comparyname = this.companyFirst.companyName;//公司名称
+				obj.chuangjiantime = this.companyFirst.companyCreateTime;//成立日期
+				obj.societyid = this.companyFirst.socialCode;//社会统一信用代码
+				obj.registeredcapital = this.companyFirst.registeredPrice;//注册资本
+				obj.faname = this.companyFirst.legalPerson;//法人姓名
+				obj.area = this.companyFirst.area;//地区
+				obj.comparylogophoto = this.companySecond.comparylogophoto;//公司logo
+				obj.comparynickname = this.companySecond.companyEasyName;//公司简称
+				obj.comparypeoplenum = this.companySecond.memberNumber;//公司成员
+				obj.comparycarnum = this.companySecond.carNum;//经营车辆
+				obj.mainbusiness = this.companySecond.mainBusiness;//主营业务
+				obj.comparytext = this.companySecond.companyIntroduce;//公司介绍
+				obj.idcardphoto = this.form.idcardphoto; //身份证照片
+				obj.comparypeoplephoto = this.form.comparypeoplephoto; //联系人照片
+				obj.username = this.form.name; //姓名
+				obj.sex = this.form.sex;//性别
+				obj.birthday = this.form.brithday; //出生日期
+				obj.idcardid = this.form.IDNumber;//身份证号
+			    obj.telephone = this.form.telephone;//手机号
+				obj.identifyCode = this.form.identifyCode;
+				
+				this.$u.api.saveAuth(obj).then(res => {
+						if(res.code === '200'){
+                            this.showTips = true
+						}
+					}).catch(res=>{
+						console.log(res)
+					})
+			},
+			confirm(){
+				uni.removeStorageSync('companyFirst');
+				uni.removeStorageSync('companySecond');
+				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			dataChange(obj){
 				let brithday = obj.year+"-"+obj.month+"-"+obj.day;

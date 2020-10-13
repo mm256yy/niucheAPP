@@ -167,12 +167,35 @@
 				"navigationStyle": "custom" 
 			}
         }
+        ,{//关于
+            "path" : "pages/aboutUs/aboutUs",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{//卖车价格
+            "path" : "pages/company/lease/step/stepResell/stepResell",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{//工作车型列表
+            "path" : "pages/company/recruit/carModel/carModel",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{//上传车辆其他
+            "path" : "pages/company/recruit/carOther/carOther",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
     ],
 	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "",
-		// "navigationBarBackgroundColor": "#FE9217",
-		"backgroundColor": "#FA3534"
+		// "navigationBarTextStyle": "white",
+		// "navigationBarTitleText": "",
+		// // "navigationBarBackgroundColor": "#FE9217",
 	},
 	"tabBar": {
 		"height":60,

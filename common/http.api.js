@@ -3,21 +3,28 @@ const install  = (Vue, vm) => {
 	const getTelephone = (params = {}) => vm.$u.get("/user/carparamter/getphone", {});
 	//获取验证码
 	const getIdentifyCode = (params = {}) => vm.$u.get("/user/carparamter/sendnode", params);
+	//获取验证码
+	const getPubSendMsg = (params = {}) => vm.$u.get("/user/carparamter/PubSendMsg", params);
 	//获取UUID
 	const GetUUID = (params = {}) => vm.$u.get('/captchaImage', params);
 	//登录
 	const loginSubmit = (params = {}) => vm.$u.post('/user/login/login', params);
 	//获取用户信息
 	const getUserInfo = (params = {}) => vm.$u.get('/user/personal/personall', params);
-	
-	const  geList =  (params = {}) => vm.$u.get('/system/tag/list', params);
-	
-	const geListIMg =  (params = {}) => vm.$u.get('//user/image/recognicedrivecard', params);
-	
+	//获取公司信息
+	const  getCompanyInfo =  (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyTextSelectByid', params);
+	//企业认证保存
+	const saveAuth =  (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyAuthentication', params);
+	//企业认证修改保存
+	const editCompany = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyTextUpdateByid', params)
+	//user/image/carotherphoto
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getPubSendMsg,
+		saveAuth,
+		editCompany,
 		getUserInfo,
-		geList,
+		getCompanyInfo,
 		GetUUID,
 		getTelephone,
 		getIdentifyCode,

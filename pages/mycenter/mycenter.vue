@@ -77,8 +77,9 @@
 								<view @click="toLogin" style="color: #fff;font-size: 14pt;">请登录/注册</view>
 							</u-col>
 							<u-col span="8" v-else>
-								<view @click="toLogin" style="color: #fff;font-size: 14pt;">{{companyName}}</view>
-								<view class="colorF">{{companyStatus}}</view>
+								<view @click="toAuth" style="color: #fff;font-size: 14pt;">{{companyName}}</view>
+								<view class="colorF">{{companyStatus | state}}</view>
+								<view v-if="companyStatus === 4">原因 {{reson}}</view>
 							</u-col>
 						</u-row>
 					</view>
@@ -95,7 +96,7 @@
 						<u-col span="4" @click="toPub(0)">
 							<view class="font-14pt">租车信息</view>
 							<view class="font-10pt">
-							<text style="width: 50pt;display: inline-block;">不可见</text>
+							<text style="width: 50pt;display: inline-block;">{{myPublishObj.zcxx}}</text>
 							<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 							</view>
 						</u-col>
@@ -106,7 +107,7 @@
 						<u-col span="4" @click="toPub(1)">
 							<view class="font-14pt">车辆转卖</view>
 							<view class="font-10pt">
-							<text style="width: 50pt;display: inline-block;">不可见</text>
+							<text style="width: 50pt;display: inline-block;">{{myPublishObj.clzm}}</text>
 							<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 							</view>
 						</u-col>
@@ -119,7 +120,7 @@
 						<u-col span="4" @click="toPub(2)">
 							<view class="font-14pt">求购信息</view>
 							<view class="font-10pt">
-							<text style="width: 50pt;display: inline-block;">不可见</text>
+							<text style="width: 50pt;display: inline-block;">{{myPublishObj.qgxx}}</text>
 							<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 							</view>
 						</u-col>
@@ -130,7 +131,7 @@
 						<u-col span="4" @click="toPub(3)">
 							<view class="font-14pt">招聘信息</view>
 							<view class="font-10pt">
-							<text style="width: 50pt;display: inline-block;">不可见</text>
+							<text style="width: 50pt;display: inline-block;">{{myPublishObj.zpxx}}</text>
 							<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 							</view>
 						</u-col>
@@ -141,9 +142,9 @@
 				<view class="colorF">
 					<u-cell-group>
 						<u-cell-item  title="其他" :title-style="titleStyle" :arrow="false"></u-cell-item>
-						<u-cell-item  title="收藏" value="不可见" :title-style="titleStyle"></u-cell-item>
-						<u-cell-item  title="消息" value="不可见" :title-style="titleStyle"></u-cell-item>
-						<u-cell-item  title="群组" value="不可见" :title-style="titleStyle"></u-cell-item>
+						<u-cell-item  title="收藏" :value="otherObj.sc" :title-style="titleStyle"></u-cell-item>
+						<u-cell-item  title="消息" :value="otherObj.xx" :title-style="titleStyle"></u-cell-item>
+						<u-cell-item  title="群组" :value="otherObj.qz" :title-style="titleStyle"></u-cell-item>
 					</u-cell-group>
 				</view>
 			</view>
@@ -158,6 +159,7 @@
 				wagesheight:0,
 				companyName:'',
 				companyStatus:'',
+				reson:'',
 				imageURL:'../../static/gongsi@2x.png',
 				titleStyle:{'fontSize': '12pt','padding-left':'5pt','color':'#000000'},
 				comnpanySrc: '../../static/touxx.png',
@@ -165,12 +167,36 @@
 				zcxxsrc:'../../static/sign104@2x.png',
 				zlzmsrc:'../../static/iconfontzhizuobiaozhun023120@2x.png',
 				qgxxsrc:'../../static/xuqiuguanli@2x.png',
-				zpxxsrc:'../../static/chezhuzhaomu@2x.png'
+				zpxxsrc:'../../static/chezhuzhaomu@2x.png',
+				myPublishObj:{
+					zcxx:'不可见',clzm:'不可见',qgxx:'不可见',zpxx:'不可见'
+				},
+				otherObj:{
+					sc:'不可见',xx:'不可见',qz:'不可见'
+				}
 			}
 		},
 		mounted() {
-	      // uni.setStorageSync('storage_key', 'hello');
 		  this.getUser()
+		},
+		//  onShow(){
+		// 	this.getUser()  
+		// },
+		filters: {
+		  state: function (value) {
+		    if (!value) return ''
+		    if (value === 1) {
+				return '已认证'
+			} else if (value === 2){
+				return '未认证'
+			} else if (value === 3){
+				return '审核中'
+			} else if (value === 4){
+				return '认证未通过'
+			}else {
+				return ''
+			}
+		  }
 		},
 		methods: {
 			getUser(){
@@ -183,14 +209,32 @@
 				});
 				if (phone) {
 					this.$u.api.getUserInfo({telephone:phone}).then(res=>{
-						
-						
+						if(res.code === 200){
+							let data = res.personalVo;
+							this.comnpanySrc =data.comparylogophoto;
+							this.companyName = data.comparynickname;
+							this.companyStatus = data.state;
+							this.reson = data.nostate;
+							let strF ='已发布';
+							let strE = '条'
+							this.myPublishObj.zcxx =strF+data.zunum+strE;
+							this.myPublishObj.clzm =strF+data.zhuannum+strE;
+							this.myPublishObj.qgxx =strF+data.qiushoppingnum+strE;
+							this.myPublishObj.zpxx =strF+data.invitenum+strE;
+							this.otherObj.sc = data.collectnum+strE;
+							this.otherObj.xx = data.messagenum;
+							this.otherObj.qz = data.groupmessagenum;
+						}else {
+							 this.$u.toast(res.message);
+						}
 					})
 				}
 			},
+			toAuth(){
+				this.$u.route('/pages/company/information/information')
+			},
 			toAboutUs(){
-				// this.$u.route('/pages/about/about');
-				this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+				this.$u.route('/pages/aboutUs/aboutUs');
 			},
 			 toLogin(){
 				 this.$u.route('/pages/login/login');

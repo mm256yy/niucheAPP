@@ -27,7 +27,7 @@
 
 <style lang="scss">
 	@import "uview-ui/index.scss";
-	.uni-page-head{
-		background: linear-gradient(55deg, $bg-grad-FE, $bg-grad-FCD);
-	}
+	// .uni-page-head{
+	// 	background: linear-gradient(55deg, $bg-grad-FE, $bg-grad-FCD);
+	// }
 </style>

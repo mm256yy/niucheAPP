@@ -53,6 +53,7 @@
 					registeredPrice: '',
 					legalPerson: '',
 					area: '',
+					businesscard:''
 				},
 				rules: {
 					companyName:requiredRule,
@@ -124,7 +125,6 @@
 				this.form.companyCreateTime = companyDate;
 			},
 			uploadChange(res,index,lists,name){
-				console.log(res.data)
 				let data = res.data;
                  this.form.companyName = data.biz_license_company_name;
 				  this.form.socialCode = data.biz_license_credit_code;
@@ -132,6 +132,7 @@
 				    this.form.registeredPrice = data.biz_license_reg_capital;
 					 this.form.legalPerson = data.biz_license_owner_name;
 					  this.form.area = data.biz_license_address;
+					  this.form.businesscard  = data.imagename;
 			}
 		}
 	}

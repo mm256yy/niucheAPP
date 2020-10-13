@@ -84,7 +84,17 @@ export default {
 	   this.show = false;
     },
 	toNext(){
-		this.$u.route("/pages/company/lease/step/stepCost/stepCost")
+		let that = this;
+		uni.getStorage({
+			key: 'publishType',
+			success: function (res) {
+			 if(res.data === '1') {
+				that.$u.route("/pages/company/lease/step/stepCost/stepCost")
+			 } else {
+				that.$u.route("/pages/company/lease/step/stepResell/stepResell")
+			 }
+			}
+		});
 	}
   }
 }

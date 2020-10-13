@@ -51,7 +51,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				action: '/user/image/BusinessImagedemo',
+				action: '/user/image/carotherphoto',
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],
@@ -63,6 +63,7 @@
 					companyIntroduce:requiredRule
 				},
 				form: {
+					comparylogophoto:'',
 					companyEasyName: '',
 					memberNumber: '',
 					carNum: '',
@@ -81,7 +82,7 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-			
+			this.setPicToken()
 		},
 		methods: {
 			setPicToken(){
@@ -118,9 +119,9 @@
 				this.form.mainBusiness = e;
 			},
 			uploadChange(res,index,lists,name){
-				console.log(res.data)
-				let data = res.data;
-
+               if(res.code === 200) {
+				   this.form.comparylogophoto = res.text;
+			   }
 			},
 			toNext(){
 				this.$refs.uForm.validate(valid=>{

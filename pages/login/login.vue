@@ -125,7 +125,7 @@
 		},
 		methods: {
 			...mapActions([
-				'Login','UUid'
+				'Login','UUid','CurThemeType'
 			]),
 			change(index) {
 				this.current = index;
@@ -224,12 +224,14 @@
 									let userInfo = obj;
 									userInfo.token = res.token;
 									this.Login(userInfo)
-									if(res.userstate === 0){
+									if(res.userstate === 2){
 										this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
 									}
-									if(userInfo.role === '1'){
+									if(res.role === "1"){
 										this.$u.route({url:'/pages/index/index',type:'switchTab'})
+										this.CurThemeType('driver')
 									} else {
+										this.CurThemeType('company')
 										this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 									}
 								}
