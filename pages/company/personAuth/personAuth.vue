@@ -16,18 +16,17 @@
 		</view>
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
-				<u-form-item label="姓名" prop="name"><u-input v-model="form.name" :border="true"/></u-form-item>
+				<u-form-item label="姓名" prop="username"><u-input v-model="form.username" :border="true"/></u-form-item>
 				<u-form-item label="性别" prop="sex">
 				<u-radio-group v-model="form.sex" :active-color="'#6DD99C'" style="text-align: right;">
 					<u-radio name="0" style="margin-left: 10pt;">女</u-radio>
 					<u-radio name="1" style="margin-left: 10pt;">男</u-radio>
 				</u-radio-group>
 				</u-form-item>
-				<u-form-item label="出生日期" prop="brithday"><u-input v-model="form.brithday" :border="true" :disabled="true" @click="show = true" placeholder=""/><u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon></u-form-item>
-				<u-form-item label="身份证号" prop="IDNumber"><u-input maxlength="24" v-model="form.IDNumber" :border="true"/></u-form-item>
+				<u-form-item label="出生日期" prop="birthday"><u-input v-model="form.birthday" :border="true" :disabled="true" @click="show = true" placeholder=""/><u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon></u-form-item>
+				<u-form-item label="身份证号" prop="idcardid"><u-input maxlength="24" v-model="form.idcardid" :border="true"/></u-form-item>
 				<u-form-item label="手机号码" prop="telephone"><u-input type="number" maxlength="11" v-model="form.telephone" :border="true"/></u-form-item>
 				<u-form-item label="输入验证码" prop="identifyCode"><u-input v-model="form.identifyCode" type="number" maxlength="6" :border="true" />
-				<!-- <u-button type="success" size="mini" shape='circle' class="btnFcd" style=";position: absolute;right: 10rpx;">获取验证码</u-button> -->
 				<u-button type="success" size="mini " shape='circle' @click="getCode" style="position: absolute;right: 10rpx;">{{codeTips}}</u-button>
 				</u-form-item>
 			</u-form>
@@ -69,6 +68,7 @@
 </template>
 
 <script>
+	 import {mapGetters,mapActions} from 'vuex'
 	import {phoneRule,codeRule,passwordRule,requiredRule,IDNumberRule} from '@/common/rule.js'
 	export default {
 		data() {
@@ -87,21 +87,20 @@
 				fileList1:[],
 				form: {
 					idcardphoto:'',
-					name: '',
-					brithday: '',
+					username: '',
+					birthday: '',
 					sex: '',
 					telephone:'',
-					IDNumber:'',
+					idcardid:'',
 					identifyCode:'',
 					comparypeoplephoto:''
 				},
-				// rules:rules,
 				rules:{
-					name: requiredRule,
-					brithday: requiredRule,
+					username: requiredRule,
+					birthday: requiredRule,
 					sex: requiredRule,
 					telephone:phoneRule,
-					IDNumber:IDNumberRule,
+					idcardid:IDNumberRule,
 					identifyCode:requiredRule	
 				},
 				show: false,
@@ -113,10 +112,15 @@
 					minute: false,
 					second: false
 				},
+				comparyid:'',
 				codeTips: '',
 				showTips:false,
-				companyFirst:{},
-				companySecond:{}
+			}
+		},
+		onLoad(option) {
+			let comparyid = option.id;
+			if(comparyid){
+				this.comparyid = comparyid;
 			}
 		},
 		onReady() {
@@ -124,6 +128,10 @@
 		},
 		mounted() {
 			this.setPicToken()
+			this.getInfo()
+		},
+		computed:{
+			...mapGetters(['token','telephone','companyFirst','companySecond','companyThree','peopleCard','shengfenzheng'])
 		},
 		methods: {
 			// 获取验证码
@@ -157,35 +165,31 @@
 				this.codeTips = text;
 			},
 			setPicToken(){
-				let that = this;
-				uni.getStorage({
-				    key: 'token',
-				    success: function (res) {
-						let Authorization ='Bearer '+ res.data;
-						that.headerObj.Authorization =Authorization
-				    }
-				});
-				uni.getStorage({
-				    key: 'telephone',
-				    success: function (res) {
-						that.formDataObj.phone =res.data
-				    }
-				});
+				this.headerObj.Authorization = this.token;
+				this.formDataObj.phone = this.phone;
+				this.form = this.companyThree;
+				this.fileList.push(this.shengfenzheng[0])
+				this.fileList1.push(this.peopleCard[0])
 			},
-			getStorage(){
-				let that = this;
-				uni.getStorage({
-				    key: 'companyFirst',
-				    success: function (res) {
-						that.companyFirst =res.data
-				    }
-				});
-				uni.getStorage({
-				    key: 'companySecond',
-				    success: function (res) {
-						that.companySecond =res.data
-				    }
-				});
+			getInfo(){
+				if(this.comparyid){
+					this.$u.api.getCompanyPerson({comparyid:this.comparyid}).then(res => {
+						if(res.code === 200){
+							let data = res.usercomparypeople;
+							this.form.idcardphoto = data.idcardphoto;
+							this.form.comparypeoplephoto = data.comparypeoplephoto;
+							this.form.username = data.username;
+							this.form.sex = data.sex;
+							this.form.birthday = data.birthday;
+							this.form.idcardid = data.idcardid;
+							this.form.telephone = data.telephone;
+							this.form.id = data.id;
+							this.form.comparyid = data.comparyid;
+						 }
+						}).catch(res=>{
+							console.log(res)
+					})
+				}
 			},
 			uploadChange(res,index,lists,name){
                if(res.code === 200) {
@@ -193,17 +197,26 @@
 			   }
 			},
 			toNext(){
-			// this.getStorage();
-			// 	const obj = Object.assign(this.companyFirst,this.companySecond,this.form);
-			// 	console.log(obj)
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
-						this.getStorage();
-						this.saveSubmit()
+						if (this.comparyid){
+							this.personSave()
+						} else {
+						this.saveSubmit()	
+					  }
 					} else {
 						
 					}
 				})
+			},
+			personSave(){
+				this.$u.api.editCompanyPerson(this.form).then(res => {
+						if(res.code === '200'){
+							this.showTips = true
+						}
+					}).catch(res=>{
+						console.log(res)
+					})
 			},
 			saveSubmit(){
 				let obj = {businesscard:'',comparyname:'',societyid:'',chuangjiantime:'',registeredcapital:'',faname:'',area:'',
@@ -224,29 +237,50 @@
 				obj.comparytext = this.companySecond.companyIntroduce;//公司介绍
 				obj.idcardphoto = this.form.idcardphoto; //身份证照片
 				obj.comparypeoplephoto = this.form.comparypeoplephoto; //联系人照片
-				obj.username = this.form.name; //姓名
+				obj.username = this.form.username; //姓名
 				obj.sex = this.form.sex;//性别
-				obj.birthday = this.form.brithday; //出生日期
-				obj.idcardid = this.form.IDNumber;//身份证号
+				obj.birthday = this.form.birthday; //出生日期
+				obj.idcardid = this.form.idcardid;//身份证号
 			    obj.telephone = this.form.telephone;//手机号
 				obj.identifyCode = this.form.identifyCode;
-				
-				this.$u.api.saveAuth(obj).then(res => {
-						if(res.code === '200'){
-                            this.showTips = true
-						}
-					}).catch(res=>{
-						console.log(res)
-					})
+
+				if (this.form.userid){
+					obj.userid = this.form.userid;
+					this.$u.api.saveAuthAll(obj).then(res => {
+							if(res.code === '200'){
+					            this.showTips = true
+							}
+						}).catch(res=>{
+							console.log(res)
+						})
+				} else {
+					uni.getStorage({
+					    key: 'telephone',
+					    success: function (res) {
+							 obj.userid = res.data;
+					    }
+					});
+					this.$u.api.saveAuth(obj).then(res => {
+							if(res.code === '200'){
+					            this.showTips = true
+							}
+						}).catch(res=>{
+							console.log(res)
+						})
+				}
 			},
 			confirm(){
 				uni.removeStorageSync('companyFirst');
 				uni.removeStorageSync('companySecond');
+				uni.removeStorageSync('companyThree');
+				uni.removeStorageSync('peopleCard');
+				uni.removeStorageSync('shengfenzheng');
+				uni.removeStorageSync('comparyLogo');
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			dataChange(obj){
-				let brithday = obj.year+"-"+obj.month+"-"+obj.day;
-				this.form.brithday = brithday;
+				let birthday = obj.year+"-"+obj.month+"-"+obj.day;
+				this.form.birthday = birthday;
 			},
 		}
 	}

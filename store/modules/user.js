@@ -36,11 +36,11 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-	  console.log(userInfo)
+	 let Authorization ='Bearer '+ userInfo.token;
 	 uni.setStorageSync('telephone', userInfo.telephone);
-	 uni.setStorageSync('token', userInfo.token);
+	 uni.setStorageSync('token', Authorization);
 	 uni.setStorageSync('role', userInfo.role);
-	 commit('SET_TOKEN', userInfo.token);
+	 commit('SET_TOKEN', Authorization);
 	 commit('SET_TELEPHONE', userInfo.telephone);
 	 commit('SET_ROLES', userInfo.role);
     },

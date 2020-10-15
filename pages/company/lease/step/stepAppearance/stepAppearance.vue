@@ -3,7 +3,8 @@
 		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆外观" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="view-content">
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
+			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' index="onephoto" upload-text=""
+			 :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;">
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					<view class="slot-tips">
@@ -25,43 +26,21 @@
 			</view>
 		  </view>
 		</view>
-		<view class="view-content">
+		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
+			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' :index="item.resName" upload-text="" 
+			:file-list="item.fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					<view class="slot-tips">
-						 <view style="color: #f00;">此图必拍，否则无法进入下一步！</view>
-						<view>请上传车辆右前方或左前方45°照片</view>
+						 <view style="color:#f00;" v-if="index ===0 ">此图必拍，否则无法进入下一步！</view>
+						<view >{{item.tipText}}</view>
 					</view>
 				</view>
 			</u-upload>
 		  </view>
 		</view>
-		<view class="view-content">
-		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
-				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
-					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
-					<view class="slot-tips">
-						 <view>请上传车辆正前方照片</view>
-					</view>
-				</view>
-			</u-upload>
-		  </view>
-		</view>
-		<view class="view-content">
-		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
-				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
-					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
-					<view class="slot-tips">
-						 <view>请上传车辆侧面照片</view>
-					</view>
-				</view>
-			</u-upload>
-		  </view>
-		</view>
+
 		<view style="text-align: center; padding: 5pt 20pt;margin-top: 10pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
 		</view>
@@ -69,20 +48,43 @@
 </template>
 
 <script>
+	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				action:'',
+				action: '/user/image/carotherphoto',
+				headerObj:{Authorization:''},
+				formDataObj:{phone:''},
+				uploadList:[
+					{fileList:[],tipText:'请上传车辆右前方或左前方45°照片',resName:'twophoto'},
+					{fileList:[],tipText:'请上传车辆正前方照片',resName:'threephoto',},
+					{fileList:[],tipText:'请上传车辆侧面照片',resName:'fourphoto'},
+				],
+				form:{onephoto:'',twophoto:'',threephoto:'',fourphoto:'',},
 				fileList:[]
 			}
 		},
+		computed:{
+			...mapGetters(['carPubFour'])
+		},
 		methods: {
+			  ...mapActions(['CARPUBFOUR']),
+			uploadChange(data, index, lists, name){
+				this.form[name] = res.text;
+				console.log(data)
+				console.log(name)
+			},
+			setForm(){
+					this.CARPUBFOUR(this.form) 
+			},
 			toNext(){
-				this.$u.route("/pages/company/lease/step/stepOther/stepOther")
+				this.setForm()
+				this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
 			}
+			
 		}
 	}
 </script>

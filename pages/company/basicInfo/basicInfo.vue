@@ -40,6 +40,7 @@
 </template>
 
 <script>
+	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule,ruleMainBusiness} from '@/common/rule.js'
 	export default {
 		data() {
@@ -70,6 +71,7 @@
 					mainBusiness:[],
 					companyIntroduce:''
 				},
+				comparyid:'',
 				checkboxList: [
 							{name: '网约车',checked: false,disabled: false},{name: '出租车',checked: false,disabled: false},{name: '长短组',checked: false,disabled: false},
 							{name: '汽车生产',checked: false,disabled: false},{name: '车辆销售',checked: false,disabled: false},{name: '维修与保养',checked: false,disabled: false},
@@ -81,39 +83,42 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
+		onLoad(option) {
+			let comparyid = option.id;
+			if(comparyid){
+				this.comparyid = comparyid;
+			}
+		},
 		mounted() {
 			this.setPicToken()
+			this.getInfo()
 		},
-		methods: {
+	computed:{
+		...mapGetters(['token','telephone','companySecond','comparyLogo'])
+	},
+	methods: {
+		...mapActions(['COMPANYSECOND']),
+			getInfo(){
+				if(this.comparyid){
+					this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
+						if(res.code === 200){
+							let data = res.usercomparypeople;
+						 }
+						}).catch(res=>{
+							console.log(res)
+					})
+				}
+			},
 			setPicToken(){
-				let that = this;
-				uni.getStorage({
-				    key: 'token',
-				    success: function (res) {
-						let Authorization ='Bearer '+ res.data;
-						that.headerObj.Authorization =Authorization
-				    }
-				});
-				uni.getStorage({
-				    key: 'telephone',
-				    success: function (res) {
-						that.formDataObj.phone =res.data
-				    }
-				});
+				this.headerObj.Authorization = this.token;
+				this.formDataObj.phone = this.phone;
+				this.form = this.companySecond;
+				this.fileList.push(this.comparyLogo[0])
 			},
 			setForm(){
-				let that = this;
 				let data = this.form;
-				uni.setStorage({
-					key: 'companySecond',
-					data:data ,
-					success: function () {
-						that.$u.route("/pages/company/personAuth/personAuth")
-					}
-				});
-			},
-			toPage(){
-				
+				this.COMPANYSECOND(data)
+				this.$u.route("/pages/company/personAuth/personAuth")
 			},
 			radioGroupChange(e) {
 				this.form.mainBusiness = e;
@@ -124,6 +129,7 @@
 			   }
 			},
 			toNext(){
+				console.log(this.fileList)
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
                         this.setForm()

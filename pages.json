@@ -191,6 +191,12 @@
 				"navigationStyle": "custom"
 			}
         }
+        ,{//公司店铺
+            "path" : "pages/company/shop/shop",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",

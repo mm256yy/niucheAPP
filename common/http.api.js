@@ -17,9 +17,22 @@ const install  = (Vue, vm) => {
 	const saveAuth =  (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyAuthentication', params);
 	//企业认证修改保存
 	const editCompany = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyTextUpdateByid', params)
+	//查询企业联系人信息
+	const getCompanyPerson =  (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparySelectPeopleByComparyid', params);
+	//修改企业联系人信息
+	const editCompanyPerson = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyUpdatePeopleByComparyid', params)
+	//查询企业认证信息
+	const getCompanyAll =  (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyAllByComparyid', params);
+	//企业认证all
+	const saveAuthAll =  (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyAllUpdateByComparyid', params);
+	
 	//user/image/carotherphoto
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		saveAuthAll,
+		getCompanyAll,
+		editCompanyPerson,
+		getCompanyPerson,
 		getPubSendMsg,
 		saveAuth,
 		editCompany,

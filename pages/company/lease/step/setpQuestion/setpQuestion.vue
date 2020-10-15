@@ -37,7 +37,7 @@
 			</view>
 		</view>
 		<view class="" style="height: 40pt;"></view>
-		<view class="fixed-btn">
+		  <view class="fixed-btn">
 			<view class=" btn-inline">
 			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">添加新问题</u-button>
 			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">完成</u-button>	

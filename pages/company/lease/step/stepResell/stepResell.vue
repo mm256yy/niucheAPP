@@ -2,18 +2,18 @@
     <view>
 		<u-navbar back-text="返回"  back-icon-size="0" title="卖车价格" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" >
-		   <view class="zlcontent-mid price-list" v-for="(item,index) in priceList" :key='index'>
+		   <view class="zlcontent-mid price-list" v-for="(item,index) in sellCarPrice" :key='index'>
 			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
 			   <view>
 				<u-form :model="item" label-width="130">
 				 <u-form-item label="起售量">
-					  <u-input v-model="item.startVal" type="number" @input="startValChange(index)" :clearable="false" :border="true" placeholder="请输入"/>
+					  <u-input v-model="item.shoplow" type="number" @input="startValChange(index)" :clearable="false" :border="true" placeholder="请输入"/>
 					  <text style="padding: 0 10pt;">至</text>
-					  <u-input v-model="item.endVal" type="number" @input="endValChange(index)" :clearable="false" :border="true" placeholder="请输入"/>
+					  <u-input v-model="item.shophigh" type="number" @input="endValChange(index)" :clearable="false" :border="true" placeholder="请输入"/>
 					  <text style="padding-left: 15pt;">台</text>
 				 </u-form-item>
 				 <u-form-item label="租金">
-				 	 <u-input v-model="item.text" type="number" :clearable="false" :border="true" placeholder="请输入"/>
+				 	 <u-input v-model="item.packprice" type="number" :clearable="false" :border="true" placeholder="请输入"/>
 					 <text style="position: absolute;right: 10px;">元/台</text>
 				 </u-form-item>
 				</u-form>	
@@ -23,7 +23,6 @@
 		   	<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加价格</text>
 		   </view>
 	    </view>
-		
 		<view style="text-align: center; padding: 26pt 20pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
 		</view>
@@ -32,7 +31,7 @@
 
 <script>
 
-
+import {mapGetters,mapActions} from 'vuex'
 export default {
   data(){
 	return {
@@ -40,36 +39,42 @@ export default {
 			'color':'#ffffff'
 		},
 		show:false,
-		priceList:[
-		{
-				startVal:'',endVal:'',text:''
+		sellCarPrice:[{
+				shoplow:'',shophigh:'',packprice:''
 			}
 		],
 		
 	}  
   },
+  computed:{
+  	...mapGetters(['carPubThree'])
+  },
   methods: {
+	  ...mapActions(['CARPUBTHREE']),
 	 addPriceObj(){
-		this.priceList.push({startVal:'',endVal:'',text:''}) 
+		this.sellCarPrice.push({
+				shoplow:'',shophigh:'',packprice:''
+			}) 
 	 },
 	 startValChange(index){
-		 // let obj = this.priceList[index];
+		 // let obj = this.sellCarPrice[index];
 		 // let startV = Number(obj.startVal);
 		 // let endV = Number(obj.endVal)
 		 // if ( startV > endV && endV >0){
-		 //    this.$set(this.priceList,index,{startVal:endV-1,endVal:endV,text:obj.text})
+		 //    this.$set(this.sellCarPrice,index,{startVal:endV-1,endVal:endV,text:obj.text})
 		 // }
 	 },
 	 endValChange(index){
-		// let obj = this.priceList[index];
+		// let obj = this.sellCarPrice[index];
 		// let startV = Number(obj.startVal);
 		// let endV = Number(obj.endVal)
 		// if ( endV < startV && startV >0){
-		//    this.$set(this.priceList,index,{startVal:startV,endVal:startV+1,text:obj.text})
+		//    this.$set(this.sellCarPrice,index,{startVal:startV,endVal:startV+1,text:obj.text})
 		// }
 	 },
 	toNext(){
-		console.log(this.priceList)
+		console.log(this.sellCarPrice)
+		this.CARPUBTHREE(this.sellCarPrice)
 		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
 	}
   }

@@ -19,13 +19,14 @@
 		  	<view class="">* 请注意，车辆所有人输入要与证件图片保持一致。</view>
 		  	<view class="">不一致会致使审核不通过，信息不能发布。</view>
 			<view class="" style="margin-top: 15pt;">
-				 <u-input v-model="role" style="background: #FFFFFF;" placeholder="请输入《行驶证》中的车辆所有人" :border="true"/>
+				 <u-input v-model="form.cardrivepeople" style="background: #FFFFFF;" placeholder="请输入《行驶证》中的车辆所有人" :border="true"/>
 			</view>
 		  </view>
 		</view>
 		<view class="view-content">
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
+			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" index="cardivephoto"
+			 :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					<view class="slot-tips">
@@ -38,10 +39,11 @@
 		</view>
 		<view class="view-content" v-show="type!== '1'">
 			<view class="" style="margin: 15pt 0;">
-				 <u-input v-model="role" style="background: #FFFFFF;" placeholder="请输入《运输证》中的车辆所有人" :border="true"/>
+				 <u-input v-model="form.taxipeople" style="background: #FFFFFF;" placeholder="请输入《运输证》中的车辆所有人" :border="true"/>
 			</view>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
+			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' index="taxiphoto"
+			 upload-text="" :file-list="fileList1" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					<view class="slot-tips">
@@ -58,19 +60,31 @@
 </template>
 
 <script>
+	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
-				backTextStyle:{
-					'color':'#ffffff'
-				},
+				backTextStyle:{'color':'#ffffff'},
 				type:2,
-				role:'',
-				action:'',
-				fileList:[]
+				action: '/user/image/carotherphoto',
+				headerObj:{Authorization:''},
+				formDataObj:{phone:''},
+				fileList:[],
+				fileList1:[],
+				form:{cardivephoto:'',cardrivepeople:'',taxiphoto:'',taxipeople:''},
 			}
 		},
+		computed:{
+			...mapGetters(['carPubSeven'])
+		},
 		methods: {
+			  ...mapActions(['CARPUBSEVEN']),
+			  uploadChange(data, index, lists, name){
+				this.form[name] = res.text;
+			  },
+			  setForm(){
+					this.CARPUBSEVEN(this.form) 
+			  },
 			toNext(){
 				this.$u.route("/pages/company/lease/step/stepNumber/stepNumber")
 			}

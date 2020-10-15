@@ -37,18 +37,35 @@
 </template>
 
 <script>
+	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				action:'',
-				fileList:[]
+				action: '/user/image/carotherphoto',
+				headerObj:{Authorization:''},
+				formDataObj:{phone:''},
+				fileList:[],
+				form:{elsephoto:''},
 			}
 		},
+		computed:{
+			...mapGetters(['carPubSix'])
+		},
 		methods: {
+			  ...mapActions(['CARPUBSIX']),
+			  uploadChange(data, index, lists, name){
+				this.form.elsephoto = res.text;
+				console.log(data)
+				console.log(name)
+			  },
+			  setForm(){
+					this.CARPUBSIX(this.form) 
+			  },
 			toNext(){
+				this.setForm()
 				this.$u.route("/pages/company/lease/step/stepCards/stepCards")
 			}
 		}

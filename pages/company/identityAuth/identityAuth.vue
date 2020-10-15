@@ -36,6 +36,7 @@
 </template>
 
 <script>
+	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
 	export default {
 		data() {
@@ -72,6 +73,7 @@
 					minute: false,
 					second: false
 				},
+				comparyid:'',
 				errorType:[
 					'message'
 				]
@@ -80,38 +82,112 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
+		onLoad(option) {
+			let comparyid = option.id;
+			if(comparyid){
+				this.comparyid = comparyid;
+			}
+		},
 		mounted() {
 	      this.setPicToken()
+		  this.getInfo()
+		},
+		computed:{
+			...mapGetters(['token','telephone'])
 		},
 		methods: {
+			...mapActions(['COMPANYFIRST','COMPANYSECOND','COMPANYTHREE','COMPARYLOGO','PEOPLECARD','SHENGFENZHENG']),
+			getInfo(){
+				if(this.comparyid){
+					this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
+						if(res.code === 200){
+							let data = res.comparyAuthenticationVo;
+							this.form.companyName = data.comparyname;
+							this.form.businesscard = data.businesscard;
+							this.form.socialCode = data.societyid;
+							this.form.companyCreateTime = data.chuangjiantime;
+							this.form.registeredPrice = data.registeredcapital;
+							this.form.legalPerson = data.faname;
+							this.form.area = data.area;
+							let obj = {
+								comparylogophoto:data.comparylogophoto,
+								companyEasyName: data.comparynickname,
+								memberNumber:data.comparypeoplenum,
+								carNum: data.comparycarnum,
+								mainBusiness:data.mainbusiness,
+								companyIntroduce:data.comparytext
+							};
+							let objF = {
+								userid:data.userid,
+								idcardphoto:data.idcardphoto,
+								username: data.username,
+								birthday: data.birthday,
+								sex: data.sex,
+								telephone:data.telephone,
+								idcardid:data.idcardid,
+								identifyCode:'',
+								comparypeoplephoto:data.comparypeoplephoto
+							};
+							this.COMPANYSECOND(obj)
+							// uni.setStorage({
+							// 	key: 'companySecond',
+							// 	data:obj ,
+							// 	success: function () {}
+							// });
+							this.COMPANYTHREE(objF)
+							// uni.setStorage({
+							// 	key: 'companyThree',
+							// 	data:objF ,
+							// 	success: function () {}
+							// });
+							let photo = data.photolist;
+							if(photo.comparyLogo){
+								let comparyLogo = [{url:photo.comparyLogo}]
+								this.COMPARYLOGO(comparyLogo)
+								// uni.setStorage({
+								// 	key: 'comparyLogo',
+								// 	data:comparyLogo ,
+								// 	success: function () {}
+								// });
+							}
+							if(photo.peopleCard){
+								let peopleCard = [{url:photo.peopleCard}]
+								this.PEOPLECARD(peopleCard)
+								// uni.setStorage({
+								// 	key: 'peopleCard',
+								// 	data:peopleCard ,
+								// 	success: function () {}
+								// });
+							}
+							if(photo.shengfenzheng){
+								let shengfenzheng = [{url:photo.shengfenzheng}]
+								this.SHENGFENZHENG(shengfenzheng)
+								// uni.setStorage({
+								// 	key: 'shengfenzheng',
+								// 	data:shengfenzheng ,
+								// 	success: function () {}
+								// });
+							}
+							if(photo.yingyezhizhao){
+								this.fileList.push({url:photo.yingyezhizhao})
+							}
+						 }
+						}).catch(res=>{
+							console.log(res)
+					})
+				}
+			},
 			setPicToken(){
-				let that = this;
-				uni.getStorage({
-				    key: 'token',
-				    success: function (res) {
-						let Authorization ='Bearer '+ res.data;
-						that.headerObj.Authorization =Authorization
-				    }
-				});
-				uni.getStorage({
-				    key: 'telephone',
-				    success: function (res) {
-						that.formDataObj.phone =res.data
-				    }
-				});
+				this.headerObj.Authorization = this.token;
+				this.formDataObj.phone = this.phone;
 			},
 			setForm(){
-				let that = this;
-				let data = this.form;
-				uni.setStorage({
-					key: 'companyFirst',
-					data:data ,
-					success: function () {
-						that.$u.route("/pages/company/basicInfo/basicInfo")
-					}
-				});
+				 let data = this.form;
+				 this.COMPANYFIRST(data)
+				 this.$u.route("/pages/company/basicInfo/basicInfo")
 			},
 			toNext(){
+				console.log(this.fileList)
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
 						this.setForm()

@@ -4,21 +4,21 @@
 		<view class="zlcontent" >
 		   <view class="zlcontent-mid" style="margin: 20pt 0;">
 			   <u-form-item label="押金">
-			   	 <u-input v-model="deposit" :clearable="false" class="input-radius" :border="true" placeholder="请输入"/><text style="position: absolute;right: 10px;">元</text>
+			   	 <u-input v-model="form.yamoney" :clearable="false" class="input-radius" :border="true" placeholder="请输入"/><text style="position: absolute;right: 10px;">元</text>
 			   </u-form-item>
 			 <view style="font-size:10pt;">*“拼租价”为2人拼单（1人1辆车）时的价格。建议拼单时给予一定 </view>
 			 <view style="font-size:10pt;">优惠有利于成交。拼单时长为发起后的3天。3天后未拼满则失败。</view>
 		   </view>
 		   
-		   <view class="zlcontent-mid price-list" v-for="(item,index) in priceList" :key='index'>
+		   <view class="zlcontent-mid price-list" v-for="(item,index) in form.rentCarPrice" :key='index'>
 			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
 			   <view>
 				<u-form :model="item" label-width="150">
 				 <u-form-item label="租赁周期">
-				 	<u-input v-model="item.name" class="input-radius" type="select" :border="true" placeholder="请选择租赁周期" @click="showDialog(index)" />
+				 	<u-input v-model="item.RentTime" class="input-radius" type="select" :border="true" placeholder="请选择租赁周期" @click="showDialog(index)" />
 				 </u-form-item>
 				 <u-form-item label="租金">
-				 	 <u-input v-model="item.text" type="number" :clearable="false" :border="true" placeholder="请输入"/><text style="position: absolute;right: 10px;">元/月</text>
+				 	 <u-input v-model="item.Rentprice" type="number" :clearable="false" :border="true" placeholder="请输入"/><text style="position: absolute;right: 10px;">元/月</text>
 				 </u-form-item>
 				</u-form>	
 			   </view>
@@ -37,7 +37,7 @@
 
 <script>
 
-
+import {mapGetters,mapActions} from 'vuex'
 export default {
   data(){
 	return {
@@ -47,32 +47,38 @@ export default {
 		list: [
 			{value: '1',text: '1个月'},{value: '2',text: '3个月'}, {value: '3',text: '6个月'}, {value: '4',text: '12个月'}
 		],
-		priceList:[
-		
-		],
+		form:{
+		  yamoney:'',
+		  rentCarPrice:[],	  
+		},
 		priceIndex:0,
 		show:false,
 		deposit:''
 		
 	}  
   },
+  computed:{
+  	...mapGetters(['carPubThree'])
+  },
   methods: {
+	  ...mapActions(['CARPUBTHREE']),
 	 actionSheetCallback(index) {
 		let value = this.list[index].text;
-		this.priceList[this.priceIndex].name = value
+		this.form.rentCarPrice[this.priceIndex].RentTime = value
 	 },
 	 showDialog(index){
 		 this.priceIndex = index;
 		 this.show = true;
 	 },
 	 addPriceObj(){
-		this.priceList.push({
-				name:'',text:''
-			}) 
+		this.form.rentCarPrice.push({RentTime:'',Rentprice:''}) 
 	 },
-	toNext(){
-		console.log(this.priceList)
-		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
+	 setForm(){
+		this.CARPUBTHREE(this.form) 
+	 },
+	 toNext(){
+		this.setForm()
+		this.$u.route("/pages/company/lease/step/stepAppearance/stepAppearance")
 	}
   }
 }

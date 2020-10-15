@@ -153,6 +153,7 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -176,12 +177,15 @@
 				}
 			}
 		},
-		mounted() {
-		  this.getUser()
+		computed:{
+			...mapGetters(['telephone'])
 		},
-		//  onShow(){
-		// 	this.getUser()  
-		// },
+		mounted() {
+		  // this.getUser()
+		},
+		 onShow(){
+			this.getUser()  
+		},
 		filters: {
 		  state: function (value) {
 		    if (!value) return ''
@@ -200,13 +204,7 @@
 		},
 		methods: {
 			getUser(){
-				let phone = '';
-				uni.getStorage({
-				    key: 'telephone',
-				    success: function (res) {
-						 phone = res.data;
-				    }
-				});
+				let phone = this.telephone;
 				if (phone) {
 					this.$u.api.getUserInfo({telephone:phone}).then(res=>{
 						if(res.code === 200){
@@ -236,14 +234,14 @@
 			toAboutUs(){
 				this.$u.route('/pages/aboutUs/aboutUs');
 			},
-			 toLogin(){
+			toLogin(){
 				 this.$u.route('/pages/login/login');
-			 },
-			  toPub(index){
+			},
+			toPub(index){
 				  this.$u.route('/pages/company/myPublish/myPublish', {
 				  	index: index
 				  });
-			  }
+			}
 		}
 	}
 </script>

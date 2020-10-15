@@ -13,12 +13,16 @@
 		  		基本参数
 		  	</view>
 			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
-				<u-form-item label="长*宽*高" prop="name"><u-input v-model="form.name" :clearable="false" :border="true" class="form_input"/><text class="middle-content-label">mm</text></u-form-item>
-				<u-form-item label="行李箱容积" prop="name"><u-input v-model="form.name" :clearable="false"  maxlength="30" :border="true" class="form_input"/><text class="middle-content-label">L</text></u-form-item>
-				<u-form-item label="轴距" prop="name"><u-input v-model="form.name" type="number" :clearable="false" maxlength="30" :border="true" class="form_input"/><text class="middle-content-label">mm</text></u-form-item>
-				<u-form-item label="排量" prop="name"><u-input v-model="form.name" type="number" :clearable="false" maxlength="30" :border="true" class="form_input"/><text class="middle-content-label">L</text></u-form-item>
-			    <u-form-item label="环 保 标 准 " prop="name">
-			    	<u-input v-model="form.name" class="form_input" type="select" :border="true" placeholder="请选择" @click="show = true" />
+				<u-form-item label="长*宽*高" prop="name"><u-input v-model="form.specification" :clearable="false" :border="true" class="form_input"/>
+				<text class="middle-content-label">mm</text></u-form-item>
+				<u-form-item label="行李箱容积"><u-input v-model="form.trunk" :clearable="false"  maxlength="30" :border="true" class="form_input"/>
+				<text class="middle-content-label">L</text></u-form-item>
+				<u-form-item label="轴距"><u-input v-model="form.wheel" type="number" :clearable="false" maxlength="30" :border="true" class="form_input"/>
+				<text class="middle-content-label">mm</text></u-form-item>
+				<u-form-item label="排量"><u-input v-model="form.displacement" type="number" :clearable="false" maxlength="30" :border="true"
+				 class="form_input"/><text class="middle-content-label">L</text></u-form-item>
+			    <u-form-item label="环 保 标 准 ">
+			    	<u-input v-model="form.environmental" class="form_input" type="select" :border="true" placeholder="请选择" @click="show = true" />
 			    	<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
 			    </u-form-item>
 			</u-form>
@@ -27,32 +31,30 @@
 		<view @click="showDialog" style="padding: 20pt;">
 			<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加其他参数</text>
 		</view>
-		<view class="view-content" v-show="otherList.length>0">
+		<view class="view-content" v-show="form.ElseParamter.length>0">
 		  <view style="margin-top: 20pt;font-size: 14pt;padding-left: 5pt;">
 		  	<view class="">
 		  		其他参数
 		  	</view>
-			<u-form-item :label="item.label" prop="name" label-width="180" v-for="(item,index) in otherList" :key='index'>
-				<u-input v-model="item.model" :clearable="false" maxlength="30" :border="true" class="form_input"/>
-				<text class="middle-content-label">{{item.text}}</text>
+			<u-form-item :label="item.paramtername" prop="name" label-width="180" v-for="(item,index) in form.ElseParamter" :key='index'>
+				<u-input v-model="item.paramtertext" :clearable="false" maxlength="30" :border="true" class="form_input"/>
+				<text class="middle-content-label">{{item.paramterunit}}</text>
 			</u-form-item>
 		  </view>
 		</view>
 		<u-modal v-model="dialogShow" @confirm="confirm" ref="uModal" title="其他参数" :async-close="true" :show-cancel-button="true" confirm-text="添加" cancel-text="放弃">
 			<view class="slot-content" style="padding:5pt 15pt;">
-				<u-input v-model="addForm.label" :border="true" placeholder="请输入参数名称"/>
+				<u-input v-model="addForm.paramtername" :border="true" placeholder="请输入参数名称"/>
 			</view>
 			<view class="slot-content" style="padding:5pt 15pt;">
-				<u-input v-model="addForm.model" :border="true" placeholder="请输入参数内容"/>
+				<u-input v-model="addForm.paramtertext" :border="true" placeholder="请输入参数内容"/>
 			</view>
 			<view class="slot-content" style="padding:5pt 15pt;">
-				<u-input v-model="addForm.text" :border="true" placeholder="请输入参数单位"/>
+				<u-input v-model="addForm.paramterunit" :border="true" placeholder="请输入参数单位"/>
 			</view>
 		</u-modal>
 		<u-row>
-			<u-col span="6">
-				<u-button type="success" class="btn-agree" @click="toNext">预览</u-button>
-			</u-col><u-col span="6">
+			<u-col span="12">
 				<u-button type="success" class="btn-agree" @click="toNext">提交审核</u-button>
 			</u-col>
 		</u-row>
@@ -66,6 +68,7 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -73,28 +76,43 @@
 					'color':'#ffffff'
 				},
 				form:{
-					name:''
+					specification:'',
+					trunk:'',
+					wheel:'',
+					displacement:'',
+					environmental:'',
+					ElseParamter:[]
+					
 				},
 				show:false,
 				showTips:false,
 				dialogShow:false,
 				addForm:{
-					label:'',
-					model:'',
-					text:''
+					paramtername:'',
+					paramtertext:'',
+					paramterunit:''
 				},
-				otherList:[],
                 list:[
 					{value: '1',text: '国4'},{value: '2',text: '国5'},{value: '3',text: '国6'},{value: '4',text: '其他'},
 				]
 			}
 		},
+		computed:{
+			...mapGetters(['carPubFirst','carPubSecond','carPubThree','carPubFour','carPubFive','carPubSix','carPubSeven','carPubEight',])
+		},
 		methods: {
+			setForm(){
+				let obj = Object.assign(this.carPubFirst, this.carPubSecond,this.carPubThree,this.carPubFour,
+				this.carPubFive,this.carPubSix,this.carPubSeven,this.form);
+				console.log(obj)
+				this.showTips = true;
+				// this.$u.route("/pages/company/lease/step/stepCards/stepCards")	
+			},
 			actionSheetCallback(index) {
-				this.form.name = this.list[index].text;
+				this.form.environmental = this.list[index].text;
 			},
 			showDialog(){
-				this.addForm = {label:'',model:'',text:''};
+				this.addForm = {paramtername:'',paramtertext:'',paramterunit:''};
 				this.dialogShow = true
 			},
 			tipsConfirm(){
@@ -104,20 +122,18 @@
 				this.$u.route('/pages/company/myPublish/myPublish', {index: 1});
 			},
 			confirm(){
-				if(this.addForm === ''){
+				if(this.addForm.paramtername === '' || this.addForm.paramtertext === '' || this.addForm.paramterunit === ''){
 				   this.$u.toast('请输入新内容')
 				   setTimeout(() => {
-				  this.$refs.uModal.clearLoading();
+				     this.$refs.uModal.clearLoading();
 					}, 100)
 				  return false
 				}
-				this.otherList.push(this.addForm)
+				this.form.ElseParamter.push(this.addForm)
 				this.dialogShow = false
 			},
 			toNext(){
-				console.log(this.otherList)
-				this.showTips = true;
-				// this.$u.route("/pages/company/lease/step/stepCards/stepCards")
+				this.setForm()
 			}
 		}
 	}

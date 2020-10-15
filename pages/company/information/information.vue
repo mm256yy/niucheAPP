@@ -12,9 +12,8 @@
          <view style="padding: 0 20pt; ">
 			<u-row style="padding: 8pt;background: #FFFFFF;">
 				<u-col span="4">企业身份认证</u-col>
-				<u-col span="8" class="auth-col" v-if="authFlag"> {{checkstate | filters}}</u-col>
+				<u-col span="8" class="auth-col" v-if="authFlag"> {{checkstate| state}}</u-col>
 				<u-col span="8" class="auth-col" @click="toAuth" v-else>去认证>></u-col>
-				
 			</u-row>
          </view>
 		 <view class="content">
@@ -46,7 +45,7 @@
 					</u-col>
 			  	</u-row>
 				<view style="padding: 8pt 0;" v-show="!form.mainBusinessFlag">
-	                <u-tag text="纯电动" type="success" mode="dark" class="tag-style"/>
+	                <u-tag :text="item" type="success" mode="dark" class="tag-style" v-for="(item,index) in form.mainBusiness" :key="index"/>
 			  	</view>
 				<view style="padding: 8pt 0;" v-show="form.mainBusinessFlag">
 					<u-checkbox-group active-color="#6DD99C" width="50%"  @change="radioGroupChange" shape="circle">
@@ -92,6 +91,7 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -128,6 +128,9 @@
 				comnpanySrc: '../../static/touxx.png',
 			}
 		},
+		computed:{
+			...mapGetters(['telephone'])
+		},
 		filters: {
 		  state: function (value) {
 		    if (!value) return ''
@@ -155,13 +158,7 @@
 				this.$u.route('/pages/company/personAuth/personAuth',{id:this.form.comparyid})
 			},
 			getCompanyInfo(){
-				let phone = '';
-					uni.getStorage({
-					    key: 'telephone',
-					    success: function (res) {
-							 phone = res.data;
-					    }
-					});
+				let phone = this.telephone;
 					if (phone) {
 						this.$u.api.getCompanyInfo({telephone:phone}).then(res=>{
 							if(res.code === 200){
@@ -181,6 +178,9 @@
 								this.form.name = data.username;
 								this.form.phone = data.telephone;
 								let list = data.mainbusiness;
+								if(list === null){
+									return
+								}
 								list.forEach(item=>{
 									this.checkboxList.map(val => {
 										if(val.name === item){

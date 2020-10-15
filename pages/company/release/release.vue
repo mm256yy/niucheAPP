@@ -53,6 +53,7 @@
 </template>
 
 <script>
+	import {mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -64,30 +65,20 @@
 				 zlzmsrc:'../../../static/iconfontzhizuobiaozhun023120@2x.png',
 				 qgxxsrc:'../../../static/xuqiuguanli@2x.png',
 				 zpxxsrc:'../../../static/chezhuzhaomu@2x.png',
-				 linesrc:'../../../static/矩形4@2x.png'
+				 linesrc:'../../../static/juxing4@2x.png'
 			}
 		},
 		methods: {
+			...mapActions(['CARPUBTYPE']),
 			toPage(type){
-				let that = this;
 				if(type ===1 ){
-					uni.setStorage({
-						key: 'publishType',
-						data:1 ,
-						success: function () {
-							that.$u.route('/pages/company/lease/lease',{type:1})
-						}
-					});
+				  this.CARPUBTYPE(1)
+				 this.$u.route('/pages/company/lease/lease')
 				} else if(type === 2){
 					this.$u.route('/pages/company/recruit/recruit')
 				}else if(type === 3){
-					uni.setStorage({
-						key: 'publishType',
-						data:3 ,
-						success: function () {
-							that.$u.route('/pages/company/lease/lease',{type:3})
-						}
-					});
+					this.CARPUBTYPE(3)
+					this.$u.route('/pages/company/lease/lease')
 				}else{
 					this.$u.route('/pages/company/demand/demand')
 				}
