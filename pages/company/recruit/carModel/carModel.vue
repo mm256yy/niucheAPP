@@ -15,8 +15,9 @@
 					</view>
 				</view>
 			</u-card>
-			<view @click="toNext" style="padding:10pt 10pt;">
-				<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加新车辆</text>
+			<view @click="toNewCar" style="padding:10pt 10pt;">
+				<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon>
+				<text style="vertical-align: top;">添加新车辆</text>
 			</view>
 	    </view>
 		<view class="fixed-btn">
@@ -24,9 +25,6 @@
 			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">完成</u-button>
 			</view>
 		</view>
-		<u-popup v-model="importShow">
-			<view>出淤泥而不染，濯清涟而不妖</view>
-		</u-popup>
      </view>
 </template>
 
@@ -55,8 +53,8 @@ export default {
 	handleClick(){
 		this.importShow = true;
 	},
-	toNext(){
-		
+	toNewCar(){
+		this.$u.route('/pages/company/recruit/carOther/carOther')
 	}
   }
 }

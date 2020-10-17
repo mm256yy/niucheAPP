@@ -191,7 +191,7 @@
 				"navigationStyle": "custom"
 			}
         }
-        ,{
+        ,{//公用
             "path" : "pages/company/lease/carList/carList",
             "style" :                                                                                    
             {

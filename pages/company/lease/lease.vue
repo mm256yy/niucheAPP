@@ -10,10 +10,8 @@
 		   <view class="zlcontent-mid">
 		   	 <u-form :model="form" ref='uForm' :error-type="errorType">
 		   	 	<u-form-item label="" prop="carbrand" label-width='0'>
-<!-- 					<u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
-					 placeholder="请选择车辆品牌" :placeholder-style="style" @click="showSelect('carbrand')" /> -->
-					 <u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
-					  placeholder="请选择车辆品牌" :placeholder-style="style" @click="toCarList" />
+				 <u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
+				  placeholder="请选择车辆品牌" :placeholder-style="style" @click="toCarList" />
 		   	 	</u-form-item>
 				<u-form-item label="" prop="carmodel" label-width='0'>
 					<u-input v-model="form.carmodel" class="input_select" type="select" :border="true" 
@@ -51,7 +49,7 @@
 					 	<u-input v-model="form.km" style="border-radius: 40rpx;" :border="true" placeholder="请输入网约车行驶里程" />
 					 </u-form-item>
 					 <u-form-item :label="carPubType === 1?'车辆在租总数':'车辆在售总数'">
-						 <u-input v-model="form.carnbumber" :border="true"/><text style="position: absolute;right: 10px;">辆</text>
+						 <u-input v-model="form.carnbumber" :clearable="false" :border="true"/><text style="position: absolute;right: 10px;">辆</text>
 					 </u-form-item>
 			      </u-form>	
 				<u-picker v-model="timeShow" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
@@ -142,14 +140,12 @@ export default {
 	}
   },
   mounted() {
-	  
-	 
     // this.getSelect()
   },
   methods: {
 	  ...mapActions(['CARPUBFIRST']),
 	 toCarList(){
-		this.$u.route('/pages/company/lease/carList/carList') 
+		this.$u.route('/pages/company/lease/carList/carList',{source:1}) 
 	 }, 
 	  
 	getChildId(id){

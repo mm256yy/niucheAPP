@@ -16,31 +16,40 @@
 		  <view class="" style="background: #FFFFFF;padding: 10pt;">
 			<u-row>
 				<u-col span="2">
-					<u-avatar src="@/static/chezhuzhaomu@2x.png"></u-avatar>
+					<u-avatar :src="quesrc"></u-avatar>
 				</u-col>
 				<u-col span="9">
-					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.qus}}</view>
-					<u-input v-model="item.qus" type="textarea" :border="true"  v-show="item.show"/>
+					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.mobanquestionname}}</view>
+					<u-input v-model="item.mobanquestionname" type="textarea" :border="true"  v-show="item.show"/>
 				</u-col>
 				<u-col span="12" class="question-border"></u-col>
 				<u-col span="2">
-					<u-avatar src="@/static/chezhuzhaomu@2x.png"></u-avatar>
+					<u-avatar :src="anssrc"></u-avatar>
 				</u-col>
 				<u-col span="9">
-					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.ans}}</view>
-					<u-input v-model="item.ans" type="textarea" :border="true" v-show="item.show"/>
+					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.mobandaan}}</view>
+					<u-input v-model="item.mobandaan" type="textarea" :border="true" v-show="item.show"/>
 				</u-col>
 			</u-row>		
 		   </view>
 			<view class="" style="text-align: right;padding: 10pt 0;">
-				<u-button type="success" shape='circle' size="mini" style="margin-right: 5pt;" @click="toNext">删除</u-button>
+				<u-button type="success" shape='circle' size="mini" style="margin-right: 5pt;" @click="delQus(index)">删除</u-button>
 			</view>
 		</view>
+		<u-modal v-model="dialogShow" @confirm="confirm" ref="uModal" title="添加新问题" 
+		 :async-close="true" :show-cancel-button="true" confirm-text="添加" cancel-text="放弃">
+			<view class="slot-content" style="padding:5pt 15pt;">
+				<u-input v-model="addForm.mobanquestionname" :border="true" placeholder="请输入新问题"/>
+			</view>
+			<view class="slot-content" style="padding:5pt 15pt;">
+				<u-input v-model="addForm.mobandaan" type="textarea" maxlength='1000' :border="true" placeholder="请输入解答"/>
+			</view>
+		</u-modal>
 		<view class="" style="height: 40pt;"></view>
 		  <view class="fixed-btn">
 			<view class=" btn-inline">
-			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">添加新问题</u-button>
-			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">完成</u-button>	
+			<u-button type="success" class="btn-agree" style="width: 50%;" @click="addQue">添加新问题</u-button>
+			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toSubmit">完成</u-button>	
 			</view>
 		</view>
 
@@ -48,30 +57,82 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				list:[
-					{qus:'1111111',ans:'222222',show:false},{qus:'3+3',ans:'222222',show:false},{qus:'4+5',ans:'7777777777777',show:false},
-					{qus:'4+5',ans:'7777777777777',show:false},
-					{qus:'4+5',ans:'7777777777777',show:false},
-					{qus:'4+5',ans:'7777777777777',show:false},
-					{qus:'4+5',ans:'7777777777777',show:false},
-					{qus:'4+5',ans:'7777777777777',show:false},
-				],
-				zpxxsrc:'@/static/chezhuzhaomu@2x.png',
-				value:'111111111'
+				list:[],
+				addForm:{
+					mobanquestionname:'',mobandaan:''
+				},
+				dialogShow:false,
+				quesrc:'../../../../../static/que.png',
+				anssrc:'../../../../../static/ans.png',
 			}
 		},
+		mounted() {
+			this.getQus()
+		},
+		computed:{
+			...mapGetters(['carPubType'])
+		},
+		onLoad(option) {
+			let id = option.id;
+		},
 		methods: {
+			getQus(){
+				this.$u.api.getQuestion({}).then(res=>{
+					if(res.code === 200){
+						let data = res.object;
+						data.forEach((item)=>{
+							this.list.push({show:false,mobanquestionname:item.mobanquestionname,mobandaan:item.mobandaan})
+						})
+					}else {
+						 this.$u.toast(res.message);
+					}
+				})
+			},
+			delQus(index){
+				this.list.splice(index,1)
+			},
 			editShow(index){
 				this.list[index].show = true;
 			},
 			toNext(){
-				this.$u.route("/pages/company/lease/step/stepCards/stepCards")
+				let index = 2
+				if (this.carPubType === 1) {
+					index = 0
+				}
+				this.$u.route('/pages/company/myPublish/myPublish', {index: index});
+			},
+			addQue(){
+				this.addForm = {
+					mobanquestionname:'',mobandaan:'',show:false
+				};
+				this.dialogShow = true;
+			},
+			confirm(){
+				if(this.addForm.mobanquestionname === '' || this.addForm.mobandaan === ''){
+				   this.$u.toast('请输入新内容')
+				   setTimeout(() => {
+				     this.$refs.uModal.clearLoading();
+					}, 100)
+				  return false
+				}
+				this.list.push(this.addForm)
+				this.dialogShow = false
+			},
+			toSubmit(){
+				this.$u.api.saveAnswer(obj).then(res=>{
+					if(res.code === '200'){
+						this.toNext()
+					}else {
+						 this.$u.toast(res.message);
+					}
+				})
 			}
 		}
 	}
@@ -80,9 +141,6 @@
 <style lang="scss">
 .scroll-container {height: 100%;}
 page{
-	// background-image: url(@/static/lease.png);
-	background-size: cover;
-	background-repeat: no-repeat;
 	background-color:#f5f5f8 ;
 	height: 100%;
 }

@@ -14,7 +14,7 @@
 			<view style="background-color: #dedede;font-size: 10pt;padding: 5pt 0;">* 以下为加分项，可以不设置。</view>
 			<u-form-item label="意向品牌" prop="intentionbrand" label-position="top">
 				<u-checkbox-group active-color="#6DD99C" @change="radioGroupChange" shape="circle">
-					<u-checkbox v-model="item.checked" size='24' v-for="(item, index) in checkboxList" :key="index" :name="item.name">
+					<u-checkbox v-model="item.checked" size='24' v-for="(item, index) in brandList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
 				</u-checkbox-group>
@@ -25,47 +25,37 @@
 			</u-row>
 			<u-form-item label="车型" label-position="top">
 				<u-checkbox-group active-color="#6DD99C" @change="radioGroupChange" shape="circle">
-					<u-checkbox v-model="item.checked" size='24' v-for="(item, index) in checkboxList" :key="index" :name="item.name">
+					<u-checkbox v-model="item.checked" size='24' v-for="(item, index) in modelList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
 				</u-checkbox-group>
 			</u-form-item>
 			<u-form-item label="动力" label-position="top">
 				<u-checkbox-group active-color="#6DD99C" @change="radioGroupChange" shape="circle">
-					<u-checkbox v-model="item.checked" size='24' v-for="(item, index) in checkboxList" :key="index" :name="item.name">
+					<u-checkbox v-model="item.checked" size='24' v-for="(item, index) in powerList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
 				</u-checkbox-group>
 			</u-form-item>
 			<u-form-item label="月租" prop="carmodel" label-position="top">
 				<u-radio-group v-model="form.carmodel" size='24' :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">3000以内(含3000)   </u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">3000以上  </u-radio>
+					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="车龄" prop="carmodel" label-position="top">
 				<u-radio-group v-model="form.carmodel" size='24' :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">1年内</u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">1年-3年</u-radio>
-					<u-radio name="2" style="margin-left: 10pt;">3年-5年</u-radio>
-					<u-radio name="3" style="margin-left: 10pt;">5年以上</u-radio>
+					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="行驶里程" prop="carmodel" label-position="top">
 				<u-radio-group v-model="form.carmodel" size='24' :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">新车(300公里以内)</u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">300公里-2万公里 </u-radio>
-					<u-radio name="2" style="margin-left: 10pt;">2万公里-5万公里</u-radio>
-					<u-radio name="3" style="margin-left: 10pt;">5万公里-10万公里</u-radio>
-					<u-radio name="3" style="margin-left: 10pt;">10万公里-20万公里</u-radio>
-					<u-radio name="3" style="margin-left: 10pt;">20万公里-30万公里</u-radio>
-					<u-radio name="3" style="margin-left: 10pt;">30万公里以上</u-radio>
+				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in mileageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 		  </u-form>	
 	   </view>
 		<view style="text-align: center; padding: 5pt 20pt;margin-top: 10pt;">
-			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
+			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">发布</u-button>
 		</view>
 	</view>
 </template>
@@ -82,9 +72,14 @@
 					intentionbrand:''
 				},
 				value:'',
-				checkboxList: [
-						{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
-						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}
+				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
+						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}],
+				modelList:[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}],
+				powerList:[{name:'纯电动',checked: false},{name:'插电混动',checked:false},{name:'燃油车(含油电混动)',checked: false}],
+				rentList:[{name: '0',text:'3000以内(含3000)' },{name: '1',text:'3000以上' }],
+				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
+				mileageList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },
+				 {name: '3',text:'5万公里-10万公里' },{name: '0',text:'10万公里-20万公里' },{name: '1',text:'20万公里-30万公里' },{name: '2',text:'30万公里以上'},
 				]
 			}
 		},

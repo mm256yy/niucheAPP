@@ -20,7 +20,8 @@
 				<u-form-item label="公司名称" prop="companyName"><u-input v-model="form.companyName" :border="true"/></u-form-item>
 				<u-form-item label="社会统一信用代码" prop="socialCode"><u-input v-model="form.socialCode" :border="true"/></u-form-item>
 				<u-form-item label="成立日期" prop="brithday"><u-input v-model="form.companyCreateTime" :border="true" :disabled="true" @click="show = true" placeholder=""/><u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon></u-form-item>
-				<u-form-item label="注册资本" prop="registeredPrice"><u-input v-model="form.registeredPrice" :clearable="false" :border="true"/><text class="middle-content-label">万元</text></u-form-item>
+				<u-form-item label="注册资本" prop="registeredPrice"><u-input v-model="form.registeredPrice" :clearable="false" :border="true"/>
+				<text class="middle-content-label">万元</text></u-form-item>
 				<u-form-item label="法人姓名" prop="legalPerson"><u-input v-model="form.legalPerson" :border="true"/></u-form-item>
 				<u-form-item label="所在地区" prop="area"><u-input v-model="form.area" :border="true"/></u-form-item>
 			</u-form>

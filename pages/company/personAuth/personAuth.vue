@@ -167,9 +167,15 @@
 			setPicToken(){
 				this.headerObj.Authorization = this.token;
 				this.formDataObj.phone = this.phone;
-				this.form = this.companyThree;
-				this.fileList.push(this.shengfenzheng[0])
-				this.fileList1.push(this.peopleCard[0])
+				if (this.companyThree){
+					this.form = this.companyThree;
+				}
+				if (this.shengfenzheng){
+					this.fileList.push(this.shengfenzheng[0])
+				}
+				if (this.peopleCard){
+					this.fileList1.push(this.peopleCard[0])
+				}
 			},
 			getInfo(){
 				if(this.comparyid){

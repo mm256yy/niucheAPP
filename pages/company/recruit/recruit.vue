@@ -24,15 +24,15 @@
 				</u-form-item>
 				<u-form-item label="" label-width="0" prop="carmodel">
 					<u-input v-model="form.carmodel" class="input_select" :disabled="true" :border="true" placeholder="未添加" />
-					<u-button type="success" size="medium" shape='circle'>添加工作车辆</u-button>
+					<u-button type="success" size="medium" shape='circle' @click="toCarModel">添加工作车辆</u-button>
 				</u-form-item>
 			</u-form>		
 	   	 </view> 
 	   </view>
 	   <view class="fixed-btn">
 	   	<view class=" btn-inline">
-	   	<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">保存草稿</u-button>
-	   	<u-button type="success" class="btn-agree" style="width: 50%;" @click="toNext">提交审核</u-button>	
+			<u-button type="success" class="btn-agree" style="width: 50%;" @click="saveStorage">保存草稿</u-button>
+			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toSubmit">提交审核</u-button>	
 	   	</view>
 	   </view>
 		<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
@@ -44,18 +44,24 @@ export default {
 	data() {
 		return {
 			backTextStyle:{'color':'#ffffff'},
-			form:{
-				carmodel:''
-			},
+			form:{carmodel:''},
 			list: [{value: '1',text: '网约车司机'},{value: '2',text: '出租车司机'}],
 			show:false
-			
 		}
 	},
 	methods: {
 	 actionSheetCallback(index) {
 		let value = this.list[index].text;
 		this.form.carmodel = value
+	 },
+	 toCarModel(){
+		this.$u.route('/pages/company/recruit/carModel/carModel') 
+	 },
+	 saveStorage(){
+		 
+	 },
+	 toSubmit(){
+		 
 	 },
 	 startValChange(){
 

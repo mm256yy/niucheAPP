@@ -98,15 +98,16 @@
 			}
 		},
 		computed:{
-			...mapGetters(['carPubType','carPubFirst','carPubSecond','carPubThree','carPubFour','carPubFive','carPubSix','carPubSeven','carPubEight',])
+			...mapGetters(['telephone','carPubType','carPubFirst','carPubSecond','carPubThree','carPubFour','carPubFive',
+			'carPubSix','carPubSeven','carPubEight',])
 		},
 		
 		methods: {
 			setForm(){
 				let obj = Object.assign(this.carPubFirst, this.carPubSecond,this.carPubThree,this.carPubFour,
 				this.carPubFive,this.carPubSix,this.carPubSeven,this.form);
-				console.log(obj)
 				obj.mainbusinesstype = this.carPubType;
+				obj.companyid = this.telephone;
 				obj.businesstype = Number(obj.businesstype)
 				this.$u.api.saveMainBusiness(obj).then(res=>{
 					if(res.code === '200'){
@@ -139,7 +140,11 @@
 				this.$u.route('/pages/company/lease/step/setpQuestion/setpQuestion')
 			},
 			tipsCancel(){
-				this.$u.route('/pages/company/myPublish/myPublish', {index: 1});
+				let index = 2
+				if (this.carPubType === 1) {
+					index = 0
+				}
+				this.$u.route('/pages/company/myPublish/myPublish', {index: index});
 			},
 			confirm(){
 				if(this.addForm.paramtername === '' || this.addForm.paramtertext === '' || this.addForm.paramterunit === ''){

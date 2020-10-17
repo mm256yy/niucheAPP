@@ -65,14 +65,6 @@ export const IDNumberRule= [
 	message: '身份证号码格式不正确'
 	}	
 ];
-export const businessTypeRule= [
-	{
-	required: true,
-	message: '至少选择一项业务',
-	trigger: 'change',
-	type: 'array',
-	}
-];
 
 
 // export const rules ={

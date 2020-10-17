@@ -3,13 +3,13 @@
 		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆其他" :background="backgroundCom" 
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent">
-			<u-form-item label="" prop="brand" label-width='0'>
-				<u-input v-model="form.brand" class="input_select" type="select" :border="true" 
-				placeholder="请选择车辆品牌"  @click="showSelect('brand')" />
-				</u-form-item>
-				<u-form-item label="" prop="system" label-width='0'>
-					<u-input v-model="form.system" class="input_select" type="select" :border="true"
-					 placeholder="请选择车系" @click="showSelect('system')" />
+			<u-form-item label="" prop="carbrand" label-width='0'>
+				 <u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
+				  placeholder="请选择车辆品牌" @click="toCarList" />
+		   	 	</u-form-item>
+				<u-form-item label="" prop="carmodel" label-width='0'>
+					<u-input v-model="form.carmodel" class="input_select" type="select" :border="true"
+					 placeholder="请选择车系" @click="showSelect" />
 			</u-form-item>
 	    </view>
 		<view class="view-content">
@@ -56,7 +56,7 @@
 			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">完成</u-button>
 			</view>
 		</view>
-		<u-action-sheet :list="selectObj[selectObjType]" v-model="show" @click="actionSheetCallback"></u-action-sheet>
+		<u-select v-model="show" :list="carmodel" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
      </view>
 </template>
 
@@ -65,41 +65,45 @@
 export default {
   data(){
 	return {
-		errorType:[
-			'message'
-		],
-		selectObjType:'',
-		selectObj:{
-			brand:[],
-			system:[]
-		},
-		backTextStyle:{
-			'color':'#ffffff'
-		},
+		errorType:['message'],
+		carmodel:[],
+		backTextStyle:{'color':'#ffffff'},
 		show:false,
 		form:{
-brand:'',system:''
+			carbrand:'',carmodel:''
 		},
 		action:'',
 		fileList:[]
 	
 	}  
   },
-
-
+  onLoad(option) {
+  	let index = option.id;
+	if(index){
+		 this.form.carbrand =option.text;
+		 this.getSelectFirst(index)
+	}
+  },
   methods: {
-	showSelect(type){
-		this.selectObjType = type;
-		this.show = true;
-	}, 
+	getSelectFirst(id){
+		this.$u.api.getCarSystem({parentid:id}).then(res=>{
+			if(res.code === 200){
+				 this.carmodel = res.alibabaCarModelVoList;
+			}else {
+				 this.$u.toast(res.message);
+			}
+		})
+	  },
 	actionSheetCallback(index) {
-		let type = this.selectObjType;
-		let val = this.selectObj[type][index].text;
-		if (type === 'brand' || type === 'system') {
-			this.getSelect(type)
-		}
-		this.form[type] = val;
+	  	let val = index[0].label;
+	  	this.form.carmodel = val;
+	  },
+	showSelect(){
+		this.show = true;
 	},
+	toCarList(){
+		this.$u.route('/pages/company/lease/carList/carList',{source:2}) 
+	}, 
 	getSelect(type){
 		console.log(type)
 	},
@@ -117,6 +121,9 @@ page{
 }
 /deep/ .u-border-bottom:after{
 	border-bottom-width:0;
+}
+.input_select{
+	background: #FFFFFF;border-radius: 40rpx;
 }
 .zlcontent{
 	padding: 0 20pt;

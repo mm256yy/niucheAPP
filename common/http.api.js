@@ -37,10 +37,15 @@ const install  = (Vue, vm) => {
 	const  getSystemTag =  (params = {}) => vm.$u.post('/system/comparymain/SystemTag', params);
 	//转卖转租保存
 	const  saveMainBusiness =  (params = {}) => vm.$u.post('/system/comparymain/mainbusiness', params);
-	
+	//获取问题列表
+	const  getQuestion =  (params = {}) => vm.$u.get('/system/carmobancollect/CarMobanAlltext', params);
+	//保存问题
+	const  saveAnswer =  (params = {}) => vm.$u.post('/system/carmobancollect/CarMobanInsert', params);
 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getQuestion,
+		saveAnswer,
 		saveMainBusiness,
 		getSystemTag,
 		getCarSystem,
