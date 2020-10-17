@@ -6,7 +6,8 @@ const user = {
     name: '',
     avatar: '',
     role: '',
-	UUid:''
+	UUid:'',
+	today:{},
   },
 
   mutations: {
@@ -30,7 +31,10 @@ const user = {
 	},
 	SET_THEME_TYPE(state,data) {
 	    state.curThemeType = data
-	},  
+	}, 
+	SET_TODAY(state,data) {
+	    state.today = data
+	}, 
   },
 
   actions: {
@@ -60,6 +64,10 @@ const user = {
 	  commit('SET_PERMISSIONS', [])
 	  removeToken()
     },
+	TODAY({ commit }, state) {
+	 uni.setStorageSync('today', state);
+	 commit('SET_TODAY', state);
+	},
   }
 }
 

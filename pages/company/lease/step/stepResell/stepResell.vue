@@ -51,7 +51,7 @@ export default {
   },
   methods: {
 	  ...mapActions(['CARPUBTHREE']),
-	 addPriceObj(){
+	  addPriceObj(){
 		this.sellCarPrice.push({
 				shoplow:'',shophigh:'',packprice:''
 			}) 
@@ -74,6 +74,11 @@ export default {
 	 },
 	toNext(){
 		console.log(this.sellCarPrice)
+		let obj = this.sellCarPrice[0];
+		if (obj.shoplow === '' || obj.shophigh === '' || obj.packprice === '') {
+			this.$u.toast('请填写完整');
+			return
+		}
 		this.CARPUBTHREE(this.sellCarPrice)
 		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
 	}

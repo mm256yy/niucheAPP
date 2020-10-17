@@ -2,7 +2,7 @@
 	<view>
 		<u-navbar back-text="返回"  back-icon-size="0" title="车辆参数" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
-				<view class="message-box right-item" @click="toNext">
+				<view class="message-box right-item" @click="setForm">
 					<text>跳过</text>
 				</view>
 			</view>
@@ -55,7 +55,7 @@
 		</u-modal>
 		<u-row>
 			<u-col span="12">
-				<u-button type="success" class="btn-agree" @click="toNext">提交审核</u-button>
+				<u-button type="success" class="btn-agree" @click="setForm">提交审核</u-button>
 			</u-col>
 		</u-row>
 		<u-modal v-model="showTips" @confirm="tipsConfirm" @cancel="tipsCancel" :show-cancel-button="true" confirm-text="现在开始编辑" cancel-text="跳过">
@@ -98,15 +98,35 @@
 			}
 		},
 		computed:{
-			...mapGetters(['carPubFirst','carPubSecond','carPubThree','carPubFour','carPubFive','carPubSix','carPubSeven','carPubEight',])
+			...mapGetters(['carPubType','carPubFirst','carPubSecond','carPubThree','carPubFour','carPubFive','carPubSix','carPubSeven','carPubEight',])
 		},
+		
 		methods: {
 			setForm(){
 				let obj = Object.assign(this.carPubFirst, this.carPubSecond,this.carPubThree,this.carPubFour,
 				this.carPubFive,this.carPubSix,this.carPubSeven,this.form);
 				console.log(obj)
-				this.showTips = true;
-				// this.$u.route("/pages/company/lease/step/stepCards/stepCards")	
+				obj.mainbusinesstype = this.carPubType;
+				obj.businesstype = Number(obj.businesstype)
+				this.$u.api.saveMainBusiness(obj).then(res=>{
+					if(res.code === '200'){
+						this.clearStorage()
+						this.showTips = true;
+					}else {
+						 this.$u.toast(res.message);
+					}
+				})
+			},
+			clearStorage(){
+				uni.removeStorageSync('carPubType');
+				uni.removeStorageSync('carPubFirst');
+				uni.removeStorageSync('carPubSecond');
+				uni.removeStorageSync('carPubThree');
+				uni.removeStorageSync('carPubFour');
+				uni.removeStorageSync('carPubFive');
+				uni.removeStorageSync('carPubSix');
+				uni.removeStorageSync('carPubSeven');
+				uni.removeStorageSync('carPubEight');
 			},
 			actionSheetCallback(index) {
 				this.form.environmental = this.list[index].text;
@@ -131,9 +151,6 @@
 				}
 				this.form.ElseParamter.push(this.addForm)
 				this.dialogShow = false
-			},
-			toNext(){
-				this.setForm()
 			}
 		}
 	}
@@ -150,6 +167,17 @@ page{
 }
 /deep/ .u-border-bottom:after{
 	border-bottom-width:0;
+}
+.list-cell {
+	display: flex;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px 24rpx;
+	overflow: hidden;
+	color: $u-content-color;
+	font-size: 14px;
+	line-height: 24px;
+	background-color: #fff;
 }
 .navbar-right {
 	margin-right: 24rpx;

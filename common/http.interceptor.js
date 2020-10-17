@@ -40,7 +40,7 @@ const install = (Vue, vm) => {
 		   } else{
 			 const token = uni.getStorageSync('token');
 			 if (token) {
-			 	config.header.Authorization ='Bearer '+ token;
+			 	config.header.Authorization = token;
 			 }  
 		   }
 

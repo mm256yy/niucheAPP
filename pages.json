@@ -73,7 +73,7 @@
 					"navigationStyle": "custom" 
 			}
         }
-        ,{//车辆租赁
+        ,{//车辆租赁 车辆转卖
             "path" : "pages/company/lease/lease",
             "style" : {
 				"navigationStyle": "custom" 
@@ -81,12 +81,6 @@
         }
         ,{//司机招募
             "path" : "pages/company/recruit/recruit",
-            "style" : {
-				"navigationStyle": "custom" 
-			}
-        }
-        ,{//车辆转卖
-            "path" : "pages/company/resell/resell",
             "style" : {
 				"navigationStyle": "custom" 
 			}
@@ -196,6 +190,15 @@
             "style" : {
 				"navigationStyle": "custom"
 			}
+        }
+        ,{
+            "path" : "pages/company/lease/carList/carList",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {

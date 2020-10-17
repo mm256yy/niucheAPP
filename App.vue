@@ -18,6 +18,10 @@
 				// })
 
 			})
+			// uni.setStorage({
+			// 	key:'time',
+			// 	data:new Date()
+			// })
 		},
 		onHide: function() {
 			console.log('App Hide')

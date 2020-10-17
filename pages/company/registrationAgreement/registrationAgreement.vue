@@ -31,7 +31,6 @@
 				},
 			}
 		},
-
 		methods: {
 			toPage(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})

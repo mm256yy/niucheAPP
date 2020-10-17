@@ -3,7 +3,8 @@
 		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆外观" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="view-content">
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' index="onephoto" upload-text=""
+			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" 
+			@on-success='uploadChange' index="onephoto" upload-text=""
 			 :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;">
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -28,7 +29,8 @@
 		</view>
 		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' :index="item.resName" upload-text="" 
+			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
+			 @on-success='uploadChange' :index="item.resName" upload-text="" 
 			:file-list="item.fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -42,7 +44,7 @@
 		</view>
 
 		<view style="text-align: center; padding: 5pt 20pt;margin-top: 10pt;">
-			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
+			<u-button type="success" shape='circle' class="btn-agree" @click="setForm">下一步</u-button>
 		</view>
 	</view>
 </template>
@@ -68,23 +70,30 @@
 			}
 		},
 		computed:{
-			...mapGetters(['carPubFour'])
+			...mapGetters(['carPubFour','token','telephone'])
+		},
+		mounted() {
+			this.setPicToken()
 		},
 		methods: {
 			  ...mapActions(['CARPUBFOUR']),
+			  setPicToken(){
+			  	this.headerObj.Authorization = this.token;
+			  	this.formDataObj.phone = this.telephone;
+			  },
 			uploadChange(data, index, lists, name){
-				this.form[name] = res.text;
+				this.form[name] = data.text;
 				console.log(data)
 				console.log(name)
 			},
 			setForm(){
-					this.CARPUBFOUR(this.form) 
-			},
-			toNext(){
-				this.setForm()
+				if ( this.form.twophoto === ''){
+					this.$u.toast('请上传图片');
+					return
+				}
+				this.CARPUBFOUR(this.form) 
 				this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
-			}
-			
+			},
 		}
 	}
 </script>

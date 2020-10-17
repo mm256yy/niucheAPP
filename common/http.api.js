@@ -25,10 +25,27 @@ const install  = (Vue, vm) => {
 	const getCompanyAll =  (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyAllByComparyid', params);
 	//企业认证all
 	const saveAuthAll =  (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyAllUpdateByComparyid', params);
+	// 
+	// 
+	//获取车辆品牌
+	const  getCarBrand =  (params = {}) => vm.$u.get('/user/carall/AlibabaCarBrandAll', params);
+	//获取车辆品牌
+	const  getCarSystem =  (params = {}) => vm.$u.get('/user/carall/AlibabaCarBrandGetCarXilie', params);
+	//获取车辆品牌
+	const  getCarModel =  (params = {}) => vm.$u.get('/user/carall/AlibabaCarXilieGetCarXinghao', params);
+	//获取系统特色标签
+	const  getSystemTag =  (params = {}) => vm.$u.post('/system/comparymain/SystemTag', params);
+	//转卖转租保存
+	const  saveMainBusiness =  (params = {}) => vm.$u.post('/system/comparymain/mainbusiness', params);
 	
-	//user/image/carotherphoto
+
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		saveMainBusiness,
+		getSystemTag,
+		getCarSystem,
+		getCarModel,
+		getCarBrand,
 		saveAuthAll,
 		getCompanyAll,
 		editCompanyPerson,

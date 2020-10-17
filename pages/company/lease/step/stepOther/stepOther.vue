@@ -52,20 +52,24 @@
 			}
 		},
 		computed:{
-			...mapGetters(['carPubSix'])
+			...mapGetters(['carPubSix','token','telephone'])
+		},
+		mounted() {
+			this.setPicToken()
 		},
 		methods: {
 			  ...mapActions(['CARPUBSIX']),
+			  setPicToken(){
+			  	this.headerObj.Authorization = this.token;
+			  	this.formDataObj.phone = this.telephone;
+			  },
 			  uploadChange(data, index, lists, name){
-				this.form.elsephoto = res.text;
+				this.form.elsephoto = data.text;
 				console.log(data)
 				console.log(name)
 			  },
-			  setForm(){
-					this.CARPUBSIX(this.form) 
-			  },
 			toNext(){
-				this.setForm()
+				this.CARPUBSIX(this.form) 
 				this.$u.route("/pages/company/lease/step/stepCards/stepCards")
 			}
 		}

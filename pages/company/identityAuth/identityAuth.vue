@@ -27,7 +27,7 @@
 			<view style="padding-top: 30pt;color:#E10000;">
 				*以上信息提交过审后不可更改
 			</view>
-			<u-picker v-model="show" mode="time" :params="params" @confirm="dataChange"></u-picker>
+			<u-picker v-model="show" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
 		</view>
 		<view style="text-align: center; padding: 5pt 20pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
@@ -93,7 +93,7 @@
 		  this.getInfo()
 		},
 		computed:{
-			...mapGetters(['token','telephone'])
+			...mapGetters(['token','telephone','today'])
 		},
 		methods: {
 			...mapActions(['COMPANYFIRST','COMPANYSECOND','COMPANYTHREE','COMPARYLOGO','PEOPLECARD','SHENGFENZHENG']),
@@ -129,44 +129,19 @@
 								comparypeoplephoto:data.comparypeoplephoto
 							};
 							this.COMPANYSECOND(obj)
-							// uni.setStorage({
-							// 	key: 'companySecond',
-							// 	data:obj ,
-							// 	success: function () {}
-							// });
 							this.COMPANYTHREE(objF)
-							// uni.setStorage({
-							// 	key: 'companyThree',
-							// 	data:objF ,
-							// 	success: function () {}
-							// });
 							let photo = data.photolist;
 							if(photo.comparyLogo){
 								let comparyLogo = [{url:photo.comparyLogo}]
 								this.COMPARYLOGO(comparyLogo)
-								// uni.setStorage({
-								// 	key: 'comparyLogo',
-								// 	data:comparyLogo ,
-								// 	success: function () {}
-								// });
 							}
 							if(photo.peopleCard){
 								let peopleCard = [{url:photo.peopleCard}]
 								this.PEOPLECARD(peopleCard)
-								// uni.setStorage({
-								// 	key: 'peopleCard',
-								// 	data:peopleCard ,
-								// 	success: function () {}
-								// });
 							}
 							if(photo.shengfenzheng){
 								let shengfenzheng = [{url:photo.shengfenzheng}]
 								this.SHENGFENZHENG(shengfenzheng)
-								// uni.setStorage({
-								// 	key: 'shengfenzheng',
-								// 	data:shengfenzheng ,
-								// 	success: function () {}
-								// });
 							}
 							if(photo.yingyezhizhao){
 								this.fileList.push({url:photo.yingyezhizhao})
@@ -197,6 +172,9 @@
 				})
 			},
 			dataChange(obj){
+				if (obj.month > this.today.month || obj.day > this.today.day){
+					return false
+				}
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form.companyCreateTime = companyDate;
 			},

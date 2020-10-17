@@ -68,7 +68,7 @@
 </template>
 
 <script>
-	 import {mapGetters,mapActions} from 'vuex'
+	 import {mapGetters} from 'vuex'
 	import {phoneRule,codeRule,passwordRule,requiredRule,IDNumberRule} from '@/common/rule.js'
 	export default {
 		data() {
@@ -254,12 +254,7 @@
 							console.log(res)
 						})
 				} else {
-					uni.getStorage({
-					    key: 'telephone',
-					    success: function (res) {
-							 obj.userid = res.data;
-					    }
-					});
+					obj.userid = this.phone;
 					this.$u.api.saveAuth(obj).then(res => {
 							if(res.code === '200'){
 					            this.showTips = true

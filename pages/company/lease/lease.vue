@@ -10,8 +10,10 @@
 		   <view class="zlcontent-mid">
 		   	 <u-form :model="form" ref='uForm' :error-type="errorType">
 		   	 	<u-form-item label="" prop="carbrand" label-width='0'>
-					<u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
-					 placeholder="请选择车辆品牌" :placeholder-style="style" @click="showSelect('carbrand')" />
+<!-- 					<u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
+					 placeholder="请选择车辆品牌" :placeholder-style="style" @click="showSelect('carbrand')" /> -->
+					 <u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
+					  placeholder="请选择车辆品牌" :placeholder-style="style" @click="toCarList" />
 		   	 	</u-form-item>
 				<u-form-item label="" prop="carmodel" label-width='0'>
 					<u-input v-model="form.carmodel" class="input_select" type="select" :border="true" 
@@ -30,11 +32,10 @@
 					 placeholder="请选择动力类型" :placeholder-style="style" @click="showSelect('power')" />
 				</u-form-item>
 		   	 	<u-form-item label="业务类型" prop="businesstype" label-width='100pt'>
-					<u-checkbox-group active-color="#6DD99C" @change="radioGroupChange" shape="circle">
-						<u-checkbox v-model="item.checked" v-for="(item, index) in checkboxList" :key="index" :name="item.name">
-							{{ item.name }}
-						</u-checkbox>
-					</u-checkbox-group>
+					<u-radio-group v-model="form.businesstype" active-color="#6DD99C" style="text-align: right;">
+						<u-radio name="1" style="margin-left: 10pt;">网约车</u-radio>
+						<u-radio name="2" style="margin-left: 10pt;">出租车</u-radio>
+					</u-radio-group>
 		   	 	</u-form-item>
 		   	 </u-form>
 			 
@@ -53,64 +54,32 @@
 						 <u-input v-model="form.carnbumber" :border="true"/><text style="position: absolute;right: 10px;">辆</text>
 					 </u-form-item>
 			      </u-form>	
-				<u-picker v-model="timeShow" mode="time" :params="params" @confirm="dataChange"></u-picker>
+				<u-picker v-model="timeShow" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
 				<view style="text-align: center; padding: 26pt 20pt;">
 					<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
 				</view>
 			</view>
 	    </view>
-		<u-action-sheet :list="selectObj[selectObjType]" v-model="show" @click="actionSheetCallback"></u-action-sheet>
-		<u-popup v-model="importShow" length="60%" >
-			<!-- <view v-for="item in 10">出淤泥而不染，濯清涟而不妖</view> -->
-			<view style="background-color: #f5f5f8;min-height: 100%;">
-				<u-card :show-head="false" margin='0 0 20rpx' border-radius='0' padding='10' v-for="i in 10">
-					<view class="" slot="body">
-						<view class="u-flex u-row-between">
-						 <image :src="src" class="card-img"></image>
-						 <view class="u-line-2 card-title">
-							 <view class="">
-							 	吉利帝豪GL
-							 </view>
-							 <view>
-							 	吉利帝豪GL 1.5L CVT运动版吉利帝豪GL 1.5L CVT运动版
-							 </view>
-						  </view>
-						</view>
-						<view>
-							 <u-tag text="在租" type="success" mode="dark" class="tag-style"/>
-							 <u-tag text="在售" type="success" mode="dark" class="tag-style"/>
-							 <u-tag text="在招" type="success" mode="dark" class="tag-style"/>
-							 <!-- <u-checkbox v-model="checked" shape="circle" active-color="#6DD99B"></u-checkbox> -->
-						</view>
-					</view>
-					<view slot="foot" style="text-align: right;">
-						<u-checkbox v-model="checked" shape="circle" active-color="#6DD99B"></u-checkbox>
-					</view>
-				</u-card>
-				<view class="fixed-btn">
-					<view class=" btn-inline">
-					 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">选择完成</u-button>
-					</view>
-				</view>
-			</view>
-		</u-popup>
+		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
+		<ChildPopup  ref='importShow' :childType='childType' @handleId = 'getChildId'></ChildPopup>
+		
      </view>
 </template>
 
 <script>
-import {requiredRule} from '@/common/rule.js'
+import {requiredRule,businessTypeRule} from '@/common/rule.js'
 import {mapGetters,mapActions} from 'vuex'
+import ChildPopup from '@/components/importCar.vue'
+
 export default {
   data(){
 	return {
 		errorType:[
 			'message'
 		],
-		checked:false,
 		backTextStyle:{
 			'color':'#ffffff'
 		},
-		src:'https://img12.360buyimg.com/n7/jfs/t1/102191/19/9072/330688/5e0af7cfE17698872/c91c00d713bf729a.jpg',
 		style:"color:#000000",
 		form:{
 			carbrand:'',
@@ -118,7 +87,7 @@ export default {
 			carxinghao:'',
 			cartype:'',
 			power:'',
-			businesstype:[],
+			businesstype:'',
 			firsttime:'',
 			km:'',
 			carnbumber:'',
@@ -142,7 +111,6 @@ export default {
 			power:[{value: '1',text: '纯电动'},{value: '2',text: '插电混动'},{value: '3',text: '燃油车(含油电混动)'}]
 		},
 		selectObjType:'carbrand',
-		checkboxList: [{name: '网约车',checked:false},{name: '出租车',checked:false}],
 		params: {
 			year: true,
 			month: true,
@@ -151,62 +119,113 @@ export default {
 			minute: false,
 			second: false
 		},
-		// type:1,//标识（租赁1 转卖3）
+		firstId:'',
 		show: false,
 		timeShow:false,
-		importShow:false,
+		childType:true,
 	}  
   },
+  components:{ChildPopup},
   onReady() {
        this.$refs.uForm.setRules(this.rules);
        this.$refs.uForm2.setRules(this.rules);
   },
   computed:{
-  	...mapGetters(['carPubType'])
+  	...mapGetters(['carPubType','today'])
+  },
+  onLoad(option) {
+  	let index = option.id;
+	this.form.carbrand = option.text;
+	this.firstId = index;
+	if(index){
+		 this.getSelectFirst(this.firstId)
+	}
   },
   mounted() {
- 
+	  
+	 
+    // this.getSelect()
   },
   methods: {
 	  ...mapActions(['CARPUBFIRST']),
+	 toCarList(){
+		this.$u.route('/pages/company/lease/carList/carList') 
+	 }, 
+	  
+	getChildId(id){
+		console.log(id)
+	},
+	setInfo(){
+		
+	},
 	showSelect(type){
 		this.selectObjType = type;
 		this.show = true;
-	},  
+	},
 	actionSheetCallback(index) {
 		let type = this.selectObjType;
-		let val = this.selectObj[type][index].text;
-		if (type === 'carbrand' || type === 'carmodel') {
-			this.getSelect(type)
+		let val = index[0].label;
+		let id = index[0].value;
+		if (type === 'carbrand') {
+			this.form.carmodel = '';
+			this.form.carxinghao = '';
+			this.getSelectFirst(id)
+		}
+		if (type === 'carmodel') {
+			this.form.carxinghao = '';
+			this.getSelectSecond(id)
 		}
 		this.form[type] = val;
 	},
-	getSelect(type){
-		console.log(type)
+	getSelect(){
+		this.$u.api.getCarBrand({}).then(res=>{
+			if(res.code === 200){
+	           this.selectObj.carbrand = res.alibabaCarModelVoList;
+			}else {
+				 this.$u.toast(res.message);
+			}
+		})
 	},
-	radioGroupChange(e) {
-		this.form.businesstype = e;
+	getSelectFirst(id){
+		this.$u.api.getCarSystem({parentid:id}).then(res=>{
+			if(res.code === 200){
+	           this.selectObj.carmodel = res.alibabaCarModelVoList;
+			}else {
+				 this.$u.toast(res.message);
+			}
+		})
+	},
+	getSelectSecond(id){
+		this.$u.api.getCarModel({parentid:id}).then(res=>{
+			if(res.code === 200){
+			   this.selectObj.carxinghao = res.alibabaCarModelVoList;
+			}else {
+				 this.$u.toast(res.message);
+			}
+		})	
 	},
 	dataChange(obj){
+		if (obj.month > this.today.month || obj.day > this.today.day){
+			return false
+		}
 		let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 		this.form.firsttime = companyDate;
 	},
     handleClick(){
-        this.importShow = true;
+		this.$refs.importShow.importShow = true
     },
 	toNext(){
 		this.CARPUBFIRST(this.form)
 		this.$refs.uForm.validate(valid=>{
 			if(valid) {
-		        this.$refs.uForm.validate(valid=>{
+		        this.$refs.uForm2.validate(valid=>{
 		        	if(valid) {
-		                // this.setForm()
+		             this.$u.route('/pages/company/lease/step/stepLabel/stepLabel')
 		        	}
 		        })
 			}
 		})
-		this.$u.route('/pages/company/lease/step/stepLabel/stepLabel')
-	}
+	},
   }
 }
 </script>

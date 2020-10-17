@@ -25,7 +25,8 @@
 		</view>
 		<view class="view-content">
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" index="cardivephoto"
+			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
+			@on-success='uploadChange' upload-text="" index="cardivephoto"
 			 :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -42,7 +43,7 @@
 				 <u-input v-model="form.taxipeople" style="background: #FFFFFF;" placeholder="请输入《运输证》中的车辆所有人" :border="true"/>
 			</view>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' index="taxiphoto"
+			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' index="taxiphoto"
 			 upload-text="" :file-list="fileList1" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -75,17 +76,26 @@
 			}
 		},
 		computed:{
-			...mapGetters(['carPubSeven'])
+			...mapGetters(['carPubSeven','token','telephone'])
+		},
+		mounted() {
+			this.setPicToken()
 		},
 		methods: {
 			  ...mapActions(['CARPUBSEVEN']),
+			  setPicToken(){
+			  	this.headerObj.Authorization = this.token;
+			  	this.formDataObj.phone = this.telephone;
+			  },
 			  uploadChange(data, index, lists, name){
-				this.form[name] = res.text;
+				this.form[name] = data.text;
 			  },
-			  setForm(){
-					this.CARPUBSEVEN(this.form) 
-			  },
-			toNext(){
+			 toNext(){
+				if (this.form.cardivephoto === '' || this.form.cardrivepeople === ''){
+					this.$u.toast('请填写完整');
+					return
+				}
+				this.CARPUBSEVEN(this.form) 
 				this.$u.route("/pages/company/lease/step/stepNumber/stepNumber")
 			}
 		}

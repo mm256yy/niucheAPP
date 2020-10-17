@@ -5,6 +5,7 @@ const getters = {
   avatar:state => state.user.avatar,
   role:state => uni.getStorageSync('role'),
   UUid:state => uni.getStorageSync('UUid'),
+  today:state => uni.getStorageSync('today'),
   curThemeType:state => uni.getStorageSync('curThemeType') || 'dirver',
    companyFirst:state => uni.getStorageSync('companyFirst'),
 	companySecond:state => uni.getStorageSync('companySecond'),

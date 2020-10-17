@@ -30,7 +30,7 @@
 	    </view>
 		
 		<view style="text-align: center; padding: 26pt 20pt;">
-			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
+			<u-button type="success" shape='circle' class="btn-agree" @click="setForm">下一步</u-button>
 		</view>
     </view>
 </template>
@@ -49,7 +49,7 @@ export default {
 		],
 		form:{
 		  yamoney:'',
-		  rentCarPrice:[],	  
+		  rentCarPrice:[{RentTime:'',Rentprice:''}],	  
 		},
 		priceIndex:0,
 		show:false,
@@ -74,12 +74,18 @@ export default {
 		this.form.rentCarPrice.push({RentTime:'',Rentprice:''}) 
 	 },
 	 setForm(){
+		 if (this.form.yamoney === ''){
+			 this.$u.toast('请填写押金');
+			 return
+		 }
+		 let obj = this.form.rentCarPrice[0];
+		 if (obj.RentTime === '' || obj.Rentprice === ''){
+			 this.$u.toast('请至少填写一个价格');
+			 return
+		 }
 		this.CARPUBTHREE(this.form) 
-	 },
-	 toNext(){
-		this.setForm()
 		this.$u.route("/pages/company/lease/step/stepAppearance/stepAppearance")
-	}
+	 },
   }
 }
 </script>

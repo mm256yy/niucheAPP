@@ -25,7 +25,7 @@
 			<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加自定义标签</text>
 		</view>
 		<view style="text-align: center; padding: 26pt 20pt;">
-			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
+			<u-button type="success" shape='circle' class="btn-agree" @click="setForm">下一步</u-button>
 		</view>
 	  <u-modal v-model="show" @confirm="confirm" ref="uModal" :async-close="true" title="添加新标签" :show-cancel-button="true" confirm-text="添加" cancel-text="放弃">
 		<view class="slot-content" style="padding: 10pt;">
@@ -49,19 +49,30 @@ export default {
 		show:false,
 		showTips:true,
 		value:'',
-		xttjList:['3厢5座','手动'],
-		zdyList:[{text:'纯电动',info:'info'},{text:'3厢5座',info:'info'},{text:'自动',info:'success'}]
+		xttjList:[],
+		zdyList:[]
 		
 	}  
   },
   computed:{
-  	...mapGetters(['carPubSecond','carPubType'])
+  	...mapGetters(['carPubFirst','carPubSecond','carPubType'])
   },
   mounted() {
-
+      this.getSysTags()
   },
   methods: {
 	...mapActions(['CARPUBSECOND']),
+	 getSysTags(){
+		let data = this.carPubFirst;
+		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,km:data.km};
+		this.$u.api.getSystemTag(obj).then(res=>{
+			if(res.code === 200){
+				this.xttjList = res.systemTagVo;
+			}else {
+				 this.$u.toast(res.message);
+			}
+		})
+	},
 	changeType(index,type){
 		let info = type === 'info'?'success':'info' 
 			this.zdyList[index].info = info;
@@ -91,16 +102,12 @@ export default {
 		})
 		let data = {SystemTag:this.xttjList,UserTag:zdylist}
         this.CARPUBSECOND(data)
-	},
-	toNext(){
-		this.setForm()
 		if(this.carPubType === 1) {
 			this.$u.route("/pages/company/lease/step/stepCost/stepCost")
 		} else {
 			this.$u.route("/pages/company/lease/step/stepResell/stepResell")
 		}
-		
-	}
+	},
   }
 }
 </script>

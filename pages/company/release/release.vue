@@ -68,12 +68,23 @@
 				 linesrc:'../../../static/juxing4@2x.png'
 			}
 		},
+		mounted() {
+			this.setDay()
+		},
 		methods: {
-			...mapActions(['CARPUBTYPE']),
+			...mapActions(['CARPUBTYPE','TODAY']),
+			setDay(){
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let obj = {year:year,month:month,day:day};
+				this.TODAY(obj)
+			},
 			toPage(type){
 				if(type ===1 ){
 				  this.CARPUBTYPE(1)
-				 this.$u.route('/pages/company/lease/lease')
+				   this.$u.route('/pages/company/lease/lease')
 				} else if(type === 2){
 					this.$u.route('/pages/company/recruit/recruit')
 				}else if(type === 3){
