@@ -12,40 +12,15 @@
 					 placeholder="请选择车系" @click="showSelect" />
 			</u-form-item>
 	    </view>
-		<view class="view-content">
+		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" 
-			:max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
+			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
+			@on-success='uploadChange' upload-text="" :file-list="item.fileList" :index="item.resName" :max-size="4 * 1024 * 1024" max-count="1" 
+			style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					<view class="slot-tips">
-						<view>请上传车辆右前方或左前方45°照片</view>
-					</view>
-				</view>
-			</u-upload>
-		  </view>
-		</view>
-		<view class="view-content">
-		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" 
-			:max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
-				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
-					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
-					<view class="slot-tips">
-						<view>请上传行驶证/运输证或二合一证件照片 </view>
-					</view>
-				</view>
-			</u-upload>
-		  </view>
-		</view>
-		<view class="view-content">
-		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" 
-			:max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
-				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
-					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
-					<view class="slot-tips">
-						<view>请上传运输证件照片（如已上传二合一证请忽略） </view>
+						<view>{{item.tipText}}</view>
 					</view>
 				</view>
 			</u-upload>
@@ -53,7 +28,7 @@
 		</view>
 		<view class="fixed-btn">
 			<view class=" btn-inline">
-			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">完成</u-button>
+			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">添加</u-button>
 			</view>
 		</view>
 		<u-select v-model="show" :list="carmodel" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
@@ -61,7 +36,7 @@
 </template>
 
 <script>
-
+	import {mapGetters,mapActions} from 'vuex'
 export default {
   data(){
 	return {
@@ -72,8 +47,14 @@ export default {
 		form:{
 			carbrand:'',carmodel:''
 		},
-		action:'',
-		fileList:[]
+		action: '/user/image/carotherphoto',
+		headerObj:{Authorization:''},
+		formDataObj:{phone:''},
+		uploadList:[
+			{fileList:[],tipText:'请上传车辆右前方或左前方45°照片',resName:'oneneishiphoto'},
+			{fileList:[],tipText:'请上传行驶证/运输证或二合一证件照片',resName:'twoneishiphoto'},
+			{fileList:[],tipText:'请上传运输证件照片（如已上传二合一证请忽略）',resName:'threeneishiphoto',},
+		],
 	
 	}  
   },
@@ -84,8 +65,24 @@ export default {
 		 this.getSelectFirst(index)
 	}
   },
+  computed:{
+  	...mapGetters(['token','telephone','carPubUpload'])
+  },
+  mounted() {
+  	this.setPicToken()
+  },
   methods: {
-	getSelectFirst(id){
+	  ...mapActions(['CARPUBUPLOAD']),
+	  setPicToken(){
+		this.headerObj.Authorization = this.token;
+		this.formDataObj.phone = this.telephone;
+	  },
+	  uploadChange(data, index, lists, name){
+		this.form[name] = data.text;
+		console.log(data)
+		console.log(name)
+	  },
+	 getSelectFirst(id){
 		this.$u.api.getCarSystem({parentid:id}).then(res=>{
 			if(res.code === 200){
 				 this.carmodel = res.alibabaCarModelVoList;
@@ -108,6 +105,10 @@ export default {
 		console.log(type)
 	},
 	toNext(){
+		 // let list = this.carPubUpload;
+		 // list.push(this.form)
+		// this.CARPUBUPLOAD()
+		// this.$u.route('/pages/company/recruit/carModel/carModel') 
 		
 	}
   }

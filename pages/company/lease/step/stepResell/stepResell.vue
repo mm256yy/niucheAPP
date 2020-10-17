@@ -2,7 +2,7 @@
     <view>
 		<u-navbar back-text="返回"  back-icon-size="0" title="卖车价格" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" >
-		   <view class="zlcontent-mid price-list" v-for="(item,index) in sellCarPrice" :key='index'>
+		   <view class="zlcontent-mid price-list" v-for="(item,index) in form.sellCarPrice" :key='index'>
 			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
 			   <view>
 				<u-form :model="item" label-width="130">
@@ -39,11 +39,12 @@ export default {
 			'color':'#ffffff'
 		},
 		show:false,
-		sellCarPrice:[{
-				shoplow:'',shophigh:'',packprice:''
-			}
-		],
-		
+		form:{
+			sellCarPrice:[{
+					shoplow:'',shophigh:'',packprice:''
+				}
+			],
+		}
 	}  
   },
   computed:{
@@ -52,34 +53,34 @@ export default {
   methods: {
 	  ...mapActions(['CARPUBTHREE']),
 	  addPriceObj(){
-		this.sellCarPrice.push({
+		this.form.sellCarPrice.push({
 				shoplow:'',shophigh:'',packprice:''
 			}) 
 	 },
 	 startValChange(index){
-		 // let obj = this.sellCarPrice[index];
+		 // let obj = this.form.sellCarPrice[index];
 		 // let startV = Number(obj.startVal);
 		 // let endV = Number(obj.endVal)
 		 // if ( startV > endV && endV >0){
-		 //    this.$set(this.sellCarPrice,index,{startVal:endV-1,endVal:endV,text:obj.text})
+		 //    this.$set(this.form.sellCarPrice,index,{startVal:endV-1,endVal:endV,text:obj.text})
 		 // }
 	 },
 	 endValChange(index){
-		// let obj = this.sellCarPrice[index];
+		// let obj = this.form.sellCarPrice[index];
 		// let startV = Number(obj.startVal);
 		// let endV = Number(obj.endVal)
 		// if ( endV < startV && startV >0){
-		//    this.$set(this.sellCarPrice,index,{startVal:startV,endVal:startV+1,text:obj.text})
+		//    this.$set(this.form.sellCarPrice,index,{startVal:startV,endVal:startV+1,text:obj.text})
 		// }
 	 },
 	toNext(){
-		console.log(this.sellCarPrice)
-		let obj = this.sellCarPrice[0];
+		console.log(this.form.sellCarPrice)
+		let obj = this.form.sellCarPrice[0];
 		if (obj.shoplow === '' || obj.shophigh === '' || obj.packprice === '') {
 			this.$u.toast('请填写完整');
 			return
 		}
-		this.CARPUBTHREE(this.sellCarPrice)
+		this.CARPUBTHREE(this.form.sellCarPrice)
 		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
 	}
   }

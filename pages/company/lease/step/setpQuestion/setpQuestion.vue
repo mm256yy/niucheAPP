@@ -12,23 +12,23 @@
 		  		*  点击文字区域进入编辑状态，修改问题或答案。      
 		  </view>
 		</view>
-		<view class="view-content" v-for="(item,index) in list" :key='index'>
+		<view class="view-content" v-for="(item,index) in form.list" :key='index'>
 		  <view class="" style="background: #FFFFFF;padding: 10pt;">
 			<u-row>
 				<u-col span="2">
 					<u-avatar :src="quesrc"></u-avatar>
 				</u-col>
 				<u-col span="9">
-					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.mobanquestionname}}</view>
-					<u-input v-model="item.mobanquestionname" type="textarea" :border="true"  v-show="item.show"/>
+					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.CarwWenti}}</view>
+					<u-input v-model="item.CarwWenti" type="textarea" :border="true"  v-show="item.show"/>
 				</u-col>
 				<u-col span="12" class="question-border"></u-col>
 				<u-col span="2">
 					<u-avatar :src="anssrc"></u-avatar>
 				</u-col>
 				<u-col span="9">
-					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.mobandaan}}</view>
-					<u-input v-model="item.mobandaan" type="textarea" :border="true" v-show="item.show"/>
+					<view style="word-break: break-all;" v-show="!item.show" @click="editShow(index)">{{item.Carhuida}}</view>
+					<u-input v-model="item.Carhuida" type="textarea" :border="true" v-show="item.show"/>
 				</u-col>
 			</u-row>		
 		   </view>
@@ -39,10 +39,10 @@
 		<u-modal v-model="dialogShow" @confirm="confirm" ref="uModal" title="添加新问题" 
 		 :async-close="true" :show-cancel-button="true" confirm-text="添加" cancel-text="放弃">
 			<view class="slot-content" style="padding:5pt 15pt;">
-				<u-input v-model="addForm.mobanquestionname" :border="true" placeholder="请输入新问题"/>
+				<u-input v-model="addForm.CarwWenti" :border="true" placeholder="请输入新问题"/>
 			</view>
 			<view class="slot-content" style="padding:5pt 15pt;">
-				<u-input v-model="addForm.mobandaan" type="textarea" maxlength='1000' :border="true" placeholder="请输入解答"/>
+				<u-input v-model="addForm.Carhuida" type="textarea" maxlength='1000' :border="true" placeholder="请输入解答"/>
 			</view>
 		</u-modal>
 		<view class="" style="height: 40pt;"></view>
@@ -64,9 +64,12 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				list:[],
 				addForm:{
-					mobanquestionname:'',mobandaan:''
+					CarwWenti:'', Carhuida:''
+				},
+				form:{
+					CartagId:'',
+					carMobanVoList:[],
 				},
 				dialogShow:false,
 				quesrc:'../../../../../static/que.png',
@@ -81,6 +84,7 @@
 		},
 		onLoad(option) {
 			let id = option.id;
+			this.form.CartagId = id;
 		},
 		methods: {
 			getQus(){
@@ -88,7 +92,7 @@
 					if(res.code === 200){
 						let data = res.object;
 						data.forEach((item)=>{
-							this.list.push({show:false,mobanquestionname:item.mobanquestionname,mobandaan:item.mobandaan})
+							this.form.list.push({show:false,CarwWenti:item.mobanquestionname, Carhuida:item.mobandaan})
 						})
 					}else {
 						 this.$u.toast(res.message);
@@ -96,10 +100,10 @@
 				})
 			},
 			delQus(index){
-				this.list.splice(index,1)
+				this.form.list.splice(index,1)
 			},
 			editShow(index){
-				this.list[index].show = true;
+				this.form.list[index].show = true;
 			},
 			toNext(){
 				let index = 2
@@ -110,19 +114,19 @@
 			},
 			addQue(){
 				this.addForm = {
-					mobanquestionname:'',mobandaan:'',show:false
+					CarwWenti:'',Carhuida:'',show:false
 				};
 				this.dialogShow = true;
 			},
 			confirm(){
-				if(this.addForm.mobanquestionname === '' || this.addForm.mobandaan === ''){
+				if(this.addForm.CarwWenti === '' || this.addForm.Carhuida === ''){
 				   this.$u.toast('请输入新内容')
 				   setTimeout(() => {
 				     this.$refs.uModal.clearLoading();
 					}, 100)
 				  return false
 				}
-				this.list.push(this.addForm)
+				this.form.list.push(this.addForm)
 				this.dialogShow = false
 			},
 			toSubmit(){

@@ -10,7 +10,7 @@
 					 <image :src="src" class="card-img"></image>
 					 <view class="u-line-2 card-title">
 						 艾瑞泽52020款 1.5L CVT运动版
-					  <u-icon name="trash" color="#6DD99B" class="iconAbs"></u-icon>
+					  <!-- <u-icon name="trash" color="#6DD99B" class="iconAbs" @click="delList(index)"></u-icon> -->
 					 </view>
 					</view>
 				</view>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-
+import {mapGetters,mapActions} from 'vuex'
 export default {
   data(){
 	return {
@@ -47,11 +47,21 @@ export default {
 	
 	}  
   },
-
-
+  computed:{
+  	...mapGetters(['carPubUpload'])
+  },
+ mounted() {
+	 this.list = this.carPubUpload;
+ 	console.log('ab')
+ },
   methods: {
+	...mapActions(['CARPUBUPLOAD']),
 	handleClick(){
 		this.importShow = true;
+	},
+	delList(index){
+	   this.list.splice(index,1)
+	   this.CARPUBUPLOAD(this.list)	  
 	},
 	toNewCar(){
 		this.$u.route('/pages/company/recruit/carOther/carOther')

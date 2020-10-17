@@ -42,7 +42,8 @@
 			</u-form-item>
 		  </view>
 		</view>
-		<u-modal v-model="dialogShow" @confirm="confirm" ref="uModal" title="其他参数" :async-close="true" :show-cancel-button="true" confirm-text="添加" cancel-text="放弃">
+		<u-modal v-model="dialogShow" @confirm="confirm" ref="uModal" title="其他参数" :async-close="true" :show-cancel-button="true" 
+		confirm-text="添加" cancel-text="放弃">
 			<view class="slot-content" style="padding:5pt 15pt;">
 				<u-input v-model="addForm.paramtername" :border="true" placeholder="请输入参数名称"/>
 			</view>
@@ -94,7 +95,8 @@
 				},
                 list:[
 					{value: '1',text: '国4'},{value: '2',text: '国5'},{value: '3',text: '国6'},{value: '4',text: '其他'},
-				]
+				],
+				 CartagId:'',
 			}
 		},
 		computed:{
@@ -112,7 +114,12 @@
 				this.$u.api.saveMainBusiness(obj).then(res=>{
 					if(res.code === '200'){
 						this.clearStorage()
-						this.showTips = true;
+						let data = res.comparyInsertText;
+						if (data.isfirst === 1){
+							this.showTips = true;
+						} else{
+							this.tipsCancel()
+						}
 					}else {
 						 this.$u.toast(res.message);
 					}
@@ -137,7 +144,7 @@
 				this.dialogShow = true
 			},
 			tipsConfirm(){
-				this.$u.route('/pages/company/lease/step/setpQuestion/setpQuestion')
+				this.$u.route('/pages/company/lease/step/setpQuestion/setpQuestion',{id:this.CartagId})
 			},
 			tipsCancel(){
 				let index = 2

@@ -15,6 +15,8 @@ const company = {
 	   carPubSix:{},
 	   carPubSeven:{},
 	   carPubEight:{},
+	   carPubUpload:[],
+	   carPubPosition:{},
     },
     mutations: {
 	   SET_COMPANYFIRST(state, data){state.companyFirst = data},
@@ -33,6 +35,9 @@ const company = {
 	   SET_CARPUBSIX(state, data){state.carPubSix = data},
 	   SET_CARPUBSEVEN(state, data){state.carPubSeven = data},
 	   SET_CARPUBEIGHT(state, data){state.carPubEight = data},
+	   SET_CARPUBUPLOAD(state, data){state.carPubUpload = data},
+	   SET_CARPUBUPOSITION(state, data){state.carPubPosition = data},
+	   
     },
 	actions: {
 		COMPANYFIRST({ commit }, data) {
@@ -96,6 +101,14 @@ const company = {
 		CARPUBEIGHT({ commit }, data) {
 		 uni.setStorageSync('carPubEight', data);
 		 commit('SET_CARPUBEIGHT', data);
+		},
+		CARPUBUPLOAD({ commit }, data) {
+		 uni.setStorageSync('carPubUpload', data);
+		 commit('SET_CARPUBUPLOAD', data);
+		},
+		CARPUBUPOSITION({ commit }, data) {
+		 uni.setStorageSync('carPubPosition', data);
+		 commit('SET_CARPUBUPOSITION', data);
 		},
 	}
 }
