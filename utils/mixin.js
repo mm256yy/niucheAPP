@@ -24,11 +24,22 @@ export default {
 
 			 }
            },
+		   onShow () {
+               // this.setTabBar()
+		   },
           computed:{
           	...mapGetters(['curThemeType'])
           },
           methods:{
-
+             setTabBar(){
+				uni.setTabBarStyle({
+				  selectedColor: '#41B36D',  
+				})  
+				uni.setTabBarItem({
+				  index: 0,
+				  selectedIconPath: 'static/tabbar/index-select.png'
+				}) 
+			 }
           }
        })
    }

@@ -72,7 +72,7 @@ const install = (Vue, vm) => {
 				vm.$u.route('/pages/user/login')
 			}, 1500)
 			return false;
-		}else if(res.code == 401) {
+		}else if(res.code == 500) {
 			vm.$u.toast('请求失败');
 			return false;
 		} else {

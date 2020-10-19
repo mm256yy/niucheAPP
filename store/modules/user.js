@@ -1,6 +1,6 @@
 const user = {
   state: {
-	 curThemeType: '',    
+	curThemeType: '',    
 	telephone:'',
     token:'' ,
     name: '',

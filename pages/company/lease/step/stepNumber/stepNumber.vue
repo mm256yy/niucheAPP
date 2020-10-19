@@ -106,22 +106,21 @@
 		
 		methods: {
 			setForm(){
-				let obj = Object.assign(this.carPubFirst, this.carPubSecond,this.carPubThree,this.carPubFour,
+				let obj = Object.assign({comparyid:this.telephone},this.carPubFirst, this.carPubSecond,this.carPubThree,this.carPubFour,
 				this.carPubFive,this.carPubSix,this.carPubSeven,this.form);
 				obj.mainbusinesstype = this.carPubType;
-				obj.companyid = this.telephone;
 				obj.businesstype = Number(obj.businesstype)
 				this.$u.api.saveMainBusiness(obj).then(res=>{
-					if(res.code === '200'){
+					if(res.code === 200){
 						this.clearStorage()
-						let data = res.comparyInsertText;
+						let data = res.object;
 						if (data.isfirst === 1){
 							this.showTips = true;
 						} else{
 							this.tipsCancel()
 						}
 					}else {
-						 this.$u.toast(res.message);
+						 this.$u.toast(res.msg);
 					}
 				})
 			},

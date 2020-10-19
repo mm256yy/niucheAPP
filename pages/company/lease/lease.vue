@@ -59,7 +59,7 @@
 			</view>
 	    </view>
 		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
-		<ChildPopup  ref='importShow' :childType='childType' @handleId = 'getChildId'></ChildPopup>
+		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
 		
      </view>
 </template>
@@ -148,8 +148,19 @@ export default {
 		this.$u.route('/pages/company/lease/carList/carList',{source:1}) 
 	 }, 
 	  
-	getChildId(id){
-		console.log(id)
+	getChildId(item){
+		console.log(item)
+		let obj = item[0];
+		this.form.carbrand = obj.carBrand;
+		// this.selectObj.carmodel.forEach((item)=>{
+		// 	if(item.text = obj.carModel) {
+		// 		this.getSelectSecond(item.id)
+		// 	}
+		// })
+		this.form.carmodel = obj.carModel;
+		this.form.carxinghao = obj.carxinghao;
+		this.form.cartype = obj.carType;
+	    this.form.power = obj.power;
 	},
 	setInfo(){
 		

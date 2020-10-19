@@ -5,25 +5,27 @@
 				<u-card :show-head="false" margin='0 0 20rpx' border-radius='0' padding='10' v-for="(item,index) in list" :key='index'>
 					<view class="" slot="body">
 						<view class="u-flex">
-						 <image :src="item.tupian" class="card-img"></image>
+						 <image :src="item.carModelPhoto" class="card-img"></image>
 						 <view class="u-line-2 card-title">
 							 <view class="">
-							 	{{item.pingpai}}
+							 	{{item.carBrand}} {{item.carModel}}
 							 </view>
 							 <view>
-							 	{{item.peizhi}}
+							 	{{item.carxinghao}}
 							 </view>
 						  </view>
 						</view>
 						<view>
-							 <u-tag :text="info.text" type="success" mode="dark" class="tag-style" v-for="(info,index) in item.biaoqian" :key='index'/>
+							 <u-tag :text="info" type="success" mode="dark" class="tag-style" v-for="(info,index) in item.carTag" :key='index'/>
 						</view>
 					</view>
 					<view slot="foot" style="text-align: right;">
-						<u-radio-group v-model="val" v-if="childType" active-color="#6DD99B" @change="radioChange">
-							<u-radio :name="item.id"></u-radio>
+						<u-radio-group v-model="val" v-if="childType" active-color="#6DD99B"  @change="radioChange">
+							<u-radio :name="index"></u-radio>
 						</u-radio-group>
-						<u-checkbox v-else v-model="checked" @change="boxChange" :name="item.id" active-color="#6DD99B"></u-checkbox>
+						<u-checkbox-group v-else>
+							<u-checkbox  v-model="item.check" :name="item.id" active-color="#6DD99B"></u-checkbox>
+						</u-checkbox-group>
 					</view>
 				</u-card>
 				<view class="fixed-btn" v-if="!childType">
@@ -37,36 +39,59 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
 				checked:false,
 				importShow:false,
-				val:'abs',
-				list:[{id:1,pingpai:'吉利帝豪GL',peizhi:'吉利帝豪GL 1.5L CVT运动版吉利帝豪GL',biaoqian:[{text:'在售'}],tupian:'https://img12.360buyimg.com/n7/jfs/t1/102191/19/9072/330688/5e0af7cfE17698872/c91c00d713bf729a.jpg'},],
+				val:'',
+				list:[],
 				idList:[],
 			};
 		},
 		props:{
 			childType:{
 				type:Boolean,
-				default:true
-			}
+				default:true,
+				//true 单选 fasle 多选
+			},
+			carPubType:{
+				type:Number,
+				//1 租车 2 司机招聘 3 车辆转卖
+			},
+		},
+		computed:{
+			...mapGetters(['telephone'])
 		},
 		mounted() {
-			console.log(this.childType)
+			this.initList()
 		},
 		methods:{
 			radioChange(name){
+				let arr = [];
+				arr.push(this.list[name])
 				this.importShow = false
-				this.$emit("handleId", name);
+				this.$emit("handleId", arr);
 			},
-			boxChange(e){
-			   this.idList = e;
+			initList(){
+				this.$u.api.getMyCar({State:this.carPubType,telephone:this.telephone}).then(res=>{
+					if(res.code === 200){
+						this.list = res.object;
+
+					}else {
+						 this.$u.toast(res.message);
+					}
+				})
 			},
 			toNext(){
-				this.$emit("handleId", this.idList);	
-				
+				let arr = [];
+				this.list.forEach((item)=>{
+					if (item.check){
+						arr.push(item)
+					}
+				})
+				this.$emit("handleId", arr);	
 			}
 		}
 	}

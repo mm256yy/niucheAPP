@@ -238,9 +238,11 @@
 				 this.$u.route('/pages/login/login');
 			},
 			toPub(index){
-				  this.$u.route('/pages/company/myPublish/myPublish', {
-				  	index: index
-				  });
+				if(this.telephone){
+					this.$u.route('/pages/company/myPublish/myPublish', {
+						index: index
+					});
+				}
 			}
 		}
 	}

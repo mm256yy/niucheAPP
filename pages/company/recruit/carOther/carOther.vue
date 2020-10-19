@@ -3,15 +3,16 @@
 		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆其他" :background="backgroundCom" 
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent">
-			<u-form-item label="" prop="carbrand" label-width='0'>
-				 <u-input v-model="form.carbrand" class="input_select" type="select" :border="true"
+			<u-form-item label="" prop="CarModel" label-width='0'>
+				 <u-input v-model="form.CarModel" class="input_select" type="select" :border="true"
 				  placeholder="请选择车辆品牌" @click="toCarList" />
 		   	 	</u-form-item>
-				<u-form-item label="" prop="carmodel" label-width='0'>
-					<u-input v-model="form.carmodel" class="input_select" type="select" :border="true"
+				<u-form-item label="" prop="CarXilie" label-width='0'>
+					<u-input v-model="form.CarXilie" class="input_select" type="select" :border="true"
 					 placeholder="请选择车系" @click="showSelect" />
 			</u-form-item>
 	    </view>
+		<view class="zlcontent">正确的车辆照片和证件照片 可帮助您更快通过审核</view>
 		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
 		   <view class="top-content-upload" >
 			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
@@ -45,15 +46,17 @@ export default {
 		backTextStyle:{'color':'#ffffff'},
 		show:false,
 		form:{
-			carbrand:'',carmodel:''
+			CarModel:'',CarXilie:'',
+			onephoto:'',CarNamePlate:'',drivephoto:'',TransportationCard:''
 		},
 		action: '/user/image/carotherphoto',
 		headerObj:{Authorization:''},
 		formDataObj:{phone:''},
 		uploadList:[
-			{fileList:[],tipText:'请上传车辆右前方或左前方45°照片',resName:'oneneishiphoto'},
-			{fileList:[],tipText:'请上传行驶证/运输证或二合一证件照片',resName:'twoneishiphoto'},
-			{fileList:[],tipText:'请上传运输证件照片（如已上传二合一证请忽略）',resName:'threeneishiphoto',},
+			{fileList:[],tipText:'请上传车辆右前方或左前方45°照片',resName:'onephoto'},
+			{fileList:[],tipText:'请上传车辆铭牌',resName:'CarNamePlate'},
+			{fileList:[],tipText:'请上传行驶证/运输证或二合一证件照片',resName:'drivephoto'},
+			{fileList:[],tipText:'请上传运输证件照片（如已上传二合一证请忽略）',resName:'TransportationCard',},
 		],
 	
 	}  
@@ -61,7 +64,7 @@ export default {
   onLoad(option) {
   	let index = option.id;
 	if(index){
-		 this.form.carbrand =option.text;
+		 this.form.CarModel =option.text;
 		 this.getSelectFirst(index)
 	}
   },
@@ -79,8 +82,6 @@ export default {
 	  },
 	  uploadChange(data, index, lists, name){
 		this.form[name] = data.text;
-		console.log(data)
-		console.log(name)
 	  },
 	 getSelectFirst(id){
 		this.$u.api.getCarSystem({parentid:id}).then(res=>{

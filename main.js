@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store/store.js'
 import themeMixin from './utils/mixin.js'
+
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 App.mpType = 'app'
@@ -16,6 +17,8 @@ const app = new Vue({
 })
 import httpInterceptor from '@/common/http.interceptor.js'
 Vue.use(httpInterceptor, app)
+
+
 
 // // http接口API集中管理引入部分
 import httpApi from '@/common/http.api.js'

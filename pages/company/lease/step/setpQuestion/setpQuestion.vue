@@ -12,7 +12,7 @@
 		  		*  点击文字区域进入编辑状态，修改问题或答案。      
 		  </view>
 		</view>
-		<view class="view-content" v-for="(item,index) in form.list" :key='index'>
+		<view class="view-content" v-for="(item,index) in form.carMobanVoList" :key='index'>
 		  <view class="" style="background: #FFFFFF;padding: 10pt;">
 			<u-row>
 				<u-col span="2">
@@ -92,7 +92,7 @@
 					if(res.code === 200){
 						let data = res.object;
 						data.forEach((item)=>{
-							this.form.list.push({show:false,CarwWenti:item.mobanquestionname, Carhuida:item.mobandaan})
+							this.form.carMobanVoList.push({show:false,CarwWenti:item.mobanquestionname, Carhuida:item.mobandaan})
 						})
 					}else {
 						 this.$u.toast(res.message);
@@ -100,10 +100,10 @@
 				})
 			},
 			delQus(index){
-				this.form.list.splice(index,1)
+				this.form.carMobanVoList.splice(index,1)
 			},
 			editShow(index){
-				this.form.list[index].show = true;
+				this.form.carMobanVoList[index].show = true;
 			},
 			toNext(){
 				let index = 2
@@ -126,12 +126,16 @@
 					}, 100)
 				  return false
 				}
-				this.form.list.push(this.addForm)
+				if (this.form.carMobanVoList.length>20){
+					this.$u.toast('添加问题超过上限');
+					return
+				}
+				this.form.carMobanVoList.push(this.addForm)
 				this.dialogShow = false
 			},
 			toSubmit(){
-				this.$u.api.saveAnswer(obj).then(res=>{
-					if(res.code === '200'){
+				this.$u.api.saveAnswer(this.form).then(res=>{
+					if(res.code === 200){
 						this.toNext()
 					}else {
 						 this.$u.toast(res.message);
