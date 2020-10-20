@@ -5,14 +5,19 @@
 		<view class="zlcontent">
 		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
 			<u-card :show-head="false" v-for="(item,index) in list" :key="index">
-				<view class="" slot="body">
-					<view class="u-flex u-row-between">
-					 <image :src="item.CarModelPhoto" class="card-img"></image>
+				<view style="position: relative;" slot="body">
+					<view class="u-flex">
+					 <image :src="item.carModelPhoto" class="card-img"></image>
 					 <view class="u-line-2 card-title">
-						 {{item.CarBrand}}{{item.CarModel}}-{{item.CarXilie}}
-					  <u-icon name="trash" color="#6DD99B" class="iconAbs" @click="delList(index)"></u-icon>
+						 <view class="">
+						 	 {{item.carBrand}} {{item.carModel}} {{item.carxinghao}}
+						 </view>
+						 <view>
+						 	 {{item.CarBrand}} {{item.CarModel}} {{item.CarXilie}}
+						 </view>
 					 </view>
 					</view>
+					 <u-icon name="trash" color="#6DD99B" class="iconAbs" @click="delList(index)"></u-icon>
 				</view>
 			</u-card>
 			<view @click="toNewCar" style="padding:10pt 10pt;">
@@ -43,7 +48,7 @@ export default {
 		},
 		list:[],
 		importShow:false,
-		childType:true,
+		childType:false,
 		carPubType:2,
 	
 	}  
@@ -111,16 +116,17 @@ page{
 	padding-right:15pt;
 }
 .card-title{
-	font-size: 16pt;
+	// font-size: 16pt;
 	color: #333;
 	padding: 20rpx 10pt;
 	position: relative;
 	border-left: 1px solid #F5F5F7;
-	.iconAbs{
-	    position: absolute;
-	    right: 6pt;
-	    bottom: 0;	
-	}
+
+}
+.iconAbs{
+	position: absolute;
+	right: 6pt;
+	bottom: 0;	
 }
 .fixed-btn{
     box-sizing: border-box;

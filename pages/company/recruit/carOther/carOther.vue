@@ -108,7 +108,7 @@ export default {
 		 this.$u.api.getCarLogo({CarBrand:this.form.CarModel,CarModel:this.form.CarXilie}).then(res=>{
 		 	if(res.code === 200){
 				let data = this.form;
-				data.CarModelPhoto = res.data;
+				data.carModelPhoto = res.data;
 		 		 list.push(data)
 				 this.CARPUBUPLOAD(list)
 				 this.$u.route('/pages/company/recruit/carModel/carModel') 

@@ -92,6 +92,7 @@
 					}
 				})
 				this.$emit("handleId", arr);	
+				this.importShow = false
 			}
 		}
 	}
