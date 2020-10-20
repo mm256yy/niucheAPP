@@ -106,7 +106,7 @@ export default {
 			this.form.comparyInviteInsertCarVoList = [];
 			pubUpload.forEach((item)=>{
 				if (item.id){
-					this.form.AlreadHaveCarList.push(item)
+					this.form.AlreadHaveCarList.push(item.id)
 				} else {
 					this.form.comparyInviteInsertCarVoList.push(item)
 				}
@@ -130,7 +130,6 @@ export default {
 		 console.log(obj)
 		 this.$u.api.saveCompanyInvite(obj).then(res=>{
 		 	if(res.code === 200){
-				
 				this.showTips = true
 		 	}else {
 		 		 this.$u.toast(res.message);
@@ -142,7 +141,7 @@ export default {
 		 uni.removeStorageSync('carPubPosition');
 	 },
 	 tipsConfirm(){
-	 	this.$u.route('/pages/company/myPublish/myPublish', {index: 2});
+	 	this.$u.route('/pages/company/myPublish/myPublish', {index: 1});
 	 },
 	 toSubmit(){
 		this.$refs.uForm.validate(valid=>{

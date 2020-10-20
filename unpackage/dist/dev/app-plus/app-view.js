@@ -14139,6 +14139,8 @@ var components = {
   uRadioGroup: __webpack_require__(/*! @/uview-ui/components/u-radio-group/u-radio-group.vue */ 189)
     .default,
   uRadio: __webpack_require__(/*! @/uview-ui/components/u-radio/u-radio.vue */ 197).default,
+  uCheckboxGroup: __webpack_require__(/*! @/uview-ui/components/u-checkbox-group/u-checkbox-group.vue */ 245)
+    .default,
   uCheckbox: __webpack_require__(/*! @/uview-ui/components/u-checkbox/u-checkbox.vue */ 253).default,
   uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default
 }
@@ -14204,7 +14206,13 @@ var render = function() {
                                 _c(
                                   "v-uni-view",
                                   { attrs: { _i: "8-" + $30 } },
-                                  [_vm._v(_vm._$g("8-" + $30, "t0-0"))]
+                                  [
+                                    _vm._v(
+                                      _vm._$g("8-" + $30, "t0-0") +
+                                        " " +
+                                        _vm._$g("8-" + $30, "t0-1")
+                                    )
+                                  ]
                                 ),
                                 _c(
                                   "v-uni-view",
@@ -14267,19 +14275,21 @@ var render = function() {
                               [_c("u-radio", { attrs: { _i: "14-" + $30 } })],
                               1
                             )
-                          : _c("u-checkbox", {
-                              attrs: { _i: "15-" + $30 },
-                              on: {
-                                change: function($event) {
-                                  return _vm.$handleViewEvent($event)
-                                }
-                              },
-                              model: {
-                                value: _vm._$g("15-" + $30, "v-model"),
-                                callback: function() {},
-                                expression: "checked"
-                              }
-                            })
+                          : _c(
+                              "u-checkbox-group",
+                              { attrs: { _i: "15-" + $30 } },
+                              [
+                                _c("u-checkbox", {
+                                  attrs: { _i: "16-" + $30 },
+                                  model: {
+                                    value: _vm._$g("16-" + $30, "v-model"),
+                                    callback: function() {},
+                                    expression: "item.check"
+                                  }
+                                })
+                              ],
+                              1
+                            )
                       ],
                       1
                     )
@@ -14287,21 +14297,21 @@ var render = function() {
                   1
                 )
               }),
-              _vm._$g(16, "i")
+              _vm._$g(17, "i")
                 ? _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+                    { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
                     [
                       _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                        { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
                         [
                           _c(
                             "u-button",
                             {
-                              staticClass: _vm._$g(18, "sc"),
+                              staticClass: _vm._$g(19, "sc"),
                               staticStyle: { width: "100%" },
-                              attrs: { _i: 18 },
+                              attrs: { _i: 19 },
                               on: {
                                 click: function($event) {
                                   return _vm.$handleViewEvent($event)
@@ -14882,7 +14892,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 
 {
-  props: ["childType"],
+  props: ["childType", "carPubType"],
   data: function data() {
     return {
       wxsProps: {} };
@@ -15090,7 +15100,8 @@ var components = {
   uInput: __webpack_require__(/*! @/uview-ui/components/u-input/u-input.vue */ 173).default,
   uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default,
   uActionSheet: __webpack_require__(/*! @/uview-ui/components/u-action-sheet/u-action-sheet.vue */ 368)
-    .default
+    .default,
+  uModal: __webpack_require__(/*! @/uview-ui/components/u-modal/u-modal.vue */ 301).default
 }
 var render = function() {
   var _vm = this
@@ -15105,20 +15116,35 @@ var render = function() {
         "v-uni-view",
         { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
         [
-          _c("v-uni-view", { attrs: { _i: 3 } }, [
-            _vm._v("* 点击文字区域进入编辑状态，修改内容。")
-          ]),
-          _c("v-uni-view", { attrs: { _i: 4 } }, [
-            _vm._v("此页内容都是必填项哦，没填写不能进入下一步！")
-          ]),
           _c(
             "v-uni-view",
-            { attrs: { _i: 5 } },
+            { attrs: { _i: 3 } },
             [
               _c(
                 "u-form",
-                { ref: "uForm", attrs: { _i: 6 } },
+                { ref: "uForm", attrs: { _i: 4 } },
                 [
+                  _c(
+                    "u-form-item",
+                    { attrs: { _i: 5 } },
+                    [
+                      _c("u-input", {
+                        staticClass: _vm._$g(6, "sc"),
+                        attrs: { _i: 6 },
+                        on: {
+                          click: function($event) {
+                            return _vm.$handleViewEvent($event)
+                          }
+                        },
+                        model: {
+                          value: _vm._$g(6, "v-model"),
+                          callback: function() {},
+                          expression: "form.workname"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _c(
                     "u-form-item",
                     { attrs: { _i: 7 } },
@@ -15127,23 +15153,24 @@ var render = function() {
                         staticClass: _vm._$g(8, "sc"),
                         attrs: { _i: 8 },
                         on: {
-                          click: function($event) {
+                          input: function($event) {
                             return _vm.$handleViewEvent($event)
                           }
                         },
                         model: {
                           value: _vm._$g(8, "v-model"),
                           callback: function() {},
-                          expression: "form.carmodel"
+                          expression: "form.lowmonthprice"
                         }
-                      })
-                    ],
-                    1
-                  ),
-                  _c(
-                    "u-form-item",
-                    { attrs: { _i: 9 } },
-                    [
+                      }),
+                      _c(
+                        "v-uni-text",
+                        {
+                          staticStyle: { padding: "0 10pt" },
+                          attrs: { _i: 9 }
+                        },
+                        [_vm._v("-")]
+                      ),
                       _c("u-input", {
                         staticClass: _vm._$g(10, "sc"),
                         attrs: { _i: 10 },
@@ -15155,29 +15182,23 @@ var render = function() {
                         model: {
                           value: _vm._$g(10, "v-model"),
                           callback: function() {},
-                          expression: "form.carmodel"
+                          expression: "form.highmonthprice"
                         }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        {
-                          staticStyle: { padding: "0 10pt" },
-                          attrs: { _i: 11 }
-                        },
-                        [_vm._v("-")]
-                      ),
+                      })
+                    ],
+                    1
+                  ),
+                  _c(
+                    "u-form-item",
+                    { attrs: { _i: 11 } },
+                    [
                       _c("u-input", {
                         staticClass: _vm._$g(12, "sc"),
                         attrs: { _i: 12 },
-                        on: {
-                          input: function($event) {
-                            return _vm.$handleViewEvent($event)
-                          }
-                        },
                         model: {
                           value: _vm._$g(12, "v-model"),
                           callback: function() {},
-                          expression: "form.carmodel"
+                          expression: "form.peoplenumber"
                         }
                       })
                     ],
@@ -15193,7 +15214,7 @@ var render = function() {
                         model: {
                           value: _vm._$g(14, "v-model"),
                           callback: function() {},
-                          expression: "form.carmodel"
+                          expression: "form.worktext"
                         }
                       })
                     ],
@@ -15209,28 +15230,21 @@ var render = function() {
                         model: {
                           value: _vm._$g(16, "v-model"),
                           callback: function() {},
-                          expression: "form.carmodel"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _c(
-                    "u-form-item",
-                    { attrs: { _i: 17 } },
-                    [
-                      _c("u-input", {
-                        staticClass: _vm._$g(18, "sc"),
-                        attrs: { _i: 18 },
-                        model: {
-                          value: _vm._$g(18, "v-model"),
-                          callback: function() {},
-                          expression: "form.carmodel"
+                          expression: "value"
                         }
                       }),
-                      _c("u-button", { attrs: { _i: 19 } }, [
-                        _vm._v("添加工作车辆")
-                      ])
+                      _c(
+                        "u-button",
+                        {
+                          attrs: { _i: 17 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [_vm._v("添加工作车辆")]
+                      )
                     ],
                     1
                   )
@@ -15245,18 +15259,18 @@ var render = function() {
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
+        { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+            { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
             [
               _c(
                 "u-button",
                 {
-                  staticClass: _vm._$g(22, "sc"),
+                  staticClass: _vm._$g(20, "sc"),
                   staticStyle: { width: "50%" },
-                  attrs: { _i: 22 },
+                  attrs: { _i: 20 },
                   on: {
                     click: function($event) {
                       return _vm.$handleViewEvent($event)
@@ -15268,9 +15282,9 @@ var render = function() {
               _c(
                 "u-button",
                 {
-                  staticClass: _vm._$g(23, "sc"),
+                  staticClass: _vm._$g(21, "sc"),
                   staticStyle: { width: "50%" },
-                  attrs: { _i: 23 },
+                  attrs: { _i: 21 },
                   on: {
                     click: function($event) {
                       return _vm.$handleViewEvent($event)
@@ -15286,18 +15300,46 @@ var render = function() {
         1
       ),
       _c("u-action-sheet", {
-        attrs: { _i: 24 },
+        attrs: { _i: 22 },
         on: {
           click: function($event) {
             return _vm.$handleViewEvent($event)
           }
         },
         model: {
-          value: _vm._$g(24, "v-model"),
+          value: _vm._$g(22, "v-model"),
           callback: function() {},
           expression: "show"
         }
-      })
+      }),
+      _c(
+        "u-modal",
+        {
+          attrs: { _i: 23 },
+          on: {
+            confirm: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          },
+          model: {
+            value: _vm._$g(23, "v-model"),
+            callback: function() {},
+            expression: "showTips"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(24, "sc"),
+              staticStyle: { padding: "10pt", "font-size": "10pt" },
+              attrs: { _i: 24 }
+            },
+            [_vm._v("信息发布成功")]
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -15759,7 +15801,8 @@ var components = {
   uRow: __webpack_require__(/*! @/uview-ui/components/u-row/u-row.vue */ 76).default,
   uCol: __webpack_require__(/*! @/uview-ui/components/u-col/u-col.vue */ 84).default,
   uInput: __webpack_require__(/*! @/uview-ui/components/u-input/u-input.vue */ 173).default,
-  uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default
+  uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default,
+  uModal: __webpack_require__(/*! @/uview-ui/components/u-modal/u-modal.vue */ 301).default
 }
 var render = function() {
   var _vm = this
@@ -15787,10 +15830,15 @@ var render = function() {
                     {
                       staticStyle: { "text-align": "right" },
                       attrs: { _i: 5 },
+                      on: {
+                        change: function($event) {
+                          return _vm.$handleViewEvent($event)
+                        }
+                      },
                       model: {
                         value: _vm._$g(5, "v-model"),
                         callback: function() {},
-                        expression: "form.carmodel"
+                        expression: "form.businesstype"
                       }
                     },
                     [
@@ -15901,7 +15949,15 @@ var render = function() {
                     [
                       _c(
                         "u-button",
-                        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                        {
+                          staticClass: _vm._$g(17, "sc"),
+                          attrs: { _i: 17 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
                         [_vm._v("添加")]
                       )
                     ],
@@ -15990,27 +16046,20 @@ var render = function() {
                       model: {
                         value: _vm._$g(25, "v-model"),
                         callback: function() {},
-                        expression: "form.carmodel"
+                        expression: "form.monthzu"
                       }
                     },
-                    [
-                      _c(
+                    _vm._l(_vm._$g(26, "f"), function(item, index, $23, $33) {
+                      return _c(
                         "u-radio",
                         {
+                          key: item,
                           staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 26 }
+                          attrs: { _i: "26-" + $33 }
                         },
-                        [_vm._v("3000以内(含3000)")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 27 }
-                        },
-                        [_vm._v("3000以上")]
+                        [_vm._v(_vm._$g("26-" + $33, "t0-0"))]
                       )
-                    ],
+                    }),
                     1
                   )
                 ],
@@ -16018,53 +16067,30 @@ var render = function() {
               ),
               _c(
                 "u-form-item",
-                { attrs: { _i: 28 } },
+                { attrs: { _i: 27 } },
                 [
                   _c(
                     "u-radio-group",
                     {
                       staticStyle: { "text-align": "right" },
-                      attrs: { _i: 29 },
+                      attrs: { _i: 28 },
                       model: {
-                        value: _vm._$g(29, "v-model"),
+                        value: _vm._$g(28, "v-model"),
                         callback: function() {},
-                        expression: "form.carmodel"
+                        expression: "form.carage"
                       }
                     },
-                    [
-                      _c(
+                    _vm._l(_vm._$g(29, "f"), function(item, index, $24, $34) {
+                      return _c(
                         "u-radio",
                         {
+                          key: item,
                           staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 30 }
+                          attrs: { _i: "29-" + $34 }
                         },
-                        [_vm._v("1年内")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 31 }
-                        },
-                        [_vm._v("1年-3年")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 32 }
-                        },
-                        [_vm._v("3年-5年")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 33 }
-                        },
-                        [_vm._v("5年以上")]
+                        [_vm._v(_vm._$g("29-" + $34, "t0-0"))]
                       )
-                    ],
+                    }),
                     1
                   )
                 ],
@@ -16072,77 +16098,30 @@ var render = function() {
               ),
               _c(
                 "u-form-item",
-                { attrs: { _i: 34 } },
+                { attrs: { _i: 30 } },
                 [
                   _c(
                     "u-radio-group",
                     {
                       staticStyle: { "text-align": "right" },
-                      attrs: { _i: 35 },
+                      attrs: { _i: 31 },
                       model: {
-                        value: _vm._$g(35, "v-model"),
+                        value: _vm._$g(31, "v-model"),
                         callback: function() {},
-                        expression: "form.carmodel"
+                        expression: "form.km"
                       }
                     },
-                    [
-                      _c(
+                    _vm._l(_vm._$g(32, "f"), function(item, index, $25, $35) {
+                      return _c(
                         "u-radio",
                         {
+                          key: item,
                           staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 36 }
+                          attrs: { _i: "32-" + $35 }
                         },
-                        [_vm._v("新车(300公里以内)")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 37 }
-                        },
-                        [_vm._v("300公里-2万公里")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 38 }
-                        },
-                        [_vm._v("2万公里-5万公里")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 39 }
-                        },
-                        [_vm._v("5万公里-10万公里")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 40 }
-                        },
-                        [_vm._v("10万公里-20万公里")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 41 }
-                        },
-                        [_vm._v("20万公里-30万公里")]
-                      ),
-                      _c(
-                        "u-radio",
-                        {
-                          staticStyle: { "margin-left": "10pt" },
-                          attrs: { _i: 42 }
-                        },
-                        [_vm._v("30万公里以上")]
+                        [_vm._v(_vm._$g("32-" + $35, "t0-0"))]
                       )
-                    ],
+                    }),
                     1
                   )
                 ],
@@ -16162,21 +16141,49 @@ var render = function() {
             padding: "5pt 20pt",
             "margin-top": "10pt"
           },
-          attrs: { _i: 43 }
+          attrs: { _i: 33 }
         },
         [
           _c(
             "u-button",
             {
-              staticClass: _vm._$g(44, "sc"),
-              attrs: { _i: 44 },
+              staticClass: _vm._$g(34, "sc"),
+              attrs: { _i: 34 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
                 }
               }
             },
-            [_vm._v("下一步")]
+            [_vm._v("发布")]
+          )
+        ],
+        1
+      ),
+      _c(
+        "u-modal",
+        {
+          attrs: { _i: 35 },
+          on: {
+            confirm: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          },
+          model: {
+            value: _vm._$g(35, "v-model"),
+            callback: function() {},
+            expression: "showTips"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(36, "sc"),
+              staticStyle: { padding: "10pt", "font-size": "10pt" },
+              attrs: { _i: 36 }
+            },
+            [_vm._v("信息发布成功")]
           )
         ],
         1
@@ -21307,7 +21314,8 @@ var components = {
   uCol: __webpack_require__(/*! @/uview-ui/components/u-col/u-col.vue */ 84).default,
   uAvatar: __webpack_require__(/*! @/uview-ui/components/u-avatar/u-avatar.vue */ 105).default,
   uInput: __webpack_require__(/*! @/uview-ui/components/u-input/u-input.vue */ 173).default,
-  uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default
+  uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default,
+  uModal: __webpack_require__(/*! @/uview-ui/components/u-modal/u-modal.vue */ 301).default
 }
 var render = function() {
   var _vm = this
@@ -21432,7 +21440,7 @@ var render = function() {
                           model: {
                             value: _vm._$g("14-" + $30, "v-model"),
                             callback: function() {},
-                            expression: "item.qus"
+                            expression: "item.CarwWenti"
                           }
                         })
                       ],
@@ -21486,7 +21494,7 @@ var render = function() {
                           model: {
                             value: _vm._$g("20-" + $30, "v-model"),
                             callback: function() {},
-                            expression: "item.ans"
+                            expression: "item.Carhuida"
                           }
                         })
                       ],
@@ -21525,21 +21533,79 @@ var render = function() {
           1
         )
       }),
-      _c("v-uni-view", { staticStyle: { height: "40pt" }, attrs: { _i: 23 } }),
       _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+        "u-modal",
+        {
+          ref: "uModal",
+          attrs: { _i: 23 },
+          on: {
+            confirm: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          },
+          model: {
+            value: _vm._$g(23, "v-model"),
+            callback: function() {},
+            expression: "dialogShow"
+          }
+        },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(25, "sc"), attrs: { _i: 25 } },
+            {
+              staticClass: _vm._$g(24, "sc"),
+              staticStyle: { padding: "5pt 15pt" },
+              attrs: { _i: 24 }
+            },
+            [
+              _c("u-input", {
+                attrs: { _i: 25 },
+                model: {
+                  value: _vm._$g(25, "v-model"),
+                  callback: function() {},
+                  expression: "addForm.CarwWenti"
+                }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(26, "sc"),
+              staticStyle: { padding: "5pt 15pt" },
+              attrs: { _i: 26 }
+            },
+            [
+              _c("u-input", {
+                attrs: { _i: 27 },
+                model: {
+                  value: _vm._$g(27, "v-model"),
+                  callback: function() {},
+                  expression: "addForm.Carhuida"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c("v-uni-view", { staticStyle: { height: "40pt" }, attrs: { _i: 28 } }),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
             [
               _c(
                 "u-button",
                 {
-                  staticClass: _vm._$g(26, "sc"),
+                  staticClass: _vm._$g(31, "sc"),
                   staticStyle: { width: "50%" },
-                  attrs: { _i: 26 },
+                  attrs: { _i: 31 },
                   on: {
                     click: function($event) {
                       return _vm.$handleViewEvent($event)
@@ -21551,9 +21617,9 @@ var render = function() {
               _c(
                 "u-button",
                 {
-                  staticClass: _vm._$g(27, "sc"),
+                  staticClass: _vm._$g(32, "sc"),
                   staticStyle: { width: "50%" },
-                  attrs: { _i: 27 },
+                  attrs: { _i: 32 },
                   on: {
                     click: function($event) {
                       return _vm.$handleViewEvent($event)
@@ -21660,7 +21726,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些\"u-\"开头的自定义变量\r\n * uView自定义的css类名和scss变量，均以\"u-\"开头，不会造成冲突，请放心使用 \r\n */\n.scroll-container {\r\n  height: 100%;\n}\nbody {\r\n  background-size: cover;\r\n  background-repeat: no-repeat;\r\n  background-color: #f5f5f8;\r\n  height: 100%;\n}\n .u-border-bottom:after {\r\n  border-bottom-width: 0;\n}\n.navbar-right {\r\n  margin-right: 24rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n.right-item {\r\n  margin: 0 12rpx;\r\n  position: relative;\r\n  color: #ffffff;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n.question-border {\r\n  margin: 5pt 0;\r\n  border-bottom: 1px solid #E5E5E5;\n}\n.view-content {\r\n  margin-top: 20pt;\r\n  padding: 0 10pt;\n}\n.fixed-btn {\r\n  box-sizing: border-box;\r\n  position: fixed;\r\n  left: 0;\r\n  bottom: 0;\r\n  width: 100%;\r\n  z-index: 998;\n}\n.btn-inline {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\n}\n.btn-agree {\r\n  width: 50%;\r\n  background: -webkit-linear-gradient(35deg, #37AB63, #6DD99C);\r\n  background: linear-gradient(55deg, #37AB63, #6DD99C);\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些\"u-\"开头的自定义变量\r\n * uView自定义的css类名和scss变量，均以\"u-\"开头，不会造成冲突，请放心使用 \r\n */\n.scroll-container {\r\n  height: 100%;\n}\nbody {\r\n  background-color: #f5f5f8;\r\n  height: 100%;\n}\n .u-border-bottom:after {\r\n  border-bottom-width: 0;\n}\n.navbar-right {\r\n  margin-right: 24rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n.right-item {\r\n  margin: 0 12rpx;\r\n  position: relative;\r\n  color: #ffffff;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n.question-border {\r\n  margin: 5pt 0;\r\n  border-bottom: 1px solid #E5E5E5;\n}\n.view-content {\r\n  margin-top: 20pt;\r\n  padding: 0 10pt;\n}\n.fixed-btn {\r\n  box-sizing: border-box;\r\n  position: fixed;\r\n  left: 0;\r\n  bottom: 0;\r\n  width: 100%;\r\n  z-index: 998;\n}\n.btn-inline {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\n}\n.btn-agree {\r\n  width: 50%;\r\n  background: -webkit-linear-gradient(35deg, #37AB63, #6DD99C);\r\n  background: linear-gradient(55deg, #37AB63, #6DD99C);\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -23019,8 +23085,7 @@ var components = {
   uNavbar: __webpack_require__(/*! @/uview-ui/components/u-navbar/u-navbar.vue */ 68).default,
   uCard: __webpack_require__(/*! @/uview-ui/components/u-card/u-card.vue */ 340).default,
   uIcon: __webpack_require__(/*! @/uview-ui/components/u-icon/u-icon.vue */ 17).default,
-  uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default,
-  uPopup: __webpack_require__(/*! @/uview-ui/components/u-popup/u-popup.vue */ 272).default
+  uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default
 }
 var render = function() {
   var _vm = this
@@ -23048,48 +23113,85 @@ var render = function() {
             },
             [_vm._v("一键导入已有车辆为“在租”车辆")]
           ),
-          _c(
-            "u-card",
-            { attrs: { _i: 4 } },
-            [
-              _c(
-                "v-uni-view",
-                { attrs: { slot: "body", _i: 5 }, slot: "body" },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
-                    [
-                      _c("v-uni-image", {
-                        staticClass: _vm._$g(7, "sc"),
-                        attrs: { src: _vm._$g(7, "a-src"), _i: 7 }
-                      }),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                        [
-                          _vm._v("艾瑞泽52020款 1.5L CVT运动版"),
-                          _c("u-icon", {
-                            staticClass: _vm._$g(9, "sc"),
-                            attrs: { _i: 9 }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
+          _vm._l(_vm._$g(4, "f"), function(item, index, $20, $30) {
+            return _c(
+              "u-card",
+              { key: item, attrs: { _i: "4-" + $30 } },
+              [
+                _c(
+                  "v-uni-view",
+                  {
+                    staticStyle: { position: "relative" },
+                    attrs: { slot: "body", _i: "5-" + $30 },
+                    slot: "body"
+                  },
+                  [
+                    _c(
+                      "v-uni-view",
+                      {
+                        staticClass: _vm._$g("6-" + $30, "sc"),
+                        attrs: { _i: "6-" + $30 }
+                      },
+                      [
+                        _c("v-uni-image", {
+                          staticClass: _vm._$g("7-" + $30, "sc"),
+                          attrs: {
+                            src: _vm._$g("7-" + $30, "a-src"),
+                            _i: "7-" + $30
+                          }
+                        }),
+                        _c(
+                          "v-uni-view",
+                          {
+                            staticClass: _vm._$g("8-" + $30, "sc"),
+                            attrs: { _i: "8-" + $30 }
+                          },
+                          [
+                            _c("v-uni-view", { attrs: { _i: "9-" + $30 } }, [
+                              _vm._v(
+                                _vm._$g("9-" + $30, "t0-0") +
+                                  " " +
+                                  _vm._$g("9-" + $30, "t0-1") +
+                                  " " +
+                                  _vm._$g("9-" + $30, "t0-2")
+                              )
+                            ]),
+                            _c("v-uni-view", { attrs: { _i: "10-" + $30 } }, [
+                              _vm._v(
+                                _vm._$g("10-" + $30, "t0-0") +
+                                  " " +
+                                  _vm._$g("10-" + $30, "t0-1") +
+                                  " " +
+                                  _vm._$g("10-" + $30, "t0-2")
+                              )
+                            ])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _c("u-icon", {
+                      staticClass: _vm._$g("11-" + $30, "sc"),
+                      attrs: { _i: "11-" + $30 },
+                      on: {
+                        click: function($event) {
+                          return _vm.$handleViewEvent($event)
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          }),
           _c(
             "v-uni-view",
             {
               staticStyle: { padding: "10pt 10pt" },
-              attrs: { _i: 10 },
+              attrs: { _i: 12 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -23097,32 +23199,32 @@ var render = function() {
               }
             },
             [
-              _c("u-icon", { attrs: { _i: 11 } }),
+              _c("u-icon", { attrs: { _i: 13 } }),
               _c(
                 "v-uni-text",
-                { staticStyle: { "vertical-align": "top" }, attrs: { _i: 12 } },
+                { staticStyle: { "vertical-align": "top" }, attrs: { _i: 14 } },
                 [_vm._v("添加新车辆")]
               )
             ],
             1
           )
         ],
-        1
+        2
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+        { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+            { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
             [
               _c(
                 "u-button",
                 {
-                  staticClass: _vm._$g(15, "sc"),
+                  staticClass: _vm._$g(17, "sc"),
                   staticStyle: { width: "100%" },
-                  attrs: { _i: 15 },
+                  attrs: { _i: 17 },
                   on: {
                     click: function($event) {
                       return _vm.$handleViewEvent($event)
@@ -23137,23 +23239,15 @@ var render = function() {
         ],
         1
       ),
-      _c(
-        "u-popup",
-        {
-          attrs: { _i: 16 },
-          model: {
-            value: _vm._$g(16, "v-model"),
-            callback: function() {},
-            expression: "importShow"
+      _c("ChildPopup", {
+        ref: "importShow",
+        attrs: { _i: 18 },
+        on: {
+          handleId: function($event) {
+            return _vm.$handleViewEvent($event)
           }
-        },
-        [
-          _c("v-uni-view", { attrs: { _i: 17 } }, [
-            _vm._v("出淤泥而不染，濯清涟而不妖")
-          ])
-        ],
-        1
-      )
+        }
+      })
     ],
     1
   )
@@ -23188,8 +23282,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _importCar = _interopRequireDefault(__webpack_require__(/*! @/components/importCar.vue */ 337));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -23197,7 +23291,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'ChildPopup': _importCar.default } };exports.default = _default;
 
 /***/ }),
 /* 525 */
@@ -23249,7 +23344,7 @@ var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(/*! @/static/leasebg.png
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些\"u-\"开头的自定义变量\r\n * uView自定义的css类名和scss变量，均以\"u-\"开头，不会造成冲突，请放心使用 \r\n */\n.scroll-container {\r\n  height: 100%;\n}\nbody {\r\n  background-color: #f5f5f8;\r\n  height: 100%;\n}\n.zlyjdr {\r\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n  background-repeat: no-repeat;\r\n  height: 40pt;\r\n  line-height: 35pt;\r\n  margin: 20pt 0;\r\n  color: #f3f4f6;\n}\n .u-border-bottom:after {\r\n  border-bottom-width: 0;\n}\n.u-card-wrap {\r\n  background-color: #f3f4f6;\r\n  padding: 1px;\n}\n.card-img {\r\n  width: 120rpx;\r\n  -webkit-box-flex: 0;\r\n  -webkit-flex: 0 0 120rpx;\r\n          flex: 0 0 120rpx;\r\n  height: 120rpx;\r\n  border-radius: 8rpx;\r\n  margin-left: 12rpx;\r\n  padding-right: 15pt;\n}\n.card-title {\r\n  font-size: 16pt;\r\n  color: #333;\r\n  padding: 20rpx 10pt;\r\n  position: relative;\r\n  border-left: 1px solid #F5F5F7;\n}\n.card-title .iconAbs {\r\n  position: absolute;\r\n  right: 8pt;\r\n  bottom: 0;\n}\n.fixed-btn {\r\n  box-sizing: border-box;\r\n  position: fixed;\r\n  left: 0;\r\n  bottom: 20pt;\r\n  width: 100%;\r\n  z-index: 98;\n}\n.btn-inline {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  padding: 30pt;\n}\n.btn-agree {\r\n  background: -webkit-linear-gradient(35deg, #37AB63, #6DD99C);\r\n  background: linear-gradient(55deg, #37AB63, #6DD99C);\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些\"u-\"开头的自定义变量\r\n * uView自定义的css类名和scss变量，均以\"u-\"开头，不会造成冲突，请放心使用 \r\n */\n.scroll-container {\r\n  height: 100%;\n}\nbody {\r\n  background-color: #f5f5f8;\r\n  height: 100%;\n}\n.zlyjdr {\r\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n  background-repeat: no-repeat;\r\n  height: 40pt;\r\n  line-height: 35pt;\r\n  margin: 20pt 0;\r\n  color: #f3f4f6;\n}\n .u-border-bottom:after {\r\n  border-bottom-width: 0;\n}\n.u-card-wrap {\r\n  background-color: #f3f4f6;\r\n  padding: 1px;\n}\n.card-img {\r\n  width: 120rpx;\r\n  -webkit-box-flex: 0;\r\n  -webkit-flex: 0 0 120rpx;\r\n          flex: 0 0 120rpx;\r\n  height: 120rpx;\r\n  border-radius: 8rpx;\r\n  margin-left: 12rpx;\r\n  padding-right: 15pt;\n}\n.card-title {\r\n  color: #333;\r\n  padding: 20rpx 10pt;\r\n  position: relative;\r\n  border-left: 1px solid #F5F5F7;\n}\n.iconAbs {\r\n  position: absolute;\r\n  right: 6pt;\r\n  bottom: 0;\n}\n.fixed-btn {\r\n  box-sizing: border-box;\r\n  position: fixed;\r\n  left: 0;\r\n  bottom: 20pt;\r\n  width: 100%;\r\n  z-index: 98;\n}\n.btn-inline {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  padding: 30pt;\n}\n.btn-agree {\r\n  background: -webkit-linear-gradient(35deg, #37AB63, #6DD99C);\r\n  background: linear-gradient(55deg, #37AB63, #6DD99C);\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -23337,8 +23432,7 @@ var components = {
   uUpload: __webpack_require__(/*! @/uview-ui/components/u-upload/u-upload.vue */ 229).default,
   uIcon: __webpack_require__(/*! @/uview-ui/components/u-icon/u-icon.vue */ 17).default,
   uButton: __webpack_require__(/*! @/uview-ui/components/u-button/u-button.vue */ 181).default,
-  uActionSheet: __webpack_require__(/*! @/uview-ui/components/u-action-sheet/u-action-sheet.vue */ 368)
-    .default
+  uSelect: __webpack_require__(/*! @/uview-ui/components/u-select/u-select.vue */ 327).default
 }
 var render = function() {
   var _vm = this
@@ -23368,7 +23462,7 @@ var render = function() {
                 model: {
                   value: _vm._$g(4, "v-model"),
                   callback: function() {},
-                  expression: "form.brand"
+                  expression: "form.CarModel"
                 }
               })
             ],
@@ -23389,7 +23483,7 @@ var render = function() {
                 model: {
                   value: _vm._$g(6, "v-model"),
                   callback: function() {},
-                  expression: "form.system"
+                  expression: "form.CarXilie"
                 }
               })
             ],
@@ -23398,197 +23492,98 @@ var render = function() {
         ],
         1
       ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-            [
-              _c(
-                "u-upload",
-                {
-                  staticStyle: { width: "100%", "justify-content": "center" },
-                  attrs: { _i: 9 },
-                  on: {
-                    "on-success": function($event) {
-                      return _vm.$handleViewEvent($event)
+      _c("v-uni-view", { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } }, [
+        _vm._v("正确的车辆照片和证件照片 可帮助您更快通过审核")
+      ]),
+      _vm._l(_vm._$g(8, "f"), function(item, index, $20, $30) {
+        return _c(
+          "v-uni-view",
+          {
+            key: item,
+            staticClass: _vm._$g("8-" + $30, "sc"),
+            attrs: { _i: "8-" + $30 }
+          },
+          [
+            _c(
+              "v-uni-view",
+              {
+                staticClass: _vm._$g("9-" + $30, "sc"),
+                attrs: { _i: "9-" + $30 }
+              },
+              [
+                _c(
+                  "u-upload",
+                  {
+                    staticStyle: { width: "100%", "justify-content": "center" },
+                    attrs: { _i: "10-" + $30 },
+                    on: {
+                      "on-success": function($event) {
+                        return _vm.$handleViewEvent($event)
+                      }
                     }
-                  }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g(10, "sc"),
-                      attrs: {
-                        slot: "addBtn",
-                        "hover-class": "slot-btn__hover",
-                        "hover-stay-time": "150",
-                        _i: 10
+                  },
+                  [
+                    _c(
+                      "v-uni-view",
+                      {
+                        staticClass: _vm._$g("11-" + $30, "sc"),
+                        attrs: {
+                          slot: "addBtn",
+                          "hover-class": "slot-btn__hover",
+                          "hover-stay-time": "150",
+                          _i: "11-" + $30
+                        },
+                        slot: "addBtn"
                       },
-                      slot: "addBtn"
-                    },
-                    [
-                      _c("u-icon", { attrs: { _i: 11 } }),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
-                        [
-                          _c("v-uni-view", { attrs: { _i: 13 } }, [
-                            _vm._v("请上传车辆右前方或左前方45°照片")
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
+                      [
+                        _c("u-icon", { attrs: { _i: "12-" + $30 } }),
+                        _c(
+                          "v-uni-view",
+                          {
+                            staticClass: _vm._$g("13-" + $30, "sc"),
+                            attrs: { _i: "13-" + $30 }
+                          },
+                          [
+                            _c("v-uni-view", { attrs: { _i: "14-" + $30 } }, [
+                              _vm._v(_vm._$g("14-" + $30, "t0-0"))
+                            ])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      }),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+        { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
-            [
-              _c(
-                "u-upload",
-                {
-                  staticStyle: { width: "100%", "justify-content": "center" },
-                  attrs: { _i: 16 },
-                  on: {
-                    "on-success": function($event) {
-                      return _vm.$handleViewEvent($event)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g(17, "sc"),
-                      attrs: {
-                        slot: "addBtn",
-                        "hover-class": "slot-btn__hover",
-                        "hover-stay-time": "150",
-                        _i: 17
-                      },
-                      slot: "addBtn"
-                    },
-                    [
-                      _c("u-icon", { attrs: { _i: 18 } }),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
-                        [
-                          _c("v-uni-view", { attrs: { _i: 20 } }, [
-                            _vm._v("请上传行驶证/运输证或二合一证件照片")
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
-            [
-              _c(
-                "u-upload",
-                {
-                  staticStyle: { width: "100%", "justify-content": "center" },
-                  attrs: { _i: 23 },
-                  on: {
-                    "on-success": function($event) {
-                      return _vm.$handleViewEvent($event)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g(24, "sc"),
-                      attrs: {
-                        slot: "addBtn",
-                        "hover-class": "slot-btn__hover",
-                        "hover-stay-time": "150",
-                        _i: 24
-                      },
-                      slot: "addBtn"
-                    },
-                    [
-                      _c("u-icon", { attrs: { _i: 25 } }),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
-                        [
-                          _c("v-uni-view", { attrs: { _i: 27 } }, [
-                            _vm._v(
-                              "请上传运输证件照片（如已上传二合一证请忽略）"
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+            { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
             [
               _c(
                 "u-button",
                 {
-                  staticClass: _vm._$g(30, "sc"),
+                  staticClass: _vm._$g(17, "sc"),
                   staticStyle: { width: "100%" },
-                  attrs: { _i: 30 },
+                  attrs: { _i: 17 },
                   on: {
                     click: function($event) {
                       return _vm.$handleViewEvent($event)
                     }
                   }
                 },
-                [_vm._v("完成")]
+                [_vm._v("添加")]
               )
             ],
             1
@@ -23596,21 +23591,21 @@ var render = function() {
         ],
         1
       ),
-      _c("u-action-sheet", {
-        attrs: { _i: 31 },
+      _c("u-select", {
+        attrs: { _i: 18 },
         on: {
-          click: function($event) {
+          confirm: function($event) {
             return _vm.$handleViewEvent($event)
           }
         },
         model: {
-          value: _vm._$g(31, "v-model"),
+          value: _vm._$g(18, "v-model"),
           callback: function() {},
           expression: "show"
         }
       })
     ],
-    1
+    2
   )
 }
 var recyclableRender = false
@@ -23701,7 +23696,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些\"u-\"开头的自定义变量\r\n * uView自定义的css类名和scss变量，均以\"u-\"开头，不会造成冲突，请放心使用 \r\n */\n.scroll-container {\r\n  height: 100%;\n}\nbody {\r\n  background-color: #f5f5f8;\r\n  height: 100%;\n}\n .u-border-bottom:after {\r\n  border-bottom-width: 0;\n}\n.zlcontent {\r\n  padding: 0 20pt;\n}\n.view-content {\r\n  margin-top: 20pt;\r\n  padding: 0 20pt;\n}\n.top-content-upload {\r\n  border: 1px dotted #dedede;\r\n  width: 100%;\r\n  background: #FFFFFF;\r\n  position: relative;\r\n  height: 118pt;\n}\n.slot-btn {\r\n  width: 230rpx;\r\n  height: 100pt;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #fff;\r\n  border-radius: 10rpx;\n}\n.slot-btn__hover {\r\n  background-color: #ebecee;\n}\n.slot-tips {\r\n  position: absolute;\r\n  top: 62pt;\r\n  font-size: 10pt;\r\n  text-align: center;\n}\n.fixed-btn {\r\n  box-sizing: border-box;\r\n  position: fixed;\r\n  left: 0;\r\n  bottom: 20pt;\r\n  width: 100%;\r\n  z-index: 98;\n}\n.btn-inline {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  padding: 0 40pt;\n}\n.btn-agree {\r\n  background: -webkit-linear-gradient(35deg, #37AB63, #6DD99C);\r\n  background: linear-gradient(55deg, #37AB63, #6DD99C);\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些\"u-\"开头的自定义变量\r\n * uView自定义的css类名和scss变量，均以\"u-\"开头，不会造成冲突，请放心使用 \r\n */\n.scroll-container {\r\n  height: 100%;\n}\nbody {\r\n  background-color: #f5f5f8;\r\n  height: 100%;\n}\n .u-border-bottom:after {\r\n  border-bottom-width: 0;\n}\n.input_select {\r\n  background: #FFFFFF;\r\n  border-radius: 40rpx;\n}\n.zlcontent {\r\n  padding: 0 20pt;\n}\n.view-content {\r\n  margin-top: 20pt;\r\n  padding: 0 20pt;\n}\n.top-content-upload {\r\n  border: 1px dotted #dedede;\r\n  width: 100%;\r\n  background: #FFFFFF;\r\n  position: relative;\r\n  height: 118pt;\n}\n.slot-btn {\r\n  width: 230rpx;\r\n  height: 100pt;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #fff;\r\n  border-radius: 10rpx;\n}\n.slot-btn__hover {\r\n  background-color: #ebecee;\n}\n.slot-tips {\r\n  position: absolute;\r\n  top: 62pt;\r\n  font-size: 10pt;\r\n  text-align: center;\n}\n.fixed-btn {\r\n  box-sizing: border-box;\r\n  position: fixed;\r\n  left: 0;\r\n  bottom: 20pt;\r\n  width: 100%;\r\n  z-index: 98;\n}\n.btn-inline {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  padding: 0 40pt;\n}\n.btn-agree {\r\n  background: -webkit-linear-gradient(35deg, #37AB63, #6DD99C);\r\n  background: linear-gradient(55deg, #37AB63, #6DD99C);\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
