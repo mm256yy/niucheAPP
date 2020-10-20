@@ -37,6 +37,11 @@
 	   	</view>
 	   </view>
 		<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
+		<u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
+			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		        信息发布成功
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -55,7 +60,8 @@ export default {
 				highmonthprice:'',
 				peoplenumber:'',
 				worktext:'',
-				AlreadHaveCarList:[]
+				AlreadHaveCarList:[],
+				comparyInviteInsertCarVoList:[]
 			},
 			rules:{
 				userid:requiredRule,
@@ -70,7 +76,9 @@ export default {
 			show:false,
 			errorType:[
 				'message'
-			]
+			],
+			showTips:false,
+			
 		}
 	},
 	onReady() {
@@ -85,16 +93,24 @@ export default {
 	methods: {
 		...mapActions(['CARPUBUPOSITION']),
     setInfo(){
-		this.form.userid = this.phone;
 		let pubUpload = this.carPubUpload;
 		let carPubPosition = this.carPubPosition;
 		if (carPubPosition){
 			this.form = carPubPosition;
-			console.log(this.form)
 		}
+			this.form.userid = this.telephone;
 		if (pubUpload){
-			let len = this.carPubUpload.length;
+			let len = pubUpload.length;
 			this.value= '已填加'+len+'辆';
+			this.form.AlreadHaveCarList = [];
+			this.form.comparyInviteInsertCarVoList = [];
+			pubUpload.forEach((item)=>{
+				if (item.id){
+					this.form.AlreadHaveCarList.push(item)
+				} else {
+					this.form.comparyInviteInsertCarVoList.push(item)
+				}
+			})
 		} else{
 			this.value = ''
 		}
@@ -109,6 +125,25 @@ export default {
 	 saveStorage(){
 		 this.CARPUBUPOSITION(this.form)
 	 },
+	 saveForm(){
+		 let obj = this.form;
+		 console.log(obj)
+		 this.$u.api.saveCompanyInvite(obj).then(res=>{
+		 	if(res.code === 200){
+				
+				this.showTips = true
+		 	}else {
+		 		 this.$u.toast(res.message);
+		 	}
+		 })
+	 },
+	 clearStorage(){
+		 uni.removeStorageSync('carPubUpload');
+		 uni.removeStorageSync('carPubPosition');
+	 },
+	 tipsConfirm(){
+	 	this.$u.route('/pages/company/myPublish/myPublish', {index: 2});
+	 },
 	 toSubmit(){
 		this.$refs.uForm.validate(valid=>{
 			if(valid) {
@@ -116,12 +151,11 @@ export default {
 					this.$u.toast('请填写月薪最高值')
 					return
 				}
-				if (this.form.AlreadHaveCarList.length === 0){
+				if (this.carPubUpload.length === 0){
 					this.$u.toast('请添加工作车辆')
 					return
 				}
-				console.log(1111111111111111)
-				// this.saveStorage()
+				this.saveForm()
 			} 
 		}) 
 	 },

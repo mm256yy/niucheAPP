@@ -4,13 +4,13 @@
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent">
 		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
-			<u-card :show-head="false">
+			<u-card :show-head="false" v-for="(item,index) in list" :key="index">
 				<view class="" slot="body">
 					<view class="u-flex u-row-between">
-					 <image :src="src" class="card-img"></image>
+					 <image :src="item.CarModelPhoto" class="card-img"></image>
 					 <view class="u-line-2 card-title">
-						 艾瑞泽52020款 1.5L CVT运动版
-					  <!-- <u-icon name="trash" color="#6DD99B" class="iconAbs" @click="delList(index)"></u-icon> -->
+						 {{item.CarBrand}}{{item.CarModel}}-{{item.CarXilie}}
+					  <u-icon name="trash" color="#6DD99B" class="iconAbs" @click="delList(index)"></u-icon>
 					 </view>
 					</view>
 				</view>
@@ -25,11 +25,13 @@
 			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">完成</u-button>
 			</view>
 		</view>
+		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
      </view>
 </template>
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
+import ChildPopup from '@/components/importCar.vue'
 export default {
   data(){
 	return {
@@ -39,14 +41,14 @@ export default {
 		backTextStyle:{
 			'color':'#ffffff'
 		},
-		src:'https://img12.360buyimg.com/n7/jfs/t1/102191/19/9072/330688/5e0af7cfE17698872/c91c00d713bf729a.jpg',
+		list:[],
 		importShow:false,
-		form:{
-
-		},
+		childType:true,
+		carPubType:2,
 	
 	}  
   },
+   components:{ChildPopup},
   computed:{
   	...mapGetters(['carPubUpload'])
   },
@@ -57,11 +59,21 @@ export default {
   methods: {
 	...mapActions(['CARPUBUPLOAD']),
 	handleClick(){
-		this.importShow = true;
+		this.$refs.importShow.importShow = true
+	},
+	getChildId(item){
+		console.log(item)
+		item.forEach((info)=>{
+			this.list.push(info)
+		})
+        this.CARPUBUPLOAD(this.list)
 	},
 	delList(index){
 	   this.list.splice(index,1)
 	   this.CARPUBUPLOAD(this.list)	  
+	},
+	toNext(){
+		this.$u.route('/pages/company/recruit/recruit')
 	},
 	toNewCar(){
 		this.$u.route('/pages/company/recruit/carOther/carOther')
@@ -106,7 +118,7 @@ page{
 	border-left: 1px solid #F5F5F7;
 	.iconAbs{
 	    position: absolute;
-	    right: 8pt;
+	    right: 6pt;
 	    bottom: 0;	
 	}
 }

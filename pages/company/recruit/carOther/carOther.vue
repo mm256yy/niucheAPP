@@ -1,6 +1,6 @@
 <template>
     <view class="wrap">
-		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆其他" :background="backgroundCom" 
+		<u-navbar back-text="返回"  back-icon-size="0" title="上传其他车辆" :background="backgroundCom" 
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent">
 			<u-form-item label="" prop="CarModel" label-width='0'>
@@ -94,7 +94,7 @@ export default {
 	  },
 	actionSheetCallback(index) {
 	  	let val = index[0].label;
-	  	this.form.carmodel = val;
+	  	this.form.CarXilie = val;
 	  },
 	showSelect(){
 		this.show = true;
@@ -102,15 +102,20 @@ export default {
 	toCarList(){
 		this.$u.route('/pages/company/lease/carList/carList',{source:2}) 
 	}, 
-	getSelect(type){
-		console.log(type)
-	},
 	toNext(){
-		 // let list = this.carPubUpload;
-		 // list.push(this.form)
-		// this.CARPUBUPLOAD()
-		// this.$u.route('/pages/company/recruit/carModel/carModel') 
-		
+		 let list = this.carPubUpload || [];
+		 console.log(list)
+		 this.$u.api.getCarLogo({CarBrand:this.form.CarModel,CarModel:this.form.CarXilie}).then(res=>{
+		 	if(res.code === 200){
+				let data = this.form;
+				data.CarModelPhoto = res.data;
+		 		 list.push(data)
+				 this.CARPUBUPLOAD(list)
+				 this.$u.route('/pages/company/recruit/carModel/carModel') 
+		 	}else {
+		 		 this.$u.toast(res.message);
+		 	}
+		 })
 	}
   }
 }
