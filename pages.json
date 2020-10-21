@@ -218,6 +218,24 @@
             }
             
         }
+        ,{//公司首页
+            "path" : "pages/index/company/company",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//司机首页
+            "path" : "pages/index/driver/driver",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
