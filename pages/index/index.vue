@@ -2,7 +2,8 @@
 	<view :class="'driver-content'">
 		<view class="wrap">
 			<view class="u-tabs-box">
-				<u-tabs-swiper activeColor="#FF6501" ref="tabs" :list="list" inactive-color="#ffffff" bg-color="#FE9217;" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs-swiper>
+				<u-tabs-swiper activeColor="#FF6501" ref="tabs" :list="list" inactive-color="#ffffff" bg-color="#FE9217;" 
+				:current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs-swiper>
 			</view>
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 				<swiper-item class="swiper-item">

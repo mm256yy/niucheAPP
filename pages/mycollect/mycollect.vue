@@ -1,8 +1,10 @@
 <template>
-	<view class="wrap">
-		<u-navbar  back-icon-size="0" title="收藏" :background="{}" height='28' title-color="#FFFFFF"></u-navbar>
+	<view :class="'company-content'"> 
+		<view class="wrap">
+		<u-navbar  back-icon-size="0" title="收藏" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
-			<u-tabs-swiper ref="uTabs" :list="list" activeColor="#ffffff" inactive-color="#e5e5e5" bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
+			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
@@ -63,6 +65,7 @@
 			</swiper-item>
 		</swiper>
 	</view>
+	</view>
 </template>
 
 <script>
@@ -110,7 +113,7 @@
 
 <style lang="scss">
 page{
-	background-image: url(@/static/lease.png);
+	// background-image: url(@/static/lease.png);
 	background-repeat: no-repeat;
 	height: 100%;
 	background-size: cover;
@@ -121,6 +124,16 @@ page{
 	}
 </style>
 <style lang="scss" scoped>
+	.driver-content{
+		.u-tabs{
+			background: linear-gradient(115deg,$bg-grad-FE, $bg-grad-FCD);
+		}
+	}
+	.company-content{
+		.u-tabs{
+			background: linear-gradient(115deg, $bg-grad-AB, $bg-grad-DDC);
+		}
+	}
 .wrap {
 	display: flex;
 	flex-direction: column;

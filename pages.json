@@ -191,8 +191,26 @@
 				"navigationStyle": "custom"
 			}
         }
-        ,{//公用
+        ,{//公用选择车品牌
             "path" : "pages/company/lease/carList/carList",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//公司收藏
+            "path" : "pages/mycollect/company/company",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//司机收藏
+            "path" : "pages/mycollect/driver/driver",
             "style" :                                                                                    
             {
                 "navigationStyle": "custom",
