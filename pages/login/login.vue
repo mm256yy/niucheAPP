@@ -70,6 +70,7 @@
 </template>
 
 <script>
+
 	import {phoneRule,codeRule,passwordRule} from '@/common/rule.js'
 	import {mapGetters,mapActions} from 'vuex'
 	export default {
@@ -122,6 +123,7 @@
 		},
 		mounted() {
 			this.getUid()
+
 		},
 		methods: {
 			...mapActions([

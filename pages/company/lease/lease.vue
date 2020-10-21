@@ -135,6 +135,7 @@ export default {
   	let index = option.id;
 	this.form.carbrand = option.text;
 	this.firstId = index;
+	console.log(index,'1')
 	if(index){
 		 this.getSelectFirst(this.firstId)
 	}
@@ -194,13 +195,14 @@ export default {
 		})
 	},
 	getSelectFirst(id){
+		console.log(id)
 		this.$u.api.getCarSystem({parentid:id}).then(res=>{
 			if(res.code === 200){
 	           this.selectObj.carmodel = res.alibabaCarModelVoList;
 			}else {
-				 this.$u.toast(res.message);
+				 this.$u.toast(res.msg);
 			}
-		})
+		}).catch(res=>{console.log(res)})
 	},
 	getSelectSecond(id){
 		this.$u.api.getCarModel({parentid:id}).then(res=>{

@@ -86,7 +86,7 @@
 				<view class="bgf" style="margin: 15pt 0;">
 					<u-row style="padding: 8pt;border-bottom: 1rpx solid #dedede;">
 						<u-col span="4">我的发布</u-col>
-						<u-col span="8" style="text-align: right;color: #7E7E7E;">店铺首页>></u-col>
+						<u-col span="8" style="text-align: right;color: #7E7E7E;" @click="toShopPage">店铺首页>></u-col>
 					</u-row>
 					<u-row style="padding:8pt">
 						
@@ -181,9 +181,9 @@
 			...mapGetters(['telephone'])
 		},
 		mounted() {
-		  // this.getUser()
+		  this.getUser()
 		},
-		 onShow(){
+		onShow(){
 			this.getUser()  
 		},
 		filters: {
@@ -236,6 +236,11 @@
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');
+			},
+			toShopPage(){
+				if (this.telephone){
+					 this.$u.route('/pages/company/shop/shop');
+				}
 			},
 			toPub(index){
 				if(this.telephone){
