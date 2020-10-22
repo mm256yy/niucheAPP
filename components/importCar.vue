@@ -45,7 +45,7 @@
 			return {
 				checked:false,
 				importShow:false,
-				val:'',
+				val:'val',
 				list:[],
 				idList:[],
 			};

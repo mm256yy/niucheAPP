@@ -3,6 +3,7 @@ module.exports = {
 	configureWebpack: {
 		devServer: {
 			disableHostCheck: true,
+			    // host:'http://192.168.3.18',
 			　　port : 8080, //端口号
 			　　proxy : {
 			// 　　　　"/dev-api" : {

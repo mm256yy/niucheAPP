@@ -2,11 +2,9 @@ import Vue from 'vue'
 import App from './App'
 import store from './store/store.js'
 import themeMixin from './utils/mixin.js'
-import conn from './utils/huanxin.js'
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 App.mpType = 'app'
-Vue.prototype.$conn = conn;
 // 引入全局uView
 import uView from 'uview-ui'
 Vue.use(uView);
