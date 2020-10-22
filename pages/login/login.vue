@@ -70,8 +70,7 @@
 </template>
 
 <script>
-	import WebIM from '@/sdk/wxsdk3.3.1.js'
-	import config from '@/sdk/WebIMConfig.js'
+	import {WebIM,conn,SDKlogin} from '@/sdk/WebIMConfig.js'
 	import {phoneRule,codeRule,passwordRule} from '@/common/rule.js'
 	import {mapGetters,mapActions} from 'vuex'
 	export default {
@@ -123,8 +122,9 @@
 			this.$refs.uFormPwd.setRules(this.rules);
 		},
 		mounted() {
-			this.getUid()
-
+			// this.getUid()
+			this.init()
+			
 		},
 		methods: {
 			...mapActions([
@@ -245,29 +245,14 @@
 				})
 			},
 			init(){
-			 let conn = {};
-				 WebIM.config = config;
-				 conn = WebIM.conn = new WebIM.connection({
-					 appKey: WebIM.config.appkey,
-					 isHttpDNS: WebIM.config.isHttpDNS,
-					 isMultiLoginSessions: WebIM.config.isMultiLoginSessions,
-					 https: WebIM.config.https,
-					 url: WebIM.config.socketServer,
-					 apiUrl: WebIM.config.restServer,
-					 isAutoLogin: WebIM.config.isAutoLogin,
-					 heartBeatWait: WebIM.config.heartBeatWait,
-					 autoReconnectNumMax: WebIM.config.autoReconnectNumMax,
-					 autoReconnectInterval: WebIM.config.autoReconnectInterval,
-					 delivery: WebIM.config.delivery,
-					 useOwnUploadFun: WebIM.config.useOwnUploadFun
-				 })
+              
 			var options = { 
 			  apiUrl: WebIM.config.apiURL,
 			  user: 'pengtianfu',
 			  pwd: '7800809s',
 			  appKey: WebIM.config.appkey
-			};
-			conn.open(options);
+			  };
+			   SDKlogin(options);
 			}
 		}
 	}
