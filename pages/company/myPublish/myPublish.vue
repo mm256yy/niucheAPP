@@ -152,7 +152,7 @@
 			},
 			toView(){
 				console.log(11111111111111)
-				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
+				this.$u.route("/pages/company/myPublish/zhaopinView/zhaopinView")
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
