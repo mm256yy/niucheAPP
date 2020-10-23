@@ -105,7 +105,9 @@
         }
         ,{
             "path" : "pages/company/myPublish/zhaopinView/zhaopinView",
-            "style" : {}
+            "style" : {
+				"navigationStyle": "custom" 
+			}
         }
         ,{//租车标签
             "path" : "pages/company/lease/step/stepLabel/stepLabel",
