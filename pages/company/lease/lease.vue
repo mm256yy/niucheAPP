@@ -1,6 +1,7 @@
 <template>
     <view class="wrap">
-		<u-navbar back-text="返回"  back-icon-size="0" title="租赁车辆发布" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回" :custom-back='customBack'  back-icon-size="0" title="租赁车辆发布" 
+		:background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent">
 		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
 		   <view class="zlcontent-mid">
@@ -147,14 +148,16 @@ export default {
 	 toCarList(){
 		this.$u.route('/pages/company/lease/carList/carList',{source:1}) 
 	 }, 
-	  
+	  customBack(){
+		  this.$u.route('/pages/company/release/release') 
+	  },
 	getChildId(item){
 		console.log(item)
 		let obj = item[0];
 		this.form.carbrand = obj.carBrand;
-		// this.selectObj.carmodel.forEach((item)=>{
-		// 	if(item.text = obj.carModel) {
-		// 		this.getSelectSecond(item.id)
+		// this.selectObj.carbrand.forEach((item)=>{
+		// 	if(item.text = obj.carBrand) {
+		// 		this.getSelectFirst(item.id)
 		// 	}
 		// })
 		this.form.carmodel = obj.carModel;
@@ -194,13 +197,14 @@ export default {
 		})
 	},
 	getSelectFirst(id){
+		console.log(id)
 		this.$u.api.getCarSystem({parentid:id}).then(res=>{
 			if(res.code === 200){
 	           this.selectObj.carmodel = res.alibabaCarModelVoList;
 			}else {
-				 this.$u.toast(res.message);
+				 this.$u.toast(res.msg);
 			}
-		})
+		}).catch(res=>{console.log(res)})
 	},
 	getSelectSecond(id){
 		this.$u.api.getCarModel({parentid:id}).then(res=>{

@@ -86,7 +86,7 @@
 				<view class="bgf" style="margin: 15pt 0;">
 					<u-row style="padding: 8pt;border-bottom: 1rpx solid #dedede;">
 						<u-col span="4">我的发布</u-col>
-						<u-col span="8" style="text-align: right;color: #7E7E7E;">店铺首页>></u-col>
+						<u-col span="8" style="text-align: right;color: #7E7E7E;" @click="toShopPage">店铺首页>></u-col>
 					</u-row>
 					<u-row style="padding:8pt">
 						
@@ -153,7 +153,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -177,13 +176,11 @@
 				}
 			}
 		},
-		computed:{
-			...mapGetters(['telephone'])
-		},
 		mounted() {
 		  // this.getUser()
 		},
-		 onShow(){
+		onShow(){
+		    this.telephone = uni.getStorageSync('telephone')
 			this.getUser()  
 		},
 		filters: {
@@ -205,6 +202,7 @@
 		methods: {
 			getUser(){
 				let phone = this.telephone;
+				console.log(phone)
 				if (phone) {
 					this.$u.api.getUserInfo({telephone:phone}).then(res=>{
 						if(res.code === 200){
@@ -236,6 +234,11 @@
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');
+			},
+			toShopPage(){
+				if (this.telephone){
+					 this.$u.route('/pages/company/shop/shop');
+				}
 			},
 			toPub(index){
 				if(this.telephone){

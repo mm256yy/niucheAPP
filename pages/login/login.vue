@@ -70,6 +70,7 @@
 </template>
 
 <script>
+	import {WebIM,conn,SDKlogin} from '@/sdk/WebIMConfig.js'
 	import {phoneRule,codeRule,passwordRule} from '@/common/rule.js'
 	import {mapGetters,mapActions} from 'vuex'
 	export default {
@@ -122,6 +123,8 @@
 		},
 		mounted() {
 			this.getUid()
+			// this.init()
+			
 		},
 		methods: {
 			...mapActions([
@@ -223,25 +226,35 @@
 								if(res.code === '1') {
 									let userInfo = obj;
 									userInfo.token = res.token;
+									// this.init()
 									this.Login(userInfo)
-									if(res.role === "1"){
+									if(res.userrole === 1){//司机
 										this.$u.route({url:'/pages/index/index',type:'switchTab'})
 										this.CurThemeType('driver')
 									} else {
 										this.CurThemeType('company')
-										if(res.userstate === 2){
+										if(res.userstate === 0){
 											this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+										} else {
+											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										}
-										this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 									}
+								}else {
+									 this.$u.toast(res.msg);
 								}
 							}).catch(res=>{
 								console.log(res)
-							})
-					} else {
-						
-					}
+							})} 
 				})
+			},
+			init(){
+				var options = { 
+				  apiUrl: WebIM.config.apiURL,
+				  user: 'pengtianfu',
+				  pwd: '7800809s',
+				  appKey: WebIM.config.appkey
+				  };
+				   SDKlogin(options);
 			}
 		}
 	}

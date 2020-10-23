@@ -27,7 +27,8 @@
 		<view style="text-align: center; padding: 26pt 20pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="setForm">下一步</u-button>
 		</view>
-	  <u-modal v-model="show" @confirm="confirm" ref="uModal" :async-close="true" title="添加新标签" :show-cancel-button="true" confirm-text="添加" cancel-text="放弃">
+	  <u-modal v-model="show" @confirm="confirm" ref="uModal" :async-close="true" title="添加新标签" :show-cancel-button="true" 
+	  confirm-text="添加" cancel-text="放弃">
 		<view class="slot-content" style="padding: 10pt;">
 			<u-input v-model="value"  :border="true" />
 		</view>

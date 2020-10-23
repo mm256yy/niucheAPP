@@ -45,7 +45,7 @@
 			return {
 				checked:false,
 				importShow:false,
-				val:'',
+				val:'val',
 				list:[],
 				idList:[],
 			};
@@ -80,7 +80,7 @@
 						this.list = res.object;
 
 					}else {
-						 this.$u.toast(res.message);
+						 this.$u.toast(res.msg);
 					}
 				})
 			},
