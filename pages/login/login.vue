@@ -122,8 +122,8 @@
 			this.$refs.uFormPwd.setRules(this.rules);
 		},
 		mounted() {
-			// this.getUid()
-			this.init()
+			this.getUid()
+			// this.init()
 			
 		},
 		methods: {

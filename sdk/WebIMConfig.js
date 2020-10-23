@@ -42,7 +42,6 @@ const logout = () => {
 // 环信的监听
 WebIM.conn.listen({
 	onOpened: function(message) { //连接成功回调
-	     debugger
 		console.log(message);
 		uni.setStorageSync("hxToken", message.accessToken);
 		console.log(uni.getStorageSync("hxToken"));
