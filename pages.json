@@ -5,7 +5,7 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			//首页
-			"path": "pages/index/index",
+			"path": "pages/index/company/company",
 			"style": {
 				"navigationStyle": "custom" ,
 				"navigationBarTitleText": " "
@@ -163,6 +163,72 @@
 				"navigationStyle": "custom" 
 			}
         }
+		,{//首页-租车
+		    "path" : "pages/index/company/components/index/carRent",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-租车需求详情
+		    "path" : "pages/index/company/components/index/carRentDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-推荐租车信息
+		    "path" : "pages/index/company/components/index/carRentRecommend",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-求职
+		    "path" : "pages/index/company/components/index/jobSearch",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-求职需求详情
+		    "path" : "pages/index/company/components/index/jobSearchDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-推荐招聘信息
+		    "path" : "pages/index/company/components/index/jobSearchRecommend",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-卖车
+		    "path" : "pages/index/company/components/index/carSell",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-卖车详情页
+		    "path" : "pages/index/company/components/index/carSellDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-求购
+		    "path" : "pages/index/company/components/index/buying",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-购车需求详情
+		    "path" : "pages/index/company/components/index/buyingDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-推荐卖车信息
+		    "path" : "pages/index/company/components/index/buyingRecommend",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
         ,{//关于
             "path" : "pages/aboutUs/aboutUs",
             "style" : {
@@ -251,7 +317,7 @@
 	    "borderStyle": "black",
 	    "backgroundColor": "#ffffff",
 	    "list": [{
-	        "pagePath": "pages/index/index",
+	        "pagePath": "pages/index/company/company",
 	        "iconPath": "static/tabbar/index.png",
 	        "selectedIconPath": "static/tabbar/index-select.png",
 	        "text": "首页"

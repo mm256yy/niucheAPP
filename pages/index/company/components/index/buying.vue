@@ -1,55 +1,51 @@
 <template>
 	<view class="buying">
 		<view class="middle-content">
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+			<u-form :model="form" ref="uForm" :border-bottom="false">
+				<u-form-item style="width:230rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:230rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
 			</u-form>
 			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
 		</view>
 		<view class="wrap">
-			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
+			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view>
 		<view class="list" @click="detail()">
-			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+			<view class="year">刷新时间：刚刚</view>
+			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+			<view class="clear"></view>
+			<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
-				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
-				<view class="clear"></view>
-				<view class="car">荣威/吉利/比亚迪....</view>
-				<u-icon class="chat" name="chat"></u-icon>
+				<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
+				<view class="type">金华诚信租车行<span>金华</span></view>
+				<view class="price">打包价:<span>2700</span></view>
 			</view>
+			<view class="clear"></view>
 		</view>
-		<view class="list">
-			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		<view class="list" @click="detail()">
+			<view class="year">刷新时间：刚刚</view>
+			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+			<view class="clear"></view>
+			<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
-				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
-				<view class="clear"></view>
-				<view class="car">荣威/吉利/比亚迪....</view>
-				<u-icon class="chat" name="chat"></u-icon>
+				<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
+				<view class="type">金华诚信租车行<span>金华</span></view>
+				<view class="price">打包价:<span>2700</span></view>
 			</view>
+			<view class="clear"></view>
 		</view>
-		<view class="list">
-			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		<view class="list" @click="detail()">
+			<view class="year">刷新时间：刚刚</view>
+			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+			<view class="clear"></view>
+			<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
-				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
-				<view class="clear"></view>
-				<view class="car">荣威/吉利/比亚迪....</view>
-				<u-icon class="chat" name="chat"></u-icon>
+				<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
+				<view class="type">金华诚信租车行<span>金华</span></view>
+				<view class="price">打包价:<span>2700</span></view>
 			</view>
 			<view class="clear"></view>
 		</view>
@@ -100,7 +96,7 @@
 				this.form.ageDriver = arr[0].label;
 		    },
 			detail() {
-				this.$u.route("/pages/index/company/components/index/detail")
+				this.$u.route("/pages/index/company/components/index/buyingDetail")
 			}
 		}
 	}
@@ -135,7 +131,7 @@
 			height: 27rpx;
 			margin-top: 22rpx;
 			float: left;
-			margin-left: 60rpx;
+			margin-left: 40rpx;
 			background: rgba(0,0,0,0.2);
 		}
 		.clear {
@@ -143,61 +139,67 @@
 		}
 		.list {
 			width: 702rpx;
-			height: 190rpx;
+			height: 308rpx;
+			padding: 38rpx;
 			margin-left: 24rpx;
 			margin-bottom: 24rpx;
-		}
-		.list .left {
-			float: left;
-		}
-		.list .right {
-			width: 512rpx;
-			padding: 0 36rpx;
-			float: left;
-		}
-		.list .right .name {
-			font-weight: 900;
-			font-size: 28rpx;
-			margin-top: 6rpx;
-		}
-		.list .right .time {
-			font-size: 16rpx;
-			float: right;
-			margin-top: 6rpx;
-		}
-		.list .right .year {
-			width: 130rpx;
-			height: 30rpx;
-			line-height: 30rpx;
-			text-align: center;
-			border-radius: 12rpx;
-			background: #37AB63;
-			font-size: 10rpx;
-			color: #fff;
-			float: left;
-			margin-top: 6rpx;
-		}
-		.list .right .type {
-			margin-left: 8rpx;
-			width: 160rpx;
-			height: 30rpx;
-			line-height: 30rpx;
-			text-align: center;
-			border-radius: 12rpx;
-			background: #37AB63;
-			font-size: 10rpx;
-			color: #fff;
-			float: left;
-			margin-top: 6rpx;
-		}
-		.list .right .car {
-			color: #7f7f7f;
 			font-size: 20rpx;
-			margin-top: 6rpx;
-		}
-		.list .right .chat {
-			float: right;
-			margin-top: 6rpx;
+			background-image: url(@/static/bgbuying.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+			.clear {
+				clear: both;
+			}
+			.left {
+				margin-top: 19rpx;
+			}
+			.left, .right {
+				float: left;
+			}
+			.right {
+				width: 494rpx;
+				padding-left: 34rpx;
+			}
+			.city {
+				width: 96rpx;
+				height: 40rpx;
+				line-height: 32rpx;
+				text-align: center;
+				font-size: 20rpx;
+				border-radius: 26rpx;
+				border: 1rpx solid rgba(0,0,0,0.3);
+				margin-top: 16rpx;
+				margin-right: 16rpx;
+				float: right;
+			}
+			.name {
+				font-size: 28rpx;
+				font-weight: 900;
+				margin-top: 20rpx;
+			}
+			.type {
+				font-size: 20rpx;
+				color: #7f7f7f;
+				margin-top: 8rpx;
+			}
+			.type span {
+				margin-left: 22rpx;
+			}
+			.price {
+				margin-top: 9rpx;
+			}
+			.price span {
+				font-size: 36rpx;
+				font-weight: 900;
+				color: #40B36C;
+				margin-left: 8rpx;
+			}
+			.year {
+				float: left;
+			}
+			.heart {
+				float: right;
+			}
 		}
 	}
 </style>

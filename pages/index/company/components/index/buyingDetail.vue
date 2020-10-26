@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="司机租车需求详情" :background="{}" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="购车需求详情" :background="{}" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="heart" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -12,13 +12,12 @@
 		 	<view class="right">
 				<u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon>
 		 		<view class="name">吴司机</view>
-				<view class="special">加急</view>
-				<view class="clear"></view>
-				<u-icon class="clock" name="clock"></u-icon>
-		 		<view class="year">驾龄4年</view>
 				<view class="clear"></view>
 				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-		 		<view class="type">杭州出租车认证</view>
+		 		<view class="year">网约车运营</view>
+				<view class="clear"></view>
+				<u-icon class="car" name="car" width="42" height="37"></u-icon>
+		 		<view class="type">出租车运营</view>
 		 		<view class="clear"></view>
 				<view class="box">
 				    <view>准驾类型</view>
@@ -30,16 +29,14 @@
 		 </view>
 		 <view class="content">
 			 <u-form label-width="150" label-align="right" :model="form" ref="uForm">
-			 		<u-form-item label="租车城市:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="业务类型:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+			 		<u-form-item label="打包价:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 					<u-form-item label="意向品牌:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="月租:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 					<u-form-item label="行驶里程:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 					<u-form-item label="动力类型:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 			 	</u-form>
 		 </view>
 		 <view class="bottom" @click="recommend()">
-			 <view>向他推荐本公司租车信息</view>
+			 <view>向他推荐本公司卖车信息</view>
 		 </view>
 	</view>
 </template>
@@ -61,7 +58,7 @@
 		},
 		methods: {
 		recommend() {
-				this.$u.route("/pages/index/company/components/index/recommend")
+				this.$u.route("/pages/index/company/components/index/buyingRecommend")
 			},
 			shared(){
 				uni.share({
@@ -131,18 +128,6 @@ page{
 				font-weight: 900;
 				font-size: 36rpx;
 				float: left;
-			}
-			.special {
-				width: 73rpx;
-				height: 34rpx;
-				line-height: 34rpx;
-				text-align: center;
-				border-radius: 16rpx;
-				background: orange;
-				font-size: 10rpx;
-				float: left;
-				margin-left: 16rpx;
-				margin-top: 8rpx;
 			}
 			.clock,.year,.car,.type {
 				float: left;

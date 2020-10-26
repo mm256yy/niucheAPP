@@ -31,7 +31,7 @@
 			<view class="year">车龄<=3个月</view>
 			<u-icon class="clock" name="clock" size="28"></u-icon>
 			<view class="year">20万公里-30万公里</view>
-			<u-icon class="heart" name="heart" size="28" show-decimal-icon="false" inactive-color="#40B36C"></u-icon>
+			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
 		</view>
 		<view class="list" @click="detail()">
 			<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
@@ -67,7 +67,7 @@
 			<view class="year">车龄<=3个月</view>
 			<u-icon class="clock" name="clock" size="28"></u-icon>
 			<view class="year">20万公里-30万公里</view>
-			<u-icon class="heart" name="heart" size="28" show-decimal-icon="false" inactive-color="#40B36C"></u-icon>
+			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
 		</view>
 	</view>
 </template>

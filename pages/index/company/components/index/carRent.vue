@@ -100,7 +100,7 @@
 				this.form.ageDriver = arr[0].label;
 		    },
 			detail() {
-				this.$u.route("/pages/index/company/components/index/detail")
+				this.$u.route("/pages/index/company/components/index/carRentDetail")
 			}
 		}
 	}
