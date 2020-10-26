@@ -1,6 +1,6 @@
 
 const target = {
-// 　　　　 "target" : "http://68.79.57.1:9007",//
+// 　　　　 "target" : "http://161.189.168.218:9007",//
          "target" : "http://192.168.3.5:9007", //本地
 　　　　 "changeOrigin" : true, 
 　　　　  "secure" : false 
