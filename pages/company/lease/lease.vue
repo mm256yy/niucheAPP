@@ -211,7 +211,7 @@ export default {
 			if(res.code === 200){
 			   this.selectObj.carxinghao = res.alibabaCarModelVoList;
 			}else {
-				 this.$u.toast(res.message);
+				 this.$u.toast(res.msg);
 			}
 		})	
 	},

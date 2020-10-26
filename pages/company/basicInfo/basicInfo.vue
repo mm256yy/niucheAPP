@@ -6,7 +6,7 @@
 			<view class="top-content-base" >公司logo或经营场所照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success="uploadChange" upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -18,8 +18,10 @@
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item label="公司简称" prop="companyEasyName"><u-input v-model="form.companyEasyName" :border="true"/></u-form-item>
-				<u-form-item label="公司成员" prop="memberNumber"><u-input maxlength='7'  :clearable='false' type="number" v-model="form.memberNumber" :border="true"/><text class="middle-content-label">人</text></u-form-item>
-				<u-form-item label="经营车辆" prop="carNum"><u-input maxlength="8" :clearable='false' type="number" v-model="form.carNum" :border="true"/><text class="middle-content-label">辆</text></u-form-item>
+				<u-form-item label="公司成员" prop="memberNumber"><u-input maxlength='7' :clearable='false' type="number"
+				 v-model="form.memberNumber" :border="true"/><text class="middle-content-label">人</text></u-form-item>
+				<u-form-item label="经营车辆" prop="carNum"><u-input maxlength="8" :clearable='false' type="number"
+				 v-model="form.carNum" :border="true"/><text class="middle-content-label">辆</text></u-form-item>
 				<u-form-item label="主营业务" prop="mainBusiness" label-position="top">
 					<u-checkbox-group active-color="#6DD99C" width="33%"  @change="radioGroupChange" shape="circle">
 						<u-checkbox v-model="item.checked" v-for="(item, index) in checkboxList" :key="index" :name="item.name">
@@ -64,12 +66,12 @@
 					companyIntroduce:requiredRule
 				},
 				form: {
-					comparylogophoto:'',
 					companyEasyName: '',
 					memberNumber: '',
 					carNum: '',
 					mainBusiness:[],
-					companyIntroduce:''
+					companyIntroduce:'',
+					comparylogophoto:'',
 				},
 				comparyid:'',
 				checkboxList: [
@@ -112,7 +114,9 @@
 			setPicToken(){
 				this.headerObj.Authorization = this.token;
 				this.formDataObj.phone = this.telephone;
-				this.form = this.companySecond;
+				if (this.companySecond){
+						this.form = this.companySecond;
+				}
 				if (this.comparyLogo.length>0){
 					this.fileList.push(this.comparyLogo[0])
 				}

@@ -243,7 +243,7 @@
 									 this.$u.toast(res.msg);
 								}
 							}).catch(res=>{
-								console.log(res)
+								 this.$u.toast(res.msg);
 							})} 
 				})
 			},

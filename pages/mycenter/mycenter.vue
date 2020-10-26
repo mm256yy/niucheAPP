@@ -221,7 +221,7 @@
 							this.otherObj.xx = data.messagenum;
 							this.otherObj.qz = data.groupmessagenum;
 						}else {
-							 this.$u.toast(res.message);
+							 this.$u.toast(res.msg);
 						}
 					})
 				}

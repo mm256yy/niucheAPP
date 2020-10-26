@@ -49,12 +49,17 @@
 				</view>
 			</view>
 		</view>
+		<NotLogin></NotLogin>
 	</view>
 </template>
 
 <script>
 	import {mapActions} from 'vuex'
+	import NotLogin from '@/components/notlogin/notlogin.vue'
 	export default {
+		components:{
+			NotLogin
+		},
 		data() {
 			return {
 				 backTextStyle:{
