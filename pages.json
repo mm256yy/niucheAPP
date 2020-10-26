@@ -317,7 +317,7 @@
 	    "borderStyle": "black",
 	    "backgroundColor": "#ffffff",
 	    "list": [{
-	        "pagePath": "pages/index/company/company",
+	        "pagePath": "pages/index/index",
 	        "iconPath": "static/tabbar/index.png",
 	        "selectedIconPath": "static/tabbar/index-select.png",
 	        "text": "首页"
