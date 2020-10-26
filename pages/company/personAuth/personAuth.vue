@@ -166,7 +166,7 @@
 			},
 			setPicToken(){
 				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.phone;
+				this.formDataObj.phone = this.telephone;
 				if (this.companyThree){
 					this.form = this.companyThree;
 				}

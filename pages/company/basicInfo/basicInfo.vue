@@ -111,9 +111,11 @@
 			},
 			setPicToken(){
 				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.phone;
+				this.formDataObj.phone = this.telephone;
 				this.form = this.companySecond;
-				this.fileList.push(this.comparyLogo[0])
+				if (this.comparyLogo.length>0){
+					this.fileList.push(this.comparyLogo[0])
+				}
 			},
 			setForm(){
 				let data = this.form;

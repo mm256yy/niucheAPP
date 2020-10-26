@@ -155,7 +155,7 @@
 			},
 			setPicToken(){
 				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.phone;
+				this.formDataObj.phone = this.telephone;
 			},
 			setForm(){
 				 let data = this.form;
