@@ -5,7 +5,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="wrap">
-			<view class="warn">请注意，只能选择一条哦！</view>
+			<view class="warn">请注意，只能选择1条哦！</view>
 			<view class="list">
 				<u-radio-group v-model="value" @change="radioGroupChange">
 							<u-radio 
