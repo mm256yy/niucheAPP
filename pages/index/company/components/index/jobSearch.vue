@@ -10,9 +10,9 @@
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
 		</view>
-		<view class="wrap">
+		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
-		</view>
+		</view> -->
 		<view class="list" @click="detail()">
 			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
@@ -22,7 +22,7 @@
 				<view class="year">驾龄4年</view>
 				<view class="type">网约车认证</view>
 				<view class="clear"></view>
-				<view class="car">求职意向：月薪5000\有保底\无责任底...</view>
+				<view class="car">求职意向：月薪5000\有保底\无责</view>
 				<u-icon class="chat" name="chat"></u-icon>
 			</view>
 		</view>
@@ -35,7 +35,7 @@
 				<view class="year">驾龄4年</view>
 				<view class="type">网约车认证</view>
 				<view class="clear"></view>
-				<view class="car">求职意向：月薪5000\有保底\无责任底...</view>
+				<view class="car">求职意向：月薪5000\有保底\无责</view>
 				<u-icon class="chat" name="chat"></u-icon>
 			</view>
 		</view>
@@ -48,7 +48,7 @@
 				<view class="year">驾龄4年</view>
 				<view class="type">网约车认证</view>
 				<view class="clear"></view>
-				<view class="car">求职意向：月薪5000\有保底\无责任底...</view>
+				<view class="car">求职意向：月薪5000\有保底\无责</view>
 				<u-icon class="chat" name="chat"></u-icon>
 			</view>
 			<view class="clear"></view>
@@ -143,27 +143,31 @@
 		}
 		.list {
 			width: 702rpx;
-			height: 190rpx;
+			height: 281rpx;
 			margin-left: 24rpx;
-			margin-bottom: 24rpx;
+			margin-top: 24rpx;
+			background-image: url(@/static/bgjobsearch.png);
+			background-repeat: no-repeat;
+			background-size: cover;
 		}
 		.list .left {
 			float: left;
+			margin-left: 49rpx;
+			margin-top: 42rpx;
 		}
 		.list .right {
-			width: 512rpx;
+			width: 460rpx;
 			padding: 0 36rpx;
 			float: left;
 		}
 		.list .right .name {
 			font-weight: 900;
 			font-size: 28rpx;
-			margin-top: 6rpx;
 		}
 		.list .right .time {
 			font-size: 16rpx;
 			float: right;
-			margin-top: 6rpx;
+			margin-top: 39rpx;
 		}
 		.list .right .year {
 			width: 130rpx;
@@ -193,11 +197,11 @@
 		.list .right .car {
 			color: #7f7f7f;
 			font-size: 20rpx;
-			margin-top: 6rpx;
+			margin-top: 18rpx;
 		}
 		.list .right .chat {
 			float: right;
-			margin-top: 6rpx;
+			margin-top: 10rpx;
 		}
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="司机租车需求详情" :background="{}" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="司机租车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="heart" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -30,12 +30,12 @@
 		 </view>
 		 <view class="content">
 			 <u-form label-width="150" label-align="right" :model="form" ref="uForm">
-			 		<u-form-item label="租车城市:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="业务类型:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="意向品牌:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="月租:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="行驶里程:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="动力类型:"><u-input disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+			 		<u-form-item label="租车城市:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+					<u-form-item label="业务类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+					<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+					<u-form-item label="月租:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+					<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 			 	</u-form>
 		 </view>
 		 <view class="bottom" @click="recommend()">
@@ -86,8 +86,8 @@
 </script>
 <style lang="scss" scoped>
 page{
-	background-image: url(@/static/lease.png);
-	background-repeat: no-repeat;
+	// background-image: url(@/static/lease.png);
+	// background-repeat: no-repeat;
 	height: 100%;
 	background-size: cover;
 	// background-position: 50% 50%;

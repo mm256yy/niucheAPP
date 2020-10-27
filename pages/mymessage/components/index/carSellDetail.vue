@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="预览" :background="{}" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="预览" :background="backgroundCom" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -28,7 +28,7 @@
 		<view class="wrap">
 			<view class="u-tabs-box">
 			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
-				:current="current" @change="tabsChange" :is-scroll="false" bold="true" inactive-color="#7f7f7f"
+				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
 			 	swiperWidth="750" active-color="#40B36C"></u-tabs-swiper>
 			</view>
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
@@ -115,8 +115,8 @@
 </script>
 <style lang="scss">
 page{
-	background-image: url(@/static/lease.png);
-	background-repeat: no-repeat;
+	// background-image: url(@/static/lease.png);
+	// background-repeat: no-repeat;
 	height: 100%;
 	background-size: cover;
 	// background-position: 50% 50%;
@@ -128,10 +128,17 @@ page{
 		margin-right: 24rpx;
 		display: flex;
 	}
+	.u-tabs-box {
+		position:sticky;
+		top: 0;
+		left: 0;
+	}
 	.wrap {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - var(--window-top));
+		// height: calc(100vh - var(--window-top));
+		height: 100vh-35;
+		// height: auto;
 		width: 100%;
 		background: rgba(0,0,0,0.02);
 	}

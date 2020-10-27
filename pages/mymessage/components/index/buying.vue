@@ -10,9 +10,9 @@
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
 		</view>
-		<view class="wrap">
+		<!-- <view class="wrap">
 			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
-		</view>
+		</view> -->
 		<view class="list" @click="detail()">
 			<view class="year">刷新时间：刚刚</view>
 			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
@@ -96,7 +96,7 @@
 				this.form.ageDriver = arr[0].label;
 		    },
 			detail() {
-				this.$u.route("/pages/index/company/components/index/buyingDetail")
+				this.$u.route("/pages/mymessage/components/index/buyingDetail")
 			}
 		}
 	}
@@ -142,7 +142,7 @@
 			height: 308rpx;
 			padding: 38rpx;
 			margin-left: 24rpx;
-			margin-bottom: 24rpx;
+			margin-top: 24rpx;
 			font-size: 20rpx;
 			background-image: url(@/static/bgbuying.png);
 			background-repeat: no-repeat;

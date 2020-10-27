@@ -4,15 +4,16 @@
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="show = true" v-model="form.typeBusiness" type="select" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
+			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
 		</view>
-		<view class="wrap">
+		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
-		</view>
+		</view> -->
 		<view class="list" @click="detail()">
 			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
@@ -75,7 +76,12 @@
 									}
 								],
 				form: {
-				ageDriver: '',
+				  ageDriver: '',
+				  typeBusiness: ''
+				},
+				pagination: {
+				  pageIndex: 0, 
+				  pageSize: 10
 				},
 				list: [
 									{
@@ -90,12 +96,57 @@
 			}
 		},
 		onReady() {
-		    
+		   var that = this;
+		                     window.onscroll = function(){
+		                       // scrollTop 滚动条滚动时，距离顶部的距离
+		                       var scrollTop = document.getElementById('scroll_wp').scrollTop;
+		                       // windowHeight 可视区的高度
+		                       var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+		                       // scrollHeight 滚动条的总高度
+		                       var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+		                       // 滚动条到底部的条件
+		                       if(scrollTop + windowHeight == scrollHeight){
+		                         // 加载数据
+		                         that.getList();
+		                       }
+		                   } 
 		},
 		mounted() {
 			
 		},
 		methods: {
+			getSelectFirst(id){
+					this.$u.api.getCarSystem({parentid:id}).then(res=>{
+						if(res.code === 200){
+							 this.list = res.alibabaCarModelVoList;
+						}else {
+							 this.$u.toast(res.message);
+						}
+					})
+			},
+			getList(id){
+			    const params = Object.assign(this.form, this.pagination);
+					this.$u.api.getCarSystem(params).then(res=>{
+						if(res.code === 200){
+							 this.list = res.alibabaCarModelVoList;
+						}else {
+							 this.$u.toast(res.message);
+						}
+					})
+			},
+			search(id){
+			    const params = Object.assign(this.form, {
+					pageIndex: this.pageIndex + 1,
+					pageSize: 10
+				});
+					this.$u.api.getCarSystem(params).then(res=>{
+						if(res.code === 200){
+							 this.list = res.alibabaCarModelVoList;
+						}else {
+							 this.$u.toast(res.message);
+						}
+					})
+			},
 		    confirm(arr){
 				this.form.ageDriver = arr[0].label;
 		    },
@@ -143,15 +194,20 @@
 		}
 		.list {
 			width: 702rpx;
-			height: 190rpx;
+			height: 281rpx;
 			margin-left: 24rpx;
-			margin-bottom: 24rpx;
+			margin-top: 24rpx;
+			background-image: url(@/static/bgrentcar.png);
+			background-repeat: no-repeat;
+			background-size: cover;
 		}
 		.list .left {
 			float: left;
+			margin-left: 49rpx;
+			margin-top: 42rpx;
 		}
 		.list .right {
-			width: 512rpx;
+			width: 460rpx;
 			padding: 0 36rpx;
 			float: left;
 		}
@@ -163,7 +219,7 @@
 		.list .right .time {
 			font-size: 16rpx;
 			float: right;
-			margin-top: 6rpx;
+			margin-top: 39rpx;
 		}
 		.list .right .year {
 			width: 130rpx;
@@ -175,7 +231,7 @@
 			font-size: 10rpx;
 			color: #fff;
 			float: left;
-			margin-top: 6rpx;
+			margin-top: 14rpx;
 		}
 		.list .right .type {
 			margin-left: 8rpx;
@@ -188,7 +244,7 @@
 			font-size: 10rpx;
 			color: #fff;
 			float: left;
-			margin-top: 6rpx;
+			margin-top: 14rpx;
 		}
 		.list .right .car {
 			color: #7f7f7f;

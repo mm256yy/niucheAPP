@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="请选择推荐哪条招聘信息" :background="{}" :back-text-style="backTextStyle" title-width="400" title-size="36" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="请选择推荐哪条招聘信息" :background="backgroundCom" :back-text-style="backTextStyle" title-width="400" title-size="36" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 			</view>
 		 </u-navbar>
@@ -111,17 +111,19 @@ page{
 		display: flex;
 	}
 	.detail {
+		height: 100vh;
+		background: #f5fafb;
 		.wrap {
 			width: 100%;
-			height: calc(100vh + 10rpx);
+			// height: calc(100vh + 10rpx);
 			border-radius: 20rpx;
-			background: #f5fafb;
 			padding-top: 40rpx;
 			margin-top: -20rpx;
 		}
 		.warn {
 			margin-left: 84rpx;
 			margin-bottom: 49rpx;
+			margin-top: 35rpx;
 			font-size: 20rpx;
 			color: #FFB400;
 		}
@@ -231,6 +233,7 @@ page{
 			font-size: 40rpx;
 			font-weight: 900;
 			background: linear-gradient(115deg,#6DD99C, #37AB63);
+			margin-top: 200rpx;
 		}
 	}
 </style>

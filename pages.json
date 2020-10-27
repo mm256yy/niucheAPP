@@ -200,31 +200,31 @@
 			}
 		}
 		,{//首页-卖车
-		    "path" : "pages/index/company/components/index/carSell",
+		    "path" : "pages/mymessage/components/index/carSell",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-卖车详情页
-		    "path" : "pages/index/company/components/index/carSellDetail",
+		    "path" : "pages/mymessage/components/index/carSellDetail",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-求购
-		    "path" : "pages/index/company/components/index/buying",
+		    "path" : "pages/mymessage/components/index/buying",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-购车需求详情
-		    "path" : "pages/index/company/components/index/buyingDetail",
+		    "path" : "pages/mymessage/components/index/buyingDetail",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-推荐卖车信息
-		    "path" : "pages/index/company/components/index/buyingRecommend",
+		    "path" : "pages/mymessage/components/index/buyingRecommend",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}

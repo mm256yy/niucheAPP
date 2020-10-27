@@ -12,9 +12,9 @@
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
 		</view>
-		<view class="wrap">
+		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
-		</view>
+		</view> -->
 		<view class="list" @click="detail()">
 			<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
@@ -116,7 +116,7 @@
 				this.form.ageDriver = arr[0].label;
 		    },
 			detail() {
-				this.$u.route("/pages/index/company/components/index/carSellDetail")
+				this.$u.route("/pages/mymessage/components/index/carSellDetail")
 			}
 		}
 	}
@@ -162,7 +162,7 @@
 			height: 308rpx;
 			padding: 18rpx 15rpx;
 			margin-left: 24rpx;
-			margin-bottom: 24rpx;
+			margin-top: 24rpx;
 			font-size: 20rpx;
 			background-image: url(@/static/bgcarsell.png);
 			background-repeat: no-repeat;
