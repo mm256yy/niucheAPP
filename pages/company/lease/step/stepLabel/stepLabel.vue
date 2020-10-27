@@ -70,7 +70,7 @@ export default {
 			if(res.code === 200){
 				this.xttjList = res.systemTagVo;
 			}else {
-				 this.$u.toast(res.message);
+				 this.$u.toast(res.msg);
 			}
 		})
 	},

@@ -65,8 +65,7 @@
 			  },
 			  uploadChange(data, index, lists, name){
 				this.form.elsephoto = data.text;
-				console.log(data)
-				console.log(name)
+				this.$u.toast(data.msg);
 			  },
 			toNext(){
 				this.CARPUBSIX(this.form) 

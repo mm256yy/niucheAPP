@@ -74,7 +74,7 @@ const install = (Vue, vm) => {
 			}, 1500)
 			return false;
 		}else if(res.code == 500) {
-			vm.$u.toast('请求失败');
+			vm.$u.toast(res.msg);
 			return false;
 		} else {
 			// 如果返回false，则会调用Promise的reject回调，

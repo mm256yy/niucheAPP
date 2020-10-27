@@ -1,7 +1,7 @@
 <template>
 	<view :class="'company-content'"> 
 		<view class="wrap">
-		<!-- <u-navbar  back-icon-size="0" title="æ”¶è—" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" title-color="#FFFFFF"></u-navbar> -->
+		<u-navbar  back-icon-size="0" title="ÊÕ²Ø" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -13,19 +13,19 @@
 					<view class="scroll-item" @click="toView()" v-for="itm in 10" :key='itm'>
 						<u-row>
 							<u-col span="12" class="time">
-								<view style="padding-right: 10pt;">ä¸Šæµ·</view>
+								<view style="padding-right: 10pt;">ÉÏº£</view>
 							</u-col>
 							<u-col span="5" @click="toView()">
 								<view><image :src="goodsUrl" mode="aspectFill"></image></view>
 							</u-col>
 							<u-col span="6" class="border-left" @click="toView()">
-								<view class="title u-line-2">è‰¾ç‘æ³½52020æ¬¾ 1.5L CVTè¿åŠ¨ç‰ˆCVTè¿åŠ¨ç‰ˆ</view>
-								<view class="type"><text>æ‰“åŒ…ä»·</text><text class="type-money">ï¿¥2700</text></view>
-								<view><text>çº¯ç”µåŠ¨</text><text>Suv</text><text>è‡ªåŠ¨æŒ¡</text></view>
+								<view class="title u-line-2">°¬ÈğÔó52020¿î 1.5L CVTÔË¶¯°æCVTÔË¶¯°æ</view>
+								<view class="type"><text>´ò°ü¼Û</text><text class="type-money">£¤2700</text></view>
+								<view><text>´¿µç¶¯</text><text>Suv</text><text>×Ô¶¯µ²</text></view>
 							</u-col>
 							<u-col span="12" class="bottom">
-								<text class="bottom-left" >è½¦é¾„â‰¤3ä¸ªæœˆ</text>
-								<text class="bottom-right">è½¦é¾„â‰¤3ä¸ªæœˆ</text>
+								<text class="bottom-left" >³µÁä¡Ü3¸öÔÂ</text>
+								<text class="bottom-right">³µÁä¡Ü3¸öÔÂ</text>
 								<u-icon name="heart-fill" color="#3FB26C" size="36"></u-icon>
 							</u-col>
 						</u-row>
@@ -34,24 +34,24 @@
 							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
 				</scroll-view>
 			</swiper-item>
-			<!-- æˆ‘çš„æ‹›è˜ -->
+			<!-- ÎÒµÄÕĞÆ¸ -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
 					<view class="scroll-item" @click="toView()" v-for="item in 7" :key='item'>
 						<u-row class="" style="padding: 8pt 15pt;">
 							<u-col span="11" style="padding: 5pt 0;">
-								<view>åˆ·æ–°æ—¶é—´ï¼šåˆšåˆš</view>
+								<view>Ë¢ĞÂÊ±¼ä£º¸Õ¸Õ</view>
 							</u-col>
 							<u-col span="1" style="padding: 5pt 0;">
 								<u-icon name="heart-fill" color="#36AB62" size="40"></u-icon>
 							</u-col>
 							<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
-								<view style="font-size: 14pt;font-weight: bold;">æ±‚è´­ï¼š30è¾† è£å¨\å‰åˆ©å¸è±ª\æ¯”äºšè¿ª...</view>
+								<view style="font-size: 14pt;font-weight: bold;">Çó¹º£º30Á¾ ÈÙÍş\¼ªÀûµÛºÀ\±ÈÑÇµÏ...</view>
 								<view class="">
-									<text>é‡‘åè¯šä¿¡ç§Ÿè½¦è¡Œ     é‡‘å</text>
+									<text>½ğ»ª³ÏĞÅ×â³µĞĞ     ½ğ»ª</text>
 								</view>
 								<view>
-									<text style="">æ‰“åŒ…ä»·ï¼š</text><text style="color: #3FB26C;font-size: 18pt;">3ä¸‡ä»¥å†…/3-5ä¸‡</text>
+									<text style="">´ò°ü¼Û£º</text><text style="color: #3FB26C;font-size: 18pt;">3ÍòÒÔÄÚ/3-5Íò</text>
 								</view>
 							</u-col>
 						</u-row>
@@ -64,6 +64,71 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+	<view> 
+		<CollectDriver v-if='curThemeType ==="driver"'></CollectDriver>
+		<CollectCompany ></CollectCompany>
+		<NotLogin></NotLogin>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</view>
 	</view>
 </template>
@@ -74,26 +139,26 @@
 			return {
 				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				list: [{
-					name: 'åœ¨å”®'
+					name: 'ÔÚÊÛ'
 				}, {
-					name: 'æ±‚è´­'
+					name: 'Çó¹º'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
 			}
 		},
 		methods: {
-			// tabsé€šçŸ¥swiperåˆ‡æ¢
+			// tabsÍ¨ÖªswiperÇĞ»»
 			tabsChange(index) {
 				this.swiperCurrent = index;
 			},
-			// swiper-itemå·¦å³ç§»åŠ¨ï¼Œé€šçŸ¥tabsçš„æ»‘å—è·Ÿéšç§»åŠ¨
+			// swiper-item×óÓÒÒÆ¶¯£¬Í¨ÖªtabsµÄ»¬¿é¸úËæÒÆ¶¯
 			transition(e) {
 				let dx = e.detail.dx;
 				this.$refs.uTabs.setDx(dx);
 			},
-			// ç”±äºswiperçš„å†…éƒ¨æœºåˆ¶é—®é¢˜ï¼Œå¿«é€Ÿåˆ‡æ¢swiperä¸ä¼šè§¦å‘dxçš„è¿ç»­å˜åŒ–ï¼Œéœ€è¦åœ¨ç»“æŸæ—¶é‡ç½®çŠ¶æ€
-			// swiperæ»‘åŠ¨ç»“æŸï¼Œåˆ†åˆ«è®¾ç½®tabså’Œswiperçš„çŠ¶æ€
+			// ÓÉÓÚswiperµÄÄÚ²¿»úÖÆÎÊÌâ£¬¿ìËÙÇĞ»»swiper²»»á´¥·¢dxµÄÁ¬Ğø±ä»¯£¬ĞèÒªÔÚ½áÊøÊ±ÖØÖÃ×´Ì¬
+			// swiper»¬¶¯½áÊø£¬·Ö±ğÉèÖÃtabsºÍswiperµÄ×´Ì¬
 			animationfinish(e) {
 				let current = e.detail.current;
 				this.$refs.uTabs.setFinishCurrent(current);
@@ -103,12 +168,25 @@
 			toView(){
 				console.log(11111111111111)
 			},
-			// scroll-viewåˆ°åº•éƒ¨åŠ è½½æ›´å¤š
+			// scroll-viewµ½µ×²¿¼ÓÔØ¸ü¶à
 			onreachBottom() {
 				
 			}
+import 	CollectCompany from './company/company.vue'
+import 	CollectDriver from './driver/driver.vue'
+import NotLogin from '@/components/notlogin/notlogin.vue'
+export default {
+	components:{
+		CollectCompany,CollectDriver,NotLogin
+	},
+	data() {
+		return {
+
 		}
 	}
+	},
+
+}
 </script>
 
 <style lang="scss">
@@ -123,6 +201,7 @@ page{
 		border-bottom-width:0;
 	}
 </style>
+
 <style lang="scss" scoped>
 	.driver-content{
 		.u-tabs{

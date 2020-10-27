@@ -58,8 +58,7 @@
 			  },
 			  uploadChange(data, index, lists, name){
 			  	this.form[name] = data.text;
-			  	console.log(data)
-			  	console.log(name)
+				this.$u.toast(data.msg);
 			  },
 			  setForm(){
 				  if ( this.form.oneneishiphoto === ''){

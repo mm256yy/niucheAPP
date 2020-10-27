@@ -89,6 +89,7 @@
 			  },
 			  uploadChange(data, index, lists, name){
 				this.form[name] = data.text;
+				this.$u.toast(data.msg);
 			  },
 			 toNext(){
 				if (this.form.cardivephoto === '' || this.form.cardrivepeople === ''){
