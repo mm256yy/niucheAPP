@@ -13,11 +13,15 @@
 					<view class="avater">
 						<u-row style="margin: 10pt 0pt">
 							<u-col span="3">
-								<u-avatar :src="driverSrc" mode="circle" size="large" ></u-avatar>
+								<u-avatar :src="driverPub.photo" mode="circle" size="large" ></u-avatar>
 							</u-col>
-							<u-col span="5" >
+							<u-col span="5" v-show="!telephone">
 								<view>欢迎来到纽车科技</view>
 								<text class="btn-mini bg" @click="toLogin">登录/注册</text>
+							</u-col>
+							<u-col span="5" v-show="telephone">
+								<view>{{driverPub.name}}</view>
+								<text class="bg">{{driverPub.telephone}}</text>
 							</u-col>
 						</u-row>
 						<view class="bg" style="padding: 4pt 0;" >
@@ -27,9 +31,9 @@
 							</u-col>
 							<u-col span="3">
 									<text class="colorF">驾照认证</text>
-									<view class="colorF">未认证</view>
+									<view class="colorF">{{driverPub.driverState}}</view>
 							</u-col>
-							<u-col span="2">
+							<u-col span="1">
 								<view class="colorF" style="text-align: center;">|</view>
 							</u-col>
 							<u-col span="2">
@@ -37,7 +41,7 @@
 							</u-col>
 							<u-col span="3">
 									<text class="colorF">职业资格认证</text>
-									<view class="colorF">未认证</view>
+									<view class="colorF">{{driverPub.postState}}</view>
 							</u-col>
 						  </u-row>
 						</view>
@@ -48,11 +52,10 @@
 					</view>
 					<view class="bgf">
 						<u-cell-group >
-							<u-cell-item icon="setting-fill" title="租车需求" :title-style="titleStyle" value="已发布"></u-cell-item>
-							<u-cell-item icon="integral-fill" title="求职需求" :title-style="titleStyle" value="未发布"></u-cell-item>
+							<u-cell-item icon="setting-fill" title="租车需求" :title-style="titleStyle" :value="driverPub.jobNum"></u-cell-item>
+							<u-cell-item icon="integral-fill" title="求职需求" :title-style="titleStyle" :value="driverPub.carNum"></u-cell-item>
 						</u-cell-group>
 					</view>
-					
 					<view class="my_title">
 						其他
 					</view>
@@ -173,15 +176,26 @@
 				},
 				otherObj:{
 					sc:'不可见',xx:'不可见',qz:'不可见'
+				},
+				driverPub:{
+					photo:'',
+					name:'',
+					telephone:'',
+					driverState:'未认证',
+					postState:'未认证',
+					jobNum:'',
+					carNum:'',
 				}
 			}
 		},
-		mounted() {
-		  // this.getUser()
-		},
 		onShow(){
 		    this.telephone = uni.getStorageSync('telephone')
-			this.getUser()  
+			this.role = uni.getStorageSync('role')
+			if (role === 2){
+				this.getUser();
+			} else {
+			   this.getDriver()  	
+			}
 		},
 		filters: {
 		  state: function (value) {
@@ -200,9 +214,18 @@
 		  }
 		},
 		methods: {
+			getDriver(){
+				this.$u.api.getUserInfo().then(res=>{
+					if(res.code === 0){
+						let data = res.data;
+						this.driverPub = data
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			getUser(){
 				let phone = this.telephone;
-				console.log(phone)
 				if (phone) {
 					this.$u.api.getUserInfo({telephone:phone}).then(res=>{
 						if(res.code === 200){

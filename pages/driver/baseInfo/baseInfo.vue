@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="基本信息" :back-text-style="backTextStyle" :height="60" :background="backgroundDri" title-color="#FFFFFF">
+		<u-navbar back-text="返回"  back-icon-size="0" :back-text-style="backTextStyle" title="基本信息" :height="60" :background="backgroundDri" title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="edit-pen" size="38" v-if="!type" @click="type =true"></u-icon>
