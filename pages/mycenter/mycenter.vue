@@ -11,11 +11,11 @@
 			<view class="content" v-show = "curThemeType ==='driver'">
 				<view style="padding: 20pt 15pt;">
 					<view class="avater">
-						<u-row>
-							<u-col span="3" style="margin: -10pt 5pt 5pt 9pt;">
+						<u-row style="margin: 10pt 0pt">
+							<u-col span="3">
 								<u-avatar :src="driverSrc" mode="circle" size="large" ></u-avatar>
 							</u-col>
-							<u-col span="5" style="margin: 10pt 0pt">
+							<u-col span="5" >
 								<view>欢迎来到纽车科技</view>
 								<text class="btn-mini bg" @click="toLogin">登录/注册</text>
 							</u-col>
@@ -36,7 +36,7 @@
 								<u-image width="100%" height="100rpx" :src="driverSrc"></u-image>
 							</u-col>
 							<u-col span="3">
-									<text class="colorF">驾照认证</text>
+									<text class="colorF">职业资格认证</text>
 									<view class="colorF">未认证</view>
 							</u-col>
 						  </u-row>

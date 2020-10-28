@@ -98,7 +98,7 @@
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
-				console.log(this.$attrs)
+				console.log(this.list)
 			}
 		}
 	}
