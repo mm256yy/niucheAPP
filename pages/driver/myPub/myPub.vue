@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+		我的发布
 	</view>
 </template>
 

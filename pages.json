@@ -304,44 +304,53 @@
             }
             
         }
-        ,{
+        ,{//司机注册协议
             "path" : "pages/driver/agreement/agreement",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
         }
-        ,{
+        ,{//司机驾照
             "path" : "pages/driver/drivingLicense/drivingLicense",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
         }
-        ,{
+        ,{//网约车驾照
             "path" : "pages/driver/onlineCar/onlineCar",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+               "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
         }
-        ,{
+        ,{//司机基本信息
             "path" : "pages/driver/baseInfo/baseInfo",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+              "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
         }
-        ,{
+        ,{//我的拼单
             "path" : "pages/driver/myList/myList",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//我的发布
+            "path" : "pages/driver/myPub/myPub",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -350,7 +359,7 @@
             
         }
         ,{
-            "path" : "pages/driver/myPub/myPub",
+            "path" : "pages/driver/taxiCar/taxiCar",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

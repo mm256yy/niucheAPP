@@ -37,7 +37,7 @@
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			toNext(){
-				this.$u.route("/pages/company/identityAuth/identityAuth")
+				this.$u.route("/pages/driver/drivingLicense/drivingLicense")
 			}
 		}
 	}

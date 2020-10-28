@@ -11,8 +11,8 @@
 			<view style="background-color: #dedede;padding: 8pt 0;" v-show="reason">
 				<text>{{reason}}</text>
 			</view>
-			<view class="top-content-base">驾照认证</view>
-			<view class="top-content-base" style="font-size: 12pt;">驾驶证正本照片</view>
+			<view class="top-content-base">出租车驾驶员证认证</view>
+			<view class="top-content-base" style="font-size: 12pt;">出租车驾驶员证认证</view>
 			<view class="top-content-upload">
 				<view></view>
 				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" 
@@ -60,11 +60,9 @@
 					<u-icon class="iconAbs" v-show='type' name="calendar" color="#FFA032" size="40"></u-icon>
 					<view class="type-right" v-show='!type'>{{form.endTime}}</view>
 				</u-form-item>
-				<u-form-item label="准驾车型" label-position="top" prop="vehicleAge">
-					<u-radio-group v-model="form.vehicleAge" :active-color="'#FFA032'" style="text-align: right;" v-if="type">
-						<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in List" :key="index">{{item.text}}</u-radio>
-					</u-radio-group>
-					<view class="type-right" v-else>{{form.vehicleAge}}</view>
+				<u-form-item label="发证城市" prop="city">
+					<u-input class="input-radius" v-model="form.city" :border="true" v-if="type"/>
+					<view v-else class="type-right">{{form.city}}</view>
 				</u-form-item>
 			</u-form>
 			<view style="padding-top: 30pt;color:#E10000;">
@@ -92,7 +90,7 @@
 			return {
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
-				title:'驾照上传',
+				title:'证件上传',
 				action: '/user/image/BusinessImagedemo',
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
@@ -104,7 +102,7 @@
 					issueDate:'',
 					beginTime:'',
 					endTime:'',
-					vehicleAge:'',
+					city:'',
 				},
 				rules: {
 					name:requiredRule,
@@ -113,7 +111,7 @@
 					issueDate:requiredRule,
 					beginTime:requiredRule,
 					endTime:requiredRule,
-					vehicleAge:requiredRule,
+					city:requiredRule,
                 },
 				pickerName:'',
 				List:[{text:'A1'},{text:'A2'},{text:'A3'},{text:'B1'},{text:'B2'},{text:'C1'},{text:'C2'}],
@@ -160,19 +158,19 @@
 							this.from.issueDate = data.issueDate;
 							this.from.beginTime = data.beginTime;
 							this.from.endTime = data.endTime;
-							this.from.vehicleAge = data.vehicleAge;
+							this.from.city = data.city;
 							this.from.id = data.id;
 							if (data.state === 2){
 								this.type = true;
 								this.reason ="驳回理由："+data.reason;
 							}else if (data.state === 3){
-								this.title = '驾照已认证';
-								this.reason = "* 驾照已认证，如有变更，请点击“变更”提交。 "
+								this.title = '证件已认证';
+								this.reason = "* 证件已认证，如有变更，请点击“变更”提交。 "
 								this.stateType = true;
 								this.type = false;
 							} else if(data.state ===4){
-								this.type = false;
-								this.title = "驾照审核中"
+								this.title = "证件审核中"
+								this.type =false;
 								this.reason = "* 信息已提交，在审核期间本页内容不能修改。"
 							}
 						 } else{
