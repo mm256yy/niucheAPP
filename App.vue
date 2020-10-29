@@ -20,11 +20,17 @@
 			})
 		},
 		onShow() {
-
+			uni.getStorage({
+				key:'curThemeType',
+				success:function(res){
+					console.log(res)
+				}
+			})
+			
 		},
 		onHide: function() {
 			console.log('App Hide')
-		}
+		},
 	}
 </script>
 

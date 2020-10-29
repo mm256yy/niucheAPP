@@ -353,7 +353,7 @@
             "path" : "pages/driver/myPub/myPub",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
@@ -362,7 +362,7 @@
             "path" : "pages/driver/taxiCar/taxiCar",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+              "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
