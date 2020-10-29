@@ -162,15 +162,15 @@
 							this.from.endTime = data.endTime;
 							this.from.vehicleAge = data.vehicleAge;
 							this.from.id = data.id;
-							if (data.state === 2){
+							if (data.state === 4){
 								this.type = true;
 								this.reason ="驳回理由："+data.reason;
-							}else if (data.state === 3){
+							}else if (data.state === 1){
 								this.title = '驾照已认证';
 								this.reason = "* 驾照已认证，如有变更，请点击“变更”提交。 "
 								this.stateType = true;
 								this.type = false;
-							} else if(data.state ===4){
+							} else if(data.state ===3){
 								this.type = false;
 								this.title = "驾照审核中"
 								this.reason = "* 信息已提交，在审核期间本页内容不能修改。"

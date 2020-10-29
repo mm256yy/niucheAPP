@@ -15,12 +15,31 @@
 </template>
 
 <script>
+	import {dirverPages,companyPages} from '@/utils/tabbar.js'
 	import MyCompany from './company/company.vue'
 	import MyDriver from './driver/driver.vue'
 	export default {
 		data() {
 			return {
 
+			}
+		},
+		onShow() {
+			let type = uni.getStorageSync('curThemeType');
+			if (type === 'company'){
+				companyPages.forEach(item=>{
+					uni.setTabBarItem(item)
+				})
+				uni.setTabBarStyle({
+				  selectedColor: '#41B36D',
+				})
+			} else {
+				dirverPages.forEach(item=>{
+					uni.setTabBarItem(item)
+				})
+				uni.setTabBarStyle({
+				  selectedColor: '#FE9217',
+				})
 			}
 		},
 		components:{

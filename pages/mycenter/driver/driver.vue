@@ -19,7 +19,8 @@
 					<view class="bg" style="padding: 4pt 0;" >
 					 <u-row>
 						<u-col span="2">
-							<u-image width="100%" height="100rpx" :src="driverSrc"></u-image>
+							<u-icon size="100" :name="jzrzSrc"></u-icon>
+							<!-- <u-image width="100%" height="100rpx" :src="jzrzSrc"></u-image> -->
 						</u-col>
 						<u-col span="3">
 								<text class="colorF">驾照认证</text>
@@ -29,7 +30,7 @@
 							<view class="colorF" style="text-align: center;">|</view>
 						</u-col>
 						<u-col span="2">
-							<u-image width="100%" height="100rpx" :src="driverSrc"></u-image>
+							<u-icon size="100" :name="zyzgSrc"></u-icon>
 						</u-col>
 						<u-col span="3">
 							<text class="colorF">职业资格认证</text>
@@ -44,8 +45,12 @@
 				</view>
 				<view class="bgf">
 					<u-cell-group >
-						<u-cell-item icon="setting-fill" title="租车需求" :title-style="titleStyle" :value="driverPub.jobNum"></u-cell-item>
-						<u-cell-item icon="integral-fill" title="求职需求" :title-style="titleStyle" :value="driverPub.carNum"></u-cell-item>
+						<u-cell-item title="租车需求" :title-style="titleStyle" :value="driverPub.jobNum">
+							<u-icon size="60" :name="zcxuSrc" slot="icon"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="求职需求" :title-style="titleStyle" :value="driverPub.carNum">
+							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
+						</u-cell-item>
 					</u-cell-group>
 				</view>
 				<view class="my_title">
@@ -53,15 +58,23 @@
 				</view>
 				<view class="colorF">
 					<u-cell-group>
-						<u-cell-item icon="fingerprint" title="我的拼单" :title-style="titleStyle"></u-cell-item>
-						<u-cell-item icon="volume-up" title="收藏" :title-style="titleStyle"></u-cell-item>
-						<u-cell-item icon="tags-fill" title="消息" :title-style="titleStyle"></u-cell-item>
-						<u-cell-item icon="map-fill" title="通讯录" :title-style="titleStyle"></u-cell-item>
+						<u-cell-item title="我的拼单" :title-style="titleStyle">
+							<u-icon size="60" :name="wdpdSrc" slot="icon"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="收藏" :title-style="titleStyle">
+							<u-icon size="60" :name="scSrc" slot="icon"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="消息" :title-style="titleStyle">
+							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="通讯录" :title-style="titleStyle">
+							<u-icon size="60" :name="txlSrc" slot="icon"></u-icon>
+						</u-cell-item>
 					</u-cell-group>
 				</view>
 			</view>
 		</view>
-		<u-modal v-model="showTips" show-cancel-button="true" :mask-close-able="true" confirm-text="出租车驾驶证" cancel-text="网约车驾驶证"
+		<u-modal v-model="showTips" :show-cancel-button="true" :mask-close-able="true" confirm-text="出租车驾驶证" cancel-text="网约车驾驶证"
 		 @confirm="tipsConfirm" @cancel="tipsCancel" >
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 		        <view class="">
@@ -78,11 +91,18 @@
 		data() {
 			return {
 				showTips:false,
-				driverSrc: '../../static/driverSrc.png',
+				jzrzSrc:'../../static/jiazhao.png',
+				zyzgSrc:'../../static/yingyezhizhao.png',
+				zcxuSrc:'../../static/zuche.png',
+				qzxuSrc:'../../static/qiuzhi.png',
+				wdpdSrc:"../../static/pindan.png",
+				scSrc:"../../static/shoucang.png",
+				xxSrc:"../../static/xiaoxi.png",
+				txlSrc:"../../static/tongxunlu.png",
 				state:'',
 				titleStyle:{'fontSize': '12pt','padding-left':'5pt','color':'#000000'},
 				driverPub:{
-					photo:'',
+					photo:'../../static/driverSrc.png',
 					name:'',
 					telephone:'',
 					driverState:'不可见',
@@ -125,6 +145,9 @@
 						 this.$u.toast(res.msg);
 					}
 				})
+			},
+			toLogin(){
+				 this.$u.route('/pages/login/login');
 			},
 			tipsConfirm(){
 				this.$u.route("/pages/driver/taxiCar/taxiCar")

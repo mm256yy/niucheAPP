@@ -1,4 +1,5 @@
 <script>
+		import {dirverPages,companyPages} from '@/utils/tabbar.js'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -20,13 +21,22 @@
 			})
 		},
 		onShow() {
-			uni.getStorage({
-				key:'curThemeType',
-				success:function(res){
-					console.log(res)
-				}
-			})
-			
+			let type = uni.getStorageSync('curThemeType');
+			if (type === 'company'){
+				companyPages.forEach(item=>{
+					uni.setTabBarItem(item)
+				})
+				uni.setTabBarStyle({
+				  selectedColor: '#41B36D',
+				})
+			} else {
+				dirverPages.forEach(item=>{
+					uni.setTabBarItem(item)
+				})
+				uni.setTabBarStyle({
+				  selectedColor: '#FE9217',
+				})
+			}
 		},
 		onHide: function() {
 			console.log('App Hide')

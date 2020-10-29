@@ -72,6 +72,7 @@
 <script>
 	import {WebIM,conn,SDKlogin} from '@/sdk/WebIMConfig.js'
 	import {phoneRule,codeRule,passwordRule} from '@/common/rule.js'
+
 	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
@@ -124,7 +125,6 @@
 		mounted() {
 			this.getUid()
 			// this.init()
-			
 		},
 		methods: {
 			...mapActions([
