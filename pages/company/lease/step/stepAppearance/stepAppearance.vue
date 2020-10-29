@@ -57,7 +57,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				action: '/user/image/carotherphoto',
+				action: 'http://161.189.168.218:9007/user/image/carotherphoto',
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				uploadList:[

@@ -117,11 +117,6 @@ page{
 	}
 </style>
 <style lang="scss" scoped>
-	// .driver-content{
-	// 	.u-tabs{
-	// 		background: linear-gradient(115deg,$bg-grad-FE, $bg-grad-FCD);
-	// 	}
-	// }
 	.company-content{
 		.u-tabs{
 			background: linear-gradient(115deg, $bg-grad-AB, $bg-grad-DDC);

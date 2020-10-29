@@ -124,6 +124,7 @@ export default {
 	 },
 	 saveStorage(){
 		 this.CARPUBUPOSITION(this.form)
+		  this.$u.toast('草稿保存成功');
 	 },
 	 saveForm(){
 		 let obj = this.form;
