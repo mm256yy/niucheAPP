@@ -94,7 +94,7 @@
 				jzrzSrc:'../../static/jiazhao.png',
 				zyzgSrc:'../../static/yingyezhizhao.png',
 				zcxuSrc:'../../static/zuche.png',
-				qzxuSrc:'../../static/qiuzhi.png',
+				qzxuSrc:'../../static/qiuzhi-c.png',
 				wdpdSrc:"../../static/pindan.png",
 				scSrc:"../../static/shoucang.png",
 				xxSrc:"../../static/xiaoxi.png",
