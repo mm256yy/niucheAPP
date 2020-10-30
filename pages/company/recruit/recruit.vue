@@ -133,9 +133,9 @@ export default {
 		 	if(res.code === 200){
 				this.showTips = true
 		 	}else {
-		 		 this.$u.toast(res.message);
+		 		 this.$u.toast(res.msg);
 		 	}
-		 })
+		 }).catch(res=>{this.$u.toast(res.msg)})
 	 },
 	 clearStorage(){
 		 uni.removeStorageSync('carPubUpload');

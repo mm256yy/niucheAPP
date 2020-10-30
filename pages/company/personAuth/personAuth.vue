@@ -191,9 +191,11 @@
 							this.form.telephone = data.telephone;
 							this.form.id = data.id;
 							this.form.comparyid = data.comparyid;
+						 }else{
+							   this.$u.toast(res.msg);
 						 }
 						}).catch(res=>{
-							console.log(res)
+							  this.$u.toast(res.msg);
 					})
 				}
 			},
@@ -208,7 +210,7 @@
 						if (this.comparyid){
 							this.personSave()
 						} else {
-						this.saveSubmit()	
+						 this.saveSubmit()	
 					  }
 					} else {
 						
@@ -219,9 +221,11 @@
 				this.$u.api.editCompanyPerson(this.form).then(res => {
 						if(res.code === '200'){
 							this.showTips = true
+						}else{
+							  this.$u.toast(res.msg);
 						}
 					}).catch(res=>{
-						console.log(res)
+						  this.$u.toast(res.msg);
 					})
 			},
 			saveSubmit(){
@@ -249,24 +253,28 @@
 				obj.idcardid = this.form.idcardid;//身份证号
 			    obj.telephone = this.form.telephone;//手机号
 				obj.identifyCode = this.form.identifyCode;
-
+                 
 				if (this.form.userid){
 					obj.userid = this.form.userid;
 					this.$u.api.saveAuthAll(obj).then(res => {
 							if(res.code === '200'){
 					            this.showTips = true
+							}else{
+								  this.$u.toast(res.msg);
 							}
 						}).catch(res=>{
-							console.log(res)
+							  this.$u.toast(res.msg);
 						})
 				} else {
 					obj.userid = this.phone;
 					this.$u.api.saveAuth(obj).then(res => {
 							if(res.code === '200'){
 					            this.showTips = true
+							}else{
+								this.$u.toast(res.msg);
 							}
 						}).catch(res=>{
-							console.log(res)
+							  this.$u.toast(res.msg);
 						})
 				}
 			},

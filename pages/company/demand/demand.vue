@@ -130,7 +130,7 @@
 					if(res.code === '200'){
 						this.showTips = true;
 					}else {
-						 this.$u.toast(res.message);
+						 this.$u.toast(res.msg);
 					}
 				})
 			},

@@ -217,7 +217,7 @@
 					}else {
 						 this.$u.toast(res.msg);
 					}
-				})
+				}).catch(res=>{this.$u.toast(res.msg)})
 				this.form[flag] = false;
 			},
 		}

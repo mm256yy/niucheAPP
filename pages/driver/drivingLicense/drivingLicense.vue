@@ -151,7 +151,7 @@
 		methods: {
 			getInfo(){
 				if(this.id){
-					this.$u.api.getCompanyAll({id:this.id}).then(res => {
+					this.$u.api.listDrivingLicense({id:this.id}).then(res => {
 						if(res.code === 0){
 							let data = res.data;
 							this.from.name = data.name;
@@ -198,7 +198,7 @@
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
-						this.$u.api.CompanyAll(this.form).then(res => {
+						this.$u.api.addDrivingLicense(this.form).then(res => {
 							if(res.code === 0){
 								this.showTips =true;
 							 } else{

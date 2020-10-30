@@ -88,9 +88,9 @@ export default {
 			if(res.code === 200){
 				 this.carmodel = res.alibabaCarModelVoList;
 			}else {
-				 this.$u.toast(res.message);
+				 this.$u.toast(res.msg);
 			}
-		})
+		}).catch(res=>{this.$u.toast(res.msg)})
 	  },
 	actionSheetCallback(index) {
 	  	let val = index[0].label;
@@ -113,9 +113,9 @@ export default {
 				 this.CARPUBUPLOAD(list)
 				 this.$u.route('/pages/company/recruit/carModel/carModel') 
 		 	}else {
-		 		 this.$u.toast(res.message);
+		 		 this.$u.toast(res.msg);
 		 	}
-		 })
+		 }).catch(res=>{this.$u.toast(res.msg)})
 	}
   }
 }
