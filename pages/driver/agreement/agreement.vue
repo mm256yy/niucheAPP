@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="司机注册协议" :background="backgroundDri" :back-text-style="backTextStyle" 
+		<u-navbar back-text="返回" :custom-back="toPage"  back-icon-size="0" title="司机注册协议" :background="backgroundDri" :back-text-style="backTextStyle" 
 		 title-color="#FFFFFF"></u-navbar>
 		<view style="padding: 10pt 20pt;">
 			 Aliquam vitae felis a massa ultrices tincidunt. Aliquam aliquam iaculis risus sed maximus. Suspendisse pretium lorem turpis, eu imperdiet enim efficitur sit amet. Mauris aliquam tellus mauris, lobortis tincidunt purus porta ac. Mauris nec tellus in elit interdum tempus. Nullam pellentesque aliquam purus, vitae dignissim neque tincidunt ut. Aliquam id cursus libero.

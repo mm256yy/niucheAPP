@@ -41,8 +41,8 @@
 						<u-input v-model="formPwd.telephone" type="number" placeholder="" border style="border-radius: 18px;"/>
 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('companyNumChange')" style="position: absolute;right: 10rpx;">{{companyNumText}}</u-button>
 					</u-form-item>
-					<u-form-item label="密码" prop="password">
-						<u-input v-model="formPwd.password" type="password" maxlength="18" placeholder="" border style="border-radius: 18px;"/>
+					<u-form-item label="密码" prop="code">
+						<u-input v-model="formPwd.code" type="password" maxlength="18" placeholder="" border style="border-radius: 18px;"/>
 					</u-form-item>
 					<u-form-item label="登录身份" prop="role" label-width='100pt'>
 						<u-radio-group v-model="formPwd.role" :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" style="text-align: right;">
@@ -102,47 +102,34 @@
 				},
 				formPwd:{
 					telephone:'',
-					password:'',
+					code:'',
 					role:1
 				},
 				codeTips: '',
 				rules:{
 					telephone:phoneRule,
-					password:passwordRule,
+					code:passwordRule,
 					code:codeRule,
 				},
-				uuid:'',
-				captcha_codes:'',
 				errorType:[
 					'toast'
 				]
 			}
 		},
 		onReady() {
+			uni.removeStorageSync('token');
 		    this.$refs.uForm.setRules(this.rules);
 			this.$refs.uFormPwd.setRules(this.rules);
 		},
 		mounted() {
-			this.getUid()
 			// this.init()
 		},
 		methods: {
 			...mapActions([
-				'Login','UUid','CurThemeType'
+				'Login','CurThemeType'
 			]),
 			change(index) {
 				this.current = index;
-			},
-			getUid(){
-			 this.$u.api.GetUUID().then(res => {
-				if(res.code === 200){
-					this.captcha_codes = res.captcha_codes;
-					this.uuid = res.uuid;
-					this.UUid(res.uuid)
-				 }
-				}).catch(res=>{
-					console.log(res)
-				})
 			},
 			//获取手机号
 			getPhoneNumber(ref){
@@ -204,24 +191,10 @@
 			login(ref){
 				this.$refs[ref].validate(valid=>{
 					if(valid) {
-						let obj = {
-							telephone:'',
-							code:'',
-							role:'',
-							uuid:'',
-							captcha_codes:''
-						}
-						if(ref === 'uForm') {
-                             obj = this.form;
-							 obj.uuid = this.uuid;
-							 obj.captcha_codes = this.captcha_codes;
-						} else{
-							obj.telephone = this.formPwd.telephone;
-							obj.code = this.formPwd.password;
-							obj.role = this.formPwd.role;
-							obj.uuid = this.uuid;
-							obj.captcha_codes = this.captcha_codes;
-						}
+						let obj = this.form;
+						if(ref === 'uFormPwd') {
+                          obj = this.formPwd;
+						} 
 						this.$u.api.loginSubmit(obj).then(res => {
 								if(res.code === '1') {
 									let userInfo = obj;

@@ -27,11 +27,6 @@
 		mounted() {
 		  // this.getUser()
 		},
-		onShow(){
-		    this.telephone = uni.getStorageSync('telephone')
-			this.getUser() 
-			 
-		},
 		filters: {
 		  state: function (value) {
 		    if (!value) return ''
@@ -45,6 +40,9 @@
 				return '认证未通过'
 			}else {
 				return ''
+			  }
+			 }
+			},
 		onShow() {
 			let type = uni.getStorageSync('curThemeType');
 			if (type === 'company'){

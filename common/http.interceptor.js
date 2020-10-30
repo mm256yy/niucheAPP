@@ -32,18 +32,13 @@ const install = (Vue, vm) => {
 		
 		// 方式四，如果token放在了Storage本地存储中，拦截是每次请求都执行的
 		// 所以哪怕您重新登录修改了Storage，下一次的请求将会是最新值
-           if(config.url === '/user/login/login' || config.url === '/captchaImage'){
-			   // config.header.Authorization = null
-			   console.log(config)
-			   let headers = config.header;
-			   config.header = {"Content-Type":"application/json"};
-                console.log(config)
-		   } else{
+              if (config.url === '/user/login/login'){
+				  	uni.removeStorageSync('token');
+			  }
 			 const token = uni.getStorageSync('token');
 			 if (token) {
 			 	config.header.Authorization = token;
 			 }  
-		   }
 
 		
 		
