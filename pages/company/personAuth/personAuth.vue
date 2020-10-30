@@ -129,6 +129,7 @@
 		mounted() {
 			this.setPicToken()
 			this.getInfo()
+			console.log(this.companySecond)
 		},
 		computed:{
 			...mapGetters(['token','telephone','companyFirst','companySecond','companyThree','peopleCard','shengfenzheng'])
@@ -205,7 +206,6 @@
 			   }
 			},
 			toNext(){
-				console.log(this.companySecond)
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
 						if (this.comparyid){
@@ -240,6 +240,9 @@
 				obj.registeredcapital = this.companyFirst.registeredPrice;//注册资本
 				obj.faname = this.companyFirst.legalPerson;//法人姓名
 				obj.area = this.companyFirst.area;//地区
+				if (!this.companySecond){
+					this.companySecond = uni.getStorageSync('companySecond')
+				}
 				obj.comparylogophoto = this.companySecond.comparylogophoto;//公司logo
 				obj.comparynickname = this.companySecond.companyEasyName;//公司简称
 				obj.comparypeoplenum = this.companySecond.memberNumber;//公司成员
