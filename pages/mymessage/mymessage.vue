@@ -1,6 +1,7 @@
 <template>
 	<view :class="'company-content'"> 
 		<view class="wrap">
+		<u-navbar  back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -9,12 +10,12 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<car-sell></car-sell>
+					<car-sell v-if="isChildUpdate1" ref="carSell"></car-sell>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<buying></buying>
+					<buying v-if="isChildUpdate2" ref="buying"></buying>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -40,12 +41,21 @@
 				}],
 				current: 0, 
 				swiperCurrent: 0,
+				isChildUpdate1:true,
+				isChildUpdate2:false
 			}
 		},
 		methods: {
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
+				if(index == 0) {
+				    this.isChildUpdate1 = true;
+				    this.isChildUpdate2 = false;
+				} else if(index == 1) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = true;
+				}
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
@@ -59,9 +69,6 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
-			},
-			toView(){
-				console.log(11111111111111)
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {

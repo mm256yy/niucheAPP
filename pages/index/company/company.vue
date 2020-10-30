@@ -1,6 +1,7 @@
 <template>
 	<view :class="'company-content'"> 
 		<view class="wrap">
+		<u-navbar  back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -9,12 +10,12 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomrentcar">
-					<car-rent ref="child"></car-rent>
+					<car-rent v-if="isChildUpdate1" ref="child"></car-rent>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomjobsearch">
-					<job-search ref="child"></job-search>
+					<job-search v-if="isChildUpdate2" ref="child"></job-search>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -36,17 +37,29 @@
 				list: [{
 					name: '租车'
 				}, {
-					name: '求职'
+					name: '招聘'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
+				isChildUpdate1:true,
+				isChildUpdate2:false
 			}
 		},
 		methods: {
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
+				if(index == 0) {
+				    this.isChildUpdate1 = true;
+				    this.isChildUpdate2 = false;
+				} else if(index == 1) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = true;
+				}
 			},
+			// init(){
+			// 	this.$refs.child.search()
+			// },
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
 				let dx = e.detail.dx;

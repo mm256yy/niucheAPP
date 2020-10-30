@@ -48,7 +48,13 @@ const install  = (Vue, vm) => {
 	//查询车辆logo
 	const  getCarLogo =  (params = {}) => vm.$u.get('/user/carall/CarBrandGetPhotoUrl', params);
 	//保存招聘
-	const  saveCompanyInvite = (params = {}) => vm.$u.post('/system/comparyinvite/ComparyInviteAdd', params); 
+	const  saveCompanyInvite = (params = {}) => vm.$u.post('/system/comparyinvite/ComparyInviteAdd', params);
+	 //求购查询
+	 const  buying = (params = {}) => vm.$u.get('/system/usermain/UsermainAskToBuy', params);
+	 //求职招聘,租车查询
+	 const  askWork = (params = {}) => vm.$u.get('/system/usermain/UsermainRentCar', params);
+	 //卖车招聘
+	 const  sellCar = (params = {}) => vm.$u.post('/system/usermain/UsermainSellCar', params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
 		saveCompanyInvite,
@@ -74,7 +80,10 @@ const install  = (Vue, vm) => {
 		GetUUID,
 		getTelephone,
 		getIdentifyCode,
-	    loginSubmit
+	    loginSubmit,
+		buying,
+		askWork,
+		sellCar
 	 };
 }
 

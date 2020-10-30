@@ -171,7 +171,7 @@ page{
 			height: 352rpx;
 			color: #fff;
 			font-size: 20rpx;
-			margin-left: 40rpx;
+			margin-left: 30rpx;
 			margin-top: 40rpx;
 			.top {
 				width: 638rpx;

@@ -4,11 +4,12 @@
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="form.typeBusiness" type="select" /></u-form-item>
 			</u-form>
 			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
+			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
+			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -18,12 +19,12 @@
 			<view class="right">
 				<view class="time">刷新时间：刚刚</view>
 				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
+				<view class="name">{{list.drivername}}</view>
+				<view class="year">{{list.driverAgeTag}}</view>
+				<view class="type">{{list.onlinecarcardis}}||{{list.onlinecarcardis}}</view>
 				<view class="clear"></view>
-				<view class="car">求职意向：月薪5000\有保底\无责</view>
-				<u-icon class="chat" name="chat"></u-icon>
+				<view class="car">求职意向：{{list.jobintention}}</view>
+				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
 		</view>
 		<view class="list">
@@ -36,7 +37,7 @@
 				<view class="type">网约车认证</view>
 				<view class="clear"></view>
 				<view class="car">求职意向：月薪5000\有保底\无责</view>
-				<u-icon class="chat" name="chat"></u-icon>
+				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
 		</view>
 		<view class="list">
@@ -49,7 +50,7 @@
 				<view class="type">网约车认证</view>
 				<view class="clear"></view>
 				<view class="car">求职意向：月薪5000\有保底\无责</view>
-				<u-icon class="chat" name="chat"></u-icon>
+				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
 			<view class="clear"></view>
 		</view>
@@ -61,43 +62,95 @@
 		data() {
 			return {
 				show:false,
-				list: [{
-										image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-										title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-									},
-									{
-										image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-										title: '身无彩凤双飞翼，心有灵犀一点通'
-									},
-									{
-										image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-										title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-									}
-								],
+				showType:false,
+				// list: [{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+				// 					},
+				// 					{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
+				// 						title: '身无彩凤双飞翼，心有灵犀一点通'
+				// 					},
+				// 					{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
+				// 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+				// 					}
+				// 				],
 				form: {
-				ageDriver: '',
+				  driverage: '',
+				  businesstype: '',
+				  isrentAndAskWork: 2
 				},
-				list: [
-									{
-										value: '1',
-										label: '江'
-									},
-									{
-										value: '2',
-										label: '湖'
-									}
-								]
+				pagination: {
+				  pageNum: 0, 
+				  pageSize: 10
+				},
+				total: 0,
+				select: [
+					{
+						label: '3年及以上',
+						value: '1'
+					},
+					{
+						label: '不限',
+						value: '2'
+					}
+				],
+				selectType: [
+					{
+						label: '网约车',
+						value: '1'
+					},
+					{
+						label: '出租车',
+						value: '2'
+					},
+					{
+						label: '不限',
+						value: '3'
+					}
+				],
+				list: [],
+				obj: {}
 			}
 		},
-		onReady() {
-		    
-		},
 		mounted() {
-			
+			this.search()	
 		},
 		methods: {
+		    getList(){
+		        const params = Object.assign(this.form, {
+		        	pageIndex: this.pagination.pageNum + 1,
+		        	pageSize: 10
+		        });
+		    		this.$u.api.askWork(params).then(res=>{
+		    			if(res.code === 200){
+		    				 this.list = res.rows;
+		    				 this.total= res.total;
+		    			}else {
+		    				 this.$u.toast(res.msg);
+		    			}
+		    		})
+		    },
+		    search(){
+		        const params = Object.assign(this.form, {
+		    		pageNum: 0,
+		    		pageSize: 10
+		    	});
+		    		this.$u.api.askWork(params).then(res=>{
+		    			if(res.code === 200){
+		    				 this.list = res.rows;
+		    				 this.total= res.total;
+		    			}else {
+		    				 this.$u.toast(res.msg);
+		    			}
+		    		})
+		    },
 		    confirm(arr){
-				this.form.ageDriver = arr[0].label;
+		    	this.form.driverage = arr[0].label;
+		    },
+		    confirmType(arr){
+		    	this.form.businesstype = arr[0].label;
 		    },
 			detail() {
 				this.$u.route("/pages/index/company/components/index/jobSearchDetail")

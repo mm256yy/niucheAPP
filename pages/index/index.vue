@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<Driver v-if='curThemeType ==="driver"'></Driver>
-		<Company v-else></Company>
+		<Company ref="companys" v-else></Company>
 	</view>
 </template>
 
@@ -16,6 +16,9 @@ export default {
 		return {
 	
 			}
+	},
+	onShow() {
+		
 	}
 			
 };

@@ -181,7 +181,8 @@
 		},
 		onShow(){
 		    this.telephone = uni.getStorageSync('telephone')
-			this.getUser()  
+			this.getUser() 
+			 
 		},
 		filters: {
 		  state: function (value) {
