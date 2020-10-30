@@ -108,8 +108,11 @@
 				codeTips: '',
 				rules:{
 					telephone:phoneRule,
-					code:passwordRule,
 					code:codeRule,
+				},
+				rules1:{
+					telephone:phoneRule,
+					code:passwordRule,
 				},
 				errorType:[
 					'toast'
@@ -117,9 +120,8 @@
 			}
 		},
 		onReady() {
-			uni.removeStorageSync('token');
 		    this.$refs.uForm.setRules(this.rules);
-			this.$refs.uFormPwd.setRules(this.rules);
+			this.$refs.uFormPwd.setRules(this.rules1);
 		},
 		mounted() {
 			// this.init()

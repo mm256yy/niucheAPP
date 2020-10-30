@@ -205,6 +205,7 @@
 			   }
 			},
 			toNext(){
+				console.log(this.companySecond)
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
 						if (this.comparyid){
@@ -230,7 +231,7 @@
 			},
 			saveSubmit(){
 				let obj = {businesscard:'',comparyname:'',societyid:'',chuangjiantime:'',registeredcapital:'',faname:'',area:'',
-				comparylogophoto:'',comparynickname:'',comparypeoplenum:'',comparycarnum:'',mainbusiness:'',
+				comparylogophoto:'',comparynickname:'',comparypeoplenum:'',comparycarnum:'',mainbusiness:'',userid:'',
 				comparytext:'',idcardphoto:'',username:'',sex:'',birthday:'',idcardid:'',telephone:'',comparypeoplephoto:'',identifyCode:''};
 				obj.businesscard = this.companyFirst.businesscard;//营业执照
 				obj.comparyname = this.companyFirst.companyName;//公司名称
@@ -255,6 +256,7 @@
 				obj.identifyCode = this.form.identifyCode;
                  
 				if (this.form.userid){
+					//修改
 					obj.userid = this.form.userid;
 					this.$u.api.saveAuthAll(obj).then(res => {
 							if(res.code === '200'){
@@ -266,7 +268,9 @@
 							  this.$u.toast(res.msg);
 						})
 				} else {
-					obj.userid = this.phone;
+					//新增
+					obj.userid = this.telephone;
+					console.log(obj)
 					this.$u.api.saveAuth(obj).then(res => {
 							if(res.code === '200'){
 					            this.showTips = true
