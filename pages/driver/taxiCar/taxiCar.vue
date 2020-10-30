@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回"  back-icon-size="0" :title="title" :back-text-style="backTextStyle" :background="backgroundDri" title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<text v-show = "stateType" @click="edit"></text>
+					<text v-show="stateType && !type" @click="edit">变更</text>
 				</view>
 			</view>
 		 </u-navbar>
@@ -13,7 +13,7 @@
 			</view>
 			<view class="top-content-base">出租车驾驶员证认证</view>
 			<view class="top-content-base" style="font-size: 12pt;">出租车驾驶员证认证</view>
-			<view class="top-content-upload">
+			<view class="top-content-upload" v-if="type">
 				<view></view>
 				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" 
 				@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024"
@@ -22,6 +22,9 @@
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
 				</u-upload>
+			</view>
+			<view class="" v-else>
+				<u-image width="100%" height="240rpx" :src="form.taxiPhoto"></u-image>
 			</view>
 			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过4M</view>
 			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
@@ -103,6 +106,7 @@
 					beginTime:'',
 					endTime:'',
 					city:'',
+					taxiPhoto:''
 				},
 				rules: {
 					name:requiredRule,
@@ -133,12 +137,6 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
-		onLoad(option) {
-			let id = option.id;
-			if(id){
-				this.id = id;
-			}
-		},
 		mounted() {
 	      this.setPicToken()
 		  this.getInfo()
@@ -148,27 +146,21 @@
 		},
 		methods: {
 			getInfo(){
-				if(this.id){
-					this.$u.api.getCompanyAll({id:this.id}).then(res => {
-						if(res.code === 0){
-							let data = res.data;
-							this.from.name = data.name;
-							this.from.sex = data.sex;
-							this.from.licenseNumber = data.licenseNumber;
-							this.from.issueDate = data.issueDate;
-							this.from.beginTime = data.beginTime;
-							this.from.endTime = data.endTime;
-							this.from.city = data.city;
-							this.from.id = data.id;
-							if (data.state === 4){
+					this.$u.api.getCompanyAll().then(res => {
+						if(res.code === 200){
+							let data = res.object;
+							this.form =data;
+							this.form.sex = data.sex.toString();
+							this.fileList= [{url:data.taxiPhoto}]
+							if (data.state === 3){
 								this.type = true;
 								this.reason ="驳回理由："+data.reason;
-							}else if (data.state === 1){
+							}else if (data.state === 2){
 								this.title = '证件已认证';
 								this.reason = "* 证件已认证，如有变更，请点击“变更”提交。 "
 								this.stateType = true;
 								this.type = false;
-							} else if(data.state ===3){
+							} else if(data.state ===1){
 								this.title = "证件审核中"
 								this.type =false;
 								this.reason = "* 信息已提交，在审核期间本页内容不能修改。"
@@ -177,7 +169,6 @@
 							this.$u.toast(res.msg) 
 						 }
 					}).catch(res=>{this.$u.toast(res.msg)})
-				}
 			},
 			showPicker(name){
 				this.pickerName = name;
