@@ -2,6 +2,12 @@
 		import {dirverPages,companyPages} from '@/utils/tabbar.js'
 	export default {
 		onLaunch: function() {
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let obj = {year:year,month:month,day:day};
+				 uni.setStorageSync('today', obj);
 			console.log('App Launch')
 			uni.onTabBarMidButtonTap(function(e){
 				console.log(e)
