@@ -128,7 +128,7 @@
 			}
 		  }
 		},
-		onShow(){
+		mounted(){
 		    this.telephone = uni.getStorageSync('telephone')
 			this.getDriver()  	
 		},

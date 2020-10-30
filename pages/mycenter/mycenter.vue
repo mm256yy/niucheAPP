@@ -8,8 +8,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyCompany></MyCompany>
-			<MyDriver></MyDriver>
+			<MyDriver v-if='curThemeType ==="driver"'></MyDriver>
+			<MyCompany v-else></MyCompany>
 	
 	</view>
 </template>

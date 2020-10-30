@@ -107,8 +107,8 @@
 				},
 			}
 		},
-		onShow(){
-		    this.telephone = uni.getStorageSync('telephone')
+		mounted() {
+			this.telephone = uni.getStorageSync('telephone')
 			this.getUser();
 		},
 		filters: {
