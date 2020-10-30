@@ -382,6 +382,69 @@
             }
             
         }
+        ,{//司机注册协议
+            "path" : "pages/driver/agreement/agreement",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//司机驾照
+            "path" : "pages/driver/drivingLicense/drivingLicense",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//网约车驾照
+            "path" : "pages/driver/onlineCar/onlineCar",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//司机基本信息
+            "path" : "pages/driver/baseInfo/baseInfo",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//我的拼单
+            "path" : "pages/driver/myList/myList",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//我的发布
+            "path" : "pages/driver/myPub/myPub",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/driver/taxiCar/taxiCar",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",

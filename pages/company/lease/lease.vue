@@ -41,13 +41,18 @@
 		    </view>
 			<view class="zlcontent-mid" style="background: #FFFFFF;">
 				<view style="padding: 10pt 0;font-size: 14pt;color: #000000;">车况详情</view>
-				 <u-form :model="form" ref='uForm2' label-width="220" :error-type="errorType">
+				 <u-form :model="form" ref='uForm2' label-width="210" :error-type="errorType">
 					 <u-form-item label="首次上牌时间" prop="firsttime">
 						 <u-input v-model="form.firsttime" :border="true" :disabled="true" @click="timeShow = true" placeholder=""/>
 						 <u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon>
 					 </u-form-item>
 					 <u-form-item label="行驶里程" prop="km">
-					 	<u-input v-model="form.km" style="border-radius: 40rpx;" :border="true" placeholder="请输入网约车行驶里程" />
+						 <u-input v-model="form.km" type="number" maxlength="3" @input="startValChange(index)"
+						  :clearable="false" :border="true" placeholder="请输入"/>
+						 <text style="padding: 0 5pt;">-</text>
+						 <u-input v-model="form.km" type="number" maxlength="3" @input="endValChange(index)" 
+						 :clearable="false" :border="true" placeholder="请输入"/>
+						 <text style="padding-left: 5pt;">万公里</text>
 					 </u-form-item>
 					 <u-form-item :label="carPubType === 1?'车辆在租总数':'车辆在售总数'">
 						 <u-input v-model="form.carnbumber" :clearable="false" :border="true"/><text style="position: absolute;right: 10px;">辆</text>

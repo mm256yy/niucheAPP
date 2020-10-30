@@ -1,7 +1,7 @@
 <template>
 	<view :class="'company-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="收藏" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" title-color="#FFFFFF"></u-navbar>
+		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -98,7 +98,7 @@
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
-				console.log(this.$attrs)
+				console.log(this.list)
 			}
 		}
 	}
@@ -117,11 +117,6 @@ page{
 	}
 </style>
 <style lang="scss" scoped>
-	// .driver-content{
-	// 	.u-tabs{
-	// 		background: linear-gradient(115deg,$bg-grad-FE, $bg-grad-FCD);
-	// 	}
-	// }
 	.company-content{
 		.u-tabs{
 			background: linear-gradient(115deg, $bg-grad-AB, $bg-grad-DDC);

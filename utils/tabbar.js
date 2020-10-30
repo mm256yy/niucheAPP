@@ -1,21 +1,19 @@
 //司机tabbar
 export const dirverPages = [{
-  pagePath:'pages/mymessage/mymessage',
   index: 0,
-  selectedIconPath: '/static/tabbar/message-select.png'
+  selectedIconPath: '/static/tabbar/index-select-d.png'
 },{
   index: 1,
-  selectedIconPath: '/static/tabbar/message-select.png'
+  selectedIconPath: '/static/tabbar/message-select-d.png'
 },{
   index: 2,
-  selectedIconPath: '/static/tabbar/message-select.png'
+  selectedIconPath: '/static/tabbar/collect-select-d.png'
 },{
   index: 3,
-  selectedIconPath: '/static/tabbar/message-select.png'
+  selectedIconPath: '/static/tabbar/mycenter-select-d.png'
 }];
 //公司tabbar
 export const companyPages =[{
-  pagePath:'pages/mymessage/mymessage',
   index: 0,
   selectedIconPath: '/static/tabbar/index-select.png'
 },{

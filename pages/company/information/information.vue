@@ -189,7 +189,7 @@
 									})
 								})
 							}else {
-								 this.$u.toast(res.message);
+								 this.$u.toast(res.msg);
 							}
 						})
 					}

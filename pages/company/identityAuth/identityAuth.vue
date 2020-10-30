@@ -6,7 +6,9 @@
 			<view class="top-content-base" style="font-size: 12pt;">营业执照照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="2" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" ref="uUpload" :action="action" :header="headerObj" :form-data="formDataObj" 
+				@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" 
+				max-count="2" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -44,7 +46,7 @@
 			return {
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
-				action: '/user/image/BusinessImagedemo',
+				action: 'http://161.189.168.218:9007/user/image/BusinessImagedemo',
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],
@@ -180,6 +182,7 @@
 				this.form.companyCreateTime = companyDate;
 			},
 			uploadChange(res,index,lists,name){
+				console.log(res)
 				let data = res.data;
                  this.form.companyName = data.biz_license_company_name;
 				  this.form.socialCode = data.biz_license_credit_code;
