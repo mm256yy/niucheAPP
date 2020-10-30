@@ -35,10 +35,12 @@
 				<view>线下看车</view>
 				<view>线下签约</view>
 			 </view>
-			 <view class="more">上拉加载该公司其他信息</view>
+			 <view @click="other()" class="more">上拉加载该公司其他信息</view>
 		</view>
 		<view class="last">
 			<view class="left">预约看车</view>
+			<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
+			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
 			<view class="right">下单租车</view>
 			<view class="clear"></view>
 		</view>
@@ -53,7 +55,9 @@
 			}
 		},
 		methods: {
-			
+			other() {
+				this.$u.route('/pages/mymessage/components/index/other');
+			}
 		}
 	}
 </script>
@@ -138,17 +142,20 @@
 		.last {
 				   width: 100%;
 				   height: 144rpx;
-				   padding: 55rpx 116rpx;
+				   padding: 55rpx 80rpx;
 				   background: linear-gradient(115deg, #6DD99B, #37AB63);
 				   font-size: 36rpx;
 				   font-weight: 900;
 				   color: #fff;
-				   .left {
-					   float: left;
-				   }
-				   .right {
-					   float: right;
-				   }
+				   display: flex;
+				   justify-content: space-around;
+				   align-items: center;
+				  //  .icon-box {
+					 // width: 96rpx;
+					 // height: 96rpx;
+					 // border-radius: 50%;
+					 // background: #fff;
+				  //  }
 		}
 	}
 </style>

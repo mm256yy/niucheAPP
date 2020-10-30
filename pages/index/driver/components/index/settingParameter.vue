@@ -18,9 +18,17 @@
 		<view class="other">其他参数</view>
 		<view class="list">
 			<u-form label-width="200" label-align="left" :model="form" ref="uForm">
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="长*宽*高(mm):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="手机号:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="车门个数(个):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="驱动方式:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 			</u-form>
+		</view>
+		<view class="ask">
+			<u-image class="question" width="66rpx" height="66rpx" src="@/static/question.png"></u-image>
+			<view class="problem">
+				<view class="everyone">问问大家</view>
+				<view class="how">谁买过？怎么样？</view>
+			</view>
+			<view class="small">></view>
 		</view>
 		<view class="more">上拉加载该公司其他信息</view>
 		<view class="last">
@@ -105,13 +113,42 @@
 				   color: #7f7f7f;
 				   margin-top: 83rpx;
 				   margin-left: 220rpx;
-				   margin-bottom: 40rpx;
+				   margin-bottom: 70rpx;
+		}
+		.ask {
+			width: 670rpx;
+			height: 118rpx;
+			padding: 26rpx 40rpx;
+			background: #fff;
+			margin-bottom: 40rpx;
+			margin-top: 40rpx;
+			margin-left: 40rpx;
+			.question {
+				float: left;
+			}
+			.problem {
+				float: left;
+				margin-left: 40rpx;
+				.everyone {
+					font-size: 28rpx;
+				}
+				.how {
+					font-size: 20rpx;
+					color: #7f7f7f;
+				}
+			}
+			.small {
+				float: right;
+				margin-top: 10rpx;
+				font-size: 32rpx;
+				color: #7f7f7f;
+			}
 		}
 		.last {
 				   width: 100%;
 				   height: 144rpx;
 				   padding: 55rpx 116rpx;
-				   background: linear-gradient(115deg, #6DD99B, #37AB63);
+				   background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 				   font-size: 36rpx;
 				   font-weight: 900;
 				   color: #fff;

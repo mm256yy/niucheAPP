@@ -2,15 +2,16 @@
 	<view class="buying">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="form.km" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:120rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:120rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:100rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:100rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
 			</u-form>
 			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
+			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
+			<u-select v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -57,7 +58,7 @@
 				<view class="city">上海</view>
 				<view class="clear"></view>
 				<view class="name">525520款包包</view>
-				<view class="price">打包价<span>2700</span></view>
+				<view class="price">打包价<span>{{list.packprice}}</span></view>
 				<view class="case">纯电动</view>
 				<view class="case">SUV</view>
 				<view class="case">自动挡</view>
@@ -66,7 +67,7 @@
 			<u-icon class="clock" name="clock" size="28"></u-icon>
 			<view class="year">车龄<=3个月</view>
 			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">20万公里-30万公里</view>
+			<view class="year">{{list.km}}</view>
 			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
 		</view>
 	</view>
@@ -77,46 +78,105 @@
 		data() {
 			return {
 				show:false,
-				list: [{
-										image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-										title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-									},
-									{
-										image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-										title: '身无彩凤双飞翼，心有灵犀一点通'
-									},
-									{
-										image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-										title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-									}
-								],
+				showPrice:false,
+				// list: [{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+				// 					},
+				// 					{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
+				// 						title: '身无彩凤双飞翼，心有灵犀一点通'
+				// 					},
+				// 					{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
+				// 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+				// 					}
+				// 				],
 				form: {
-				ageDriver: '',
+				  km: '',
+				  packprice: ''
 				},
-				list: [
-									{
-										value: '1',
-										label: '江'
-									},
-									{
-										value: '2',
-										label: '湖'
-									}
-								]
+				packpricekey: '',
+				pagination: {
+				  pageNum: 0, 
+				  pageSize: 10
+				},
+				total: 0,
+				select: [
+					{
+						label: '不限',
+						value: '0'
+					},
+					{
+						label: '3年及以上',
+						value: '1'
+					}
+				],
+				selectPrice: [
+					{
+						label: '不限',
+						value: '0'
+					},
+					{
+						label: '3万以内',
+						value: '1'
+					},
+					{
+						label: '3万-5万',
+						value: '2'
+					},
+					{
+						label: '5万以上',
+						value: '3'
+					}
+				],
+				list: []
 			}
 		},
-		onReady() {
-		    
-		},
 		mounted() {
-			
+			this.search()
 		},
 		methods: {
-		    confirm(arr){
-				this.form.ageDriver = arr[0].label;
+		    getList(){
+		        const params = Object.assign(this.form, {
+		        	pageNum: this.pagination.pageNum + 1,
+		        	pageSize: 10
+		        });
+		    		this.$u.api.sellCar(params).then(res=>{
+		    			if(res.code === 200){
+		    				 this.list = res.rows;
+		    				 this.total= res.total;
+		    			}else {
+		    				 this.$u.toast(res.msg);
+		    			}
+		    		})
 		    },
+		    search(){
+		        const params = Object.assign(this.form, {
+		    		pageIndex: 0,
+		    		pageSize: 10
+		    	});
+		    		this.$u.api.sellCar(params).then(res=>{
+		    			if(res.code === 200){
+		    				 this.list = res.rows;
+		    				 this.total= res.total;
+		    			}else {
+		    				 this.$u.toast(res.msg);
+		    			}
+		    		})
+		    },
+		    confirm(arr){
+		    	this.form.ageDriver = arr[0].label;
+		    },
+		    confirmPrice(arr){
+		    	this.form.packprice = arr[0].value;
+		    	this.packpricekey = arr[0].label;
+			},
 			detail() {
 				this.$u.route("/pages/mymessage/components/index/carSellDetail")
+			},
+			filter() {
+				this.$u.route("/pages/mymessage/components/index/filter")
 			}
 		}
 	}

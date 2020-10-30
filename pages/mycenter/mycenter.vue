@@ -24,6 +24,27 @@
 
 			}
 		},
+		mounted() {
+		  // this.getUser()
+		},
+		onShow(){
+		    this.telephone = uni.getStorageSync('telephone')
+			this.getUser() 
+			 
+		},
+		filters: {
+		  state: function (value) {
+		    if (!value) return ''
+		    if (value === 1) {
+				return '已认证'
+			} else if (value === 2){
+				return '未认证'
+			} else if (value === 3){
+				return '审核中'
+			} else if (value === 4){
+				return '认证未通过'
+			}else {
+				return ''
 		onShow() {
 			let type = uni.getStorageSync('curThemeType');
 			if (type === 'company'){
@@ -70,4 +91,5 @@ page {
 		display: flex;
 	}
 </style>
+
 

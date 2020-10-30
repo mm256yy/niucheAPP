@@ -2,26 +2,27 @@
 	<view class="buying">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:230rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:280rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="form.km" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:230rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
+			<u-select value-name='id' v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
+			<u-select value-name='value' v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<view class="list" @click="detail()">
-			<view class="year">刷新时间：刚刚</view>
+			<view class="year">刷新时间：{{list.refreshtime}}</view>
 			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
 			<view class="clear"></view>
 			<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
-				<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-				<view class="type">金华诚信租车行<span>金华</span></view>
-				<view class="price">打包价:<span>2700</span></view>
+				<view class="name">{{list.teXtTile}}</view>
+				<view class="type">{{list.comparyName}}<span>{{list.comparyArea}}</span></view>
+				<view class="price">打包价:<span>{{list.packprice}}</span></view>
 			</view>
 			<view class="clear"></view>
 		</view>
@@ -57,44 +58,132 @@
 		data() {
 			return {
 				show:false,
-				list: [{
-										image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-										title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-									},
-									{
-										image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-										title: '身无彩凤双飞翼，心有灵犀一点通'
-									},
-									{
-										image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-										title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-									}
-								],
+				showPrice:false,
+				// list: [{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+				// 					},
+				// 					{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
+				// 						title: '身无彩凤双飞翼，心有灵犀一点通'
+				// 					},
+				// 					{
+				// 						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
+				// 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+				// 					}
+				// 				],
 				form: {
-				ageDriver: '',
+				  km: '',
+				  packprice: ''
 				},
-				list: [
-									{
-										value: '1',
-										label: '江'
-									},
-									{
-										value: '2',
-										label: '湖'
-									}
-								]
+				packpricekey: '',
+				pagination: {
+				  pageNum: 1, 
+				  pageSize: 10
+				},
+				total: 0,
+				select: [
+					{
+						label: '新车（300公里）',
+						value: '1'
+					},
+					{
+						label: '300公里-2万公里',
+						value: '2'
+					},
+					{
+						label: '2万公里-5万公里',
+						value: '3'
+					},
+					{
+						label: '5万公里-10万公里',
+						value: '4'
+					},
+					{
+						label: '10万公里-20万公里',
+						value: '2'
+					},
+					{
+						label: '20万公里-30万公里',
+						value: '3'
+					},
+					{
+						label: '30万公里-50万公里',
+						value: '4'
+					},
+					{
+						label: '50万公里-70万公里',
+						value: '4'
+					},
+					{
+						label: '70万公里以上',
+						value: '4'
+					},
+					{
+						label: '不限',
+						value: '4'
+					}
+				],
+				selectPrice: [
+					{
+						label: '3万以内',
+						value: '1'
+					},
+					{
+						label: '3万-5万',
+						value: '2'
+					},
+					{
+						label: '5万以上',
+						value: '3'
+					},
+					{
+						label: '不限',
+						value: '4'
+					}
+				],
+				list: []
 			}
 		},
-		onReady() {
-		    
-		},
 		mounted() {
-			
+			this.search()
 		},
 		methods: {
+			getList(){
+			    const params = Object.assign(this.form, {
+			    	pageNum: this.pagination.pageNum + 1,
+			    	pageSize: 10
+			    });
+					this.$u.api.buying(params).then(res=>{
+						if(res.code === 200){
+							 this.list = res.rows;
+							 this.total= res.total;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
+			search(){
+                    const params = Object.assign(this.form, {
+                    	pageNum: 0,
+                    	pageSize: 10
+                    });
+					this.$u.api.buying(params).then(res=>{
+						if(res.code === 200){
+							 this.list = res.rows;
+							 this.total= res.total;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
 		    confirm(arr){
-				this.form.ageDriver = arr[0].label;
+				this.form.km = arr[0].label;
 		    },
+			confirmPrice(arr){
+				this.form.packprice = arr[0].value;
+				this.packpricekey = arr[0].label;
+			},
 			detail() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")
 			}
