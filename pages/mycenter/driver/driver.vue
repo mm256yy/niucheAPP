@@ -32,7 +32,7 @@
 						<u-col span="2">
 							<u-icon size="100" :name="zyzgSrc"></u-icon>
 						</u-col>
-						<u-col span="3">
+						<u-col span="4">
 							<text class="colorF">职业资格认证</text>
 							<view class="colorF" @click="toCard">{{driverPub.postState}}</view>
 						</u-col>
