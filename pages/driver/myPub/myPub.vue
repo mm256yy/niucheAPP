@@ -1,7 +1,7 @@
 <template>
 	<view :class="'driver-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<u-navbar  back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -10,26 +10,17 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<u-card title="1111" @click="toView(item.id)" v-for="item in list" :key="item.id">
+					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
 						<view class="card-head" slot="head">
-							<text style="color:#7E7E7E;">刷新时间</text>  
+							<text style="color:#7E7E7E;">刷新时间:刚刚</text><u-icon name="reload" color="#FE9B1C" size="28"></u-icon>
 						</view>
-						<view class="" slot="body">
-							<view class="u-body-item u-flex ">
-
-							</view>
+						<view class="card-head"  slot="body" style="border-bottom: 0;">
+                           <text>意向品牌</text>
+							<u-switch v-model="checked" active-color="#FE9B1C"></u-switch>
 						</view>
-<!-- 						<view class="bg-foot" slot="foot" style="">
-							<view style="color: #FFFFFF;">
-							<text style="font-size: 16pt;">¥2700</text>
-							<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
-							</view> 
-							<view style="margin-top: 5pt;">
-							 <u-tag text="纯电动" type="warning" size="mini" class="tag-style"/>
-							  <u-tag text="SUV" type="warning" size="mini" class="tag-style"/>
-							   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
-							</view> 
-						</view> -->
+						<view  slot="foot" style="padding:5rpx 20rpx;">
+						<u-tag text="吉利" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"/>
+						</view>
 					</u-card>
 							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
 				</scroll-view>
@@ -38,32 +29,21 @@
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				<u-card  @click="toView(item.id)" v-for="item in list" :key="item.id">
-					<view class="" slot="body" style="padding:10rpx 20rpx;">
-						<view class="u-body-item u-flex ">
-							
-						  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
-							  <view style="text-align: right;">
-								  <u-tag text="网约车" type="info" class="tag-style" size="mini"/>
-								  <u-icon name="heart-fill" color="#FE9B1C" size="28"></u-icon>
-							   </view>
-							 <view>高薪招聘网约车司机高薪招聘网约车司...</view>
-							 <view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>荣威\吉利\比亚迪...</view>
-						  </view>
+					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
+						<view class="card-head" slot="head">
+							<text style="color:#7E7E7E;">刷新时间:刚刚</text><u-icon name="reload" color="#FE9B1C" size="28"></u-icon>
 						</view>
-					</view>
-					<view class="bg-foot" slot="foot" style="">
-						<view style="color: #FFFFFF;">
-						<text style="font-size: 16pt;">¥2700</text>
-						<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
-						</view> 
-						<view style="margin-top: 5pt;">
-						 <u-tag text="纯电动" type="warning" size="mini" class="tag-style"/>
-						  <u-tag text="SUV" type="warning" size="mini" class="tag-style"/>
-						   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
-						</view> 
-					</view>
-				</u-card>
+						<view class="card-head"  slot="body" style="border-bottom: 0;">
+							<view style="color: #000000;">
+								  <view style="font-size: 16pt;">意向品牌</view>
+								  <view>工作车辆: 荣威\吉利\比亚迪...  </view>
+							</view>
+					        <view>
+								<u-switch v-model="checked" active-color="#FE9B1C"></u-switch>
+								<view style="font-size: 14pt;color:#FE9B1C ;">¥2700月薪</view>
+							</view>
+						</view>
+					</u-card>
 							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
 				</scroll-view>
 			</swiper-item>
@@ -83,6 +63,7 @@
 				}],
 				current: 0, 
 				swiperCurrent: 0,
+				checked:true
 			}
 		},
 		methods: {
@@ -149,20 +130,9 @@ background: #fff;margin: 20rpx;padding-top: 30rpx;
  .card-head{
  	display: flex;justify-content: space-between;
  	align-items: center;
+	border-bottom: 1px solid #E5E5E5;
+	padding:20rpx 20rpx;
  }
- .u-body-item {
- 	font-size: 32rpx;
- 	color: #333;
- 	padding: 20rpx 10rpx;
- }
- .u-body-item image {
- 	width: 180rpx;
- 	flex: 0 0 180rpx;
- 	height: 150rpx;
- 	border-radius: 8rpx;
- 	margin-left: 12rpx;
- }
-
 .tag-style{
 	background-color: #FFFFFF;
 	margin-right: 8pt;margin-bottom: 5pt;
