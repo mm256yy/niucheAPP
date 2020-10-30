@@ -11,17 +11,20 @@
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
 					<u-card padding="0" :border="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
-<!-- 						<view class="card-head" slot="head">
-			              <text>发起是你</text><text>发起是你</text>
-					    </view>	 -->
 						<view class="" slot="body" style="padding:10rpx 20rpx;">
 							<view class="u-body-item u-flex ">
-								<image :src="goodsUrl"></image>
-							  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
-								  <view style="text-align: right;"><u-tag text="网约车" type="info" class="tag-style" size="mini"/></view>
-								<view>高薪招聘网约车司机高薪招聘网约车司...</view>
-								<view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>荣威\吉利\比亚迪...</view>
+							  <view class="u-line-4" style="width: 100%;">
+								 <view>高薪招聘网约车司机高薪招聘网约车司...</view>
+								 <view style="color: #7F7F7F;"><u-icon name="clock" size="28"></u-icon>车龄个月...</view>
+								  <view style="color: #7F7F7F;"><u-icon name="attach" size="28"></u-icon>20万公里-30万公里...</view>
 							  </view>
+							   <view class="">
+								   <view style="text-align: right;">
+									  <u-tag text="网约车" type="info" class="tag-style" size="mini"/>
+									  <u-icon name="heart-fill" color="#FE9B1C" size="28"></u-icon>
+								    </view>
+							   	<image :src="goodsUrl"></image>
+							   </view>
 							</view>
 						</view>
 						<view class="bg-foot" slot="foot" style="">
@@ -43,9 +46,32 @@
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					
-    
-					    		
+				<u-card padding="0" :border="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
+					<view class="" slot="body" style="padding:10rpx 20rpx;">
+						<view class="u-body-item u-flex ">
+							<image :src="goodsUrl"></image>
+						  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
+							  <view style="text-align: right;">
+								  <u-tag text="网约车" type="info" class="tag-style" size="mini"/>
+								  <u-icon name="heart-fill" color="#FE9B1C" size="28"></u-icon>
+							   </view>
+							 <view>高薪招聘网约车司机高薪招聘网约车司...</view>
+							 <view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>荣威\吉利\比亚迪...</view>
+						  </view>
+						</view>
+					</view>
+					<view class="bg-foot" slot="foot" style="">
+						<view style="color: #FFFFFF;">
+						<text style="font-size: 16pt;">¥2700</text>
+						<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
+						</view> 
+						<view style="margin-top: 5pt;">
+						 <u-tag text="纯电动" type="warning" size="mini" class="tag-style"/>
+						  <u-tag text="SUV" type="warning" size="mini" class="tag-style"/>
+						   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
+						</view> 
+					</view>
+				</u-card>
 							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
 				</scroll-view>
 			</swiper-item>
@@ -60,9 +86,9 @@
 			return {
 				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				list: [{
-					name: '在售'
+					name: '租车'
 				}, {
-					name: '求购'
+					name: '招聘'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
