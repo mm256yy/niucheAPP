@@ -129,15 +129,13 @@
 		  }
 		},
 		mounted(){
-		    this.telephone = uni.getStorageSync('telephone')
+		    this.token = uni.getStorageSync('token')
 			this.getDriver()  	
 		},
 		methods: {
 			getDriver(){
-				if (!this.telephone){
-					return
-				}
-				this.$u.api.getUserInfo().then(res=>{
+              if (this.token){
+				 this.$u.api.getUserInfo().then(res=>{
 					if(res.code === 0){
 						let data = res.data;
 						this.driverPub = data
@@ -145,6 +143,7 @@
 						 this.$u.toast(res.msg);
 					}
 				})
+			  }
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');

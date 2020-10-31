@@ -148,7 +148,7 @@
 		},
 		methods: {
 			getInfo(){
-					this.$u.api.listDrivingLicense({}).then(res => {
+					this.$u.api.listDrivingLicense({state:0}).then(res => {
 						if(res.code === 200){
 							let data = res.object;
 							this.form =data;
@@ -189,6 +189,7 @@
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
+						this.form.type = 0
 						this.$u.api.addDrivingLicense(this.form).then(res => {
 							if(res.code === 200){
 								this.showTips =true;
