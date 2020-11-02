@@ -36,6 +36,54 @@
 				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
 			</view>
 		</view>
+		<view class="bg">
+			<view class="border">
+				<view class="box">
+					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
+				</view>
+				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
+			</view>
+			<view class="bottom">
+				<view class="box">答</view>
+				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
+			</view>
+		</view>
+		<view class="bg">
+			<view class="border">
+				<view class="box">
+					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
+				</view>
+				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
+			</view>
+			<view class="bottom">
+				<view class="box">答</view>
+				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
+			</view>
+		</view>
+		<view class="bg">
+			<view class="border">
+				<view class="box">
+					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
+				</view>
+				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
+			</view>
+			<view class="bottom">
+				<view class="box">答</view>
+				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
+			</view>
+		</view>
+		<view class="bg">
+			<view class="border">
+				<view class="box">
+					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
+				</view>
+				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
+			</view>
+			<view class="bottom">
+				<view class="box">答</view>
+				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
+			</view>
+		</view>
 		<view class="ask">
 			<u-image class="question" width="66rpx" height="66rpx" src="@/static/question.png"></u-image>
 			<view class="problem">
@@ -47,7 +95,7 @@
 		<view class="more" @click="other()">上拉加载该公司其他信息</view>
 		<view class="last">
 			<view class="left">预约看车</view>
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
+			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
 			<view class="right">下单租车</view>
 		</view>
 	</view>
@@ -60,8 +108,20 @@
 				
 			}
 		},
+		mounted() {
+			this.getList()
+		},
 		methods: {
-			
+			getList() {
+				this.$u.api.getCarSystem().then(res=>{
+					if(res.code === 200){
+						 this.list = res.rows;
+						 this.total= res.total;
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 		}
 	}
 </script>
@@ -143,6 +203,7 @@
 	   		margin-left: 40rpx;
 	   		.everyone {
 	   			font-size: 28rpx;
+				font-weight: 600;
 	   		}
 	   		.how {
 	   			font-size: 20rpx;

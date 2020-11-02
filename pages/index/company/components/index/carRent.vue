@@ -19,15 +19,15 @@
 			<view class="right">
 				<view class="time">刷新时间：刚刚</view>
 				<view class="clear"></view>
-				<view class="name">{{list.drivername}}</view>
+				<!-- <view class="name">{{list.drivername}}</view>
 				<view class="year">{{list.driverAgeTag}}</view>
 				<view class="type">{{list.driverAgeTag.onlinecarcardis}}||{{list.driverAgeTag.onlinecarcardis}}</view>
-				<view class="clear"></view>
+				<view class="clear"></view> -->
 				<view class="car">荣威/吉利/比亚迪....</view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
 		</view>
-		<view class="list">
+		<view class="list" @click="detail()">
 			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
 				<view class="time">刷新时间：刚刚</view>

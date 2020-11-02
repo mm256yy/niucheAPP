@@ -1,22 +1,24 @@
 <template>
 	<view class="selling">
-		 <view class="list">
-		 	<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 <view class="list" @click="detail()">
 		 	<view class="right">
-		 		<view class="city">上海</view>
+		 		<view class="name">520520款运动版</view>
+		 		<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+		 		<view class="year">车龄<3个月</view>
 		 		<view class="clear"></view>
-		 		<view class="name">525520款包包</view>
-		 		<view class="price">打包价<span>￥2700</span></view>
-		 		<view class="case">纯电动</view>
-		 		<view class="case">SUV</view>
-		 		<view class="case">自动挡</view>
+		 		<u-icon class="car" name="car" width="22" height="22"></u-icon>
+		 		<view class="distance">20万公里-30万公里</view>
+		 		<view class="clear"></view>
 		 	</view>
+		 	<u-image class="left" width="306rpx" height="226rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="clear"></view>
-		 	<u-icon class="clock" name="clock" size="28"></u-icon>
-		 	<view class="year">车龄<=3个月</view>
-		 	<u-icon class="clock" name="clock" size="28"></u-icon>
-		 	<view class="year">20万公里-30万公里</view>
-		 	<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+		 	<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		 	<view class="box">
+		 		<view><span>28000</span>元/月起租</view>
+		 		<view class="case">自动挡</view>
+		 		<view class="case">SUV</view>
+		 		<view class="case">纯电动</view>
+		 	</view>
 		 </view>
 	</view>
 </template>
@@ -39,72 +41,79 @@
 </script>
 <style lang="scss" scoped>
 	.selling {
-		.list {
-			width: 702rpx;
-			height: 308rpx;
-			padding: 18rpx 15rpx;
-			margin-left: 24rpx;
-			margin-top: 24rpx;
+		.list{
+			width: 679rpx;
+			height: 285rpx;
+			color: #000;
 			font-size: 20rpx;
-			background-image: url(@/static/bgcarsell.png);
-			background-repeat: no-repeat;
-			background-size: cover;
+			margin-left: 36rpx;
+			margin-top: 40rpx;
 			.clear {
 				clear: both;
 			}
-			.left, .right {
-				float: left;
-			}
-			.right {
-				width: 360rpx;
-				padding-left: 34rpx;
-			}
-			.city {
-				width: 96rpx;
-				height: 40rpx;
-				line-height: 32rpx;
-				text-align: center;
-				font-size: 20rpx;
-				border-radius: 26rpx;
-				border: 1rpx solid rgba(0,0,0,0.3);
-				margin-top: 16rpx;
-				margin-right: 16rpx;
+			.left {
 				float: right;
+			}
+			.right{
+				width: 373rpx;
+				height: 226rpx;
+				padding: 0 30rpx;
+				background: #fff;
+				float: left;
 			}
 			.name {
-				font-size: 28rpx;
 				font-weight: 900;
-				margin-top: 8rpx;
+				font-size: 34rpx;
+				margin-top: 63rpx;
 			}
-			.price span {
-				font-size: 36rpx;
-				font-weight: 900;
-				color: #40B36C;
-				margin-left: 8rpx;
-			}
-			.case {
-				padding: 6rpx 14rpx;
-				border-radius: 30rpx;
-				background: #40B36C;
-				color: #fff;
+			.clock,.year {
 				float: left;
-				margin-right: 10rpx;
-				margin-top: 10rpx;
+				margin-top: 6rpx;
 			}
 			.clock {
-				margin-left: 30rpx;
-				margin-top: 10rpx;
+				margin-top: 18rpx;
+				color: #7f7f7f;
+			}
+			.car {
 				float: left;
+				color: #7f7f7f;
+				margin-top: 4rpx;
 			}
 			.year {
-				margin-top: 8rpx;
-				margin-right: 50rpx;
+				margin-left: 6rpx;
+				margin-top: 12rpx;
+				color: #7f7f7f;
+			}
+			.distance {
+				margin-left: 6rpx;
+				color: #7f7f7f;
 				float: left;
 			}
-			.heart {
-				margin-top: 12rpx;
-				margin-right: 20rpx;
-				float: right;
+			.box {
+				width: 679rpx;
+				height: 59rpx;
+				background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
+				padding: 0 0 0 18rpx;
+				color: #fff;
+				view {
+					font-size: 20rpx;
+					float: left;
+				}
+				view span {
+					font-size: 36rpx;
+					font-weight: 900;
+					margin-right: 19rpx;
+				}
+				.case {
+					padding: 6rpx 14rpx;
+					border-radius: 10rpx;
+					background: #fff;
+					font-weight: 900;
+					color: #FF6501;
+					margin-top: 8rpx;
+					float: right;
+					margin-right: 10rpx;
+				}
 			}
 		}
 	}

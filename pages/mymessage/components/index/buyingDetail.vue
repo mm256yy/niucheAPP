@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="购车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="heart" color="#ffffff" size="40" @click="shared"></u-icon>
+					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
 				</view>
 			</view>
 		 </u-navbar>
@@ -48,9 +48,6 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
-				current: 0,
-				firstCurrent:0,
 				form: {
 					name: '杭州'
 				}

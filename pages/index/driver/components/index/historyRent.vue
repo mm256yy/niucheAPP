@@ -1,6 +1,6 @@
 <template>
 	<view class="history">
-		<u-navbar back-text="返回" back-icon-size="0" title="历史筛选记录" :background="backgroundCom" :back-text-style="backTextStyle" title-width="400" title-size="36" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="历史筛选记录" :background="backgroundDri" :back-text-style="backTextStyle" title-width="400" title-size="36" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 			</view>
 		 </u-navbar>
@@ -24,8 +24,20 @@
 				}
 			}
 		},
+		mounted() {
+			this.getList()
+		},
 		methods: {
-		
+		    getList() {
+				this.$u.api.getCarSystem().then(res=>{
+					if(res.code === 200){
+						 this.list = res.rows;
+						 this.total= res.total;
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -82,7 +94,7 @@ page{
 			border-radius: 20rpx;
 			line-height: 49rpx;
 			text-align: center;
-			background: linear-gradient(115deg,#6DD99C, #37AB63);
+			background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 			font-size: 32rpx;
 			color: #fff;
 			float: right;

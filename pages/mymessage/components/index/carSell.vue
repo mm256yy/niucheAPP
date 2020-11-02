@@ -8,7 +8,7 @@
 				<view class="line"></view>
 				<u-form-item style="width:100rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select>
@@ -16,42 +16,6 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="list" @click="detail()">
-			<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="city">上海</view>
-				<view class="clear"></view>
-				<view class="name">525520款包包</view>
-				<view class="price">打包价<span>2700</span></view>
-				<view class="case">纯电动</view>
-				<view class="case">SUV</view>
-				<view class="case">自动挡</view>
-			</view>
-			<view class="clear"></view>
-			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">车龄<=3个月</view>
-			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">20万公里-30万公里</view>
-			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-		</view>
-		<view class="list" @click="detail()">
-			<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="city">上海</view>
-				<view class="clear"></view>
-				<view class="name">525520款包包</view>
-				<view class="price">打包价<span>2700</span></view>
-				<view class="case">纯电动</view>
-				<view class="case">SUV</view>
-				<view class="case">自动挡</view>
-			</view>
-			<view class="clear"></view>
-			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">车龄<=3个月</view>
-			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">20万公里-30万公里</view>
-			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-		</view>
 		<view class="list" @click="detail()">
 			<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
@@ -67,9 +31,11 @@
 			<u-icon class="clock" name="clock" size="28"></u-icon>
 			<view class="year">车龄<=3个月</view>
 			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">{{list.km}}</view>
-			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+			<view class="year">20万公里-30万公里</view>
+			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		</view>
+		<u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+		<u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 	</view>
 </template>
 
@@ -79,6 +45,7 @@
 			return {
 				show:false,
 				showPrice:false,
+				change: false,
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -104,12 +71,40 @@
 				total: 0,
 				select: [
 					{
-						label: '不限',
-						value: '0'
+						label: '0万公里-2万公里',
+						value: '1'
 					},
 					{
-						label: '3年及以上',
-						value: '1'
+						label: '2万公里-5万公里',
+						value: '2'
+					},
+					{
+						label: '5万公里-10万公里',
+						value: '3'
+					},
+					{
+						label: '10万公里-20万公里',
+						value: '4'
+					},
+					{
+						label: '20万公里-30万公里',
+						value: '5'
+					},
+					{
+						label: '30万公里-50万公里',
+						value: '6'
+					},
+					{
+						label: '50万公里-70万公里',
+						value: '7'
+					},
+					{
+						label: '70万公里以上',
+						value: '8'
+					},
+					{
+						label: '不限',
+						value: '9'
 					}
 				],
 				selectPrice: [
@@ -137,6 +132,9 @@
 			this.search()
 		},
 		methods: {
+			favorites() {
+			    this.change = !this.change;
+			},
 		    getList(){
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
@@ -153,7 +151,7 @@
 		    },
 		    search(){
 		        const params = Object.assign(this.form, {
-		    		pageIndex: 0,
+		    		pageNum: 0,
 		    		pageSize: 10
 		    	});
 		    		this.$u.api.sellCar(params).then(res=>{
@@ -166,7 +164,7 @@
 		    		})
 		    },
 		    confirm(arr){
-		    	this.form.ageDriver = arr[0].label;
+		    	this.form.km = arr[0].label;
 		    },
 		    confirmPrice(arr){
 		    	this.form.packprice = arr[0].value;
@@ -216,6 +214,13 @@
 		}
 		.clear {
 			clear: both;
+		}
+		.heart {
+			margin-top: 14rpx;
+			margin-right: 20rpx;
+			position: absolute;
+			top: 370rpx;
+		    right: 34rpx;
 		}
 		.list {
 			width: 702rpx;
@@ -278,11 +283,6 @@
 				margin-top: 8rpx;
 				margin-right: 50rpx;
 				float: left;
-			}
-			.heart {
-				margin-top: 12rpx;
-				margin-right: 20rpx;
-				float: right;
 			}
 		}
 	}

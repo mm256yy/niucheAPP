@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="司机租车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="heart" color="#ffffff" size="40" @click="shared"></u-icon>
+					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
 				</view>
 			</view>
 		 </u-navbar>
@@ -51,9 +51,6 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
-				current: 0,
-				firstCurrent:0,
 				form: {
 					name: '杭州'
 				}
@@ -63,15 +60,15 @@
 			this.getDetail();
 		},
 		methods: {
-		recommend() {
+		    recommend() {
 				this.$u.route("/pages/index/company/components/index/carRentRecommend")
 			},
 			getDetail(){
 					this.$u.api.getCarSystem().then(res=>{
 						if(res.code === 200){
-							 this.list = res.alibabaCarModelVoList;
+							 this.list = res.rows;
 						}else {
-							 this.$u.toast(res.message);
+							 this.$u.toast(res.msg);
 						}
 					})
 			}

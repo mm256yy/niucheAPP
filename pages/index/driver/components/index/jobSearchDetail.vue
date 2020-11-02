@@ -1,94 +1,195 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="司机求职需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
-			<view class="navbar-right" slot="right">
-				<view class="message-box right-item">
-					<u-icon name="heart" color="#ffffff" size="40" @click="shared"></u-icon>
-				</view>
-			</view>
+		<u-navbar back-text="返回" back-icon-size="0" title="招聘详情" :background="backgroundDri" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
+		    <view class="navbar-right" slot="right">
+		    	<view class="message-box right-item">
+		    		<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+		    	</view>
+		    </view>
 		 </u-navbar>
-		 <view class="list">
-		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-		 	<view class="right">
-				<u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon>
-		 		<view class="name">吴司机</view>
-				<view class="special">加急</view>
-				<view class="clear"></view>
-				<u-icon class="clock" name="clock"></u-icon>
-		 		<view class="year">驾龄4年</view>
-				<view class="clear"></view>
-				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-		 		<view class="type">杭州出租车认证</view>
-		 		<view class="clear"></view>
+		 <view class="" style="padding: 40rpx;">
+			<!-- <u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image> -->
+			<view class="list">
+				<view class="tag">付费标签</view>
+				<view class="name">高薪招聘高薪招聘高薪招聘高薪招聘的点点滴滴大大大</view>
+				<view class="price"><span>￥7000-10000</span>月薪</view>
+				<view class="city">工作城市：杭州<span>招聘：20人</span></view>
 				<view class="box">
-				    <view>准驾类型</view>
-				    <view>C1</view>	
+					<view class="text">帆帆帆帆66</view>
+					<view class="text">帆帆帆帆</view>
+					<view class="text">帆帆帆帆</view>
+					<view class="text">帆帆帆帆</view>
+					<view class="text">帆帆帆帆</view>
+					<view class="text">帆帆帆帆</view>
+					<view class="text">帆帆帆帆</view>
+					<view class="clear"></view>
 				</view>
 		 	</view>
-			<view class="clear"></view>
-			<view class="time">刷新时间：刚刚</view>
-		 </view>
-		 <view class="content">
-			 <u-form label-width="150" label-align="right" :model="form" ref="uForm">
-			 		<u-form-item label="租车城市:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="业务类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="求职意向:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="我的优势:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-			 	</u-form>
-		 </view>
-		 <view class="bottom" @click="recommend()">
-			 <view>向他推荐本公司招聘信息</view>
-		 </view>
+		</view>
+		<view class="title">车型</view>
+		<view class="wrap">
+			<view class="u-tabs-box">
+			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
+				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
+			 	swiperWidth="750" active-color="#FF6501"></u-tabs-swiper>
+			</view>
+			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
+			 			<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+			 		</scroll-view>
+			 	</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
+						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
+						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
+						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
+						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view class="wrapBottom">
+			<view class="u-tabs-box">
+			 	<u-tabs-swiper ref="uTabsBottom" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="listBottom" 
+				:current="currentBottom" @change="tabsChangeBottom" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
+			 	swiperWidth="750" active-color="#FF6501"></u-tabs-swiper>
+			</view>
+			<swiper class="swiper-box" :current="swiperCurrentBottom" @transition="transitionBottom" @animationfinish="animationfinishBottom">
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+			 			<job-detail ref="child" v-if="isChildUpdate1"></job-detail>
+			 		</scroll-view>
+			 	</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+						<company-detail v-if="isChildUpdate2"></company-detail>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
 	</view>
 </template>
 
 <script>
+	import rangePrice from './rangePrice'
+	import rentcarIssue from './rentcarIssue'
+	import settingParameter from './settingParameter'
+	import jobDetail from './jobDetail'
+	import companyDetail from './companyDetail'
 	export default {
+		components: {
+		    rangePrice,
+			rentcarIssue,
+			settingParameter,
+			jobDetail,
+			companyDetail
+		  },
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
+				list: [{
+					name: '荣威ei6'
+					}, {
+				    name: '荣威ei5'
+					}, {
+					name: '比亚迪e5'
+			    }, {
+					name: '吉利帝豪'
+			    }, {
+					name: '荣威ei6'
+			    }],
+				listBottom: [{
+					name: '职位详情'
+					}, {
+				    name: '公司介绍'
+					}],
 				current: 0,
-				firstCurrent:0,
-				form: {
-					name: '杭州'
-				}
+				swiperCurrent: 0,
+				currentBottom: 0,
+				swiperCurrentBottom: 0,
+				isChildUpdate1:true,
+				isChildUpdate2:false
 			}
 		},
+		mounted() {
+			this.$refs.child.getList();
+			this.$u.api.getCarSystem().then(res=>{
+				if(res.code === 200){
+					 this.list = res.rows;
+				}else {
+					 this.$u.toast(res.msg);
+				}
+			})
+		},
 		methods: {
-		recommend() {
-				this.$u.route("/pages/index/company/components/index/jobSearchRecommend")
+			// tabs通知swiper切换
+			tabsChange(index) {
+				this.swiperCurrent = index;
 			},
-			shared(){
-				uni.share({
-				    provider: "weixin",
-				    scene: "WXSenceTimeline",
-				    type: 0,
-				    href: "http://uniapp.dcloud.io/",
-				    title: "uni-app分享",
-				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-				    imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
-				    success: function (res) {
-				        console.log("success:" + JSON.stringify(res));
-				    },
-				    fail: function (err) {
-				        console.log("fail:" + JSON.stringify(err));
-				    }
-				});
+			tabsChangeBottom(index) {
+				this.swiperCurrentBottom = index;
+				if(index == 0) {
+				    this.isChildUpdate1 = true;
+				    this.isChildUpdate2 = false;
+				} else if(index == 1) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = true;
+				}
+			},
+			// swiper-item左右移动，通知tabs的滑块跟随移动
+			transition(e) {
+				let dx = e.detail.dx;
+				this.$refs.uTabs.setDx(dx);
+			},
+			transitionBottom(e) {
+				let dx = e.detail.dx;
+				this.$refs.uTabsBottom.setDx(dx);
+			},
+			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
+			// swiper滑动结束，分别设置tabs和swiper的状态
+			animationfinish(e) {
+				let current = e.detail.current;
+				this.$refs.uTabs.setFinishCurrent(current);
+				this.swiperCurrent = current;
+				this.current = current;
+			},
+			animationfinishBottom(e) {
+				let current = e.detail.current;
+				this.$refs.uTabsBottom.setFinishCurrent(current);
+				this.swiperCurrentBottom = current;
+				this.currentBottom = current;
+			},
+			// scroll-view到底部加载更多
+			onreachBottom() {
+							
 			}
 			
 		}
 	}
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 page{
 	// background-image: url(@/static/lease.png);
 	// background-repeat: no-repeat;
 	height: 100%;
 	background-size: cover;
 	// background-position: 50% 50%;
+	background: rgba(0,0,0,0.02);
 }
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;
@@ -97,97 +198,98 @@ page{
 		margin-right: 24rpx;
 		display: flex;
 	}
-	.right-item {
-		margin: 0 12rpx;
-		position: relative;
-		color: #ffffff;
+	.u-tabs-box {
+		position:sticky;
+		top: 0;
+		left: 0;
+	}
+	.wrap {
 		display: flex;
+		flex-direction: column;
+		// height: calc(100vh - var(--window-top));
+		// height: auto;
+		height: 671rpx;
+		width: 100%;
+	}
+	.wrapBottom {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - var(--window-top));
+		// height: auto;
+		width: 100%;
+	}
+	.swiper-box {
+		flex: 1;
+	}
+	.swiper-item {
+		height: 100%;
 	}
 	.detail {
-		.list{
-			width: 670rpx;
-			height: 257rpx;
-			border-radius: 60rpx 0 60rpx 60rpx;
-			padding: 40rpx;
-			color: #fff;
-			font-size: 20rpx;
+		.title {
+			font-size: 36rpx;
+			font-weight: 900;
 			margin-left: 40rpx;
 			margin-top: 40rpx;
-			background: linear-gradient(115deg,#6DD99C, #37AB63);
-			.clear {
-				clear: both;
-			}
-			.left, .right{
-				float: left;
-			}
-			.right {
-				width: 432rpx;
-				height: 152rpx;
-				padding: 0 30rpx;
-			}
-			.name {
-				font-weight: 900;
-				font-size: 36rpx;
-				float: left;
-			}
-			.special {
-				width: 73rpx;
-				height: 34rpx;
-				line-height: 34rpx;
-				text-align: center;
-				border-radius: 16rpx;
-				background: orange;
-				font-size: 10rpx;
-				float: left;
-				margin-left: 16rpx;
-				margin-top: 8rpx;
-			}
-			.clock,.year,.car,.type {
-				float: left;
-				margin-top: 6rpx;
-			}
-			.clock {
-				font-size: 40rpx;
-			}
-			.car {
-				font-size: 36rpx;
-			}
-			.year,.type {
-				margin-left: 10rpx;
-				margin-top: 10rpx;
-			}
-			.time {
-				margin-top: 19rpx;
-			}
-			.box {
-				float: right;
-				margin-top: -32rpx;
-				font-size: 32rpx;
-			}
-			.reload {
-				float: right;
-				margin-right: 10rpx;
-				margin-top: -20rpx;
-				margin-right: -60rpx;
-			}
+			margin-bottom: 20rpx;
+		}	
+		.list {
+			width: 669rpx;
+			background: #fff;
+			padding: 40rpx;
+			margin-top: 20rpx;
 		}
-		.content {
+		.clear {
+			clear: both;
+		}
+		.tag {
+			width: 179rpx;
+			height: 43rpx;
+			line-height: 43rpx;
+			text-align: center;
+			background: #FF6501;
 			font-size: 28rpx;
 			font-weight: 900;
-			padding: 40rpx;
-			.u-form-item{
-				border-bottom: 1rpx solid rgba(0,0,0,0.06);
-			}
-		}
-		.bottom {
-			width: 750rpx;
-			height: 125rpx;
-			line-height: 125rpx;
-			text-align: center;
 			color: #fff;
+			margin-top: -60rpx;
+		}
+		.name {
+			font-size: 36rpx;
+			font-weight: 900;
+			margin-top: 20rpx;
+			margin-bottom: 20rpx;
+		}
+		.price {
+			font-size: 20rpx;
+		}
+		.price span {
 			font-size: 40rpx;
 			font-weight: 900;
-			background: linear-gradient(115deg,#6DD99C, #37AB63);
+			color: #FF6501;
+			margin-right: 12rpx;
+		}
+		.city {
+			font-size: 20rpx;
+			margin-top: 18rpx;
+			span {
+				margin-left: 157rpx;
+			}
+		}
+	    .box .text {
+			padding: 14rpx;
+			border-radius: 10rpx;
+			background: #ECEBEB;
+			font-size: 20rpx;
+			color: #7f7f7f;
+			float: left;
+			margin-right: 10rpx;
+			margin-top: 9rpx;
+		}
+		.box {
+			margin-top: 39rpx;
+		}
+		.img {
+			margin-left: 40rpx;
+			margin-top: 40rpx;
 		}
 	}
 </style>

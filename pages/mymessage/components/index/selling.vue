@@ -16,8 +16,10 @@
 		 	<view class="year">车龄<=3个月</view>
 		 	<u-icon class="clock" name="clock" size="28"></u-icon>
 		 	<view class="year">20万公里-30万公里</view>
-		 	<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+		 	<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		 </view>
+		 <u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+		 <u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 	</view>
 </template>
 
@@ -27,18 +29,29 @@
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
-				}
+				},
+				change: false
 			}
 		},
 		methods: {
+		  favorites() {
+			this.change = !this.change;
+		  },
 		  clear() {
-				this.$u.route("pages/mymessage/mymessage")
-		  	}
+		    this.$u.route("pages/mymessage/mymessage")
+		  }
 		}
 	}
 </script>
 <style lang="scss" scoped>
 	.selling {
+		.heart {
+			margin-top: 14rpx;
+			margin-right: 20rpx;
+			position: absolute;
+			top: 268rpx;
+		    right: 34rpx;
+		}
 		.list {
 			width: 702rpx;
 			height: 308rpx;
@@ -100,11 +113,6 @@
 				margin-top: 8rpx;
 				margin-right: 50rpx;
 				float: left;
-			}
-			.heart {
-				margin-top: 12rpx;
-				margin-right: 20rpx;
-				float: right;
 			}
 		}
 	}

@@ -47,9 +47,9 @@
 			},
 			toPage(type){
 				if(type ===1 ){
-				   this.$u.route('/pages/driver/carRent/carRent')
+				   this.$u.route('/pages/driver/release/carRent')
 				} else if(type === 2){
-					this.$u.route('/pages/driver/search/search')
+					this.$u.route('/pages/driver/release/search')
 				}
 			}
 		}

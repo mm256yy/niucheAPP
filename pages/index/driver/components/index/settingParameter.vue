@@ -30,10 +30,10 @@
 			</view>
 			<view class="small">></view>
 		</view>
-		<view class="more">上拉加载该公司其他信息</view>
+		<view class="more" @click="other()">上拉加载该公司其他信息</view>
 		<view class="last">
 			<view class="left">预约看车</view>
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
+			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
 			<view class="right">下单租车</view>
 		</view>
 	</view>
@@ -48,8 +48,19 @@
 				}
 			}
 		},
+		mounted() {
+			this.getList()
+		},
 		methods: {
-			
+			getList() {
+				this.$u.api.getCarSystem().then(res=>{
+					if(res.code === 200){
+						 this.list = res.rows;
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 		}
 	}
 </script>
@@ -74,7 +85,7 @@
 				font-weight: 900;
 				color: #fff;
 				border-radius: 50%;
-				background: linear-gradient(115deg, #6DD99B, #37AB63);
+				background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 				margin-left: 40rpx;
 				float: left;
 			}
@@ -131,6 +142,7 @@
 				margin-left: 40rpx;
 				.everyone {
 					font-size: 28rpx;
+					font-weight: 600;
 				}
 				.how {
 					font-size: 20rpx;

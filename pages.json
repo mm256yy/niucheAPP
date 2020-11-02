@@ -272,19 +272,37 @@
 			}
 		}
 		,{//首页-租车-筛选-司机
-		    "path" : "pages/index/driver/components/index/filter",
+		    "path" : "pages/index/driver/components/index/filterRent",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-租车-筛选-筛选结果-司机
-		    "path" : "pages/index/driver/components/index/result",
+		    "path" : "pages/index/driver/components/index/resultRent",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-租车-筛选-历史-司机
-		    "path" : "pages/index/driver/components/index/history",
+		    "path" : "pages/index/driver/components/index/historyRent",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-招聘-筛选-司机
+		    "path" : "pages/index/driver/components/index/filterSearch",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-招聘-筛选-筛选结果-司机
+		    "path" : "pages/index/driver/components/index/resultSearch",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-招聘-筛选-历史-司机
+		    "path" : "pages/index/driver/components/index/historySearch",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
@@ -295,14 +313,14 @@
 				"navigationStyle": "custom" 
 			}
 		}
-		,{//租车
-		    "path" : "pages/driver/carRent/carRent",
+		,{//租车-发布
+		    "path" : "pages/driver/release/carRent",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
-		,{//求职
-		    "path" : "pages/driver/search/search",
+		,{//求职-发布
+		    "path" : "pages/driver/release/search",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}

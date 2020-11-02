@@ -10,7 +10,7 @@
 		 		<view class="city">上海</view>
 		 		<view class="clear"></view>
 		 		<view class="name">525520款包包</view>
-		 		<view class="price">打包价<span>2700</span></view>
+		 		<view class="price">打包价<span>￥2700</span></view>
 		 		<view class="case">纯电动</view>
 		 		<view class="case">SUV</view>
 		 		<view class="case">自动挡</view>
@@ -20,8 +20,10 @@
 		 	<view class="year">车龄<=3个月</view>
 		 	<u-icon class="clock" name="clock" size="28"></u-icon>
 		 	<view class="year">20万公里-30万公里</view>
-		 	<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+		 	<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		 </view>
+		 <u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+		 <u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 	</view>
 </template>
 
@@ -31,10 +33,14 @@
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
-				}
+				},
+				change: false
 			}
 		},
 		methods: {
+		  favorites() {
+			this.change = !this.change;
+		  },
 		  clear() {
 				this.$u.route({url:'/pages/mymessage/mymessage',type:'switchTab'});
 		  	}
@@ -64,6 +70,13 @@ page{
 		display: flex;
 	}
 	.result {
+		.heart {
+			margin-top: 14rpx;
+			margin-right: 20rpx;
+			position: absolute;
+			top: 466rpx;
+		    right: 34rpx;
+		}
 		.list {
 			width: 702rpx;
 			height: 308rpx;
@@ -125,11 +138,6 @@ page{
 				margin-top: 8rpx;
 				margin-right: 50rpx;
 				float: left;
-			}
-			.heart {
-				margin-top: 12rpx;
-				margin-right: 20rpx;
-				float: right;
 			}
 		}
 	}

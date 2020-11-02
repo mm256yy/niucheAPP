@@ -2,22 +2,22 @@
 	<view class="carRent">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showPrice = true" v-model="form.price" type="select" /></u-form-item>
+				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showPrice = true" v-model="form.price" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
+				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter()" type="text" :disabled="true" /></u-form-item>
 				<view class="clear"></view>
 			</u-form>
 			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showPrice" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
+			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="list" @click="detail()">
+		<view v-show="list.length" class="list" @click="detail()">
 			<view class="right">
 				<view class="name">520520款运动版</view>
 				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
@@ -27,56 +27,24 @@
 				<view class="distance">20万公里-30万公里</view>
 				<view class="clear"></view>
 			</view>
-			<u-image class="left" width="306rpx" height="226rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+			<view class="label">网约车</view>
+			<u-image class="left" width="300rpx" height="153rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="clear"></view>
 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 			<view class="box">
-				<view><span>28000</span>元/月起租</view>
+				<view><span>￥28000</span>元/月起租</view>
 				<view class="case">自动挡</view>
 				<view class="case">SUV</view>
 				<view class="case">纯电动</view>
 			</view>
 		</view>
-		<view class="list" @click="detail()">
-			<view class="right">
-				<view class="name">520520款运动版</view>
-				<u-icon class="clock" name="clock"></u-icon>
-				<view class="year">车龄<3个月</view>
-				<view class="clear"></view>
-				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-				<view class="distance">20万公里-30万公里</view>
-				<view class="clear"></view>
-			</view>
-			<u-image class="left" width="306rpx" height="226rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="clear"></view>
-			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-			<view class="box">
-				<view><span>28000</span>元/月起租</view>
-				<view class="case">自动挡</view>
-				<view class="case">SUV</view>
-				<view class="case">纯电动</view>
-			</view>
+		<u-icon v-show="change&&list.length" @click="favorites()" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
+		<u-icon v-show="!change&&list.length" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+		<view class="null" v-show="!list.length">
+			<u-image width="371rpx" height="171rpx" src="@/static/empty.png"></u-image>
+			<view class="tip">很抱歉，没有找到符合条件的内容。请修改条件后再试。</view>
 		</view>
-		<view class="list" @click="detail()">
-			<view class="right">
-				<view class="name">520520款运动版</view>
-				<u-icon class="clock" name="clock"></u-icon>
-				<view class="year">车龄<3个月</view>
-				<view class="clear"></view>
-				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-				<view class="distance">20万公里-30万公里</view>
-				<view class="clear"></view>
-			</view>
-			<u-image class="left" width="306rpx" height="226rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="clear"></view>
-			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-			<view class="box">
-				<view><span>28000</span>元/月起租</view>
-				<view class="case">自动挡</view>
-				<view class="case">SUV</view>
-				<view class="case">纯电动</view>
-			</view>
-		</view>
+		
 	</view>
 </template>
 
@@ -85,7 +53,8 @@
 		data() {
 			return {
 				show:false,
-				showPrice:false,
+				showType:false,
+				change: false,
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -104,15 +73,11 @@
 				  price: ''
 				},
 				pagination: {
-				  pageIndex: 0, 
+				  pageNum: 0, 
 				  pageSize: 10
 				},
 				total: 0,
 				select: [
-					{
-						label: '不限',
-						value: '0'
-					},
 					{
 						label: '2000以内',
 						value: '1'
@@ -128,13 +93,13 @@
 					{
 						label: '4000及以上',
 						value: '4'
+					},
+					{
+						label: '不限',
+						value: '5'
 					}
 				],
 				selectType: [
-					{
-						label: '不限',
-						value: '0'
-					},
 					{
 						label: '网约车',
 						value: '1'
@@ -142,51 +107,46 @@
 					{
 						label: '出租车',
 						value: '2'
+					},
+					{
+						label: '不限',
+						value: '3'
 					}
 				],
-				list: []
+				list: [0]
 			}
 		},
-		onReady() {
-		    
-		},
 		mounted() {
-			
+			this.search()
 		},
 		methods: {
-		    getSelectFirst(){
-		    		this.$u.api.getCarSystem().then(res=>{
-		    			if(res.code === 200){
-		    				 this.select = res.alibabaCarModelVoList;
-		    			}else {
-		    				 this.$u.toast(res.message);
-		    			}
-		    		})
-		    },
+			favorites() {
+			    this.change = !this.change;	
+			},
 		    getList(){
 		        const params = Object.assign(this.form, {
-		        	pageIndex: this.pageIndex + 1,
+		        	pageNum: this.pageNum + 1,
 		        	pageSize: 10
 		        });
 		    		this.$u.api.getCarSystem(params).then(res=>{
 		    			if(res.code === 200){
-		    				 this.list = res.alibabaCarModelVoList;
+		    				 this.list = res.rows;
 		    				 this.total= res.total;
 		    			}else {
-		    				 this.$u.toast(res.message);
+		    				 this.$u.toast(res.msg);
 		    			}
 		    		})
 		    },
 		    search(){
 		        const params = Object.assign(this.form, {
-		    		pageIndex: 0,
+		    		pageNum: 0,
 		    		pageSize: 10
 		    	});
 		    		this.$u.api.getCarSystem(params).then(res=>{
 		    			if(res.code === 200){
-		    				 this.list = res.alibabaCarModelVoList;
+		    				 this.list = res.rows;
 		    			}else {
-		    				 this.$u.toast(res.message);
+		    				 this.$u.toast(res.msg);
 		    			}
 		    		})
 		    },
@@ -198,6 +158,9 @@
 			},
 			detail() {
 				this.$u.route("/pages/index/driver/components/index/carRentDetail")
+			},
+			filter() {
+				this.$u.route("/pages/index/driver/components/index/filterRent")
 			}
 		}
 	}
@@ -205,6 +168,18 @@
 
 <style lang="scss" scoped>
 	.carRent {
+		.null {
+			margin-left: 198rpx;
+			margin-top: 229rpx;
+			.tip {
+				width: 384rpx;
+				height: 49rpx;
+				line-height: 49rpx;
+				text-align: center;
+				margin-top: 60rpx;
+				font-size: 20rpx;
+			}
+		}
 		.wrap {
 			padding: 40rpx;
 		}
@@ -212,8 +187,8 @@
 			width: 621rpx;
 			height: 71rpx;
 			border-radius: 40rpx 0 0 40rpx;
+			border: 1rpx solid rgba(0,0,0,0.1);
 			margin-left: 39rpx;
-			background-color: #CDE5E3;
 			margin-top: 30rpx;
 			float: left;
 		}
@@ -238,6 +213,13 @@
 		.clear {
 			clear: both;
 		}
+		.heart {
+			margin-top: 14rpx;
+			margin-right: 20rpx;
+			position: absolute;
+			top: 140rpx;
+		    right: 34rpx;
+		}
 		.list{
 			width: 679rpx;
 			height: 285rpx;
@@ -250,6 +232,7 @@
 			}
 			.left {
 				float: right;
+				margin-top: 20rpx;
 			}
 			.right{
 				width: 373rpx;
@@ -257,6 +240,17 @@
 				padding: 0 30rpx;
 				background: #fff;
 				float: left;
+			}
+			.label {
+				width: 86rpx;
+				height: 36rpx;
+				line-height: 36rpx;
+				text-align: center;
+				background: rgba(0,0,0,0.1);
+				font-size: 20rpx;
+				float: right;
+				margin-top: 10rpx;
+				margin-right: 70rpx;
 			}
 			.name {
 				font-weight: 900;

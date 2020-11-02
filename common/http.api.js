@@ -53,8 +53,12 @@ const install  = (Vue, vm) => {
 	 const  buying = (params = {}) => vm.$u.get('/system/usermain/UsermainAskToBuy', params);
 	 //求职招聘,租车查询
 	 const  askWork = (params = {}) => vm.$u.get('/system/usermain/UsermainRentCar', params);
-	 //卖车招聘
-	 const  sellCar = (params = {}) => vm.$u.post('/system/usermain/UsermainSellCar', params);
+	 //卖车招聘/system/comparymain/PubCollect
+	 const  sellCar = (params = {}) => vm.$u.get('/system/usermain/UsermainSellCar', params);
+	 //收藏
+	 const collect = (params = {}) => vm.$u.get('/system/comparymain/PubCollect', params);
+	 //租车发布-司机
+	 const  release = (params = {}) => vm.$u.post('/user/drivingLicense/addUserWanted', params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
 		saveCompanyInvite,
@@ -83,7 +87,9 @@ const install  = (Vue, vm) => {
 	    loginSubmit,
 		buying,
 		askWork,
-		sellCar
+		sellCar,
+		collect,
+		release
 	 };
 }
 

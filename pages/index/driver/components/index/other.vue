@@ -1,6 +1,6 @@
 <template>
 	<view class="other">
-		<u-navbar back-text="返回" back-icon-size="0" title="吉利 帝豪" :background="backgroundCom" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="公司简称" :background="backgroundDri" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image class="left" width="185rpx" height="186rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 	<u-image shape="circle" class="left" width="185rpx" height="186rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="right">
 		 		<view class="name">万兴租车有限公司</view>
 		 		<view class="address">北京朝阳区</view>
@@ -20,7 +20,7 @@
 		 </view>
 		 <view class="wrap">
 			 <view style="">
-			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="list" inactive-color="#000"
+			 	<u-tabs-swiper ref="uTabs" activeColor="#FF6501" :list="list" inactive-color="#000"
 			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 	 swiperWidth="750"></u-tabs-swiper>
 			 </view>
@@ -33,53 +33,29 @@
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
 			 			<view class="list" @click="detail()">
-			 				<view class="year">刷新时间：刚刚</view>
-			 				<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-			 				<view class="clear"></view>
-			 				<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+			 				<u-image class="left" width="264rpx" height="199rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			 				<view class="right">
-			 					<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-			 					<view class="type">金华诚信租车行<span>金华</span></view>
-			 					<view class="price">打包价:<span>2700</span></view>
-			 					<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
+			 					<view class="tag">付费标签</view>
+			 					<view class="type">网约车</view>
+			 					<u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon>
+			 					<view class="clear"></view>
+			 					<view class="name">高薪招聘高薪招聘高薪招聘...</view>
+			 					<u-icon class="car" name="car" width="22" height="22"></u-icon>
+			 					<view class="distance">荣威\吉利\比亚迪...</view>
+			 					<view class="clear"></view>
 			 				</view>
 			 				<view class="clear"></view>
-			 			</view>
-			 			<view class="list" @click="detail()">
-			 				<view class="year">刷新时间：刚刚</view>
-			 				<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-			 				<view class="clear"></view>
-			 				<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			 				<view class="right">
-			 					<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-			 					<view class="type">金华诚信租车行<span>金华</span></view>
-			 					<view class="price">打包价:<span>2700</span></view>
-			 					<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
+			 				<view class="box">
+			 					<view><span>28000</span>月薪</view>
+			 					<view class="case">自动挡</view>
+			 					<view class="case">SUV</view>
+			 					<view class="case">纯电动</view>
 			 				</view>
-			 				<view class="clear"></view>
-			 			</view>
-			 			<view class="list" @click="detail()">
-			 				<view class="year">刷新时间：刚刚</view>
-			 				<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-			 				<view class="clear"></view>
-			 				<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			 				<view class="right">
-			 					<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-			 					<view class="type">金华诚信租车行<span>金华</span></view>
-			 					<view class="price">打包价:<span>2700</span></view>
-			 					<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
-			 				</view>
-			 				<view class="clear"></view>
 			 			</view>
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>
 		 </view>
-		<view class="last">
-			<view class="left">预约看车</view>
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
-			<view class="right">下单租车</view>
-		</view>
 	</view>
 </template>
 
@@ -95,9 +71,9 @@
 					'color':'#ffffff'
 				},
 				list: [{
-					name: '在售'
+					name: '租车'
 				}, {
-					name: '求购'
+					name: '招聘'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
@@ -201,85 +177,100 @@
 		.clear {
 			clear: both;
 		}
-		.list {
-			width: 702rpx;
-			height: 308rpx;
-			padding: 38rpx;
-			margin-left: 24rpx;
-			margin-top: 24rpx;
+		.list{
+			width: 679rpx;
+			height: 295rpx;
+			color: #000;
 			font-size: 20rpx;
-			background-image: url(@/static/bgbuying.png);
-			background-repeat: no-repeat;
-			background-size: cover;
+			margin-left: 36rpx;
+			margin-top: 40rpx;
 			.clear {
 				clear: both;
 			}
 			.left {
-				margin-top: 19rpx;
+				float: left;
+				margin-left: 19rpx;
+				margin-top: 20rpx;
 			}
-			.left, .right {
+			.right{
+				width: 396rpx;
+				height: 226rpx;
+				padding: 0 30rpx;
+				background: #fff;
 				float: left;
 			}
-			.right {
-				width: 494rpx;
-				padding-left: 34rpx;
-			}
-			.city {
-				width: 96rpx;
-				height: 40rpx;
-				line-height: 32rpx;
-				text-align: center;
-				font-size: 20rpx;
-				border-radius: 26rpx;
-				border: 1rpx solid rgba(0,0,0,0.3);
-				margin-top: 16rpx;
-				margin-right: 16rpx;
-				float: right;
-			}
 			.name {
-				font-size: 28rpx;
 				font-weight: 900;
+				font-size: 28rpx;
+				margin-top: 18rpx;
+			}
+			.car {
+				float: left;
+				color: #7f7f7f;
+				margin-top: 23rpx;
+			}
+			.distance {
+				margin-left: 6rpx;
+				color: #7f7f7f;
+				float: left;
+				margin-top: 16rpx;
+			}
+			.tag {
+				width: 179rpx;
+				height: 43rpx;
+				line-height: 43rpx;
+				text-align: center;
+				border-radius: 6rpx;
+				background: #FF6501;
+				font-size: 28rpx;
+				color: #fff;
+				font-weight: 900;
+				float: left;
 				margin-top: 20rpx;
 			}
 			.type {
+				width: 86rpx;
+				height: 28rpx;
+				line-height: 28rpx;
+				text-align: center;
+				background: rgba(0,0,0,0.1);
 				font-size: 20rpx;
-				color: #7f7f7f;
-				margin-top: 8rpx;
-			}
-			.type span {
-				margin-left: 22rpx;
-			}
-			.price {
-				margin-top: 9rpx;
-			}
-			.price span {
-				font-size: 36rpx;
-				font-weight: 900;
-				color: #40B36C;
-				margin-left: 8rpx;
-			}
-			.year {
 				float: left;
+				margin-left: 33rpx;
+				margin-top: 28rpx;
+				margin-right: 20rpx;
 			}
 			.heart {
 				float: right;
+				margin-top: -24rpx;
 			}
-			.chat {
-				float: right;
+			.box {
+				width: 679rpx;
+				height: 59rpx;
+				background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
+				padding: 0 0 0 18rpx;
+				color: #fff;
+				margin-top: 10rpx;
+				view {
+					font-size: 20rpx;
+					float: left;
+				}
+				view span {
+					font-size: 36rpx;
+					font-weight: 900;
+					margin-right: 19rpx;
+				}
+				.case {
+					padding: 6rpx 14rpx;
+					border-radius: 10rpx;
+					background: #fff;
+					font-weight: 900;
+					color: #FF6501;
+					margin-top: 8rpx;
+					float: right;
+					margin-right: 10rpx;
+				}
 			}
-		}
-		.last {
-				   width: 100%;
-				   height: 144rpx;
-				   padding: 55rpx 116rpx;
-				   background: linear-gradient(115deg, #6DD99B, #37AB63);
-				   font-size: 36rpx;
-				   font-weight: 900;
-				   color: #fff;
-				   display: flex;
-				   justify-content: space-around;
-				   align-items: center;
-				   margin-top: 63rpx;
 		}
 	}
 </style>

@@ -14,7 +14,7 @@
 		<!-- <view class="wrap">
 			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="list" @click="detail()">
+		<!-- <view class="list" @click="detail()">
 			<view class="year">刷新时间：{{list.refreshtime}}</view>
 			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
 			<view class="clear"></view>
@@ -25,31 +25,21 @@
 				<view class="price">打包价:<span>{{list.packprice}}</span></view>
 			</view>
 			<view class="clear"></view>
-		</view>
+		</view> -->
 		<view class="list" @click="detail()">
 			<view class="year">刷新时间：刚刚</view>
-			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 			<view class="clear"></view>
 			<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
 				<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
 				<view class="type">金华诚信租车行<span>金华</span></view>
-				<view class="price">打包价:<span>2700</span></view>
+				<view class="price">打包价:<span>￥2700</span></view>
 			</view>
 			<view class="clear"></view>
 		</view>
-		<view class="list" @click="detail()">
-			<view class="year">刷新时间：刚刚</view>
-			<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-			<view class="clear"></view>
-			<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-				<view class="type">金华诚信租车行<span>金华</span></view>
-				<view class="price">打包价:<span>2700</span></view>
-			</view>
-			<view class="clear"></view>
-		</view>
+		<u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+		<u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 	</view>
 </template>
 
@@ -59,6 +49,7 @@
 			return {
 				show:false,
 				showPrice:false,
+				change: false,
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -84,44 +75,40 @@
 				total: 0,
 				select: [
 					{
-						label: '新车（300公里）',
+						label: '0万公里-2万公里',
 						value: '1'
 					},
 					{
-						label: '300公里-2万公里',
-						value: '2'
-					},
-					{
 						label: '2万公里-5万公里',
-						value: '3'
+						value: '2'
 					},
 					{
 						label: '5万公里-10万公里',
-						value: '4'
-					},
-					{
-						label: '10万公里-20万公里',
-						value: '2'
-					},
-					{
-						label: '20万公里-30万公里',
 						value: '3'
 					},
 					{
-						label: '30万公里-50万公里',
+						label: '10万公里-20万公里',
 						value: '4'
+					},
+					{
+						label: '20万公里-30万公里',
+						value: '5'
+					},
+					{
+						label: '30万公里-50万公里',
+						value: '6'
 					},
 					{
 						label: '50万公里-70万公里',
-						value: '4'
+						value: '7'
 					},
 					{
 						label: '70万公里以上',
-						value: '4'
+						value: '8'
 					},
 					{
 						label: '不限',
-						value: '4'
+						value: '9'
 					}
 				],
 				selectPrice: [
@@ -149,6 +136,9 @@
 			this.search()
 		},
 		methods: {
+			favorites() {
+			    this.change = !this.change;	
+			},
 			getList(){
 			    const params = Object.assign(this.form, {
 			    	pageNum: this.pagination.pageNum + 1,
@@ -226,6 +216,13 @@
 		.clear {
 			clear: both;
 		}
+		.heart {
+			margin-top: 14rpx;
+			margin-right: 20rpx;
+			position: absolute;
+			top: 144rpx;
+		    right: 34rpx;
+		}
 		.list {
 			width: 702rpx;
 			height: 308rpx;
@@ -285,9 +282,6 @@
 			}
 			.year {
 				float: left;
-			}
-			.heart {
-				float: right;
 			}
 		}
 	}

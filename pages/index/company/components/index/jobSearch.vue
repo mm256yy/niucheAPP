@@ -6,7 +6,7 @@
 				<view class="line"></view>
 				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="form.typeBusiness" type="select" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
@@ -27,7 +27,7 @@
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
 		</view>
-		<view class="list">
+		<view class="list" @click="detail()">
 			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
 				<view class="time">刷新时间：刚刚</view>

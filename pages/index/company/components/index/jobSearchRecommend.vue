@@ -8,11 +8,11 @@
 			<view class="warn">请注意，只能选择1条哦！</view>
 			<view class="list">
 				<u-radio-group v-model="value" @change="radioGroupChange">
-							<u-radio 
+							<u-radio
+							    active-color="#37AB63"
 								@change="radioChange" 
 								v-for="(item, index) in list" :key="index" 
-								:name="item.name"
-								:disabled="item.disabled"
+								:name="item.id"
 							>
 							    <view class="left">
 									<u-image width="190rpx" height="190rpx" shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
@@ -23,16 +23,16 @@
 									<u-icon class="clock" name="clock"></u-icon>
 									<view class="car">荣威/吉利/比亚迪</view>
 									<view class="clear"></view>
-									<view class="salary">月薪<span>2700-1000</span></view>
+									<view class="salary">月薪<span>￥2700-￥1000</span></view>
 								</view>
 								<view class="clear"></view>
+								<view class="box">
+									<view class="case">有5险</view>
+									<view class="case">有电费补贴</view>
+									<view class="case">有提成</view>
+								</view>
 							</u-radio>
 				</u-radio-group>
-				<view class="box">
-					<view class="case">有5险</view>
-					<view class="case">有电费补贴</view>
-					<view class="case">有提成</view>
-				</view>
 			</view> 
 		 </view>
 		 <view class="bottom" @click="recommend()">
@@ -48,44 +48,54 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
-				current: 0,
-				firstCurrent:0,
 				form: {
 					name: '杭州'
 				},
-				list: [
-								{
-									name: 'apple',
-									disabled: false
-								}
-							],
-							// u-radio-group的v-model绑定的值如果设置为某个radio的name，就会被默认选中
-							value: 'orange',
+				list: [{
+					id: 0,
+					name: '看看'
+				},
+				{
+					id: 1,
+					name: '照顾'
+				},
+				{
+					id: 2,
+					name: '看看'
+				},
+				{
+					id: 3,
+					name: '照顾'
+				},
+				{
+					id: 4,
+					name: '看看'
+				},
+				{
+					id: 5,
+					name: '照顾'
+				},
+				{
+					id: 6,
+					name: '看看'
+				},
+				{
+					id: 7,
+					name: '照顾'
+				}],
+				value: 0
 			}
 		},
-		methods: {
-		recommend() {
-				this.$u.route("/pages/index/company/components/index/recommend")
+		methods: {   
+			// 选中某个单选框时，由radio时触发
+			radioChange(e) {
+				console.log(e);
 			},
-			shared(){
-				uni.share({
-				    provider: "weixin",
-				    scene: "WXSenceTimeline",
-				    type: 0,
-				    href: "http://uniapp.dcloud.io/",
-				    title: "uni-app分享",
-				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-				    imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
-				    success: function (res) {
-				        console.log("success:" + JSON.stringify(res));
-				    },
-				    fail: function (err) {
-				        console.log("fail:" + JSON.stringify(err));
-				    }
-				});
+			// 选中任一radio时，由radio-group触发
+			radioGroupChange(e) {
+				console.log(e);
+				console.log(this.value)
 			}
-			
 		}
 	}
 </script>
@@ -110,26 +120,32 @@ page{
 		color: #ffffff;
 		display: flex;
 	}
+	.wrap {
+		display: flex;
+		flex-direction: column;
+		// height: calc(90vh - var(--window-top));
+		// height: auto;
+		width: 100%;
+		// background: rgba(0,0,0,0.02);
+	}
+	.swiper-box {
+		flex: 1;
+	}
+	.swiper-item {
+		height: 100%;
+	}
 	.detail {
-		height: 100vh;
 		background: #f5fafb;
-		.wrap {
-			width: 100%;
-			// height: calc(100vh + 10rpx);
-			border-radius: 20rpx;
-			padding-top: 40rpx;
-			margin-top: -20rpx;
-		}
 		.warn {
 			margin-left: 84rpx;
 			margin-bottom: 49rpx;
-			margin-top: 35rpx;
+			margin-top: 49rpx;
 			font-size: 20rpx;
 			color: #FFB400;
 		}
 		.list{
-			width: 670rpx;
-			height: 257rpx;
+			width: 690rpx;
+			// height: 257rpx;
 			font-size: 20rpx;
 			margin-left: 30rpx;
 			.clear {
@@ -149,7 +165,7 @@ page{
 				.hailing {
 					width: 86rpx;
 					height: 30rpx;
-					border-radius: 8rpx;
+					border-radius: -8rpx;
 					line-height: 30rpx;
 					text-align: center;
 					background: #ecebeb;
@@ -204,7 +220,7 @@ page{
 				height: 60rpx;
 				padding: 0 32rpx;
 				background: linear-gradient(115deg,#6DD99C, #37AB63);
-				margin-left: 44rpx;
+				margin-bottom: 20rpx;
 				view {
 					font-size: 20rpx;
 					float: left;
@@ -214,9 +230,10 @@ page{
 					font-weight: 900;
 				}
 				.case {
-					padding: 6rpx 15rpx;
+					padding: 2rpx 15rpx;
 					border-radius: 10rpx;
 					background: #fff;
+					font-size: 20rpx;
 					font-weight: 900;
 					color: #37AB63;
 					margin-top: 8rpx;

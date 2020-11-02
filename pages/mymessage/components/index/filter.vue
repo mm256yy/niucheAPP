@@ -1,7 +1,7 @@
 <template>
 	<view class="filter">
 	  <u-navbar back-text="返回" back-icon-size="0" title="筛选" :background="backgroundCom" 
-	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
+	   :back-text-style="backTextStyle" height='98' title-color="#FFFFFF"><view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
 		   历史</view></u-navbar>
 	   <view class="view-content">
 		   <view class="name">比亚迪+宝马 / 3万以内</view>
