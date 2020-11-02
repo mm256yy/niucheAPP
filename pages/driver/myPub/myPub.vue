@@ -66,6 +66,13 @@
 				checked:true
 			}
 		},
+		onLoad(option) {
+			let index  = Number(option.index);
+			if(index){
+			 this.current = index;
+			 this.swiperCurrent = index;	
+			}
+		},
 		methods: {
 			// tabs通知swiper切换
 			tabsChange(index) {
