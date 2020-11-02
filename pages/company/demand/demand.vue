@@ -37,10 +37,13 @@
 					</u-checkbox>
 				</u-checkbox-group>
 			</u-form-item>
-			<u-form-item label="月租" label-position="top">
+			<u-form-item label="打包价" label-position="top">
 				<u-radio-group v-model="form.monthzu"  :active-color="'#6DD99C'" style="text-align: right;">
 					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
+			</u-form-item>
+			<u-form-item label="数量" label-width="150">
+				<u-input v-model="form.intentioncarbrandnum" maxlength="6" type="number" :border="true" placeholder="请输入车辆品牌"/>
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top">
 				<u-radio-group v-model="form.carage"  :active-color="'#6DD99C'" style="text-align: right;">
@@ -82,13 +85,14 @@
 					monthzu:'',
 					carage:'',
 					km:'',
+					intentioncarbrandnum:''
 				},
 				value:'',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
 						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}],
 				modelList:[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}],
 				powerList:[{name:'纯电动',checked: false},{name:'插电混动',checked:false},{name:'燃油车(含油电混动)',checked: false}],
-				rentList:[{name: '0',text:'3000以内(含3000)' },{name: '1',text:'3000以上' }],
+				rentList:[{name: '0',text:'3万以内' },{name: '1',text:'3万-5万' },{name: '3',text:'5万以上' }],
 				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				objType:{
 					wycList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },

@@ -38,11 +38,9 @@
 				return '审核中'
 			} else if (value === 4){
 				return '认证未通过'
-			}else {
-				return ''
-			  }
-			 }
-			},
+			}else {return ''}
+		     }
+		},
 		onShow() {
 			let type = uni.getStorageSync('curThemeType');
 			if (type === 'company'){
