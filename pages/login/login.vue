@@ -70,9 +70,7 @@
 </template>
 
 <script>
-	import {WebIM,conn,SDKlogin} from '@/sdk/WebIMConfig.js'
 	import {phoneRule,codeRule,passwordRule} from '@/common/rule.js'
-
 	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
@@ -225,15 +223,6 @@
 								 this.$u.toast(res.msg);
 							})} 
 				})
-			},
-			init(){
-				var options = { 
-				  apiUrl: WebIM.config.apiURL,
-				  user: 'pengtianfu',
-				  pwd: '7800809s',
-				  appKey: WebIM.config.appkey
-				  };
-				   SDKlogin(options);
 			}
 		}
 	}
