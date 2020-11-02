@@ -105,10 +105,10 @@
 					this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
 						if(res.code === 200){
 							let data = res.usercomparypeople;
+						 }else {
+							 this.$u.toast(res.msg)
 						 }
-						}).catch(res=>{
-							console.log(res)
-					})
+						}).catch(res=>{this.$u.toast(res.msg)})
 				}
 			},
 			setPicToken(){

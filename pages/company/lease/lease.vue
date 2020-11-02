@@ -46,11 +46,11 @@
 						 <u-input v-model="form.firsttime" :border="true" :disabled="true" @click="timeShow = true" placeholder=""/>
 						 <u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon>
 					 </u-form-item>
-					 <u-form-item label="行驶里程" prop="km">
-						 <u-input v-model="form.km" type="number" maxlength="3" @input="startValChange(index)"
+					 <u-form-item label="行驶里程" prop="firstkm">
+						 <u-input v-model="form.firstkm" type="number" maxlength="3" 
 						  :clearable="false" :border="true" placeholder="请输入"/>
 						 <text style="padding: 0 5pt;">-</text>
-						 <u-input v-model="form.km" type="number" maxlength="3" @input="endValChange(index)" 
+						 <u-input v-model="form.EndKm" type="number" maxlength="3"
 						 :clearable="false" :border="true" placeholder="请输入"/>
 						 <text style="padding-left: 5pt;">万公里</text>
 					 </u-form-item>
@@ -93,7 +93,8 @@ export default {
 			power:'',
 			businesstype:'',
 			firsttime:'',
-			km:'',
+			firstkm:'',
+			EndKm:'',
 			carnbumber:'',
 		},
 		rules:{
@@ -104,7 +105,7 @@ export default {
 			power:requiredRule,
 			businesstype:requiredRule,
 			firsttime:requiredRule,
-			km:requiredRule,
+			firstkm:requiredRule,
 			carnbumber:requiredRule,
 		},
 		selectObj:{
@@ -236,6 +237,12 @@ export default {
 			if(valid) {
 		        this.$refs.uForm2.validate(valid=>{
 		        	if(valid) {
+						let startKm = Number(this.form.firstkm);
+						let endKm = Number(this.form.EndKm);
+						if (startKm > endKm){
+							this.$u.toast('行驶里程填写有误');
+							return
+						}
 		             this.$u.route('/pages/company/lease/step/stepLabel/stepLabel')
 		        	}
 		        })

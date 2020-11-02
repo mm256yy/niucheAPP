@@ -65,7 +65,7 @@ export default {
 	...mapActions(['CARPUBSECOND']),
 	 getSysTags(){
 		let data = this.carPubFirst;
-		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,km:data.km};
+		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,EndKm:data.EndKm};
 		this.$u.api.getSystemTag(obj).then(res=>{
 			if(res.code === 200){
 				this.xttjList = res.systemTagVo;

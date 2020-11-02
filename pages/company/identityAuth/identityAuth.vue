@@ -150,9 +150,7 @@
 								this.fileList.push({url:photo.yingyezhizhao})
 							}
 						 }
-						}).catch(res=>{
-							console.log(res)
-					})
+						}).catch(res=>{this.$u.toast(res.msg)})
 				}
 			},
 			setPicToken(){

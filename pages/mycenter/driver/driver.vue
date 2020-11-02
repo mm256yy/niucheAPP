@@ -32,7 +32,7 @@
 						<u-col span="2">
 							<u-icon size="100" :name="zyzgSrc"></u-icon>
 						</u-col>
-						<u-col span="3">
+						<u-col span="4">
 							<text class="colorF">职业资格认证</text>
 							<view class="colorF" @click="toCard">{{driverPub.postState}}</view>
 						</u-col>
@@ -94,7 +94,7 @@
 				jzrzSrc:'../../static/jiazhao.png',
 				zyzgSrc:'../../static/yingyezhizhao.png',
 				zcxuSrc:'../../static/zuche.png',
-				qzxuSrc:'../../static/qiuzhi.png',
+				qzxuSrc:'../../static/qiuzhi-c.png',
 				wdpdSrc:"../../static/pindan.png",
 				scSrc:"../../static/shoucang.png",
 				xxSrc:"../../static/xiaoxi.png",
@@ -129,15 +129,13 @@
 		  }
 		},
 		mounted(){
-		    this.telephone = uni.getStorageSync('telephone')
+		    this.token = uni.getStorageSync('token')
 			this.getDriver()  	
 		},
 		methods: {
 			getDriver(){
-				if (!this.telephone){
-					return
-				}
-				this.$u.api.getUserInfo().then(res=>{
+              if (this.token){
+				 this.$u.api.getUserInfo().then(res=>{
 					if(res.code === 0){
 						let data = res.data;
 						this.driverPub = data
@@ -145,6 +143,7 @@
 						 this.$u.toast(res.msg);
 					}
 				})
+			  }
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');

@@ -129,6 +129,7 @@
 		mounted() {
 			this.setPicToken()
 			this.getInfo()
+			console.log(this.companySecond)
 		},
 		computed:{
 			...mapGetters(['token','telephone','companyFirst','companySecond','companyThree','peopleCard','shengfenzheng'])
@@ -191,9 +192,11 @@
 							this.form.telephone = data.telephone;
 							this.form.id = data.id;
 							this.form.comparyid = data.comparyid;
+						 }else{
+							   this.$u.toast(res.msg);
 						 }
 						}).catch(res=>{
-							console.log(res)
+							  this.$u.toast(res.msg);
 					})
 				}
 			},
@@ -208,7 +211,7 @@
 						if (this.comparyid){
 							this.personSave()
 						} else {
-						this.saveSubmit()	
+						 this.saveSubmit()	
 					  }
 					} else {
 						
@@ -219,14 +222,16 @@
 				this.$u.api.editCompanyPerson(this.form).then(res => {
 						if(res.code === '200'){
 							this.showTips = true
+						}else{
+							  this.$u.toast(res.msg);
 						}
 					}).catch(res=>{
-						console.log(res)
+						  this.$u.toast(res.msg);
 					})
 			},
 			saveSubmit(){
 				let obj = {businesscard:'',comparyname:'',societyid:'',chuangjiantime:'',registeredcapital:'',faname:'',area:'',
-				comparylogophoto:'',comparynickname:'',comparypeoplenum:'',comparycarnum:'',mainbusiness:'',
+				comparylogophoto:'',comparynickname:'',comparypeoplenum:'',comparycarnum:'',mainbusiness:'',userid:'',
 				comparytext:'',idcardphoto:'',username:'',sex:'',birthday:'',idcardid:'',telephone:'',comparypeoplephoto:'',identifyCode:''};
 				obj.businesscard = this.companyFirst.businesscard;//营业执照
 				obj.comparyname = this.companyFirst.companyName;//公司名称
@@ -235,6 +240,9 @@
 				obj.registeredcapital = this.companyFirst.registeredPrice;//注册资本
 				obj.faname = this.companyFirst.legalPerson;//法人姓名
 				obj.area = this.companyFirst.area;//地区
+				if (!this.companySecond){
+					this.companySecond = uni.getStorageSync('companySecond')
+				}
 				obj.comparylogophoto = this.companySecond.comparylogophoto;//公司logo
 				obj.comparynickname = this.companySecond.companyEasyName;//公司简称
 				obj.comparypeoplenum = this.companySecond.memberNumber;//公司成员
@@ -249,24 +257,31 @@
 				obj.idcardid = this.form.idcardid;//身份证号
 			    obj.telephone = this.form.telephone;//手机号
 				obj.identifyCode = this.form.identifyCode;
-
+                 
 				if (this.form.userid){
+					//修改
 					obj.userid = this.form.userid;
 					this.$u.api.saveAuthAll(obj).then(res => {
 							if(res.code === '200'){
 					            this.showTips = true
+							}else{
+								  this.$u.toast(res.msg);
 							}
 						}).catch(res=>{
-							console.log(res)
+							  this.$u.toast(res.msg);
 						})
 				} else {
-					obj.userid = this.phone;
+					//新增
+					obj.userid = this.telephone;
+					console.log(obj)
 					this.$u.api.saveAuth(obj).then(res => {
 							if(res.code === '200'){
 					            this.showTips = true
+							}else{
+								this.$u.toast(res.msg);
 							}
 						}).catch(res=>{
-							console.log(res)
+							  this.$u.toast(res.msg);
 						})
 				}
 			},
