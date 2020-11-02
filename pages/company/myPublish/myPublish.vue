@@ -128,9 +128,10 @@
 		},
 		onLoad(option) {
 			let index  = Number(option.index)
-			console.log(index)
-			this.current = index;
-			this.swiperCurrent = index;
+			if(index){
+			 this.current = index;
+			 this.swiperCurrent = index;	
+			}
 		},
 		methods: {
 			// tabs通知swiper切换
