@@ -9,7 +9,7 @@
 		 </u-navbar>
 		<view class="top-content" >
 			<view style="background-color: #dedede;padding: 8pt 0;" v-show="reason">
-				<text>{{reason}}</text>
+				<text style="padding-left: 6px;">{{reason}}</text>
 			</view>
 			<view class="top-content-base">驾照认证</view>
 			<view class="top-content-base" style="font-size: 12pt;">驾驶证正本照片</view>
@@ -39,17 +39,23 @@
 					<u-radio-group v-if="type" v-model="form.sex" :active-color="'#FFA032'" style="text-align: right;">
 						<u-radio :name="item.name" style="margin-left: 10pt;" v-for="item in radioList" :key="item.name">{{item.text}}</u-radio>
 					</u-radio-group>
-					<view class="type-right" v-else>{{form.sex === 0 ? "女":"男"}}</view>
+					<view class="type-right" v-else>{{form.sex === '0' ? "女":"男"}}</view>
+				</u-form-item>
+				<u-form-item label="出生日期" prop="brithday">
+					<u-input v-model="form.brithday" :border="true" v-show='type'
+					 class="input-radius" :disabled="true" @click="showPicker('brithday')" placeholder=""/>
+					<u-icon class="iconAbs" v-show='type' name="calendar" color="#FFA032" size="40"></u-icon>
+					<view class="type-right" v-show='!type'>{{form.brithday}}</view>
 				</u-form-item>
 				<u-form-item label="驾驶证号" prop="licenseNumber">
 					<u-input class="input-radius" v-model="form.licenseNumber" :border="true" v-if="type"/>
 					<view class="type-right" v-else>{{form.licenseNumber}}</view>
 				</u-form-item>
 				<u-form-item label="初次领证" prop="username">
-					<u-input v-model="form.issueDate" :border="true" class="input-radius" :disabled="true"
-					 @click="showPicker('issueDate')" placeholder="" v-show='type'/>
-					<u-icon class="iconAbs" name="calendar" color="#FFA032" size="40" v-show='type'></u-icon>	
-					<view v-show='!type' class="type-right">{{form.issueDate}}</view>
+					<u-input v-model="form.issueDate" :border="true" v-show='type' 
+					class="input-radius" :disabled="true" @click="showPicker('issueDate')" placeholder="" />
+					<u-icon class="iconAbs" v-show='type' name="calendar" color="#FFA032" size="40" ></u-icon>	
+					<view class="type-right" v-show='!type' >{{form.issueDate}}</view>
 				</u-form-item>
 				<u-form-item label="有效起始时间" prop="beginTime">
 					<u-input v-model="form.beginTime" :border="true" v-show='type'
@@ -104,6 +110,7 @@
 				form: {
 					name:'',
 					sex: '',
+					brithday:'',
 					licenseNumber:'',
 					issueDate:'',
 					beginTime:'',
@@ -114,6 +121,7 @@
 				rules: {
 					name:requiredRule,
 					sex:requiredRule,
+					brithday:requiredRule,
 					licenseNumber:requiredRule,
 					issueDate:requiredRule,
 					beginTime:requiredRule,
@@ -148,29 +156,29 @@
 		},
 		methods: {
 			getInfo(){
-					this.$u.api.listDrivingLicense({state:0}).then(res => {
-						if(res.code === 200){
-							let data = res.object;
-							this.form =data;
-							this.form.sex = data.sex.toString();
-							this.fileList= [{url:data.driverPhoto}]
-							if (data.state === 3){
-								this.type = true;
-								this.reason ="驳回理由："+data.reason;
-							}else if (data.state === 2){
-								this.title = '驾照已认证';
-								this.reason = "* 驾照已认证，如有变更，请点击“变更”提交。 "
-								this.stateType = true;
-								this.type = false;
-							} else if(data.state ===1){
-								this.type = false;
-								this.title = "驾照审核中"
-								this.reason = "* 信息已提交，在审核期间本页内容不能修改。"
-							}
-						 } else{
-							this.$u.toast(res.msg) 
-						 }
-					}).catch(res=>{this.$u.toast(res.msg)})
+				this.$u.api.listDrivingLicense({state:0}).then(res => {
+					if(res.code === 200){
+						let data = res.object;
+						this.form =data;
+						this.form.sex = data.sex.toString();
+						this.fileList= [{url:data.driverPhoto}]
+						if (data.state === 3){
+							this.type = true;
+							this.reason ="驳回理由："+data.reason;
+						}else if (data.state === 2){
+							this.title = '驾照已认证';
+							this.reason = "* 驾照已认证，如有变更，请点击“变更”提交。 "
+							this.stateType = true;
+							this.type = false;
+						} else if(data.state ===1){
+							this.type = false;
+							this.title = "驾照审核中"
+							this.reason = "* 信息已提交，在审核期间本页内容不能修改。"
+						}
+					 } else{
+						this.$u.toast(res.msg) 
+					 }
+				}).catch(res=>{this.$u.toast(res.msg)})
 			},
 			showPicker(name){
 				this.pickerName = name;
