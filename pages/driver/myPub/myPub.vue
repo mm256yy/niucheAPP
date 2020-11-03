@@ -58,6 +58,7 @@
 </template>
 
 <script>
+	import {refreshTime} from '@/utils/time.js'
 	export default {
 		data() {
 			return {
@@ -146,20 +147,19 @@
 				})
 			},
 			timeZ(value){
-				let nowTime = this.shijian;
+				let nowTime = new Date().getTime();
 				let oneDay= 86400000;
-				let sjc = nowTime-value;//时间差
-				let tian =parseInt(sjc/oneDay);
+				let timeDiff = nowTime-value;//时间差
+				let tian =parseInt(timeDiff/oneDay);
 				let day6 = oneDay*6;
-				if(sjc>day6){
-					let str = this.$u.timeFormat(value, 'yyyy-mm-dd');
-					return str
-				} else if (sjc>oneDay && sjc < day6){
+				if(timeDiff>day6){
+					return this.$u.timeFormat(value, 'yyyy-mm-dd');
+				} else if (timeDiff>oneDay && timeDiff < day6){
 					return tian+"天前"
-				} else if (sjc<oneDay){
+				} else if (timeDiff<oneDay){
 					return '刚刚'
 				} else {
-					console.log(sjc)
+					console.log(timeDiff)
 				 }
 			},
 			switchChange(item){
