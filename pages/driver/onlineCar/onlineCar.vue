@@ -95,7 +95,7 @@
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
 				title:'证件上传',
-				action: '/user/image/BusinessImagedemo',
+				action: '/user/image/DriverCardLicense',
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],

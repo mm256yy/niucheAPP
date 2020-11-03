@@ -32,20 +32,20 @@
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item.id)" v-for="item in qzList" :key="item.id">
+					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item)" v-for="item in qzList" :key="item.id">
 						<view class="card-head" slot="head">
-							<text style="color:#7E7E7E;">刷新时间:{{item.updateTime}}</text>
+							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
 							<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>
 						</view>
 						<view class="card-head"  slot="body" style="border-bottom: 0;">
 							<view style="color: #000000;">
-								  <view style="font-size: 16pt;">意向品牌</view>
+								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
 								  <view>工作车辆: 荣威\吉利\比亚迪...  </view>
 							</view>
-					        <view>
+					        <view style="width: 30%;">
 								<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
 								 font-size="20" button-color="#FE9B1C" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
-								<view style="font-size: 14pt;color:#FE9B1C ;">¥2700月薪</view>
+								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice}}月薪</view>
 							</view>
 						</view>
 					</u-card>
@@ -84,18 +84,8 @@
 			}
 		},
 		mounted() {
-			this.setList([ {
-		            "isOpen": 0,
-		            "updateTime": 1504345947000,
-		            "carCard": "string",
-		            "driverDemandId": "78319729550430208"
-		        },
-		        {
-		            "isOpen": 1,
-		            "updateTime": 1603890948000,
-		            "carCard": "string",
-		            "driverDemandId": "68319732784238592"
-		        }])
+	           this.getList()
+			   this.getPageList()
 		},
 		methods: {
 			tabsChange(index) {
@@ -113,12 +103,34 @@
 			},
 			getList(){
 				let pageNum = this.pageNum+1;
-				this.$u.api.askWork({pageNum:pageNum,pageSize:10}).then(res=>{
+				this.$u.api.listUserWanted({pageNum:pageNum,pageSize:10}).then(res=>{
 					if(res.code === 200){
 						this.setList(res.rows);
 					}else {
 						 this.$u.toast(res.msg);
 					}
+				})
+			},
+			getPageList(){
+				let pageNum = this.pageNum1+1;
+				this.$u.api.listUserJobWanted({pageNum:pageNum,pageSize:10}).then(res=>{
+					if(res.code === 200){
+						this.setPageList(res.rows);
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
+			setPageList(arr){
+				arr.forEach(item=>{
+					if (item.carCard){
+						item.carCardList = item.carCard.split(',');
+					}
+					item.updateTimeStr = this.timeZ(item.updateTime)
+					item.refreshFlag = true;
+					item.switchFlag = true;
+					this.qzList.push(item)
+					console.log(item)
 				})
 			},
 			setList(arr){
@@ -152,13 +164,13 @@
 			},
 			switchChange(item){
 				item.switchFlag = false
-				this.$u.api.getTelephone().then(res=>{
-					if(res.code === 1){
-						item.switchFlag = true
-					}else {
-						this.$u.toast(res.msg);
-					}
-				})
+				// this.$u.api.getTelephone().then(res=>{
+				// 	if(res.code === 1){
+				// 		item.switchFlag = true
+				// 	}else {
+				// 		this.$u.toast(res.msg);
+				// 	}
+				// })
 			},
 			refresh(item){
 				item.refreshFlag = false
