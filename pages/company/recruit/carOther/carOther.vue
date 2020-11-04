@@ -27,6 +27,9 @@
 			</u-upload>
 		  </view>
 		</view>
+		<view class="" style="height: 20pt;">
+			
+		</view>
 		<view class="fixed-btn">
 			<view class=" btn-inline">
 			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">添加</u-button>
@@ -38,6 +41,7 @@
 
 <script>
 	import {mapGetters,mapActions} from 'vuex'
+	import {action} from '@/utils/constant.js'
 export default {
   data(){
 	return {
@@ -49,7 +53,7 @@ export default {
 			CarModel:'',CarXilie:'',
 			onephoto:'',CarNamePlate:'',drivephoto:'',TransportationCard:''
 		},
-		action: 'http://161.189.168.218:9007/user/image/carotherphoto',
+		action: action,
 		headerObj:{Authorization:''},
 		formDataObj:{phone:''},
 		uploadList:[
@@ -164,7 +168,7 @@ page{
     box-sizing: border-box;
     position: fixed;
     left: 0;
-    bottom: 20pt;
+    bottom: 10pt;
     width: 100%;
     z-index: 98;
 }

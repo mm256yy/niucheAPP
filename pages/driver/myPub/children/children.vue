@@ -4,49 +4,39 @@
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 		 </u-navbar>
 		 <view class="list">
-		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="form.userAvatar"></u-image>
 		 	<view class="right">
-				<u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon>
-		 		<view class="name">吴司机</view>
-				<view class="special">加急</view>
+				<u-icon class="reload" name="reload" color="#ffffff" size="50" @click="refresh"></u-icon>
+		 		<view class="name">{{form.userName}}</view>
+				<!-- <view class="special">加急</view> -->
 				<view class="clear"></view>
 				<u-icon class="clock" name="clock"></u-icon>
-		 		<view class="year">驾龄4年</view>
+		 		<view class="year">驾龄{{form.drivingYear}}年</view>
 				<view class="clear"></view>
 				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-		 		<view class="type">杭州出租车认证</view>
+		 		<view class="type">{{form.ifAuthentication === 2 ?'出租车认证':'网约车认证'}}</view>
 		 		<view class="clear"></view>
 				<view class="box">
 				    <view>准驾类型</view>
-				    <view style="font-weight: bold;">C1</view>	
+				    <view style="font-weight: bold;">{{form.carType}}</view>	
 				</view>
 		 	</view>
 			<view class="clear"></view>
-			<view class="time">刷新时间：刚刚</view>
+			<view class="time">刷新时间：{{form.updateTime}}</view>
 		 </view>
 		  <view style="color: #7F7F7F;text-align: right;padding:2pt 20pt;font-size: 12px;">*刷新需求可提高曝光率哦</view>
 		 <view class="content">
-<!-- 		 <u-cell-group >
-			<u-cell-item :arrow="false" :title-style="titleStyle" :value-style="titleStyle"
-			 value="1111" style="background-color: #F5F5F8;border-bottom: 0.5px solid rgba(0, 0, 0, 0.06);">
-			   <view slot="title">
-				  <view>1111</view>
-				   <view>3333</view>
-			  </view>
-			</u-cell-item>
-		 </u-cell-group> -->
-		  <u-form label-width="150" label-align="left" :model="form" ref="uForm">
-			<u-form-item label="是否允许租车公司主动联系我？" label-width="600">
-				<u-input :disabled="true" height="80" input-align="right" v-model="form.name" />
-			</u-form-item>  
+		  <u-form label-width="150" label-align="left" :model="form" ref="uForm"> 
 			<u-form-item label="租车城市:">
-				<u-input :disabled="true" height="80" input-align="right" v-model="form.name" />
+				<u-input :disabled="true" height="80" input-align="right" v-model="form.workCity" />
 			</u-form-item>
-			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-			<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-			<u-form-item label="月租:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-			<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-			<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right"
+			 v-model="form.businessType===0?'网约车':'出租车'" /></u-form-item>
+			<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.carCard" /></u-form-item>
+			<u-form-item label="月租:"><u-input :disabled="true" height="80" type="textarea" input-align="right"
+			 v-model="form.monthlyRent===0?'3000以内(含3000)':'3000以上'" /></u-form-item>
+			<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.kmStr" /></u-form-item>
+			<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.power" /></u-form-item>
 		   </u-form>
 		 </view>
 		 <view class="fixed-btn" style="">
@@ -57,7 +47,7 @@
 				<view class="btn-edit" @click="toNext">编辑</view>
 				<view class="btn-edit">|</view>
 				<view style="width: 30%;">
-					<u-subsection :current="1" @change="switchChange(item)" vibrateShort button-color="#FE9B1C" 
+					<u-subsection :current="form.isOpen" @change="switchChange" vibrateShort button-color="#FE9B1C" 
 					bg-color="#fff" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
 				</view>
            </view>
@@ -81,8 +71,28 @@
 				showTips:false,
 				titleStyle:{'fontSize': '12pt','color':'#000000'},
 				xxSrc:"../../../../static/lajitongshanchu.png",
+				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2万公里-5万公里' },
+					  {name: 2,text:'5万公里-10万公里' },{name: 3,text:'10万公里-20万公里' },{name: 4,text:'20万公里-30万公里' },
+					  {name: 5,text:'30万公里-50万公里' },{name: 6,text:'50万公里-70万公里' },{name: 7,text:'70万公里以上'},{name: 8,text:'30万公里以上'},],
 				form: {
-					name: '杭州'
+					kmStr:'',
+					userName:'',
+					userAge:'',
+					userAvatar:'',
+					drivingYear:'',
+					ifAuthentication:'',
+					carType:'',
+					updateTime:'',
+					isOpen:'',
+					workCity:'',
+					businessType:'',
+					city:'',
+					carCard:'',
+					carModel:'',
+					power:'',
+					monthlyRent:'',
+					carAge:'',
+					km:'',
 				}
 			}
 		},
@@ -92,18 +102,30 @@
 			 this.driverDemandId = id;
 			}
 		},
+		filters:{
+			carAgeFit: function (value) {
+		    if (value === 0) {
+				return '1年以内'
+			} else if (value === 1){
+				return '1年-3年'
+			} else if (value === 2){
+				return '3年-5年'
+			} else if (value === 3){
+				return '5年以上'
+			} else {
+				return ''
+			}
+		  }
+		},
 		mounted() {
 			this.getDetail();
 		},
 		methods: {
-		    recommend() {
-				this.$u.route("/pages/index/company/components/index/carRentRecommend")
-			},
-			switchChange(item){
-				let isOpen = item.isOpen=== 0?1:0;
+			switchChange(){
+				let isOpen = this.form.isOpen=== 0?1:0;
 				this.$u.api.updateUserWantedState({driverDemandId:this.driverDemandId,isOpen:isOpen}).then(res=>{
 					if(res.code === 200){
-						 this.$u.toast(res.msg);
+						this.$u.toast(res.msg);
 					}else {
 						this.$u.toast(res.msg);
 					}
@@ -112,17 +134,17 @@
 			refresh(){
 				this.$u.api.refreshUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
+						this.getDetail()
 						 this.$u.toast(res.msg);
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
-
 			delSubmit(){
 				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
 						if(res.code === 200){
-							console.log(res)
+							this.showTips = true
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -131,7 +153,12 @@
 			getDetail(){
 				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
-						console.log(res)
+						 this.form = res.object
+						 this.xslc.forEach(item=>{
+							 if(item.name === this.form.km){
+								 this.form.kmStr = item.text;
+							 }
+						 })
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -143,23 +170,6 @@
 			tipsConfirm(){
 			   this.$u.route("/pages/driver/myPub/myPub",{index:0})
 			},
-			timeZ(value){
-				let nowTime = new Date().getTime();
-				let oneDay= 86400000;
-				let timeDiff = nowTime-value;//时间差
-				let tian =parseInt(timeDiff/oneDay);
-				let day6 = oneDay*6;
-				if(timeDiff>day6){
-					return this.$u.timeFormat(value, 'yyyy-mm-dd');
-				} else if (timeDiff>oneDay && timeDiff < day6){
-					return tian+"天前"
-				} else if (timeDiff<oneDay){
-					return '刚刚'
-				} else {
-					console.log(timeDiff)
-				 }
-			},
-			
 		}
 	}
 </script>
