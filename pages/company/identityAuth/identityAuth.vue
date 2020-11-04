@@ -41,12 +41,13 @@
 <script>
 	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
+	import {actionJx} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
-				action: 'http://161.189.168.218:9007/user/image/BusinessImagedemo',
+				action: actionJx,
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],
