@@ -10,11 +10,11 @@
 				 </view>
 				<view class="box">
 					<view class="left">
-						<view class="price"><span>3100</span>/辆</view>
+						<view class="price"><text>3100</text>/辆</view>
 						<view>打包价</view>
 					</view>
 					<view class="right">
-						<view class="price"><span>30</span>辆</view>
+						<view class="price"><text>30</text>辆</view>
 						<view>起售</view>
 					</view>
 					<view class="clear"></view>
@@ -94,7 +94,7 @@
 					color: #7f7f7f;
 					margin-left: 43rpx;
 					float: left;
-					.price span {
+					.price text {
 						font-size: 46rpx;
 						font-weight: 900;
 					}

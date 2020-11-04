@@ -16,26 +16,28 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="list" @click="detail()">
-			<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="city">上海</view>
+		<view v-for="(item, index) in list" :key="index">
+			<view class="list" @click="detail()">
+				<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+				<view class="right">
+					<view class="city">上海</view>
+					<view class="clear"></view>
+					<view class="name">525520款包包</view>
+					<view class="price">打包价<text>{{list.packprice}}</text></view>
+					<view class="case">纯电动</view>
+					<view class="case">SUV</view>
+					<view class="case">自动挡</view>
+				</view>
 				<view class="clear"></view>
-				<view class="name">525520款包包</view>
-				<view class="price">打包价<span>{{list.packprice}}</span></view>
-				<view class="case">纯电动</view>
-				<view class="case">SUV</view>
-				<view class="case">自动挡</view>
+				<u-icon class="clock" name="clock" size="28"></u-icon>
+				<view class="year">车龄<=3个月</view>
+				<u-icon class="clock" name="clock" size="28"></u-icon>
+				<view class="year">20万公里-30万公里</view>
+				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 			</view>
-			<view class="clear"></view>
-			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">车龄<=3个月</view>
-			<u-icon class="clock" name="clock" size="28"></u-icon>
-			<view class="year">20万公里-30万公里</view>
-			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+			<u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+			<u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		</view>
-		<u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-		<u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 	</view>
 </template>
 
@@ -132,8 +134,31 @@
 			this.search()
 		},
 		methods: {
-			favorites() {
-			    this.change = !this.change;
+			favorites(id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1 
+				};
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
+			cancel(id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1 
+				};
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('取消收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
 			},
 		    getList(){
 		        const params = Object.assign(this.form, {
@@ -259,7 +284,7 @@
 				font-weight: 900;
 				margin-top: 8rpx;
 			}
-			.price span {
+			.price text {
 				font-size: 36rpx;
 				font-weight: 900;
 				color: #40B36C;

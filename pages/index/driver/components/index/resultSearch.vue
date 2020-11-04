@@ -4,28 +4,30 @@
 			<view @click="clear()" class="navbar-right" slot="right">清除
 			</view>
 		 </u-navbar>
-		 <view class="list" @click="detail()">
-		 	<u-image class="left" width="264rpx" height="199rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-		 	<view class="right">
-		 		<view class="tag">付费标签</view>
-		 		<view class="type">网约车</view>
-		 		<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
-		 		<view class="clear"></view>
-		 		<view class="name">高薪招聘高薪招聘高薪招聘...</view>
-		 		<u-icon class="car" name="car" width="22" height="22"></u-icon>
-		 		<view class="distance">荣威\吉利\比亚迪...</view>
-		 		<view class="clear"></view>
-		 	</view>
-		 	<view class="clear"></view>
-		 	<view class="box">
-		 		<view><span>28000</span>元/月起租</view>
-		 		<view class="case">自动挡</view>
-		 		<view class="case">SUV</view>
-		 		<view class="case">纯电动</view>
-		 	</view>
+		 <view v-for="(item, index) in list" :key="index">
+			 <view class="list" @click="detail()">
+			 	<u-image class="left" width="264rpx" height="199rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+			 	<view class="right">
+			 		<view class="tag">付费标签</view>
+			 		<view class="type">网约车</view>
+			 		<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
+			 		<view class="clear"></view>
+			 		<view class="name">高薪招聘高薪招聘高薪招聘...</view>
+			 		<u-icon class="car" name="car" width="22" height="22"></u-icon>
+			 		<view class="distance">荣威\吉利\比亚迪...</view>
+			 		<view class="clear"></view>
+			 	</view>
+			 	<view class="clear"></view>
+			 	<view class="box">
+			 		<view><text>￥28000</text>元/月起租</view>
+			 		<view class="case">自动挡</view>
+			 		<view class="case">SUV</view>
+			 		<view class="case">纯电动</view>
+			 	</view>
+			 </view>
+			 <u-icon v-show="item.iscollect" @click="cancel(item.id)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
+			 <u-icon v-show="!item.iscollect" @click="favorites(item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		 </view>
-		 <u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
-		 <u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 	</view>
 </template>
 
@@ -36,25 +38,72 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				change: false
+				pagination: {
+				  pageNum: 0, 
+				  pageSize: 10
+				},
+				list: [],
+				total: 0
 			}
 		},
 		mounted() {
 			this.getList()
 		},
 		methods: {
-	      favorites() {
-			this.change = !this.change;	
-		  },
-		  getList() {
-			this.$u.api.getCarSystem().then(res=>{
-				if(res.code === 200){
-					 this.list = res.rows;
-				}else {
-					 this.$u.toast(res.msg);
-				}
-			})  
-		  },
+	      favorites(id) {
+	      	const params = {
+	      		BeCollectedId: id,
+	      		isDriveAndCompary: 1 
+	      	};
+	          this.$u.api.collect(params).then(res=>{
+	          	if(res.code === 200){
+	          		 this.$u.toast('收藏成功');
+	          	}else {
+	          		 this.$u.toast(res.msg);
+	          	}
+	          })
+	      },
+	      cancel(id) {
+	      	const params = {
+	      		BeCollectedId: id,
+	      		isDriveAndCompary: 1 
+	      	};
+	          this.$u.api.collect(params).then(res=>{
+	          	if(res.code === 200){
+	          		 this.$u.toast('取消收藏成功');
+	          	}else {
+	          		 this.$u.toast(res.msg);
+	          	}
+	          })
+	      },
+	      getList(){
+	          const params = Object.assign({
+	          	pageNum: this.pagination.pageNum + 1,
+	          	pageSize: 10
+	          });
+	      		this.$u.api.sellCar(params).then(res=>{
+	      			if(res.code === 200){
+	      				 this.list = res.rows;
+	      				 this.total= res.total;
+	      			}else {
+	      				 this.$u.toast(res.msg);
+	      			}
+	      		})
+	      },
+	      search(){
+	          const params = Object.assign({
+	      		pageNum: 0,
+	      		pageSize: 10
+	      	});
+	      		this.$u.api.sellCar(params).then(res=>{
+	      			if(res.code === 200){
+	      				 this.list = res.rows;
+	      				 this.total= res.total;
+	      			}else {
+	      				 this.$u.toast(res.msg);
+	      			}
+	      		})
+	      },
 		  clear() {
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 		  	}
@@ -165,7 +214,7 @@ page{
 					font-size: 20rpx;
 					float: left;
 				}
-				view span {
+				view text {
 					font-size: 36rpx;
 					font-weight: 900;
 					margin-right: 19rpx;

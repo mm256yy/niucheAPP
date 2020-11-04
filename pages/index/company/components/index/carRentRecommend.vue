@@ -26,7 +26,7 @@
 								<u-image class="left" width="305rpx" height="226rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 								<view class="clear"></view>
 								<view class="box">
-									<view><span>28000</span>元/月起租</view>
+									<view><text>￥28000</text>元/月起租</view>
 									<view class="case">自动挡</view>
 									<view class="case">SUV</view>
 									<view class="case">纯电动</view>
@@ -203,7 +203,7 @@ page{
 					font-size: 20rpx;
 					float: left;
 				}
-				view span {
+				view text {
 					font-size: 36rpx;
 					font-weight: 900;
 				}

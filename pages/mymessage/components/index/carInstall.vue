@@ -3,11 +3,11 @@
 		<view class="select">选择首付方案</view>
 		<view class="box">
 			<view class="left">
-				<view class="price"><span>34.66</span>万元</view>
+				<view class="price"><text>34.66</text>万元</view>
 				<view>首付三成</view>
 			</view>
 			<view class="right">
-				<view class="price"><span>8888</span>元/月</view>
+				<view class="price"><text>8888</text>元/月</view>
 				<view>期数36</view>
 			</view>
 			<view class="apply">立即申请</view>
@@ -54,7 +54,7 @@
 				margin-left: 43rpx;
 				margin-top: 40rpx;
 				float: left;
-				.price span {
+				.price text {
 					font-size: 46rpx;
 					font-weight: 900;
 					margin-right: 15rpx;

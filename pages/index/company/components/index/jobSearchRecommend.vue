@@ -23,7 +23,7 @@
 									<u-icon class="clock" name="clock"></u-icon>
 									<view class="car">荣威/吉利/比亚迪</view>
 									<view class="clear"></view>
-									<view class="salary">月薪<span>￥2700-￥1000</span></view>
+									<view class="salary">月薪<text>￥2700-￥1000</text></view>
 								</view>
 								<view class="clear"></view>
 								<view class="box">
@@ -209,7 +209,7 @@ page{
 				margin-top: -8rpx;
 				float: left;
 			}
-			.salary span {
+			.salary text {
 				font-size: 36rpx;
 				color: #4DB171;
 				font-weight: 900;

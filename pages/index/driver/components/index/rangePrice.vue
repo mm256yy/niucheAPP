@@ -11,15 +11,15 @@
 				</view>
 				<view class="box">
 					<view class="left">
-						<view class="price"><span>￥3100</span></view>
+						<view class="price"><text>￥3100</text></view>
 						<view>-月租-</view>
 					</view>
 					<view class="right">
-						<view class="price"><span>￥3000</span></view>
+						<view class="price"><text>￥3000</text></view>
 						<view>-2人拼租价-</view>
 					</view>
 					<view class="clear"></view>
-					<view class="deposit">押金：<span>￥8000</span></view>
+					<view class="deposit">押金：<text>￥8000</text></view>
 				</view>
 			 </view>
 			 <view class="" v-if="firstCurrent === 1">
@@ -30,15 +30,15 @@
 			    </view>
 			    <view class="box">
 			    	<view class="left">
-			    		<view class="price"><span>￥3100</span></view>
+			    		<view class="price"><text>￥3100</text></view>
 			    		<view>-月租-</view>
 			    	</view>
 			    	<view class="right">
-			    		<view class="price"><span>￥3000</span></view>
+			    		<view class="price"><text>￥3000</text></view>
 			    		<view>-2人拼租价-</view>
 			    	</view>
 			    	<view class="clear"></view>
-			    	<view class="deposit">押金：<span>￥8000</span></view>
+			    	<view class="deposit">押金：<text>￥8000</text></view>
 			    </view>
 			 </view>
 			 <view class="" v-if="firstCurrent === 2">
@@ -49,15 +49,15 @@
 			 	</view>
 			 	<view class="box">
 			 		<view class="left">
-			 			<view class="price"><span>￥3100</span></view>
+			 			<view class="price"><text>￥3100</text></view>
 			 			<view>-月租-</view>
 			 		</view>
 			 		<view class="right">
-			 			<view class="price"><span>￥3000</span></view>
+			 			<view class="price"><text>￥3000</text></view>
 			 			<view>-2人拼租价-</view>
 			 		</view>
 			 		<view class="clear"></view>
-			 		<view class="deposit">押金：<span>￥8000</span></view>
+			 		<view class="deposit">押金：<text>￥8000</text></view>
 			 	</view>					
 			 </view>
 			 <view class="" v-if="firstCurrent === 3">
@@ -68,19 +68,19 @@
 			 	</view>
 			 	<view class="box">
 			 		<view class="left">
-			 			<view class="price"><span>￥3100</span></view>
+			 			<view class="price"><text>￥3100</text></view>
 			 			<view>-月租-</view>
 			 		</view>
 			 		<view class="right">
-			 			<view class="price"><span>￥3000</span></view>
+			 			<view class="price"><text>￥3000</text></view>
 			 			<view>-2人拼租价-</view>
 			 		</view>
 			 		<view class="clear"></view>
-			 		<view class="deposit">押金：<span>￥8000</span></view>
+			 		<view class="deposit">押金：<text>￥8000</text></view>
 			 	</view>					
 			 </view>
 			 <view class="discount">
-				 <span>优惠</span>
+				 <text>优惠</text>
 				 租满12个月，免费送3个月！
 			 </view>
 			 <view class="icon">
@@ -211,7 +211,7 @@
 					color: #7f7f7f;
 					margin-left: 43rpx;
 					float: left;
-					.price span {
+					.price text {
 						font-size: 46rpx;
 						font-weight: 900;
 					}
@@ -226,7 +226,7 @@
 					color: #fff;
 					background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
 					float: right;
-					.price span {
+					.price text {
 						font-size: 46rpx;
 						font-weight: 900;
 					}
@@ -235,7 +235,7 @@
 					font-size: 28rpx;
 					margin-top: 46rpx;
 					margin-left: 42rpx;
-					span {
+					text {
 						font-size: 40rpx;
 						font-weight: 900;
 						color: #FF6501;
@@ -250,7 +250,7 @@
 				font-size: 28rpx;
 				margin-top: 45rpx;
 				background: #fff;
-				span {
+				text {
 					font-weight: 900;
 					color: #FF6501;
 					margin-right: 35rpx;

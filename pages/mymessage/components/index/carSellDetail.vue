@@ -12,7 +12,7 @@
 			<view>
 				<view class="tag">付费标签</view>
 				<view class="name">撤销撤销</view>
-				<view class="price"><span>27000</span>打包价</view>
+				<view class="price"><text>￥27000</text>打包价</view>
 				<view class="box">
 					<view class="text">帆帆帆帆66</view>
 					<view class="text">帆帆帆帆</view>
@@ -173,7 +173,7 @@ page{
 		.price {
 			font-size: 20rpx;
 		}
-		.price span {
+		.price text {
 			font-size: 40rpx;
 			font-weight: 900;
 			color: #40B36C;

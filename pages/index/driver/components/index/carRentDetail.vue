@@ -12,7 +12,7 @@
 			<view>
 				<view class="tag">付费标签</view>
 				<view class="name">520520款运动版</view>
-				<view class="price"><span>27000</span>元/月起租</view>
+				<view class="price"><text>27000</text>元/月起租</view>
 				<view class="box">
 					<view class="text">帆帆帆帆66</view>
 					<view class="text">帆帆帆帆</view>
@@ -81,15 +81,18 @@
 				isChildUpdate3:false
 			}
 		},
+		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
+		    console.log(option.index); //打印出上个页面传递的参数。
+		},
 		mounted() {
-			this.$refs.child.getList();
-			this.$u.api.getCarSystem().then(res=>{
-				if(res.code === 200){
-					 this.list = res.rows;
-				}else {
-					 this.$u.toast(res.msg);
-				}
-			})
+			// this.$refs.child.getList();
+			// this.$u.api.getCarSystem().then(res=>{
+			// 	if(res.code === 200){
+			// 		 this.list = res.rows;
+			// 	}else {
+			// 		 this.$u.toast(res.msg);
+			// 	}
+			// })
 		},
 		methods: {
 			// tabs通知swiper切换
@@ -190,7 +193,7 @@ page{
 		.price {
 			font-size: 20rpx;
 		}
-		.price span {
+		.price text {
 			font-size: 40rpx;
 			font-weight: 900;
 			color: #FF6501;

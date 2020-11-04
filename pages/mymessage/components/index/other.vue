@@ -20,7 +20,7 @@
 		 </view>
 		 <view class="wrap">
 			 <view style="">
-			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="list" inactive-color="#000"
+			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
 			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 	 swiperWidth="750"></u-tabs-swiper>
 			 </view>
@@ -32,21 +32,23 @@
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<view class="list" @click="detail()">
-			 				<view class="year">刷新时间：刚刚</view>
-			 				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-			 				<view class="clear"></view>
-			 				<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			 				<view class="right">
-			 					<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-			 					<view class="type">金华诚信租车行<span>金华</span></view>
-			 					<view class="price">打包价:<span>￥2700</span></view>
-			 					<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
-			 				</view>
-			 				<view class="clear"></view>
-			 			</view>
-						<u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-						<u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+			 			<view v-for="(item, index) in list" :key="index">
+							<view class="list" @click="detail()">
+								<view class="year">刷新时间：刚刚</view>
+								<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+								<view class="clear"></view>
+								<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+								<view class="right">
+									<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
+									<view class="type">金华诚信租车行<text>金华</text></view>
+									<view class="price">打包价:<text>￥2700</text></view>
+									<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
+								</view>
+								<view class="clear"></view>
+							</view>
+							<u-icon v-show="item.iscollect" @click="cancel(item.id)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
+							<u-icon v-show="!item.iscollect" @click="favorites(item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+						</view>
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>
@@ -65,22 +67,74 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				list: [{
+				listTab: [{
 					name: '在售'
 				}, {
 					name: '求购'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
-				change: false
+				list: [],
+				total: 0
 			}
 		},
 		mounted() {
 			
 		},
 		methods: {
-			favorites() {
-			    this.change = !this.change;
+			favorites(id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1 
+				};
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
+			cancel(id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1 
+				};
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('取消收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
+			getList(){
+			    const params = Object.assign({
+			    	pageNum: this.pagination.pageNum + 1,
+			    	pageSize: 10
+			    });
+					this.$u.api.sellCar(params).then(res=>{
+						if(res.code === 200){
+							 this.list = res.rows;
+							 this.total= res.total;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
+			search(){
+			    const params = Object.assign({
+					pageNum: 0,
+					pageSize: 10
+				});
+					this.$u.api.sellCar(params).then(res=>{
+						if(res.code === 200){
+							 this.list = res.rows;
+							 this.total= res.total;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
 			},
 			// tabs通知swiper切换
 			tabsChange(index) {
@@ -231,7 +285,7 @@
 			.price {
 				margin-top: 9rpx;
 			}
-			.price span {
+			.price text {
 				font-size: 36rpx;
 				font-weight: 900;
 				color: #40B36C;

@@ -12,8 +12,8 @@
 			<view class="list">
 				<view class="tag">付费标签</view>
 				<view class="name">高薪招聘高薪招聘高薪招聘高薪招聘的点点滴滴大大大</view>
-				<view class="price"><span>￥7000-10000</span>月薪</view>
-				<view class="city">工作城市：杭州<span>招聘：20人</span></view>
+				<view class="price"><text>￥7000-10000</text>月薪</view>
+				<view class="city">工作城市：杭州<text>招聘：20人</text></view>
 				<view class="box">
 					<view class="text">帆帆帆帆66</view>
 					<view class="text">帆帆帆帆</view>
@@ -261,7 +261,7 @@ page{
 		.price {
 			font-size: 20rpx;
 		}
-		.price span {
+		.price text {
 			font-size: 40rpx;
 			font-weight: 900;
 			color: #FF6501;
@@ -270,7 +270,7 @@ page{
 		.city {
 			font-size: 20rpx;
 			margin-top: 18rpx;
-			span {
+			text {
 				margin-left: 157rpx;
 			}
 		}

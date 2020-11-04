@@ -2,9 +2,9 @@
 	<view class="carRent">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="priceid" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showPrice = true" v-model="form.price" type="select" /></u-form-item>
+				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showPrice = true" v-model="businesstype" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter()" type="text" :disabled="true" /></u-form-item>
 				<view class="clear"></view>
@@ -17,29 +17,30 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-show="list.length" class="list" @click="detail()">
-			<view class="right">
-				<view class="name">520520款运动版</view>
-				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-				<view class="year">车龄<3个月</view>
+		<view v-for="(item, index) in list" :key="index">
+			<view v-show="list.length" class="list" @click="detail()">
+				<view class="right">
+					<view class="name">520520款运动版{{list.texttitle}}</view>
+					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+					<view class="year">车龄<3个月{{item.carage}}</view>
+					<view class="clear"></view>
+					<u-icon class="car" name="car" width="22" height="22"></u-icon>
+					<view class="distance">20万公里-30万公里{{item.carkm}}</view>
+					<view class="clear"></view>
+				</view>
+				<view class="label">网约车{{list.businesstypetag}}</view>
+				<u-image class="left" width="300rpx" height="153rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 				<view class="clear"></view>
-				<u-icon class="car" name="car" width="22" height="22"></u-icon>
-				<view class="distance">20万公里-30万公里</view>
-				<view class="clear"></view>
+				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+				<view class="box">
+					<view><text>￥{{list.rentprice}}</text>元/月起租</view>
+					<view v-for="(item, index) in item.systemtag" :key="index" class="case">自动挡</view>
+					<view v-for="(item, index) in item.usertag" :key="index" class="case">SUV</view>
+				</view>
 			</view>
-			<view class="label">网约车</view>
-			<u-image class="left" width="300rpx" height="153rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="clear"></view>
-			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-			<view class="box">
-				<view><span>￥28000</span>元/月起租</view>
-				<view class="case">自动挡</view>
-				<view class="case">SUV</view>
-				<view class="case">纯电动</view>
-			</view>
+			<u-icon v-show="item.iscollect&&list.length" @click="cancel(item.id)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
+			<u-icon v-show="!item.iscollect&&list.length" @click="favorites(item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		</view>
-		<u-icon v-show="change&&list.length" @click="favorites()" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
-		<u-icon v-show="!change&&list.length" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		<view class="null" v-show="!list.length">
 			<u-image width="371rpx" height="171rpx" src="@/static/empty.png"></u-image>
 			<view class="tip">很抱歉，没有找到符合条件的内容。请修改条件后再试。</view>
@@ -69,33 +70,35 @@
 				// 					}
 				// 				],
 				form: {
-				  ageDriver: '',
-				  price: ''
+				  priceid: '',
+				  businesstype: ''
 				},
 				pagination: {
 				  pageNum: 0, 
 				  pageSize: 10
 				},
+				priceid: '',
+				businesstype: '',
 				total: 0,
 				select: [
 					{
-						label: '2000以内',
+						label: '不限',
 						value: '1'
 					},
 					{
-						label: '2000-3000',
+						label: '2000以内',
 						value: '2'
 					},
 					{
-						label: '3000-4000',
+						label: '2000-3000',
 						value: '3'
 					},
 					{
-						label: '4000及以上',
+						label: '3000-4000',
 						value: '4'
 					},
 					{
-						label: '不限',
+						label: '4000及以上',
 						value: '5'
 					}
 				],
@@ -110,7 +113,7 @@
 					},
 					{
 						label: '不限',
-						value: '3'
+						value: ''
 					}
 				],
 				list: [0]
@@ -120,15 +123,38 @@
 			this.search()
 		},
 		methods: {
-			favorites() {
-			    this.change = !this.change;	
+			favorites(id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1 
+				};
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
+			cancel(id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1 
+				};
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('取消收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
 			},
 		    getList(){
 		        const params = Object.assign(this.form, {
-		        	pageNum: this.pageNum + 1,
+		        	pageNum: this.pagination.pageNum + 1,
 		        	pageSize: 10
 		        });
-		    		this.$u.api.getCarSystem(params).then(res=>{
+		    		this.$u.api.homeRent(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
@@ -142,22 +168,25 @@
 		    		pageNum: 0,
 		    		pageSize: 10
 		    	});
-		    		this.$u.api.getCarSystem(params).then(res=>{
+		    		this.$u.api.homeRent(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
+							 this.total = res.total;
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
 		    		})
 		    },
 		    confirm(arr){
-		    	this.form.ageDriver = arr[0].label;
+		    	this.priceid = arr[0].label;
+				this.form.priceid = arr[0].value;
 		    },
 		    confirmType(arr){
-		    	this.form.price = arr[0].label;
+		    	this.businesstype = arr[0].label;
+		    	this.form.businesstype = arr[0].value;
 			},
 			detail() {
-				this.$u.route("/pages/index/driver/components/index/carRentDetail")
+				this.$u.route("/pages/index/driver/components/index/carRentDetail",{index:0})
 			},
 			filter() {
 				this.$u.route("/pages/index/driver/components/index/filterRent")
@@ -290,7 +319,7 @@
 					font-size: 20rpx;
 					float: left;
 				}
-				view span {
+				view text {
 					font-size: 36rpx;
 					font-weight: 900;
 					margin-right: 19rpx;

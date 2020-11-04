@@ -62,6 +62,11 @@
 		<view class="bottom">
 			<view @click="release()" class="btn">发布</view>
 		</view>
+		<u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
+			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		        信息发布成功
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -74,9 +79,9 @@
 				},
 				form:{
 					businessType:0,
-					carCard:[],
-					carmodel: [],
-					power:[],
+					carCard:'',
+					carmodel: '',
+					power:'',
 					monthzu:'',
 					carage:'',
 					isOpen: 1,
@@ -124,14 +129,36 @@
 				// 	return
 				// }
 				console.log(this.form)
-				this.$u.api.release(this.form).then(res=>{
-					if(res.code === '200'){
-						this.$u.toast('发布成功');
-						this.$u.route('/pages/driver/myPub/myPub', {index: 0});
+				this.$u.api.releaseRent(this.form).then(res=>{
+					if(res.code === 200){
+						this.showTips = true;
+						this.form = {
+					        businessType:0,
+					        carCard:'',
+					        carmodel: '',
+					        power:'',
+					        monthzu:'',
+					        carage:'',
+					        isOpen: 1,
+					        km:'',
+					        workCity: '杭州'
+				        };
+						this.brandList.forEach(item => {
+						      item.checked=false;
+						})
+						this.modelList.forEach(item => {
+						      item.checked=false;
+						})
+						this.powerList.forEach(item => {
+						      item.checked=false;
+						})
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
+			},
+			tipsConfirm(){
+				this.$u.route('/pages/driver/myPub/myPub', {index: 0});
 			}
 		}
 	}

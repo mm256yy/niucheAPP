@@ -56,9 +56,13 @@ const install  = (Vue, vm) => {
 	 //收藏
 	 const collect = (params = {}) => vm.$u.get('/system/comparymain/PubCollect', params);
 	 //租车发布-司机
-	 const  release = (params = {}) => vm.$u.post('/user/drivingLicense/addUserWanted', params);
+	 const  releaseRent = (params = {}) => vm.$u.post('/user/drivingLicense/addUserWanted', params);
+	 //求职发布-司机
+	 const  releaseSearch = (params = {}) => vm.$u.post('/user/drivingLicense/addUserJobWanted', params);
 	 //卖车招聘
 	 const  sellCar = (params = {}) => vm.$u.post('/system/usermain/UsermainSellCar', params);
+	 //司机端租车首页展示
+	 const  homeRent = (params = {}) => vm.$u.get('/system/usermain/DriverSideRentCarList', params);
 	 //驾照认证查询
 	  const  listDrivingLicense = (params = {}) => vm.$u.get('/user/drivingLicense/listDrivingLicense', params);
 	  //保存驾照认证
@@ -94,8 +98,10 @@ const install  = (Vue, vm) => {
 		buying,
 		askWork,
 		sellCar,
+		homeRent,
 		collect,
-		release
+		releaseRent,
+		releaseSearch
 	 };
 }
 

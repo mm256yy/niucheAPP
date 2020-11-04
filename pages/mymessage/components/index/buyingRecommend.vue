@@ -29,7 +29,7 @@
 								<u-image class="left" width="305rpx" height="226rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 								<view class="clear"></view>
 								<view class="box">
-									<view class="price">打包价<span>￥28000</span></view>
+									<view class="price">打包价<text>￥28000</text></view>
 									<view class="case">自动挡</view>
 									<view class="case">SUV</view>
 									<view class="case">纯电动</view>
@@ -231,7 +231,7 @@ page{
 					font-size: 20rpx;
 					float: left;
 				}
-				.price span {
+				.price text {
 					font-size: 36rpx;
 					font-weight: 900;
 					margin-left: 12rpx;
