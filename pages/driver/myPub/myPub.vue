@@ -31,8 +31,8 @@
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item)" v-for="item in qzList" :key="item.id">
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomed">
+					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView2(item)" v-for="item in qzList" :key="item.id">
 						<view class="card-head" slot="head">
 							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
 							<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>
@@ -73,11 +73,9 @@
 				swiperCurrent: 0,
 				pageNum:0,
 				pageNum1:0,
-				shijian:0
 			}
 		},
 		onLoad(option) {
-			this.shijian = new Date().getTime();
 			let index  = Number(option.index);
 			if(index){
 			 this.current = index;
@@ -131,7 +129,6 @@
 					item.refreshFlag = true;
 					item.switchFlag = true;
 					this.qzList.push(item)
-					console.log(item)
 				})
 			},
 			setList(arr){
@@ -164,19 +161,22 @@
 			},
 			switchChange(item){
 				item.switchFlag = false
-				// this.$u.api.getTelephone().then(res=>{
-				// 	if(res.code === 1){
-				// 		item.switchFlag = true
-				// 	}else {
-				// 		this.$u.toast(res.msg);
-				// 	}
-				// })
+				let isOpen = item.isOpen=== 0?1:0;
+				this.$u.api.updateUserWantedState({driverDemandId:item.driverDemandId,isOpen:isOpen}).then(res=>{
+					if(res.code === 200){
+						item.switchFlag = true
+						 this.$u.toast(res.msg);
+					}else {
+						this.$u.toast(res.msg);
+					}
+				})
 			},
 			refresh(item){
 				item.refreshFlag = false
-				this.$u.api.getTelephone().then(res=>{
-					if(res.code === 1){
-						item.refreshFlag = true
+				this.$u.api.refreshUserJobWanted({driverDemandId:item.driverDemandId}).then(res=>{
+					if(res.code === 200){
+						item.refreshFlag = true;
+						 this.$u.toast(res.msg);
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -185,11 +185,21 @@
 			toView(item){
 				//判断点击的不是刷新或开关
 				if (item.refreshFlag && item.switchFlag){
-					console.log("kaifsssssssssssssssssssssss")
+					this.$u.route("/pages/driver/myPub/children/children",{id:item.driverDemandId})
+				}
+			},
+			toView2(item){
+				//判断点击的不是刷新或开关
+				if (item.refreshFlag && item.switchFlag){
+					//我的求职
+					this.$u.route("/pages/driver/myPub/children/index",{id:item.driverDemandId})
 				}
 			},
 			onreachBottom() {
-				console.log(this.list)
+				 this.getList()
+			},
+			onreachBottomed() {
+				 this.getPageList()
 			}
 		},
 	}
