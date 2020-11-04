@@ -72,18 +72,31 @@ const install  = (Vue, vm) => {
 	  //个人中心详情页
 	  const  listUserMessageInfo = (params = {}) => vm.$u.get('/user/drivingLicense/listUserMessageInfo', params);
 	  //刷新租车/求职公开状态
-	  const  refreshUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/refreshUserJobWanted', params);
+	  const  refreshUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/refreshUserJobWanted?driverDemandId='+params.driverDemandId, {});
 	  //修改租车/求职公开状态
-	  const  getUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserJobWanted', params);
+	  const  updateUserWantedState = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserWantedState?driverDemandId='+params.driverDemandId+'&isOpen='+params.isOpen, {});
+
 	  //我的发布 租车列表
 	  const  listUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserWanted', params);
 	  //我的发布 求职列表
 	  const  listUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserJobWanted', params);
+	  //修改司机求租内容
+	  const  updateUserWanted = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserWanted?driverDemandId='+params.driverDemandId, params);
+	  //修改司机求职内容
+	  const  updateUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserJobWanted?driverDemandId='+params.driverDemandId,params);
+	  //查询司机求租详情
+	  const  getUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserWanted', params);
+	  //查询司机求租详情
+	  const  getUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserJobWanted', params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getUserJobWanted,
+		getUserWanted,
+		updateUserJobWanted,
+		updateUserWanted,
 		listUserJobWanted,
 		listUserWanted,
-		getUserJobWanted,
+		updateUserWantedState,
 		refreshUserJobWanted,
 		listUserMessage,
 		listUserMessageInfo,

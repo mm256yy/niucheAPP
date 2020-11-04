@@ -127,9 +127,9 @@
 			}
 		  }
 		},
-		mounted(){
-		    this.token = uni.getStorageSync('token')
-			this.getDriver()  	
+		onShow() {
+			this.token = uni.getStorageSync('token')
+			this.getDriver()  
 		},
 		methods: {
 			getDriver(){
