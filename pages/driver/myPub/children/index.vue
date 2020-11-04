@@ -30,7 +30,7 @@
 			<u-form-item label="工作城市:">
 				<u-input :disabled="true" height="80" input-align="right" v-model="form.workCity" />
 			</u-form-item>
-			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right"
+			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
 			 v-model="form.businessType===0?'网约车':'出租车'" /></u-form-item>
 			<u-form-item label="求职意向:"><u-input :disabled="true" height="80" placeholder="" 
 			type="textarea" input-align="right" v-model="form.str" /></u-form-item>
@@ -43,7 +43,7 @@
 				<view class="">
 					<u-icon size="80" :name="xxSrc"></u-icon>
 				</view>
-				<view class="btn-edit">编辑</view>
+				<view class="btn-edit" @click="toNext">编辑</view>
 				<view class="btn-edit">|</view>
 				<view style="width: 30%;">
 					<u-subsection :current="form.isOpen" @change="switchChange"
@@ -121,7 +121,7 @@ export default {
 				})
 			},
 			delSubmit(){
-				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
+				this.$u.api.deleteUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							this.showTips = true
 						}else {
@@ -133,14 +133,14 @@ export default {
 				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.form = res.object
-						 this.form.str = '月薪'+this.form.monthprice+'/'+this.form.worktime+'工作时长'+'/'+this.welfare
+						 this.form.str = '月薪'+this.form.monthprice+'/'+this.form.worktime+'工作时长'+'/'+this.form.welfare
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
 			toNext(){
-				this.$u.route("/pages/driver/myPub/children/children",{id:this.driverDemandId})
+				this.$u.route("/pages/driver/release/search",{id:this.driverDemandId})
 			},
 			tipsConfirm(){
 			   this.$u.route("/pages/driver/myPub/myPub",{index:1})

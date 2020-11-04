@@ -75,6 +75,7 @@
 	export default {
 		data() {
 			return {
+				driverDemandId:'',
 				backTextStyle:{
 					'color':'#ffffff'
 				},
@@ -98,6 +99,17 @@
 						{text: '月休4天',checked: false}]
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
+			}
+		},
+		mounted() {
+			if (this.driverDemandId){
+				this.getDetail()
+			}
+		},
 		methods: {
 			benefitGroupChange(e){
 				this.form.welfare = e.join(',');
@@ -111,6 +123,16 @@
 				// 	this.$u.toast('请选择业务类型');
 				// 	return
 				// }
+				if (this.driverDemandId){
+					this.form.driverDemandId = this.driverDemandId
+					this.$u.api.updateUserJobWanted(this.form).then(res=>{
+							if(res.code === 200){
+								this.showTips = true
+							}else {
+								 this.$u.toast(res.msg);
+							}
+						})
+				} else {
 				if (this.form.monthprice != ''||this.form.worktime != ''||this.form.welfare != ''){
 					this.$u.api.releaseSearch(this.form).then(res=>{
 						if(res.code === 200){
@@ -137,6 +159,24 @@
 					return
 				}
 				console.log(this.form)
+				}
+			},
+			getDetail(){
+				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
+					if(res.code === 200){
+						   let data = res.object;
+						   this.form.businessType = data.businessType
+						   this.form.isOpen = data.isOpen
+						   this.form.monthprice = data.monthprice
+						   this.form.myok = data.myok
+						   this.form.taxiExperience = data.taxiExperience
+						   this.form.workexperience = data.workexperience
+						   this.form.worktime = data.worktime
+						   this.form.workCity ='杭州'
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			tipsConfirm(){
 				this.$u.route('/pages/driver/myPub/myPub', {index: 1});

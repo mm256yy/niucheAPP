@@ -28,15 +28,18 @@
 		 <view class="content">
 		  <u-form label-width="150" label-align="left" :model="form" ref="uForm"> 
 			<u-form-item label="租车城市:">
-				<u-input :disabled="true" height="80" input-align="right" v-model="form.workCity" />
+				<u-input :disabled="true" height="80" input-align="right" placeholder="" v-model="form.workCity" />
 			</u-form-item>
-			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right"
+			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
 			 v-model="form.businessType===0?'网约车':'出租车'" /></u-form-item>
-			<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.carCard" /></u-form-item>
-			<u-form-item label="月租:"><u-input :disabled="true" height="80" type="textarea" input-align="right"
+			<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" placeholder="" 
+			type="textarea" input-align="right" v-model="form.carCard" /></u-form-item>
+			<u-form-item label="月租:"><u-input :disabled="true" height="80" type="textarea" placeholder="" input-align="right"
 			 v-model="form.monthlyRent===0?'3000以内(含3000)':'3000以上'" /></u-form-item>
-			<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.kmStr" /></u-form-item>
-			<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.power" /></u-form-item>
+			<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" placeholder=""
+			 input-align="right" v-model="form.kmStr" /></u-form-item>
+			<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" placeholder="" 
+			input-align="right" v-model="form.power" /></u-form-item>
 		   </u-form>
 		 </view>
 		 <view class="fixed-btn" style="">
@@ -142,7 +145,7 @@
 				})
 			},
 			delSubmit(){
-				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
+				this.$u.api.deleteUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							this.showTips = true
 						}else {
@@ -165,7 +168,7 @@
 				})
 			},
 			toNext(){
-				this.$u.route("/pages/driver/myPub/children/children",{id:this.driverDemandId})
+				this.$u.route("/pages/driver/release/carRent",{id:this.driverDemandId})
 			},
 			tipsConfirm(){
 			   this.$u.route("/pages/driver/myPub/myPub",{index:0})
