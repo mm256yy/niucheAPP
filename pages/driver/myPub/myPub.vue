@@ -10,16 +10,19 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
+					<u-card title="" :padding="0" :foot-border-top="false" @click="toView(item)" v-for="item in zcList" :key="item.driverDemandId">
 						<view class="card-head" slot="head">
-							<text style="color:#7E7E7E;">刷新时间:刚刚</text><u-icon name="reload" color="#FE9B1C" size="28"></u-icon>
+							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text><u-icon name="reload"
+							 @click="refresh(item)" color="#FE9B1C" size="28"></u-icon>
 						</view>
 						<view class="card-head"  slot="body" style="border-bottom: 0;">
                            <text>意向品牌</text>
-							<u-switch v-model="checked" active-color="#FE9B1C"></u-switch>
+								<u-subsection style="" :current="item.isOpen" @change="switchChange(item)"
+								 vibrateShort button-color="#FE9B1C" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
 						</view>
 						<view  slot="foot" style="padding:5rpx 20rpx;">
-						<u-tag text="吉利" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"/>
+						<u-tag :text="obj" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"
+						 v-for="(obj,index) in item.carCardList" :key="index"/>
 						</view>
 					</u-card>
 							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
@@ -29,18 +32,20 @@
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
+					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView(item)" v-for="item in qzList" :key="item.id">
 						<view class="card-head" slot="head">
-							<text style="color:#7E7E7E;">刷新时间:刚刚</text><u-icon name="reload" color="#FE9B1C" size="28"></u-icon>
+							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
+							<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>
 						</view>
 						<view class="card-head"  slot="body" style="border-bottom: 0;">
 							<view style="color: #000000;">
-								  <view style="font-size: 16pt;">意向品牌</view>
+								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
 								  <view>工作车辆: 荣威\吉利\比亚迪...  </view>
 							</view>
-					        <view>
-								<u-switch v-model="checked" active-color="#FE9B1C"></u-switch>
-								<view style="font-size: 14pt;color:#FE9B1C ;">¥2700月薪</view>
+					        <view style="width: 30%;">
+								<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
+								 font-size="20" button-color="#FE9B1C" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
+								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice}}月薪</view>
 							</view>
 						</view>
 					</u-card>
@@ -53,6 +58,7 @@
 </template>
 
 <script>
+	import {refreshTime} from '@/utils/time.js'
 	export default {
 		data() {
 			return {
@@ -61,37 +67,131 @@
 				}, {
 					name: '我的求职'
 				}],
+				zcList:[],
+				qzList:[],
 				current: 0, 
 				swiperCurrent: 0,
-				checked:true
+				pageNum:0,
+				pageNum1:0,
+				shijian:0
 			}
 		},
+		onLoad(option) {
+			this.shijian = new Date().getTime();
+			let index  = Number(option.index);
+			if(index){
+			 this.current = index;
+			 this.swiperCurrent = index;	
+			}
+		},
+		mounted() {
+	           this.getList()
+			   this.getPageList()
+		},
 		methods: {
-			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
 			},
-			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
 				let dx = e.detail.dx;
 				this.$refs.uTabs.setDx(dx);
 			},
-			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
-			// swiper滑动结束，分别设置tabs和swiper的状态
 			animationfinish(e) {
 				let current = e.detail.current;
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			toView(){
-				console.log(11111111111111)
+			getList(){
+				let pageNum = this.pageNum+1;
+				this.$u.api.listUserWanted({pageNum:pageNum,pageSize:10}).then(res=>{
+					if(res.code === 200){
+						this.setList(res.rows);
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
-			// scroll-view到底部加载更多
+			getPageList(){
+				let pageNum = this.pageNum1+1;
+				this.$u.api.listUserJobWanted({pageNum:pageNum,pageSize:10}).then(res=>{
+					if(res.code === 200){
+						this.setPageList(res.rows);
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
+			setPageList(arr){
+				arr.forEach(item=>{
+					if (item.carCard){
+						item.carCardList = item.carCard.split(',');
+					}
+					item.updateTimeStr = this.timeZ(item.updateTime)
+					item.refreshFlag = true;
+					item.switchFlag = true;
+					this.qzList.push(item)
+					console.log(item)
+				})
+			},
+			setList(arr){
+				arr.forEach(item=>{
+					if (item.carCard){
+						item.carCardList = item.carCard.split(',');
+					}
+					item.updateTimeStr = this.timeZ(item.updateTime)
+					item.refreshFlag = true;
+					item.switchFlag = true;
+					this.zcList.push(item)
+					console.log(item)
+				})
+			},
+			timeZ(value){
+				let nowTime = new Date().getTime();
+				let oneDay= 86400000;
+				let timeDiff = nowTime-value;//时间差
+				let tian =parseInt(timeDiff/oneDay);
+				let day6 = oneDay*6;
+				if(timeDiff>day6){
+					return this.$u.timeFormat(value, 'yyyy-mm-dd');
+				} else if (timeDiff>oneDay && timeDiff < day6){
+					return tian+"天前"
+				} else if (timeDiff<oneDay){
+					return '刚刚'
+				} else {
+					console.log(timeDiff)
+				 }
+			},
+			switchChange(item){
+				item.switchFlag = false
+				// this.$u.api.getTelephone().then(res=>{
+				// 	if(res.code === 1){
+				// 		item.switchFlag = true
+				// 	}else {
+				// 		this.$u.toast(res.msg);
+				// 	}
+				// })
+			},
+			refresh(item){
+				item.refreshFlag = false
+				this.$u.api.getTelephone().then(res=>{
+					if(res.code === 1){
+						item.refreshFlag = true
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
+			toView(item){
+				//判断点击的不是刷新或开关
+				if (item.refreshFlag && item.switchFlag){
+					console.log("kaifsssssssssssssssssssssss")
+				}
+			},
 			onreachBottom() {
 				console.log(this.list)
 			}
-		}
+		},
 	}
 </script>
 
@@ -106,6 +206,11 @@
 }
 /deep/ .u-border-bottom:after{
 	border-bottom-width:0;
+}
+/deep/ .u-subsection{
+	// padding: 0!important;
+	width:45%;
+	border-radius: 20px!important;
 }
 .wrap {
 	display: flex;

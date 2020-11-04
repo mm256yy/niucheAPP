@@ -5,7 +5,7 @@
 				<view class="avater">
 					<u-row style="margin-top: 10pt;background-color: #FFFFFF;padding: 6pt 0;">
 						<u-col span="3">
-							<u-avatar :src="driverPub.photo" mode="circle" size="large" ></u-avatar>
+							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
 						</u-col>
 						<u-col span="5" v-show="!driverPub.name">
 							<view>欢迎来到纽车科技</view>
@@ -13,18 +13,17 @@
 						</u-col>
 						<u-col span="5" v-show="driverPub.name">
 							<view>{{driverPub.name}}</view>
-							<text class="bg">{{driverPub.telephone}}</text>
+							<text>{{driverPub.telephone}}</text>
 						</u-col>
 					</u-row>
 					<view class="bg" style="padding: 4pt 0;" >
 					 <u-row>
 						<u-col span="2">
 							<u-icon size="100" :name="jzrzSrc"></u-icon>
-							<!-- <u-image width="100%" height="100rpx" :src="jzrzSrc"></u-image> -->
 						</u-col>
 						<u-col span="3">
 								<text class="colorF">驾照认证</text>
-								<view class="colorF" @click="toLicense">{{driverPub.driverState}}</view>
+								<view class="colorF" @click="toLicense">{{driverPub.driverState | stateV}}</view>
 						</u-col>
 						<u-col span="1">
 							<view class="colorF" style="text-align: center;">|</view>
@@ -34,7 +33,7 @@
 						</u-col>
 						<u-col span="4">
 							<text class="colorF">职业资格认证</text>
-							<view class="colorF" @click="toCard">{{driverPub.postState}}</view>
+							<view class="colorF" @click="toCard">{{driverPub.postState | stateV}}</view>
 						</u-col>
 					  </u-row>
 					</view>
@@ -45,10 +44,10 @@
 				</view>
 				<view class="bgf">
 					<u-cell-group >
-						<u-cell-item title="租车需求" :title-style="titleStyle" :value="driverPub.jobNum">
+						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.jobNum">
 							<u-icon size="60" :name="zcxuSrc" slot="icon"></u-icon>
 						</u-cell-item>
-						<u-cell-item title="求职需求" :title-style="titleStyle" :value="driverPub.carNum">
+						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.carNum">
 							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
 						</u-cell-item>
 					</u-cell-group>
@@ -102,29 +101,29 @@
 				state:'',
 				titleStyle:{'fontSize': '12pt','padding-left':'5pt','color':'#000000'},
 				driverPub:{
-					photo:'../../static/driverSrc.png',
+					headPhoto:'../../static/driverSrc.png',
 					name:'',
 					telephone:'',
-					driverState:'不可见',
-					postState:'不可见',
+					driverState:9,
+					postState:9,
 					jobNum:'',
 					carNum:'',
+					certificationType:""
 				}
 			}
 		},
 		filters: {
 		  stateV: function (value) {
-		    if (!value) return ''
-		    if (value === 1) {
+		    if (value === 2) {
 				return '已认证'
-			} else if (value === 2){
+			} else if (value === 0){
 				return '未认证'
-			} else if (value === 3){
+			} else if (value === 1){
 				return '审核中'
-			} else if (value === 4){
+			} else if (value === 3){
 				return '认证未通过'
 			}else {
-				return ''
+				return '不可见'
 			}
 		  }
 		},
@@ -135,10 +134,12 @@
 		methods: {
 			getDriver(){
               if (this.token){
-				 this.$u.api.getUserInfo().then(res=>{
-					if(res.code === 0){
-						let data = res.data;
+				 this.$u.api.listUserMessage().then(res=>{
+					if(res.code === 200){
+						let data = res.object;
 						this.driverPub = data
+						this.driverPub.jobNum = this.driverPub.jobNum.toString()
+						this.driverPub.carNum = this.driverPub.carNum.toString()
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -155,19 +156,23 @@
 				this.$u.route("/pages/driver/onlineCar/onlineCar")
 			},
 			toLicense(){
-				if(this.state){
-					this.$u.route("/pages/driver/drivingLicense/drivingLicense")
-				}
+				   if (this.driverPub.driverState !==9){
+					   	this.$u.route("/pages/driver/drivingLicense/drivingLicense")
+				   }
+			},
+			toMyPub(index){
+				this.$u.route("/pages/driver/myPub/myPub",{index:index})
 			},
 			toCard(){
-				if(this.state){
-					if(this.form.postState){
+				if(this.driverPub.postState === 0 || this.driverPub.postState === 9){
+					this.showTips = true
+				} else {
+					if(this.driverPub.certificationType === 1){
 						this.$u.route("/pages/driver/onlineCar/onlineCar")
 					} else {
 						this.$u.route("/pages/driver/taxiCar/taxiCar")
 					}
-				} else {
-					this.showTips = true
+
 				}
 			}
 		}

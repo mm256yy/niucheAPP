@@ -16,8 +16,8 @@
 			};
 		},
 		mounted() {
-			let phone = uni.getStorageSync('telephone');
-			if(!phone){
+			let token = uni.getStorageSync('token');
+			if(!token){
 				this.showTips = true
 			}
 		},
