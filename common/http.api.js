@@ -67,8 +67,26 @@ const install  = (Vue, vm) => {
 	  const  listDrivingLicense = (params = {}) => vm.$u.get('/user/drivingLicense/listDrivingLicense', params);
 	  //保存驾照认证
 	  const  addDrivingLicense = (params = {}) => vm.$u.post('/user/drivingLicense/addDrivingLicense', params);
+	 //个人中心首页
+	  const  listUserMessage = (params = {}) => vm.$u.get('/user/drivingLicense/listUserMessage', params);
+	  //个人中心详情页
+	  const  listUserMessageInfo = (params = {}) => vm.$u.get('/user/drivingLicense/listUserMessageInfo', params);
+	  //刷新租车/求职公开状态
+	  const  refreshUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/refreshUserJobWanted', params);
+	  //修改租车/求职公开状态
+	  const  getUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserJobWanted', params);
+	  //我的发布 租车列表
+	  const  listUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserWanted', params);
+	  //我的发布 求职列表
+	  const  listUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserJobWanted', params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		listUserJobWanted,
+		listUserWanted,
+		getUserJobWanted,
+		refreshUserJobWanted,
+		listUserMessage,
+		listUserMessageInfo,
 		addDrivingLicense,
 		listDrivingLicense,
 		saveCompanyInvite,
