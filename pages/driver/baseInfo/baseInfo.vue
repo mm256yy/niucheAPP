@@ -49,7 +49,7 @@
 <script>
 	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
-		import {actionJx} from '@/utils/constant.js'
+	import {actionJx} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {

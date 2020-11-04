@@ -131,6 +131,10 @@
 			this.token = uni.getStorageSync('token')
 			this.getDriver()  
 		},
+		mounted() {
+			this.token = uni.getStorageSync('token')
+			this.getDriver()  
+		},
 		methods: {
 			getDriver(){
               if (this.token){
