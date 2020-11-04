@@ -225,7 +225,7 @@ page{
 			}
 			.img .type {
 				float: left;
-			}
+			}     
 			.box {
 				width: 638rpx;
 				height: 60rpx;
