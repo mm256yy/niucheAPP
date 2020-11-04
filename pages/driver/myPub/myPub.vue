@@ -58,7 +58,7 @@
 </template>
 
 <script>
-	import {refreshTime} from '@/utils/time.js'
+	// import {refreshTime} from '@/utils/time.js'
 	export default {
 		data() {
 			return {
