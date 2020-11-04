@@ -15,15 +15,18 @@
 								:name="item.id"
 							>
 								<view class="right">
-									<view class="name">吴司机{{item.name}}</view>
-									<u-icon class="clock" name="clock"></u-icon>
-									<view class="year">驾龄4年</view>
+									<view class="name">52020款运动版运动版{{item.name}}</view>
+									<u-icon width="23" height="22" class="clock" name="clock"></u-icon>
+									<view class="year">车龄<=3个月</view>
 									<view class="clear"></view>
-									<u-icon class="car" name="car" width="42" height="37"></u-icon>
-									<view class="type">杭州出租车认证</view>
+									<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+									<view class="type">20万公里-30万公里</view>
 									<view class="clear"></view>
 								</view>
-								<u-image class="left" width="305rpx" height="226rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+								<view class="top">
+									<view class="typeCar">网约车</view>
+									<u-image class="left" width="305rpx" height="153rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+								</view>
 								<view class="clear"></view>
 								<view class="box">
 									<view><text>￥28000</text>元/月起租</view>
@@ -144,14 +147,33 @@ page{
 		.list{
 			width: 690rpx;
 			// height: 257rpx;
-			color: #fff;
+			color: #000;
 			font-size: 20rpx;
 			margin-left: 30rpx;
 			.clear {
 				clear: both;
 			}
+			.top {
+				width: 305rpx;
+				height: 226rpx;
+				background: #fff;
+				float: right;
+				.typeCar {
+					width: 90rpx;
+					height: 38rpx;
+					line-height: 38rpx;
+					text-align: center;
+					border-radius: 10rpx;
+					font-size: 20rpx;
+					background: rgba(0,0,0,0.1);
+					float: right;
+					margin-right: 23rpx;
+					margin-top: 23rpx;
+				}
+			}
 			.left {
 				float: right;
+				margin-top: 10rpx;
 			}
 			.right{
 				width: 334rpx;
@@ -159,10 +181,13 @@ page{
 				padding: 0 30rpx;
 				background: #fff;
 				float: left;
+				color: #000;
 			}
 			.name {
 				font-weight: 900;
-				font-size: 34rpx;
+				font-size: 28rpx;
+				line-height: 36rpx;
+				margin-top: 63rpx;
 			}
 			.special {
 				width: 73rpx;
@@ -176,22 +201,30 @@ page{
 				margin-left: 16rpx;
 				margin-top: 8rpx;
 			}
-			.clock,.year,.car,.type {
+			.clock,.year,.car {
 				float: left;
 				margin-top: 6rpx;
 			}
 			.clock {
-				font-size: 40rpx;
 				margin-top: 18rpx;
 			}
 			.car {
 				font-size: 36rpx;
 				margin-top: 18rpx;
 			}
-			.year,.type {
+			.year {
 				margin-left: 10rpx;
 				margin-top: 10rpx;
+				font-size: 20rpx;
 				color: #7f7f7f;
+			}
+			.type {
+				margin-left: 10rpx;
+				font-size: 20rpx;
+				color: #7f7f7f;
+			}
+			.img .type {
+				float: left;
 			}
 			.box {
 				width: 638rpx;

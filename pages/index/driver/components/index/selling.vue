@@ -7,7 +7,7 @@
 					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
 					<view class="year">车龄<3个月</view>
 					<view class="clear"></view>
-					<u-icon class="car" name="car" width="22" height="22"></u-icon>
+					<u-image width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
 					<view class="distance">20万公里-30万公里</view>
 					<view class="clear"></view>
 				</view>

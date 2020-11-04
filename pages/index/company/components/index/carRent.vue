@@ -23,6 +23,7 @@
 				<view class="year">{{list.driverAgeTag}}</view>
 				<view class="type">{{list.driverAgeTag.onlinecarcardis}}||{{list.driverAgeTag.onlinecarcardis}}</view>
 				<view class="clear"></view> -->
+				<u-image class="img" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
 				<view class="car">荣威/吉利/比亚迪....</view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
@@ -252,10 +253,16 @@
 			float: left;
 			margin-top: 14rpx;
 		}
-		.list .right .car {
-			color: #7f7f7f;
-			font-size: 20rpx;
-			margin-top: 6rpx;
+		.list .right {
+			.img {
+				float: left;
+			}
+			.car {
+				color: #7f7f7f;
+				font-size: 20rpx;
+				margin-top: 6rpx;
+				float: left;
+			}
 		}
 		.list .right .chat {
 			float: right;

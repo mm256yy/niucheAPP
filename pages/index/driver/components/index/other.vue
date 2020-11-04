@@ -41,8 +41,10 @@
 									<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
 									<view class="clear"></view>
 									<view class="name">高薪招聘高薪招聘高薪招聘...</view>
-									<u-icon class="car" name="car" width="22" height="22"></u-icon>
+									<u-image width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
 									<view class="distance">荣威\吉利\比亚迪...</view>
+									<u-image width="23rpx" height="22rpx" src="@/static/company.png"></u-image>
+									<view class="distance">奇瑞新能源公司</view>
 									<view class="clear"></view>
 								</view>
 								<view class="clear"></view>

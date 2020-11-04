@@ -14,15 +14,15 @@
 		 		<view class="name">吴司机</view>
 				<view class="special">加急</view>
 				<view class="clear"></view>
-				<u-icon class="clock" name="clock"></u-icon>
+				<u-icon width="42" height="41" class="clock" name="clock"></u-icon>
 		 		<view class="year">驾龄4年</view>
 				<view class="clear"></view>
-				<u-icon class="car" name="car" width="42" height="37"></u-icon>
+				<u-image class="img" width="42rpx" height="37rpx" src="@/static/cert.png"></u-image>
 		 		<view class="type">杭州出租车认证</view>
 		 		<view class="clear"></view>
 				<view class="box">
-				    <view>准驾类型</view>
-				    <view>C1</view>	
+				    <view class="typePermit">准驾类型</view>
+				    <view class="grade">C1</view>
 				</view>
 		 	</view>
 			<view class="clear"></view>
@@ -146,17 +146,34 @@ page{
 			.car {
 				font-size: 36rpx;
 			}
-			.year,.type {
+			.year {
 				margin-left: 10rpx;
-				margin-top: 10rpx;
+				margin-top: 8rpx;
+			}
+			.type {
+				margin-left: 10rpx;
+				margin-top: -2rpx;
+			}
+			.img,.type {
+				float: left;
 			}
 			.time {
 				margin-top: 19rpx;
 			}
 			.box {
+				width: 162rpx;
+				height: 86rpx;
+				padding: 8rpx;
+				background: #fff;
 				float: right;
-				margin-top: -32rpx;
-				font-size: 32rpx;
+				margin-top: -40rpx;
+				margin-right: -76rpx;
+				font-size: 36rpx;
+				font-weight: 900;
+				color: #37AB63;
+				.typePermit {
+					font-size: 20rpx;
+				}
 			}
 			.reload {
 				float: right;
