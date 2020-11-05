@@ -129,6 +129,7 @@
 		},
 		methods: {
 			getUser(){
+				this.telephone = uni.getStorageSync('telephone')
 				let phone = this.telephone;
 				if (phone) {
 					this.$u.api.getUserInfo({telephone:phone}).then(res=>{

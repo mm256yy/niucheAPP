@@ -8,8 +8,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyDriver v-if='curThemeType ==="driver"'></MyDriver>
-			<MyCompany v-else></MyCompany>
+			<MyDriver ref="Dri" v-if='curThemeType ==="driver"'></MyDriver>
+			<MyCompany ref="Com" v-else></MyCompany>
 	
 	</view>
 </template>
@@ -50,6 +50,7 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
+				this.$refs.Com.getUser()
 			} else {
 				dirverPages.forEach(item=>{
 					uni.setTabBarItem(item)
@@ -57,6 +58,7 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
+				this.$refs.Dri.getDriver()
 			}
 		},
 		components:{

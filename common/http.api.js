@@ -86,10 +86,14 @@ const install  = (Vue, vm) => {
 	  const  updateUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserJobWanted?driverDemandId='+params.driverDemandId,params);
 	  //查询司机求租详情
 	  const  getUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserWanted', params);
-	  //查询司机求租详情
+	  //查询司机求职详情
 	  const  getUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserJobWanted', params);
+	  //删除租车或求职
+	  const  deleteUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/deleteUserJobWanted?driverDemandId='+params.driverDemandId, {});
+	  
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		deleteUserJobWanted,
 		getUserJobWanted,
 		getUserWanted,
 		updateUserJobWanted,

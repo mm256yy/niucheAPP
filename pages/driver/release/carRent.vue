@@ -74,6 +74,7 @@
 	export default {
 		data() {
 			return {
+				driverDemandId:'',
 				backTextStyle:{
 					'color':'#ffffff'
 				},
@@ -108,7 +109,27 @@
 				showTips:false
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
+			}
+		},
+		mounted() {
+			if (this.driverDemandId){
+				this.getDetail()
+			}
+		},
 		methods: {
+			getDetail(){
+				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
+					if(res.code === 200){
+						 this.form = res.object
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			brandGroupChange(e) {
 				this.form.carCard = e.join(',');
 			},
@@ -129,6 +150,16 @@
 				// 	return
 				// }
 				console.log(this.form)
+				if (this.driverDemandId){
+					this.form.driverDemandId = this.driverDemandId
+					this.$u.api.updateUserWanted(this.form).then(res=>{
+							if(res.code === 200){
+								this.showTips = true
+							}else {
+								 this.$u.toast(res.msg);
+							}
+						})
+				} else {
 				this.$u.api.releaseRent(this.form).then(res=>{
 					if(res.code === 200){
 						this.showTips = true;
@@ -155,7 +186,8 @@
 					}else {
 						 this.$u.toast(res.msg);
 					}
-				})
+				 })
+				}
 			},
 			tipsConfirm(){
 				this.$u.route('/pages/driver/myPub/myPub', {index: 0});

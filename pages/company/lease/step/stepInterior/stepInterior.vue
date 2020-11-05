@@ -26,13 +26,14 @@
 
 <script>
 	import {mapGetters,mapActions} from 'vuex'
+		import {action} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				action: 'http://161.189.168.218:9007/user/image/carotherphoto',
+				action: action,
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				uploadList:[
