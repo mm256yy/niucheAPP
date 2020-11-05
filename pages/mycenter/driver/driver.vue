@@ -127,16 +127,13 @@
 			}
 		  }
 		},
-		onShow() {
-			this.token = uni.getStorageSync('token')
-			this.getDriver()  
-		},
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getDriver()  
 		},
 		methods: {
 			getDriver(){
+			this.token = uni.getStorageSync('token')
               if (this.token){
 				 this.$u.api.listUserMessage().then(res=>{
 					if(res.code === 200){

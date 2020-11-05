@@ -86,6 +86,8 @@ export default {
 					km:'',
 					myok:'',
 				},
+				salaryList:[{name: 0,text:'6000以内' },{name: 1,text:'6000-8000' },{name: 2,text:'8000-10000' },{name: 3,text:'10000以上' }],
+				hoursList:[{name: 0,text:'8小时' },{name: 1,text:'8-10小时' },{name: 2,text:'10小时以上' },{name: 3,text:'不限' }],
 				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2万公里-5万公里' },
 					  {name: 2,text:'5万公里-10万公里' },{name: 3,text:'10万公里-20万公里' },{name: 4,text:'20万公里-30万公里' },],
 			}
@@ -132,8 +134,20 @@ export default {
 			getDetail(){
 				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
-						 this.form = res.object
-						 this.form.str = '月薪'+this.form.monthprice+'/'+this.form.worktime+'工作时长'+'/'+this.form.welfare
+						 this.form = res.object;
+						 let price="";
+						 this.salaryList.forEach(item=>{
+							 if(item.name === this.form.monthprice){
+								 price = item.text;
+							 }
+						 })
+						 let worktime = "";
+						 this.hoursList.forEach(item=>{
+							 if(item.name === this.form.worktime){
+							 		worktime = item.text;
+							 }
+						 })
+						 this.form.str = '月薪'+price+'/'+worktime+'工作时长'+'/'+this.form.welfare
 					}else {
 						 this.$u.toast(res.msg);
 					}
