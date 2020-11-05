@@ -14,7 +14,7 @@
 			 		<view class="clear"></view>
 			 		<view class="name">高薪招聘高薪招聘高薪招聘...</view>
 			 		<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
-					<u-image width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
+					<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
 			 		<view class="distance">荣威\吉利\比亚迪...</view>
 			 		<view class="clear"></view>
 			 	</view>
@@ -170,8 +170,6 @@ page{
 			}
 			.car {
 				float: left;
-				color: #7f7f7f;
-				margin-top: 23rpx;
 			}
 			.distance {
 				margin-left: 6rpx;

@@ -9,8 +9,8 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomrentcar">
-					<car-rent v-if="isChildUpdate1"></car-rent>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomjobsearch">
+					<job-search v-if="isChildUpdate2"></job-search>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -19,16 +19,16 @@
 </template>
 
 <script>
-	import carRent from './components/index/carRent'
+	import jobSearch from './components/index/jobSearch'
 	export default {
 		components: {
-			carRent
+			jobSearch
 		},
 		data() {
 			return {
 				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				list: [{
-					name: '租车'
+					name: '招聘'
 				}],
 				current: 0, 
 				swiperCurrent: 0,

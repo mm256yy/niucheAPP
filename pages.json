@@ -206,31 +206,31 @@
 			}
 		}
 		,{//首页-卖车-筛选
-		    "path" : "pages/mymessage/components/index/filter",
+		    "path" : "pages/mymessage/company/components/index/filter",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-卖车-筛选-筛选结果
-		    "path" : "pages/mymessage/components/index/result",
+		    "path" : "pages/mymessage/company/components/index/result",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-卖车-筛选-历史
-		    "path" : "pages/mymessage/components/index/history",
+		    "path" : "pages/mymessage/company/components/index/history",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-卖车详情页
-		    "path" : "pages/mymessage/components/index/carSellDetail",
+		    "path" : "pages/mymessage/company/components/index/carSellDetail",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-卖车-其他信息
-		    "path" : "pages/mymessage/components/index/other",
+		    "path" : "pages/mymessage/company/components/index/other",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
@@ -242,13 +242,13 @@
 			}
 		}
 		,{//首页-购车需求详情
-		    "path" : "pages/mymessage/components/index/buyingDetail",
+		    "path" : "pages/mymessage/company/components/index/buyingDetail",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-推荐卖车信息
-		    "path" : "pages/mymessage/components/index/buyingRecommend",
+		    "path" : "pages/mymessage/company/components/index/buyingRecommend",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
@@ -260,7 +260,7 @@
 			}
 		}
 		,{//首页-招聘需求详情-司机
-		    "path" : "pages/index/driver/components/index/jobSearchDetail",
+		    "path" : "pages/mymessage/driver/components/index/jobSearchDetail",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
@@ -290,19 +290,19 @@
 			}
 		}
 		,{//首页-招聘-筛选-司机
-		    "path" : "pages/index/driver/components/index/filterSearch",
+		    "path" : "pages/mymessage/driver/components/index/filterSearch",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-招聘-筛选-筛选结果-司机
-		    "path" : "pages/index/driver/components/index/resultSearch",
+		    "path" : "pages/mymessage/driver/components/index/resultSearch",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
 		}
 		,{//首页-招聘-筛选-历史-司机
-		    "path" : "pages/index/driver/components/index/historySearch",
+		    "path" : "pages/mymessage/driver/components/index/historySearch",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}

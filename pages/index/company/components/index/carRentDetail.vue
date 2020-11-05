@@ -14,7 +14,7 @@
 		 		<view class="name">吴司机</view>
 				<view class="special">加急</view>
 				<view class="clear"></view>
-				<u-icon width="42" height="41" class="clock" name="clock"></u-icon>
+				<u-icon width="39" height="39" class="clock" name="clock"></u-icon>
 		 		<view class="year">驾龄4年</view>
 				<view class="clear"></view>
 				<u-image class="img" width="42rpx" height="37rpx" src="@/static/cert.png"></u-image>
@@ -104,7 +104,6 @@ page{
 			border-radius: 60rpx 0 60rpx 60rpx;
 			padding: 40rpx;
 			color: #fff;
-			font-size: 20rpx;
 			margin-left: 40rpx;
 			margin-top: 40rpx;
 			background: linear-gradient(115deg,#6DD99C, #37AB63);
@@ -136,29 +135,29 @@ page{
 				margin-left: 16rpx;
 				margin-top: 8rpx;
 			}
-			.clock,.year,.car,.type {
+			.clock,.year,.type {
 				float: left;
 				margin-top: 6rpx;
 			}
 			.clock {
-				font-size: 40rpx;
-			}
-			.car {
-				font-size: 36rpx;
+				font-size: 50rpx;
 			}
 			.year {
 				margin-left: 10rpx;
-				margin-top: 8rpx;
+				margin-top: 14rpx;
+				font-size: 20rpx;
 			}
 			.type {
 				margin-left: 10rpx;
 				margin-top: -2rpx;
+				font-size: 20rpx;
 			}
 			.img,.type {
 				float: left;
 			}
 			.time {
 				margin-top: 19rpx;
+				font-size: 20rpx;
 			}
 			.box {
 				width: 162rpx;

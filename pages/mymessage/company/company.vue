@@ -1,7 +1,7 @@
 <template>
-	<view :class="'driver-content'"> 
+	<view :class="'company-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<u-navbar  back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -9,8 +9,13 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomrentcar">
-					<car-rent v-if="isChildUpdate1"></car-rent>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+					<car-sell v-if="isChildUpdate1" ref="carSell"></car-sell>
+				</scroll-view>
+			</swiper-item>
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+					<buying v-if="isChildUpdate2" ref="buying"></buying>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -19,16 +24,20 @@
 </template>
 
 <script>
-	import carRent from './components/index/carRent'
+	import carSell from './components/index/carSell'
+	import buying from './components/index/buying'
 	export default {
 		components: {
-			carRent
+			carSell,
+		    buying
 		},
 		data() {
 			return {
 				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				list: [{
-					name: '租车'
+					name: '卖车'
+				}, {
+					name: '求购'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
@@ -61,16 +70,8 @@
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			toView(){
-				console.log(11111111111111)
-			},
 			// scroll-view到底部加载更多
-			onreachBottomrentcar() {
-				var _this = this;
-				//监听上拉触底事件
-				this.$refs.child.getList();
-			},
-			onreachBottomjobsearch() {
+			onreachBottom() {
 				
 			}
 		}

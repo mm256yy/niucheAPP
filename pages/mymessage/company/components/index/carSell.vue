@@ -29,9 +29,9 @@
 					<view class="case">自动挡</view>
 				</view>
 				<view class="clear"></view>
-				<u-icon class="clock" name="clock" size="28"></u-icon>
+				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
 				<view class="year">车龄<=3个月</view>
-				<u-icon class="clock" name="clock" size="28"></u-icon>
+				<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
 				<view class="year">20万公里-30万公里</view>
 				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 			</view>
@@ -302,6 +302,9 @@
 			.clock {
 				margin-left: 30rpx;
 				margin-top: 10rpx;
+				float: left;
+			}
+			.img {
 				float: left;
 			}
 			.year {
