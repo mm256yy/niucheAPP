@@ -25,7 +25,7 @@
 								</view>
 								<view class="top">
 									<view class="typeCar">网约车</view>
-									<u-image class="left" width="305rpx" height="153rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+									<u-image class="left" width="305rpx" height="182rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 								</view>
 								<view class="clear"></view>
 								<view class="box">
@@ -173,12 +173,11 @@ page{
 			}
 			.left {
 				float: right;
-				margin-top: 10rpx;
+				margin-top: 6rpx;
 			}
 			.right{
 				width: 334rpx;
-				height: 226rpx;
-				padding: 0 30rpx;
+				padding: 63rpx 4rpx 30rpx 36rpx;
 				background: #fff;
 				float: left;
 				color: #000;
@@ -187,7 +186,6 @@ page{
 				font-weight: 900;
 				font-size: 28rpx;
 				line-height: 36rpx;
-				margin-top: 63rpx;
 			}
 			.special {
 				width: 73rpx;
@@ -220,10 +218,14 @@ page{
 			}
 			.type {
 				margin-left: 10rpx;
+				margin-top: -4rpx;
 				font-size: 20rpx;
 				color: #7f7f7f;
 			}
-			.img .type {
+			.img {
+				margin-top: -10rpx;
+			}
+			.img,.type {
 				float: left;
 			}
 			.box {

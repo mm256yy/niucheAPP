@@ -84,16 +84,10 @@
 </template>
 
 <script>
-	import rangePrice from './rangePrice'
-	import rentcarIssue from './rentcarIssue'
-	import settingParameter from './settingParameter'
 	import jobDetail from './jobDetail'
 	import companyDetail from './companyDetail'
 	export default {
 		components: {
-		    rangePrice,
-			rentcarIssue,
-			settingParameter,
 			jobDetail,
 			companyDetail
 		  },

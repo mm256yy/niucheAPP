@@ -23,6 +23,7 @@
 				<view class="year">{{list.driverAgeTag}}</view>
 				<view class="type">{{list.onlinecarcardis}}||{{list.onlinecarcardis}}</view>
 				<view class="clear"></view>
+				<u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image>
 				<view class="car">求职意向：{{list.jobintention}}</view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
@@ -36,6 +37,7 @@
 				<view class="year">驾龄4年</view>
 				<view class="type">网约车认证</view>
 				<view class="clear"></view>
+				<u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image>
 				<view class="car">求职意向：月薪5000\有保底\无责</view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
@@ -49,6 +51,7 @@
 				<view class="year">驾龄4年</view>
 				<view class="type">网约车认证</view>
 				<view class="clear"></view>
+				<u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image>
 				<view class="car">求职意向：月薪5000\有保底\无责</view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
@@ -232,7 +235,7 @@
 			font-size: 10rpx;
 			color: #fff;
 			float: left;
-			margin-top: 6rpx;
+			margin-top: 10rpx;
 		}
 		.list .right .type {
 			margin-left: 8rpx;
@@ -245,12 +248,24 @@
 			font-size: 10rpx;
 			color: #fff;
 			float: left;
-			margin-top: 6rpx;
+			margin-top: 10rpx;
 		}
-		.list .right .car {
-			color: #7f7f7f;
-			font-size: 20rpx;
-			margin-top: 18rpx;
+		.list .right {
+			.img {
+				float: left;
+				margin-top: 16rpx;
+				margin-right: 4rpx;
+			}
+			.car {
+				width: 365rpx;
+				color: #7f7f7f;
+				font-size: 20rpx;
+				margin-top: 18rpx;
+				float: left;
+				overflow: hidden;
+				text-overflow:ellipsis; 
+				white-space: nowrap;
+		    }
 		}
 		.list .right .chat {
 			float: right;

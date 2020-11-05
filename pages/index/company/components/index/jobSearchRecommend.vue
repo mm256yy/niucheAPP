@@ -20,7 +20,7 @@
 								<view class="right">
 									<view class="hailing">网约车</view>
 									<view class="name">高薪招聘网约车司机高薪招聘网约车司机</view>
-									<u-icon class="clock" name="clock"></u-icon>
+									<u-image class="img" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
 									<view class="car">荣威/吉利/比亚迪</view>
 									<view class="clear"></view>
 									<view class="salary">月薪<text>￥2700-￥1000</text></view>
@@ -161,6 +161,7 @@ page{
 				height: 240rpx;
 				padding-right: 13rpx;
 				background: #fff;
+				color: #000;
 				float: left;
 				.hailing {
 					width: 86rpx;
@@ -194,10 +195,9 @@ page{
 				margin-left: 16rpx;
 				margin-top: 8rpx;
 			}
-			.clock {
+			.img {
 				float: left;
-				font-size: 40rpx;
-				margin-top: 6rpx;
+				margin-right: 4rpx;
 			}
 			.car {
 				font-size: 20rpx;

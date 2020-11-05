@@ -24,7 +24,7 @@
 					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
 					<view class="year">车龄<3个月{{item.carage}}</view>
 					<view class="clear"></view>
-					<u-icon class="car" name="car" width="22" height="22"></u-icon>
+					<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
 					<view class="distance">20万公里-30万公里{{item.carkm}}</view>
 					<view class="clear"></view>
 				</view>
@@ -296,8 +296,6 @@
 			}
 			.car {
 				float: left;
-				color: #7f7f7f;
-				margin-top: 4rpx;
 			}
 			.year {
 				margin-left: 6rpx;
