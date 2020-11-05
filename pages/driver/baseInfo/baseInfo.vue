@@ -28,8 +28,8 @@
 					<view v-else class="type-right">{{form.nickName}}</view>
 				</u-form-item>
 				<u-form-item label="手机号" prop="telephone">
-					<u-input class="input-radius" v-model="form.telephone" :disabled="true" :border="true" v-if="type"/>
-					<view v-else class="type-right">{{form.telephone}}</view>
+					<!-- <u-input class="input-radius" v-model="form.telephone" :disabled="true" :border="true" v-if="type"/> -->
+					<view class="type-right">{{form.telephone}}</view>
 				</u-form-item>
 				<u-form-item label="微信号" prop="wechatNum">
 					<u-input class="input-radius" v-model="form.wechatNum" :border="true" v-if="type"/>
@@ -45,7 +45,11 @@
 			<u-button type="success" shape='circle' class="btn-orange" @click="toNext" v-if="type">保存</u-button>
 			<u-button type="success" shape='circle' class="btn-orange" @click="loginOut" v-else>退出当前账号</u-button>
 		</view>
-
+         <u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
+			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		        保存成功
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -75,6 +79,7 @@
 					wechatNum:requiredRule,
 					qqNum:requiredRule,
                 },
+				showTips:false,
 				type:false,
 				errorType:[
 					'message'
@@ -121,7 +126,7 @@
 				})
 			  }
 			},
-			confirm(){
+			tipsConfirm(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			edit(){
