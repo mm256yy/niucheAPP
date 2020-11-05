@@ -184,6 +184,9 @@
 			},
 			release(){
 				this.form.driverDemandId = this.driverDemandId
+				this.form.monthzu = this.form.monthlyRent;
+				this.form.carmodel = this.form.carModel;
+				this.form.carage = this.form.carAge;
 				this.$u.api.updateUserWanted(this.form).then(res=>{
 						if(res.code === 200){
 							this.showTips = true
