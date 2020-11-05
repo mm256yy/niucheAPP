@@ -7,11 +7,11 @@
 						<u-col span="3">
 							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
 						</u-col>
-						<u-col span="5" v-show="!driverPub.telephone">
+						<u-col span="8" v-show="!driverPub.telephone">
 							<view style="font-size: 14pt;">欢迎来到纽车科技</view>
 							<text class="btn-mini bg" @click="toLogin">登录/注册</text>
 						</u-col>
-						<u-col span="5" v-show="driverPub.telephone" @click="toMyInfo">
+						<u-col span="8" v-show="driverPub.telephone" @click="toMyInfo">
 							<view style="font-size: 14pt;">{{driverPub.name}}</view>
 							<text style="font-size: 12pt;">{{driverPub.telephone}}</text>
 						</u-col>
