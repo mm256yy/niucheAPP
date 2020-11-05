@@ -18,23 +18,26 @@
             	</u-upload>
             </view>
 			<view v-else style="text-align: center;">
-				<u-avatar :src="form.photo" size="300"></u-avatar>
+				<u-avatar :src="form.headPhoto" size="300"></u-avatar>
 			</view>
 		</view>
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="220" :error-type="errorType" :border-bottom="false">
-				<u-form-item label="昵称" prop="name">
-					<u-input class="input-radius" v-model="form.name" :border="true" v-if="type"/>
-					<view v-else class="type-right">{{form.name}}</view>
+				<u-form-item label="昵称" prop="nickName">
+					<u-input class="input-radius" v-model="form.nickName" :border="true" v-if="type"/>
+					<view v-else class="type-right">{{form.nickName}}</view>
 				</u-form-item>
 				<u-form-item label="手机号" prop="telephone">
-					<u-input class="input-radius" v-model="form.telephone" :border="true" v-if="type"/>
+					<u-input class="input-radius" v-model="form.telephone" :disabled="true" :border="true" v-if="type"/>
+					<view v-else class="type-right">{{form.telephone}}</view>
 				</u-form-item>
-				<u-form-item label="微信号" prop="wechat">
-					<u-input class="input-radius" v-model="form.wechat" :border="true" v-if="type"/>
+				<u-form-item label="微信号" prop="wechatNum">
+					<u-input class="input-radius" v-model="form.wechatNum" :border="true" v-if="type"/>
+					<view v-else class="type-right">{{form.wechatNum}}</view>
 				</u-form-item>
-				<u-form-item label="QQ号" prop="qq">
-					<u-input class="input-radius" v-model="form.qq" :border="true" v-if="type"/>
+				<u-form-item label="QQ号" prop="qqNum">
+					<u-input class="input-radius" v-model="form.qqNum" :border="true" v-if="type"/>
+					<view v-else class="type-right">{{form.qqNum}}</view>
 				</u-form-item>
 			</u-form>
 		</view>
@@ -49,31 +52,30 @@
 <script>
 	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
-	import {actionJx} from '@/utils/constant.js'
+	import {action} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
-				action: actionJx,
+				action: action,
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],
 				form: {
-					name:'',
+					nickName:'',
 					telephone: '',
-					wechat:'',
-					qq:'',
-					photo:'../../../static/driverSrc.png',
+					wechatNum:'',
+					qqNum:'',
+					headPhoto:'',
 				},
 				rules: {
-					name:requiredRule,
+					nickName:requiredRule,
 					telephone:requiredRule,
-					wechat:requiredRule,
-					qq:requiredRule,
+					wechatNum:requiredRule,
+					qqNum:requiredRule,
                 },
 				type:false,
-				id:'',
 				errorType:[
 					'message'
 				]
@@ -81,12 +83,6 @@
 		},
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
-		},
-		onLoad(option) {
-			let id = option.id;
-			if(id){
-				this.id = id;
-			}
 		},
 		mounted() {
 		  this.setPicToken()
@@ -101,19 +97,29 @@
 			setPicToken(){
 				this.headerObj.Authorization = this.token;
 				this.formDataObj.phone = this.telephone;
+				console.log(this.telephone)
+				this.form.telephone = this.telephone
 			},
 			getInfo(){
-				if(this.id){
-					this.$u.api.getCompanyAll({id:this.id}).then(res => {
-						if(res.code === 0){
-							let data = res.data;
-							this.from.name = data.name;
-							this.from.sex = data.sex;
-						 } else{
-							this.$u.toast(res.msg) 
-						 }
-					}).catch(res=>{this.$u.toast(res.msg)})
-				}
+			  if (this.token){
+				 this.$u.api.listUserMessageInfo().then(res=>{
+					if(res.code === 200){
+						let data = res.object;
+						if (data.headPhoto){
+							this.fileList = []
+							this.fileList.push({url:data.headPhoto})
+						}
+						if (!data.nickName && !data.telephone){
+							this.type = true
+						} else{
+							this.form = data;
+						}
+						console.log(this.form)
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			  }
 			},
 			confirm(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
@@ -124,8 +130,8 @@
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
-						this.$u.api.CompanyAll(this.form).then(res => {
-							if(res.code === 0){
+						this.$u.api.addUserMessageInfo(this.form).then(res => {
+							if(res.code === 200){
 								this.showTips =true;
 							 } else{
 								this.$u.toast(res.msg) 
@@ -133,6 +139,10 @@
 						}).catch(res=>{this.$u.toast(res.msg)})
 					} 
 				})
+			},
+			uploadChange(res,index,lists,name){
+				let data = res.data;
+				this.form.headPhoto = data.imagename
 			},
 			loginOut(){
 				uni.clearStorage();

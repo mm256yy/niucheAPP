@@ -7,11 +7,11 @@
 						<u-col span="3">
 							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
 						</u-col>
-						<u-col span="5" v-show="!driverPub.name">
+						<u-col span="5" v-show="!driverPub.telephone">
 							<view>欢迎来到纽车科技</view>
 							<text class="btn-mini bg" @click="toLogin">登录/注册</text>
 						</u-col>
-						<u-col span="5" v-show="driverPub.name">
+						<u-col span="5" v-show="driverPub.telephone" @click="toMyInfo">
 							<view>{{driverPub.name}}</view>
 							<text>{{driverPub.telephone}}</text>
 						</u-col>
@@ -155,6 +155,9 @@
 			},
 			tipsCancel(){
 				this.$u.route("/pages/driver/onlineCar/onlineCar")
+			},
+			toMyInfo(){
+				 	this.$u.route("/pages/driver/baseInfo/baseInfo")
 			},
 			toLicense(){
 				   if (this.driverPub.driverState !==9){
