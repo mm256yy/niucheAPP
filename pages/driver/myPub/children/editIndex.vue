@@ -111,6 +111,7 @@
 				// 	this.$u.toast('请选择业务类型');
 				// 	return
 				// }
+
 				if (this.form.monthprice != ''||this.form.worktime != ''||this.form.welfare != ''){
 					this.$u.api.releaseSearch(this.form).then(res=>{
 						if(res.code === 200){

@@ -481,6 +481,24 @@
 		    }
 		    
 		}
+        ,{
+            "path" : "pages/driver/myPub/children/editChildren",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/driver/myPub/children/editIndex",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",

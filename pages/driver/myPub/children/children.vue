@@ -51,7 +51,7 @@
 				<view class="btn-edit">|</view>
 				<view style="width: 30%;">
 					<u-subsection :current="form.isOpen" @change="switchChange" vibrateShort button-color="#FE9B1C" 
-					bg-color="#fff" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
+					bg-color="#fff" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
 				</view>
            </view>
 		 </view>

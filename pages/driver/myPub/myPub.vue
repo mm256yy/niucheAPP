@@ -44,7 +44,7 @@
 							</view>
 					        <view style="width: 30%;">
 								<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
-								 font-size="20" button-color="#FE9B1C" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
+								 font-size="20" button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
 								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice}}月薪</view>
 							</view>
 						</view>
