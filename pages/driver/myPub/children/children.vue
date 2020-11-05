@@ -168,7 +168,7 @@
 				})
 			},
 			toNext(){
-				this.$u.route("/pages/driver/release/carRent",{id:this.driverDemandId})
+				this.$u.route("/pages/driver/myPub/children/editChildren",{id:this.driverDemandId})
 			},
 			tipsConfirm(){
 			   this.$u.route("/pages/driver/myPub/myPub",{index:0})

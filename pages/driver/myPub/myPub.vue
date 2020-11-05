@@ -18,7 +18,7 @@
 						<view class="card-head"  slot="body" style="border-bottom: 0;">
                            <text>意向品牌</text>
 								<u-subsection style="" :current="item.isOpen" @change="switchChange(item)"
-								 vibrateShort button-color="#FE9B1C" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
+								 vibrateShort button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
 						</view>
 						<view  slot="foot" style="padding:5rpx 20rpx;">
 						<u-tag :text="obj" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"

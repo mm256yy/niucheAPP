@@ -19,10 +19,6 @@
 				</u-radio-group>
 				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 	   	  	</u-form-item>
-			<view class="rules">
-				<view>*以下设置项都可多选，至少完成其中1项才能发布</view>
-				<view>不选则代表此项“不限”</view>
-			</view>
 			<u-form-item label="月薪" label-position="top" prop="monthprice">
 				<u-radio-group v-model="form.monthprice"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in salaryList" :key="index">{{item.text}}</u-radio>
@@ -98,46 +94,45 @@
 						{text: '月休4天',checked: false}]
 			}
 		},
+		onLoad(option) {
+			this.driverDemandId = option.id;
+		},
+		mounted() {
+			this.getDetail()
+		},
 		methods: {
 			benefitGroupChange(e){
 				this.form.welfare = e.join(',');
 			},
 			release(){
-				// if (this.form.public === ''){
-				// 	this.$u.toast('请选择是否公开');
-				// 	return
-				// }
-				// if (this.form.mainBusiness === ''){
-				// 	this.$u.toast('请选择业务类型');
-				// 	return
-				// }
-
-				if (this.form.monthprice != ''||this.form.worktime != ''||this.form.welfare != ''){
-					this.$u.api.releaseSearch(this.form).then(res=>{
+				this.form.driverDemandId = this.driverDemandId
+				this.$u.api.updateUserJobWanted(this.form).then(res=>{
 						if(res.code === 200){
-							this.showTips = true;
-							this.form = {
-					           businessType:0,
-					           isOpen: 1,
-					           monthprice:'',
-					           myok:'',
-					           taxiExperience:'',
-					           workexperience:'',
-					           worktime:'',
-					           workCity: '杭州'
-				            };
-						    this.benefitList.forEach(item => {
-							      item.checked=false;
-						    })
+							this.showTips = true
 						}else {
-							this.$u.toast(res.msg);
+							 this.$u.toast(res.msg);
 						}
-					})
-				}else{
-					this.$u.toast('请选择一项');
-					return
-				}
-				console.log(this.form)
+				})
+			},
+			getDetail(){
+				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
+					if(res.code === 200){
+						  let data = res.object;
+						  this.form = data;
+						 if (data.welfare){
+							let welfare = data.welfare.split(',');
+							welfare.forEach(obj=>{
+								 this.benefitList.forEach(item=>{
+									 if(item.text === obj){
+										item.checked = true;
+									 }
+								 })
+							})
+						 }
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			tipsConfirm(){
 				this.$u.route('/pages/driver/myPub/myPub', {index: 1});

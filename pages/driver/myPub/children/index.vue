@@ -47,7 +47,7 @@
 				<view class="btn-edit">|</view>
 				<view style="width: 30%;">
 					<u-subsection :current="form.isOpen" @change="switchChange"
-					 vibrateShort button-color="#FE9B1C" bg-color="#fff" active-color="#fff" :list="['公开', '不公开']"></u-subsection>
+					 vibrateShort button-color="#FE9B1C" bg-color="#fff" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
 				</view>
            </view>
 		 </view>
@@ -154,7 +154,7 @@ export default {
 				})
 			},
 			toNext(){
-				this.$u.route("/pages/driver/release/search",{id:this.driverDemandId})
+				this.$u.route("/pages/driver/myPub/children/editIndex",{id:this.driverDemandId})
 			},
 			tipsConfirm(){
 			   this.$u.route("/pages/driver/myPub/myPub",{index:1})
