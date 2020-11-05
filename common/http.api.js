@@ -51,8 +51,8 @@ const install  = (Vue, vm) => {
 	const  saveCompanyInvite = (params = {}) => vm.$u.post('/system/comparyinvite/ComparyInviteAdd', params);
 	 //求购查询
 	 const  buying = (params = {}) => vm.$u.get('/system/usermain/UsermainAskToBuy', params);
-	 //求职招聘,租车查询
-	 const  askWork = (params = {}) => vm.$u.get('/system/usermain/UsermainRentCar', params);
+	 //招聘,租车查询-公司
+	 const  askWork = (params = {}) => vm.$u.get('/system/usermain/listDriverWanted', params);
 	 //收藏
 	 const collect = (params = {}) => vm.$u.get('/system/comparymain/PubCollect', params);
 	 //租车发布-司机
