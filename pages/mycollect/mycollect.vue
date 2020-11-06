@@ -2,7 +2,7 @@
 	<view> 
 		<CollectDriver v-if='curThemeType ==="driver"'></CollectDriver>
 		<CollectCompany v-else></CollectCompany>
-		<NotLogin></NotLogin>
+		<!-- <NotLogin></NotLogin> -->
 	</view>
 </template>
 
@@ -43,9 +43,8 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-
-
-
-	
+<style lang="scss">
+page {
+	background-color: #F5F5F8;
+}
 </style>

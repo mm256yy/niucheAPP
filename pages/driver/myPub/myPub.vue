@@ -25,7 +25,7 @@
 						 v-for="(obj,index) in item.carCardList" :key="index"/>
 						</view>
 					</u-card>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+					    <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 			</swiper-item>
@@ -49,7 +49,7 @@
 							</view>
 						</view>
 					</u-card>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+							 <u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -71,8 +71,18 @@
 				qzList:[],
 				current: 0, 
 				swiperCurrent: 0,
-				pageNum:0,
-				pageNum1:0,
+				pageNum:1,
+				total:0,
+				pageNum1:1,
+				total1:0,
+				status: 'loadmore',
+				status1:'loadmore',
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			}
 		},
 		onLoad(option) {
@@ -83,8 +93,8 @@
 			}
 		},
 		mounted() {
-	           this.getList()
-			   this.getPageList()
+	           this.getList(1)
+			   this.getPageList(1)
 		},
 		methods: {
 			tabsChange(index) {
@@ -100,20 +110,20 @@
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			getList(){
-				let pageNum = this.pageNum+1;
-				this.$u.api.listUserWanted({pageNum:pageNum,pageSize:10}).then(res=>{
+			getList(pageNum){
+				this.$u.api.listUserWanted({pageNum:pageNum,pageSize:10,orderByColumn:'updateTime',isAsc:'desc'}).then(res=>{
 					if(res.code === 200){
+						this.total = res.total
 						this.setList(res.rows);
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
-			getPageList(){
-				let pageNum = this.pageNum1+1;
-				this.$u.api.listUserJobWanted({pageNum:pageNum,pageSize:10}).then(res=>{
+			getPageList(pageNum){
+				this.$u.api.listUserJobWanted({pageNum:pageNum,pageSize:10,orderByColumn:'updateTime',isAsc:'desc'}).then(res=>{
 					if(res.code === 200){
+						this.total1 = res.total
 						this.setPageList(res.rows);
 					}else {
 						 this.$u.toast(res.msg);
@@ -140,7 +150,6 @@
 					item.refreshFlag = true;
 					item.switchFlag = true;
 					this.zcList.push(item)
-					console.log(item)
 				})
 			},
 			timeZ(value){
@@ -196,10 +205,22 @@
 				}
 			},
 			onreachBottom() {
-				 this.getList()
+                 let len = this.zcList.length;
+				 if (len < this.total){
+					this.pageNum++;
+					 this.getList(this.pageNum)
+				 }else{
+					this.status = 'nomore'
+				}
 			},
 			onreachBottomed() {
-				 this.getPageList()
+				let len = this.qzList.length;
+				if (len < this.total1){
+				  this.pageNum1++
+				  this.getPageList(this.pageNum1)
+				} else{
+					this.status1 = 'nomore'
+				}
 			}
 		},
 	}

@@ -10,7 +10,8 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<u-card padding="0" :border="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
+					<view style="box-shadow: #000000;">
+					 <u-card padding="0" :border="false">
 						<view class="" slot="body" style="padding:10rpx 20rpx;">
 							<view class="u-body-item u-flex ">
 							  <view class="u-line-4" style="width: 100%;">
@@ -38,7 +39,8 @@
 							   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
 							</view> 
 						</view>
-					</u-card>
+					   </u-card>
+					</view>
 							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
 				</scroll-view>
 			</swiper-item>
@@ -46,7 +48,7 @@
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				<u-card padding="0" :border="false" @click="toView(item.id)" v-for="item in list" :key="item.id">
+				<u-card padding="0" :border="false" @click="toView()" >
 					<view class="" slot="body" style="padding:10rpx 20rpx;">
 						<view class="u-body-item u-flex ">
 							<image :src="goodsUrl"></image>
@@ -90,6 +92,7 @@
 				}, {
 					name: '招聘'
 				}],
+				listOne:[{}],
 				current: 0, 
 				swiperCurrent: 0,
 			}
@@ -124,9 +127,6 @@
 </script>
 
 <style lang="scss">
-	page{
-		background-color:#f5f5f8 ;
-	}
 .driver-content{
 	.u-tabs{
 		background: linear-gradient(115deg,$bg-grad-FE, $bg-grad-FCD);
