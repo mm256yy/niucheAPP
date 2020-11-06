@@ -10,7 +10,7 @@
 						<u-icon name="reload" color="#36AB62" size="40"></u-icon>
 					</u-col>
 					<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding: 8.5pt 0 10pt;">
-						<view style="font-size: 14pt;font-weight: bold;">求购：{{item.inviteCarStr}}...</view>
+						<view style="font-size: 14pt;font-weight: bold;">求购：{{item.inviteCar}}...</view>
 						<view class="" style="padding-top: 8pt;">
 							<text style="">打包价：</text><text style="color: #3FB26C;font-size: 18pt;">{{item.packprice}}</text>
 						</view>
@@ -26,7 +26,6 @@
 export default {
 		data() {
 			return {
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				pageNum:0,
 				list:[]
 			}
@@ -41,7 +40,6 @@ export default {
 					if(res.code === 200){
 						let arr = res.rows
 						arr.forEach(item=>{
-							// item.inviteCarStr = item.inviteCar.split(',')
 							this.list.push(item)
 						})
 					}else {

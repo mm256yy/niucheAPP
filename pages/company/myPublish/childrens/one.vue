@@ -1,7 +1,7 @@
 <template>
 	<view>
 			<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				<view class="scroll-item" @click="toView()" v-for="item in list" :key="item.rentCarId">
+				<view class="scroll-item" @click="toView(item.rentCarId)" v-for="item in list" :key="item.rentCarId">
 					<u-row>
 						<u-col span="12" class="time">
 							<view style="padding-right: 10pt;">2020/09/2</view>
@@ -14,8 +14,8 @@
 							<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
 						</u-col>
 						<u-col span="12" class="bottom">
-							<text class="bottom-left">{{item.textTag[0]}}</text>
-							<text class="bottom-right">{{item.textTag[1]}}</text>
+							<view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAgeTag}}</view>
+							<view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.priceTag}}</view>
 						</u-col>
 					</u-row>
 				</view>
@@ -29,6 +29,7 @@
 		data() {
 			return {
 				pageNum:0,
+				distance:'../../../static/distance.png',
 				list:[]
 			}
 		},
@@ -106,12 +107,14 @@
 		border-bottom-left-radius: 40rpx;
 	}
 	.bottom-left{
+		display: inline-block;
 		color: #7F7F7F;
 		font-size: 10pt;
 		padding-left: 20rpx;
 		
 	}
 	.bottom-right{
+		display: inline-block;
 		padding-left: 30rpx;
 		color: #7F7F7F;
 		font-size: 10pt;

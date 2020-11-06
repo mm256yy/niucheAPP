@@ -1,27 +1,27 @@
 <template>
 	<view>
 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			<view class="scroll-item" @click="toView()" v-for="item in list" :key="item.askToShopId">
+			<view class="scroll-item" @click="toView(item.inviteId)" v-for="item in list" :key="item.inviteId">
 				<u-row class="" style="padding: 8pt 15pt;">
 					<u-col span="11" style="padding: 5pt 0;">
-						<view>2020/09/2</view>
+						<view>{{item.createtime}}</view>
 					</u-col>
 					<u-col span="1" style="padding: 5pt 0;">
-						<u-icon name="reload" color="#36AB62" size="40"></u-icon>
+						<u-icon name="reload" color="#36AB62" size="40" @click="reload(item.inviteId)"></u-icon>
 					</u-col>
 					<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
-						<view style="font-size: 14pt;font-weight: bold;">高薪招聘网约车司机高薪招聘网约车司机</view>
+						<view style="font-size: 14pt;font-weight: bold;">{{item.texttitle}}</view>
 						<view>
-							<text style="">月薪：</text><text style="color: #3FB26C;font-size: 18pt;">¥8000-10000</text>
+							<text style="">月薪：</text><text style="color: #3FB26C;font-size: 18pt;">¥{{item.monthprice}}</text>
 						</view>
 					</u-col>
 				</u-row>
 				<view class="bottom">
-					<u-icon name="reload" style="padding-left: 15pt;"></u-icon><text class="bottom-left">车龄≤3个月</text>
+					<view class="bottom-left"><u-icon :name="company" size="30"></u-icon>
+					<text style="padding-left: 10px;">{{item.intentionBrand[0]}}</text></view>
 				</view>
-			    		
 			</view>
-					<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+					<!-- <u-loadmore :status="status" bgColor="#f2f2f2"></u-loadmore> -->
 		</scroll-view>
 	</view>
 </template>
@@ -30,7 +30,9 @@
 	export default {
 		data() {
 			return {
+				status: 'loadmore',
 				pageNum:0,
+				company:'../../../static/company.png',
 				list:[]
 			}
 		},
@@ -54,7 +56,11 @@
 			toView(){
 				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
 			},
+			reload(id){
+				console.log(id)
+			},
 			onreachBottom() {
+				this.getList()
 				console.log(111111)
 			}
 		}

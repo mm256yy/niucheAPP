@@ -1,21 +1,21 @@
 <template>
 	<view>
 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			<view class="scroll-item" @click="toView()" v-for="item in list" :key="item.askToShopId">
+			<view class="scroll-item" @click="toView(item.rentCarId)" v-for="item in list" :key="item.rentCarId">
 				<u-row>
 					<u-col span="12" class="time">
-						<view style="padding-right: 10pt;">2020/09/2</view>
+						<view style="padding-right: 10pt;">{{item.createTime}}</view>
 					</u-col>
 					<u-col span="5" @click="toView()">
-						<view><image :src="goodsUrl" mode="aspectFill"></image></view>
+						<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
 					</u-col>
 					<u-col span="6" class="border-left" @click="toView()">
-						<view class="title u-line-2">艾瑞泽52020款 1.5L CVT运动版CVT运动版</view>
-						<view class="type"><text class="type-money">￥2700</text>元/月起租</view>
+						<view class="title u-line-2">{{item.textTitle}}</view>
+						<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
 					</u-col>
 					<u-col span="12" class="bottom">
-						<text class="bottom-left">车龄≤3个月</text>
-						<text class="bottom-right">车龄≤3个月</text>
+						<view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAgeTag}}</view>
+						<view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.priceTag}}</view>
 					</u-col>
 				</u-row>
 			</view>
@@ -27,8 +27,8 @@
 export default {
 		data() {
 			return {
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				pageNum:0,
+				distance:'../../../static/distance.png',
 				list:[]
 			}
 		},
@@ -106,12 +106,14 @@ export default {
 		border-bottom-left-radius: 40rpx;
 	}
 	.bottom-left{
+		display: inline-block;
 		color: #7F7F7F;
 		font-size: 10pt;
 		padding-left: 20rpx;
 		
 	}
 	.bottom-right{
+		display: inline-block;
 		padding-left: 30rpx;
 		color: #7F7F7F;
 		font-size: 10pt;
