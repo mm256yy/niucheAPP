@@ -41,7 +41,7 @@
 		 <view class="fixed-btn" style="">
 		   <view class="btn-inline">
 				<view class="">
-					<u-icon size="80" :name="xxSrc"></u-icon>
+					<u-icon size="80" :name="xxSrc" @click="delSubmit"></u-icon>
 				</view>
 				<view class="btn-edit" @click="toNext">编辑</view>
 				<view class="btn-edit">|</view>
