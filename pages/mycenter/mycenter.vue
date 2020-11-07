@@ -9,7 +9,7 @@
 				</view>
 			</u-navbar>
 			<MyDriver ref="Search" v-show='curThemeType ==="driver"'></MyDriver>
-			<MyCompany ref="Search" v-show='curThemeType ==="company"'></MyCompany>
+			<MyCompany ref="Search2" v-show='curThemeType ==="company"'></MyCompany>
 	
 	</view>
 </template>
@@ -33,6 +33,7 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
+				this.$refs.Search2.getUser()
 				
 			} else {
 				dirverPages.forEach(item=>{
@@ -41,8 +42,8 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
+				this.$refs.Search.getUser()
 			}
-			this.init()
 		},
 		components:{
 			MyCompany,MyDriver
@@ -50,10 +51,6 @@
 		methods: {
 			toAboutUs(){
 				this.$u.route('/pages/aboutUs/aboutUs');
-			},
-			init(){
-				setTimeout(this.$refs.Search.getUser(),100)
-				
 			}
 			
 		}
