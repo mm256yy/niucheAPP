@@ -1,28 +1,26 @@
 <template>
 	<view>
-		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			<view class="scroll-item" @click="toView(item.inviteId)" v-for="item in list" :key="item.inviteId">
-				<u-row class="" style="padding: 8pt 15pt;">
-					<u-col span="11" style="padding: 5pt 0;">
-						<view>{{item.createtime}}</view>
-					</u-col>
-					<u-col span="1" style="padding: 5pt 0;">
-						<u-icon name="reload" color="#36AB62" size="40" @click="reload(item.inviteId)"></u-icon>
-					</u-col>
-					<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
-						<view style="font-size: 14pt;font-weight: bold;">{{item.texttitle}}</view>
-						<view>
-							<text style="">月薪：</text><text style="color: #3FB26C;font-size: 18pt;">¥{{item.monthprice}}</text>
-						</view>
-					</u-col>
-				</u-row>
-				<view class="bottom">
-					<view class="bottom-left"><u-icon :name="company" size="30"></u-icon>
-					<text style="padding-left: 10px;">{{item.intentionBrand[0]}}</text></view>
-				</view>
+		<view class="scroll-item" @click="toView(item.inviteId)" v-for="(item,index) in list" :key="item.index">
+			<u-row class="" style="padding: 8pt 15pt;">
+				<u-col span="11" style="padding: 5pt 0;">
+					<view>{{item.createtime}}</view>
+				</u-col>
+				<u-col span="1" style="padding: 5pt 0;">
+					<u-icon name="reload" color="#36AB62" size="40" @click="reload(item.inviteId)"></u-icon>
+				</u-col>
+				<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
+					<view style="font-size: 14pt;font-weight: bold;">{{item.texttitle}}</view>
+					<view>
+						<text style="">月薪：</text><text style="color: #3FB26C;font-size: 18pt;">¥{{item.monthprice}}</text>
+					</view>
+				</u-col>
+			</u-row>
+			<view class="bottom">
+				<view class="bottom-left"><u-icon :name="company" size="30"></u-icon>
+				<text style="padding-left: 10px;">{{item.intentionBrand[0]}}</text></view>
 			</view>
-					<!-- <u-loadmore :status="status" bgColor="#f2f2f2"></u-loadmore> -->
-		</scroll-view>
+		</view>
+			 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
 </template>
 
@@ -33,18 +31,26 @@
 				status: 'loadmore',
 				pageNum:0,
 				company:'../../../static/company.png',
-				list:[]
+				list:[],
+				total:0,
+				status: 'loadmore',
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			}
 		},
 		mounted() {
-			 this.getList()
+			 this.getList(1)
 		},
 		methods: {
-			getList(){
-				let pageNum = this.pageNum+1;
+			getList(pageNum){
 				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10}).then(res=>{
 					if(res.code === 200){
-						let arr = res.rows
+						let arr = res.rows;
+						this.total = res.total
 						arr.forEach(item=>{
 							this.list.push(item)
 						})
@@ -60,8 +66,13 @@
 				console.log(id)
 			},
 			onreachBottom() {
-				this.getList()
-				console.log(111111)
+				let len = this.list.length;
+				 if (len < this.total){
+					 this.pageNum++;
+					 this.getList(this.pageNum)
+				 }else{
+					this.status = 'nomore'
+				}
 			}
 		}
 	}

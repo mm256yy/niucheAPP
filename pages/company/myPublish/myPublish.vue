@@ -6,17 +6,25 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<OneList></OneList>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+				 <OneList ref="onelist"></OneList>
+				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
-				<TwoList></TwoList>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom1">
+				  <TwoList ref="twolist"></TwoList>
+			    </scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
-				<ThreeList></ThreeList>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom2">
+				  <ThreeList ref="threelist"></ThreeList>
+			    </scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
-				<FourList></FourList>
-			</swiper-item>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom3">
+				  <FourList ref="fourlist"></FourList>
+			    </scroll-view>
+			</swiper-item>	
 		</swiper>
 	</view>
 </template>
@@ -70,7 +78,16 @@
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
-				
+				this.$refs.onelist.onreachBottom()
+			},
+			onreachBottom1() {
+				this.$refs.twolist.onreachBottom()
+			},
+			onreachBottom2() {
+				this.$refs.threelist.onreachBottom()
+			},
+			onreachBottom3() {
+				this.$refs.fourlist.onreachBottom()
 			}
 		}
 	}

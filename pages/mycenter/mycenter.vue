@@ -8,8 +8,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyDriver ref="Search" v-if='curThemeType ==="driver"'></MyDriver>
-			<MyCompany ref="Search" v-else></MyCompany>
+			<MyDriver ref="Search" v-show='curThemeType ==="driver"'></MyDriver>
+			<MyCompany ref="Search" v-show='curThemeType ==="company"'></MyCompany>
 	
 	</view>
 </template>
@@ -24,11 +24,7 @@
 
 			}
 		},
-		mounted() {
-		  // this.getUser()
-		},
 		onShow() {
-			
 			let type = uni.getStorageSync('curThemeType');
 			if (type === 'company'){
 				companyPages.forEach(item=>{

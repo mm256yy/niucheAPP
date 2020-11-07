@@ -8,57 +8,26 @@
 				let day = date.getDate();
 				let obj = {year:year,month:month,day:day};
 				 uni.setStorageSync('today', obj);
-			console.log('App Launch')
-			uni.onTabBarMidButtonTap(function(e){
-				console.log(e)
-				// uni.chooseImage({
-				//     success: (chooseImageRes) => {
-				//         const tempFilePaths = chooseImageRes.tempFilePaths;
-				// 		console.log(tempFilePaths)
-				// 		let token = uni.getStorageSync('token')
-				// 		 const uploadTask =  uni.uploadFile({
-				// 		           url: 'http://192.168.3.5:9007/user/image/BusinessImagedemo', //仅为示例，非真实的接口地址
-				// 		            filePath: tempFilePaths[0],
-				// 		            name: 'file',
-				// 		            formData: {
-				// 		                'phone': '17667678787'
-				// 		            },
-				// 					header: {
-				// 					        'content-type': 'multipart/form-data',
-				// 							// 'Authorization':token
-				// 					    },
-				// 		            success: (uploadFileRes) => {
-				// 		                console.log(uploadFileRes.data);
-				// 		            },
-				// 					    fail: (err) => {
-				// 					        console.log(err)
-				// 					    }
-				// 		        });
-				// 			        uploadTask.onProgressUpdate((res) => {
-				// 			            console.log('上传进度' + res.progress);
-				// 			            console.log('已经上传的数据长度' + res.totalBytesSent);
-				// 			            console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
-							
-				// 			            // 测试条件，取消上传任务。
-				// 			            // if (res.progress > 50) {
-				// 			            //     uploadTask.abort();
-				// 			            // }
-				// 			        });
-				// 		}
-				// })
-				uni.navigateTo({
-				    url: '/pages/company/release/release'
-				});
-				// uni.getStorage({
-				//     key: 'role',
-				//     success: function (res) {
-				//         console.log(res.data);
-				// 		uni.navigateTo({
-				// 		    url: '/pages/company/release/release'
-				// 		});
-				//     }
-				// })
-
+			     
+			   uni.onTabBarMidButtonTap(function(e){
+				   let token = uni.getStorageInfoSync('token');
+				   if (token){
+					   let role = uni.getStorageInfoSync('role');
+					   if (role === 2){
+						  uni.navigateTo({
+						      url: '/pages/company/release/release'
+						  });
+					   } else{
+						   uni.navigateTo({
+						       url: '/pages/driver/release/release'
+						   });
+					   }
+				   } else {
+					   this.$u.toast("未登录不能发布信息，2秒后跳转我的页面")
+					   setTimeout(function(){
+						   this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+					   },2000)
+				   }
 			})
 		},
 		onShow() {

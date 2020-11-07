@@ -97,18 +97,6 @@
 				"navigationStyle": "custom" 
 			}
         }
-        ,{
-            "path" : "pages/company/myPublish/zucheView/zucheView",
-            "style" : {
-				"navigationStyle": "custom" 
-			}
-        }
-        ,{
-            "path" : "pages/company/myPublish/zhaopinView/zhaopinView",
-            "style" : {
-				"navigationStyle": "custom" 
-			}
-        }
         ,{//租车标签
             "path" : "pages/company/lease/step/stepLabel/stepLabel",
             "style" : {

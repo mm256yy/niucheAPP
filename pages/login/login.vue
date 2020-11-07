@@ -203,14 +203,14 @@
 									this.Login(userInfo)
 									if(res.userrole === 1){//司机
 										this.CurThemeType('driver')
-										if(res.userstate === 0){
+										if(res.userstate === '0'){
 											this.$u.route('/pages/driver/agreement/agreement')
 										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										}
 									} else {
 										this.CurThemeType('company')
-										if(res.userstate === 0){
+										if(res.userstate ==='0'){
 											this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
 										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})

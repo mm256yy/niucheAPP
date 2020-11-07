@@ -1,26 +1,24 @@
 <template>
 	<view>
-		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			<view class="scroll-item" @click="toView(item.rentCarId)" v-for="item in list" :key="item.rentCarId">
-				<u-row>
-					<u-col span="12" class="time">
-						<view style="padding-right: 10pt;">{{item.createTime}}</view>
-					</u-col>
-					<u-col span="5" @click="toView()">
-						<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
-					</u-col>
-					<u-col span="6" class="border-left" @click="toView()">
-						<view class="title u-line-2">{{item.textTitle}}</view>
-						<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
-					</u-col>
-					<u-col span="12" class="bottom">
-						<view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAgeTag}}</view>
-						<view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.priceTag}}</view>
-					</u-col>
-				</u-row>
-			</view>
-					<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
-		</scroll-view>
+		<view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
+			<u-row>
+				<u-col span="12" class="time">
+					<view style="padding-right: 10pt;">{{item.createTime}}</view>
+				</u-col>
+				<u-col span="5" @click="toView()">
+					<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
+				</u-col>
+				<u-col span="6" class="border-left" @click="toView()">
+					<view class="title u-line-2">{{item.textTitle}}</view>
+					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
+				</u-col>
+				<u-col span="12" class="bottom">
+					<view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAgeTag}}</view>
+					<view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.priceTag}}</view>
+				</u-col>
+			</u-row>
+		</view>
+			 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
 </template>
 <script>
@@ -29,18 +27,26 @@ export default {
 			return {
 				pageNum:0,
 				distance:'../../../static/distance.png',
-				list:[]
+				list:[],
+				total:0,
+				status: 'loadmore',
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			}
 		},
 		mounted() {
-			 this.getList()
+			 this.getList(1)
 		},
 		methods: {
-			getList(){
-				let pageNum = this.pageNum+1;
+			getList(pageNum){
 				this.$u.api.ComparyMySellCarList({pageNum:pageNum,pageSize:10}).then(res=>{
 					if(res.code === 200){
-						let arr = res.rows
+						let arr = res.rows;
+						this.total = res.total
 						arr.forEach(item=>{
 							this.list.push(item)
 						})
@@ -53,7 +59,13 @@ export default {
 				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
 			},
 			onreachBottom() {
-				console.log(111111)
+				let len = this.list.length;
+				 if (len < this.total){
+					 this.pageNum++;
+					 this.getList(this.pageNum)
+				 }else{
+					this.status = 'nomore'
+				}
 			}
 		}
 	}

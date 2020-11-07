@@ -94,7 +94,8 @@ export default {
 		...mapActions(['CARPUBUPOSITION']),
     setInfo(){
 		let pubUpload = this.carPubUpload;
-		let carPubPosition = this.carPubPosition;
+		let carPubPosition = uni.getStorageSync('carPubPosition');
+		console.log(carPubPosition)
 		if (carPubPosition){
 			this.form = carPubPosition;
 		}
@@ -120,6 +121,7 @@ export default {
 		this.form.workname = value
 	 },
 	 toCarModel(){
+		 this.saveStorage()
 		this.$u.route('/pages/company/recruit/carModel/carModel') 
 	 },
 	 saveStorage(){
@@ -130,7 +132,7 @@ export default {
 		 let obj = this.form;
 		 console.log(obj)
 		 this.$u.api.saveCompanyInvite(obj).then(res=>{
-		 	if(res.code === 200){
+		 	if(res.code === '200'){
 				this.showTips = true
 		 	}else {
 		 		 this.$u.toast(res.msg);
