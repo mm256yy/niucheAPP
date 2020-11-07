@@ -96,9 +96,23 @@ const install  = (Vue, vm) => {
 	  const  getUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserJobWanted', params);
 	  //删除租车或求职
 	  const  deleteUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/deleteUserJobWanted?driverDemandId='+params.driverDemandId, {});
-	  
+	  //个人中心首页
+	   const  addUserMessageInfo = (params = {}) => vm.$u.post('/user/drivingLicense/addUserMessageInfo', params);
+	   //公司发布 我的租车  
+		const  ComparyMyRentCarList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyRentCarList', params);
+		//公司发布 我的招聘
+		 const  ComparyMyInviteList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyInviteList', params);
+		 //公司发布 我的卖车
+		  const  ComparyMySellCarList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMySellCarList', params);
+		  //公司发布 我的求购
+			 const  ComparyMyAskToShopList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyAskToShopList', params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+	  ComparyMyAskToShopList,
+	   ComparyMySellCarList,
+	   ComparyMyInviteList,
+	   ComparyMyRentCarList,
+	   addUserMessageInfo,
 		deleteUserJobWanted,
 		getUserJobWanted,
 		getUserWanted,

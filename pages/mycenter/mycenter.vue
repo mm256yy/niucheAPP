@@ -8,8 +8,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyDriver ref="Dri" v-if='curThemeType ==="driver"'></MyDriver>
-			<MyCompany ref="Com" v-else></MyCompany>
+			<MyDriver ref="Search" v-if='curThemeType ==="driver"'></MyDriver>
+			<MyCompany ref="Search" v-else></MyCompany>
 	
 	</view>
 </template>
@@ -27,21 +27,8 @@
 		mounted() {
 		  // this.getUser()
 		},
-		filters: {
-		  state: function (value) {
-		    if (!value) return ''
-		    if (value === 1) {
-				return '已认证'
-			} else if (value === 2){
-				return '未认证'
-			} else if (value === 3){
-				return '审核中'
-			} else if (value === 4){
-				return '认证未通过'
-			}else {return ''}
-		     }
-		},
 		onShow() {
+			
 			let type = uni.getStorageSync('curThemeType');
 			if (type === 'company'){
 				companyPages.forEach(item=>{
@@ -50,7 +37,7 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
-				this.$refs.Com.getUser()
+				
 			} else {
 				dirverPages.forEach(item=>{
 					uni.setTabBarItem(item)
@@ -58,8 +45,8 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
-				this.$refs.Dri.getDriver()
 			}
+			this.init()
 		},
 		components:{
 			MyCompany,MyDriver
@@ -68,6 +55,10 @@
 			toAboutUs(){
 				this.$u.route('/pages/aboutUs/aboutUs');
 			},
+			init(){
+				setTimeout(this.$refs.Search.getUser(),100)
+				
+			}
 			
 		}
 	}

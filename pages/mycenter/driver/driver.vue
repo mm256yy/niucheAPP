@@ -129,10 +129,10 @@
 		},
 		mounted() {
 			this.token = uni.getStorageSync('token')
-			this.getDriver()  
+			this.getUser()  
 		},
 		methods: {
-			getDriver(){
+			getUser(){
 			this.token = uni.getStorageSync('token')
               if (this.token){
 				 this.$u.api.listUserMessage().then(res=>{

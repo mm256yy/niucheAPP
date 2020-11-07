@@ -105,13 +105,6 @@
 </script>
 
 <style lang="scss">
-page{
-	// background-image: url(@/static/lease.png);
-	background-repeat: no-repeat;
-	height: 100%;
-	background-size: cover;
-	// background-position: 50% 50%;
-}
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;
 	}
