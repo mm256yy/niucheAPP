@@ -9,12 +9,12 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomCarSell">
 					<car-sell v-if="isChildUpdate1" ref="carSell"></car-sell>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuying">
 					<buying v-if="isChildUpdate2" ref="buying"></buying>
 				</scroll-view>
 			</swiper-item>
@@ -71,8 +71,11 @@
 				this.current = current;
 			},
 			// scroll-view到底部加载更多
-			onreachBottom() {
-				
+			onreachBottomCarSell() {
+				this.$refs.carSell.pull()
+			},
+			onreachBottomBuying() {
+				this.$refs.buying.search()
 			}
 		}
 	}
@@ -85,6 +88,7 @@ page{
 	height: 100%;
 	background-size: cover;
 	// background-position: 50% 50%;
+	overflow: hidden;
 }
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;
@@ -106,6 +110,7 @@ page{
 	flex-direction: column;
 	height: calc(100vh - var(--window-top));
 	width: 100%;
+	margin-bottom: 120rpx;
 }
 .swiper-box {
 	flex: 1;

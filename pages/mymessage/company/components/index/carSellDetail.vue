@@ -10,9 +10,14 @@
 		 <view class="" style="padding: 40rpx;">
 			<u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view>
-				<view class="tag">付费标签</view>
-				<view class="name">哈哈哈</view>
+				<!-- <view class="tag">付费标签</view> -->
+				<view class="name">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
+				<view class="collect">
+					<u-icon class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
+					<text>634</text>
+				</view>
+				<view class="clear"></view>
 				<view class="box">
 					<view v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
@@ -28,7 +33,7 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :detail="detail.pricesectionlist"></range-price>
+			 			<range-price :tab="tab" :detail="detail.pricesectionlist"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
@@ -73,7 +78,8 @@
 			    }],
 				current: 0,
 				swiperCurrent: 0,
-				detail:[]
+				detail:{},
+				tab: []
 			}
 		},
 		onLoad(option) {
@@ -90,7 +96,21 @@
 					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
-							 this.total= res.total;
+							 var text = '';
+							 if(this.detail.pricesectionlist) {
+								this.detail.pricesectionlist.forEach(item=>{
+									if(item.lowprice && !item.highprice) {
+										text = '≥'+item.lowprice + '辆';
+									}
+									if(!item.lowprice && item.highprice) {
+										text = '≤'+item.highprice + '辆';
+									}
+									if(item.lowprice && item.highprice) {
+										text = item.lowprice + '-' + item.highprice + '辆';
+									}
+									this.tab.push(text)						
+								}) 
+							 }
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -180,12 +200,19 @@ page{
 		}
 		.price {
 			font-size: 20rpx;
+			float: left;
 		}
 		.price text {
 			font-size: 40rpx;
 			font-weight: 900;
 			color: #40B36C;
 			margin-right: 12rpx;
+		}
+		.collect {
+			float: right;
+			.heart {
+				margin-right: 6rpx;
+			}
 		}
 	    .box .text {
 			padding: 14rpx;

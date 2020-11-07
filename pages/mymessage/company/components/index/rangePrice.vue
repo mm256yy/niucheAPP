@@ -1,39 +1,42 @@
 <template>
 	<view class="range-price">
 		<view class="padding">
-			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' color="#40B36C" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#000000" :tabs="['12个月', '6个月', '3个月','1个月']"></v-tabs>
-			 <view class="" v-show="firstCurrent === 0">
-				 <view class="bg">
+			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab"></v-tabs>
+			 <view v-for="(item, index) in detail" :key="index" class="" v-show="firstCurrent === index">
+				<view class="bg">
 					<view class="year">车龄：<8个月</view>
 					<view class="distance">新车 <300公里</view>
 					<view class="clear"></view>
-				 </view>
+				</view>
 				<view class="box">
 					<view class="left">
-						<view class="price"><text>3100</text>/辆</view>
-						<view>打包价</view>
+						<view class="price"><text>{{item.packprice}}</text>/辆</view>
+						<view>-打包价-</view>
 					</view>
 					<view class="right">
-						<view class="price"><text>30</text>辆</view>
-						<view>起售</view>
+						<view class="price"><text>{{item.lowprice}}</text>辆</view>
+						<view>-起售-</view>
 					</view>
 					<view class="clear"></view>
 				</view>
 			 </view>
-			 <view class="" v-show="firstCurrent === 1">
-				1
-			 </view>
-			 <view class="" v-show="firstCurrent === 2">
-			 	2					
-			 </view>
-			 <view class="" v-show="firstCurrent === 3">
-			 	3					
-			 </view>
 			 <view class="icon">
-				<view>线上选车</view>
-				<view>线上约谈</view>
-				<view>线下看车</view>
-				<view>线下签约</view>
+			 				<view class="text-box">
+			 					<u-image width="45rpx" height="62rpx" src="@/static/selectCar.png"></u-image>
+			 					<view class="text">线上选车</view>
+			 				</view>
+			 				<view class="text-box">
+			 					<u-image width="56rpx" height="56rpx" src="@/static/interview.png"></u-image>
+			 					<view class="text">线上约谈</view> 
+			 				</view>
+			 				<view class="text-box">
+			 					<u-image width="48rpx" height="42rpx" src="@/static/viewCar.png"></u-image>
+			 					<view class="text">线下看车</view>
+			 				</view>
+			 				<view class="text-box">
+			 					<u-image width="50rpx" height="49rpx" src="@/static/bi.png"></u-image>
+			 					<view class="text">线下签约</view>
+			 				</view>
 			 </view>
 			 <view @click="other()" class="more">上拉加载该公司其他信息</view>
 		</view>
@@ -53,6 +56,16 @@
 			return {
 				firstCurrent:0
 			}
+		},
+		props: {
+			detail: {
+			    type: Array,
+			    default: function (){return []}
+			},
+			tab: {
+			    type: Array,
+			    default: function (){return []}
+			},
 		},
 		methods: {
 			other() {
@@ -109,7 +122,7 @@
 					color: #fff;
 					background: linear-gradient(115deg,#6DD99C, #37AB63);
 					float: right;
-					.price span {
+					.price text {
 						font-size: 46rpx;
 						font-weight: 900;
 					}
@@ -117,15 +130,20 @@
 			}
 			.icon {
 				width: 667rpx;
-				height: 200rpx;
+				height: 211rpx;
 				background: #fff;
 				margin-top: 40rpx;
-				view {
-					float: left;
-					margin-left: 35rpx;
-					margin-right: 36rpx;
-					font-size: 20rpx;
-					margin-top: 120rpx;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				.text-box {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: center;
+					.text {
+						margin-top: 35rpx;
+					}
 				}
 			}
 			.more {

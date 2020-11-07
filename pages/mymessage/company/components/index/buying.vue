@@ -15,9 +15,9 @@
 			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<view v-for="(item, index) in list" :key="index">
-			<view class="list" @click="detail()">
+			<view class="list" @click="detail(item.demandid)">
 				<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
-				<u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 				<view class="clear"></view>
 				<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 				<view class="right">
@@ -218,7 +218,7 @@
 				this.packpricekey = arr[0].label;
 			},
 			detail(id) {
-				this.$u.route("/pages/mymessage/components/index/buyingDetail",{id:id})
+				this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:id})
 			}
 		}
 	}

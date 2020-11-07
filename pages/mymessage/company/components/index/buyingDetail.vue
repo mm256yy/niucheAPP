@@ -25,14 +25,14 @@
 				</view>
 		 	</view>
 			<view class="clear"></view>
-			<view class="time">刷新时间：刚刚</view>
+			<view class="time">刷新时间：{{detail.comparyRefreshTime}}</view>
 		 </view>
 		 <view class="content">
-			 <u-form label-width="150" label-align="right" :model="form" ref="uForm">
-			 		<u-form-item label="打包价:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+			 <u-form label-width="150" label-align="right" :model="detail" ref="uForm">
+			 		<u-form-item label="打包价:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.packprice" /></u-form-item>
+					<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
+					<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
+					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 	</u-form>
 		 </view>
 		 <view class="bottom" @click="recommend()">
@@ -49,9 +49,7 @@
 					'color':'#ffffff'
 				},
 				driverDemandId: '',
-				form: {
-					name: '杭州'
-				}
+				detail: {}
 			}
 		},
 		onLoad(option) {
@@ -67,8 +65,19 @@
 			getDetail(){
 					this.$u.api.detailBuying({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
-							 this.list = res.rows;
-							 this.total= res.total;
+							 this.detail = res.object;
+							 if(this.detail.intenitonBrand) {
+								this.detail.intenitonBrand.forEach(item=>{
+									item = item.join('/')
+																
+								}) 
+							 }
+							 if(this.detail.power) {
+							    this.detail.power.forEach(item=>{
+							    	item = item.join('/')
+							    								
+							    }) 
+							 }
 						}else {
 							 this.$u.toast(res.msg);
 						}

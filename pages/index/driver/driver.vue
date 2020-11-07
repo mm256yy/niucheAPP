@@ -4,13 +4,13 @@
 		<u-navbar  back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
-			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 bg-color="" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
-		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+		<swiper class="swiper-box">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomrentcar">
-					<car-rent v-if="isChildUpdate1"></car-rent>
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
+					<car-rent></car-rent>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -26,53 +26,13 @@
 		},
 		data() {
 			return {
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				list: [{
 					name: '租车'
-				}],
-				current: 0, 
-				swiperCurrent: 0,
-				isChildUpdate1:true,
-				isChildUpdate2:false
+				}]
 			}
 		},
 		methods: {
-			// tabs通知swiper切换
-			tabsChange(index) {
-				this.swiperCurrent = index;
-				if(index == 0) {
-				    this.isChildUpdate1 = true;
-				    this.isChildUpdate2 = false;
-				} else if(index == 1) {
-				    this.isChildUpdate1 = false;
-				    this.isChildUpdate2 = true;
-				}
-			},
-			// swiper-item左右移动，通知tabs的滑块跟随移动
-			transition(e) {
-				let dx = e.detail.dx;
-				this.$refs.uTabs.setDx(dx);
-			},
-			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
-			// swiper滑动结束，分别设置tabs和swiper的状态
-			animationfinish(e) {
-				let current = e.detail.current;
-				this.$refs.uTabs.setFinishCurrent(current);
-				this.swiperCurrent = current;
-				this.current = current;
-			},
-			toView(){
-				console.log(11111111111111)
-			},
-			// scroll-view到底部加载更多
-			onreachBottomrentcar() {
-				var _this = this;
-				//监听上拉触底事件
-				this.$refs.child.getList();
-			},
-			onreachBottomjobsearch() {
-				
-			}
+		
 		}
 	}
 </script>
@@ -105,6 +65,7 @@ page{
 	flex-direction: column;
 	height: calc(100vh - var(--window-top));
 	width: 100%;
+	margin-bottom: 120rpx;
 }
 .swiper-box {
 	flex: 1;

@@ -25,7 +25,7 @@
 					<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 					<view class="price">打包价<text>{{item.packPrice}}</text></view>
 					<view class="u-line-1">
-						<view v-for="(items, index) in item.carSystemTag.slice(0,2)" :key="index" class="case">{{items}}</view>
+						<view v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
 					</view>
 				</view>
 				<view class="clear"></view>
@@ -38,6 +38,7 @@
 			<u-icon v-show="item.iscollection === 1" @click="cancel(item.demandid)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
 			<u-icon v-show="item.iscollection === 2" @click="favorites(item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		</view>
+		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
 </template>
 
@@ -128,7 +129,13 @@
 						value: '4'
 					}
 				],
-				list: []
+				list: [],
+				status: 'loadmore',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			}
 		},
 		mounted() {
@@ -184,6 +191,14 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 this.list.forEach(item=>{
+								 if(item.carSystemTag) {
+									if (item.carSystemTag.length > 2){
+										item.carSystemTag = item.carSystemTag.slice(0,2);		
+									} 
+								 }
+							 								
+							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -196,6 +211,14 @@
 		    confirmPrice(arr){
 		    	this.form.packprice = arr[0].value;
 		    	this.packpricekey = arr[0].label;
+			},
+			pull() {
+				let len = this.list.length;
+				 if (len < this.total){
+					 this.getList()
+				 }else{
+					this.status = 'nomore'
+				}
 			},
 			detail(id) {
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})

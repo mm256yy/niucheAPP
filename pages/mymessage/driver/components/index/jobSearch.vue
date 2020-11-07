@@ -4,7 +4,7 @@
 			<u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showPrice = true" v-model="form.price" type="select" /></u-form-item>
+				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="form.price" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
 				<view class="clear"></view>
@@ -50,7 +50,7 @@
 		data() {
 			return {
 				show:false,
-				showPrice:false,
+				showType:false,
 				change: false,
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
