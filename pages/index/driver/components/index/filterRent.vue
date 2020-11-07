@@ -1,7 +1,7 @@
 <template>
 	<view class="filter">
 	  <u-navbar back-text="返回" back-icon-size="0" title="更多筛选条件" :background="backgroundDri" 
-	   :back-text-style="backTextStyle" height='98' title-color="#FFFFFF"><view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
+	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
 		   历史</view></u-navbar>
 	   <view class="view-content">
 		   <view class="name">比亚迪+宝马 / 3万以内</view>
@@ -13,7 +13,7 @@
 				</u-radio-group>
 				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 	   	  	</u-form-item>
-			<u-form-item label="意向品牌" label-position="top">
+			<u-form-item label="意向品牌(多选)" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="brandGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
 						{{ item.name }}
@@ -24,14 +24,14 @@
 				<u-col span="8"><u-input v-model="value" maxlength="30" :border="true" placeholder="请输入车辆品牌"/></u-col>
 				<u-col span="3"><u-button type="success" shape='circle' class="btn-agree" @click="addBrand">添加</u-button></u-col>
 			</u-row>
-			<u-form-item label="车型" label-position="top">
+			<u-form-item label="车型(多选)" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="modelGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
 				</u-checkbox-group>
 			</u-form-item>
-			<u-form-item label="动力" label-position="top">
+			<u-form-item label="动力(多选)" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="powerGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
 						{{ item.name }}
@@ -39,17 +39,17 @@
 				</u-checkbox-group>
 			</u-form-item>
 			<u-form-item label="月租" label-position="top">
-				<u-radio-group v-model="form.monthzu"  :active-color="'#FFA032'" style="text-align: right;">
+				<u-radio-group @change="radioGroupChangeRent" v-model="form.monthzu"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top">
-				<u-radio-group v-model="form.carage"  :active-color="'#FFA032'" style="text-align: right;">
+				<u-radio-group @change="radioGroupChangeAge" v-model="form.carage" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="行驶里程" label-position="top">
-				<u-radio-group v-model="form.km"  :active-color="'#FFA032'" style="text-align: right;">
+				<u-radio-group @change="radioGroupChangeKm" v-model="form.km" :active-color="'#FFA032'" style="text-align: right;">
 				  <u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
@@ -96,8 +96,7 @@
 					  {name: '3',text:'5万公里-10万公里' },{name: '4',text:'10万公里-20万公里' },{name: '5',text:'20万公里-30万公里' },
 					  {name: '6',text:'30万公里-50万公里' },{name: '7',text:'50万公里-70万公里' },{name: '8',text:'70万公里以上'},],
 				},
-				radioType:'wycList',
-				showTips:false
+				radioType:'wycList'
 			}
 		},
 		computed:{
@@ -107,11 +106,30 @@
 			this.form.userid = this.telephone;
 		},
 		methods: {
-			brandGroupChange(e) {this.form.intentionbrand = e;},
-			powerGroupChange(e) {this.form.power = e;},
-			modelGroupChange(e) {this.form.carmodel = e;},
+			brandGroupChange(e) {
+				this.form.intentionbrand = e;
+				this.select()
+				},
+			powerGroupChange(e) {
+				this.form.power = e;
+				this.select()
+				},
+			modelGroupChange(e) {
+				this.form.carmodel = e;
+				this.select()
+				},
 			radioGroupChange(e){
 				this.radioType = e=== '0'?'wycList':'czcList'
+				this.select()
+			},
+			radioGroupChangeRent(e){
+				this.select()
+			},
+			radioGroupChangeAge(e){
+				this.select()
+			},
+			radioGroupChangeKm(e){
+				this.select()
 			},
 			addBrand(){
 				if (this.value){
@@ -119,13 +137,13 @@
 					this.value = ''
 				}
 			},
-			toNext(){
+			select(){
 				// if (this.form.mainBusiness === ''){
 				// 	this.$u.toast('请选择业务类型');
 				// 	return
 				// }
-				this.$u.api.saveShoping(this.form).then(res=>{
-					if(res.code === '200'){
+				this.$u.api.filterRent(this.form).then(res=>{
+					if(res.code === 200){
 						this.showTips = true;
 					}else {
 						 this.$u.toast(res.message);

@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="租车详情" :background="backgroundDri" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="租车详情" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -34,17 +34,17 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price ref="child" v-if="isChildUpdate1"></range-price>
+			 			<range-price ref="child"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue v-if="isChildUpdate2"></rentcar-issue>
+						<rentcar-issue></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter v-if="isChildUpdate3"></setting-parameter>
+						<setting-parameter></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -67,6 +67,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				driverDemandId: '',
 				list: [{
 					name: '租车价格'
 					}, {
@@ -81,8 +82,11 @@
 				isChildUpdate3:false
 			}
 		},
-		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
-		    console.log(option.index); //打印出上个页面传递的参数。
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
+			}
 		},
 		mounted() {
 			// this.$refs.child.getList();

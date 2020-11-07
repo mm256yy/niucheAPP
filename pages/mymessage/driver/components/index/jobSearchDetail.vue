@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="招聘详情" :background="backgroundDri" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="招聘详情" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 		    <view class="navbar-right" slot="right">
 		    	<view class="message-box right-item">
 		    		<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -96,6 +96,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				driverDemandId: '',
 				list: [{
 					name: '荣威ei6'
 					}, {
@@ -118,6 +119,12 @@
 				swiperCurrentBottom: 0,
 				isChildUpdate1:true,
 				isChildUpdate2:false
+			}
+		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
 			}
 		},
 		mounted() {

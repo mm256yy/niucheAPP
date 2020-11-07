@@ -70,7 +70,7 @@
 				  price: ''
 				},
 				pagination: {
-				  pageNum: 0, 
+				  pageNum: 1, 
 				  pageSize: 10
 				},
 				total: 0,
@@ -148,7 +148,7 @@
 		        	pageNum: this.pagination.pageNum + 1,
 		        	pageSize: 10
 		        });
-		    		this.$u.api.getCarSystem(params).then(res=>{
+		    		this.$u.api.homeSearch(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
@@ -159,10 +159,10 @@
 		    },
 		    search(){
 		        const params = Object.assign(this.form, {
-		    		pageNum: 0,
+		    		pageNum: 1,
 		    		pageSize: 10
 		    	});
-		    		this.$u.api.getCarSystem(params).then(res=>{
+		    		this.$u.api.homeSearch(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 							 this.total = res.total;
@@ -177,8 +177,8 @@
 		    confirmType(arr){
 		    	this.form.businesstype = arr[0].label;
 			},
-			detail() {
-				this.$u.route("/pages/index/driver/components/index/jobSearchDetail")
+			detail(id) {
+				this.$u.route("/pages/index/driver/components/index/jobSearchDetail",{id:id})
 			},
 			filter() {
 				this.$u.route("/pages/index/driver/components/index/filterSearch")

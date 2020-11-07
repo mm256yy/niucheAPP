@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="预览" :background="backgroundCom" :back-text-style="backTextStyle" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="预览" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -11,45 +11,34 @@
 			<u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view>
 				<view class="tag">付费标签</view>
-				<view class="name">撤销撤销</view>
-				<view class="price"><text>￥27000</text>打包价</view>
+				<view class="name">哈哈哈</view>
+				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
 				<view class="box">
-					<view class="text">帆帆帆帆66</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
+					<view v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
 				</view>
 		 	</view>
 		</view>
 		<view class="wrap">
 			<view class="u-tabs-box">
-			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
+			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="listTab" 
 				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
 			 	swiperWidth="750" active-color="#40B36C"></u-tabs-swiper>
 			</view>
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price></range-price>
+			 			<range-price :detail="detail.pricesectionlist"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue></rentcar-issue>
+						<rentcar-issue :detail="detail.problem"></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter></setting-parameter>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<car-install></car-install>
+						<setting-parameter :detail="detail"></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -74,20 +63,39 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				list: [{
+				driverDemandId: '',
+				listTab: [{
 					name: '价格区间'
 					}, {
 				    name: '租车常见问题'
 					}, {
 					name: '参数配置'
-			    }, {
-				    name: '分期购车'
-				}],
+			    }],
 				current: 0,
-				swiperCurrent: 0
+				swiperCurrent: 0,
+				detail:[]
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
+			}
+		},
+		mounted() {
+			this.getDetail()
+		},
 		methods: {
+			getDetail(){
+					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
+						if(res.code === 200){
+							 this.detail = res.object;
+							 this.total= res.total;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;

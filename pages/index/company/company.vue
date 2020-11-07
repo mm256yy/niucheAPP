@@ -78,7 +78,6 @@
 			},
 			// scroll-view到底部加载更多
 			onreachBottomrentcar() {
-				var _this = this;
 				//监听上拉触底事件
 				this.$refs.child.getList();
 			},
@@ -96,6 +95,7 @@ page{
 	height: 100%;
 	background-size: cover;
 	// background-position: 50% 50%;
+	overflow: hidden;
 }
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;
@@ -117,6 +117,7 @@ page{
 	flex-direction: column;
 	height: calc(100vh - var(--window-top));
 	width: 100%;
+	margin-bottom: 120rpx;
 }
 .swiper-box {
 	flex: 1;

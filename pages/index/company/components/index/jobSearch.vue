@@ -2,9 +2,9 @@
 	<view class="jobSearch">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="form.driverAgeKey" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="form.typeBusiness" type="select" /></u-form-item>
+				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="form.typeBusinessKey" type="select" /></u-form-item>
 			</u-form>
 			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
@@ -14,48 +14,21 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="list" @click="detail()">
+		<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
+				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
 				<view class="clear"></view>
-				<view class="name">{{list.drivername}}</view>
-				<view class="year">{{list.driverAgeTag}}</view>
-				<view class="type">{{list.onlinecarcardis}}||{{list.onlinecarcardis}}</view>
+				<view class="name">{{item.drivername}}</view>
+				<view class="year">驾龄{{item.driverAgeTag}}年</view>
+				<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
+				<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
+				<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
 				<view class="clear"></view>
-				<u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image>
-				<view class="car">求职意向：{{list.jobintention}}</view>
+				<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
+				<view class="car">求职意向：{{item.carCard}}</view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
-		</view>
-		<view class="list" @click="detail()">
-			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
-				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
-				<view class="clear"></view>
-				<u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image>
-				<view class="car">求职意向：月薪5000\有保底\无责</view>
-				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
-			</view>
-		</view>
-		<view class="list">
-			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
-				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
-				<view class="clear"></view>
-				<u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image>
-				<view class="car">求职意向：月薪5000\有保底\无责</view>
-				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
-			</view>
-			<view class="clear"></view>
 		</view>
 	</view>
 </template>
@@ -80,23 +53,25 @@
 				// 					}
 				// 				],
 				form: {
-				  driverage: '',
-				  businesstype: '',
-				  isrentAndAskWork: 2
+				  driverAge: '',
+				  businessType: 0,
+				  type: 2
 				},
+				driverAgeKey: '',
+				businessTypeKey: '',
 				pagination: {
-				  pageNum: 0, 
+				  pageNum: 1, 
 				  pageSize: 10
 				},
 				total: 0,
 				select: [
 					{
 						label: '3年及以上',
-						value: '1'
+						value: '3'
 					},
 					{
 						label: '不限',
-						value: '2'
+						value: '0'
 					}
 				],
 				selectType: [
@@ -110,11 +85,10 @@
 					},
 					{
 						label: '不限',
-						value: '3'
+						value: '0'
 					}
 				],
-				list: [],
-				obj: {}
+				list: []
 			}
 		},
 		mounted() {
@@ -123,13 +97,22 @@
 		methods: {
 		    getList(){
 		        const params = Object.assign(this.form, {
-		        	pageIndex: this.pagination.pageNum + 1,
-		        	pageSize: 10
+		        	pageNum: this.pagination.pageNum + 1,
+		        	pageSize: 10,
+					condition: this.form.driverAge ? 2:''
 		        });
 		    		this.$u.api.askWork(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 this.list.forEach(item=>{
+							    if (item.carCard){
+							 		item.carCard = item.carCard.split(',').join('/')
+							 	}
+								if (item.updateTime){
+									item.updateTimeStr = this.timeZ(item.updateTime)
+								}
+							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -137,26 +120,53 @@
 		    },
 		    search(){
 		        const params = Object.assign(this.form, {
-		    		pageNum: 0,
-		    		pageSize: 10
+		    		pageNum: 1,
+		    		pageSize: 10,
+					condition: this.form.driverAge ? 2:''
 		    	});
 		    		this.$u.api.askWork(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 this.list.forEach(item=>{
+							    if (item.carCard){
+							 		item.carCard = item.carCard.split(',').join('/')
+							 	}
+								if (item.updateTime){
+									item.updateTimeStr = this.timeZ(item.updateTime)
+								}
+							 })					
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
 		    		})
 		    },
+			timeZ(value){
+				let nowTime = new Date().getTime();
+				let oneDay= 86400000;
+				let timeDiff = nowTime-value;//时间差
+				let tian =parseInt(timeDiff/oneDay);
+				let day6 = oneDay*6;
+				if(timeDiff>day6){
+					return this.$u.timeFormat(value, 'yyyy-mm-dd');
+				} else if (timeDiff>oneDay && timeDiff < day6){
+					return tian+"天前"
+				} else if (timeDiff<oneDay){
+					return '刚刚'
+				} else {
+					console.log(timeDiff)
+				 }
+			},
 		    confirm(arr){
-		    	this.form.driverage = arr[0].label;
+		    	this.form.driverAge = arr[0].value;
+		    	this.driverAgeKey = arr[0].label;
 		    },
 		    confirmType(arr){
-		    	this.form.businesstype = arr[0].label;
+		    	this.form.businessType = arr[0].value;
+		    	this.businessTypeKey = arr[0].label;
 		    },
-			detail() {
-				this.$u.route("/pages/index/company/components/index/jobSearchDetail")
+			detail(id) {
+				this.$u.route("/pages/index/company/components/index/jobSearchDetail",{id:id})
 			}
 		}
 	}
@@ -251,17 +261,11 @@
 			margin-top: 10rpx;
 		}
 		.list .right {
-			.img {
-				float: left;
-				margin-top: 16rpx;
-				margin-right: 4rpx;
-			}
 			.car {
 				width: 365rpx;
 				color: #7f7f7f;
 				font-size: 20rpx;
 				margin-top: 18rpx;
-				float: left;
 				overflow: hidden;
 				text-overflow:ellipsis; 
 				white-space: nowrap;

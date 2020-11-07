@@ -74,7 +74,7 @@
 				  businesstype: ''
 				},
 				pagination: {
-				  pageNum: 0, 
+				  pageNum: 1, 
 				  pageSize: 10
 				},
 				priceid: '',
@@ -165,7 +165,7 @@
 		    },
 		    search(){
 		        const params = Object.assign(this.form, {
-		    		pageNum: 0,
+		    		pageNum: 1,
 		    		pageSize: 10
 		    	});
 		    		this.$u.api.homeRent(params).then(res=>{
@@ -185,8 +185,8 @@
 		    	this.businesstype = arr[0].label;
 		    	this.form.businesstype = arr[0].value;
 			},
-			detail() {
-				this.$u.route("/pages/index/driver/components/index/carRentDetail",{index:0})
+			detail(id) {
+				this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:id})
 			},
 			filter() {
 				this.$u.route("/pages/index/driver/components/index/filterRent")

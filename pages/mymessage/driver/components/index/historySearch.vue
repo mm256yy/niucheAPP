@@ -1,6 +1,6 @@
 <template>
 	<view class="history">
-		<u-navbar back-text="返回" back-icon-size="0" title="历史筛选记录" :background="backgroundDri" :back-text-style="backTextStyle" title-width="400" title-size="36" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="历史筛选记录" :background="backgroundDri" :back-text-style="backTextStyle" title-width="400" title-size="36" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 			</view>
 		 </u-navbar>

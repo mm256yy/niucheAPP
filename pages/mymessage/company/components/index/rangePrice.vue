@@ -56,7 +56,7 @@
 		},
 		methods: {
 			other() {
-				this.$u.route('/pages/mymessage/components/index/other');
+				this.$u.route('/pages/mymessage/company/components/index/other');
 			}
 		}
 	}

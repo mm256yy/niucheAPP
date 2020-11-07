@@ -1,6 +1,6 @@
 <template>
 	<view class="result">
-		<u-navbar back-text="返回" back-icon-size="0" title="轿车+纯电动+荣威ie5\荣威ie6" :background="backgroundCom" :back-text-style="backTextStyle" title-width="400" title-size="36" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="轿车+纯电动+荣威ie5\荣威ie6" :background="backgroundCom" :back-text-style="backTextStyle" title-width="400" title-size="36" height='44' title-color="#FFFFFF">
 			<view @click="clear()" class="navbar-right" slot="right">清除
 			</view>
 		 </u-navbar>

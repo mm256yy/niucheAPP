@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="购车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="购车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -48,14 +48,34 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				driverDemandId: '',
 				form: {
 					name: '杭州'
 				}
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
+			}
+		},
+		mounted() {
+			this.getDetail()
+		},
 		methods: {
-		recommend() {
-				this.$u.route("/pages/mymessage/components/index/buyingRecommend")
+			getDetail(){
+					this.$u.api.detailBuying({id: this.driverDemandId}).then(res=>{
+						if(res.code === 200){
+							 this.list = res.rows;
+							 this.total= res.total;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
+		    recommend() {
+				this.$u.route("/pages/mymessage/company/components/index/buyingRecommend")
 			},
 			shared(){
 				uni.share({

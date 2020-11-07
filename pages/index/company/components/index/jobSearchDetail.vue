@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="司机求职需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='98' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="司机求职需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -10,31 +10,37 @@
 		 <view class="list">
 		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="right">
-				<u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon>
-		 		<view class="name">吴司机</view>
-				<view class="special">加急</view>
-				<view class="clear"></view>
-				<u-icon width="39" height="39" class="clock" name="clock"></u-icon>
-				<view class="year">驾龄4年</view>
-				<view class="clear"></view>
-				<u-image class="img" width="42rpx" height="37rpx" src="@/static/cert.png"></u-image>
-				<view class="type">杭州出租车认证</view>
+		 		<view class="name">{{form.userName}}</view>
+		 			<!-- <view class="special">加急</view> -->
+		 			<view class="clear"></view>
+		 			<u-icon width="39" height="39" class="clock" name="clock"></u-icon>
+		 			<view class="year">驾龄{{form.drivingYear}}年</view>
+		 			<view class="clear"></view>
+		 			<u-image class="img" width="42rpx" height="37rpx" src="@/static/cert.png"></u-image>
+		 			<view v-show="form.ifAuthentication == 0" class="type">未认证</view>
+		 			<view v-show="form.ifAuthentication == 1"  class="type">网约车认证</view>
+		 			<view v-show="form.ifAuthentication == 2"  class="type">出租车认证</view>
+		 			<view class="clear"></view>
+		 			<view class="box">
+		 			    <view class="typePermit">准驾类型</view>
+		 			    <view class="grade">{{form.carType}}</view>
+		 			</view>
+		 		</view>
 		 		<view class="clear"></view>
-				<view class="box">
-				    <view class="typePermit">准驾类型</view>
-				    <view class="grade">C1</view>
-				</view>
-		 	</view>
-			<view class="clear"></view>
-			<view class="time">刷新时间：刚刚</view>
+		 		<view class="time">刷新时间：{{form.updateTime}}</view>
 		 </view>
 		 <view class="content">
-			 <u-form label-width="150" label-align="right" :model="form" ref="uForm">
-			 		<u-form-item label="租车城市:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="业务类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="求职意向:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-					<u-form-item label="我的优势:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-			 	</u-form>
+			 <u-form label-width="150" label-align="left" :model="form" ref="uForm">
+			 			<u-form-item label="工作城市:">
+			 				<u-input :disabled="true" height="80" input-align="right" v-model="form.workCity" />
+			 			</u-form-item>
+			 			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" placeholder="" input-align="right"
+			 			 v-model="form.businessType===0?'网约车':'出租车'" /></u-form-item>
+			 			<u-form-item label="求职意向:"><u-input :disabled="true" height="80" placeholder="" 
+			 			type="textarea" input-align="right" v-model="form.str" /></u-form-item>
+			 			<u-form-item label="我的优势:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
+			 			 v-model="form.myok" /></u-form-item>
+			 </u-form>
 		 </view>
 		 <view class="bottom" @click="recommend()">
 			 <view>向他推荐本公司招聘信息</view>
@@ -49,19 +55,58 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				driverDemandId:'',
 				form: {
-					name: '杭州'
-				}
+					kmStr:'',
+					userName:'',
+					userAge:'',
+					userAvatar:'',
+					drivingYear:'',
+					ifAuthentication:'',
+					carType:'',
+					updateTime:'',
+					workCity:'',
+					businessType:'',
+					city:'',
+					carCard:'',
+					carModel:'',
+					power:'',
+					monthlyRent:'',
+					carAge:'',
+					km:'',
+					myok:'',
+				},
+				salaryList:[{name: 0,text:'6000以内' },{name: 1,text:'6000-8000' },{name: 2,text:'8000-10000' },{name: 3,text:'10000以上' }],
+				hoursList:[{name: 0,text:'8小时' },{name: 1,text:'8-10小时' },{name: 2,text:'10小时以上' },{name: 3,text:'不限' }],
+			}
+		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
 			}
 		},
 		mounted() {
-			this.getDetail()
+			this.getDetail();
 		},
 		methods: {
-			getDetail() {
-				this.$u.api.getCarSystem().then(res=>{
+			getDetail(){
+				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
-						 this.list = res.rows;
+						 this.form = res.object;
+						 let price="";
+						 this.salaryList.forEach(item=>{
+							 if(item.name === this.form.monthprice){
+								 price = item.text;
+							 }
+						 })
+						 let worktime = "";
+						 this.hoursList.forEach(item=>{
+							 if(item.name === this.form.worktime){
+							 		worktime = item.text;
+							 }
+						 })
+						 this.form.str = price==''?'':'月薪'+price+'/'+worktime+ worktime==''?'':'工作时长'+'/'+this.form.welfare != null? this.form.welfare.split(',').join('/'):''
 					}else {
 						 this.$u.toast(res.msg);
 					}

@@ -2,9 +2,9 @@
 	<view class="buying">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="driveragekey" type="select" /></u-form-item>
+				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="driverAgeKey" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businesstypekey" type="select" /></u-form-item>
+				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
 			</u-form>
 			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
@@ -14,46 +14,22 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view  class="list" v-for="item in list" @click="detail()">
+		<view  class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
+				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
 				<view class="clear"></view>
-				<!-- <view class="name">{{list.drivername}}</view>
-				<view class="year">{{list.driverAgeTag}}</view>
-				<view class="type">{{list.driverAgeTag.onlinecarcardis}}||{{list.driverAgeTag.onlinecarcardis}}</view>
-				<view class="clear"></view> -->
+				<view class="name">{{item.drivername}}</view>
+				<view class="year">驾龄{{item.driverAgeTag}}年</view>
+				<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
+				<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
+				<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
+				<view class="clear"></view>
 				<u-image class="img" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-				<view class="car">荣威/吉利/比亚迪....</view>
+				<view class="car u-line-1"> {{item.carCard}}</view>
+				<view class="clear"></view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
-		</view>
-		<view class="list" @click="detail()">
-			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
-				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
-				<view class="clear"></view>
-				<view class="car">荣威/吉利/比亚迪....</view>
-				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
-			</view>
-		</view>
-		<view class="list">
-			<u-image class="left" width="190rpx" height="190rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			<view class="right">
-				<view class="time">刷新时间：刚刚</view>
-				<view class="clear"></view>
-				<view class="name">X司机</view>
-				<view class="year">驾龄4年</view>
-				<view class="type">网约车认证</view>
-				<view class="clear"></view>
-				<view class="car">荣威/吉利/比亚迪....</view>
-				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
-			</view>
-			<view class="clear"></view>
 		</view>
 	</view>
 </template>
@@ -78,25 +54,25 @@
 				// 					}
 				// 				],
 				form: {
-				  driverage: '',
-				  businesstype: '',
-				  isrentAndAskWork: 1
+				  driverAge: '',
+				  businessType: 0,
+				  type: 1
 				},
-				driveragekey: '',
-				businesstypekey: '',
+				driverAgeKey: '',
+				businessTypeKey: '',
 				pagination: {
-				  pageNum: 0, 
+				  pageNum: 1, 
 				  pageSize: 10
 				},
 				total: 0,
 				select: [
 					{
 						label: '3年及以上',
-						value: '1'
+						value: '3'
 					},
 					{
 						label: '不限',
-						value: '2'
+						value: '0'
 					},
 				],
 				selectType: [
@@ -110,25 +86,39 @@
 					},
 					{
 						label: '不限',
-						value: '3'
+						value: '0'
 					}
 				],
-				list: [],
-				obj: {}
+				list: []
 			}
 		},
 		mounted() {
 			this.search()
 		},
 		methods: {
+			// transform(str) {
+			// 	return str.replace(/,/g,'\');
+			// },
 			getList(){
 			    const params = Object.assign(this.form, {
-			    	pageIndex: this.pagination.pageNum + 1,
-			    	pageSize: 10
+			    	pageNum: this.pagination.pageNum + 1,
+			    	pageSize: 10,
+					condition: this.form.driverAge ? 2:'',
+					orderByColumn: 'a.updateTime',
+					isAsc: 'desc'
 			    });
 					this.$u.api.askWork(params).then(res=>{
 						if(res.code === 200){
 							 this.list = res.rows;
+							 this.list.forEach(item=>{
+								 if (item.carCard){
+									item.carCard = item.carCard.split(',').join('/')
+								 }
+								 if (item.updateTime){
+								 	item.updateTimeStr = this.timeZ(item.updateTime)
+								 }
+								
+							 })
 							 this.total= res.total;
 						}else {
 							 this.$u.toast(res.msg);
@@ -137,28 +127,57 @@
 			},
 			search(){
 			    const params = Object.assign(this.form, {
-					pageNum: 0,
-					pageSize: 10
+					pageNum: 1,
+					pageSize: 10,
+					condition: this.form.driverAge ? 2:'',
+					orderByColumn: 'a.updateTime',
+					isAsc: 'desc'
 				});
+				
 					this.$u.api.askWork(params).then(res=>{
 						if(res.code === 200){
 							 this.list = res.rows;
+							 this.list.forEach(item=>{
+								 if (item.carCard){
+									item.carCard = item.carCard.split(',').join('/')
+								 }
+								 if (item.updateTime){
+								 	item.updateTimeStr = this.timeZ(item.updateTime)
+								 }
+							 								
+							 })
 							 this.total= res.total;
 						}else {
 							 this.$u.toast(res.msg);
 						}
 					})
 			},
+			timeZ(value){
+				let nowTime = new Date().getTime();
+				let oneDay= 86400000;
+				let timeDiff = nowTime-value;//时间差
+				let tian =parseInt(timeDiff/oneDay);
+				let day6 = oneDay*6;
+				if(timeDiff>day6){
+					return this.$u.timeFormat(value, 'yyyy-mm-dd');
+				} else if (timeDiff>oneDay && timeDiff < day6){
+					return tian+"天前"
+				} else if (timeDiff<oneDay){
+					return '刚刚'
+				} else {
+					console.log(timeDiff)
+				 }
+			},
 		    confirm(arr){
-				this.form.driverage = arr[0].value;
-				this.driveragekey = arr[0].label;
+				this.form.driverAge = arr[0].value;
+				this.driverAgeKey = arr[0].label;
 		    },
 			confirmType(arr){
-				this.form.businesstype = arr[0].value;
-				this.businesstypekey = arr[0].label;
+				this.form.businessType = arr[0].value;
+				this.businessTypeKey = arr[0].label;
 			},
-			detail() {
-				this.$u.route("/pages/index/company/components/index/carRentDetail")
+			detail(id) {
+				this.$u.route("/pages/index/company/components/index/carRentDetail",{id:id})
 			}
 		}
 	}
@@ -229,8 +248,7 @@
 			margin-top: 39rpx;
 		}
 		.list .right .year {
-			width: 130rpx;
-			height: 30rpx;
+			padding: 4rpx 16rpx;
 			line-height: 30rpx;
 			text-align: center;
 			border-radius: 12rpx;
@@ -241,9 +259,8 @@
 			margin-top: 14rpx;
 		}
 		.list .right .type {
+			padding: 4rpx 16rpx;
 			margin-left: 8rpx;
-			width: 160rpx;
-			height: 30rpx;
 			line-height: 30rpx;
 			text-align: center;
 			border-radius: 12rpx;
@@ -256,11 +273,14 @@
 		.list .right {
 			.img {
 				float: left;
+				margin-top: 4rpx;
 			}
 			.car {
+				width: 362rpx;
 				color: #7f7f7f;
 				font-size: 20rpx;
 				margin-top: 6rpx;
+				margin-left: 4rpx;
 				float: left;
 			}
 		}

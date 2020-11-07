@@ -2,7 +2,7 @@
 	<view class="buying">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="form.km" type="select" /></u-form-item>
+				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="kmkey" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:120rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
 				<view class="line"></view>
@@ -17,26 +17,26 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<view v-for="(item, index) in list" :key="index">
-			<view class="list" @click="detail()">
+			<view class="list" @click="detail(item.demandid)">
 				<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 				<view class="right">
 					<view class="city">上海</view>
 					<view class="clear"></view>
-					<view class="name">525520款包包</view>
-					<view class="price">打包价<text>{{list.packprice}}</text></view>
-					<view class="case">纯电动</view>
-					<view class="case">SUV</view>
-					<view class="case">自动挡</view>
+					<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
+					<view class="price">打包价<text>{{item.packPrice}}</text></view>
+					<view class="u-line-1">
+						<view v-for="(items, index) in item.carSystemTag.slice(0,2)" :key="index" class="case">{{items}}</view>
+					</view>
 				</view>
 				<view class="clear"></view>
 				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-				<view class="year">车龄<=3个月</view>
+				<view class="year">{{item.carAge}}</view>
 				<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-				<view class="year">20万公里-30万公里</view>
+				<view class="year">{{item.km}}</view>
 				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 			</view>
-			<u-icon v-show="change" @click="favorites()" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-			<u-icon v-show="!change" @click="favorites()" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+			<u-icon v-show="item.iscollection === 1" @click="cancel(item.demandid)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
+			<u-icon v-show="item.iscollection === 2" @click="favorites(item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		</view>
 	</view>
 </template>
@@ -65,9 +65,10 @@
 				  km: '',
 				  packprice: ''
 				},
+				kmkey: '',
 				packpricekey: '',
 				pagination: {
-				  pageNum: 0, 
+				  pageNum: 1, 
 				  pageSize: 10
 				},
 				total: 0,
@@ -111,10 +112,6 @@
 				],
 				selectPrice: [
 					{
-						label: '不限',
-						value: '0'
-					},
-					{
 						label: '3万以内',
 						value: '1'
 					},
@@ -125,6 +122,10 @@
 					{
 						label: '5万以上',
 						value: '3'
+					},
+					{
+						label: '不限',
+						value: '4'
 					}
 				],
 				list: []
@@ -176,7 +177,7 @@
 		    },
 		    search(){
 		        const params = Object.assign(this.form, {
-		    		pageNum: 0,
+		    		pageNum: 1,
 		    		pageSize: 10
 		    	});
 		    		this.$u.api.sellCar(params).then(res=>{
@@ -189,14 +190,15 @@
 		    		})
 		    },
 		    confirm(arr){
-		    	this.form.km = arr[0].label;
+		    	this.form.km = arr[0].value;
+		    	this.kmkey = arr[0].label;
 		    },
 		    confirmPrice(arr){
 		    	this.form.packprice = arr[0].value;
 		    	this.packpricekey = arr[0].label;
 			},
-			detail() {
-				this.$u.route("/pages/mymessage/components/index/carSellDetail")
+			detail(id) {
+				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
 			},
 			filter() {
 				this.$u.route("/pages/mymessage/components/index/filter")
@@ -269,8 +271,8 @@
 			}
 			.city {
 				width: 96rpx;
-				height: 40rpx;
-				line-height: 32rpx;
+				height: 36rpx;
+				line-height: 30rpx;
 				text-align: center;
 				font-size: 20rpx;
 				border-radius: 26rpx;
@@ -281,8 +283,9 @@
 			}
 			.name {
 				font-size: 28rpx;
+				line-height: 34rpx;
 				font-weight: 900;
-				margin-top: 8rpx;
+				margin-top: 6rpx;
 			}
 			.price text {
 				font-size: 36rpx;
@@ -297,15 +300,18 @@
 				color: #fff;
 				float: left;
 				margin-right: 10rpx;
-				margin-top: 10rpx;
+				margin-top: 6rpx;
 			}
 			.clock {
 				margin-left: 30rpx;
-				margin-top: 10rpx;
+				margin-top: 14rpx;
+				margin-right: 4rpx;
 				float: left;
 			}
 			.img {
 				float: left;
+				margin-top: 10rpx;
+				margin-right: 4rpx;
 			}
 			.year {
 				margin-top: 8rpx;
