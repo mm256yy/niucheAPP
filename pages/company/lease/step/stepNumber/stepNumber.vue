@@ -31,12 +31,12 @@
 		<view @click="showDialog" style="padding: 20pt;">
 			<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加其他参数</text>
 		</view>
-		<view class="view-content" v-show="form.ElseParamter.length>0">
+		<view class="view-content" v-show="form.elseParamterList.length>0">
 		  <view style="margin-top: 20pt;font-size: 14pt;padding-left: 5pt;">
 		  	<view class="">
 		  		其他参数
 		  	</view>
-			<u-form-item :label="item.paramtername" prop="name" label-width="180" v-for="(item,index) in form.ElseParamter" :key='index'>
+			<u-form-item :label="item.paramtername" prop="name" label-width="180" v-for="(item,index) in form.elseParamterList" :key='index'>
 				<u-input v-model="item.paramtertext" :clearable="false" maxlength="30" :border="true" class="form_input"/>
 				<text class="middle-content-label">{{item.paramterunit}}</text>
 			</u-form-item>
@@ -82,7 +82,7 @@
 					wheel:'',
 					displacement:'',
 					environmental:'',
-					ElseParamter:[]
+					elseParamterList:[]
 					
 				},
 				show:false,
@@ -160,7 +160,7 @@
 					}, 100)
 				  return false
 				}
-				this.form.ElseParamter.push(this.addForm)
+				this.form.elseParamterList.push(this.addForm)
 				this.dialogShow = false
 			}
 		}
