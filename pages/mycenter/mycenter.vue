@@ -8,8 +8,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyDriver ref="Search" v-show='curThemeType ==="driver"'></MyDriver>
-			<MyCompany ref="Search2" v-show='curThemeType ==="company"'></MyCompany>
+			<MyDriver ref="Search" v-if='curThemeType ==="driver"'></MyDriver>
+			<MyCompany ref="Search" v-else></MyCompany>
 	
 	</view>
 </template>
@@ -26,6 +26,7 @@
 		},
 		onShow() {
 			let type = uni.getStorageSync('curThemeType');
+			console.log(type)
 			if (type === 'company'){
 				companyPages.forEach(item=>{
 					uni.setTabBarItem(item)
@@ -33,8 +34,6 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
-				this.$refs.Search2.getUser()
-				
 			} else {
 				dirverPages.forEach(item=>{
 					uni.setTabBarItem(item)
@@ -42,8 +41,9 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
-				this.$refs.Search.getUser()
 			}
+			console.log(1)
+			this.$refs.Search.getUser()
 		},
 		components:{
 			MyCompany,MyDriver

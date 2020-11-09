@@ -184,6 +184,7 @@
 				this.$u.api.refreshUserJobWanted({driverDemandId:item.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						item.refreshFlag = true;
+						item.updateTimeStr = '刚刚'
 						 this.$u.toast(res.msg);
 					}else {
 						 this.$u.toast(res.msg);
