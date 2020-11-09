@@ -2,10 +2,10 @@
 	<view class="range-price">
 		<view class="padding">
 			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab"></v-tabs>
-			 <view v-for="(item, index) in detail" :key="index" class="" v-show="firstCurrent === index">
+			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 				<view class="bg">
-					<view class="year">车龄：<8个月</view>
-					<view class="distance">新车 <300公里</view>
+					<view class="year">{{detail.carage}}</view>
+					<view class="distance">新车 <{{detail.carkm}}公里</view>
 					<view class="clear"></view>
 				</view>
 				<view class="box">
@@ -59,8 +59,8 @@
 		},
 		props: {
 			detail: {
-			    type: Array,
-			    default: function (){return []}
+			    type: Object,
+			    default: function (){return {}}
 			},
 			tab: {
 			    type: Array,

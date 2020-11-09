@@ -10,17 +10,11 @@
 		 <view class="" style="padding: 40rpx;">
 			<u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 			<view>
-				<view class="tag">付费标签</view>
-				<view class="name">520520款运动版</view>
+				<!-- <view class="tag">付费标签</view> -->
+				<view class="name">520520款运动版{{detail.texttitle}}</view>
 				<view class="price"><text>27000</text>元/月起租</view>
 				<view class="box">
-					<view class="text">帆帆帆帆66</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
-					<view class="text">帆帆帆帆</view>
+					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
 				</view>
 		 	</view>
@@ -34,17 +28,17 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price ref="child"></range-price>
+			 			<range-price :tab="tab" :detail="detail" ref="child"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue></rentcar-issue>
+						<rentcar-issue :detail="detail.carRentProblemCollection"></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter></setting-parameter>
+						<setting-parameter :detail="detail"></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -77,9 +71,9 @@
 			    }],
 				current: 0,
 				swiperCurrent: 0,
-				isChildUpdate1:true,
-				isChildUpdate2:false,
-				isChildUpdate3:false
+				detail: {},
+				tab: [],
+				arr: []
 			}
 		},
 		onLoad(option) {
@@ -89,32 +83,41 @@
 			}
 		},
 		mounted() {
-			// this.$refs.child.getList();
-			// this.$u.api.getCarSystem().then(res=>{
-			// 	if(res.code === 200){
-			// 		 this.list = res.rows;
-			// 	}else {
-			// 		 this.$u.toast(res.msg);
-			// 	}
-			// })
+			this.getDetail()
 		},
 		methods: {
+			getDetail(){
+				this.$u.api.detailRent({driverDemandId:this.driverDemandId}).then(res=>{
+					if(res.code === 200){
+						 this.detail = res.object;
+						 const systemtag = this.detail.systemtag;
+						 const usertag = this.detail.usertag;
+						 const businesstypetag = this.detail.businesstypetag;
+						 const concat =systemtag.concat(usertag);
+						 this.arr = link.concat(businesstypetag);
+						 var text = '';
+						 if(this.detail.pricesectionlist) {
+						   this.detail.pricesectionlist.forEach(item=>{
+						   	if(item.lowprice && !item.highprice) {
+						   		text = '≥'+item.lowprice + '辆';
+						   	}
+						   	if(!item.lowprice && item.highprice) {
+						   		text = '≤'+item.highprice + '辆';
+						   	}
+						   	if(item.lowprice && item.highprice) {
+						   		text = item.lowprice + '-' + item.highprice + '辆';
+						   	}
+						   	this.tab.push(text)						
+						   })
+						 }
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
-				if(index == 0) {
-				    this.isChildUpdate1 = true;
-				    this.isChildUpdate2 = false;
-					this.isChildUpdate3 = false;
-				} else if(index == 1) {
-				    this.isChildUpdate1 = false;
-				    this.isChildUpdate2 = true;
-					this.isChildUpdate3 = false;
-				}else if(index == 2) {
-				    this.isChildUpdate1 = false;
-				    this.isChildUpdate2 = false;
-					this.isChildUpdate3 = true;
-				}
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {

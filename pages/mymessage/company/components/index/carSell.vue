@@ -1,5 +1,5 @@
 <template>
-	<view class="buying">
+	<view class="carSell">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="kmkey" type="select" /></u-form-item>
@@ -16,27 +16,27 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-for="(item, index) in list" :key="index">
-			<view class="list" @click="detail(item.demandid)">
-				<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-				<view class="right">
-					<view class="city">上海</view>
-					<view class="clear"></view>
-					<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
-					<view class="price">打包价<text>{{item.packPrice}}</text></view>
-					<view class="u-line-1">
+		<view class="last">
+			<view class="lists" v-for="(item, index) in list" :key="index">
+				<view class="list" @click="detail(item.demandid)">
+					<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+					<view class="right">
+						<view class="city">上海</view>
+						<view class="clear"></view>
+						<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
+						<view class="price">打包价<text>{{item.packPrice}}</text></view>
 						<view v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
 					</view>
+					<view class="clear"></view>
+					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+					<view class="year">{{item.carAge}}</view>
+					<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+					<view class="year">{{item.km}}</view>
+					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 				</view>
-				<view class="clear"></view>
-				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-				<view class="year">{{item.carAge}}</view>
-				<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-				<view class="year">{{item.km}}</view>
-				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+				<u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
+				<u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 			</view>
-			<u-icon v-show="item.iscollection === 1" @click="cancel(item.demandid)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
-			<u-icon v-show="item.iscollection === 2" @click="favorites(item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		</view>
 		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
@@ -49,6 +49,7 @@
 				show:false,
 				showPrice:false,
 				change: false,
+				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -64,7 +65,15 @@
 				// 				],
 				form: {
 				  km: '',
-				  packprice: ''
+				  packprice: '',
+				  businessType:0,
+				  carbrand:'',
+				  cartype:'',
+				  km: 100,
+				  power:'',
+				  packprice:'',
+				  startCarAge:'',
+				  endCarAge:''
 				},
 				kmkey: '',
 				packpricekey: '',
@@ -142,11 +151,14 @@
 			this.search()
 		},
 		methods: {
-			favorites(id) {
+			favorites(item,id) {
 				const params = {
 					BeCollectedId: id,
-					isDriveAndCompary: 1 
+					isDriveAndCompary: 2,
+					collectionstate: 3,
+					iscollection: 1
 				};
+				item.iscollection = 1;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('收藏成功');
@@ -155,11 +167,14 @@
 			    	}
 			    })
 			},
-			cancel(id) {
+			cancel(item,id) {
 				const params = {
 					BeCollectedId: id,
-					isDriveAndCompary: 1 
+					isDriveAndCompary: 2,
+					collectionstate: 3,
+					iscollection: 0
 				};
+				item.iscollection = 2;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('取消收藏成功');
@@ -177,6 +192,19 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 this.list.forEach(item=>{
+							 	if(item.carSystemTag.length > 2) {
+							 		item.carSystemTag = item.carSystemTag.slice(0,2); 
+							 	}else if(item.carSystemTag.length <= 2){
+							 		if(item.carUserTag.length) {
+							 			const arr = item.carSystemTag.concat(item.carUserTag);
+							 			if(arr.length > 2) {
+							 				item.carSystemTag = arr.slice(0,2);
+							 			}						 											 
+							 		}
+							 	}
+							 								
+							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -192,10 +220,15 @@
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
 							 this.list.forEach(item=>{
-								 if(item.carSystemTag) {
-									if (item.carSystemTag.length > 2){
-										item.carSystemTag = item.carSystemTag.slice(0,2);		
-									} 
+								 if(item.carSystemTag.length > 2) {
+									item.carSystemTag = item.carSystemTag.slice(0,2); 
+								 }else if(item.carSystemTag.length <= 2){
+									 if(item.carUserTag.length) {
+										const arr = item.carSystemTag.concat(item.carUserTag);
+										if(arr.length > 2) {
+											item.carSystemTag = arr.slice(0,2);
+										} 
+									 }
 								 }
 							 								
 							 })
@@ -224,14 +257,17 @@
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
 			},
 			filter() {
-				this.$u.route("/pages/mymessage/components/index/filter")
+				this.$u.route("/pages/mymessage/company/components/index/filter")
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.buying {
+	.carSell {
+		.last .lists:last-child {
+			margin-bottom: 90rpx;
+		}
 		.wrap {
 			padding: 40rpx;
 		}
@@ -265,81 +301,86 @@
 		.clear {
 			clear: both;
 		}
-		.heart {
-			margin-top: 14rpx;
-			margin-right: 20rpx;
-			position: absolute;
-			top: 370rpx;
-		    right: 34rpx;
-		}
-		.list {
+		.lists {
 			width: 702rpx;
-			height: 308rpx;
-			padding: 18rpx 15rpx;
-			margin-left: 24rpx;
-			margin-top: 24rpx;
-			font-size: 20rpx;
-			background-image: url(@/static/bgcarsell.png);
-			background-repeat: no-repeat;
-			background-size: cover;
-			.clear {
-				clear: both;
-			}
-			.left, .right {
-				float: left;
-			}
-			.right {
-				width: 360rpx;
-				padding-left: 34rpx;
-			}
-			.city {
-				width: 96rpx;
-				height: 36rpx;
-				line-height: 30rpx;
-				text-align: center;
-				font-size: 20rpx;
-				border-radius: 26rpx;
-				border: 1rpx solid rgba(0,0,0,0.3);
-				margin-top: 16rpx;
-				margin-right: 16rpx;
-				float: right;
-			}
-			.name {
-				font-size: 28rpx;
-				line-height: 34rpx;
-				font-weight: 900;
-				margin-top: 6rpx;
-			}
-			.price text {
-				font-size: 36rpx;
-				font-weight: 900;
-				color: #40B36C;
-				margin-left: 8rpx;
-			}
-			.case {
-				padding: 6rpx 14rpx;
-				border-radius: 30rpx;
-				background: #40B36C;
-				color: #fff;
-				float: left;
-				margin-right: 10rpx;
-				margin-top: 6rpx;
-			}
-			.clock {
-				margin-left: 30rpx;
+			// height: 308rpx;
+			position: relative;
+			.heart {
 				margin-top: 14rpx;
-				margin-right: 4rpx;
-				float: left;
+				margin-right: 20rpx;
+				position: absolute;
+				top: 246rpx;
+			    right: 0rpx;
 			}
-			.img {
-				float: left;
-				margin-top: 10rpx;
-				margin-right: 4rpx;
-			}
-			.year {
-				margin-top: 8rpx;
-				margin-right: 50rpx;
-				float: left;
+			.list {
+				width: 702rpx;
+				// height: 308rpx;
+				padding: 18rpx 15rpx;
+				margin-left: 24rpx;
+				margin-top: 24rpx;
+				font-size: 20rpx;
+				background-image: url(@/static/bgcarsell.png);
+				background-repeat: no-repeat;
+				background-size: cover;
+				.clear {
+					clear: both;
+				}
+				.left, .right {
+					float: left;
+				}
+				.right {
+					width: 360rpx;
+					padding-left: 34rpx;
+				}
+				.city {
+					width: 96rpx;
+					height: 36rpx;
+					line-height: 30rpx;
+					text-align: center;
+					font-size: 20rpx;
+					border-radius: 26rpx;
+					border: 1rpx solid rgba(0,0,0,0.3);
+					margin-top: 16rpx;
+					margin-right: 16rpx;
+					float: right;
+				}
+				.name {
+					font-size: 28rpx;
+					line-height: 34rpx;
+					font-weight: 900;
+					margin-top: 6rpx;
+				}
+				.price text {
+					font-size: 36rpx;
+					font-weight: 900;
+					color: #40B36C;
+					margin-left: 8rpx;
+				}
+				.case {
+					padding: 6rpx 14rpx;
+					border-radius: 30rpx;
+					background: #40B36C;
+					color: #fff;
+					float: left;
+					margin-right: 10rpx;
+					margin-top: 6rpx;
+				}
+				.clock {
+					margin-left: 30rpx;
+					margin-top: 14rpx;
+					margin-right: 4rpx;
+					float: left;
+				}
+				.img {
+					float: left;
+					margin-top: 10rpx;
+					margin-right: 4rpx;
+				}
+				.year {
+					margin-top: 8rpx;
+					margin-right: 50rpx;
+					float: left;
+				}
 			}
 		}
 	}

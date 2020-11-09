@@ -2,14 +2,14 @@
 	<view class="carRent">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="form.ageDriver" type="select" /></u-form-item>
+				<u-form-item style="width:200rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="priceid" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="form.price" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
+				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessType" type="select" /></u-form-item>
+				<!-- <view class="line"></view> -->
+				<!-- <u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item> -->
 				<view class="clear"></view>
 			</u-form>
-			<view class="icon"><u-icon name="search" color="#fff"></u-icon></view>
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
@@ -17,41 +17,46 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-	    <view v-for="(item, index) in list" :key="index">
-			<view class="list" @click="detail()">
-					<u-image class="left" width="264rpx" height="199rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-					<view class="right">
-						<view class="tag">付费标签</view>
-						<view class="type">网约车</view>
-						<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
+		<view class="last">
+			<view class="lists" v-for="(item, index) in list" :key="index">
+				<view class="list" @click="detail(item.inviteId)">
+						<u-image class="left" width="264rpx" height="199rpx" src="item.photoUrl"></u-image>
+						<view class="right">
+							<!-- <view class="tag">付费标签</view> -->
+							<!-- <view class="type">网约车</view> -->
+							<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
+							<view class="clear"></view>
+							<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
+							<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
+							<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
+							<view class="distance ">{{item.intentionBrand}}</view>
+							<view class="clear"></view>
+						</view>
 						<view class="clear"></view>
-						<view class="name">高薪招聘高薪招聘高薪招聘...</view>
-						<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
-						<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-						<view class="distance">荣威\吉利\比亚迪...</view>
-						<view class="clear"></view>
-					</view>
-					<view class="clear"></view>
-					<view class="box">
-						<view><text>28000</text>元/月起租</view>
-						<view class="case">自动挡</view>
-						<view class="case">SUV</view>
-						<view class="case">纯电动</view>
-					</view>
+						<view class="box">
+							<view><text>{{item.pay}}</text>月薪</view>
+							<!-- <view class="case">自动挡</view>
+							<view class="case">SUV</view>
+							<view class="case">纯电动</view> -->
+						</view>
 				</view>
-				<u-icon v-show="item.iscollect" @click="cancel(item.id)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
-				<u-icon v-show="!item.iscollect" @click="favorites(item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+				<u-icon v-show="item.isCollection === 1" @click="cancel(item,item.inviteId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
+				<u-icon v-show="item.isCollection === 2" @click="favorites(item,item.inviteId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 			</view>
-		</view>  
+		</view>
+		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+	</view>
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
 				show:false,
 				showType:false,
 				change: false,
+				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -66,9 +71,13 @@
 				// 					}
 				// 				],
 				form: {
-				  ageDriver: '',
-				  price: ''
+				  businessType: '',
+				  startPriceid: '',
+				  endPriceid: '',
+				  islogin: ''
 				},
+				priceid: '',
+				businessType: '',
 				pagination: {
 				  pageNum: 1, 
 				  pageSize: 10
@@ -107,21 +116,39 @@
 					},
 					{
 						label: '不限',
-						value: ''
+						value: '0'
 					}
 				],
-				list: []
+				list: [],
+				status: 'loadmore',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			}
 		},
+		computed:{
+			...mapGetters(['token'])
+		},
 		mounted() {
+			const token = this.token;
+			if(token) {
+				this.form.islogin = 1
+			}else{
+				this.form.islogin = 0
+			}
 			this.search()
 		},
 		methods: {
-			favorites(id) {
+			favorites(item,id) {
 				const params = {
 					BeCollectedId: id,
-					isDriveAndCompary: 1 
+					isDriveAndCompary: 1,
+					collectionstate: 2,
+					iscollection: 1
 				};
+				item.isCollection = 1;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('收藏成功');
@@ -130,11 +157,14 @@
 			    	}
 			    })
 			},
-			cancel(id) {
+			cancel(item,id) {
 				const params = {
 					BeCollectedId: id,
-					isDriveAndCompary: 1 
+					isDriveAndCompary: 1,
+					collectionstate: 2,
+					iscollection: 0
 				};
+				item.isCollection = 2;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('取消收藏成功');
@@ -152,6 +182,12 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 this.list.forEach(item=>{
+							    if (item.intentionBrand){
+							       item.intentionBrand = item.intentionBrand.split(',').join('/')
+							    }
+							 								
+							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -166,22 +202,58 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 							 this.total = res.total;
+							 this.list.forEach(item=>{
+							    if (item.intentionBrand){
+							       item.intentionBrand = item.intentionBrand.split(',').join('/')
+							    }
+							 								
+							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
 		    		})
 		    },
 		    confirm(arr){
-		    	this.form.ageDriver = arr[0].label;
+		    	this.priceid = arr[0].label;
+		    	const priceid = arr[0].value;
+		    	if(priceid == 1) {
+		    		this.form.startPriceid = '';
+		    		this.form.endPriceid = '6000';
+		    	}
+		    	if(priceid == 2) {
+		    		this.form.startPriceid = '6000';
+		    		this.form.endPriceid = '8000';
+		    	}
+		    	if(priceid == 3) {
+		    		this.form.startPriceid = '8000';
+		    		this.form.endPriceid = '10000';
+		    	}
+		    	if(priceid == 4) {
+		    		this.form.startPriceid = '10000';
+		    		this.form.endPriceid = '';
+		    	}
+		    	if(priceid == 5) {
+		    		this.form.startPriceid = '';
+		    		this.form.endPriceid = '';
+		    	}
 		    },
 		    confirmType(arr){
-		    	this.form.businesstype = arr[0].label;
+		    	this.businessType = arr[0].label;
+		    	this.form.businessType = arr[0].value;
+		    },
+			pull() {
+				let len = this.list.length;
+				 if (len < this.total){
+					 this.getList()
+				 }else{
+					this.status = 'nomore'
+				}
 			},
 			detail(id) {
-				this.$u.route("/pages/index/driver/components/index/jobSearchDetail",{id:id})
+				this.$u.route("/pages/mymessage/driver/components/index/jobSearchDetail",{id:id})
 			},
 			filter() {
-				this.$u.route("/pages/index/driver/components/index/filterSearch")
+				this.$u.route("/pages/mymessage/driver/components/index/filterSearch")
 			}
 		}
 	}
@@ -189,6 +261,9 @@
 
 <style lang="scss" scoped>
 	.carRent {
+		.last .lists:last-child {
+			margin-bottom: 90rpx;
+		}
 		.wrap {
 			padding: 40rpx;
 		}
@@ -222,103 +297,106 @@
 		.clear {
 			clear: both;
 		}
-		.heart {
-			margin-top: 14rpx;
-			margin-right: 20rpx;
-			position: absolute;
-			top: 154rpx;
-		    right: 34rpx;
-		}
-		.list{
+		.lists {
 			width: 679rpx;
-			height: 295rpx;
-			color: #000;
-			font-size: 20rpx;
-			margin-left: 36rpx;
-			margin-top: 40rpx;
-			.clear {
-				clear: both;
-			}
-			.left {
-				float: left;
-				margin-left: 19rpx;
-				margin-top: 20rpx;
-			}
-			.right{
-				width: 396rpx;
-				height: 226rpx;
-				padding: 0 30rpx;
-				background: #fff;
-				float: left;
-			}
-			.name {
-				font-weight: 900;
-				font-size: 28rpx;
-				margin-top: 18rpx;
-			}
-			.car {
-				float: left;
-			}
-			.distance {
-				margin-left: 6rpx;
-				color: #7f7f7f;
-				float: left;
-				margin-top: 16rpx;
-			}
-			.tag {
-				width: 179rpx;
-				height: 43rpx;
-				line-height: 43rpx;
-				text-align: center;
-				border-radius: 6rpx;
-				background: #FF6501;
-				font-size: 28rpx;
-				color: #fff;
-				font-weight: 900;
-				float: left;
-				margin-top: 20rpx;
-			}
-			.type {
-				width: 86rpx;
-				height: 28rpx;
-				line-height: 28rpx;
-				text-align: center;
-				background: rgba(0,0,0,0.1);
-				font-size: 20rpx;
-				float: left;
-				margin-left: 33rpx;
-				margin-top: 28rpx;
-				margin-right: 20rpx;
-			}
+			position: relative;
 			.heart {
-				float: right;
-				margin-top: -24rpx;
+				position: absolute;
+				margin-top: 14rpx;
+				position: absolute;
+				top: 0rpx;
+			    right: -16rpx;
 			}
-			.box {
+			.list{
 				width: 679rpx;
-				height: 59rpx;
-				background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
-				padding: 0 0 0 18rpx;
-				color: #fff;
-				margin-top: 10rpx;
-				view {
-					font-size: 20rpx;
+				// height: 295rpx;
+				color: #000;
+				font-size: 10pt;
+				margin-left: 36rpx;
+				margin-top: 40rpx;
+				background: #fff;
+				.clear {
+					clear: both;
+				}
+				.left {
+					float: left;
+					margin-left: 19rpx;
+					margin-top: 20rpx;
+				}
+				.right{
+					width: 396rpx;
+					height: 226rpx;
+					padding: 0 30rpx;
+					background: #fff;
 					float: left;
 				}
-				view text {
-					font-size: 36rpx;
+				.name {
 					font-weight: 900;
-					margin-right: 19rpx;
+					font-size: 14pt;
+					margin-top: 80rpx;
 				}
-				.case {
-					padding: 6rpx 14rpx;
-					border-radius: 10rpx;
-					background: #fff;
+				.car {
+					float: left;
+					margin-top: 14rpx;
+					margin-right: 4rpx;
+				}
+				.distance {
+					margin-left: 6rpx;
+					color: #7f7f7f;
+					float: left;
+					margin-top: 16rpx;
+				}
+				.tag {
+					width: 179rpx;
+					height: 43rpx;
+					line-height: 43rpx;
+					text-align: center;
+					border-radius: 6rpx;
+					background: #FF6501;
+					font-size: 28rpx;
+					color: #fff;
 					font-weight: 900;
-					color: #FF6501;
-					margin-top: 8rpx;
-					float: right;
-					margin-right: 10rpx;
+					float: left;
+					margin-top: 20rpx;
+				}
+				.type {
+					width: 86rpx;
+					height: 28rpx;
+					line-height: 28rpx;
+					text-align: center;
+					background: rgba(0,0,0,0.1);
+					font-size: 20rpx;
+					float: left;
+					margin-left: 33rpx;
+					margin-top: 28rpx;
+					margin-right: 20rpx;
+				}
+				.box {
+					width: 679rpx;
+					height: 59rpx;
+					background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
+					padding: 0 0 0 18rpx;
+					color: #fff;
+					margin-top: 10rpx;
+					view {
+						font-size: 20rpx;
+						float: left;
+					}
+					view text {
+						font-size: 18pt;
+						font-weight: 900;
+						margin-right: 19rpx;
+					}
+					.case {
+						padding: 6rpx 14rpx;
+						border-radius: 10rpx;
+						background: #fff;
+						font-weight: 900;
+						color: #FF6501;
+						margin-top: 8rpx;
+						float: right;
+						margin-right: 10rpx;
+					}
 				}
 			}
 		}

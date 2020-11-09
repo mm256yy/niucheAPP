@@ -9,8 +9,8 @@
 		</view>
 		<swiper class="swiper-box">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;">
-					<job-search></job-search>
+				<scroll-view @scrolltolower="onreachBottom" scroll-y style="height: 100%;width: 100%;">
+					<job-search ref="search"></job-search>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -32,18 +32,17 @@
 			}
 		},
 		methods: {
-			
+			onreachBottom() {
+				this.$refs.search.pull()
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
 page{
-	// background-image: url(@/static/lease.png);
-	background-repeat: no-repeat;
-	height: 100%;
-	background-size: cover;
-	// background-position: 50% 50%;
+	background-color: #F5F5F8;
+	overflow: hidden;
 }
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;

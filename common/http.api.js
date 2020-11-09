@@ -67,8 +67,12 @@ const install  = (Vue, vm) => {
 	 const  detailSellCar = (params = {}) => vm.$u.get('/system/usermain/ComparySellCarTextByid', params);
 	 //司机端租车首页展示
 	 const  homeRent = (params = {}) => vm.$u.get('/system/usermain/DriverSideRentCarList', params);
+	 //司机端租车详情
+	 const  detailRent = (params = {}) => vm.$u.get('/system/usermain/DriverSideRentCarListByOne', params);
 	 //司机端招聘首页展示
 	 const  homeSearch = (params = {}) => vm.$u.get('/system/usermain/DriverSideInvideCarList', params);
+	 //司机端招聘详情
+	 const  detailSearch = (params = {}) => vm.$u.get('/system/usermain/DriverSideInvideCarListByOne', params);
 	 //驾照认证查询
 	  const  listDrivingLicense = (params = {}) => vm.$u.get('/user/drivingLicense/listDrivingLicense', params);
 	  //保存驾照认证
@@ -159,7 +163,9 @@ const install  = (Vue, vm) => {
 		releaseRent,
 		releaseSearch,
 		detailBuying,
-		detailSellCar
+		detailSellCar,
+		detailRent,
+		detailSearch
 	 };
 }
 

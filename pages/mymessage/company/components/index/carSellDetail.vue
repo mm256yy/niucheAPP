@@ -19,7 +19,7 @@
 				</view>
 				<view class="clear"></view>
 				<view class="box">
-					<view v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
+					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
 				</view>
 		 	</view>
@@ -33,7 +33,7 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :tab="tab" :detail="detail.pricesectionlist"></range-price>
+			 			<range-price :tab="tab" :detail="detail"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
@@ -79,7 +79,8 @@
 				current: 0,
 				swiperCurrent: 0,
 				detail:{},
-				tab: []
+				tab: [],
+				arr: []
 			}
 		},
 		onLoad(option) {
@@ -96,6 +97,9 @@
 					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
+							 const systemtag = this.detail.systemtag;
+							 const usertag = this.detail.usertag;
+							 this.arr =systemtag.concat(usertag);
 							 var text = '';
 							 if(this.detail.pricesectionlist) {
 								this.detail.pricesectionlist.forEach(item=>{

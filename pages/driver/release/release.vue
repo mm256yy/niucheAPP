@@ -1,17 +1,19 @@
 <template>
 	<view class="release">
 		<u-navbar back-text="返回"  back-icon-size="0" title="" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		<view class="content" style="text-align: center;padding: 40pt;">
-			<view class="" style="font-size: 18pt;color: #fff;margin-bottom: 114rpx;margin-top: 260rpx;">
+		<view class="publish">
+			<view class="message">
 				您要发布什么信息？
 			</view>
+		</view>
+		<view class="content">
 			<view class="box" @click="toPage(1)">
 				<u-image class="img" width="70rpx" height="70rpx" src="@/static/carRent.png"></u-image>
-				<view class="text">租车</view>
+				<text class="text">租车</text>
 			</view>
 			<view class="box" @click="toPage(2)">
 				<u-image class="img" width="70rpx" height="70rpx" src="@/static/qiuzhi.png"></u-image>
-				<view class="text">求职</view>
+				<text class="text">求职</text>
 			</view>
 		</view>
 		<NotLogin></NotLogin>
@@ -102,26 +104,50 @@
 // 	text-align: center;
 // }
 page{
+	height: 100%;
 	background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 }
 .release {
+	height: 100%;
+	.publish {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.message {
+			width: 326rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			font-size: 36rpx;
+			font-weight: 900;
+			color: #fff;
+			margin-bottom: 114rpx;
+			margin-top: 260rpx;
+		}
+	}
+	.content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
 	.box {
-		width: 380rpx;
-		height: 94rpx;
-		padding: 14rpx;
+		width: 326rpx;
+		height: 88rpx;
+		line-height: 88rpx;
+		text-align: center;
 		border-radius: 60rpx;
 		background: #fff;
-		font-size: 40rpx;
+		font-size: 36rpx;
 		color: #FF6501;
 		margin-bottom: 41rpx;
-		margin-left: 40rpx;
 		.img {
 			float: left;
+			margin-top: 12rpx;
+			margin-left: 12rpx;
 		}
 		.text {
-			float: left;
-			margin-left: 90rpx;
-			margin-top: 10rpx;
 			letter-spacing: 30rpx;
 		}
 	}

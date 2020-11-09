@@ -2,27 +2,8 @@
 	<view class="range-price">
 		<view class="padding">
 			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx"
-			 inactive-color="#7f7f7f" activeColor="#FF6501" :tabs="['12个月', '6个月', '3个月','1个月']" @change="change"></v-tabs>
-			 <view class="" v-if="firstCurrent === 0">
-				<view class="bg">
-				    <view class="year">车龄：<8个月</view>
-					<view class="distance">10-20万公里</view>
-					<view class="clear"></view>
-				</view>
-				<view class="box">
-					<view class="left">
-						<view class="price"><text>￥3100</text></view>
-						<view>-月租-</view>
-					</view>
-					<view class="right">
-						<view class="price"><text>￥3000</text></view>
-						<view>-2人拼租价-</view>
-					</view>
-					<view class="clear"></view>
-					<view class="deposit">押金：<text>￥8000</text></view>
-				</view>
-			 </view>
-			 <view class="" v-if="firstCurrent === 1">
+			 inactive-color="#7f7f7f" activeColor="#FF6501" :tabs="tab" @change="change"></v-tabs>
+			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
 			        <view class="year">车龄：<8个月</view>
 			    	<view class="distance">10-20万公里</view>
@@ -40,44 +21,6 @@
 			    	<view class="clear"></view>
 			    	<view class="deposit">押金：<text>￥8000</text></view>
 			    </view>
-			 </view>
-			 <view class="" v-if="firstCurrent === 2">
-			 	<view class="bg">
-			 	    <view class="year">车龄：<8个月</view>
-			 		<view class="distance">10-20万公里</view>
-			 		<view class="clear"></view>
-			 	</view>
-			 	<view class="box">
-			 		<view class="left">
-			 			<view class="price"><text>￥3100</text></view>
-			 			<view>-月租-</view>
-			 		</view>
-			 		<view class="right">
-			 			<view class="price"><text>￥3000</text></view>
-			 			<view>-2人拼租价-</view>
-			 		</view>
-			 		<view class="clear"></view>
-			 		<view class="deposit">押金：<text>￥8000</text></view>
-			 	</view>					
-			 </view>
-			 <view class="" v-if="firstCurrent === 3">
-			 	<view class="bg">
-			 	    <view class="year">车龄：<8个月</view>
-			 		<view class="distance">10-20万公里</view>
-			 		<view class="clear"></view>
-			 	</view>
-			 	<view class="box">
-			 		<view class="left">
-			 			<view class="price"><text>￥3100</text></view>
-			 			<view>-月租-</view>
-			 		</view>
-			 		<view class="right">
-			 			<view class="price"><text>￥3000</text></view>
-			 			<view>-2人拼租价-</view>
-			 		</view>
-			 		<view class="clear"></view>
-			 		<view class="deposit">押金：<text>￥8000</text></view>
-			 	</view>					
 			 </view>
 			 <view class="discount">
 				 <text>优惠</text>
@@ -128,6 +71,16 @@
 				firstCurrent:0
 			}
 		},
+		props: {
+			detail: {
+			    type: Object,
+			    default: function (){return {}}
+			},
+			tab: {
+			    type: Array,
+			    default: function (){return []}
+			},
+		},
 		mounted() {
 			this.getList()
 		},
@@ -144,33 +97,6 @@
 			},
 			change(index) {
 				this.firstCurrent = index;
-				if(firstCurrent === 0) {
-					this.getList()
-				}else if(firstCurrent === 1) {
-					this.$u.api.getCarSystem().then(res=>{
-						if(res.code === 200){
-							 this.list = res.rows;
-						}else {
-							 this.$u.toast(res.msg);
-						}
-					})
-				}else if(firstCurrent === 2) {
-					this.$u.api.getCarSystem().then(res=>{
-						if(res.code === 200){
-							 this.list = res.rows;
-						}else {
-							 this.$u.toast(res.msg);
-						}
-					})
-				}else if(firstCurrent === 3) {
-					this.$u.api.getCarSystem().then(res=>{
-						if(res.code === 200){
-							 this.list = res.rows;
-						}else {
-							 this.$u.toast(res.msg);
-						}
-					})
-				}
 			},
 			other() {
 				this.$u.route('/pages/index/driver/components/index/other');

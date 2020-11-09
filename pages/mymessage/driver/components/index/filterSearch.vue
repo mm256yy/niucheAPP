@@ -8,8 +8,9 @@
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
 	   	  	<u-form-item label="业务类型" prop="businesstype">
 				<u-radio-group v-model="form.businesstype" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">网约车 </u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">出租车 </u-radio>
+					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
+					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
+					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
 				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 	   	  	</u-form-item>
@@ -20,25 +21,25 @@
 					</u-checkbox>
 				</u-checkbox-group>
 			</u-form-item>
-			<u-form-item label="押金" label-position="top">
+			<!-- <u-form-item label="押金" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="modelGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in depositList" :key="index" :name="item.name">
 						{{item.text}}
 					</u-checkbox>
 				</u-checkbox-group>
-			</u-form-item>
-			<u-form-item label="能接受的工作时长" label-position="top">
+			</u-form-item> -->
+			<!-- <u-form-item label="能接受的工作时长" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="powerGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in hoursList" :key="index" :name="item.name">
 						{{item.text}}
 					</u-checkbox>
 				</u-checkbox-group>
-			</u-form-item>
-			<u-form-item label="车龄" label-position="top">
+			</u-form-item> -->
+			<!-- <u-form-item label="车龄" label-position="top">
 				<u-radio-group v-model="form.carage"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
-			</u-form-item>
+			</u-form-item> -->
 		  </u-form>	
 	   </view>
 		<view class="bottom">

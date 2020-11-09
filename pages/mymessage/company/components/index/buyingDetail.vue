@@ -10,7 +10,7 @@
 		 <view class="list">
 		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="right">
-				<u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon>
+				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
 		 		<view class="name">吴司机</view>
 				<view class="clear"></view>
 				<u-icon class="car" name="car" width="42" height="37"></u-icon>
@@ -20,8 +20,8 @@
 		 		<view class="type">出租车运营</view>
 		 		<view class="clear"></view>
 				<view class="box">
-				    <view>准驾类型</view>
-				    <view>C1</view>	
+				    <view>求购</view>
+				    <text class="num">30</text>辆
 				</view>
 		 	</view>
 			<view class="clear"></view>
@@ -130,7 +130,7 @@ page{
 	}
 	.detail {
 		.list{
-			width: 670rpx;
+			width: 671rpx;
 			height: 257rpx;
 			border-radius: 60rpx 0 60rpx 60rpx;
 			padding: 40rpx;
@@ -173,9 +173,19 @@ page{
 				margin-top: 19rpx;
 			}
 			.box {
+				width: 160rpx;
+				height: 135rpx;
+				padding: 6rpx;
 				float: right;
-				margin-top: -32rpx;
+				margin-top: -86rpx;
+				margin-right: -76rpx;
 				font-size: 32rpx;
+				background: #fff;
+				color: #37AB63;
+				.num {
+					font-size: 72rpx;
+					font-weight: 900;
+				}
 			}
 			.reload {
 				float: right;

@@ -75,7 +75,7 @@
 				this.$refs.carSell.pull()
 			},
 			onreachBottomBuying() {
-				this.$refs.buying.search()
+				this.$refs.buying.pull()
 			}
 		}
 	}
@@ -110,7 +110,6 @@ page{
 	flex-direction: column;
 	height: calc(100vh - var(--window-top));
 	width: 100%;
-	margin-bottom: 120rpx;
 }
 .swiper-box {
 	flex: 1;

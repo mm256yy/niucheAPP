@@ -6,10 +6,11 @@
 	   <view class="view-content">
 		   <view class="name">比亚迪+宝马 / 3万以内</view>
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
-	   	  	<u-form-item label="业务类型" prop="businesstype">
-				<u-radio-group v-model="form.businesstype" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">网约车 </u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">出租车 </u-radio>
+	   	  	<u-form-item label="业务类型" prop="businessType">
+				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
+					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
+					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
+					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
 				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 	   	  	</u-form-item>
@@ -39,18 +40,18 @@
 				</u-checkbox-group>
 			</u-form-item>
 			<u-form-item label="打包价" label-position="top">
-				<u-radio-group v-model="form.monthzu"  :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
+				<u-radio-group @change="radioGroupChangePrice" v-model="form.packprice"  :active-color="'#6DD99C'" style="text-align: right;">
+					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in priceList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top">
-				<u-radio-group v-model="form.carage"  :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
+				<u-radio-group @change="radioGroupChangeAge" v-model="carage"  :active-color="'#6DD99C'" style="text-align: right;">
+					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="行驶里程" label-position="top">
-				<u-radio-group v-model="form.km"  :active-color="'#6DD99C'" style="text-align: right;">
-				  <u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
+				<u-radio-group @change="radioGroupChangeKm" v-model="form.km"  :active-color="'#6DD99C'" style="text-align: right;">
+				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 		  </u-form>	
@@ -71,46 +72,84 @@
 					'color':'#ffffff'
 				},
 				form:{
-					userid:'',
-					businesstype:0,
-					carmodel:[],
-					intentionbrand:[],
-					power:[],
-					monthzu:'',
-					carage:'',
-					km:''
+					businessType:0,
+					carbrand:'',
+					cartype:'',
+					km: 100,
+					power:'',
+					packprice:'',
+					startCarAge:'',
+					endCarAge:''
 				},
+				carage: '',
 				value:'',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
 						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}],
 				modelList:[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}],
 				powerList:[{name:'纯电动',checked: false},{name:'插电混动',checked:false},{name:'燃油车(含油电混动)',checked: false}],
-				rentList:[{name: '0',text:'3万以内' },{name: '1',text:'3万-5万' },{name: '1',text:'5万以上' }],
-				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
+				priceList:[{name: '4',text:'不限' },{name: '1',text:'3万以内' },{name: '2',text:'3万-5万' },{name: '3',text:'5万以上' }],
+				ageList:[{name: '4',text:'不限' },{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				objType:{
-					wycList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },
-					 {name: '3',text:'5万公里-10万公里' },{name: '4',text:'10万公里-20万公里' },{name: '5',text:'20万公里-30万公里' },
-					 {name: '6',text:'30万公里以上'},],
-					 czcList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },
-					  {name: '3',text:'5万公里-10万公里' },{name: '4',text:'10万公里-20万公里' },{name: '5',text:'20万公里-30万公里' },
-					  {name: '6',text:'30万公里-50万公里' },{name: '7',text:'50万公里-70万公里' },{name: '8',text:'70万公里以上'},],
+					wycList:[{name: '',text:'不限' },{name: '1',text:'0-2万公里' },{name: '2',text:'2-5万公里'},{name: '3',text:'5-10万公里' },{name: '4',text:'10-20万公里' },
+					     {name: '5',text:'20-30万公里' },{name: '6',text:'30万公里以上'},],
+					      czcList:[{name: '',text:'不限' },{name: '1',text:'0-2万公里' },{name: '2',text:'2-5万公里' },
+					      {name: '3',text:'5-10万公里' },{name: '4',text:'10-20万公里' },{name: '5',text:'20-30万公里' },
+					      {name: '6',text:'30-50万公里' },{name: '7',text:'50-70万公里' },{name: '8',text:'70万公里以上'}],
 				},
-				radioType:'wycList',
-				showTips:false
+				radioType:'wycList'
 			}
 		},
-		computed:{
-			...mapGetters(['telephone'])
-		},
-		mounted() {
-			this.form.userid = this.telephone;
-		},
+		// computed:{
+		// 	...mapGetters(['telephone'])
+		// },
+		// mounted() {
+		// 	this.form.userid = this.telephone;
+		// },
 		methods: {
-			brandGroupChange(e) {this.form.intentionbrand = e;},
-			powerGroupChange(e) {this.form.power = e;},
-			modelGroupChange(e) {this.form.carmodel = e;},
+			brandGroupChange(e) {
+				this.form.carbrand = e.join(',');
+				this.select()
+			},
+			powerGroupChange(e) {
+				this.form.power = e.join(',');
+				this.select()
+			},
+			modelGroupChange(e) {
+				this.form.cartype = e.join(',');
+				this.select()
+			},
 			radioGroupChange(e){
-				this.radioType = e=== '0'?'wycList':'czcList'
+				this.radioType = e=== '1'?'wycList':'czcList'
+				this.select()
+			},
+			radioGroupChangePrice(e){
+				this.select()
+			},
+			radioGroupChangeAge(e){
+				if(this.carage == '0') {
+					this.form.startCarAge = '0';
+                    this.form.endCarAge = '1';
+				}
+				if(this.carage == '1') {
+					this.form.startCarAge = '1';
+				    this.form.endCarAge = '3';
+				}
+				if(this.carage == '2') {
+					this.form.startCarAge = '3';
+				    this.form.endCarAge = '5';
+				}
+				if(this.carage == '3') {
+					this.form.startCarAge = '5';
+				    this.form.endCarAge = '';
+				}
+				if(this.carage == '4') {
+					this.form.startCarAge = '';
+				    this.form.endCarAge = '';
+				}
+				this.select()
+			},
+			radioGroupChangeKm(e){
+				this.select()
 			},
 			addBrand(){
 				if (this.value){
@@ -118,24 +157,24 @@
 					this.value = ''
 				}
 			},
-			toNext(){
+			select(){
 				// if (this.form.mainBusiness === ''){
 				// 	this.$u.toast('请选择业务类型');
 				// 	return
 				// }
-				this.$u.api.saveShoping(this.form).then(res=>{
+				this.$u.api.sellCar(this.form).then(res=>{
 					if(res.code === '200'){
-						this.showTips = true;
+				
 					}else {
 						 this.$u.toast(res.message);
 					}
 				})
 			},
 			history() {
-				this.$u.route('/pages/mymessage/components/index/history');
+				this.$u.route('/pages/mymessage/company/components/index/history');
 			},
 			result() {
-				this.$u.route('/pages/mymessage/components/index/result');
+				this.$u.route('/pages/mymessage/company/components/index/result',{form:JSON.stringify(this.form)});
 			}
 		}
 	}

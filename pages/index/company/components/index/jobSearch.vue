@@ -26,7 +26,7 @@
 				<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
 				<view class="clear"></view>
 				<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
-				<view class="car">求职意向：{{item.carCard}}</view>
+				<view class="car u-line-1"">求职意向：{{item.carCard}}</view>
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
 		</view>
@@ -122,7 +122,9 @@
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
 		    		pageSize: 10,
-					condition: this.form.driverAge ? 2:''
+					condition: this.form.driverAge ? 2:'',
+					orderByColumn: 'a.updateTime',
+					isAsc: 'desc'
 		    	});
 		    		this.$u.api.askWork(params).then(res=>{
 		    			if(res.code === 200){

@@ -1,87 +1,15 @@
 <template>
 	<view class="issue">
-		<view class="bg">
+		<view class="bg" v-for="(item, index) in detail" :key="index">
 			<view class="border">
 				<view class="box">
 					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
 				</view>
-				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
+				<view class="limit">{{item.mobanquestionname}}</view>
 			</view>
 			<view class="bottom">
 				<view class="box">答</view>
-				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
-			</view>
-		</view>
-		<view class="bg">
-			<view class="border">
-				<view class="box">
-					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
-				</view>
-				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
-			</view>
-			<view class="bottom">
-				<view class="box">答</view>
-				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
-			</view>
-		</view>
-		<view class="bg">
-			<view class="border">
-				<view class="box">
-					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
-				</view>
-				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
-			</view>
-			<view class="bottom">
-				<view class="box">答</view>
-				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
-			</view>
-		</view>
-		<view class="bg">
-			<view class="border">
-				<view class="box">
-					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
-				</view>
-				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
-			</view>
-			<view class="bottom">
-				<view class="box">答</view>
-				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
-			</view>
-		</view>
-		<view class="bg">
-			<view class="border">
-				<view class="box">
-					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
-				</view>
-				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
-			</view>
-			<view class="bottom">
-				<view class="box">答</view>
-				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
-			</view>
-		</view>
-		<view class="bg">
-			<view class="border">
-				<view class="box">
-					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
-				</view>
-				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
-			</view>
-			<view class="bottom">
-				<view class="box">答</view>
-				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
-			</view>
-		</view>
-		<view class="bg">
-			<view class="border">
-				<view class="box">
-					<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
-				</view>
-				<view class="limit">租车要满足哪些条件？租车要满足哪些条件？租车要满足哪些条件？</view>
-			</view>
-			<view class="bottom">
-				<view class="box">答</view>
-				<view class="limit">年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁年满18周岁</view>
+				<view class="limit">{{item.mobandaan}}</view>
 			</view>
 		</view>
 		<view class="ask">
@@ -106,6 +34,12 @@
 		data() {
 			return {
 				
+			}
+		},
+		props: {
+			detail: {
+			    type: Object,
+			    default: function (){return {}}
 			}
 		},
 		mounted() {
