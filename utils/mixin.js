@@ -12,18 +12,13 @@ export default {
 				 	'background-image': 'linear-gradient(55deg, #37AB63, #6DD99C)'
 					// 'background-image': 'linear-gradient(55deg, #37AB63, #34b98b)'
 				 },
-
+                curThemeType:''
 			 }
            },
 		   onShow () {
-			   
+				let type = uni.getStorageSync('curThemeType');
+				this.curThemeType = type
 		   },
-          computed:{
-          	...mapGetters(['curThemeType'])
-          },
-          methods:{
- 
-          }
        })
    }
 }

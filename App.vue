@@ -8,8 +8,11 @@
 				let day = date.getDate();
 				let obj = {year:year,month:month,day:day};
 				 uni.setStorageSync('today', obj);
-			     
-			   uni.onTabBarMidButtonTap(function(e){
+			     let type = uni.getStorageSync('curThemeType');
+				 if(!type){
+					 uni.setStorageSync('curThemeType', 'driver');
+				 }
+			    uni.onTabBarMidButtonTap(function(e){
 				   let token = uni.getStorageInfoSync('token');
 				   if (token){
 					   let role = uni.getStorageInfoSync('role');

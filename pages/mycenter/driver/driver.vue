@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="content" v-show = "curThemeType ==='driver'">
+		<view class="content">
 			<view style="padding: 15pt;">
 				<view class="avater">
 					<u-row style="margin-top: 10pt;background-color: #FFFFFF;padding: 6pt 0;">
@@ -109,7 +109,7 @@
 					jobNum:'',
 					carNum:'',
 					certificationType:""
-				}
+				},
 			}
 		},
 		filters: {

@@ -26,7 +26,7 @@
 		},
 		onShow() {
 			let type = uni.getStorageSync('curThemeType');
-			console.log(type)
+			this.curThemeType = type
 			if (type === 'company'){
 				companyPages.forEach(item=>{
 					uni.setTabBarItem(item)

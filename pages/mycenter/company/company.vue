@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view v-show="curThemeType ==='company'" style="padding: 8pt;">
+		<view style="padding: 8pt;">
 			<view>
 				<view class="imgUrl">
 					<u-row style="padding:10pt 10pt 15pt; ">
