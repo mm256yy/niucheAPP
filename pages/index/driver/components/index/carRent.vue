@@ -31,7 +31,7 @@
 					</view>
 					<view v-show="item.businesstypetag == 1" class="label">网约车</view>
 					<view v-show="item.businesstypetag == 2" class="label">出租车</view>
-					<u-image class="left" width="306rpx" height="226rpx" src="item.photourl"></u-image>
+					<u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
 					<view class="clear"></view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="box">
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -83,7 +84,8 @@
 				  startPriceid: '',
 				  endPriceid: '',
 				  km: '',
-				  power: ''
+				  power: '',
+				  islogin: ''
 				},
 				pagination: {
 				  pageNum: 1, 
@@ -137,7 +139,16 @@
 				}
 			}
 		},
+		computed:{
+			...mapGetters(['token'])
+		},
 		mounted() {
+			const token = this.token;
+			if(token) {
+				this.form.islogin = 1
+			}else{
+				this.form.islogin = 0
+			}
 			this.search()
 		},
 		methods: {
@@ -345,15 +356,13 @@
 				margin-left: 36rpx;
 				margin-top: 40rpx;
 				background: #fff;
-				.clear {
-					clear: both;
-				}
 				.left {
 					float: right;
 					margin-top: 20rpx;
+					margin-right: 10rpx;
 				}
 				.right{
-					width: 373rpx;
+					width: 363rpx;
 					height: 226rpx;
 					padding: 0 30rpx;
 					background: #fff;

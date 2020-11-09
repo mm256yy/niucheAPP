@@ -19,11 +19,12 @@
 		</view> -->
 		<view class="last">
 			<view class="lists" v-for="(item, index) in list" :key="index">
-				<view class="list" @click="detail(item.inviteId)">
+				<view class="list" @click="detail(item.companyMainId)">
 						<u-image class="left" width="264rpx" height="199rpx" src="item.photoUrl"></u-image>
 						<view class="right">
 							<!-- <view class="tag">付费标签</view> -->
-							<!-- <view class="type">网约车</view> -->
+							<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
+							<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
 							<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
 							<view class="clear"></view>
 							<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
@@ -40,8 +41,8 @@
 							<view class="case">纯电动</view> -->
 						</view>
 				</view>
-				<u-icon v-show="item.isCollection === 1" @click="cancel(item,item.inviteId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
-				<u-icon v-show="item.isCollection === 2" @click="favorites(item,item.inviteId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+				<u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
+				<u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 			</view>
 		</view>
 		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
@@ -108,15 +109,15 @@
 				selectType: [
 					{
 						label: '网约车',
-						value: '1'
+						value: '网约车司机'
 					},
 					{
 						label: '出租车',
-						value: '2'
+						value: '出租车司机'
 					},
 					{
 						label: '不限',
-						value: '0'
+						value: ''
 					}
 				],
 				list: [],
@@ -131,7 +132,7 @@
 		computed:{
 			...mapGetters(['token'])
 		},
-		mounted() {
+		onshow() {
 			const token = this.token;
 			if(token) {
 				this.form.islogin = 1
@@ -304,7 +305,7 @@
 				position: absolute;
 				margin-top: 14rpx;
 				position: absolute;
-				top: 0rpx;
+				top: 8rpx;
 			    right: -16rpx;
 			}
 			.list{
@@ -315,9 +316,6 @@
 				margin-left: 36rpx;
 				margin-top: 40rpx;
 				background: #fff;
-				.clear {
-					clear: both;
-				}
 				.left {
 					float: left;
 					margin-left: 19rpx;
@@ -333,7 +331,7 @@
 				.name {
 					font-weight: 900;
 					font-size: 14pt;
-					margin-top: 80rpx;
+					margin-top: 20rpx;
 				}
 				.car {
 					float: left;
@@ -366,10 +364,10 @@
 					text-align: center;
 					background: rgba(0,0,0,0.1);
 					font-size: 20rpx;
-					float: left;
+					float: right;
 					margin-left: 33rpx;
-					margin-top: 28rpx;
-					margin-right: 20rpx;
+					margin-top: 20rpx;
+					margin-right: 30rpx;
 				}
 				.box {
 					width: 679rpx;

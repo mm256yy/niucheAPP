@@ -307,9 +307,6 @@
 				background-image: url(@/static/bgrentcar.png);
 				background-repeat: no-repeat;
 				background-size: cover;
-				.clear {
-					clear: both;
-				}
 				.left {
 					margin-top: 19rpx;
 				}

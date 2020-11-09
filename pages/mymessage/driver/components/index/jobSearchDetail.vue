@@ -10,11 +10,11 @@
 		 <view class="" style="padding: 40rpx;">
 			<!-- <u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image> -->
 			<view class="list">
-				<view class="tag">付费标签</view>
-				<view class="name">高薪招聘高薪招聘高薪招聘高薪招聘的点点滴滴大大大</view>
-				<view class="price"><text>￥7000-10000</text>月薪</view>
-				<view class="city">工作城市：杭州<text>招聘：20人</text></view>
-				<view class="box">
+				<!-- <view class="tag">付费标签</view> -->
+				<view class="name">高薪招聘{{detail.texttitle}}</view>
+				<view class="price"><text>￥{{detail.pay}}</text>月薪</view>
+				<view class="city">工作城市：{{detail.city}}<text>招聘：{{detail.invitepeoplenum}}人</text></view>
+				<!-- <view class="box">
 					<view class="text">帆帆帆帆66</view>
 					<view class="text">帆帆帆帆</view>
 					<view class="text">帆帆帆帆</view>
@@ -23,12 +23,16 @@
 					<view class="text">帆帆帆帆</view>
 					<view class="text">帆帆帆帆</view>
 					<view class="clear"></view>
-				</view>
+				</view> -->
 		 	</view>
 		</view>
 		<view class="title">车型</view>
 		<view class="wrap">
-			<view class="u-tabs-box">
+			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="list"></v-tabs>
+			 <view v-for="(item, index) in detail.carphotolist" :key="index" class="" v-show="firstCurrent === index">
+				<u-image class="img" width="671rpx" height="504rpx" :src="item.neionephoto"></u-image>
+			 </view>
+			<!-- <view class="u-tabs-box">
 			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
 				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
 			 	swiperWidth="750" active-color="#FF6501"></u-tabs-swiper>
@@ -59,7 +63,7 @@
 						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 					</scroll-view>
 				</swiper-item>
-			</swiper>
+			</swiper> -->
 		</view>
 		<view class="wrapBottom">
 			<view class="u-tabs-box">
@@ -70,12 +74,12 @@
 			<swiper class="swiper-box" :current="swiperCurrentBottom" @transition="transitionBottom" @animationfinish="animationfinishBottom">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<job-detail ref="child" v-if="isChildUpdate1"></job-detail>
+			 			<job-detail ref="child"></job-detail>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<company-detail v-if="isChildUpdate2"></company-detail>
+						<company-detail></company-detail>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -97,17 +101,7 @@
 					'color':'#ffffff'
 				},
 				driverDemandId: '',
-				list: [{
-					name: '荣威ei6'
-					}, {
-				    name: '荣威ei5'
-					}, {
-					name: '比亚迪e5'
-			    }, {
-					name: '吉利帝豪'
-			    }, {
-					name: '荣威ei6'
-			    }],
+				list: [],
 				listBottom: [{
 					name: '职位详情'
 					}, {
@@ -117,8 +111,7 @@
 				swiperCurrent: 0,
 				currentBottom: 0,
 				swiperCurrentBottom: 0,
-				isChildUpdate1:true,
-				isChildUpdate2:false
+				detail: ''
 			}
 		},
 		onLoad(option) {
@@ -128,29 +121,29 @@
 			}
 		},
 		mounted() {
-			this.$refs.child.getList();
-			this.$u.api.getCarSystem().then(res=>{
-				if(res.code === 200){
-					 this.list = res.rows;
-				}else {
-					 this.$u.toast(res.msg);
-				}
-			})
+			this.getDetail()
 		},
 		methods: {
+			getDetail(){
+				this.$u.api.detailSearch({id:this.driverDemandId}).then(res=>{
+					if(res.code === 200){
+						 this.detail = res.object;
+						 if(this.detail.carphotolist) {
+						   this.detail.carphotolist.forEach(item=>{
+						       this.list.push(item.carBrandAndModel)						
+						   })
+						 }
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
 			},
 			tabsChangeBottom(index) {
 				this.swiperCurrentBottom = index;
-				if(index == 0) {
-				    this.isChildUpdate1 = true;
-				    this.isChildUpdate2 = false;
-				} else if(index == 1) {
-				    this.isChildUpdate1 = false;
-				    this.isChildUpdate2 = true;
-				}
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {

@@ -8,11 +8,11 @@
 			</view>
 		</u-navbar>
 		 <view class="" style="padding: 40rpx;">
-			<u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+			<u-image class="img" width="669rpx" height="503rpx" :src="detail.photourl"></u-image>
 			<view>
 				<!-- <view class="tag">付费标签</view> -->
-				<view class="name">520520款运动版{{detail.texttitle}}</view>
-				<view class="price"><text>27000</text>元/月起租</view>
+				<view class="name">{{detail.texttitle}}</view>
+				<view class="price"><text>{{detail.rentprice}}</text>元/月起租</view>
 				<view class="box">
 					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
@@ -87,26 +87,18 @@
 		},
 		methods: {
 			getDetail(){
-				this.$u.api.detailRent({driverDemandId:this.driverDemandId}).then(res=>{
+				this.$u.api.detailRent({id:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.detail = res.object;
 						 const systemtag = this.detail.systemtag;
 						 const usertag = this.detail.usertag;
-						 const businesstypetag = this.detail.businesstypetag;
-						 const concat =systemtag.concat(usertag);
-						 this.arr = link.concat(businesstypetag);
+						 this.arr =systemtag.concat(usertag);
 						 var text = '';
-						 if(this.detail.pricesectionlist) {
-						   this.detail.pricesectionlist.forEach(item=>{
-						   	if(item.lowprice && !item.highprice) {
-						   		text = '≥'+item.lowprice + '辆';
-						   	}
-						   	if(!item.lowprice && item.highprice) {
-						   		text = '≤'+item.highprice + '辆';
-						   	}
-						   	if(item.lowprice && item.highprice) {
-						   		text = item.lowprice + '-' + item.highprice + '辆';
-						   	}
+						 if(this.detail.carRentPriceCollection) {
+						   this.detail.carRentPriceCollection.forEach(item=>{
+						   	if(item.carrentprice){
+								text = item.carrenttime + '个月';
+							}
 						   	this.tab.push(text)						
 						   })
 						 }

@@ -322,9 +322,6 @@
 				background-image: url(@/static/bgcarsell.png);
 				background-repeat: no-repeat;
 				background-size: cover;
-				.clear {
-					clear: both;
-				}
 				.left, .right {
 					float: left;
 				}

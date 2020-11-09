@@ -60,7 +60,6 @@
 			if(form){
 			 this.form = form;
 			}
-			console.log(option)
 		},
 		mounted() {
 			this.search()

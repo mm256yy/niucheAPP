@@ -8,7 +8,7 @@
 		<view class="content">
 			<u-form label-width="200" label-align="left" :model="form" ref="uForm">
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="长*宽*高(mm):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="手机号:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+				<!-- <u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="手机号:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item> -->
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="续航里程(km):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="轴距(mm):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="环保标准:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
@@ -48,19 +48,17 @@
 				}
 			}
 		},
+		props: {
+			detail: {
+			    type: Object,
+			    default: function (){return {}}
+			}
+		},
 		mounted() {
-			this.getList()
+			
 		},
 		methods: {
-			getList() {
-				this.$u.api.getCarSystem().then(res=>{
-					if(res.code === 200){
-						 this.list = res.rows;
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
+			
 		}
 	}
 </script>

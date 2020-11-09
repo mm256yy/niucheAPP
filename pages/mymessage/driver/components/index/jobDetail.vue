@@ -25,18 +25,10 @@
 			}
 		},
 		mounted() {
-			this.getList()
+			
 		},
 		methods: {
-			getList() {
-				this.$u.api.getCarSystem().then(res=>{
-					if(res.code === 200){
-						 this.list = res.rows;
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			}
+			
 		}
 	}
 </script>

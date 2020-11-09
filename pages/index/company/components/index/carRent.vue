@@ -89,7 +89,13 @@
 						value: '0'
 					}
 				],
-				list: []
+				list: [],
+				status: 'loadmore',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			}
 		},
 		mounted() {

@@ -8,8 +8,9 @@
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
 	   	  	<u-form-item label="业务类型" prop="businesstype">
 				<u-radio-group v-model="form.businesstype" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">网约车 </u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">出租车 </u-radio>
+					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
+					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
+					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
 				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 	   	  	</u-form-item>
@@ -39,12 +40,12 @@
 				</u-checkbox-group>
 			</u-form-item>
 			<u-form-item label="月租" label-position="top">
-				<u-radio-group @change="radioGroupChangeRent" v-model="form.monthzu"  :active-color="'#FFA032'" style="text-align: right;">
+				<u-radio-group @change="radioGroupChangeRent" v-model="priceid"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top">
-				<u-radio-group @change="radioGroupChangeAge" v-model="form.carage" :active-color="'#FFA032'" style="text-align: right;">
+				<u-radio-group @change="radioGroupChangeAge" v-model="carage" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
@@ -57,53 +58,64 @@
 	   </view>
 		<view class="bottom">
 			<view class="btn">重置</view>
-			<view class="total" @click="result()">当前选择条件的检索结果，共0条>></view>
+			<view class="total" @click="result()">当前选择条件的检索结果，共{{total}}条>></view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
+	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				form:{
-					userid:'',
-					businesstype:0,
-					carmodel:[],
-					intentionbrand:[],
-					power:[],
-					monthzu:'',
-					carage:'',
-					km:''
+				form: {
+				  businesstype: '',
+				  carbrand: '',
+				  cartype: '',
+				  city: '杭州',
+				  startCarAge: '',
+				  endCarAge: '',
+				  startPriceid: '',
+				  endPriceid: '',
+				  km: '',
+				  power: '',
+				  islogin: ''
 				},
+				priceid: '',
+				carage: '',
+				total: '',
 				value:'',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
 						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false},
 						{name: '本田',checked: false},{name: '北京现代',checked: false}],
 				modelList:[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}],
 				powerList:[{name:'纯电动',checked: false},{name:'插电混动',checked:false},{name:'燃油车(含油电混动)',checked: false}],
-				rentList:[{name: '0',text:'2000以内' },{name: '1',text:'2000-3000' },{name: '1',text:'3000-4000' },{name: '1',text:'4000以上' }],
-				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
+				rentList:[{name: '1',text:'不限' },{name: '2',text:'2000以内' },{name: '3',text:'2000-3000' },{name: '4',text:'3000-4000' },{name: '5',text:'4000以上' }],
+				ageList:[{name: '1',text:'不限' },{name: '2',text:'1年内' },{name: '3',text:'1年-3年' },{name: '4',text:'3年-5年' },{name: '5',text:'5年以上' }],
 				objType:{
-					wycList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },
-					 {name: '3',text:'5万公里-10万公里' },{name: '4',text:'10万公里-20万公里' },{name: '5',text:'20万公里-30万公里' },
-					 {name: '6',text:'30万公里以上'},],
-					 czcList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },
-					  {name: '3',text:'5万公里-10万公里' },{name: '4',text:'10万公里-20万公里' },{name: '5',text:'20万公里-30万公里' },
-					  {name: '6',text:'30万公里-50万公里' },{name: '7',text:'50万公里-70万公里' },{name: '8',text:'70万公里以上'},],
+					wycList:[{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里'},{name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },
+					     {name: '4',text:'20-30万公里' },{name: '5',text:'30万公里以上'},],
+					      czcList:[{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里' },
+					      {name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },{name: '4',text:'20-30万公里' },
+					      {name: '5',text:'30-50万公里' },{name: '6',text:'50-70万公里' },{name: '7',text:'70万公里以上'}],
 				},
 				radioType:'wycList'
 			}
 		},
 		computed:{
-			...mapGetters(['telephone'])
+			...mapGetters(['token'])
 		},
 		mounted() {
-			this.form.userid = this.telephone;
+			const token = this.token;
+			if(token) {
+				this.form.islogin = 1
+			}else{
+				this.form.islogin = 0
+			}
+			this.select()
 		},
 		methods: {
 			brandGroupChange(e) {
@@ -119,13 +131,53 @@
 				this.select()
 				},
 			radioGroupChange(e){
-				this.radioType = e=== '0'?'wycList':'czcList'
+				this.radioType = e=== '1'?'wycList':'czcList'
 				this.select()
 			},
 			radioGroupChangeRent(e){
+				if(priceid == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				if(priceid == 2) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '2000';
+				}
+				if(priceid == 3) {
+					this.form.startPriceid = '2000';
+					this.form.endPriceid = '3000';
+				}
+				if(priceid == 4) {
+					this.form.startPriceid = '3000';
+					this.form.endPriceid = '4000';
+				}
+				if(priceid == 5) {
+					this.form.startPriceid = '4000';
+					this.form.endPriceid = '';
+				}
 				this.select()
 			},
 			radioGroupChangeAge(e){
+				if(carage == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				if(carage == 2) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '1';
+				}
+				if(carage == 3) {
+					this.form.startPriceid = '1';
+					this.form.endPriceid = '3';
+				}
+				if(carage == 4) {
+					this.form.startPriceid = '3';
+					this.form.endPriceid = '5';
+				}
+				if(carage == 5) {
+					this.form.startPriceid = '5';
+					this.form.endPriceid = '';
+				}
 				this.select()
 			},
 			radioGroupChangeKm(e){
@@ -142,9 +194,14 @@
 				// 	this.$u.toast('请选择业务类型');
 				// 	return
 				// }
-				this.$u.api.filterRent(this.form).then(res=>{
+				const params = Object.assign(this.form, {
+					pageNum: 1,
+					pageSize: 10,
+					isCount: 1
+				});
+				this.$u.api.homeRent(params).then(res=>{
 					if(res.code === 200){
-						this.showTips = true;
+						this.total = res.total;
 					}else {
 						 this.$u.toast(res.message);
 					}
@@ -154,7 +211,7 @@
 				this.$u.route('/pages/index/driver/components/index/historyRent');
 			},
 			result() {
-				this.$u.route('/pages/index/driver/components/index/resultRent');
+				this.$u.route('/pages/index/driver/components/index/resultRent',{form:JSON.stringify(this.form)});
 			}
 		}
 	}

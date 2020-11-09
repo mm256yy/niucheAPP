@@ -3,23 +3,23 @@
 		<view class="padding">
 			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx"
 			 inactive-color="#7f7f7f" activeColor="#FF6501" :tabs="tab" @change="change"></v-tabs>
-			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
+			 <view v-for="(item, index) in detail.carRentPriceCollection" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
-			        <view class="year">车龄：<8个月</view>
-			    	<view class="distance">10-20万公里</view>
+			        <view class="year">{{detail.carage}}</view>
+			    	<view class="distance">{{detail.carkm}}</view>
 			    	<view class="clear"></view>
 			    </view>
 			    <view class="box">
 			    	<view class="left">
-			    		<view class="price"><text>￥3100</text></view>
+			    		<view class="price"><text>￥{{item.carrentprice}}</text></view>
 			    		<view>-月租-</view>
 			    	</view>
-			    	<view class="right">
+			    	<!-- <view class="right">
 			    		<view class="price"><text>￥3000</text></view>
 			    		<view>-2人拼租价-</view>
-			    	</view>
+			    	</view> -->
 			    	<view class="clear"></view>
-			    	<view class="deposit">押金：<text>￥8000</text></view>
+			    	<view class="deposit">押金：<text>￥{{detail.cashPrice}}</text></view>
 			    </view>
 			 </view>
 			 <view class="discount">
@@ -82,19 +82,9 @@
 			},
 		},
 		mounted() {
-			this.getList()
+			
 		},
 		methods: {
-			getList() {
-				this.$u.api.getCarSystem().then(res=>{
-					if(res.code === 200){
-						 this.list = res.rows;
-						 this.total= res.total;
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
 			change(index) {
 				this.firstCurrent = index;
 			},

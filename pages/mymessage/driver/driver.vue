@@ -34,6 +34,9 @@
 		methods: {
 			onreachBottom() {
 				this.$refs.search.pull()
+			},
+			getList() {
+				this.$refs.search.search()
 			}
 		}
 	}
