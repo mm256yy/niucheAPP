@@ -71,10 +71,10 @@
 						<text style="font-size: 16pt;">¥{{item.pay}}</text>
 						<text style="font-size: 10pt;padding-left: 10pt;">月薪</text>
 						</view> 
-						<view style="margin-top: 5pt;">
+<!-- 						<view style="margin-top: 5pt;">
 						 <u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
 						 :key="index" class="tag-style" v-show="it.length<7"/>
-						</view> 
+						</view> --> 
 					</view>
 				</u-card>
 						<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
