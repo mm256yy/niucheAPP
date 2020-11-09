@@ -42,7 +42,6 @@
 				  selectedColor: '#FE9217',
 				})
 			}
-			console.log(1)
 			this.$refs.Search.getUser()
 		},
 		components:{

@@ -47,6 +47,7 @@
 					</scroll-view>
 				</swiper-item>
 			</swiper>
+			<PubBottom v-if="viewFlag" :isOpen="detail.isOpen" :id="driverDemandId"></PubBottom>
 		</view>
 	</view>
 </template>
@@ -56,12 +57,14 @@
 	import rentcarIssue from './rentcarIssue'
 	import settingParameter from './settingParameter'
 	import carInstall from './carInstall'
+	import PubBottom from '@/components/pubBottom.vue'
 	export default {
 		components: {
 		    rangePrice,
 			rentcarIssue,
 			settingParameter,
-			carInstall
+			carInstall,
+			PubBottom
 		  },
 		data() {
 			return {
@@ -80,13 +83,18 @@
 				swiperCurrent: 0,
 				detail:{},
 				tab: [],
-				arr: []
+				arr: [],
+				viewFlag:false//发布页详情true,列表页详情false
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
+			let flag = option.flag;
 			if(id){
 			 this.driverDemandId = id;
+			}
+			if(flag){
+				this.viewFlag =true
 			}
 		},
 		mounted() {

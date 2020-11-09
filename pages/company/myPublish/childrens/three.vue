@@ -6,7 +6,7 @@
 					<view style="padding-right: 10pt;">{{item.createTime}}</view>
 				</u-col>
 				<u-col span="5" @click="toView()">
-					<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
+					<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
 				</u-col>
 				<u-col span="6" class="border-left" @click="toView()">
 					<view class="title u-line-2">{{item.textTitle}}</view>
@@ -50,6 +50,12 @@ export default {
 						arr.forEach(item=>{
 							this.list.push(item)
 						})
+						let len = this.list.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
 					}else {
 						 this.$u.toast(res.msg);
 					}

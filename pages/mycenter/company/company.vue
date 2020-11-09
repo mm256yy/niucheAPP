@@ -108,7 +108,7 @@
 			}
 		},
 		mounted() {
-			this.telephone = uni.getStorageSync('telephone')
+			this.token = uni.getStorageSync('token')
 			this.getUser();
 		},
 		filters: {
@@ -129,10 +129,9 @@
 		},
 		methods: {
 			getUser(){
-				this.telephone = uni.getStorageSync('telephone')
-				let phone = this.telephone;
-				if (phone) {
-					this.$u.api.getUserInfo({telephone:phone}).then(res=>{
+				let token =  uni.getStorageSync('token')
+				if (token) {
+					this.$u.api.getUserInfo({}).then(res=>{
 						if(res.code === 200){
 							let data = res.personalVo;
 							this.comnpanySrc =data.comparylogophoto;
@@ -149,7 +148,7 @@
 							this.otherObj.xx = data.messagenum;
 							this.otherObj.qz = data.groupmessagenum;
 						}else {
-							 this.$u.toast(res.msg);
+							 this.$u.toast(res.message);
 						}
 					})
 				}
@@ -162,12 +161,12 @@
 				 this.$u.route('/pages/login/login');
 			},
 			toShopPage(){
-				if (this.telephone){
+				if (this.token){
 					 this.$u.route('/pages/company/shop/shop');
 				}
 			},
 			toPub(index){
-				if(this.telephone){
+				if(this.token){
 					this.$u.route('/pages/company/myPublish/myPublish', {
 						index: index
 					});

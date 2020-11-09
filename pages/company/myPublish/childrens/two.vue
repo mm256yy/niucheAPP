@@ -9,9 +9,9 @@
 					<u-icon name="reload" color="#36AB62" size="40" @click="reload(item.inviteId)"></u-icon>
 				</u-col>
 				<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
-					<view style="font-size: 14pt;font-weight: bold;">{{item.texttitle}}</view>
+					<view style="font-size: 12pt;font-weight: bold;">{{item.texttitle}}</view>
 					<view>
-						<text style="">月薪：</text><text style="color: #3FB26C;font-size: 18pt;">¥{{item.monthprice}}</text>
+						<text style="">月薪：</text><text style="color: #3FB26C;font-size: 16pt;">¥{{item.monthprice}}</text>
 					</view>
 				</u-col>
 			</u-row>
@@ -54,6 +54,12 @@
 						arr.forEach(item=>{
 							this.list.push(item)
 						})
+						let len = this.list.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
 					}else {
 						 this.$u.toast(res.msg);
 					}

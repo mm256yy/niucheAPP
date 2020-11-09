@@ -5,7 +5,7 @@
 		  <view class="btn-inline">
 				<view class="btn-edit" @click="toNext">编辑</view>
 				<view class="" >
-					<u-icon size="60" style="vertical-align: middle;" :name="delSrc" @click="delSubmit"></u-icon>
+					<u-icon size="80" style="vertical-align: middle;" :name="delSrc" @click="delSubmit"></u-icon>
 				</view>
 				<view @click="opened">
 					{{isOpen === 0?'上架':'下架'}}
@@ -30,10 +30,16 @@
 
 		},
 		props:{
-			value: {
-			  type: Number,
-			  default: 0
+			id: {
+			  type: String,
 			},
+			isOpen:{
+				type:String,
+			}
+		},
+		mounted() {
+			console.log(this.id)
+			console.log(this.isOpen)
 		},
 		method:{
 			tipsConfirm(){
@@ -68,7 +74,7 @@
 	justify-content:space-around ;
 	 flex-direction: row;
 	 font-size: 12pt;
-	 line-height: 60px;
-	 height: 60px;
+	 line-height: 72px;
+	 height: 72px;
 }
 </style>

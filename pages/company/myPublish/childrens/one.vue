@@ -6,9 +6,9 @@
 					<view style="padding-right: 10pt;">2020/09/2</view>
 				</u-col>
 				<u-col span="5" @click="toView(item.rentCarId)">
-					<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
+					<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
 				</u-col>
-				<u-col span="6" class="border-left" @click="toView()">
+				<u-col span="6" class="border-left" @click="toView(item.rentCarId)">
 					<view class="title u-line-2">{{item.textTitle}}</view>
 					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
 				</u-col>
@@ -51,13 +51,19 @@
 						arr.forEach(item=>{
 							this.list.push(item)
 						})
+						let len = this.list.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
-			toView(){
-				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
+			toView(id){
+				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id,flag:true})
 			},
 			onreachBottom() {
 				let len = this.list.length;
@@ -110,6 +116,7 @@
 		padding-top: 10rpx;
 	}
 	.type-money{
+		font-size: 14pt;
 		color: #40B36C;
 	}
 	.bottom{

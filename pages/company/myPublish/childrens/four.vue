@@ -8,10 +8,10 @@
 					<u-col span="1" style="padding: 5pt 0;">
 						<u-icon name="reload" color="#36AB62" size="40"></u-icon>
 					</u-col>
-					<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding: 8.5pt 0 10pt;">
-						<view style="font-size: 14pt;font-weight: bold;">求购：{{item.inviteCar}}...</view>
+					<u-col span="12" @click="toView(item.askToShopId)" style="border-top: 1px solid #E5E5E5;padding: 8.5pt 0 10pt;">
+						<view style="font-size: 12pt;font-weight: bold;">求购：{{item.inviteCar}}...</view>
 						<view class="" style="padding-top: 8pt;">
-							<text style="">打包价：</text><text style="color: #3FB26C;font-size: 18pt;">{{item.packprice}}</text>
+							<text style="">打包价：</text><text style="color: #3FB26C;font-size: 16pt;">{{item.packprice}}</text>
 						</view>
 					</u-col>
 				</u-row>
@@ -48,13 +48,19 @@ export default {
 						arr.forEach(item=>{
 							this.list.push(item)
 						})
+						let len = this.list.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
-			toView(){
-				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
+			toView(id){
+				this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:id,flag:true})
 			},
 			onreachBottom() {
 				let len = this.list.length;

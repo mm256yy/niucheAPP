@@ -35,27 +35,38 @@
 					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 	</u-form>
 		 </view>
-		 <view class="bottom" @click="recommend()">
-			 <view>向他推荐本公司卖车信息</view>
+
+		 <PubBottom v-if="viewFlag" :isOpen="detail.isOpen" :id="driverDemandId"></PubBottom>
+		 <view class="bottom" @click="recommend()" v-else>
+		 			 <view>向他推荐本公司卖车信息</view>
 		 </view>
 	</view>
 </template>
 
 <script>
+	import PubBottom from '@/components/pubBottom.vue'
 	export default {
+		components: {
+			PubBottom
+		  },
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
 				driverDemandId: '',
-				detail: {}
+				detail: {},
+				viewFlag:false//发布页详情true,列表页详情false
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
+			let flag = option.flag;
 			if(id){
 			 this.driverDemandId = id;
+			}
+			if(flag){
+				this.viewFlag =true
 			}
 		},
 		mounted() {
