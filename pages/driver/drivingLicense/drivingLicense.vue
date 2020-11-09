@@ -96,14 +96,14 @@
 <script>
 	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
-	import {actionJx} from '@/utils/constant.js'
+	import {actionJs} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
 				title:'驾照上传',
-				action: actionJx,
+				action: actionJs,
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],
