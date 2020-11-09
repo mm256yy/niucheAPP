@@ -110,8 +110,14 @@ const install  = (Vue, vm) => {
 		  const  ComparyMySellCarList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMySellCarList', params);
 		  //公司发布 我的求购
 			 const  ComparyMyAskToShopList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyAskToShopList', params);
+			 //我的收藏
+			  const  DriverMyCollectionRent = (params = {}) => vm.$u.get('/system/usercollect/DriverMyCollectionRent', params);
+			   const  MyCollectionSell = (params = {}) => vm.$u.get('/system/usercollect/MyCollectionSell', params);
+			 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		MyCollectionSell,
+		DriverMyCollectionRent,
 	  ComparyMyAskToShopList,
 	   ComparyMySellCarList,
 	   ComparyMyInviteList,

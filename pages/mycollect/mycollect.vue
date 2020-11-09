@@ -1,7 +1,7 @@
 <template>
 	<view> 
-		<CollectDriver v-if='curThemeType ==="driver"'></CollectDriver>
-		<CollectCompany v-else></CollectCompany>
+		<CollectDriver ref="collectRef" v-if='curThemeType ==="driver"'></CollectDriver>
+		<CollectCompany ref="collectRef" v-else></CollectCompany>
 		<!-- <NotLogin></NotLogin> -->
 	</view>
 </template>
@@ -32,6 +32,7 @@ export default {
 			  selectedColor: '#FE9217',
 			})
 		}
+		this.$refs.collectRef.init()
 	},
 	data() {
 		return {

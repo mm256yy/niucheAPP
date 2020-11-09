@@ -95,12 +95,12 @@
 				rentList:[{name: '0',text:'3万以内' },{name: '1',text:'3万-5万' },{name: '3',text:'5万以上' }],
 				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				objType:{
-					wycList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },
-					 {name: '3',text:'5万公里-10万公里' },{name: '4',text:'10万公里-20万公里' },{name: '5',text:'20万公里-30万公里' },
-					 {name: '6',text:'30万公里以上'},],
-					 czcList:[{name: '0',text:'新车(300公里以内)' },{name: '1',text:'300公里-2万公里' },{name: '2',text:'2万公里-5万公里' },
-					  {name: '3',text:'5万公里-10万公里' },{name: '4',text:'10万公里-20万公里' },{name: '5',text:'20万公里-30万公里' },
-					  {name: '6',text:'30万公里-50万公里' },{name: '7',text:'50万公里-70万公里' },{name: '8',text:'70万公里以上'},],
+					wycList:[{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里' },
+					 {name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },{name: '4',text:'20-30万公里' },
+					 {name: '5',text:'30万公里以上'},],
+					 czcList:[{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里' },
+					 {name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },{name: '4',text:'20-30万公里' },
+					 {name: '5',text:'30-50万公里' },{name: '6',text:'50-70万公里' },{name: '7',text:'70万公里以上'}],
 				},
 				radioType:'wycList',
 				showTips:false

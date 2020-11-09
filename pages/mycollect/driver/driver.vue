@@ -3,78 +3,81 @@
 		<view class="wrap">
 		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
-			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
+			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="tablist" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<view style="box-shadow: #000000;">
-					 <u-card padding="0" :border="false">
+					 <u-card padding="0" :border="false" @click="toView(item)" v-for="(item,index) in list" :key="item.id">
 						<view class="" slot="body" style="padding:10rpx 20rpx;">
 							<view class="u-body-item u-flex ">
 							  <view class="u-line-4" style="width: 100%;">
-								 <view>高薪招聘网约车司机高薪招聘网约车司...</view>
-								 <view style="color: #7F7F7F;"><u-icon name="clock" size="28"></u-icon>车龄个月...</view>
-								  <view style="color: #7F7F7F;"><u-icon name="attach" size="28"></u-icon>20万公里-30万公里...</view>
+								 <view class="u-line-2">{{item.texttitle}}</view>
+								 <view style="color: #7F7F7F;">
+									 <u-icon name="clock" size="28"></u-icon>
+									 <text>{{item.carage}}</text>
+								 </view>
+								 <view style="color: #7F7F7F;">
+									  <u-icon :name="distance" style="vertical-align: middle;" size="30"></u-icon>
+									  <text>{{item.carkm}}</text>
+								 </view>
 							  </view>
 							   <view class="">
 								   <view style="text-align: right;">
-									  <u-tag text="网约车" type="info" class="tag-style" size="mini"/>
-									  <u-icon name="heart-fill" color="#FE9B1C" size="28"></u-icon>
+									  <u-tag :text="item.businesstypetag" type="info" class="tag-style" size="mini"/>
+									  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
 								    </view>
-							   	<image :src="goodsUrl"></image>
+							   	<image :src="item.photourl"></image>
 							   </view>
 							</view>
 						</view>
 						<view class="bg-foot" slot="foot" style="">
 							<view style="color: #FFFFFF;">
-							<text style="font-size: 16pt;">¥2700</text>
-							<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
+							<text style="font-size: 16pt;">¥{{item.rentprice}}</text>
+							<text style="font-size: 10pt;padding-left: 8pt;">月租</text>
 							</view> 
 							<view style="margin-top: 5pt;">
-							 <u-tag text="纯电动" type="warning" size="mini" class="tag-style"/>
-							  <u-tag text="SUV" type="warning" size="mini" class="tag-style"/>
-							   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
+								<u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
+								:key="index" class="tag-style" v-show="it.length<7"/>
 							</view> 
 						</view>
 					   </u-card>
-					</view>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+						<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
-			</swiper-item>
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				<u-card padding="0" :border="false" @click="toView()" >
+				<u-card padding="0" :border="false"  @click="toView(item)"  v-for="(item,index) in list1" :key="item.id">
 					<view class="" slot="body" style="padding:10rpx 20rpx;">
 						<view class="u-body-item u-flex ">
-							<image :src="goodsUrl"></image>
+							<image :src="item.photourl"></image>
 						  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
 							  <view style="text-align: right;">
-								  <u-tag text="网约车" type="info" class="tag-style" size="mini"/>
-								  <u-icon name="heart-fill" color="#FE9B1C" size="28"></u-icon>
+								  <u-tag :text="item.businesstypetag"  type="info" class="tag-style" size="mini"/>
+								  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
 							   </view>
-							 <view>高薪招聘网约车司机高薪招聘网约车司...</view>
-							 <view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>荣威\吉利\比亚迪...</view>
+							  <view class="u-line-2">{{item.texttitle}}</view>
+							 <view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>
+							  <text v-for="(car,index) in item.intentionBrand" :key="index">{{car}}</text>
+							 </view>
 						  </view>
 						</view>
 					</view>
 					<view class="bg-foot" slot="foot" style="">
 						<view style="color: #FFFFFF;">
-						<text style="font-size: 16pt;">¥2700</text>
-						<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
+						<text style="font-size: 16pt;">¥{{item.pay}}</text>
+						<text style="font-size: 10pt;padding-left: 10pt;">月薪</text>
 						</view> 
 						<view style="margin-top: 5pt;">
-						 <u-tag text="纯电动" type="warning" size="mini" class="tag-style"/>
-						  <u-tag text="SUV" type="warning" size="mini" class="tag-style"/>
-						   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
+						 <u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
+						 :key="index" class="tag-style" v-show="it.length<7"/>
 						</view> 
 					</view>
 				</u-card>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+						<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -86,44 +89,161 @@
 	export default {
 		data() {
 			return {
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
-				list: [{
+				tablist: [{
 					name: '租车'
 				}, {
 					name: '招聘'
 				}],
-				listOne:[{}],
-				current: 0, 
+				distance:'../../static/distance.png',
+			    current: 0,
 				swiperCurrent: 0,
+				pageNum:0,
+				pageNum1:0,
+				list:[],
+				list1:[],
+				total:0,
+				total2:0,
+				status: 'loadmore',
+				status1: 'loadmore',
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
+			     }
+			},
+				mounted() {
+					this.init()
+				},
+				methods: {
+					tabsChange(index) {
+						this.swiperCurrent = index;
+					},
+					transition(e) {
+						let dx = e.detail.dx;
+						this.$refs.uTabs.setDx(dx);
+					},
+					animationfinish(e) {
+						let current = e.detail.current;
+						this.$refs.uTabs.setFinishCurrent(current);
+						this.swiperCurrent = current;
+						this.current = current;
+					},
+					init(){
+						this.list = [];
+						this.list1 = [];
+						this.getList(1)
+						this.getList1(1)
+					},
+					collectOr(item,index){
+						item.collectFlag = false;
+						const params = {
+						     BeCollectedId: item.inviteId,
+						     isDriveAndCompary: 1,//公司2
+						     collectionstate: 1,
+						     iscollection: 0
+						    };
+						   this.$u.api.collect(params).then(res=>{
+							if(res.code === 200){
+								this.list.splice(index,1)
+								item.collectFlag = true;
+							   this.$u.toast('取消收藏成功');
+							}else {
+							  this.$u.toast(res.msg);
+							}
+						   })
+					},
+					collectOr1(item,index){
+						item.collectFlag = false;
+						const params = {
+						     BeCollectedId: item.inviteId,
+						     isDriveAndCompary: 1,//公司2
+						     collectionstate: 2,
+						     iscollection: 0
+						    };
+						   this.$u.api.collect(params).then(res=>{
+							if(res.code === 200){
+								this.list1.splice(index,1)
+								item.collectFlag = true;
+							  this.$u.toast('取消收藏成功');
+							}else {
+							  this.$u.toast(res.msg);
+							}
+						   })
+					},
+					getList(pageNum){
+						this.status = 'loading';
+						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:1}).then(res=>{
+							if(res.code === 200){
+								this.total = res.total
+								let arr = res.rows
+								arr.forEach(item=>{
+									item.collectFlag = true;
+									this.list.push(item)
+								})
+								let len = this.list.length;
+								if(len<this.total){
+									this.status = 'loadmore'
+								} else{
+									this.status = 'nomore'
+								}
+							}else {
+								 this.$u.toast(res.msg);
+							}
+						})
+					},
+					getList1(pageNum){
+						this.status1 = 'loading';
+						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:2}).then(res=>{
+							if(res.code === 200){
+								this.total2 = res.total
+								let arr = res.rows
+								arr.forEach(item=>{
+									item.collectFlag = true;
+									this.list1.push(item)
+								})
+								let len = this.list1.length;
+								if(len<this.total2){
+									this.status1 = 'loadmore'
+								} else{
+									this.status1 = 'nomore'
+								}
+							}else {
+								 this.$u.toast(res.msg);
+							}
+						})
+					},
+					toView(item){
+						if (item.collectFlag){
+							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.inviteId})
+						}
+					},
+					toView1(item){
+						if (item.collectFlag){
+							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.inviteId})
+						}
+					},
+					onreachBottom() {
+						let len = this.list.length;
+						 if (len < this.total){
+							 this.pageNum++;
+							 this.getList(this.pageNum)
+						 }else{
+							this.status = 'nomore'
+						}
+					},
+					onreachBottom1() {
+						let len = this.list1.length;
+						 if (len < this.total1){
+							 this.pageNum1++;
+							 this.getList1(this.pageNum1)
+						 }else{
+							this.status1 = 'nomore'
+						}
+					},
+				}
 			}
-		},
-		methods: {
-			// tabs通知swiper切换
-			tabsChange(index) {
-				this.swiperCurrent = index;
-			},
-			// swiper-item左右移动，通知tabs的滑块跟随移动
-			transition(e) {
-				let dx = e.detail.dx;
-				this.$refs.uTabs.setDx(dx);
-			},
-			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
-			// swiper滑动结束，分别设置tabs和swiper的状态
-			animationfinish(e) {
-				let current = e.detail.current;
-				this.$refs.uTabs.setFinishCurrent(current);
-				this.swiperCurrent = current;
-				this.current = current;
-			},
-			toView(){
-				console.log(11111111111111)
-			},
-			// scroll-view到底部加载更多
-			onreachBottom() {
-				console.log(this.list)
-			}
-		}
-	}
 </script>
 
 <style lang="scss">

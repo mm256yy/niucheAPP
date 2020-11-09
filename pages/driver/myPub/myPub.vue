@@ -28,11 +28,10 @@
 					    <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
-			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomed">
-					<u-card title="1111" :padding="0" :foot-border-top="false" @click="toView2(item)" v-for="item in qzList" :key="item.id">
+					<u-card title="" :padding="0" :foot-border-top="false" @click="toView2(item)" v-for="item in qzList" :key="item.id">
 						<view class="card-head" slot="head">
 							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
 							<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>

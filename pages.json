@@ -523,7 +523,7 @@
 		"midButton": {
 			"width": "66px",
 			"height": "55px",
-			"iconPath": "static/tabbar/midbutton.png",
+			"iconPath": "static/tabbar/Z.png",
 			"iconWidth": "50px"
 					// "backgroundImage":"static/center-selected.png"
 			}
