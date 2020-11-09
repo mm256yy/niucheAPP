@@ -10,71 +10,74 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<view style="box-shadow: #000000;">
-					 <u-card padding="0" :border="false">
+					 <u-card padding="0" :border="false" @click="toView(item)" v-for="(item,index) in list" :key="item.id">
 						<view class="" slot="body" style="padding:10rpx 20rpx;">
 							<view class="u-body-item u-flex ">
 							  <view class="u-line-4" style="width: 100%;">
-								 <view>高薪招聘网约车司机高薪招聘网约车司...</view>
-								 <view style="color: #7F7F7F;"><u-icon name="clock" size="28"></u-icon>车龄个月...</view>
-								  <view style="color: #7F7F7F;"><u-icon name="attach" size="28"></u-icon>20万公里-30万公里...</view>
+								 <view class="u-line-2">{{item.texttitle}}</view>
+								 <view style="color: #7F7F7F;">
+									 <u-icon name="clock" size="28"></u-icon>
+									 <text>{{item.carage}}</text>
+								 </view>
+								 <view style="color: #7F7F7F;">
+									  <u-icon :name="distance" style="vertical-align: middle;" size="30"></u-icon>
+									  <text>{{item.carkm}}</text>
+								 </view>
 							  </view>
 							   <view class="">
 								   <view style="text-align: right;">
-									  <u-tag text="网约车" type="info" class="tag-style" size="mini"/>
-									  <u-icon name="heart-fill" color="#FE9B1C" size="28"></u-icon>
+									  <u-tag :text="item.businesstypetag" type="info" class="tag-style" size="mini"/>
+									  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
 								    </view>
-							   	<image :src="goodsUrl"></image>
+							   	<image :src="item.photourl"></image>
 							   </view>
 							</view>
 						</view>
 						<view class="bg-foot" slot="foot" style="">
 							<view style="color: #FFFFFF;">
-							<text style="font-size: 16pt;">¥2700</text>
-							<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
+							<text style="font-size: 16pt;">¥{{item.rentprice}}</text>
+							<text style="font-size: 10pt;padding-left: 8pt;">月租</text>
 							</view> 
 							<view style="margin-top: 5pt;">
-							 <u-tag text="纯电动" type="warning" size="mini" class="tag-style"/>
-							  <u-tag text="SUV" type="warning" size="mini" class="tag-style"/>
-							   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
+								<u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
+								:key="index" class="tag-style" v-show="it.length<7"/>
 							</view> 
 						</view>
 					   </u-card>
-					</view>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+						<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
-			</swiper-item>
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				<u-card padding="0" :border="false" @click="toView()" >
+				<u-card padding="0" :border="false"  @click="toView(item)"  v-for="(item,index) in list1" :key="item.id">
 					<view class="" slot="body" style="padding:10rpx 20rpx;">
 						<view class="u-body-item u-flex ">
-							<image :src="goodsUrl"></image>
+							<image :src="item.photourl"></image>
 						  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
 							  <view style="text-align: right;">
-								  <u-tag text="网约车" type="info" class="tag-style" size="mini"/>
-								  <u-icon name="heart-fill" color="#FE9B1C" size="28"></u-icon>
+								  <u-tag :text="item.businesstypetag"  type="info" class="tag-style" size="mini"/>
+								  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
 							   </view>
-							 <view>高薪招聘网约车司机高薪招聘网约车司...</view>
-							 <view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>荣威\吉利\比亚迪...</view>
+							  <view class="u-line-2">{{item.texttitle}}</view>
+							 <view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>
+							  <text v-for="(car,index) in item.intentionBrand" :key="index">{{car}}</text>
+							 </view>
 						  </view>
 						</view>
 					</view>
 					<view class="bg-foot" slot="foot" style="">
 						<view style="color: #FFFFFF;">
-						<text style="font-size: 16pt;">¥2700</text>
+						<text style="font-size: 16pt;">¥{{item.rentprice}}</text>
 						<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
 						</view> 
 						<view style="margin-top: 5pt;">
-						 <u-tag text="纯电动" type="warning" size="mini" class="tag-style"/>
-						  <u-tag text="SUV" type="warning" size="mini" class="tag-style"/>
-						   <u-tag text="自动挡" type="warning" size="mini" class="tag-style"/>
+						 <u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
+						 :key="index" class="tag-style" v-show="it.length<7"/>
 						</view> 
 					</view>
 				</u-card>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+						<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -86,12 +89,12 @@
 	export default {
 		data() {
 			return {
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
 				tablist: [{
 					name: '租车'
 				}, {
 					name: '招聘'
 				}],
+				distance:'../../static/distance.png',
 			    current: 0,
 				swiperCurrent: 0,
 				pageNum:0,
@@ -134,7 +137,7 @@
 					collectOr(item,index){
 						item.collectFlag = false;
 						const params = {
-						     BeCollectedId: item.demandid,
+						     BeCollectedId: item.inviteId,
 						     isDriveAndCompary: 1,//公司2
 						     collectionstate: 1,
 						     iscollection: 0
@@ -152,7 +155,7 @@
 					collectOr1(item,index){
 						item.collectFlag = false;
 						const params = {
-						     BeCollectedId: item.demandid,
+						     BeCollectedId: item.inviteId,
 						     isDriveAndCompary: 1,//公司2
 						     collectionstate: 2,
 						     iscollection: 0
@@ -169,7 +172,7 @@
 					},
 					getList(pageNum){
 						this.status = 'loading';
-						this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:1}).then(res=>{
+						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:1}).then(res=>{
 							if(res.code === 200){
 								this.total = res.total
 								let arr = res.rows
@@ -190,7 +193,7 @@
 					},
 					getList1(pageNum){
 						this.status1 = 'loading';
-						this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:2}).then(res=>{
+						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:2}).then(res=>{
 							if(res.code === 200){
 								this.total2 = res.total
 								let arr = res.rows
@@ -211,12 +214,12 @@
 					},
 					toView(item){
 						if (item.collectFlag){
-							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.demandid})
+							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.inviteId})
 						}
 					},
 					toView1(item){
 						if (item.collectFlag){
-							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.demandid})
+							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.inviteId})
 						}
 					},
 					onreachBottom() {

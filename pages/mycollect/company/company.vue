@@ -106,6 +106,8 @@
 				this.current = current;
 			},
 			init(){
+				this.list = [];
+				this.list1 = [];
 				this.getList(1)
 				this.getList1(1)
 			},
