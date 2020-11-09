@@ -92,47 +92,153 @@
 				}, {
 					name: '招聘'
 				}],
+			    current: 0,
+				swiperCurrent: 0,
 				pageNum:0,
+				pageNum1:0,
 				list:[],
+				list1:[],
 				total:0,
+				total2:0,
 				status: 'loadmore',
+				status1: 'loadmore',
 				iconType: 'flower',
 				loadText: {
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
+				}
+			     }
+			},
+				mounted() {
+					this.init()
 				},
-				current: 0, 
-				swiperCurrent: 0,
+				methods: {
+					tabsChange(index) {
+						this.swiperCurrent = index;
+					},
+					transition(e) {
+						let dx = e.detail.dx;
+						this.$refs.uTabs.setDx(dx);
+					},
+					animationfinish(e) {
+						let current = e.detail.current;
+						this.$refs.uTabs.setFinishCurrent(current);
+						this.swiperCurrent = current;
+						this.current = current;
+					},
+					init(){
+						this.getList(1)
+						this.getList1(1)
+					},
+					collectOr(item,index){
+						item.collectFlag = false;
+						const params = {
+						     BeCollectedId: item.demandid,
+						     isDriveAndCompary: 1,//公司2
+						     collectionstate: 1,
+						     iscollection: 0
+						    };
+						   this.$u.api.collect(params).then(res=>{
+							if(res.code === 200){
+								this.list.splice(index,1)
+								item.collectFlag = true;
+							   this.$u.toast('取消收藏成功');
+							}else {
+							  this.$u.toast(res.msg);
+							}
+						   })
+					},
+					collectOr1(item,index){
+						item.collectFlag = false;
+						const params = {
+						     BeCollectedId: item.demandid,
+						     isDriveAndCompary: 1,//公司2
+						     collectionstate: 2,
+						     iscollection: 0
+						    };
+						   this.$u.api.collect(params).then(res=>{
+							if(res.code === 200){
+								this.list1.splice(index,1)
+								item.collectFlag = true;
+							  this.$u.toast('取消收藏成功');
+							}else {
+							  this.$u.toast(res.msg);
+							}
+						   })
+					},
+					getList(pageNum){
+						this.status = 'loading';
+						this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:1}).then(res=>{
+							if(res.code === 200){
+								this.total = res.total
+								let arr = res.rows
+								arr.forEach(item=>{
+									item.collectFlag = true;
+									this.list.push(item)
+								})
+								let len = this.list.length;
+								if(len<this.total){
+									this.status = 'loadmore'
+								} else{
+									this.status = 'nomore'
+								}
+							}else {
+								 this.$u.toast(res.msg);
+							}
+						})
+					},
+					getList1(pageNum){
+						this.status1 = 'loading';
+						this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:2}).then(res=>{
+							if(res.code === 200){
+								this.total2 = res.total
+								let arr = res.rows
+								arr.forEach(item=>{
+									item.collectFlag = true;
+									this.list1.push(item)
+								})
+								let len = this.list1.length;
+								if(len<this.total2){
+									this.status1 = 'loadmore'
+								} else{
+									this.status1 = 'nomore'
+								}
+							}else {
+								 this.$u.toast(res.msg);
+							}
+						})
+					},
+					toView(item){
+						if (item.collectFlag){
+							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.demandid})
+						}
+					},
+					toView1(item){
+						if (item.collectFlag){
+							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.demandid})
+						}
+					},
+					onreachBottom() {
+						let len = this.list.length;
+						 if (len < this.total){
+							 this.pageNum++;
+							 this.getList(this.pageNum)
+						 }else{
+							this.status = 'nomore'
+						}
+					},
+					onreachBottom1() {
+						let len = this.list1.length;
+						 if (len < this.total1){
+							 this.pageNum1++;
+							 this.getList1(this.pageNum1)
+						 }else{
+							this.status1 = 'nomore'
+						}
+					},
+				}
 			}
-		},
-		methods: {
-			// tabs通知swiper切换
-			tabsChange(index) {
-				this.swiperCurrent = index;
-			},
-			// swiper-item左右移动，通知tabs的滑块跟随移动
-			transition(e) {
-				let dx = e.detail.dx;
-				this.$refs.uTabs.setDx(dx);
-			},
-			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
-			// swiper滑动结束，分别设置tabs和swiper的状态
-			animationfinish(e) {
-				let current = e.detail.current;
-				this.$refs.uTabs.setFinishCurrent(current);
-				this.swiperCurrent = current;
-				this.current = current;
-			},
-			toView(){
-				console.log(11111111111111)
-			},
-			// scroll-view到底部加载更多
-			onreachBottom() {
-				console.log(this.list)
-			}
-		}
-	}
 </script>
 
 <style lang="scss">

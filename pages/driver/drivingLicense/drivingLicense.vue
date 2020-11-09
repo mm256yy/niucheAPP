@@ -83,7 +83,7 @@
 			<u-picker v-model="showEnd" mode="time" :start-year="today.year" :params="params" @confirm="dataChangeEnd"></u-picker>
 		</view>
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
-			<u-button type="success" shape='circle' class="btn-orange"  @click="toNext">提交</u-button>
+			<u-button type="warning" shape='circle' class="btn-orange"  @click="toNext">提交</u-button>
 		</view>
 		<u-modal v-model="showTips" @confirm="confirm" confirm-text="我知道了">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
@@ -210,10 +210,11 @@
 				})
 			},
 			dataChange(obj){
-				console.log(obj)
-				if (obj.month > this.today.month || obj.day > this.today.day){
-					this.$u.toast('选择日期大于当前日期')
-					return false
+				if (obj.year === this.today.year){
+					if (obj.month > this.today.month || obj.day > this.today.day){
+						this.$u.toast('选择日期大于当前日期')
+						return false
+					}
 				}
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form[this.pickerName] = companyDate;

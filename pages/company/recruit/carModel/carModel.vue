@@ -57,9 +57,12 @@ export default {
   computed:{
   	...mapGetters(['carPubUpload'])
   },
+  onShow() {
+  	 this.list = uni.getStorageInfoSync('carPubUpload')
+  },
  mounted() {
 	 this.list = this.carPubUpload;
- 	console.log('ab')
+
  },
   methods: {
 	...mapActions(['CARPUBUPLOAD']),

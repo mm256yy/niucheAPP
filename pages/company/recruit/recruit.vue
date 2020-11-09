@@ -121,7 +121,7 @@ export default {
 		this.form.workname = value
 	 },
 	 toCarModel(){
-		 this.saveStorage()
+		  this.CARPUBUPOSITION(this.form)
 		this.$u.route('/pages/company/recruit/carModel/carModel') 
 	 },
 	 saveStorage(){
