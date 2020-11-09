@@ -39,7 +39,7 @@
 						<view class="card-head"  slot="body" style="border-bottom: 0;">
 							<view style="color: #000000;">
 								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
-								  <view>工作车辆: 荣威\吉利\比亚迪...  </view>
+								  <view class="u-line-2">工作车辆: {{item.carCards}}  </view>
 							</view>
 					        <view style="width: 30%;">
 								<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
