@@ -7,8 +7,8 @@
 				<view class="" >
 					<u-icon size="60" style="vertical-align: middle;" :name="delSrc" @click="delSubmit"></u-icon>
 				</view>
-				<view >
-					上架
+				<view @click="opened">
+					{{isOpen === 0?'上架':'下架'}}
 				</view>
 		  </view>
 		</view>
@@ -29,8 +29,23 @@
 			};
 
 		},
+		props:{
+			value: {
+			  type: Number,
+			  default: 0
+			},
+		},
 		method:{
 			tipsConfirm(){
+				
+			},
+			opened(){
+				
+			},
+			delSubmit(){
+				
+			},
+			toNext(){
 				
 			}
 		}
