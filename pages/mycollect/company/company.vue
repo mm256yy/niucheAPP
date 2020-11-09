@@ -1,59 +1,58 @@
 <template>
-	<view :class="'company-content'"> 
+	<view class="company-content"> 
 		<view class="wrap">
 		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
-			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
+			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="tablist" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<view class="scroll-item" @click="toView()" v-for="itm in 5" :key='itm'>
+					<view class="scroll-item" @click="toView(item)" v-for="(item,index) in list" :key='item.demandid'>
 						<view class="time">
-							<view class="padding15">上海</view>
+							<view class="padding15">{{item.comparyArea}}</view>
 						</view>
-						<view class="img" @click="toView()">
-							<view><image :src="goodsUrl" mode="aspectFill"></image></view>
+						<view class="img">
+							<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
 						</view>
-						<view class="border-left" @click="toView()">
-							<view class="title u-line-2">艾瑞泽52020款 1.5L CVT运动版CVT运动版</view>
-							<view class="type"><text>打包价</text><text class="type-money">￥2700</text></view>
-							<view><text>纯电动</text><text>Suv</text><text>自动挡</text></view>
+						<view class="border-left">
+							<view class="title u-line-2">{{item.carText}}</view>
+							<view class="type"><text>打包价</text><text class="type-money">￥{{item.packprice}}</text></view>
+							<view class="u-line-1"><u-tag :text="it" type="success" mode="dark" v-for="(it,index) in item.carSystemTag" 
+							:key="index" class="tag-style" v-show="it.length<7"/></view>
 						</view>
 						<view class="bottom">
-							<text class="bottom-left" >车龄≤3个月</text>
-							<text class="bottom-right">车龄≤3个月</text>
-							<u-icon name="heart-fill" color="#3FB26C" size="36"></u-icon>
+					        <view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAge}}</view>
+					        <view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.km}}</view>
+							<u-icon name="heart-fill" color="#3FB26C" size="36" @click="collectOr(item,index)"></u-icon>
 						</view>
 					</view>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+						 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<view class="scroll-item" @click="toView()" v-for="item in 7" :key='item'>
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom1">
+					<view class="scroll-item" @click="toView1(item)" v-for="item in list1" :key='item.demandid'>
 						<view class="zplist">
 							<view style="padding: 5pt 0;">
-								<text class="zplist-time">刷新时间：刚刚</text>
-								<u-icon name="heart-fill" color="#36AB62" size="40"></u-icon>
+								<text class="zplist-time">刷新时间：{{item.refreshtimeStr}}</text>
+								<u-icon name="heart-fill" color="#36AB62" size="40" @click="collectOr1(item,index)"></u-icon>
 							</view>
 							<view class="zplist-carName">
-								<view class="zplist-qg">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-								<view class="">
-									<text>金华诚信租车行     金华</text>
+								<view class="zplist-qg u-line-1">求购：{{item.intentioncarbrandnum}}辆 {{item.teXtTile}}</view>
+								<view style="color: #7F7F7F;padding-top: 5pt;">
+									<text>{{item.comparyName}}</text><text style="padding-left: 10pt;">{{item.comparyArea}}</text>
 								</view>
 								<view>
-									<text>打包价：</text><text class="zplist-price">3万以内/3-5万</text>
+									<text>打包价：</text><text class="zplist-price">{{item.packprice}}</text>
 								</view>
 							</view>
 						</view>
-    
-					    		
 					</view>
-							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+							<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -65,41 +64,174 @@
 	export default {
 		data() {
 			return {
-				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
-				list: [{
+				tablist: [{
 					name: '在售'
 				}, {
 					name: '求购'
 				}],
-				current: 0, 
+				distance:'../../static/distance.png',
+				current: 0,
 				swiperCurrent: 0,
+				pageNum:0,
+				pageNum1:0,
+				list:[],
+				list1:[],
+				total:0,
+				total2:0,
+				status: 'loadmore',
+				status1: 'loadmore',
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			}
 		},
+		mounted() {
+			this.init()
+		},
 		methods: {
-			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
 			},
-			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
 				let dx = e.detail.dx;
 				this.$refs.uTabs.setDx(dx);
 			},
-			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
-			// swiper滑动结束，分别设置tabs和swiper的状态
 			animationfinish(e) {
 				let current = e.detail.current;
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			toView(){
-				console.log(11111111111111)
+			init(){
+				this.getList(1)
+				this.getList1(1)
 			},
-			// scroll-view到底部加载更多
+			collectOr(item,index){
+				item.collectFlag = false;
+				const params = {
+				     BeCollectedId: item.demandid,
+				     isDriveAndCompary: 2,//公司2
+				     collectionstate: 3,
+				     iscollection: 0
+				    };
+				   this.$u.api.collect(params).then(res=>{
+					if(res.code === 200){
+						this.list.splice(index,1)
+						item.collectFlag = true;
+					   this.$u.toast('取消收藏成功');
+					}else {
+					  this.$u.toast(res.msg);
+					}
+				   })
+			},
+			collectOr1(item,index){
+				item.collectFlag = false;
+				const params = {
+				     BeCollectedId: item.demandid,
+				     isDriveAndCompary: 2,//公司2
+				     collectionstate: 4,
+				     iscollection: 0
+				    };
+				   this.$u.api.collect(params).then(res=>{
+					if(res.code === 200){
+						this.list1.splice(index,1)
+						item.collectFlag = true;
+					  this.$u.toast('取消收藏成功');
+					}else {
+					  this.$u.toast(res.msg);
+					}
+				   })
+			},
+			getList(pageNum){
+				this.status = 'loading';
+				this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:3}).then(res=>{
+					if(res.code === 200){
+						this.total = res.total
+						let arr = res.rows
+						arr.forEach(item=>{
+							item.collectFlag = true;
+							this.list.push(item)
+						})
+						let len = this.list.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
+			getList1(pageNum){
+				this.status1 = 'loading';
+				this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:4}).then(res=>{
+					if(res.code === 200){
+						this.total2 = res.total
+						let arr = res.rows
+						arr.forEach(item=>{
+							item.collectFlag = true;
+							item.refreshtimeStr = this.timeZ(item.refreshtime)
+							this.list1.push(item)
+						})
+						let len = this.list1.length;
+						if(len<this.total2){
+							this.status1 = 'loadmore'
+						} else{
+							this.status1 = 'nomore'
+						}
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
+			timeZ(value){
+				let nowTime = new Date().getTime();
+				let oneDay= 86400000;
+				let timeDiff = nowTime-value;//时间差
+				let tian =parseInt(timeDiff/oneDay);
+				let day6 = oneDay*6;
+				if(timeDiff>day6){
+					return this.$u.timeFormat(value, 'yyyy-mm-dd');
+				} else if (timeDiff>oneDay && timeDiff < day6){
+					return tian+"天前"
+				} else if (timeDiff<oneDay){
+					return '刚刚'
+				} else {
+					console.log(timeDiff)
+				 }
+			},
+			toView(item){
+				if (item.collectFlag){
+					this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:item.demandid})
+				}
+			},
+			toView1(item){
+				if (item.collectFlag){
+					this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.demandid})
+				}
+			},
 			onreachBottom() {
-				console.log(this.list)
-			}
+				let len = this.list.length;
+				 if (len < this.total){
+					 this.pageNum++;
+					 this.getList(this.pageNum)
+				 }else{
+					this.status = 'nomore'
+				}
+			},
+			onreachBottom1() {
+				let len = this.list1.length;
+				 if (len < this.total1){
+					 this.pageNum1++;
+					 this.getList1(this.pageNum1)
+				 }else{
+					this.status1 = 'nomore'
+				}
+			},
 		}
 	}
 </script>
@@ -114,6 +246,7 @@
 		.u-tabs{
 			background: linear-gradient(115deg, $bg-grad-AB, $bg-grad-DDC);
 		}
+		// padding-bottom: 10px;
 	}
 .wrap {
 	display: flex;
@@ -139,15 +272,18 @@
 		padding-right: 15pt;
 	}
 	.img{
-		display: inline-block;width:40% 
+		display: inline-block;width:40% ;
+		border-right: 1px solid #CDE5E3;
+		text-align: center;
 	}
 	image {
 		width: 200rpx;
 		height: 200rpx;
+		
 		border-radius: 10rpx;
+		
 	}
 	.border-left{
-		border-left: 1px solid #7F7F7F;
 		padding-left: 30rpx;
 		display: inline-block;width:55% ;
 	}
@@ -159,6 +295,7 @@
 		padding-top: 10rpx;
 	}
 	.type-money{
+		font-size: 14pt;
 		color: #40B36C;
 	}
 	.bottom{
@@ -195,7 +332,10 @@
 		font-size: 14pt;font-weight: bold;
 	}
 	.zplist-price{
-		color: #3FB26C;font-size: 18pt;
+		color: #40B36C;font-size: 18pt;
+	}
+	.tag-style{
+		margin-right: 5pt;margin-bottom: 3pt;
 	}
 }
 

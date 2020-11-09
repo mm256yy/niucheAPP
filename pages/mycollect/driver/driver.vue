@@ -3,7 +3,7 @@
 		<view class="wrap">
 		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
-			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
+			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="tablist" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
@@ -87,12 +87,21 @@
 		data() {
 			return {
 				goodsUrl: '//img10.360buyimg.com/n7/jfs/t22300/31/1505958241/171936/9e201a89/5b2b12ffNe6dbb594.jpg!q90.jpg',
-				list: [{
+				tablist: [{
 					name: '租车'
 				}, {
 					name: '招聘'
 				}],
-				listOne:[{}],
+				pageNum:0,
+				list:[],
+				total:0,
+				status: 'loadmore',
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				},
 				current: 0, 
 				swiperCurrent: 0,
 			}
