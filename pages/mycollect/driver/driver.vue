@@ -68,8 +68,8 @@
 					</view>
 					<view class="bg-foot" slot="foot" style="">
 						<view style="color: #FFFFFF;">
-						<text style="font-size: 16pt;">¥{{item.rentprice}}</text>
-						<text style="font-size: 10pt;padding-left: 10pt;">月租</text>
+						<text style="font-size: 16pt;">¥{{item.pay}}</text>
+						<text style="font-size: 10pt;padding-left: 10pt;">月薪</text>
 						</view> 
 						<view style="margin-top: 5pt;">
 						 <u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
