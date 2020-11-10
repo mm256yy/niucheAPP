@@ -26,6 +26,7 @@
 		},
 		onShow() {
 			let type = uni.getStorageSync('curThemeType');
+			let token = uni.getStorageSync('token');
 			this.curThemeType = type
 			if (type === 'company'){
 				companyPages.forEach(item=>{
@@ -34,7 +35,9 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
-				this.$refs.searchCom.getUser()
+				if (token){
+					this.$refs.searchCom.getUser()
+				}
 			} else {
 				dirverPages.forEach(item=>{
 					uni.setTabBarItem(item)
@@ -42,7 +45,9 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
-				this.$refs.searchDri.getUser()
+				if (token){
+					this.$refs.searchDri.getUser()
+				}
 			}
 			
 		},

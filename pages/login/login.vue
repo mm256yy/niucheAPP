@@ -123,7 +123,8 @@
 		},
 		mounted() {
 			// this.init()
-			let token = uni.getStorageInfoSync('token')
+			let token = uni.getStorageSync('token')
+			console.log(token)
 			if (token){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			}

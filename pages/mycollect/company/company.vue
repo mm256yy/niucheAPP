@@ -89,7 +89,10 @@
 			}
 		},
 		mounted() {
-			this.init()
+			let token = uni.getStorageSync('token');
+			if (token){
+				this.init()
+			}
 		},
 		methods: {
 			tabsChange(index) {

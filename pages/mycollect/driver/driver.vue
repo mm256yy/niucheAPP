@@ -103,7 +103,7 @@
 				list1:[],
 				total:0,
 				total2:0,
-				status: 'loadmore',
+				status: 'nomore',
 				status1: 'loadmore',
 				iconType: 'flower',
 				loadText: {
@@ -114,7 +114,10 @@
 			     }
 			},
 				mounted() {
-					this.init()
+					let token = uni.getStorageSync('token');
+					if (token){
+						this.init()
+					}
 				},
 				methods: {
 					tabsChange(index) {
