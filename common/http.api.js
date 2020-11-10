@@ -123,11 +123,12 @@ const install  = (Vue, vm) => {
 			 //我的收藏
 			  const  DriverMyCollectionRent = (params = {}) => vm.$u.get('/system/usercollect/DriverMyCollectionRent', params);
 			   const  MyCollectionSell = (params = {}) => vm.$u.get('/system/usercollect/MyCollectionSell', params);
-			    const  ComparyMyInviteForOne = (params = {}) => vm.$u.get('/  system/usercomparybasictext/ComparyMyInviteForOne', params);
-			 
-			 
+			    const  ComparyMyInviteForOne = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyInviteForOne', params);
+			  const  logout = (params = {}) => vm.$u.post('/user/login/logout', params);
+			
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		logout,
 		ComparyMyInviteForOne,
 		MyCollectionSell,
 		DriverMyCollectionRent,
