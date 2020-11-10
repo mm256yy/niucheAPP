@@ -42,19 +42,25 @@
 			</u-form>
 		</view>
 		<view style="text-align: center; padding: 15pt 30pt;">
-			<u-button type="success" shape='circle' class="btn-orange" @click="toNext" v-if="type">保存</u-button>
-			<u-button type="success" shape='circle' class="btn-orange" @click="loginOut" v-else>退出当前账号</u-button>
+			<u-button type="warning" shape='circle' class="btn-orange" @click="toNext" v-if="type">保存</u-button>
+			<u-button type="warning" shape='circle' class="btn-orange" @click="showLogut = true" v-else>退出当前账号</u-button>
 		</view>
          <u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 		        保存成功
 			</view>
 		</u-modal>
+		<u-modal v-model="showLogut" title="提示" :show-cancel-button="true" confirm-text="是" cancel-text="否"
+		 @confirm="loginOut">
+			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		        是否确定要退出当前账号？
+			</view>
+		</u-modal>
 	</view>
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
+	import {mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
 	import {action} from '@/utils/constant.js'
 	export default {
@@ -83,7 +89,8 @@
 				type:false,
 				errorType:[
 					'message'
-				]
+				],
+				showLogut:false
 			}
 		},
 		onReady() {
@@ -93,21 +100,19 @@
 		  this.setPicToken()
 		  this.getInfo()
 		},
-
-		computed:{
-			...mapGetters(['token','telephone'])
-		},
 		methods: {
 			...mapActions(['CurThemeType']),
 			setPicToken(){
-				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.telephone;
-				console.log(this.telephone)
-				this.form.telephone = this.telephone
+				let token = uni.getStorageSync('token');
+				let telephone = uni.getStorageSync('token');
+				this.headerObj.Authorization = token;
+				this.formDataObj.phone = telephone;
+				this.form.telephone = telephone;
 			},
 			getInfo(){
-			  if (this.token){
-				 this.$u.api.listUserMessageInfo().then(res=>{
+				let token = uni.getStorageSync('token');
+				if(token){
+				  this.$u.api.listUserMessageInfo().then(res=>{
 					if(res.code === 200){
 						let data = res.object;
 						if (data.headPhoto){
@@ -119,12 +124,11 @@
 						} else{
 							this.form = data;
 						}
-						console.log(this.form)
 					}else {
 						 this.$u.toast(res.msg);
 					}
-				})
-			  }
+				 })
+				}
 			},
 			tipsConfirm(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
@@ -150,9 +154,14 @@
 				this.form.headPhoto = data.imagename
 			},
 			loginOut(){
-				uni.clearStorage();
-				this.CurThemeType('driver')
-				this.$u.route('/pages/login/login');
+				this.$u.api.logout({}).then(res=>{
+					if (res.code === 200){
+						this.$u.toast(res.msg) 
+						uni.clearStorage();
+						this.CurThemeType('driver')
+						this.$u.route('/pages/login/login');
+					}
+				})
 			},
 
 		}
