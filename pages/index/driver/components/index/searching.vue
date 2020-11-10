@@ -6,19 +6,19 @@
 						<u-image class="left" width="264rpx" height="199rpx" src="item.photoUrl"></u-image>
 						<view class="right">
 							<!-- <view class="tag">付费标签</view> -->
-							<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
-							<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
+							<view v-show="item.workname == '网约车司机'" class="type">网约车</view>
+							<view v-show="item.workname == '出租车司机'" class="type">出租车</view>
 							<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
 							<view class="clear"></view>
-							<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
+							<view class="name u-line-2">高薪招聘{{item.workname}}</view>
 							<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
 							<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-							<view class="distance ">{{item.intentionBrand}}</view>
+							<view class="distance">{{item.intentionBrand}}</view>
 							<view class="clear"></view>
 						</view>
 						<view class="clear"></view>
 						<view class="box">
-							<view><text>{{item.pay}}</text>月薪</view>
+							<view><text>￥{{item.highmonthprice}}</text>月薪</view>
 							<!-- <view class="case">自动挡</view>
 							<view class="case">SUV</view>
 							<view class="case">纯电动</view> -->
@@ -139,7 +139,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.selling {
+	.searching {
 		.last .lists:last-child {
 			margin-bottom: 90rpx;
 		}
@@ -224,12 +224,15 @@
 					padding: 0 0 0 18rpx;
 					color: #fff;
 					margin-top: 10rpx;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
 					view {
 						font-size: 20rpx;
 						float: left;
 					}
 					view text {
-						font-size: 18pt;
+						font-size: 36rpx;
 						font-weight: 900;
 						margin-right: 19rpx;
 					}

@@ -93,10 +93,18 @@
 		    				 this.list = res.rows;
 							 this.total = res.total;
 							 this.list.forEach(item=>{
-							    if(item.systemok.length > 2) {
-							    	item.systemok = item.systemok.slice(0,2); 
-							    }
-							 								
+							    if(item.systemok){
+							        if(item.systemok.length > 2) {
+							        	item.systemok = item.systemok.slice(0,2); 
+							        }else if(item.systemok.length <= 2){
+							        	if(item.userok) {
+							        		const arr = item.systemok.concat(item.userok);
+							        		if(arr.length > 2) {
+							        			item.systemok = arr.slice(0,2);
+							        		}						 											 
+							        	}
+							        } 
+							    }						
 							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);

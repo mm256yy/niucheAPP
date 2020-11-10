@@ -21,10 +21,10 @@
 				<view class="list" @click="detail(item.demandid)">
 					<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 					<view class="right">
-						<view class="city">上海</view>
+						<view class="city">上海{{item.comparyarea}}</view>
 						<view class="clear"></view>
 						<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
-						<view class="price">打包价<text>{{item.packPrice}}</text></view>
+						<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
 						<view v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
 					</view>
 					<view class="clear"></view>
@@ -191,20 +191,33 @@
 		        });
 		    		this.$u.api.sellCar(params).then(res=>{
 		    			if(res.code === 200){
-		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 let arr = res.rows
+							 arr.forEach(item=>{
+							 	item.collectFlag = true;
+							 	this.list.push(item)
+							 })
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
-							 	if(item.carSystemTag.length > 2) {
-							 		item.carSystemTag = item.carSystemTag.slice(0,2); 
-							 	}else if(item.carSystemTag.length <= 2){
-							 		if(item.carUserTag.length) {
-							 			const arr = item.carSystemTag.concat(item.carUserTag);
-							 			if(arr.length > 2) {
-							 				item.carSystemTag = arr.slice(0,2);
-							 			}						 											 
+							 	if(item.carSystemTag){
+							 		if(item.carSystemTag){
+							 			if(item.carSystemTag.length > 2) {
+							 				item.carSystemTag = item.carSystemTag.slice(0,2); 
+							 			}else if(item.carSystemTag.length <= 2){
+							 			    if(item.carUserTag) {
+							 			    	const arr = item.carSystemTag.concat(item.carUserTag);
+							 			    	if(arr.length > 2) {
+							 			    		item.carSystemTag = arr.slice(0,2);
+							 			    	} 
+							 			    }
+							 			} 
 							 		}
-							 	}
-							 								
+								}
 							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
@@ -220,18 +233,25 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
-								 if(item.carSystemTag.length > 2) {
-									item.carSystemTag = item.carSystemTag.slice(0,2); 
-								 }else if(item.carSystemTag.length <= 2){
-									 if(item.carUserTag.length) {
-										const arr = item.carSystemTag.concat(item.carUserTag);
-										if(arr.length > 2) {
-											item.carSystemTag = arr.slice(0,2);
-										} 
-									 }
-								 }
-							 								
+								 if(item.carSystemTag){
+									if(item.carSystemTag.length > 2) {
+										item.carSystemTag = item.carSystemTag.slice(0,2); 
+									}else if(item.carSystemTag.length <= 2){
+								        if(item.carUserTag) {
+								        	const arr = item.carSystemTag.concat(item.carUserTag);
+								        	if(arr.length > 2) {
+								        		item.carSystemTag = arr.slice(0,2);
+								        	} 
+								        }
+									} 
+								 }							
 							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
@@ -331,10 +351,7 @@
 					padding-left: 34rpx;
 				}
 				.city {
-					width: 96rpx;
-					height: 36rpx;
-					line-height: 30rpx;
-					text-align: center;
+					padding: 4rpx 8rpx;
 					font-size: 20rpx;
 					border-radius: 26rpx;
 					border: 1rpx solid rgba(0,0,0,0.3);

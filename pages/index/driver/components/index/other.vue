@@ -8,12 +8,11 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image shape="circle" class="left" width="185rpx" height="186rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 	<u-image shape="circle" class="left" width="185rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
 		 	<view class="right">
-		 		<view class="name">万兴租车有限公司</view>
-		 		<view class="address">北京朝阳区</view>
-				<view class="box">网约车运营</view>
-				<view class="box">网约车运营</view>
+		 		<view class="name">{{detail.comparyname}}</view>
+		 		<view class="address">{{detail.area}}</view>
+				<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
 				<view class="clear"></view>
 		 	</view>
 		 	<view class="clear"></view>
@@ -27,12 +26,12 @@
 			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRenting">
-			 			<Renting v-if="isChildUpdate1" :id="driverDemandId" ref="renting"></Renting>
+			 			<renting v-if="isChildUpdate1" :id="driverDemandId" ref="renting"></renting>
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearching">
-			 			<Searching v-if="isChildUpdate2" :id="driverDemandId" ref="searching"></Searching>
+			 			<searching v-if="isChildUpdate2" :id="driverDemandId" ref="searching"></searching>
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>
@@ -86,7 +85,7 @@
 				}
 					this.$u.api.MessageCompany(params).then(res=>{
 						if(res.code === 200){
-							 this.detail = res.rows;
+							 this.detail = res.object;
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -123,7 +122,7 @@
 			onreachBottomSearching() {
 				this.$refs.searching.pull()
 			},
-			detail() {
+			details() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")
 			}
 		}

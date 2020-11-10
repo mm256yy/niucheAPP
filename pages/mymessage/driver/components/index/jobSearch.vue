@@ -35,7 +35,7 @@
 						</view>
 						<view class="clear"></view>
 						<view class="box">
-							<view><text>{{item.pay}}</text>月薪</view>
+							<view><text>￥{{item.pay}}</text>月薪</view>
 							<!-- <view class="case">自动挡</view>
 							<view class="case">SUV</view>
 							<view class="case">纯电动</view> -->
@@ -132,7 +132,7 @@
 		computed:{
 			...mapGetters(['token'])
 		},
-		onshow() {
+		mounted() {
 			const token = this.token;
 			if(token) {
 				this.form.islogin = 1
@@ -181,8 +181,18 @@
 		        });
 		    		this.$u.api.homeSearch(params).then(res=>{
 		    			if(res.code === 200){
-		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 let arr = res.rows
+							 arr.forEach(item=>{
+							 	item.collectFlag = true;
+							 	this.list.push(item)
+							 })
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
 							    if (item.intentionBrand){
 							       item.intentionBrand = item.intentionBrand.split(',').join('/')
@@ -203,6 +213,12 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 							 this.total = res.total;
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
 							    if (item.intentionBrand){
 							       item.intentionBrand = item.intentionBrand.split(',').join('/')
@@ -312,7 +328,7 @@
 				width: 679rpx;
 				// height: 295rpx;
 				color: #000;
-				font-size: 10pt;
+				font-size: 20rpx;
 				margin-left: 36rpx;
 				margin-top: 40rpx;
 				background: #fff;
@@ -330,7 +346,7 @@
 				}
 				.name {
 					font-weight: 900;
-					font-size: 14pt;
+					font-size: 34rpx;
 					margin-top: 20rpx;
 				}
 				.car {
@@ -376,12 +392,15 @@
 					padding: 0 0 0 18rpx;
 					color: #fff;
 					margin-top: 10rpx;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
 					view {
 						font-size: 20rpx;
 						float: left;
 					}
 					view text {
-						font-size: 18pt;
+						font-size: 36rpx;
 						font-weight: 900;
 						margin-right: 19rpx;
 					}

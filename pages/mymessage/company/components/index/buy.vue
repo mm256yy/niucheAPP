@@ -88,7 +88,8 @@
 		    				 this.total= res.total;
 		    				 this.list.forEach(item=>{
 		    				 	if (item.refreshtime){
-		    				 		item.refreshtimeStr = this.timeZ(item.refreshtime.getTime())
+									let date = new Date(item.refreshtime)
+		    				 		item.refreshtimeStr = this.timeZ(date.getTime())
 		    				 	}
 		    				 								
 		    				 })

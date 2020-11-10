@@ -31,6 +31,7 @@
 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 			</view>
 		</view>
+		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
 </template>
 
@@ -40,6 +41,7 @@
 			return {
 				show:false,
 				showType:false,
+				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -115,7 +117,18 @@
 			    });
 					this.$u.api.askWork(params).then(res=>{
 						if(res.code === 200){
-							 this.list = res.rows;
+							 this.total = res.total;
+							 let arr = res.rows
+							 arr.forEach(item=>{
+							 	item.collectFlag = true;
+							 	this.list.push(item)
+							 })
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
 								 if (item.carCard){
 									item.carCard = item.carCard.split(',').join('/')
@@ -143,6 +156,13 @@
 					this.$u.api.askWork(params).then(res=>{
 						if(res.code === 200){
 							 this.list = res.rows;
+							 this.total = res.total;
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
 								 if (item.carCard){
 									item.carCard = item.carCard.split(',').join('/')
@@ -181,6 +201,14 @@
 			confirmType(arr){
 				this.form.businessType = arr[0].value;
 				this.businessTypeKey = arr[0].label;
+			},
+			pull() {
+				let len = this.list.length;
+				 if (len < this.total){
+					 this.getList()
+				 }else{
+					this.status = 'nomore'
+				}
 			},
 			detail(id) {
 				this.$u.route("/pages/index/company/components/index/carRentDetail",{id:id})
