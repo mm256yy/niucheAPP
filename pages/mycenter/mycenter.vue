@@ -8,8 +8,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyDriver ref="Search" v-if='curThemeType ==="driver"'></MyDriver>
-			<MyCompany ref="Search" v-else></MyCompany>
+			<MyDriver ref="searchDri" v-if='curThemeType ==="driver"'></MyDriver>
+			<MyCompany ref="searchCom" v-else></MyCompany>
 	
 	</view>
 </template>
@@ -34,6 +34,7 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
+				this.$refs.searchCom.getUser()
 			} else {
 				dirverPages.forEach(item=>{
 					uni.setTabBarItem(item)
@@ -41,8 +42,9 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
+				this.$refs.searchDri.getUser()
 			}
-			this.$refs.Search.getUser()
+			
 		},
 		components:{
 			MyCompany,MyDriver

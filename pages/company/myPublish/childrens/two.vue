@@ -8,7 +8,7 @@
 				<u-col span="1" style="padding: 5pt 0;">
 					<u-icon name="reload" color="#36AB62" size="40" @click="reload(item.inviteId)"></u-icon>
 				</u-col>
-				<u-col span="12" @click="toView()" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
+				<u-col span="12" @click="toView(item.inviteId)" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
 					<view style="font-size: 12pt;font-weight: bold;">{{item.texttitle}}</view>
 					<view>
 						<text style="">月薪：</text><text style="color: #3FB26C;font-size: 16pt;">¥{{item.monthprice}}</text>
@@ -65,8 +65,8 @@
 					}
 				})
 			},
-			toView(){
-				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
+			toView(id){
+				this.$u.route("/pages/company/myPublish/zhaopinView/zhaopinView",{id:id})
 			},
 			reload(id){
 				console.log(id)

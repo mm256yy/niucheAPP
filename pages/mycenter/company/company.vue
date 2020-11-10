@@ -22,7 +22,7 @@
 					<u-col span="4">我的发布</u-col>
 					<u-col span="8" style="text-align: right;color: #7E7E7E;" @click="toShopPage">店铺首页>></u-col>
 				</u-row>
-				<u-row style="padding:8pt">
+				<u-row style="padding:8pt 5pt">
 					
 					<u-col span="2" @click="toPub(0)">
 						<u-image width="100%" height="48rpx"  :src="zcxxsrc"></u-image>
@@ -30,7 +30,7 @@
 					<u-col span="4" @click="toPub(0)">
 						<view class="font-14pt">租车信息</view>
 						<view class="font-10pt">
-						<text style="width: 50pt;display: inline-block;">{{myPublishObj.zcxx}}</text>
+						<text style="width: 60pt;display: inline-block;">{{myPublishObj.zcxx}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 						</view>
 					</u-col>
@@ -41,12 +41,12 @@
 					<u-col span="4" @click="toPub(1)">
 						<view class="font-14pt">车辆转卖</view>
 						<view class="font-10pt">
-						<text style="width: 50pt;display: inline-block;">{{myPublishObj.clzm}}</text>
+						<text style="width: 60pt;display: inline-block;">{{myPublishObj.clzm}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 						</view>
 					</u-col>
 				</u-row>
-				<u-row style="padding:8pt">
+				<u-row style="padding:8pt 5pt">
 					<u-col span="2" @click="toPub(2)">
 						<u-avatar :src="qgxxsrc" mode='square'></u-avatar>
 						<!-- <u-image width="100%" height="50rpx" :src="qgxxsrc"></u-image> -->
@@ -54,7 +54,7 @@
 					<u-col span="4" @click="toPub(2)">
 						<view class="font-14pt">求购信息</view>
 						<view class="font-10pt">
-						<text style="width: 50pt;display: inline-block;">{{myPublishObj.qgxx}}</text>
+						<text style="width: 60pt;display: inline-block;">{{myPublishObj.qgxx}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 						</view>
 					</u-col>
@@ -65,7 +65,7 @@
 					<u-col span="4" @click="toPub(3)">
 						<view class="font-14pt">招聘信息</view>
 						<view class="font-10pt">
-						<text style="width: 50pt;display: inline-block;">{{myPublishObj.zpxx}}</text>
+						<text style="width: 60pt;display: inline-block;">{{myPublishObj.zpxx}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 						</view>
 					</u-col>
