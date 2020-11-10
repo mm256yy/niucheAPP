@@ -80,6 +80,10 @@
 			    type: Array,
 			    default: function (){return []}
 			},
+			id: {
+			    type: String,
+			    default: ''
+			}
 		},
 		mounted() {
 			
@@ -89,7 +93,7 @@
 				this.firstCurrent = index;
 			},
 			other() {
-				this.$u.route('/pages/index/driver/components/index/other');
+				this.$u.route('/pages/index/driver/components/index/other',{id:this.id});
 			}
 		}
 	}

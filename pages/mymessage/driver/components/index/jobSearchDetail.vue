@@ -28,7 +28,7 @@
 		</view>
 		<view class="title">车型</view>
 		<view class="wrap">
-			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="list"></v-tabs>
+			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="list"></v-tabs>
 			 <view v-for="(item, index) in detail.carphotolist" :key="index" class="" v-show="firstCurrent === index">
 				<u-image class="img" width="671rpx" height="504rpx" :src="item.neionephoto"></u-image>
 			 </view>

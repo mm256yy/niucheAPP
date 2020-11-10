@@ -32,12 +32,6 @@
 				<view class="clear"></view>
 			</view>
 		</view>
-		<view class="more">上拉加载该公司其他信息</view>
-		<view class="last">
-			<view class="left">预约看车</view>
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
-			<view class="right">下单租车</view>
-		</view>
 	</view>
 </template>
 
@@ -50,12 +44,18 @@
 		},
 		props: {
 			detail: {
-			    type: Array,
+			    type: Object,
 			    default: function (){return {}}
 			},
+			id: {
+			    type: String,
+			    default: ''
+			}
 		},
 		methods: {
-			
+			other() {
+				this.$u.route('/pages/mymessage/company/components/index/other',{id:this.id});
+			}
 		}
 	}
 </script>

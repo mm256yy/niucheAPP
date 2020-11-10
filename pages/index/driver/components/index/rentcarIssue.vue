@@ -40,13 +40,19 @@
 			detail: {
 			    type: Object,
 			    default: function (){return {}}
+			},
+			id: {
+			    type: String,
+			    default: ''
 			}
 		},
 		mounted() {
 			
 		},
 		methods: {
-			
+			other() {
+				this.$u.route('/pages/index/driver/components/index/other',{id:this.id});
+			}
 		}
 	}
 </script>

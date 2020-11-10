@@ -58,7 +58,7 @@
 	   </view>
 		<view class="bottom">
 			<view class="btn">重置</view>
-			<view class="total" @click="result()">当前选择条件的检索结果，共0条>></view>
+			<view class="total" @click="result()">当前选择条件的检索结果，共{{total}}条>></view>
 		</view>
 	</view>
 </template>
@@ -83,6 +83,7 @@
 				},
 				carage: '',
 				value:'',
+				total: '',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
 						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}],
 				modelList:[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}],
@@ -162,9 +163,14 @@
 				// 	this.$u.toast('请选择业务类型');
 				// 	return
 				// }
-				this.$u.api.sellCar(this.form).then(res=>{
-					if(res.code === '200'){
-				
+				const params = Object.assign(this.form, {
+					pageNum: 1,
+					pageSize: 10,
+					isCount: 1
+				});
+				this.$u.api.sellCar(params).then(res=>{
+					if(res.code === 200){
+						this.total = res.total;
 					}else {
 						 this.$u.toast(res.message);
 					}

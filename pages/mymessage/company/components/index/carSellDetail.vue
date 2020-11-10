@@ -33,21 +33,27 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :tab="tab" :detail="detail"></range-price>
+			 			<range-price :id="detail.comparyid"" :tab="tab" :detail="detail"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue :detail="detail.problem"></rentcar-issue>
+						<rentcar-issue :id="detail.comparyid" :detail="detail.problem"></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter :detail="detail"></setting-parameter>
+						<setting-parameter :id="detail.comparyid" :detail="detail"></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
-			<PubBottom v-if="viewFlag" :isOpen="detail.isOpen" :id="driverDemandId"></PubBottom>
+			<view @click="other" class="more">上拉加载该公司其他信息</view>
+			<view class="last">
+				<view class="left">预约看车</view>
+				<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
+				<view class="right">下单租车</view>
+			</view>
+			<PubBottom v-if="viewFlag" :isOpen="detail.isOpen" :id="detail.comparyid"></PubBottom>
 		</view>
 	</view>
 </template>
@@ -176,8 +182,7 @@ page{
 	.wrap {
 		display: flex;
 		flex-direction: column;
-		// height: calc(100vh - var(--window-top));
-		height: 100vh-35;
+		height: calc(66vh - var(--window-top));
 		// height: auto;
 		width: 100%;
 		background: rgba(0,0,0,0.02);
@@ -239,7 +244,25 @@ page{
 		.box {
 			margin-top: 39rpx;
 		}
-		
+		.more {
+				   font-size: 20rpx;
+				   color: #7f7f7f;
+				   margin-top: 83rpx;
+				   margin-left: 220rpx;
+				   margin-bottom: 40rpx;
+		}
+		.last {
+				   width: 100%;
+				   height: 144rpx;
+				   padding: 55rpx 116rpx;
+				   background: linear-gradient(115deg, #6DD99B, #37AB63);
+				   font-size: 36rpx;
+				   font-weight: 900;
+				   color: #fff;
+				   display: flex;
+				   justify-content: space-around;
+				   align-items: center;
+		}
 	}
 </style>
 

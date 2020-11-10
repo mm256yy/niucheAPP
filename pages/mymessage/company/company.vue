@@ -46,6 +46,9 @@
 			}
 		},
 		methods: {
+			getList() {
+				this.$refs.carSell.search()
+			},
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;

@@ -10,8 +10,8 @@
 		 <view class="top">
 		 	<u-image class="left" width="185rpx" height="186rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="right">
-		 		<view class="name">万兴租车有限公司</view>
-		 		<view class="address">北京朝阳区</view>
+		 		<view class="name">{{detail.comparyname}}</view>
+		 		<view class="address">{{detail.area}}</view>
 				<view class="box">网约车运营</view>
 				<view class="box">网约车运营</view>
 				<view class="clear"></view>
@@ -26,29 +26,13 @@
 			 </view>
 			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<selling></selling>
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
+			 			<selling :id="driverDemandId" v-if="isChildUpdate1" ref="selling"></selling>
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<view v-for="(item, index) in list" :key="index">
-							<view class="list" @click="detail()">
-								<view class="year">刷新时间：刚刚</view>
-								<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-								<view class="clear"></view>
-								<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-								<view class="right">
-									<view class="name">求购：30辆 荣威\吉利帝豪\比亚迪...</view>
-									<view class="type">金华诚信租车行<text>金华</text></view>
-									<view class="price">打包价:<text>￥2700</text></view>
-									<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
-								</view>
-								<view class="clear"></view>
-							</view>
-							<u-icon v-show="item.iscollect" @click="cancel(item.id)" class="heart" name="heart-fill" color="#FFA032" size="28"></u-icon>
-							<u-icon v-show="!item.iscollect" @click="favorites(item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
-						</view>
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuy">
+			 			<buy :id="driverDemandId" v-if="isChildUpdate2" ref="buy"></buy>
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>
@@ -58,9 +42,11 @@
 
 <script>
 	import selling from './selling'
+	import buy from './buy'
 	export default {
 		components: {
-			selling
+			selling,
+			buy
 		},
 		data() {
 			return {
@@ -74,63 +60,30 @@
 				}],
 				current: 0, 
 				swiperCurrent: 0,
-				list: [],
-				total: 0
+				detail: {},
+				isChildUpdate1:true,
+				isChildUpdate2:false,
+				driverDemandId: ''
+			}
+		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
 			}
 		},
 		mounted() {
-			
+			this.getDetail()
+			// this.$refs.selling.getDetail()
 		},
 		methods: {
-			favorites(id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 1 
-				};
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
-			cancel(id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 1 
-				};
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('取消收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
-			getList(){
-			    const params = Object.assign({
-			    	pageNum: this.pagination.pageNum + 1,
-			    	pageSize: 10
-			    });
-					this.$u.api.sellCar(params).then(res=>{
+			getDetail(){
+			    const params = {
+					id: this.driverDemandId
+				}
+					this.$u.api.MessageCompany(params).then(res=>{
 						if(res.code === 200){
-							 this.list = res.rows;
-							 this.total= res.total;
-						}else {
-							 this.$u.toast(res.msg);
-						}
-					})
-			},
-			search(){
-			    const params = Object.assign({
-					pageNum: 0,
-					pageSize: 10
-				});
-					this.$u.api.sellCar(params).then(res=>{
-						if(res.code === 200){
-							 this.list = res.rows;
-							 this.total= res.total;
+							 this.detail = res.object;
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -139,6 +92,13 @@
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
+				if(index == 0) {
+				    this.isChildUpdate1 = true;
+				    this.isChildUpdate2 = false;
+				} else if(index == 1) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = true;
+				}
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
@@ -154,8 +114,11 @@
 				this.current = current;
 			},
 			// scroll-view到底部加载更多
-			onreachBottom() {
-				
+			onreachBottomSelling() {
+				this.$refs.selling.pull()
+			},
+			onreachBottomBuy() {
+				this.$refs.buy.pull()
 			},
 			detail() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")

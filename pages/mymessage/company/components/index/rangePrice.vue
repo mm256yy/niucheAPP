@@ -1,7 +1,7 @@
 <template>
 	<view class="range-price">
 		<view class="padding">
-			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab"></v-tabs>
+			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab"></v-tabs>
 			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 				<view class="bg">
 					<view class="year">{{detail.carage}}</view>
@@ -38,14 +38,6 @@
 			 					<view class="text">线下签约</view>
 			 				</view>
 			 </view>
-			 <view @click="other()" class="more">上拉加载该公司其他信息</view>
-		</view>
-		<view class="last">
-			<view class="left">预约看车</view>
-			<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
-			<view class="right">下单租车</view>
-			<view class="clear"></view>
 		</view>
 	</view>
 </template>
@@ -66,10 +58,14 @@
 			    type: Array,
 			    default: function (){return []}
 			},
+			id: {
+			    type: String,
+			    default: ''
+			}
 		},
 		methods: {
 			other() {
-				this.$u.route('/pages/mymessage/company/components/index/other');
+				this.$u.route('/pages/mymessage/company/components/index/other',{id:this.id});
 			}
 		}
 	}

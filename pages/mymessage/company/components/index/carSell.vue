@@ -32,6 +32,7 @@
 					<view class="year">{{item.carAge}}</view>
 					<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
 					<view class="year">{{item.km}}</view>
+					<view class="clear"></view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 				</view>
 				<u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>

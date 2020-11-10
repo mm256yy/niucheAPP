@@ -65,6 +65,12 @@ const install  = (Vue, vm) => {
 	 const  sellCar = (params = {}) => vm.$u.get('/system/usermain/UsermainSellCar', params);
 	 //公司卖车详情
 	 const  detailSellCar = (params = {}) => vm.$u.get('/system/usermain/ComparySellCarTextByid', params);
+	 //详情页面查看公司信息
+	 const  MessageCompany = (params = {}) => vm.$u.get('/system/usermain/ComparySellThenComparyText', params);
+	 //公司该店其他信息-在售
+	 const  detailOtherSelling = (params = {}) => vm.$u.get('/system/usermain/ComparySellCarThenComparyOherText', params);
+	 //公司该店其他信息-求购
+	 const  detailOtherBuy = (params = {}) => vm.$u.get('/system/usermain/ComparySellCarThenComparyOherTextAskToShop', params);
 	 //司机端租车首页展示
 	 const  homeRent = (params = {}) => vm.$u.get('/system/usermain/DriverSideRentCarList', params);
 	 //司机端租车详情
@@ -73,6 +79,10 @@ const install  = (Vue, vm) => {
 	 const  homeSearch = (params = {}) => vm.$u.get('/system/usermain/DriverSideInvideCarList', params);
 	 //司机端招聘详情
 	 const  detailSearch = (params = {}) => vm.$u.get('/system/usermain/DriverSideInvideCarListByOne', params);
+	 //司机端该店其他信息-租车
+	 const  detailOtherRenting = (params = {}) => vm.$u.get('/system/usermain/DriverSellCarThenComparyOherTextRentCar', params);
+	 //司机端该店其他信息-招聘
+	 const  detailOtherSearching = (params = {}) => vm.$u.get('/system/usermain/DriverSellCarThenComparyOherTextInvite', params);
 	 //驾照认证查询
 	  const  listDrivingLicense = (params = {}) => vm.$u.get('/user/drivingLicense/listDrivingLicense', params);
 	  //保存驾照认证
@@ -171,7 +181,12 @@ const install  = (Vue, vm) => {
 		detailBuying,
 		detailSellCar,
 		detailRent,
-		detailSearch
+		detailSearch,
+		MessageCompany,
+		detailOtherSelling,
+		detailOtherBuy,
+		detailOtherRenting,
+		detailOtherSearching
 	 };
 }
 

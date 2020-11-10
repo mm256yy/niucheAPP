@@ -25,6 +25,7 @@
 						<view class="name u-line-1">{{item.teXtTile}}</view>
 						<view class="type">{{item.comparyName}}<span>{{item.comparyArea}}</span></view>
 						<view class="price">打包价:<span>{{item.packprice}}</span></view>
+						<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 					</view>
 					<view class="clear"></view>
 				</view>
@@ -316,6 +317,10 @@
 				.right {
 					width: 494rpx;
 					padding-left: 34rpx;
+					.chat {
+						float: right;
+						margin-top: 6rpx;
+					}
 				}
 				.city {
 					width: 96rpx;

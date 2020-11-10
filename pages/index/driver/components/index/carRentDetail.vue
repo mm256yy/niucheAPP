@@ -28,17 +28,17 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :tab="tab" :detail="detail" ref="child"></range-price>
+			 			<range-price :id="driverDemandId" :tab="tab" :detail="detail" ref="child"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue :detail="detail.carRentProblemCollection"></rentcar-issue>
+						<rentcar-issue :id="driverDemandId" :detail="detail.carRentProblemCollection"></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter :detail="detail"></setting-parameter>
+						<setting-parameter :id="driverDemandId" :detail="detail"></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
