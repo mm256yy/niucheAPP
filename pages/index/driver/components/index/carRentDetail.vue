@@ -12,7 +12,7 @@
 			<view>
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.texttitle}}</view>
-				<view class="price"><text>{{detail.rentprice}}</text>元/月起租</view>
+				<view class="price"><text>￥{{detail.rentprice}}</text>元/月起租</view>
 				<view class="box">
 					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
@@ -28,17 +28,17 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :id="driverDemandId" :tab="tab" :detail="detail" ref="child"></range-price>
+			 			<range-price :id="detail.comparyid" :tab="tab" :detail="detail" ref="child"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue :id="driverDemandId" :detail="detail.carRentProblemCollection"></rentcar-issue>
+						<rentcar-issue :id="detail.comparyid" :detail="detail.carRentProblemCollection"></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter :id="driverDemandId" :detail="detail"></setting-parameter>
+						<setting-parameter :id="detail.comparyid" :detail="detail"></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>

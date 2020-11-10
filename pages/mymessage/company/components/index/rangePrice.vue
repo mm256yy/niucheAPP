@@ -57,16 +57,10 @@
 			tab: {
 			    type: Array,
 			    default: function (){return []}
-			},
-			id: {
-			    type: String,
-			    default: ''
 			}
 		},
 		methods: {
-			other() {
-				this.$u.route('/pages/mymessage/company/components/index/other',{id:this.id});
-			}
+			
 		}
 	}
 </script>

@@ -8,12 +8,11 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image class="left" width="185rpx" height="186rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 	<u-image class="left" width="185rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>
 		 		<view class="address">{{detail.area}}</view>
-				<view class="box">网约车运营</view>
-				<view class="box">网约车运营</view>
+				<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
 				<view class="clear"></view>
 		 	</view>
 		 	<view class="clear"></view>
@@ -120,7 +119,7 @@
 			onreachBottomBuy() {
 				this.$refs.buy.pull()
 			},
-			detail() {
+			details() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")
 			}
 		}

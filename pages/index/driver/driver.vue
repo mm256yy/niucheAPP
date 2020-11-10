@@ -9,7 +9,7 @@
 		</view>
 		<swiper class="swiper-box">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<car-rent ref="rent"></car-rent>
 				</scroll-view>
 			</swiper-item>
@@ -32,9 +32,9 @@
 			}
 		},
 		methods: {
-		    onreachBottom() {
-		    	this.$refs.rent.pull()
-		    }
+			getList() {
+				this.$refs.carSell.search()
+			}
 		}
 	}
 </script>

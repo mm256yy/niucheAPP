@@ -9,7 +9,7 @@
 		</view>
 		<swiper class="swiper-box">
 			<swiper-item class="swiper-item">
-				<scroll-view @scrolltolower="onreachBottom" scroll-y style="height: 100%;width: 100%;">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<job-search ref="search"></job-search>
 				</scroll-view>
 			</swiper-item>
@@ -32,9 +32,6 @@
 			}
 		},
 		methods: {
-			onreachBottom() {
-				this.$refs.search.pull()
-			},
 			getList() {
 				this.$refs.search.search()
 			}

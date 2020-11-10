@@ -8,14 +8,14 @@
 			</view>
 		 </u-navbar>
 		 <view class="" style="padding: 40rpx;">
-			<u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+			<u-image class="img" width="669rpx" height="503rpx" :src="detail.photourl"></u-image>
 			<view>
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
 				<view class="collect">
 					<u-icon class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
-					<text>634</text>
+					<text>{{detail.collectnum}}</text>
 				</view>
 				<view class="clear"></view>
 				<view class="box">
@@ -33,17 +33,17 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :id="detail.comparyid"" :tab="tab" :detail="detail"></range-price>
+			 			<range-price :tab="tab" :detail="detail"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue :id="detail.comparyid" :detail="detail.problem"></rentcar-issue>
+						<rentcar-issue :detail="detail.problem"></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter :id="detail.comparyid" :detail="detail"></setting-parameter>
+						<setting-parameter :detail="detail"></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -154,8 +154,10 @@
 			// scroll-view到底部加载更多
 			onreachBottom() {
 							
+			},
+			other() {
+				this.$u.route('/pages/mymessage/company/components/index/other',{id:this.detail.comparyid});
 			}
-			
 		}
 	}
 </script>

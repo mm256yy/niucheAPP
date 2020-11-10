@@ -64,7 +64,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -106,46 +105,76 @@
 		// mounted() {
 		// 	this.form.userid = this.telephone;
 		// },
+		mounted() {
+			this.select()
+		},
 		methods: {
+			add() {
+				this.addkey = this.form.businessTypekey + '/'+this.form.carbrandkey + 
+				'/'+this.form.cartypekey + '/'+this.form.powerkey + '/'
+				+this.form.packpricekey + '/' + this.form.caragekey;
+			},
 			brandGroupChange(e) {
 				this.form.carbrand = e.join(',');
+				this.form.carbrandkey = e.join('+');
 				this.select()
 			},
 			powerGroupChange(e) {
 				this.form.power = e.join(',');
+				this.form.powerkey = e.join('+');
 				this.select()
 			},
 			modelGroupChange(e) {
 				this.form.cartype = e.join(',');
+				this.form.cartypekey = e.join('+');
 				this.select()
 			},
 			radioGroupChange(e){
-				this.radioType = e=== '1'?'wycList':'czcList'
+				this.radioType = e=== '1'?'wycList':'czcList' 
+				if(e==='0'){
+					this.form.businessTypekey = '不限'
+				}
+				if(e==='1'){
+					this.form.businessTypekey = '网约车'
+				}
+				if(e==='2'){
+					this.form.businessType = '出租车'
+				}
 				this.select()
 			},
 			radioGroupChangePrice(e){
+				this.form.packpricekey =  this.priceList.find( item => {
+				   if(item.name === e) {
+					   return item
+				   }
+				});
 				this.select()
 			},
 			radioGroupChangeAge(e){
 				if(this.carage == '0') {
 					this.form.startCarAge = '0';
                     this.form.endCarAge = '1';
+					this.caragekey = '1年内';
 				}
 				if(this.carage == '1') {
 					this.form.startCarAge = '1';
 				    this.form.endCarAge = '3';
+					this.caragekey = '1年-3年';
 				}
 				if(this.carage == '2') {
 					this.form.startCarAge = '3';
 				    this.form.endCarAge = '5';
+					this.caragekey = '3年-5年';
 				}
 				if(this.carage == '3') {
 					this.form.startCarAge = '5';
 				    this.form.endCarAge = '';
+					this.caragekey = '5年以上';
 				}
 				if(this.carage == '4') {
 					this.form.startCarAge = '';
 				    this.form.endCarAge = '';
+					this.caragekey = '不限';
 				}
 				this.select()
 			},

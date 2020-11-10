@@ -23,10 +23,11 @@
 					<view class="right">
 						<view class="name u-line-2">{{item.texttitle}}</view>
 						<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-						<view class="year">车龄<3个月{{item.carage}}</view>
+						<view class="year">车龄≤{{item.carAge}}年
+						</view>
 						<view class="clear"></view>
 						<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-						<view class="distance">{{item.km}}</view>
+						<view class="distance">{{item.km}}万公里</view>
 						<view class="clear"></view>
 					</view>
 					<view v-show="item.businesstypetag == 1" class="label">网约车</view>
@@ -36,7 +37,9 @@
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="box">
 						<view><text>￥{{item.rentprice}}</text>元/月起租</view>
-						<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+						<view>
+							<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+						</view>
 					</view>
 				</view>
 				<u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
@@ -192,20 +195,31 @@
 		        });
 		    		this.$u.api.homeRent(params).then(res=>{
 		    			if(res.code === 200){
-		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 let arr = res.rows
+							 arr.forEach(item=>{
+							 	item.collectFlag = true;
+							 	this.list.push(item)
+							 })
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
-							 	if(item.systemtag.length > 2) {
-							 		item.systemtag = item.systemtag.slice(0,2); 
-							 	}else if(item.systemtag.length <= 2){
-							 		if(item.usertag.length) {
-							 			const arr = item.systemtag.concat(item.usertag);
-							 			if(arr.length > 2) {
-							 				item.systemtag = arr.slice(0,2);
-							 			}						 											 
-							 		}
-							 	}
-							 								
+								 if(item.systemtag){
+									if(item.systemtag.length > 2) {
+										item.systemtag = item.systemtag.slice(0,2); 
+									}else if(item.systemtag.length <= 2){
+										if(item.usertag) {
+											const arr = item.systemtag.concat(item.usertag);
+											if(arr.length > 2) {
+												item.systemtag = arr.slice(0,2);
+											}						 											 
+										}
+									} 
+								 }						
 							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
@@ -222,18 +236,25 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 							 this.total = res.total;
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
-							 	if(item.systemtag.length > 2) {
-							 		item.systemtag = item.systemtag.slice(0,2); 
-							 	}else if(item.systemtag.length <= 2){
-							 		if(item.usertag.length) {
-							 			const arr = item.systemtag.concat(item.usertag);
-							 			if(arr.length > 2) {
-							 				item.systemtag = arr.slice(0,2);
-							 			}						 											 
-							 		}
-							 	}
-							 								
+							 	if(item.systemtag){
+							 		if(item.systemtag.length > 2) {
+							 			item.systemtag = item.systemtag.slice(0,2); 
+							 		}else if(item.systemtag.length <= 2){
+							 			if(item.usertag) {
+							 				const arr = item.systemtag.concat(item.usertag);
+							 				if(arr.length > 2) {
+							 					item.systemtag = arr.slice(0,2);
+							 				}						 											 
+							 			}
+							 		} 
+							 	}							
 							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
@@ -411,9 +432,11 @@
 					background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
 					padding: 0 0 0 18rpx;
 					color: #fff;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
 					view {
 						font-size: 20rpx;
-						float: left;
 					}
 					view text {
 						font-size: 36rpx;
@@ -426,9 +449,8 @@
 						background: #fff;
 						font-weight: 900;
 						color: #FF6501;
-						margin-top: 8rpx;
-						float: right;
 						margin-right: 10rpx;
+						float: left;
 					}
 				}
 			}

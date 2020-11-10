@@ -177,8 +177,18 @@
 			    });
 					this.$u.api.buying(params).then(res=>{
 						if(res.code === 200){
-							 this.list = res.rows;
 							 this.total= res.total;
+							 let arr = res.rows
+							 arr.forEach(item=>{
+							 	item.collectFlag = true;
+							 	this.list.push(item)
+							 })
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
 							 	if (item.refreshtime){
 							 		item.refreshtimeStr = this.timeZ(item.refreshtime)
@@ -199,6 +209,12 @@
 						if(res.code === 200){
 							 this.list = res.rows;
 							 this.total= res.total;
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
 							 	if (item.refreshtime){
 							 		item.refreshtimeStr = this.timeZ(item.refreshtime)
