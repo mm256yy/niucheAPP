@@ -17,6 +17,7 @@ export default {
 	},
 	onShow() {
 		let type = uni.getStorageSync('curThemeType');
+		let token = uni.getStorageSync('token');
 		if (type === 'company'){
 			companyPages.forEach(item=>{
 				uni.setTabBarItem(item)
@@ -32,7 +33,9 @@ export default {
 			  selectedColor: '#FE9217',
 			})
 		}
-		this.$refs.collectRef.init()
+		if(token){
+			this.$refs.collectRef.init()
+		}
 	},
 	data() {
 		return {

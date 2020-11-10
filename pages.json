@@ -496,6 +496,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/company/myPublish/maicheView/maicheView",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
