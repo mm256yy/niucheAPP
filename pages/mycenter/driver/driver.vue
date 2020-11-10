@@ -151,13 +151,22 @@
 				 this.$u.route('/pages/login/login');
 			},
 			tipsConfirm(){
-				this.$u.route("/pages/driver/taxiCar/taxiCar")
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.$u.route("/pages/driver/taxiCar/taxiCar")
+				}
 			},
 			tipsCancel(){
-				this.$u.route("/pages/driver/onlineCar/onlineCar")
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.$u.route("/pages/driver/onlineCar/onlineCar")
+				}
 			},
 			toMyInfo(){
-				 	this.$u.route("/pages/driver/baseInfo/baseInfo")
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.$u.route("/pages/driver/baseInfo/baseInfo")
+				}
 			},
 			toLicense(){
 				   if (this.driverPub.driverState !==9){
@@ -165,9 +174,14 @@
 				   }
 			},
 			toMyPub(index){
-				this.$u.route("/pages/driver/myPub/myPub",{index:index})
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.$u.route("/pages/driver/myPub/myPub",{index:index})
+				}
 			},
 			toCard(){
+				let token = uni.getStorageSync('token')
+				if (token){
 				if(this.driverPub.postState === 0 || this.driverPub.postState === 9){
 					this.showTips = true
 				} else {
@@ -178,6 +192,7 @@
 					}
 
 				}
+			  }
 			}
 		}
 	}
