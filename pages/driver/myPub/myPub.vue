@@ -10,7 +10,7 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<u-card title="" :padding="0" :foot-border-top="false" @click="toView(item)" v-for="item in zcList" :key="item.driverDemandId">
+					<view style="margin:10pt;background-color: #FFFFFF;" @click="toView(item)" v-for="item in zcList" :key="item.driverDemandId">
 						<view class="card-head" slot="head">
 							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text><u-icon name="reload"
 							 @click="refresh(item)" color="#FE9B1C" size="28"></u-icon>
@@ -24,14 +24,14 @@
 						<u-tag :text="obj" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"
 						 v-for="(obj,index) in item.carCardList" :key="index"/>
 						</view>
-					</u-card>
+					</view>
 					    <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomed">
-					<u-card title="" :padding="0" :foot-border-top="false" @click="toView2(item)" v-for="item in qzList" :key="item.id">
+					<view style="margin:10pt;background-color: #FFFFFF;" @click="toView2(item)" v-for="item in qzList" :key="item.id">
 						<view class="card-head" slot="head">
 							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
 							<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>
@@ -47,7 +47,7 @@
 								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice}}月薪</view>
 							</view>
 						</view>
-					</u-card>
+					</view>
 							 <u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-	// import {refreshTime} from '@/utils/time.js'
 	export default {
 		data() {
 			return {
@@ -226,7 +225,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	page{
 		background-color:#f5f5f8 ;
 	}

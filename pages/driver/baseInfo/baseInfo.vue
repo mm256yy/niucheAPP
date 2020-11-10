@@ -104,7 +104,7 @@
 			...mapActions(['CurThemeType']),
 			setPicToken(){
 				let token = uni.getStorageSync('token');
-				let telephone = uni.getStorageSync('token');
+				let telephone = uni.getStorageSync('telephone');
 				this.headerObj.Authorization = token;
 				this.formDataObj.phone = telephone;
 				this.form.telephone = telephone;

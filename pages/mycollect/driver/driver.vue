@@ -10,8 +10,8 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					 <u-card padding="0" :border="false" @click="toView(item)" v-for="(item,index) in list" :key="item.id">
-						<view class="" slot="body" style="padding:10rpx 20rpx;">
+					 <view  @click="toView(item)" v-for="(item,index) in list" :key="item.id" style="margin:10pt;background-color: #FFFFFF;">
+					  <view  style="padding:10rpx 20rpx;">
 							<view class="u-body-item u-flex ">
 							  <view class="u-line-4" style="width: 100%;">
 								 <view class="u-line-2">{{item.texttitle}}</view>
@@ -20,11 +20,12 @@
 									 <text>{{item.carage}}</text>
 								 </view>
 								 <view style="color: #7F7F7F;">
-									  <u-icon :name="distance" style="vertical-align: middle;" size="30"></u-icon>
+									 
+									  <!-- <u-icon :name="distance" style="vertical-align: middle;" size="30"></u-icon> -->
 									  <text>{{item.carkm}}</text>
 								 </view>
 							  </view>
-							   <view class="">
+							   <view>
 								   <view style="text-align: right;">
 									  <u-tag :text="item.businesstypetag" type="info" class="tag-style" size="mini"/>
 									  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
@@ -33,25 +34,26 @@
 							   </view>
 							</view>
 						</view>
-						<view class="bg-foot" slot="foot" style="">
+						<view class="bg-foot">
 							<view style="color: #FFFFFF;">
 							<text style="font-size: 16pt;">¥{{item.rentprice}}</text>
 							<text style="font-size: 10pt;padding-left: 8pt;">月租</text>
 							</view> 
 							<view style="margin-top: 5pt;">
-								<u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
-								:key="index" class="tag-style" v-show="it.length<7"/>
+								<u-tag :text="it" type="warning" size="mini" v-for="(it,i) in item.systemtag"
+								:key="i" class="tag-style" v-show="it.length<7"/>
 							</view> 
 						</view>
-					   </u-card>
-						<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+						
+					</view>
+						<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 				</scroll-view>
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				<u-card padding="0" :border="false"  @click="toView(item)"  v-for="(item,index) in list1" :key="item.id">
-					<view class="" slot="body" style="padding:10rpx 20rpx;">
+				<view style="margin:10pt;background-color: #FFFFFF;"  @click="toView(item)"  v-for="(item,index) in list1" :key="item.id">
+					<view  style="padding:10rpx 20rpx;">
 						<view class="u-body-item u-flex ">
 							<image :src="item.photourl"></image>
 						  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
@@ -66,17 +68,13 @@
 						  </view>
 						</view>
 					</view>
-					<view class="bg-foot" slot="foot" style="">
+					<view class="bg-foot">
 						<view style="color: #FFFFFF;">
 						<text style="font-size: 16pt;">¥{{item.pay}}</text>
 						<text style="font-size: 10pt;padding-left: 10pt;">月薪</text>
 						</view> 
-<!-- 						<view style="margin-top: 5pt;">
-						 <u-tag :text="it" type="warning" size="mini" v-for="(it,index) in item.systemtag"
-						 :key="index" class="tag-style" v-show="it.length<7"/>
-						</view> --> 
 					</view>
-				</u-card>
+				</view>
 						<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
@@ -99,7 +97,7 @@
 				swiperCurrent: 0,
 				pageNum:0,
 				pageNum1:0,
-				list:[],
+				list:[{"businessTag":null,"texttitle":"奥迪奥迪A32014款 Limousine 35TFSI 时尚型","intentionBrand":null,"pay":null,"isCollection":null,"carage":"车辆年龄小于3年","carkm":"0-3","photourl":"http://pic1.jisuapi.cn/car/static/images/logo/300/2588.jpg","businesstypetag":"网约车","systemtag":["轿车"," 车龄小于3年"," 22万公里-33万公里"," 纯电动"],"usertag":["2222"," 33333"],"rentprice":"8000","iscollect":1,"islogin":1,"pubMainComparyId":"55555555555555555"}],
 				list1:[],
 				total:0,
 				total2:0,
@@ -248,7 +246,6 @@
 				}
 			}
 </script>
-
 <style lang="scss">
 .driver-content{
 	.u-tabs{
