@@ -89,9 +89,9 @@
 				showTips:false,
 				dialogShow:false,
 				addForm:{
-					paramtername:'',
-					paramtertext:'',
-					paramterunit:''
+					"paramtername":'',
+					"paramtertext":'',
+					"paramterunit":''
 				},
                 list:[
 					{value: '1',text: '国4'},{value: '2',text: '国5'},{value: '3',text: '国6'},{value: '4',text: '其他'},
@@ -139,7 +139,7 @@
 				this.form.environmental = this.list[index].text;
 			},
 			showDialog(){
-				this.addForm = {paramtername:'',paramtertext:'',paramterunit:''};
+				this.addForm = {"paramtername":'',"paramtertext":'',"paramterunit":''};
 				this.dialogShow = true
 			},
 			tipsConfirm(){

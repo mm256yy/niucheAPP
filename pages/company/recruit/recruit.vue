@@ -90,6 +90,9 @@ export default {
 	mounted() {
           this.setInfo()
 	},
+	onShow() {
+		 this.setInfo()
+	},
 	methods: {
 		...mapActions(['CARPUBUPOSITION']),
     setInfo(){

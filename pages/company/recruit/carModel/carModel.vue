@@ -58,11 +58,15 @@ export default {
   	...mapGetters(['carPubUpload'])
   },
   onShow() {
-  	 this.list = uni.getStorageInfoSync('carPubUpload')
+	  let list = uni.getStorageSync('carPubUpload')
+  	 if(list){
+		 this.list = list
+	 }
   },
  mounted() {
-	 this.list = this.carPubUpload;
-
+	if (this.carPubUpload){
+			 this.list = this.carPubUpload;
+	}
  },
   methods: {
 	...mapActions(['CARPUBUPLOAD']),
@@ -71,9 +75,11 @@ export default {
 	},
 	getChildId(item){
 		console.log(item)
+		console.log(this.list)
 		item.forEach((info)=>{
 			this.list.push(info)
 		})
+		console.log(this.list)
         this.CARPUBUPLOAD(this.list)
 	},
 	delList(index){
