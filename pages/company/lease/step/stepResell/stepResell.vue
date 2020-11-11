@@ -31,7 +31,6 @@
 
 <script>
 
-import {mapGetters,mapActions} from 'vuex'
 export default {
   data(){
 	return {
@@ -44,14 +43,20 @@ export default {
 					shoplow:'',shophigh:'',packprice:''
 				}
 			],
-		}
+		},
+		carPubThree:{}
 	}  
   },
-  computed:{
-  	...mapGetters(['carPubThree'])
+  mounted() {
+  	 this.initStorage()
   },
   methods: {
-	  ...mapActions(['CARPUBTHREE']),
+	    initStorage(){
+				this.carPubThree = uni.getStorageSync('carPubThree');
+		},
+		setStorage(data){
+			 uni.setStorageSync('carPubThree', data);
+		},
 	  addPriceObj(){
 		this.form.sellCarPrice.push({
 				shoplow:'',shophigh:'',packprice:''
@@ -80,7 +85,7 @@ export default {
 			this.$u.toast('请填写完整');
 			return
 		}
-		this.CARPUBTHREE(this.form.sellCarPrice)
+		this.setStorage(this.form.sellCarPrice)
 		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
 	}
   }

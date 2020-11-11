@@ -42,7 +42,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 export default {
   data(){
 	return {
@@ -51,18 +50,26 @@ export default {
 		showTips:true,
 		value:'',
 		xttjList:[],
-		zdyList:[]
+		zdyList:[],
+		carPubFirst:{},
+		carPubSecond:{},
+		carPubType:''
 		
 	}  
   },
-  computed:{
-  	...mapGetters(['carPubFirst','carPubSecond','carPubType'])
-  },
   mounted() {
+	  this.initStorage()
       this.getSysTags()
   },
   methods: {
-	...mapActions(['CARPUBSECOND']),
+	initStorage(){
+		this.carPubFirst = uni.getStorageSync('carPubFirst');
+		this.carPubSecond = uni.getStorageSync('carPubSecond');
+		this.carPubType = uni.getStorageSync('carPubType');
+	},
+	setStorage(data){
+		  uni.setStorageSync('carPubSecond', data);
+	},
 	 getSysTags(){
 		let data = this.carPubFirst;
 		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,EndKm:data.EndKm};
@@ -102,7 +109,7 @@ export default {
 			}
 		})
 		let data = {SystemTag:this.xttjList,UserTag:zdylist}
-        this.CARPUBSECOND(data)
+        this.setStorage(data)
 		if(this.carPubType === 1) {
 			this.$u.route("/pages/company/lease/step/stepCost/stepCost")
 		} else {

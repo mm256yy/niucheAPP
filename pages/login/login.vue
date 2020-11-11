@@ -71,7 +71,6 @@
 
 <script>
 	import {phoneRule,codeRule,passwordRule} from '@/common/rule.js'
-	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -130,9 +129,12 @@
 			}
 		},
 		methods: {
-			...mapActions([
-				'Login','CurThemeType'
-			]),
+			setStorage(userInfo){
+				    let Authorization ='Bearer '+ userInfo.token;
+					uni.setStorageSync('telephone', userInfo.telephone);
+					uni.setStorageSync('token', Authorization);
+					uni.setStorageSync('role', userInfo.role);
+			},
 			change(index) {
 				this.current = index;
 			},
@@ -204,17 +206,16 @@
 								if(res.code === '1') {
 									let userInfo = obj;
 									userInfo.token = res.token;
-									// this.init()
-									this.Login(userInfo)
+									this.setStorage(userInfo)
 									if(res.userrole === 1){//司机
-										this.CurThemeType('driver')
+									 uni.setStorageSync('CurThemeType', 'driver');
 										if(res.userstate === '0'){
 											this.$u.route('/pages/driver/agreement/agreement',{type:'reLaunch'})
 										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										}
 									} else {
-										this.CurThemeType('company')
+										 uni.setStorageSync('CurThemeType', 'company');
 										if(res.userstate ==='0'){
 											this.$u.route('/pages/company/registrationAgreement/registrationAgreement',{type:'reLaunch'})
 										} else {

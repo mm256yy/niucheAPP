@@ -61,7 +61,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {action} from '@/utils/constant.js'
 	export default {
 		data() {
@@ -74,20 +73,19 @@
 				fileList:[],
 				fileList1:[],
 				form:{cardivephoto:'',cardrivepeople:'',taxiphoto:'',taxipeople:''},
+				carPubSeven:{}
 			}
 		},
-		computed:{
-			...mapGetters(['carPubSeven','token','telephone'])
-		},
 		mounted() {
-			this.setPicToken()
+			this.initStorage()
 		},
 		methods: {
-			  ...mapActions(['CARPUBSEVEN']),
-			  setPicToken(){
-			  	this.headerObj.Authorization = this.token;
-			  	this.formDataObj.phone = this.telephone;
-			  },
+				initStorage(){
+					this.carPubSeven = uni.getStorageSync('carPubSeven');
+				},
+				setStorage(data){
+					 uni.setStorageSync('carPubSeven', data);
+				},
 			  uploadChange(data, index, lists, name){
 				this.form[name] = data.text;
 				this.$u.toast(data.msg);
@@ -97,7 +95,7 @@
 					this.$u.toast('请填写完整');
 					return
 				}
-				this.CARPUBSEVEN(this.form) 
+				this.setStorage(this.form) 
 				this.$u.route("/pages/company/lease/step/stepNumber/stepNumber")
 			}
 		}

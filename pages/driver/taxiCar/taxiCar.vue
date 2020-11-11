@@ -133,18 +133,16 @@
 				id:'',
 				errorType:[
 					'message'
-				]
+				],
+				today:{}
 			}
 		},
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-	      this.setPicToken()
+			this.today = uni.getStorageSync('today');
 		  this.getInfo()
-		},
-		computed:{
-			...mapGetters(['token','telephone','today'])
 		},
 		methods: {
 			getInfo(){
@@ -182,10 +180,6 @@
 			},
 			edit(){
 				this.type = true;
-			},
-			setPicToken(){
-				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.telephone;
 			},
 			toNext(){
 				this.$refs.uForm.validate(valid=>{

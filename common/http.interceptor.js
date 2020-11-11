@@ -54,15 +54,12 @@ const install = (Vue, vm) => {
 	
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		
-		if(res.code == 200) {
+		debugger
+		if(res.code === 200) {
 			return res;
-		} else if(res.code == 401) {
+		} else if(res.code === 401) {
 			uni.clearStorage('token')
-			setTimeout(() => {
-			  vm.$u.route('/pages/user/login')
-			}, 1000)
-			return false;
+		    vm.$u.route('/pages/login/login')
 		}else if(res.code == 500) {
 			vm.$u.toast(res.msg);
 			return false;

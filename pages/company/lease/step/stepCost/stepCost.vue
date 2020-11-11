@@ -37,7 +37,6 @@
 
 <script>
 
-import {mapGetters,mapActions} from 'vuex'
 export default {
   data(){
 	return {
@@ -53,15 +52,21 @@ export default {
 		},
 		priceIndex:0,
 		show:false,
-		deposit:''
+		deposit:'',
+		carPubThree:{}
 		
 	}  
   },
-  computed:{
-  	...mapGetters(['carPubThree'])
+  mounted() {
+  	  this.initStorage()
   },
   methods: {
-	  ...mapActions(['CARPUBTHREE']),
+	  initStorage(){
+	  	this.carPubThree = uni.getStorageSync('carPubThree');
+	  },
+	  setStorage(data){
+	  	 uni.setStorageSync('carPubThree', data);
+	  },
 	 actionSheetCallback(index) {
 		let value = this.list[index].text;
 		this.form.rentCarPrice[this.priceIndex].RentTime = value
@@ -83,7 +88,7 @@ export default {
 			 this.$u.toast('请至少填写一个价格');
 			 return
 		 }
-		this.CARPUBTHREE(this.form) 
+		this.setStorage(this.form) 
 		this.$u.route("/pages/company/lease/step/stepAppearance/stepAppearance")
 	 },
   }

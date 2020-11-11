@@ -69,7 +69,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -98,14 +97,34 @@
 					{value: '1',text: '国4'},{value: '2',text: '国5'},{value: '3',text: '国6'},{value: '4',text: '其他'},
 				],
 				 CartagId:'',
+				 telephone:'',
+				 carPubType:'',
+				 carPubFirst:{},
+				  carPubSecond:{},
+				   carPubThree:{},
+				    carPubFour:{},
+					 carPubFive:{},
+					  carPubSix:{},
+					   carPubSeven:{},
+					    carPubEight:{},
 			}
 		},
-		computed:{
-			...mapGetters(['telephone','carPubType','carPubFirst','carPubSecond','carPubThree','carPubFour','carPubFive',
-			'carPubSix','carPubSeven','carPubEight',])
+		mounted() {
+			this.initStorage()
 		},
-		
 		methods: {
+			initStorage(){
+				this.telephone = uni.getStorageSync('telephone');
+				this.carPubType = uni.getStorageSync('carPubType');
+				this.carPubFirst = uni.getStorageSync('carPubFirst');
+				this.carPubSecond = uni.getStorageSync('carPubSecond');
+				this.carPubThree = uni.getStorageSync('carPubThree');
+				this.carPubFour = uni.getStorageSync('carPubFour');
+				this.carPubFive = uni.getStorageSync('carPubFive');
+				this.carPubSix = uni.getStorageSync('carPubSix');
+				this.carPubSeven = uni.getStorageSync('carPubSeven');
+				this.carPubEight = uni.getStorageSync('carPubEight');
+			},
 			setForm(){
 				let arr = this.elseParamterList;
 				let list = '';

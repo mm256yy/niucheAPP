@@ -39,7 +39,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -48,6 +47,7 @@
 				val:'val',
 				list:[],
 				idList:[],
+				telephone:'',
 			};
 		},
 		props:{
@@ -61,10 +61,8 @@
 				//1 租车 2 司机招聘 3 车辆转卖
 			},
 		},
-		computed:{
-			...mapGetters(['telephone'])
-		},
 		mounted() {
+			this.telephone = uni.getStorageSync('telephone')
 			this.initList()
 		},
 		methods:{

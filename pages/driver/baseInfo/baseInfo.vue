@@ -60,7 +60,6 @@
 </template>
 
 <script>
-	import {mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
 	import {action} from '@/utils/constant.js'
 	export default {
@@ -96,18 +95,11 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
+			this.form.telephone = telephone;
 		  // this.setPicToken()
 		  this.getInfo()
 		},
 		methods: {
-			...mapActions(['CurThemeType']),
-			setPicToken(){
-				let token = uni.getStorageSync('token');
-				let telephone = uni.getStorageSync('telephone');
-				this.headerObj.Authorization = token;
-				this.formDataObj.phone = telephone;
-				this.form.telephone = telephone;
-			},
 			getInfo(){
 				let token = uni.getStorageSync('token');
 				if(token){
@@ -158,7 +150,6 @@
 					if (res.code === 200){
 						this.$u.toast(res.msg) 
 						uni.clearStorage();
-						// this.CurThemeType('driver')
 						uni.setStorageSync('curThemeType','driver')
 						this.$u.route('/pages/login/login',{type:'reLaunch'});
 					}

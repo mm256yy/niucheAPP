@@ -97,7 +97,7 @@
 				swiperCurrent: 0,
 				pageNum:0,
 				pageNum1:0,
-				list:[{"businessTag":null,"texttitle":"奥迪奥迪A32014款 Limousine 35TFSI 时尚型","intentionBrand":null,"pay":null,"isCollection":null,"carage":"车辆年龄小于3年","carkm":"0-3","photourl":"http://pic1.jisuapi.cn/car/static/images/logo/300/2588.jpg","businesstypetag":"网约车","systemtag":["轿车"," 车龄小于3年"," 22万公里-33万公里"," 纯电动"],"usertag":["2222"," 33333"],"rentprice":"8000","iscollect":1,"islogin":1,"pubMainComparyId":"55555555555555555"}],
+				list:[],
 				list1:[],
 				total:0,
 				total2:0,

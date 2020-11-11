@@ -57,7 +57,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -74,19 +73,21 @@
 				dialogShow:false,
 				quesrc:'../../../../../static/que.png',
 				anssrc:'../../../../../static/ans.png',
+				carPubType:''
 			}
 		},
 		mounted() {
+			this.initStorage()
 			this.getQus()
-		},
-		computed:{
-			...mapGetters(['carPubType'])
 		},
 		onLoad(option) {
 			let id = option.id;
 			this.form.CartagId = id;
 		},
 		methods: {
+			initStorage(){
+					this.carPubType = uni.getStorageSync('carPubType');
+			},
 			getQus(){
 				this.$u.api.getQuestion({}).then(res=>{
 					if(res.code === 200){
