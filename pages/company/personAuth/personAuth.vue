@@ -68,9 +68,8 @@
 </template>
 
 <script>
-	 import {mapGetters} from 'vuex'
 	import {phoneRule,codeRule,passwordRule,requiredRule,IDNumberRule} from '@/common/rule.js'
-		import {action} from '@/utils/constant.js'
+	import {action} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
@@ -116,6 +115,10 @@
 				comparyid:'',
 				codeTips: '',
 				showTips:false,
+				companyFirst:{},
+				companySecond:{},
+				peopleCard:'',
+				shengfenzheng:'',
 			}
 		},
 		onLoad(option) {
@@ -128,14 +131,29 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-			this.setPicToken()
+			this.initStorage()
 			this.getInfo()
-			console.log(this.companySecond)
-		},
-		computed:{
-			...mapGetters(['token','telephone','companyFirst','companySecond','companyThree','peopleCard','shengfenzheng'])
 		},
 		methods: {
+			initStorage(){
+				    this.companyFirst = uni.getStorageSync('companyFirst');
+					this.companySecond = uni.getStorageSync('companySecond');
+					this.companyThree = uni.getStorageSync('companyThree');
+					this.peopleCard = uni.getStorageSync('peopleCard');
+					this.shengfenzheng = uni.getStorageSync('shengfenzheng');
+					if (this.companyThree){
+						this.form = this.companyThree;
+					}
+					if (this.shengfenzheng){
+						this.fileList.push(this.shengfenzheng[0])
+					}
+					if (this.peopleCard){
+						this.fileList1.push(this.peopleCard[0])
+					}
+			},
+			setStorage(data){
+					 uni.setStorageSync('companySecond', data);
+			},
 			// 获取验证码
 			getCode() {
 				if(this.$refs.uCode.canGetCode) {
@@ -169,15 +187,7 @@
 			setPicToken(){
 				this.headerObj.Authorization = this.token;
 				this.formDataObj.phone = this.telephone;
-				if (this.companyThree){
-					this.form = this.companyThree;
-				}
-				if (this.shengfenzheng){
-					this.fileList.push(this.shengfenzheng[0])
-				}
-				if (this.peopleCard){
-					this.fileList1.push(this.peopleCard[0])
-				}
+
 			},
 			getInfo(){
 				if(this.comparyid){
