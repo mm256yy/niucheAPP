@@ -13,9 +13,9 @@
 					 uni.setStorageSync('curThemeType', 'driver');
 				 }
 			    uni.onTabBarMidButtonTap(function(e){
-				   let token = uni.getStorageInfoSync('token');
+				   let token = uni.getStorageSync('token');
 				   if (token){
-					   let role = uni.getStorageInfoSync('role');
+					   let role = uni.getStorageSync('role');
 					   if (role === 2){
 						  uni.navigateTo({
 						      url: '/pages/company/release/release'
@@ -26,10 +26,10 @@
 						   });
 					   }
 				   } else {
-					   this.$u.toast("未登录不能发布信息，2秒后跳转我的页面")
+					   this.$u.toast("未登录不能发布信息，1.5秒后跳转我的页面")
 					   setTimeout(function(){
 						   this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
-					   },2000)
+					   },1500)
 				   }
 			})
 		},
