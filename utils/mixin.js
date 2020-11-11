@@ -15,6 +15,10 @@ export default {
                 curThemeType:''
 			 }
            },
+		   onLoad() {
+				let type = uni.getStorageSync('curThemeType');
+				this.curThemeType = type
+		   },
 		   onShow () {
 				let type = uni.getStorageSync('curThemeType');
 				this.curThemeType = type
