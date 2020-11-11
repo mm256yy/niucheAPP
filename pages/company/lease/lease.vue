@@ -128,8 +128,9 @@ export default {
 		show: false,
 		timeShow:false,
 		childType:true,
-		carPubType:'',
-		today:{}
+		carPubType:1,
+		today:{},
+		editId:''
 	}  
   },
   components:{ChildPopup},
@@ -144,14 +145,19 @@ export default {
 	if(index){
 		 this.getSelectFirst(this.firstId)
 	}
+	let editId = option.editId;
+	this.editId = editId
   },
   mounted() {
     this.initStorage()
+	if(this.editId){
+		this.editInit()
+	}
   },
   methods: {
 	  initStorage(){
-	  		this.today = uni.getStorageSync('today');
-			this.carPubType = uni.getStorageSync('carPubType');
+		this.today = uni.getStorageSync('today');
+		this.carPubType = uni.getStorageSync('carPubType');
 	  },
 	  setStorage(data){
 	  		 uni.setStorageSync('carPubFirst', data);
@@ -162,7 +168,16 @@ export default {
 	  customBack(){
 		  this.$u.route('/pages/company/release/release') 
 	  },
-	getChildId(item){
+	  editInit(){
+		 this.$u.api.ComparyRentCarEchoText({IsRentAndSell:this.carPubType,cartagid:this.editId}).then(res=>{
+		 	if(res.code === 200){
+		        console.log(res.data)
+		 	}else {
+		 		 this.$u.toast(res.message);
+		 	}
+		 })
+	  },
+	 getChildId(item){
 		console.log(item)
 		let obj = item[0];
 		this.form.carbrand = obj.carBrand;
@@ -177,7 +192,13 @@ export default {
 	    this.form.power = obj.power;
 	},
 	setInfo(){
-		
+		this.$u.api.getCarBrand({}).then(res=>{
+			if(res.code === 200){
+		       this.selectObj.carbrand = res.alibabaCarModelVoList;
+			}else {
+				 this.$u.toast(res.message);
+			}
+		})
 	},
 	showSelect(type){
 		this.selectObjType = type;

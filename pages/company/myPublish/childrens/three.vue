@@ -5,10 +5,10 @@
 				<u-col span="12" class="time">
 					<view style="padding-right: 10pt;">{{item.createTime}}</view>
 				</u-col>
-				<u-col span="5" @click="toView()">
+				<u-col span="5" @click="toView(item.rentCarId)">
 					<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
 				</u-col>
-				<u-col span="6" class="border-left" @click="toView()">
+				<u-col span="6" class="border-left" @click="toView(item.rentCarId)">
 					<view class="title u-line-2">{{item.textTitle}}</view>
 					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
 				</u-col>
@@ -61,8 +61,8 @@ export default {
 					}
 				})
 			},
-			toView(){
-				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
+			toView(id){
+				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id,flag:true})
 			},
 			onreachBottom() {
 				let len = this.list.length;

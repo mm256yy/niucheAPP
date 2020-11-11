@@ -63,7 +63,7 @@
 				})
 			},
 			toView(id){
-				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id,flag:true})
+				this.$u.route("/pages/company/myPublish/zucheView/zucheView")
 			},
 			onreachBottom() {
 				let len = this.list.length;

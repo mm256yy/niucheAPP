@@ -35,13 +35,16 @@
 			},
 			isOpen:{
 				type:String,
+			},
+			type:{
+				type:Number,
 			}
 		},
 		mounted() {
 			console.log(this.id)
 			console.log(this.isOpen)
 		},
-		method:{
+		methods:{
 			tipsConfirm(){
 				
 			},
@@ -52,7 +55,13 @@
 				
 			},
 			toNext(){
-				
+				console.log(this.id)
+				console.log(this.isOpen)
+				console.log(this.type)
+				if(this.type === 3){
+					 uni.setStorageSync('carPubType',3);
+					this.$u.route('/pages/company/lease/lease',{editId:this.id})
+				}
 			}
 		}
 	}
