@@ -209,14 +209,14 @@
 									if(res.userrole === 1){//司机
 										this.CurThemeType('driver')
 										if(res.userstate === '0'){
-											this.$u.route('/pages/driver/agreement/agreement')
+											this.$u.route('/pages/driver/agreement/agreement',{type:'reLaunch'})
 										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										}
 									} else {
 										this.CurThemeType('company')
 										if(res.userstate ==='0'){
-											this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+											this.$u.route('/pages/company/registrationAgreement/registrationAgreement',{type:'reLaunch'})
 										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										}

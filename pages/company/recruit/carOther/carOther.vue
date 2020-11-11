@@ -15,8 +15,8 @@
 		<view class="zlcontent">正确的车辆照片和证件照片 可帮助您更快通过审核</view>
 		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
-			@on-success='uploadChange' upload-text="" :file-list="item.fileList" :index="item.resName" :max-size="4 * 1024 * 1024" max-count="1" 
+			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="item.fileList" 
+			:index="item.resName" :max-size="4 * 1024 * 1024" max-count="1" 
 			style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {action} from '@/utils/constant.js'
 export default {
   data(){
@@ -54,14 +53,13 @@ export default {
 			onephoto:'',CarNamePlate:'',drivephoto:'',TransportationCard:''
 		},
 		action: action,
-		headerObj:{Authorization:''},
-		formDataObj:{phone:''},
 		uploadList:[
 			{fileList:[],tipText:'请上传车辆右前方或左前方45°照片',resName:'onephoto'},
 			{fileList:[],tipText:'请上传车辆铭牌',resName:'CarNamePlate'},
 			{fileList:[],tipText:'请上传行驶证/运输证或二合一证件照片',resName:'drivephoto'},
 			{fileList:[],tipText:'请上传运输证件照片（如已上传二合一证请忽略）',resName:'TransportationCard',},
 		],
+		carPubUpload:'',
 	
 	}  
   },
@@ -71,23 +69,21 @@ export default {
 		 this.form.CarModel =option.text;
 		 this.getSelectFirst(index)
 	}
-  },
-  computed:{
-  	...mapGetters(['token','telephone','carPubUpload'])
-  },
-  mounted() {
-  	this.setPicToken()
-  },
-  methods: {
-	  ...mapActions(['CARPUBUPLOAD']),
-	  setPicToken(){
-		this.headerObj.Authorization = this.token;
-		this.formDataObj.phone = this.telephone;
+   },
+   mounted() {
+	  this.initStorage()
+   },
+   methods: {
+	  initStorage(){
+	  		this.carPubUpload = uni.getStorageSync('carPubUpload');
+	  },
+	  setStorage(data){
+	  		 uni.setStorageSync('carPubUpload', data);
 	  },
 	  uploadChange(data, index, lists, name){
 		this.form[name] = data.text;
 	  },
-	 getSelectFirst(id){
+	  getSelectFirst(id){
 		this.$u.api.getCarSystem({parentid:id}).then(res=>{
 			if(res.code === 200){
 				 this.carmodel = res.alibabaCarModelVoList;
@@ -96,15 +92,15 @@ export default {
 			}
 		}).catch(res=>{this.$u.toast(res.msg)})
 	  },
-	actionSheetCallback(index) {
+	 actionSheetCallback(index) {
 	  	let val = index[0].label;
 	  	this.form.CarXilie = val;
 	  },
-	showSelect(){
+	 showSelect(){
 		this.show = true;
-	},
-	toCarList(){
-		this.$u.route('/pages/company/lease/carList/carList',{source:2}) 
+	 },
+	 toCarList(){
+	 	this.$u.route('/pages/company/lease/carList/carList',{source:2}) 
 	}, 
 	toNext(){
 		 let list = this.carPubUpload || [];
@@ -114,7 +110,7 @@ export default {
 				let data = this.form;
 				data.carModelPhoto = res.data;
 		 		 list.push(data)
-				 this.CARPUBUPLOAD(list)
+				 this.setStorage(list)
 				 this.$u.route('/pages/company/recruit/carModel/carModel') 
 		 	}else {
 		 		 this.$u.toast(res.msg);

@@ -2,8 +2,12 @@
     <view class="wrap">
 		<u-navbar back-text="返回"  back-icon-size="0" title="工作车型列表" :background="backgroundCom" 
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		<view class="zlcontent">
+		<view class="zlcontent" style="margin-bottom: 20pt;">
 		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
+		   <view @click="toNewCar" style="padding:10pt 10pt;">
+		   	<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon>
+		   	<text style="vertical-align: top;">添加新车辆</text>
+		   </view>
 			<u-card :show-head="false" v-for="(item,index) in list" :key="index">
 				<view style="position: relative;" slot="body">
 					<view class="u-flex">
@@ -20,13 +24,10 @@
 					 <u-icon name="trash" color="#6DD99B" class="iconAbs" @click="delList(index)"></u-icon>
 				</view>
 			</u-card>
-			<view @click="toNewCar" style="padding:10pt 10pt;">
-				<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon>
-				<text style="vertical-align: top;">添加新车辆</text>
-			</view>
+		<u-gap height="80" bg-color="#f5f5f8"></u-gap>
 	    </view>
 		<view class="fixed-btn">
-			<view class=" btn-inline">
+			<view class="btn-inline">
 			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">完成</u-button>
 			</view>
 		</view>
@@ -35,7 +36,6 @@
 </template>
 
 <script>
-import {mapGetters,mapActions} from 'vuex'
 import ChildPopup from '@/components/importCar.vue'
 export default {
   data(){
@@ -50,41 +50,39 @@ export default {
 		importShow:false,
 		childType:false,
 		carPubType:2,
+		carPubUpload:{},
 	
 	}  
   },
    components:{ChildPopup},
-  computed:{
-  	...mapGetters(['carPubUpload'])
-  },
-  onShow() {
-	  let list = uni.getStorageSync('carPubUpload')
-  	 if(list){
+    onShow() {
+	   this.initStorage()
+	  let list = this.carPubUpload;
+  	  if(list){
 		 this.list = list
-	 }
-  },
- mounted() {
-	if (this.carPubUpload){
-			 this.list = this.carPubUpload;
-	}
- },
+	  }
+   },
   methods: {
-	...mapActions(['CARPUBUPLOAD']),
+	initStorage(){
+		this.carPubUpload = uni.getStorageSync('carPubUpload');
+	},
+	setStorage(data){
+		uni.setStorageSync('carPubUpload', data);
+	},
 	handleClick(){
 		this.$refs.importShow.importShow = true
 	},
 	getChildId(item){
-		console.log(item)
-		console.log(this.list)
+		let arr = this.list;
 		item.forEach((info)=>{
-			this.list.push(info)
+			arr.push(info)
 		})
-		console.log(this.list)
-        this.CARPUBUPLOAD(this.list)
+		this.list =Array.from(new Set(arr)) 
+        this.setStorage(this.list)
 	},
 	delList(index){
 	   this.list.splice(index,1)
-	   this.CARPUBUPLOAD(this.list)	  
+	   this.setStorage(this.list)	  
 	},
 	toNext(){
 		this.$u.route('/pages/company/recruit/recruit')
@@ -141,7 +139,7 @@ page{
     box-sizing: border-box;
     position: fixed;
     left: 0;
-    bottom: 20pt;
+    bottom: 10pt;
     width: 100%;
     z-index: 98;
 }
@@ -149,7 +147,7 @@ page{
 	display: flex;
 	justify-content: center;
 	 flex-direction: row;
-	 padding: 30pt;
+	 padding: 0 20pt;
 }
  .btn-agree{
 	background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC);

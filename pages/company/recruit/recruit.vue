@@ -17,7 +17,8 @@
 				  :clearable="false" :border="true" placeholder="请输入最高值"/>
 				</u-form-item>
 				<u-form-item label="招聘人数" prop="peoplenumber">
-					<u-input v-model="form.peoplenumber" class="input_select" maxlength="7" type="number" :border="true" placeholder="请输入招聘人数" />
+					<u-input v-model="form.peoplenumber" class="input_select" maxlength="7" type="number" :border="true"
+					 placeholder="请输入招聘人数" />
 				</u-form-item>
 				<u-form-item label="职位详情" prop="worktext" label-position="top">
 					<u-input v-model="form.worktext" class="input_textarea" type="textarea" maxlength="1000"
@@ -46,13 +47,13 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
 export default {
 	data() {
 		return {
 			backTextStyle:{'color':'#ffffff'},
 			value:'',
+			id:'',
 			form:{
 				userid:'',
 				workname:'',
@@ -78,27 +79,50 @@ export default {
 				'message'
 			],
 			showTips:false,
+			telephone:'',
+			carPubUpload:{},
+			carPubPosition:{}
 			
 		}
 	},
 	onReady() {
 	    this.$refs.uForm.setRules(this.rules);
 	},
-	computed:{
-		...mapGetters(['telephone','carPubUpload','carPubPosition'])
-	},
-	mounted() {
-          this.setInfo()
+	onLoad(option) {
+		let id = option.id;
+		if(id){
+			this.id = id;
+		}
 	},
 	onShow() {
-		 this.setInfo()
+		this.initStorage()
+		if(this.id){
+			this.getInfo()
+		}else {
+		    this.setInfo()	
+		}
 	},
 	methods: {
-		...mapActions(['CARPUBUPOSITION']),
+ 	  initStorage(){
+		this.carPubUpload = uni.getStorageSync('carPubUpload');
+		this.carPubPosition = uni.getStorageSync('carPubPosition');
+		this.telephone = uni.getStorageSync('telephone');
+	 },
+	 setStorage(data){
+		 uni.setStorageSync('carPubPosition', data);
+	 },
+	 getInfo(){
+		this.$u.api.saveCompanyInvite({id:this.id}).then(res=>{
+			if(res.code === 200){
+			     this.form = res.object;
+			}else {
+				 this.$u.toast(res.msg);
+			}
+		}).catch(res=>{this.$u.toast(res.msg)})
+	},	
     setInfo(){
 		let pubUpload = this.carPubUpload;
-		let carPubPosition = uni.getStorageSync('carPubPosition');
-		console.log(carPubPosition)
+		let carPubPosition = this.carPubPosition;;
 		if (carPubPosition){
 			this.form = carPubPosition;
 		}
@@ -118,22 +142,21 @@ export default {
 		} else{
 			this.value = ''
 		}
-	},		
+	},	
 	 actionSheetCallback(index) {
 		let value = this.list[index].text;
 		this.form.workname = value
 	 },
 	 toCarModel(){
-		  this.CARPUBUPOSITION(this.form)
+		this.setStorage(this.form)
 		this.$u.route('/pages/company/recruit/carModel/carModel') 
 	 },
 	 saveStorage(){
-		 this.CARPUBUPOSITION(this.form)
+		  this.setStorage(this.form)
 		  this.$u.toast('草稿保存成功');
 	 },
 	 saveForm(){
 		 let obj = this.form;
-		 console.log(obj)
 		 this.$u.api.saveCompanyInvite(obj).then(res=>{
 		 	if(res.code === '200'){
 				this.showTips = true
@@ -147,7 +170,8 @@ export default {
 		 uni.removeStorageSync('carPubPosition');
 	 },
 	 tipsConfirm(){
-	 	this.$u.route('/pages/company/myPublish/myPublish', {index: 1});
+		 this.clearStorage()
+	 	 this.$u.route('/pages/company/myPublish/myPublish', {index: 1});
 	 },
 	 toSubmit(){
 		this.$refs.uForm.validate(valid=>{

@@ -27,7 +27,7 @@
 					<u-input class="input-radius" v-model="form.nickName" :border="true" v-if="type"/>
 					<view v-else class="type-right">{{form.nickName}}</view>
 				</u-form-item>
-				<u-form-item label="手机号" prop="telephone">
+				<u-form-item label="手机号">
 					<!-- <u-input class="input-radius" v-model="form.telephone" :disabled="true" :border="true" v-if="type"/> -->
 					<view class="type-right">{{form.telephone}}</view>
 				</u-form-item>
@@ -81,7 +81,6 @@
 				},
 				rules: {
 					nickName:requiredRule,
-					telephone:requiredRule,
 					wechatNum:requiredRule,
 					qqNum:requiredRule,
                 },
@@ -159,8 +158,9 @@
 					if (res.code === 200){
 						this.$u.toast(res.msg) 
 						uni.clearStorage();
-						this.CurThemeType('driver')
-						this.$u.route('/pages/login/login');
+						// this.CurThemeType('driver')
+						uni.setStorageSync('curThemeType','driver')
+						this.$u.route('/pages/login/login',{type:'reLaunch'});
 					}
 				})
 			},
