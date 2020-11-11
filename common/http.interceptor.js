@@ -54,7 +54,6 @@ const install = (Vue, vm) => {
 	
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		debugger
 		if(res.code === 200) {
 			return res;
 		} else if(res.code === 401) {
