@@ -91,7 +91,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -126,10 +125,8 @@
 				resData:{},
 				authFlag:false,//认证状态
 				comnpanySrc: '../../static/touxx.png',
+				telephone:''
 			}
-		},
-		computed:{
-			...mapGetters(['telephone'])
 		},
 		filters: {
 		  state: function (value) {
@@ -148,9 +145,13 @@
 		  }
 		},
         mounted() {
+			this.initStorage()
         	this.getCompanyInfo()
         },
 		methods: {
+			initStorage(){
+				this.telephone = uni.getStorageSync('telephone');
+			},
 			toAuth(){
 				this.$u.route('/pages/company/identityAuth/identityAuth',{id:this.form.comparyid})
 			},

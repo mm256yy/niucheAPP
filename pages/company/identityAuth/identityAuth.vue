@@ -39,7 +39,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
 	import {actionJx} from '@/utils/constant.js'
 	export default {
@@ -80,7 +79,8 @@
 				comparyid:'',
 				errorType:[
 					'message'
-				]
+				],
+				today:{}
 			}
 		},
 		onReady() {
@@ -93,14 +93,10 @@
 			}
 		},
 		mounted() {
-	      this.setPicToken()
+		  this.initStorage()
 		  this.getInfo()
 		},
-		computed:{
-			...mapGetters(['token','telephone','today'])
-		},
 		methods: {
-			...mapActions(['COMPANYFIRST','COMPANYSECOND','COMPANYTHREE','COMPARYLOGO','PEOPLECARD','SHENGFENZHENG']),
 			getInfo(){
 				if(this.comparyid){
 					this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
@@ -132,35 +128,37 @@
 								identifyCode:'',
 								comparypeoplephoto:data.comparypeoplephoto
 							};
-							this.COMPANYSECOND(obj)
-							this.COMPANYTHREE(objF)
+							 uni.setStorageSync('companySecond', obj);
+							 uni.setStorageSync('companyThree', objF);
 							let photo = data.photolist;
 							if(photo.comparyLogo){
 								let comparyLogo = [{url:photo.comparyLogo}]
-								this.COMPARYLOGO(comparyLogo)
+								 uni.setStorageSync('comparyLogo', comparyLogo);
 							}
 							if(photo.peopleCard){
 								let peopleCard = [{url:photo.peopleCard}]
-								this.PEOPLECARD(peopleCard)
+								 uni.setStorageSync('peopleCard', peopleCard);
 							}
 							if(photo.shengfenzheng){
 								let shengfenzheng = [{url:photo.shengfenzheng}]
-								this.SHENGFENZHENG(shengfenzheng)
+								 uni.setStorageSync('shengfenzheng', shengfenzheng);
 							}
 							if(photo.yingyezhizhao){
 								this.fileList.push({url:photo.yingyezhizhao})
 							}
-						 }
+						  }
 						}).catch(res=>{this.$u.toast(res.msg)})
 				}
 			},
-			setPicToken(){
-				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.telephone;
+			initStorage(){
+					this.today = uni.getStorageSync('today');
+			},
+			setStorage(data){
+					 uni.setStorageSync('companyFirst', data);
 			},
 			setForm(){
 				 let data = this.form;
-				 this.COMPANYFIRST(data)
+				 this.setStorage(data)
 				 this.$u.route("/pages/company/basicInfo/basicInfo")
 			},
 			toNext(){

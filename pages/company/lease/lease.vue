@@ -128,6 +128,8 @@ export default {
 		show: false,
 		timeShow:false,
 		childType:true,
+		carPubType:'',
+		today:{}
 	}  
   },
   components:{ChildPopup},
@@ -147,10 +149,16 @@ export default {
 	}
   },
   mounted() {
-    // this.getSelect()
+    this.initStorage()
   },
   methods: {
-	  ...mapActions(['CARPUBFIRST']),
+	  initStorage(){
+	  		this.today = uni.getStorageSync('today');
+			this.carPubType = uni.getStorageSync('carPubType');
+	  },
+	  setStorage(data){
+	  		 uni.setStorageSync('carPubFirst', data);
+	  },
 	 toCarList(){
 		this.$u.route('/pages/company/lease/carList/carList',{source:1}) 
 	 }, 
@@ -232,7 +240,7 @@ export default {
 		this.$refs.importShow.importShow = true
     },
 	toNext(){
-		this.CARPUBFIRST(this.form)
+		this.setStorage(this.form)
 		this.$refs.uForm.validate(valid=>{
 			if(valid) {
 		        this.$refs.uForm2.validate(valid=>{

@@ -69,7 +69,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -103,16 +102,18 @@
 					 {name: '5',text:'30-50万公里' },{name: '6',text:'50-70万公里' },{name: '7',text:'70万公里以上'}],
 				},
 				radioType:'wycList',
-				showTips:false
+				showTips:false,
+				telephone:''
 			}
 		},
-		computed:{
-			...mapGetters(['telephone'])
-		},
 		mounted() {
-			this.form.userid = this.telephone;
+			this.initStorage()
 		},
 		methods: {
+			initStorage(){
+					this.telephone = uni.getStorageSync('telephone');
+					this.form.userid = this.telephone;
+			},
 			brandGroupChange(e) {this.form.intentionbrand = e;},
 			powerGroupChange(e) {this.form.power = e;},
 			modelGroupChange(e) {this.form.carmodel = e;},

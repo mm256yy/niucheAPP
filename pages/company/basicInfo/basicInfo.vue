@@ -42,7 +42,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule,ruleMainBusiness} from '@/common/rule.js'
 	import {action} from '@/utils/constant.js'
 	export default {
@@ -76,11 +75,16 @@
 				},
 				comparyid:'',
 				checkboxList: [
-							{name: '网约车',checked: false,disabled: false},{name: '出租车',checked: false,disabled: false},{name: '长短组',checked: false,disabled: false},
-							{name: '汽车生产',checked: false,disabled: false},{name: '车辆销售',checked: false,disabled: false},{name: '维修与保养',checked: false,disabled: false},
-							{name: '汽车金融',checked: false,disabled: false},{name: '汽车保险',checked: false,disabled: false},{name: '装修与美容',checked: false,disabled: false},
-							{name: '其他',checked: false,disabled: false}
-						]
+					{name: '网约车',checked: false,disabled: false},{name: '出租车',checked: false,disabled: false},
+					{name: '长短组',checked: false,disabled: false},
+					{name: '汽车生产',checked: false,disabled: false},{name: '车辆销售',checked: false,disabled: false},
+					{name: '维修与保养',checked: false,disabled: false},
+					{name: '汽车金融',checked: false,disabled: false},{name: '汽车保险',checked: false,disabled: false},
+					{name: '装修与美容',checked: false,disabled: false},
+					{name: '其他',checked: false,disabled: false}
+					],
+				companySecond:{},
+				comparyLogo:''
 			}
 		},
 		onReady() {
@@ -93,59 +97,54 @@
 			}
 		},
 		mounted() {
-			this.setPicToken()
+			this.initStorage()
 			this.getInfo()
 		},
-	computed:{
-		...mapGetters(['token','telephone','companySecond','comparyLogo'])
-	},
 	methods: {
-		...mapActions(['COMPANYSECOND']),
-			getInfo(){
-				if(this.comparyid){
-					this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
-						if(res.code === 200){
-							let data = res.usercomparypeople;
-						 }else {
-							 this.$u.toast(res.msg)
-						 }
-						}).catch(res=>{this.$u.toast(res.msg)})
-				}
-			},
-			setPicToken(){
-				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.telephone;
+		initStorage(){
+				this.companySecond = uni.getStorageSync('companySecond');
+				this.comparyLogo = uni.getStorageSync('comparyLogo');
 				if (this.companySecond){
 						this.form = this.companySecond;
 				}
 				if (this.comparyLogo.length>0){
 					this.fileList.push(this.comparyLogo[0])
 				}
-			},
-			setForm(){
-				let data = this.form;
-				this.COMPANYSECOND(data)
-				this.$u.route("/pages/company/personAuth/personAuth")
-			},
-			radioGroupChange(e) {
-				this.form.mainBusiness = e;
-			},
-			uploadChange(res,index,lists,name){
-               if(res.code === 200) {
-				   this.form.comparylogophoto = res.text;
-			   }
-			},
-			toNext(){
-				console.log(this.fileList)
-				this.$refs.uForm.validate(valid=>{
-					if(valid) {
-                        this.setForm()
-					} else {
-						
-					}
-				})
-				
+		},
+		setStorage(data){
+				 uni.setStorageSync('companySecond', data);
+		},
+		getInfo(){
+			if(this.comparyid){
+				this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
+					if(res.code === 200){
+						let data = res.usercomparypeople;
+					 }else {
+						 this.$u.toast(res.msg)
+					 }
+					}).catch(res=>{this.$u.toast(res.msg)})
 			}
+		},
+		setForm(){
+			let data = this.form;
+			this.setStorage(data)
+			this.$u.route("/pages/company/personAuth/personAuth")
+		},
+		radioGroupChange(e) {
+			this.form.mainBusiness = e;
+		},
+		uploadChange(res,index,lists,name){
+		   if(res.code === 200) {
+			   this.form.comparylogophoto = res.text;
+		   }
+		},
+		toNext(){
+			this.$refs.uForm.validate(valid=>{
+				if(valid) {
+					this.setForm()
+				} 
+			})
+		  }
 		}
 	}
 </script>
