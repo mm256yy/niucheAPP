@@ -229,6 +229,7 @@
 			},
 			uploadChange(res,index,lists,name){
 				let data = res.data;
+				this.driverPhoto = data.text
 			}
 		}
 	}

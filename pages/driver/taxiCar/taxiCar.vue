@@ -220,7 +220,7 @@
 			},
 			uploadChange(res,index,lists,name){
 				let data = res.data;
-				this.form.driverPhoto = data.imagename
+				this.form.driverPhoto = data.text
 			}
 		}
 	}

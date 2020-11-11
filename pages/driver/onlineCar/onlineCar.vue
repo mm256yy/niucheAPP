@@ -89,13 +89,14 @@
 <script>
 	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
+	import {action} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
 				labelStyle:{'color':'#7F7F7F'},
 				backTextStyle:{'color':'#ffffff'},
 				title:'证件上传',
-				action: '/user/image/DriverCardLicense',
+				action: action,
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],
@@ -218,7 +219,7 @@
 			},
 			uploadChange(res,index,lists,name){
 				let data = res.data;
-				this.form.driverPhoto = data.imagename
+				this.form.driverPhoto = data.text
 			}
 		}
 	}
