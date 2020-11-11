@@ -50,7 +50,7 @@
 						 <u-input v-model="form.firstkm" type="number" maxlength="3" 
 						  :clearable="false" :border="true" placeholder="请输入"/>
 						 <text style="padding: 0 5pt;">-</text>
-						 <u-input v-model="form.EndKm" type="number" maxlength="3"
+						 <u-input v-model="form.endkm" type="number" maxlength="3"
 						 :clearable="false" :border="true" placeholder="请输入"/>
 						 <text style="padding-left: 5pt;">万公里</text>
 					 </u-form-item>
@@ -94,7 +94,7 @@ export default {
 			businesstype:'',
 			firsttime:'',
 			firstkm:'',
-			EndKm:'',
+			endkm:'',
 			carnbumber:'',
 		},
 		rules:{
@@ -171,11 +171,24 @@ export default {
 	  editInit(){
 		 this.$u.api.ComparyRentCarEchoText({IsRentAndSell:this.carPubType,cartagid:this.editId}).then(res=>{
 		 	if(res.code === 200){
-		        console.log(res.data)
+				this.editSetStorage(res.object)
 		 	}else {
 		 		 this.$u.toast(res.message);
 		 	}
 		 })
+	  },
+	  editSetStorage(data){
+		  this.form.carbrand = data.carbrand;
+		  this.form.carmodel = data.carmodel;
+		  this.form.carxinghao = data.carxinghao;
+		  this.form.cartype = data.cartype;
+		  this.form.power = data.power;
+		  this.form.businesstype = data.businesstype;
+		  this.form.firsttime = data.firsttime;
+		  this.form.firstkm = data.firstkm;
+		  this.form.endkm = data.endkm;
+		  this.form.carnbumber = data.carnbumber; 
+		  uni.setStorageSync('editId',data.tagid)
 	  },
 	 getChildId(item){
 		console.log(item)
@@ -264,8 +277,8 @@ export default {
 		        this.$refs.uForm2.validate(valid=>{
 		        	if(valid) {
 						let startKm = Number(this.form.firstkm);
-						let endKm = Number(this.form.EndKm);
-						if (startKm > endKm){
+						let endkm = Number(this.form.endkm);
+						if (startKm > endkm){
 							this.$u.toast('行驶里程填写有误');
 							return
 						}
