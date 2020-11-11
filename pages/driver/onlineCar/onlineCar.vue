@@ -87,7 +87,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
 	import {action} from '@/utils/constant.js'
 	export default {
@@ -135,18 +134,16 @@
 				id:'',
 				errorType:[
 					'message'
-				]
+				],
+				today:{}
 			}
 		},
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-	      this.setPicToken()
-		  this.getInfo()
-		},
-		computed:{
-			...mapGetters(['token','telephone','today'])
+			this.today = uni.getStorageSync('today');
+		   this.getInfo()
 		},
 		methods: {
 			getInfo(){
@@ -183,10 +180,6 @@
 			},
 			edit(){
 				this.type = true;
-			},
-			setPicToken(){
-				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.telephone;
 			},
 			toNext(){
 				this.$refs.uForm.validate(valid=>{

@@ -94,7 +94,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {requiredRule} from '@/common/rule.js'
 	import {actionJs} from '@/utils/constant.js'
 	export default {
@@ -142,18 +141,17 @@
 				},
 				errorType:[
 					'message'
-				]
+				],
+				today:{}
 			}
 		},
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-	      this.setPicToken()
+			this.today = uni.getStorageSync('today');
+	      // this.setPicToken()
 		  this.getInfo()
-		},
-		computed:{
-			...mapGetters(['token','telephone','today'])
 		},
 		methods: {
 			getInfo(){
