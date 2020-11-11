@@ -50,7 +50,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 	import {action} from '@/utils/constant.js'
 	export default {
 		data() {
@@ -67,21 +66,20 @@
 					{fileList:[],tipText:'请上传车辆侧面照片',resName:'fourphoto'},
 				],
 				form:{onephoto:'',twophoto:'',threephoto:'',fourphoto:'',},
-				fileList:[]
+				fileList:[],
+				carPubFour:{}
 			}
 		},
-		computed:{
-			...mapGetters(['carPubFour','token','telephone'])
-		},
 		mounted() {
-			this.setPicToken()
+			this.initStorage()
 		},
 		methods: {
-			  ...mapActions(['CARPUBFOUR']),
-			  setPicToken(){
-			  	this.headerObj.Authorization = this.token;
-			  	this.formDataObj.phone = this.telephone;
-			  },
+		    initStorage(){
+				this.carPubFour = uni.getStorageSync('carPubFour');
+			},
+			setStorage(data){
+				 uni.setStorageSync('carPubFour', data);
+			},
 			uploadChange(data, index, lists, name){
 				this.form[name] = data.text;
 				this.$u.toast(data.msg);
@@ -91,7 +89,7 @@
 					this.$u.toast('请上传图片');
 					return
 				}
-				this.CARPUBFOUR(this.form) 
+				this.setStorage(this.form) 
 				this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
 			},
 		}

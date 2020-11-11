@@ -43,19 +43,18 @@
 					{fileList:[],tipText:'请上传车辆后备箱照片或视频',resName:'fourneishiphoto'},
 				],
 				form:{oneneishiphoto:'',twoneishiphoto:'',threeneishiphoto:'',fourneishiphoto:'',},
+				carPubFive:{}
 			}
 		},
-		computed:{
-			...mapGetters(['carPubFive','token','telephone'])
-		},
 		mounted() {
-			this.setPicToken()
+			  this.initStorage()
 		},
 		methods: {
-			  ...mapActions(['CARPUBFIVE']),
-			  setPicToken(){
-			  	this.headerObj.Authorization = this.token;
-			  	this.formDataObj.phone = this.telephone;
+			  initStorage(){
+				this.carPubFive = uni.getStorageSync('carPubFive');
+			  },
+			  setStorage(data){
+				 uni.setStorageSync('carPubFive', data);
 			  },
 			  uploadChange(data, index, lists, name){
 			  	this.form[name] = data.text;

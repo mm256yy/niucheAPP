@@ -117,6 +117,7 @@
 				showTips:false,
 				companyFirst:{},
 				companySecond:{},
+				companyThree:{},
 				peopleCard:'',
 				shengfenzheng:'',
 			}

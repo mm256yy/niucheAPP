@@ -50,26 +50,25 @@
 				formDataObj:{phone:''},
 				fileList:[],
 				form:{elsephoto:''},
+				carPubSix:{}
 			}
 		},
-		computed:{
-			...mapGetters(['carPubSix','token','telephone'])
-		},
 		mounted() {
-			this.setPicToken()
+			this.initStorage()
 		},
-		methods: {
-			  ...mapActions(['CARPUBSIX']),
-			  setPicToken(){
-			  	this.headerObj.Authorization = this.token;
-			  	this.formDataObj.phone = this.telephone;
-			  },
+	     methods: {
+		    initStorage(){
+					this.carPubSix = uni.getStorageSync('carPubSix');
+			},
+			setStorage(data){
+				 uni.setStorageSync('carPubSix', data);
+			},
 			  uploadChange(data, index, lists, name){
 				this.form.elsephoto = data.text;
 				this.$u.toast(data.msg);
 			  },
 			toNext(){
-				this.CARPUBSIX(this.form) 
+				this.setStorage(this.form) 
 				this.$u.route("/pages/company/lease/step/stepCards/stepCards")
 			}
 		}
