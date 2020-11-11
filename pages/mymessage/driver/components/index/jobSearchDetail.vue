@@ -28,7 +28,8 @@
 		</view>
 		<view class="title">车型</view>
 		<view class="wrap">
-			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="list"></v-tabs>
+			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true"
+			 pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="list" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carphotolist" :key="index" class="" v-show="firstCurrent === index">
 				<u-image class="img" width="671rpx" height="504rpx" :src="item.neionephoto"></u-image>
 			 </view>
@@ -83,6 +84,14 @@
 					</scroll-view>
 				</swiper-item>
 			</swiper>
+			<view class="more" @click="other()">上拉加载该公司其他信息</view>
+			<view class="last">
+				<view class="left">预约看车</view>
+				<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
+				<u-image width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
+				<view class="right">下单租车</view>
+				<view class="clear"></view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -111,7 +120,8 @@
 				swiperCurrent: 0,
 				currentBottom: 0,
 				swiperCurrentBottom: 0,
-				detail: ''
+				detail: '',
+				firstCurrent:0
 			}
 		},
 		onLoad(option) {
@@ -124,6 +134,9 @@
 			this.getDetail()
 		},
 		methods: {
+			change(index) {
+				this.firstCurrent = index;
+			},
 			getDetail(){
 				this.$u.api.detailSearch({id:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
@@ -200,15 +213,15 @@ page{
 	.wrap {
 		display: flex;
 		flex-direction: column;
-		// height: calc(100vh - var(--window-top));
+		// height: calc(66vh - var(--window-top));
 		// height: auto;
-		height: 671rpx;
 		width: 100%;
+		background: rgba(0,0,0,0.02);
 	}
 	.wrapBottom {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - var(--window-top));
+		height: calc(70vh - var(--window-top));
 		// height: auto;
 		width: 100%;
 	}
@@ -284,6 +297,31 @@ page{
 		.img {
 			margin-left: 40rpx;
 			margin-top: 40rpx;
+		}
+		.more {
+				   font-size: 20rpx;
+				   color: #7f7f7f;
+				   margin-top: 83rpx;
+				   margin-left: 220rpx;
+				   margin-bottom: 40rpx;
+		}
+		.last {
+				   width: 100%;
+				   height: 144rpx;
+				   padding: 55rpx 80rpx;
+				   background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
+				   font-size: 36rpx;
+				   font-weight: 900;
+				   color: #fff;
+				   display: flex;
+				   justify-content: space-around;
+				   align-items: center;
+				  //  .icon-box {
+					 // width: 96rpx;
+					 // height: 96rpx;
+					 // border-radius: 50%;
+					 // background: #fff;
+				  //  }
 		}
 	}
 </style>

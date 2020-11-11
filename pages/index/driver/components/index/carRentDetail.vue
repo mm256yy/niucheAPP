@@ -28,20 +28,28 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :id="detail.comparyid" :tab="tab" :detail="detail" ref="child"></range-price>
+			 			<range-price :tab="tab" :detail="detail" ref="child"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue :id="detail.comparyid" :detail="detail.carRentProblemCollection"></rentcar-issue>
+						<rentcar-issue :detail="detail.carRentProblemCollection"></rentcar-issue>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter :id="detail.comparyid" :detail="detail"></setting-parameter>
+						<setting-parameter :detail="detail"></setting-parameter>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
+			<view class="more" @click="other()">上拉加载该公司其他信息</view>
+			<view class="last">
+				<view class="left">预约看车</view>
+				<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
+				<u-image width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
+				<view class="right">下单租车</view>
+				<view class="clear"></view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -127,8 +135,10 @@
 			// scroll-view到底部加载更多
 			onreachBottom() {
 							
-			}
-			
+			},
+			other() {
+				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
+			}	
 		}
 	}
 </script>
@@ -137,7 +147,6 @@ page{
 	// background-image: url(@/static/lease.png);
 	// background-repeat: no-repeat;
 	height: 100%;
-	overflow: scroll;
 	background-size: cover;
 	// background-position: 50% 50%;
 }
@@ -156,7 +165,7 @@ page{
 	.wrap {
 		display: flex;
 		flex-direction: column;
-		height: calc(80vh - var(--window-top));
+		height: calc(85vh - var(--window-top));
 		// height: auto;
 		width: 100%;
 		background: rgba(0,0,0,0.02);
@@ -211,7 +220,31 @@ page{
 		.box {
 			margin-top: 39rpx;
 		}
-		
+		.more {
+				   font-size: 20rpx;
+				   color: #7f7f7f;
+				   margin-top: 83rpx;
+				   margin-left: 220rpx;
+				   margin-bottom: 40rpx;
+		}
+		.last {
+				   width: 100%;
+				   height: 144rpx;
+				   padding: 55rpx 80rpx;
+				   background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
+				   font-size: 36rpx;
+				   font-weight: 900;
+				   color: #fff;
+				   display: flex;
+				   justify-content: space-around;
+				   align-items: center;
+				  //  .icon-box {
+					 // width: 96rpx;
+					 // height: 96rpx;
+					 // border-radius: 50%;
+					 // background: #fff;
+				  //  }
+		}
 	}
 </style>
 

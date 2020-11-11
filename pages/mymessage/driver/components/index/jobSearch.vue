@@ -50,7 +50,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -129,11 +128,8 @@
 				}
 			}
 		},
-		computed:{
-			...mapGetters(['token'])
-		},
 		mounted() {
-			const token = this.token;
+			const token = uni.getStorageSync('token');
 			if(token) {
 				this.form.islogin = 1
 			}else{
@@ -279,7 +275,7 @@
 <style lang="scss" scoped>
 	.carRent {
 		.last .lists:last-child {
-			margin-bottom: 90rpx;
+			margin-bottom: 250rpx;
 		}
 		.wrap {
 			padding: 40rpx;

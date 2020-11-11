@@ -21,14 +21,9 @@
 				<u-form-item v-for="(item, index) in detail.otherparam" :key="index" style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" :label="车门个数(个)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.otherparam[0]" /></u-form-item>
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="驱动方式"><u-input :disabled="true" height="30" input-align="right" v-model="detail.otherparam[1]" /></u-form-item>
 			</u-form> -->
-			<!-- <view class="params" v-for="(item, index) in detail.otherparam" :key="index">
-				<text class="left">车门个数{{item.paramtername}}</text><text class="left">（个）{{item.paramterunit}}</text>
-				<text class="right">公共广告栏{{item.paramtertext}}</text>
-				<view class="clear"></view>
-			</view> -->
-			<view class="params">
-				<text class="left">车门个数</text><text class="left">（个）</text>
-				<text class="right">公共广告栏</text>
+			<view class="params" v-for="(item, index) in detail.otherparam" :key="index">
+				<text class="left">{{item.paramtername}}</text><text class="left">{{item.paramterunit}}</text>
+				<text class="right">{{item.paramtertext}}</text>
 				<view class="clear"></view>
 			</view>
 		</view>

@@ -7,13 +7,9 @@
 			 bg-color="" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
-		<swiper class="swiper-box">
-			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;">
-					<job-search ref="search"></job-search>
-				</scroll-view>
-			</swiper-item>
-		</swiper>
+		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearch">
+			<job-search ref="search"></job-search>
+		</scroll-view>
 	</view>
 	</view>
 </template>
@@ -34,6 +30,10 @@
 		methods: {
 			getList() {
 				this.$refs.search.search()
+			},
+			onreachBottomSearch() {
+				//监听上拉触底事件
+				this.$refs.search.pull();
 			}
 		}
 	}

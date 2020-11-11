@@ -6,21 +6,26 @@
 			<view class="distance">行驶里程：3-8万公里</view>
 		</view>
 		<view class="content">
-			<u-form label-width="200" label-align="left" :model="form" ref="uForm">
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="长*宽*高(mm):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-				<!-- <u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="手机号:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item> -->
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="续航里程(km):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="轴距(mm):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="环保标准:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="排量(L):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
+			<u-form label-width="200" label-align="left" :model="detail" ref="uForm">
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="长*宽*高(mm)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.specification" /></u-form-item>
+				<!-- <u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="手机号"><u-input :disabled="true" height="30" input-align="right" v-model="detail.specification" /></u-form-item> -->
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="续航里程(km)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.trunk" /></u-form-item>
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="轴距(mm)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.wheel" /></u-form-item>
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="环保标准"><u-input :disabled="true" height="30" input-align="right" v-model="detail.environmental" /></u-form-item>
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="排量(L)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.displacement" /></u-form-item>
 			</u-form>
 		</view>
 		<view class="other">其他参数</view>
 		<view class="list">
-			<u-form label-width="200" label-align="left" :model="form" ref="uForm">
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="车门个数(个):"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="驱动方式:"><u-input :disabled="true" height="30" type="textarea" input-align="right" v-model="form.name" /></u-form-item>
-			</u-form>
+			<!-- <u-form label-width="200" label-align="left" :model="detail" ref="uForm">
+				<u-form-item v-for="(item, index) in detail.otherparam" :key="index" style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" :label="车门个数(个)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.otherparam[0]" /></u-form-item>
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="驱动方式"><u-input :disabled="true" height="30" input-align="right" v-model="detail.otherparam[1]" /></u-form-item>
+			</u-form> -->
+			<view class="params" v-for="(item, index) in detail.otherparam" :key="index">
+				<text class="left">{{item.paramtername}}</text><text class="left">{{item.paramterunit}}</text>
+				<text class="right">{{item.paramtertext}}</text>
+				<view class="clear"></view>
+			</view>
 		</view>
 		<view class="ask">
 			<u-image class="question" width="66rpx" height="66rpx" src="@/static/question.png"></u-image>
@@ -29,12 +34,6 @@
 				<view class="how">谁买过？怎么样？</view>
 			</view>
 			<view class="small">></view>
-		</view>
-		<view class="more" @click="other()">上拉加载该公司其他信息</view>
-		<view class="last">
-			<view class="left">预约看车</view>
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
-			<view class="right">下单租车</view>
 		</view>
 	</view>
 </template>
@@ -63,13 +62,16 @@
 		},
 		methods: {
 			other() {
-				this.$u.route('/pages/index/driver/components/index/other',{id:id});
+				this.$u.route('/pages/index/driver/components/index/other',{id:this.id});
 			}
 		}
 	}
 </script>
 <style lang="scss" scoped>
     .setting {
+		.clear {
+			clear: both;
+		}
 		.top {
 			width: 670rpx;
 			height: 84rpx;
@@ -119,16 +121,18 @@
 		}
 		.list {
 			width: 670rpx;
-			height: 162rpx;
+			// height: 162rpx;
 			background: #fff;
 			margin-left: 40rpx;
-		}
-		.more {
-				   font-size: 20rpx;
-				   color: #7f7f7f;
-				   margin-top: 83rpx;
-				   margin-left: 220rpx;
-				   margin-bottom: 70rpx;
+			.params {
+				padding: 20rpx 46rpx 20rpx 38rpx;
+				.left {
+					float: left;
+				}
+				.right {
+					float: right;
+				}
+			}
 		}
 		.ask {
 			width: 670rpx;
@@ -159,18 +163,6 @@
 				font-size: 32rpx;
 				color: #7f7f7f;
 			}
-		}
-		.last {
-				   width: 100%;
-				   height: 144rpx;
-				   padding: 55rpx 116rpx;
-				   background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
-				   font-size: 36rpx;
-				   font-weight: 900;
-				   color: #fff;
-				   display: flex;
-				   justify-content: space-around;
-				   align-items: center;
 		}
 	}
 </style>

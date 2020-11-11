@@ -7,13 +7,9 @@
 			 bg-color="" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
-		<swiper class="swiper-box">
-			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;">
-					<car-rent ref="rent"></car-rent>
-				</scroll-view>
-			</swiper-item>
-		</swiper>
+		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRent">
+			<car-rent ref="rent"></car-rent>
+		</scroll-view>
 	</view>
 	</view>
 </template>
@@ -33,8 +29,13 @@
 		},
 		methods: {
 			getList() {
-				this.$refs.carSell.search()
-			}
+				this.$refs.rent.search()
+			},
+			// scroll-view到底部加载更多
+			onreachBottomRent() {
+				//监听上拉触底事件
+				this.$refs.rent.pull();
+			},
 		}
 	}
 </script>

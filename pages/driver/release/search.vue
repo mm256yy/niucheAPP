@@ -19,6 +19,7 @@
 				</u-radio-group>
 				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 	   	  	</u-form-item>
+			<u-form-item label="工作城市(必选)"><u-input v-model="form.workCity" /></u-form-item>
 			<view class="rules">
 				<view>*以下设置项都可多选，至少完成其中1项才能发布</view>
 				<view>不选则代表此项“不限”</view>

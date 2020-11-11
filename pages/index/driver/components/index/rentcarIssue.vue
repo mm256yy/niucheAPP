@@ -20,12 +20,6 @@
 			</view>
 			<view class="small">></view>
 		</view>
-		<view class="more" @click="other()">上拉加载该公司其他信息</view>
-		<view class="last">
-			<view class="left">预约看车</view>
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
-			<view class="right">下单租车</view>
-		</view>
 	</view>
 </template>
 
@@ -38,8 +32,8 @@
 		},
 		props: {
 			detail: {
-			    type: Object,
-			    default: function (){return {}}
+			    type: Array,
+			    default: function (){return []}
 			},
 			id: {
 			    type: String,
@@ -111,13 +105,6 @@
 			   }
 		   }
 	   }
-	   .more {
-		   font-size: 20rpx;
-		   color: #7f7f7f;
-		   margin-top: 83rpx;
-		   margin-left: 220rpx;
-		   margin-bottom: 70rpx;
-	   }
 	   .ask {
 	   	width: 670rpx;
 	   	height: 118rpx;
@@ -147,18 +134,6 @@
 	   		font-size: 32rpx;
 	   		color: #7f7f7f;
 	   	}
-	   }
-	   .last {
-		   width: 100%;
-		   height: 144rpx;
-		   padding: 55rpx 116rpx;
-		   background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
-		   font-size: 36rpx;
-		   font-weight: 900;
-		   color: #fff;
-		   display: flex;
-		   justify-content: space-around;
-		   align-items: center;
 	   }
    }
 </style>

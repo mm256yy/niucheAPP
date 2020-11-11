@@ -21,7 +21,7 @@
 				<view class="list" @click="detail(item.demandid)">
 					<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 					<view class="right">
-						<view class="city">上海{{item.comparyarea}}</view>
+						<view class="city">{{item.comparyarea}}</view>
 						<view class="clear"></view>
 						<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 						<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
@@ -351,9 +351,9 @@
 					padding-left: 34rpx;
 				}
 				.city {
-					padding: 4rpx 8rpx;
+					padding: 4rpx 14rpx;
 					font-size: 20rpx;
-					border-radius: 26rpx;
+					border-radius: 22rpx;
 					border: 1rpx solid rgba(0,0,0,0.3);
 					margin-top: 16rpx;
 					margin-right: 16rpx;

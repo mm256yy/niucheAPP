@@ -1,7 +1,8 @@
 <template>
 	<view class="range-price">
 		<view class="padding">
-			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab"></v-tabs>
+			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" 
+			pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 				<view class="bg">
 					<view class="year">{{detail.carage}}</view>
@@ -60,7 +61,9 @@
 			}
 		},
 		methods: {
-			
+			change(index) {
+				this.firstCurrent = index;
+			}
 		}
 	}
 </script>

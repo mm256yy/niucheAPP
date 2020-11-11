@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<Driver v-if='curThemeType ==="driver"'></Driver>
+		<Driver v-if='curThemeType ==="driver"' ref="driver"></Driver>
 		<Company ref="driver" v-else></Company>
 	</view>
 </template>

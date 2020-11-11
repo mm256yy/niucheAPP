@@ -4,7 +4,7 @@
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
 		   历史</view></u-navbar>
 	   <view class="view-content">
-		   <view class="name">比亚迪+宝马 / 3万以内</view>
+		   <view class="name">{{addkey}}</view>
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
 	   	  	<u-form-item label="业务类型" prop="businessType">
 				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
@@ -96,7 +96,19 @@
 					      {name: '3',text:'5-10万公里' },{name: '4',text:'10-20万公里' },{name: '5',text:'20-30万公里' },
 					      {name: '6',text:'30-50万公里' },{name: '7',text:'50-70万公里' },{name: '8',text:'70万公里以上'}],
 				},
-				radioType:'wycList'
+				radioType:'wycList',
+				addkey: '不限',
+				businessTypekey: '不限',
+				carbrandkey: '',
+				cartypekey: '',
+				powerkey: '',
+				packpricekey: {
+					text:''
+				},
+				caragekey: '',
+				kmkey: {
+					text:''
+				}
 			}
 		},
 		// computed:{
@@ -110,44 +122,50 @@
 		},
 		methods: {
 			add() {
-				this.addkey = this.form.businessTypekey + '/'+this.form.carbrandkey + 
-				'/'+this.form.cartypekey + '/'+this.form.powerkey + '/'
-				+this.form.packpricekey + '/' + this.form.caragekey;
+				this.addkey = this.businessTypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
+				(this.cartypekey?'/':'')+this.cartypekey + (this.powerkey?'/':'')+this.powerkey +
+				(this.packpricekey.text?'/':'')+this.packpricekey.text + (this.caragekey?'/':'') + this.caragekey +
+				(this.kmkey.text?'/':'')+this.kmkey.text;
 			},
 			brandGroupChange(e) {
 				this.form.carbrand = e.join(',');
-				this.form.carbrandkey = e.join('+');
+				this.carbrandkey = e.join('+');
+				this.add()
 				this.select()
 			},
 			powerGroupChange(e) {
 				this.form.power = e.join(',');
-				this.form.powerkey = e.join('+');
+				this.powerkey = e.join('+');
+				this.add()
 				this.select()
 			},
 			modelGroupChange(e) {
 				this.form.cartype = e.join(',');
-				this.form.cartypekey = e.join('+');
+				this.cartypekey = e.join('+');
+				this.add()
 				this.select()
 			},
 			radioGroupChange(e){
 				this.radioType = e=== '1'?'wycList':'czcList' 
 				if(e==='0'){
-					this.form.businessTypekey = '不限'
+					this.businessTypekey = '不限'
 				}
 				if(e==='1'){
-					this.form.businessTypekey = '网约车'
+					this.businessTypekey = '网约车'
 				}
 				if(e==='2'){
-					this.form.businessType = '出租车'
+					this.businessTypekey = '出租车'
 				}
+				this.add()
 				this.select()
 			},
 			radioGroupChangePrice(e){
-				this.form.packpricekey =  this.priceList.find( item => {
+				this.packpricekey =  this.priceList.find( item => {
 				   if(item.name === e) {
 					   return item
 				   }
 				});
+				this.add()
 				this.select()
 			},
 			radioGroupChangeAge(e){
@@ -176,9 +194,16 @@
 				    this.form.endCarAge = '';
 					this.caragekey = '不限';
 				}
+				this.add()
 				this.select()
 			},
 			radioGroupChangeKm(e){
+				this.kmkey =  this.objType[this.radioType].find( item => {
+				   if(item.name === e) {
+					   return item
+				   }
+				});
+				this.add()
 				this.select()
 			},
 			addBrand(){
@@ -209,7 +234,7 @@
 				this.$u.route('/pages/mymessage/company/components/index/history');
 			},
 			result() {
-				this.$u.route('/pages/mymessage/company/components/index/result',{form:JSON.stringify(this.form)});
+				this.$u.route('/pages/mymessage/company/components/index/result',{form:JSON.stringify(this.form),title:this.addkey});
 			}
 		}
 	}
@@ -230,7 +255,7 @@ page{
 	.name {
 		padding: 39rpx;
 		width: 670rpx;
-		height: 148rpx;
+		// height: 148rpx;
 		font-size: 28rpx;
 		background: #fff;
 	}

@@ -1,36 +1,42 @@
 <template>
 	<view class="result">
-		<u-navbar back-text="返回" back-icon-size="0" title="轿车+纯电动+荣威ie5\荣威ie6" :background="backgroundDri" :back-text-style="backTextStyle" title-width="400" title-size="36" height='44' title-color="#FFFFFF">
-			<view @click="clear()" class="navbar-right" slot="right">清除
-			</view>
-		 </u-navbar>
-		 <view class="last">
-		 	<view class="lists" v-for="(item, index) in list" :key="index">
-		 		<view class="list" @click="detail(item.id)">
-		 			<view class="right">
-		 				<view class="name u-line-2">{{item.texttitle}}</view>
-		 				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-		 				<view class="year">车龄<3个月{{item.carage}}</view>
-		 				<view class="clear"></view>
-		 				<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-		 				<view class="distance">{{item.km}}</view>
-		 				<view class="clear"></view>
-		 			</view>
-		 			<view v-show="item.businesstypetag == 1" class="label">网约车</view>
-		 			<view v-show="item.businesstypetag == 2" class="label">出租车</view>
-		 			<u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
-		 			<view class="clear"></view>
-		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-		 			<view class="box">
-		 				<view><text>￥{{item.rentprice}}</text>元/月起租</view>
-		 				<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
-		 			</view>
-		 		</view>
-		 		<u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
-		 		<u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
-		 	</view>
-		 </view>
-		 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<view class="wrap">
+			<u-navbar back-text="返回" back-icon-size="0" :title="title" :background="backgroundDri" :back-text-style="backTextStyle" title-width="400" title-size="36" height='44' title-color="#FFFFFF">
+				<view @click="clear()" class="navbar-right" slot="right">清除
+				</view>
+			 </u-navbar>
+			 <scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+			 	<view class="last">
+			 		<view class="lists" v-for="(item, index) in list" :key="index">
+			 			<view class="list" @click="detail(item.id)">
+			 				<view class="right">
+			 					<view class="name u-line-2">{{item.texttitle}}</view>
+			 					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+			 					<view class="year">车龄<3个月{{item.carage}}</view>
+			 					<view class="clear"></view>
+			 					<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+			 					<view class="distance">{{item.km}}</view>
+			 					<view class="clear"></view>
+			 				</view>
+			 				<view v-show="item.businesstypetag == 1" class="label">网约车</view>
+			 				<view v-show="item.businesstypetag == 2" class="label">出租车</view>
+			 				<u-image class="left" width="306rpx" height="180rpx" :src="item.photourl"></u-image>
+			 				<view class="clear"></view>
+			 				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+			 				<view class="box">
+			 					<view><text>￥{{item.rentprice}}</text>元/月起租</view>
+			 							<view>
+			 								<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+			 							</view>
+			 				</view>
+			 			</view>
+			 			<u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
+			 			<u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+			 		</view>
+			 	</view>
+				<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+			 </scroll-view>
+		</view>
 	</view>
 </template>
 
@@ -54,7 +60,8 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				iconType: 'flower'
+				iconType: 'flower',
+				title: ''
 			}
 		},
 		onLoad(option) {
@@ -62,9 +69,13 @@
 			if(form){
 			 this.form = form;
 			}
+			let title = option.title;
+			if(title){
+			 this.title = title;
+			}
 		},
 		mounted() {
-			const token = this.token;
+			const token = uni.getStorageSync('token');
 			if(token) {
 				this.form.islogin = 1
 			}else{
@@ -172,6 +183,11 @@
 		  		this.status = 'nomore'
 		  	}
 		  },
+		  onreachBottom() {
+			debugger
+		  	console.log(99)
+		  	this.pull()
+		  },
 		  clear() {
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 		  	}
@@ -179,6 +195,13 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.wrap {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - var(--window-top));
+		width: 100%;
+		margin-bottom: 120rpx;
+	}
 page{
 	// background-image: url(@/static/lease.png);
 	// background-repeat: no-repeat;
@@ -201,6 +224,9 @@ page{
 		display: flex;
 	}
 	.result {
+		.last .lists:last-child {
+			margin-bottom: 10000rpx;
+		}
 		.clear {
 			clear: both;
 		}
@@ -227,9 +253,10 @@ page{
 				.left {
 					float: right;
 					margin-top: 20rpx;
+					margin-right: 10rpx;
 				}
 				.right{
-					width: 373rpx;
+					width: 363rpx;
 					height: 226rpx;
 					padding: 0 30rpx;
 					background: #fff;
@@ -278,9 +305,11 @@ page{
 					background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
 					padding: 0 0 0 18rpx;
 					color: #fff;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
 					view {
 						font-size: 20rpx;
-						float: left;
 					}
 					view text {
 						font-size: 36rpx;
@@ -293,9 +322,8 @@ page{
 						background: #fff;
 						font-weight: 900;
 						color: #FF6501;
-						margin-top: 8rpx;
-						float: right;
 						margin-right: 10rpx;
+						float: left;
 					}
 				}
 			}

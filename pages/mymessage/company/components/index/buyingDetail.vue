@@ -11,29 +11,28 @@
 		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="right">
 				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
-		 		<view class="name">吴司机</view>
+		 		<view class="name">{{detail.comparyname}}</view>
 				<view class="clear"></view>
-				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-		 		<view class="year">网约车运营</view>
-				<view class="clear"></view>
-				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-		 		<view class="type">出租车运营</view>
-		 		<view class="clear"></view>
+				<view v-for="(item, index) in detail.comparytag" :key="index">
+					<u-image class="car" width="29rpx" height="26rpx" src="@/static/car.png"></u-image>
+					<view class="year">{{item}}运营</view>
+					<view class="clear"></view>
+				</view>
 				<view class="box">
 				    <view>求购</view>
-				    <text class="num">30</text>辆
+				    <text class="num">{{detail.comparyAskShopNum}}</text>辆
 				</view>
 		 	</view>
 			<view class="clear"></view>
-			<view class="time">刷新时间：{{detail.comparyRefreshTime}}</view>
+			<view class="time">刷新时间：{{comparyRefreshTimeStr}}</view>
 		 </view>
 		 <view class="content">
 			 <u-form label-width="150" label-align="right" :model="detail" ref="uForm">
-			 		<u-form-item label="打包价:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.packprice" /></u-form-item>
-					<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
-					<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
-					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
-			 	</u-form>
+			 		<u-form-item label="打包价:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.packprice" /></u-form-item>
+					<u-form-item label="意向品牌:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
+					<u-form-item label="行驶里程:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
+					<u-form-item label="动力类型:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
+			 </u-form>
 		 </view>
 
 		 <PubBottom v-if="viewFlag" :isOpen="detail.isOpen" :id="driverDemandId"></PubBottom>
@@ -56,6 +55,7 @@
 				},
 				driverDemandId: '',
 				detail: {},
+				comparyRefreshTimeStr: '',
 				viewFlag:false//发布页详情true,列表页详情false
 			}
 		},
@@ -73,21 +73,44 @@
 			this.getDetail()
 		},
 		methods: {
+		format(time, format) {
+			            var t = new Date(time);
+			            var tf = function(i) {
+			                return (i < 10 ? '0' : '') + i
+			            };
+			            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
+			                switch (a) {
+			                case 'yyyy':
+			                    return tf(t.getFullYear());
+			                    break;
+			                case 'MM':
+			                    return tf(t.getMonth() + 1);
+			                    break;
+			                case 'mm':
+			                    return tf(t.getMinutes());
+			                    break;
+			                case 'dd':
+			                    return tf(t.getDate());
+			                    break;
+			                case 'HH':
+			                    return tf(t.getHours());
+			                    break;
+			                case 'ss':
+			                    return tf(t.getSeconds());
+			                    break;
+			                }
+			            });
+			        },
 			getDetail(){
 					this.$u.api.detailBuying({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
+							 this.comparyRefreshTimeStr = this.format(this.detail.comparyRefreshTime, 'yyyy-MM-dd HH:mm:ss');
 							 if(this.detail.intenitonBrand) {
-								this.detail.intenitonBrand.forEach(item=>{
-									item = item.join('/')
-																
-								}) 
+								this.detail.intenitonBrand = this.detail.intenitonBrand.join('/') 
 							 }
 							 if(this.detail.power) {
-							    this.detail.power.forEach(item=>{
-							    	item = item.join('/')
-							    								
-							    }) 
+							    this.detail.power = this.detail.power.join('/') 
 							 }
 						}else {
 							 this.$u.toast(res.msg);
@@ -178,7 +201,7 @@ page{
 			}
 			.year,.type {
 				margin-left: 10rpx;
-				margin-top: 10rpx;
+				margin-top: 12rpx;
 			}
 			.time {
 				margin-top: 19rpx;
@@ -188,7 +211,7 @@ page{
 				height: 135rpx;
 				padding: 6rpx;
 				float: right;
-				margin-top: -86rpx;
+				margin-top: -96rpx;
 				margin-right: -76rpx;
 				font-size: 32rpx;
 				background: #fff;
@@ -222,6 +245,7 @@ page{
 			font-size: 40rpx;
 			font-weight: 900;
 			background: linear-gradient(115deg,#6DD99C, #37AB63);
+			margin-top: 40rpx;
 		}
 	}
 </style>

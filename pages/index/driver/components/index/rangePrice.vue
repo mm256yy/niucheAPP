@@ -1,12 +1,12 @@
 <template>
 	<view class="range-price">
 		<view class="padding">
-			<v-tabs v-model="firstCurrent" :scroll="false" lineHeight='0rpx' :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx"
+			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx"
 			 inactive-color="#7f7f7f" activeColor="#FF6501" :tabs="tab" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carRentPriceCollection" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
-			        <view class="year">{{detail.carage}}</view>
-			    	<view class="distance">{{detail.carkm}}</view>
+			        <view class="year">车龄：≤{{detail.carage}}个月</view>
+			    	<view class="distance">{{detail.carkm}}万公里</view>
 			    	<view class="clear"></view>
 			    </view>
 			    <view class="box">
@@ -52,14 +52,6 @@
 			 	</view>
 			 	<view class="small">></view>
 			 </view>
-			 <view @click="other()" class="more">上拉加载该公司其他信息</view>
-		</view>
-		<view class="last">
-			<view class="left">预约看车</view>
-			<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
-			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
-			<view class="right">下单租车</view>
-			<view class="clear"></view>
 		</view>
 	</view>
 </template>
@@ -91,9 +83,6 @@
 		methods: {
 			change(index) {
 				this.firstCurrent = index;
-			},
-			other() {
-				this.$u.route('/pages/index/driver/components/index/other',{id:this.id});
 			}
 		}
 	}
@@ -194,13 +183,6 @@
 					}
 				}
 			}
-			.more {
-				font-size: 20rpx;
-				color: #7f7f7f;
-				margin-top: 83rpx;
-				margin-left: 220rpx;
-				margin-bottom: 70rpx;
-			}
 		}
 		.clear{
 			clear: both;
@@ -233,24 +215,6 @@
 				font-size: 32rpx;
 				color: #7f7f7f;
 			}
-		}
-		.last {
-				   width: 100%;
-				   height: 144rpx;
-				   padding: 55rpx 80rpx;
-				   background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
-				   font-size: 36rpx;
-				   font-weight: 900;
-				   color: #fff;
-				   display: flex;
-				   justify-content: space-around;
-				   align-items: center;
-				  //  .icon-box {
-					 // width: 96rpx;
-					 // height: 96rpx;
-					 // border-radius: 50%;
-					 // background: #fff;
-				  //  }
 		}
 	}
 </style>

@@ -10,12 +10,12 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomrentcar">
-					<car-rent v-if="isChildUpdate1" ref="child"></car-rent>
+					<car-rent v-if="isChildUpdate1" ref="rent"></car-rent>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomjobsearch">
-					<job-search v-if="isChildUpdate2" ref="child"></job-search>
+					<job-search v-if="isChildUpdate2" ref="search"></job-search>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -80,13 +80,14 @@
 				console.log(11111111111111)
 			},
 			// scroll-view到底部加载更多
-			onreachBottomrentcar() {
+			onreachBottomRent() {
 				//监听上拉触底事件
-				this.$refs.child.getList();
+				this.$refs.rent.pull();
 			},
-			onreachBottomjobsearch() {
-				
-			}
+			onreachBottomSearch() {
+				//监听上拉触底事件
+				this.$refs.search.pull();
+			},
 		}
 	}
 </script>

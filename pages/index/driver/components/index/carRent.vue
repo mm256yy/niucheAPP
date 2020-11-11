@@ -32,7 +32,7 @@
 					</view>
 					<view v-show="item.businesstypetag == 1" class="label">网约车</view>
 					<view v-show="item.businesstypetag == 2" class="label">出租车</view>
-					<u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
+					<u-image class="left" width="306rpx" height="180rpx" :src="item.photourl"></u-image>
 					<view class="clear"></view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="box">
@@ -56,7 +56,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -142,11 +141,8 @@
 				}
 			}
 		},
-		computed:{
-			...mapGetters(['token'])
-		},
 		mounted() {
-			const token = this.token;
+			const token = uni.getStorageSync('token');
 			if(token) {
 				this.form.islogin = 1
 			}else{
@@ -310,7 +306,7 @@
 <style lang="scss" scoped>
 	.carRent {
 		.last .lists:last-child {
-			margin-bottom: 90rpx;
+			margin-bottom: 250rpx;
 		}
 		.null {
 			margin-left: 198rpx;

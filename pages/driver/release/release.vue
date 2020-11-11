@@ -1,11 +1,7 @@
 <template>
 	<view class="release">
 		<u-navbar back-text="返回"  back-icon-size="0" title="" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		<view class="publish">
-			<view class="message">
-				您要发布什么信息？
-			</view>
-		</view>
+		<view class="publish">您要发布什么信息？</view>
 		<view class="content">
 			<view class="box" @click="toPage(1)">
 				<u-image class="img" width="70rpx" height="70rpx" src="@/static/carRent.png"></u-image>
@@ -109,22 +105,19 @@ page{
 }
 .release {
 	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 	.publish {
 		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		.message {
-			width: 326rpx;
-			height: 88rpx;
-			line-height: 88rpx;
-			text-align: center;
-			font-size: 36rpx;
-			font-weight: 900;
-			color: #fff;
-			margin-bottom: 114rpx;
-			margin-top: 260rpx;
-		}
+		height: 88rpx;
+		line-height: 88rpx;
+		text-align: center;
+		font-size: 36rpx;
+		font-weight: 900;
+		color: #fff;
+		margin-bottom: 120rpx;
 	}
 	.content {
 		display: flex;

@@ -4,16 +4,17 @@
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
 		   历史</view></u-navbar>
 	   <view class="view-content">
-		   <view class="name">比亚迪+宝马 / 3万以内</view>
+		   <view class="name">{{addkey}}</view>
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
 	   	  	<u-form-item label="业务类型" prop="businesstype">
 				<u-radio-group v-model="form.businesstype" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
+					<u-radio name="" style="margin-left: 10pt;">不限 </u-radio>
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
 				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 	   	  	</u-form-item>
+			<u-form-item label="工作城市(必选)"><u-input v-model="form.city" /></u-form-item>
 			<u-form-item label="意向品牌(多选)" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="brandGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
@@ -41,17 +42,17 @@
 			</u-form-item>
 			<u-form-item label="月租" label-position="top">
 				<u-radio-group @change="radioGroupChangeRent" v-model="priceid"  :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
+					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top">
 				<u-radio-group @change="radioGroupChangeAge" v-model="carage" :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
+					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="行驶里程" label-position="top">
 				<u-radio-group @change="radioGroupChangeKm" v-model="form.km" :active-color="'#FFA032'" style="text-align: right;">
-				  <u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
+				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
 			</u-form-item>
 		  </u-form>	
@@ -64,7 +65,6 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -102,14 +102,21 @@
 					      {name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },{name: '4',text:'20-30万公里' },
 					      {name: '5',text:'30-50万公里' },{name: '6',text:'50-70万公里' },{name: '7',text:'70万公里以上'}],
 				},
-				radioType:'wycList'
+				radioType:'wycList',
+				addkey: '不限',
+				businesstypekey: '不限',
+				carbrandkey: '',
+				cartypekey: '',
+				powerkey: '',
+				priceidkey: '',
+				caragekey: '',
+				kmkey: {
+					text:''
+				}
 			}
 		},
-		computed:{
-			...mapGetters(['token'])
-		},
 		mounted() {
-			const token = this.token;
+			const token = uni.getStorageSync('token');
 			if(token) {
 				this.form.islogin = 1
 			}else{
@@ -118,69 +125,110 @@
 			this.select()
 		},
 		methods: {
+			add() {
+				this.addkey = this.businesstypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
+				(this.cartypekey?'/':'')+this.cartypekey + (this.powerkey?'/':'')+this.powerkey +
+				(this.priceidkey?'/':'')+this.priceidkey + (this.caragekey?'/':'') + this.caragekey +
+				(this.kmkey.text?'/':'')+this.kmkey.text;
+			},
 			brandGroupChange(e) {
-				this.form.intentionbrand = e;
+				this.form.carbrand = e.join(',');
+				this.carbrandkey = e.join('+');
+				this.add()
 				this.select()
 				},
 			powerGroupChange(e) {
-				this.form.power = e;
+				this.form.power = e.join(',');
+				this.powerkey = e.join('+');
+				this.add()
 				this.select()
 				},
 			modelGroupChange(e) {
-				this.form.carmodel = e;
+				this.form.cartype = e.join(',');
+				this.cartypekey = e.join('+');
+				this.add()
 				this.select()
 				},
 			radioGroupChange(e){
 				this.radioType = e=== '1'?'wycList':'czcList'
+				if(e===''){
+					this.businesstypekey = '不限'
+				}
+				if(e==='1'){
+					this.businesstypekey = '网约车'
+				}
+				if(e==='2'){
+					this.businesstypekey = '出租车'
+				}
+				this.add()
 				this.select()
 			},
 			radioGroupChangeRent(e){
-				if(priceid == 1) {
+				console.log(e)
+				if(this.priceid == '1') {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '';
+					this.priceidkey = '不限';
 				}
-				if(priceid == 2) {
+				if(this.priceid == '2') {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '2000';
+					this.priceidkey = '2000以内';
 				}
-				if(priceid == 3) {
+				if(this.priceid == '3') {
 					this.form.startPriceid = '2000';
 					this.form.endPriceid = '3000';
+					this.priceidkey = '2000-3000';
 				}
-				if(priceid == 4) {
+				if(this.priceid == '4') {
 					this.form.startPriceid = '3000';
 					this.form.endPriceid = '4000';
+					this.priceidkey = '3000-4000';
 				}
-				if(priceid == 5) {
+				if(this.priceid == '5') {
 					this.form.startPriceid = '4000';
 					this.form.endPriceid = '';
+					this.priceidkey = '4000以上';
 				}
+				this.add()
 				this.select()
 			},
 			radioGroupChangeAge(e){
-				if(carage == 1) {
+				if(this.carage == '1') {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '';
+					this.caragekey = '不限';
 				}
-				if(carage == 2) {
+				if(this.carage == '2') {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '1';
+					this.caragekey = '1年内';
 				}
-				if(carage == 3) {
+				if(this.carage == '3') {
 					this.form.startPriceid = '1';
 					this.form.endPriceid = '3';
+					this.caragekey = '1年-3年';
 				}
-				if(carage == 4) {
+				if(this.carage == '4') {
 					this.form.startPriceid = '3';
 					this.form.endPriceid = '5';
+					this.caragekey = '3年-5年';
 				}
-				if(carage == 5) {
+				if(this.carage == '5') {
 					this.form.startPriceid = '5';
 					this.form.endPriceid = '';
+					this.caragekey = '5年以上';
 				}
+				this.add()
 				this.select()
 			},
 			radioGroupChangeKm(e){
+				this.kmkey =  this.objType[this.radioType].find( item => {
+				   if(item.name === e) {
+					   return item
+				   }
+				});
+				this.add()
 				this.select()
 			},
 			addBrand(){
@@ -211,7 +259,7 @@
 				this.$u.route('/pages/index/driver/components/index/historyRent');
 			},
 			result() {
-				this.$u.route('/pages/index/driver/components/index/resultRent',{form:JSON.stringify(this.form)});
+				this.$u.route('/pages/index/driver/components/index/resultRent',{form:JSON.stringify(this.form),title:this.addkey});
 			}
 		}
 	}
@@ -232,7 +280,7 @@ page{
 	.name {
 		padding: 39rpx;
 		width: 670rpx;
-		height: 148rpx;
+		// height: 148rpx;
 		font-size: 28rpx;
 		background: #fff;
 	}
