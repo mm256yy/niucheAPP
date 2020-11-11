@@ -36,7 +36,7 @@
 		  	<view class="">
 		  		其他参数
 		  	</view>
-			<u-form-item :label="item.paramtername" prop="name" label-width="180" v-for="(item,index) in form.elseParamterList" :key='index'>
+			<u-form-item :label="item.paramtername" prop="name" label-width="180" v-for="(item,index) in elseParamterList" :key='index'>
 				<u-input v-model="item.paramtertext" :clearable="false" maxlength="30" :border="true" class="form_input"/>
 				<text class="middle-content-label">{{item.paramterunit}}</text>
 			</u-form-item>
@@ -82,16 +82,17 @@
 					wheel:'',
 					displacement:'',
 					environmental:'',
-					elseParamterList:[]
+					elseParamterList:''
 					
 				},
+				elseParamterList:[],
 				show:false,
 				showTips:false,
 				dialogShow:false,
 				addForm:{
-					"paramtername":'',
-					"paramtertext":'',
-					"paramterunit":''
+					paramtername:'',
+					paramtertext:'',
+					paramterunit:''
 				},
                 list:[
 					{value: '1',text: '国4'},{value: '2',text: '国5'},{value: '3',text: '国6'},{value: '4',text: '其他'},
@@ -106,6 +107,15 @@
 		
 		methods: {
 			setForm(){
+				let arr = this.elseParamterList;
+				let list = '';
+				if (arr.length>0){
+					arr.forEach(item=>{
+						list+=JSON.stringify(item)
+					})
+					console.log(list)
+					this.form.elseParamterList = list;
+				}
 				let obj = Object.assign({comparyid:this.telephone},this.carPubFirst, this.carPubSecond,this.carPubThree,this.carPubFour,
 				this.carPubFive,this.carPubSix,this.carPubSeven,this.form);
 				obj.mainbusinesstype = this.carPubType;
@@ -139,7 +149,7 @@
 				this.form.environmental = this.list[index].text;
 			},
 			showDialog(){
-				this.addForm = {"paramtername":'',"paramtertext":'',"paramterunit":''};
+				this.addForm = {paramtername:'',paramtertext:'',paramterunit:''};
 				this.dialogShow = true
 			},
 			tipsConfirm(){
@@ -160,7 +170,7 @@
 					}, 100)
 				  return false
 				}
-				this.form.elseParamterList.push(this.addForm)
+				this.elseParamterList.push(this.addForm)
 				this.dialogShow = false
 			}
 		}
