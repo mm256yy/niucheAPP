@@ -137,9 +137,6 @@ export default {
        this.$refs.uForm.setRules(this.rules);
        this.$refs.uForm2.setRules(this.rules);
   },
-  computed:{
-  	...mapGetters(['carPubType','today'])
-  },
   onLoad(option) {
   	let index = option.id;
 	this.form.carbrand = option.text;
