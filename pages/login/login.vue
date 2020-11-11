@@ -208,14 +208,14 @@
 									userInfo.token = res.token;
 									this.setStorage(userInfo)
 									if(res.userrole === 1){//司机
-									 uni.setStorageSync('CurThemeType', 'driver');
+									 uni.setStorageSync('curThemeType', 'driver');
 										if(res.userstate === '0'){
 											this.$u.route('/pages/driver/agreement/agreement',{type:'reLaunch'})
 										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										}
 									} else {
-										 uni.setStorageSync('CurThemeType', 'company');
+										 uni.setStorageSync('curThemeType', 'company');
 										if(res.userstate ==='0'){
 											this.$u.route('/pages/company/registrationAgreement/registrationAgreement',{type:'reLaunch'})
 										} else {
