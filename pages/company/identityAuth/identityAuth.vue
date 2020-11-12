@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="企业身份认证(2/4)" :back-text-style="backTextStyle" :background="backgroundCom" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="企业身份认证(1/3)" :back-text-style="backTextStyle" :background="backgroundCom" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="top-content">
 			<view class="top-content-base">公司信息补充</view>
 			<view class="top-content-base" style="font-size: 12pt;">营业执照照片</view>

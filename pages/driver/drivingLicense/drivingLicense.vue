@@ -175,7 +175,7 @@
 							this.reason = "* 信息已提交，在审核期间本页内容不能修改。"
 						}
 					 } else{
-						this.$u.toast(res.msg) 
+						// this.$u.toast(res.msg) 
 					 }
 				}).catch(res=>{this.$u.toast(res.msg)})
 			},
@@ -199,6 +199,7 @@
 						this.form.type = 0
 						this.$u.api.addDrivingLicense(this.form).then(res => {
 							if(res.code === 200){
+								uni.setStorageSync('isauthencation',1)
 								this.showTips =true;
 							 } else{
 								this.$u.toast(res.msg) 

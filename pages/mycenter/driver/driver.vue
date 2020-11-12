@@ -15,6 +15,9 @@
 							<view style="font-size: 14pt;">{{driverPub.name}}</view>
 							<text style="font-size: 12pt;">{{driverPub.telephone}}</text>
 						</u-col>
+						<u-col span="1">
+							<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
+						</u-col>
 					</u-row>
 					<view class="bg" style="padding: 4pt 0;" >
 					 <u-row>
@@ -138,6 +141,7 @@
 				 this.$u.api.listUserMessage().then(res=>{
 					if(res.code === 200){
 						let data = res.object;
+						uni.setStorageSync('isauthencation',data.driverState)
 						this.driverPub = data
 						this.driverPub.jobNum = this.driverPub.jobNum.toString()
 						this.driverPub.carNum = this.driverPub.carNum.toString()

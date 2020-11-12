@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="企业身份认证(4/4)" :back-text-style="backTextStyle" :background="backgroundCom" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="企业身份认证(3/3)" :back-text-style="backTextStyle" :background="backgroundCom" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="top-content">
 			<view class="top-content-base">企业联系人身份认证</view>
 			<view class="top-content-base" style="font-size: 12pt;">身份证照片</view>
@@ -233,6 +233,7 @@
 			personSave(){
 				this.$u.api.editCompanyPerson(this.form).then(res => {
 						if(res.code === '200'){
+							uni.setStorageSync('isauthencation',1)
 							this.showTips = true
 						}else{
 							  this.$u.toast(res.msg);
@@ -275,6 +276,7 @@
 					obj.userid = this.form.userid;
 					this.$u.api.saveAuthAll(obj).then(res => {
 							if(res.code === '200'){
+								uni.setStorageSync('isauthencation',1)
 					            this.showTips = true
 							}else{
 								  this.$u.toast(res.msg);
