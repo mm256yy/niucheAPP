@@ -237,6 +237,7 @@
 								if(res.code === '1') {
 									let userInfo = obj;
 									userInfo.token = res.token;
+									userInfo.isauthencation = res.isauthencation
 									this.setStorage(userInfo)
 								
 									if(res.userrole === 1){//司机

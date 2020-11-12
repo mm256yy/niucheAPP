@@ -101,7 +101,7 @@
 				fileList: [],
 				radioList:[{name:'0',text:'女'},{name:'1',text:'男'}],
 				form: {
-					state:2,
+					type:2,
 					name:'',
 					sex: '',
 					licenseNumber:'',
