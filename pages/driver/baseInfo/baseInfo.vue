@@ -28,8 +28,8 @@
 					<view v-else class="type-right">{{form.nickName}}</view>
 				</u-form-item>
 				<u-form-item label="手机号">
-					<!-- <u-input class="input-radius" v-model="form.telephone" :disabled="true" :border="true" v-if="type"/> -->
-					<view class="type-right">{{form.telephone}}</view>
+					<u-input class="input-radius" v-model="telephone" :disabled="true" :border="true" v-if="type"/>
+					<view class="type-right" v-else>{{telephone}}</view>
 				</u-form-item>
 				<u-form-item label="微信号" prop="wechatNum">
 					<u-input class="input-radius" v-model="form.wechatNum" :border="true" v-if="type"/>
@@ -73,7 +73,6 @@
 				fileList: [],
 				form: {
 					nickName:'',
-					telephone: '',
 					wechatNum:'',
 					qqNum:'',
 					headPhoto:'',
@@ -94,13 +93,8 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
-		mounted() {
-			this.form.telephone = uni.getStorageSync('telephone');
-		  // this.setPicToken()
-		  this.getInfo()
-		},
 		onShow() {
-			this.form.telephone = uni.getStorageSync('telephone');
+			this.telephone = uni.getStorageSync('telephone');
 			// this.setPicToken()
 			this.getInfo()
 		},
