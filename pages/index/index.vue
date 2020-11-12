@@ -23,4 +23,9 @@ export default {
 			
 };
 </script>
+<style lang="scss">
+page {
+	background-color: #F5F5F8;
+}
+</style>
 

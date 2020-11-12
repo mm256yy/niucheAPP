@@ -6,18 +6,20 @@
 		 			<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		 			<view class="clear"></view>
-		 			<u-image class="left" width="125rpx" height="125rpx" :src="item.comparylogophoto"></u-image>
+		 			<u-image class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
 		 			<view class="right">
-		 				<view class="name u-line-1">{{item.teXtTile}}</view>
-		 				<view class="type">{{item.comparyname}}<span>{{item.comparyArea}}</span></view>
-		 				<view class="price">打包价:<span>{{item.packprice}}</span></view>
+		 				<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆{{item.teXtTile}}</view>
+		 				<view class="type">{{item.comparyname}}<text>{{item.area}}</text></view>
+		 				<view class="price">打包价:<text>￥{{item.packprice}}</text></view>
+		 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
 		 			</view>
 		 			<view class="clear"></view>
 		 		</view>
-		 		<u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
+		 		<u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
 		 		<u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		 	</view>
 		 </view>
+		 <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 	</view>
 </template>
 
@@ -147,7 +149,7 @@
 			}
 			.list {
 				width: 702rpx;
-				// height: 308rpx;
+				height: 286rpx;
 				padding: 38rpx;
 				margin-left: 24rpx;
 				margin-top: 24rpx;
@@ -156,7 +158,7 @@
 				background-repeat: no-repeat;
 				background-size: cover;
 				.left {
-					margin-top: 19rpx;
+					margin-top: 10rpx;
 				}
 				.left, .right {
 					float: left;
@@ -164,6 +166,10 @@
 				.right {
 					width: 494rpx;
 					padding-left: 34rpx;
+					.chat {
+						float: right;
+						margin-top: 6rpx;
+					}
 				}
 				.city {
 					width: 96rpx;
@@ -180,20 +186,20 @@
 				.name {
 					font-size: 28rpx;
 					font-weight: 900;
-					margin-top: 20rpx;
+					margin-top: 8rpx;
 				}
 				.type {
 					font-size: 20rpx;
 					color: #7f7f7f;
 					margin-top: 8rpx;
 				}
-				.type span {
+				.type text {
 					margin-left: 22rpx;
 				}
 				.price {
 					margin-top: 9rpx;
 				}
-				.price span {
+				.price text {
 					font-size: 36rpx;
 					font-weight: 900;
 					color: #40B36C;

@@ -254,7 +254,7 @@
 		}
 		.list {
 			width: 702rpx;
-			height: 281rpx;
+			height: 286rpx;
 			margin-left: 24rpx;
 			margin-top: 24rpx;
 			background-image: url(@/static/bgrentcar.png);
@@ -283,14 +283,12 @@
 		}
 		.list .right .year {
 			padding: 4rpx 16rpx;
-			line-height: 30rpx;
-			text-align: center;
 			border-radius: 12rpx;
 			background: #37AB63;
-			font-size: 10rpx;
+			font-size: 20rpx;
 			color: #fff;
 			float: left;
-			margin-top: 14rpx;
+			margin-top: 10rpx;
 		}
 		.list .right .type {
 			padding: 4rpx 16rpx;
@@ -299,10 +297,10 @@
 			text-align: center;
 			border-radius: 12rpx;
 			background: #37AB63;
-			font-size: 10rpx;
+			font-size: 20rpx;
 			color: #fff;
 			float: left;
-			margin-top: 14rpx;
+			margin-top: 10rpx;
 		}
 		.list .right {
 			.img {
@@ -320,7 +318,7 @@
 		}
 		.list .right .chat {
 			float: right;
-			margin-top: 6rpx;
+			margin-top: 16rpx;
 		}
 	}
 </style>

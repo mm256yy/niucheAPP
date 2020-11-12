@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="公司简称" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
 				</view>
 			</view>
 		 </u-navbar>

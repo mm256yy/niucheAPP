@@ -6,13 +6,13 @@
 	   <view class="view-content">
 		   <view class="name">{{addkey}}</view>
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
-	   	  	<u-form-item label="业务类型" prop="businesstype">
+	   	  	<u-form-item label="业务类型(必选)" label-position="top">
 				<u-radio-group v-model="form.businesstype" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio name="" style="margin-left: 10pt;">不限 </u-radio>
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
-				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
+				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
 			<u-form-item label="工作城市(必选)"><u-input v-model="form.city" /></u-form-item>
 			<u-form-item label="意向品牌(多选)" label-position="top">

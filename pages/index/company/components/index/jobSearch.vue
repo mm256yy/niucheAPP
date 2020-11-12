@@ -243,7 +243,7 @@
 		}
 		.list {
 			width: 702rpx;
-			height: 281rpx;
+			height: 286rpx;
 			margin-left: 24rpx;
 			margin-top: 24rpx;
 			background-image: url(@/static/bgjobsearch.png);
@@ -270,26 +270,20 @@
 			margin-top: 39rpx;
 		}
 		.list .right .year {
-			width: 130rpx;
-			height: 30rpx;
-			line-height: 30rpx;
-			text-align: center;
+			padding: 4rpx 16rpx;
 			border-radius: 12rpx;
 			background: #37AB63;
-			font-size: 10rpx;
+			font-size: 20rpx;
 			color: #fff;
 			float: left;
 			margin-top: 10rpx;
 		}
 		.list .right .type {
+			padding: 4rpx 16rpx;
 			margin-left: 8rpx;
-			width: 160rpx;
-			height: 30rpx;
-			line-height: 30rpx;
-			text-align: center;
 			border-radius: 12rpx;
 			background: #37AB63;
-			font-size: 10rpx;
+			font-size: 20rpx;
 			color: #fff;
 			float: left;
 			margin-top: 10rpx;
@@ -307,7 +301,7 @@
 		}
 		.list .right .chat {
 			float: right;
-			margin-top: 10rpx;
+			margin-top: 20rpx;
 		}
 	}
 </style>

@@ -40,10 +40,6 @@
 </script>
 
 <style lang="scss">
-page{
-	background-color: #F5F5F8;
-	overflow: hidden;
-}
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;
 	}

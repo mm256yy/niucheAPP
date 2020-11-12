@@ -80,11 +80,11 @@
 				console.log(11111111111111)
 			},
 			// scroll-view到底部加载更多
-			onreachBottomRent() {
+			onreachBottomrentcar() {
 				//监听上拉触底事件
 				this.$refs.rent.pull();
 			},
-			onreachBottomSearch() {
+			onreachBottomjobsearch() {
 				//监听上拉触底事件
 				this.$refs.search.pull();
 			},
@@ -99,7 +99,6 @@ page{
 	height: 100%;
 	background-size: cover;
 	// background-position: 50% 50%;
-	overflow: hidden;
 }
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;

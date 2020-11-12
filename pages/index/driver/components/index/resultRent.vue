@@ -12,10 +12,10 @@
 			 				<view class="right">
 			 					<view class="name u-line-2">{{item.texttitle}}</view>
 			 					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-			 					<view class="year">车龄<3个月{{item.carage}}</view>
+			 					<view class="year">车龄≤{{item.carAge}}年</view>
 			 					<view class="clear"></view>
 			 					<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-			 					<view class="distance">{{item.km}}</view>
+			 					<view class="distance">{{item.km}}万公里</view>
 			 					<view class="clear"></view>
 			 				</view>
 			 				<view v-show="item.businesstypetag == 1" class="label">网约车</view>
@@ -283,6 +283,7 @@ page{
 				}
 				.car {
 					float: left;
+					margin-top: 4rpx;
 				}
 				.year {
 					margin-left: 6rpx;
