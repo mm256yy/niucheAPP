@@ -135,6 +135,7 @@
 			}else{
 				this.form.islogin = 0
 			}
+	        console.log(6)
 			this.search()
 		},
 		methods: {

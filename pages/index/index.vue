@@ -18,9 +18,10 @@ export default {
 			}
 	},
 	onShow() {
-		this.$refs.driver.getList()
-	}
-			
+		if(this.$refs.driver != undefined){
+			this.$refs.driver.getList()
+		}
+	}		
 };
 </script>
 <style lang="scss">

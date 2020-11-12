@@ -15,7 +15,7 @@
 			</swiper-item>
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomjobsearch">
-					<job-search v-if="isChildUpdate2" ref="search"></job-search>
+					<job-search v-if="isChildUpdate2" ref="jobsearch"></job-search>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -47,7 +47,12 @@
 		},
 		methods: {
 			getList() {
-				this.$refs.carSell.search()
+				if(this.$refs.rent != undefined){
+					this.$refs.rent.search()
+				}
+				if(this.$refs.jobsearch != undefined){
+					this.$refs.jobsearch.search()
+				}
 			},
 			// tabs通知swiper切换
 			tabsChange(index) {

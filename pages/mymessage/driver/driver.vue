@@ -24,11 +24,12 @@
 			return {
 				list: [{
 					name: '招聘'
-				}]
+				}],
 			}
 		},
 		methods: {
 			getList() {
+				console.log(1)
 				this.$refs.search.search()
 			},
 			onreachBottomSearch() {

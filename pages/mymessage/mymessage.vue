@@ -14,11 +14,13 @@ export default {
 	},
 	data() {
 		return {
-	
+	        
 			}
 	},
 	onShow() {
-		this.$refs.driver.getList()
+		if(this.$refs.driver != undefined){
+			this.$refs.driver.getList()
+		}
 	}
 			
 };
