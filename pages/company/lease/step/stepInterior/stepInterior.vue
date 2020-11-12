@@ -48,6 +48,14 @@
 		},
 		mounted() {
 			  this.initStorage()
+			  let id = uni.getStorageSync('editId');
+			  if(id){
+			  	this.form = this.carPubFive;
+			    this.uploadList[0].fileList = [{url:this.form.oneneishiphoto}]
+			  	this.uploadList[1].fileList = [{url:this.form.twoneishiphoto}]
+			  	this.uploadList[2].fileList = [{url:this.form.threeneishiphoto}]
+				this.uploadList[3].fileList = [{url:this.form.fourneishiphoto}]
+			  }
 		},
 		methods: {
 			  initStorage(){
@@ -65,7 +73,7 @@
 						this.$u.toast('请上传图片');
 						return
 				   }
-					this.CARPUBFIVE(this.form)
+					this.setStorage(this.form)
 					this.$u.route("/pages/company/lease/step/stepOther/stepOther")
 			  }
 		}

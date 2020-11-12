@@ -5,7 +5,7 @@
 		  <view style="margin-top: 20pt;font-size: 10pt;padding: 5pt;background: #FFFFFF;">
 		  	<view class="">车辆《行驶证》与《运输证》是哪种情况？</view>
 		  	  <view class="">
-		  	  	 <u-radio-group v-model="type" :wrap="true" active-color="#6DD99C">
+		  	  	 <u-radio-group v-model="form.type" :wrap="true" active-color="#6DD99C">
 		  	  	 	<u-radio name="1">营运车辆行驶证与运输证，两证合一为驾驶证</u-radio>
 		  	  	 	<u-radio name="2">营运车辆行驶证与运输证，两证未合并</u-radio>
 					<u-radio name="3">非营运车辆行驶证</u-radio>
@@ -38,7 +38,7 @@
 			</u-upload>
 		  </view>
 		</view>
-		<view class="view-content" v-show="type!== '1'">
+		<view class="view-content" v-show="form.type!== '1'">
 			<view class="" style="margin: 15pt 0;">
 				 <u-input v-model="form.taxipeople" style="background: #FFFFFF;" placeholder="请输入《运输证》中的车辆所有人" :border="true"/>
 			</view>
@@ -72,20 +72,26 @@
 				formDataObj:{phone:''},
 				fileList:[],
 				fileList1:[],
-				form:{cardivephoto:'',cardrivepeople:'',taxiphoto:'',taxipeople:''},
+				form:{cardivephoto:'',cardrivepeople:'',taxiphoto:'',taxipeople:'',type:2},
 				carPubSeven:{}
 			}
 		},
 		mounted() {
 			this.initStorage()
+			let id = uni.getStorageSync('editId');
+			if(id){
+				this.form = this.carPubSeven;
+				this.fileList = [{url:this.form.cardivephoto}]
+				this.fileList1 = [{url:this.form.taxiphoto}]
+			}
 		},
 		methods: {
-				initStorage(){
-					this.carPubSeven = uni.getStorageSync('carPubSeven');
-				},
-				setStorage(data){
-					 uni.setStorageSync('carPubSeven', data);
-				},
+			initStorage(){
+				this.carPubSeven = uni.getStorageSync('carPubSeven');
+			},
+			setStorage(data){
+				 uni.setStorageSync('carPubSeven', data);
+			},
 			  uploadChange(data, index, lists, name){
 				this.form[name] = data.text;
 				this.$u.toast(data.msg);

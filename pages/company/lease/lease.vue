@@ -187,8 +187,46 @@ export default {
 		  this.form.firsttime = data.firsttime;
 		  this.form.firstkm = data.firstkm;
 		  this.form.endkm = data.endkm;
-		  this.form.carnbumber = data.carnbumber; 
+		  this.form.carnbumber = data.carnbumber;
 		  uni.setStorageSync('editId',data.tagid)
+		  uni.setStorageSync('carPubSecond',{SystemTag:data.systemok,UserTag:data.userok})
+			if (this.carPubType === 1) {
+				let sellCarPriceObj = {
+					sellCarPrice:[{
+							shoplow:'',shophigh:'',packprice:''
+						}
+					]
+				};
+				let arr = []
+				data.rentAndSellPriceList.forEach(item=>{
+					arr.push({shoplow:item.sellCarLowPrice,shophigh:item.sellCarHighPrice,packprice:item.sellCarPackPrice})
+				})
+				if (arr.length>0){
+					sellCarPriceObj.sellCarPrice = arr
+				}
+				 uni.setStorageSync('carPubThree',sellCarPriceObj)
+			}else {
+				let carThree = {
+					yamoney:data.caryaprice,
+					rentCarPrice:[],
+				};
+				let arr = [];
+				data.rentAndSellPriceList.forEach(item=>{
+					arr.push({RentTime:item.rentCarTime,Rentprice:item.rentCarPrice})
+				})
+				 carThree.rentCarPrice = arr;
+				 uni.setStorageSync('carPubThree',carThree)
+			}
+
+			uni.setStorageSync('carPubFour',{onephoto:data.onephoto,twophoto:data.twophoto,threephoto:data.threephoto,fourphoto:data.fourphoto})
+		    uni.setStorageSync('carPubFive',{oneneishiphoto:data.oneneishiphoto,twoneishiphoto:data.twoneishiphoto,threeneishiphoto:data.threeneishiphoto,
+		    fourneishiphoto:data.fourneishiphoto})
+		    uni.setStorageSync('carPubSix',{elsephoto:data.elsephoto})
+			uni.setStorageSync('carPubSeven',{cardivephoto:data.cardivephoto,cardrivepeople:data.cardrivepeople,taxiphoto:data.taxiphoto,
+			taxipeople:data.taxipeople,type:2})
+			let objEight = {specification:data.specification,trunk:data.trunk,wheel:data.wheel,displacement:data.displacement,
+			environmental:data.environmental,elseParamterList:data.elseparamter};
+			uni.setStorageSync('carPubEight',objEight)
 	  },
 	 getChildId(item){
 		console.log(item)

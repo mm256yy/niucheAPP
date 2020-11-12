@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="购车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+					<!-- <u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon> -->
 				</view>
 			</view>
 		 </u-navbar>
@@ -34,36 +34,37 @@
 					<u-form-item label="动力类型:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 </u-form>
 		 </view>
-
-		 <view class="bottom" @click="recommend()">
-		 			 <view>向他推荐本公司卖车信息</view>
-		 </view>
+		 <PubBottom :isOpen="detail.isOpen" :id="AskToShopId" :type="2"></PubBottom>
 	</view>
 </template>
 
 <script>
+	import PubBottom from '@/components/pubBottom.vue'
 	export default {
+		components: {
+			PubBottom
+		  },
 		data() {
 			return {
+				
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				driverDemandId: '',
+				AskToShopId: '',
 				detail: {},
 				comparyRefreshTimeStr: '',
+				type:4
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
-			if(id){
-			 this.driverDemandId = id;
-			}
+			this.AskToShopId = id;
 		},
 		mounted() {
 			this.getDetail()
 		},
 		methods: {
-		format(time, format) {
+		        format(time, format) {
 			            var t = new Date(time);
 			            var tf = function(i) {
 			                return (i < 10 ? '0' : '') + i
@@ -92,7 +93,7 @@
 			            });
 			        },
 			getDetail(){
-					this.$u.api.detailBuying({id: this.driverDemandId}).then(res=>{
+					this.$u.api.ComparyMyAskToShopForOne({AskToShopId:this.AskToShopId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
 							 this.comparyRefreshTimeStr = this.format(this.detail.comparyRefreshTime, 'yyyy-MM-dd HH:mm:ss');
@@ -106,28 +107,7 @@
 							 this.$u.toast(res.msg);
 						}
 					})
-			},
-		    recommend() {
-				this.$u.route("/pages/mymessage/company/components/index/buyingRecommend")
-			},
-			shared(){
-				uni.share({
-				    provider: "weixin",
-				    scene: "WXSenceTimeline",
-				    type: 0,
-				    href: "http://uniapp.dcloud.io/",
-				    title: "uni-app分享",
-				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-				    imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
-				    success: function (res) {
-				        console.log("success:" + JSON.stringify(res));
-				    },
-				    fail: function (err) {
-				        console.log("fail:" + JSON.stringify(err));
-				    }
-				});
-			}
-			
+			},	
 		}
 	}
 </script>
@@ -197,7 +177,7 @@ page{
 				margin-top: 19rpx;
 			}
 			.box {
-				width: 160rpx;
+				width: 180rpx;
 				height: 135rpx;
 				padding: 6rpx;
 				float: right;
@@ -207,7 +187,7 @@ page{
 				background: #fff;
 				color: #37AB63;
 				.num {
-					font-size: 72rpx;
+					font-size: 16pt;
 					font-weight: 900;
 				}
 			}

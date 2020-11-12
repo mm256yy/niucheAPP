@@ -26,6 +26,15 @@
 						</u-radio-group>
 					</u-form-item>
 				</u-form>
+				<view>
+					<u-radio-group v-model="xytype" :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'"  style="text-align: right;">
+						<u-radio name="1" style="margin-left: 10pt;">
+							<view class="u-line-2" style="font-size: 10pt;">
+								登录代表同意<text class="link">纽车用户协议、隐私政策，</text>
+							</view>
+					     </u-radio>
+					</u-radio-group>
+				</view>
 				<view style="margin-top: 100pt;text-align: center;">
 					<u-button type="curThemeType ==='driver'?warning:success" shape='circle' class="btnFcd" @click="login('uForm')">登录</u-button>
 				</view>
@@ -113,7 +122,8 @@
 				},
 				errorType:[
 					'toast'
-				]
+				],
+				xytype:1
 			}
 		},
 		onReady() {

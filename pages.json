@@ -505,6 +505,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/company/myPublish/qiugouView/qiugouView",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",

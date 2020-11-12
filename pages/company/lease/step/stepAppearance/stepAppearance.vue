@@ -65,13 +65,21 @@
 					{fileList:[],tipText:'请上传车辆正前方照片',resName:'threephoto',},
 					{fileList:[],tipText:'请上传车辆侧面照片',resName:'fourphoto'},
 				],
-				form:{onephoto:'',twophoto:'',threephoto:'',fourphoto:'',},
+				form:{onephoto:'',twophoto:'',threephoto:'',fourphoto:''},
 				fileList:[],
 				carPubFour:{}
 			}
 		},
 		mounted() {
 			this.initStorage()
+			let id = uni.getStorageSync('editId');
+			if(id){
+				this.form = this.carPubFour;
+				this.fileList= [{url:this.form.onephoto}];
+                this.uploadList[0].fileList = [{url:this.form.twophoto}]
+				this.uploadList[1].fileList = [{url:this.form.threephoto}]
+				this.uploadList[2].fileList = [{url:this.form.fourphoto}]
+			}
 		},
 		methods: {
 		    initStorage(){
