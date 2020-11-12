@@ -29,7 +29,7 @@
 		<view class="title">车型</view>
 		<view class="wrap">
 			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true"
-			 pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="list" @change="change"></v-tabs>
+			 pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#FF6501" :tabs="list" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carphotolist" :key="index" class="" v-show="firstCurrent === index">
 				<u-image class="img" width="671rpx" height="504rpx" :src="item.neionephoto"></u-image>
 			 </view>
@@ -184,8 +184,10 @@
 			// scroll-view到底部加载更多
 			onreachBottom() {
 							
+			},
+			other() {
+				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
 			}
-			
 		}
 	}
 </script>
@@ -299,11 +301,12 @@ page{
 			margin-top: 40rpx;
 		}
 		.more {
-				   font-size: 20rpx;
-				   color: #7f7f7f;
-				   margin-top: 83rpx;
-				   margin-left: 220rpx;
-				   margin-bottom: 40rpx;
+			width: 100%;
+			text-align: center;
+			font-size: 20rpx;
+			color: #7f7f7f;
+			margin-top: 83rpx;
+			margin-bottom: 40rpx;
 		}
 		.last {
 				   width: 100%;

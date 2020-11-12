@@ -4,7 +4,7 @@
 			<u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="priceid" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showPrice = true" v-model="businesstype" type="select" /></u-form-item>
+				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businesstype" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter()" type="text" :disabled="true" /></u-form-item>
 				<view class="clear"></view>
@@ -38,7 +38,7 @@
 					<view class="box">
 						<view><text>￥{{item.rentprice}}</text>元/月起租</view>
 						<view>
-							<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+							<view v-show="items.length<8" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
 						</view>
 					</view>
 				</view>
@@ -205,13 +205,13 @@
 							 }
 							 this.list.forEach(item=>{
 								 if(item.systemtag){
-									if(item.systemtag.length > 2) {
-										item.systemtag = item.systemtag.slice(0,2); 
-									}else if(item.systemtag.length <= 2){
+									if(item.systemtag.length > 3) {
+										item.systemtag = item.systemtag.slice(0,3); 
+									}else if(item.systemtag.length <= 3){
 										if(item.usertag) {
 											const arr = item.systemtag.concat(item.usertag);
-											if(arr.length > 2) {
-												item.systemtag = arr.slice(0,2);
+											if(arr.length > 3) {
+												item.systemtag = arr.slice(0,3);
 											}						 											 
 										}
 									} 
@@ -240,13 +240,13 @@
 							 }
 							 this.list.forEach(item=>{
 							 	if(item.systemtag){
-							 		if(item.systemtag.length > 2) {
-							 			item.systemtag = item.systemtag.slice(0,2); 
-							 		}else if(item.systemtag.length <= 2){
+							 		if(item.systemtag.length > 3) {
+							 			item.systemtag = item.systemtag.slice(0,3); 
+							 		}else if(item.systemtag.length <= 3){
 							 			if(item.usertag) {
 							 				const arr = item.systemtag.concat(item.usertag);
-							 				if(arr.length > 2) {
-							 					item.systemtag = arr.slice(0,2);
+							 				if(arr.length > 3) {
+							 					item.systemtag = arr.slice(0,3);
 							 				}						 											 
 							 			}
 							 		} 
@@ -306,7 +306,7 @@
 <style lang="scss" scoped>
 	.carRent {
 		.last .lists:last-child {
-			margin-bottom: 250rpx;
+			margin-bottom: 10rpx;
 		}
 		.null {
 			margin-left: 198rpx;

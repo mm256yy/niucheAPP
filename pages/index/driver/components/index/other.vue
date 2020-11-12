@@ -155,18 +155,18 @@
 		height: 100%;
 	}
 	.other {
+		background-color: #F5F5F8;
 		.top {
 			width: 666rpx;
-			height: 186rpx;
+			padding: 40rpx 39rpx;
 			margin-left: 42rpx;
 			margin-top: 40rpx;
 			margin-bottom: 60rpx;
+			background-color: #ffffff;
 			.left {
 				float: left;
 			}
 			.right {
-				width: 481rpx;
-				height: 186rpx;
 				padding: 30rpx 42rpx;
 				float: left;
 				font-size: 20rpx;
@@ -206,6 +206,7 @@
 			font-size: 20rpx;
 			margin-left: 36rpx;
 			margin-top: 40rpx;
+			background: #fff;
 			.clear {
 				clear: both;
 			}

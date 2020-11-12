@@ -1,12 +1,12 @@
 <template>
 	<view :class="'driver-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
-		<view style="">
+		<u-navbar height="44" back-icon-size="0" title="招聘" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<!-- <view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
-		</view>
+		</view> -->
 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearch">
 			<job-search ref="search"></job-search>
 		</scroll-view>

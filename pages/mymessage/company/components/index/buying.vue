@@ -20,7 +20,7 @@
 					<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="clear"></view>
-					<u-image class="left" width="125rpx" height="125rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+					<u-image class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
 					<view class="right">
 						<view class="name u-line-1">{{item.teXtTile}}</view>
 						<view class="type">{{item.comparyName}}<span>{{item.comparyArea}}</span></view>

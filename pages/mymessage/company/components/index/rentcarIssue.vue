@@ -90,25 +90,6 @@
 			   }
 		   }
 	   }
-	   .more {
-		   font-size: 20rpx;
-		   color: #7f7f7f;
-		   margin-top: 83rpx;
-		   margin-left: 220rpx;
-		   margin-bottom: 40rpx;
-	   }
-	   .last {
-		   width: 100%;
-		   height: 144rpx;
-		   padding: 55rpx 116rpx;
-		   background: linear-gradient(115deg, #6DD99B, #37AB63);
-		   font-size: 36rpx;
-		   font-weight: 900;
-		   color: #fff;
-		   display: flex;
-		   justify-content: space-around;
-		   align-items: center;
-	   }
    }
 </style>
 

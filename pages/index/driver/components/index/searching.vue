@@ -160,7 +160,7 @@
 				width: 679rpx;
 				// height: 295rpx;
 				color: #000;
-				font-size: 10pt;
+				font-size: 20rpx;
 				margin-left: 36rpx;
 				margin-top: 40rpx;
 				background: #fff;
@@ -178,7 +178,7 @@
 				}
 				.name {
 					font-weight: 900;
-					font-size: 14pt;
+					font-size: 34rpx;
 					margin-top: 20rpx;
 				}
 				.car {

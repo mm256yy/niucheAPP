@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="list">
-		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="detail.comparyPhotoUrl"></u-image>
 		 	<view class="right">
 				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
 		 		<view class="name">{{detail.comparyname}}</view>

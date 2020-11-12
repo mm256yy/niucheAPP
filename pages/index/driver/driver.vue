@@ -1,12 +1,8 @@
 <template>
 	<view :class="'driver-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
-		<view style="">
-			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
-			 bg-color="" :is-scroll="false"
-			 swiperWidth="750"></u-tabs-swiper>
-		</view>
+		<u-navbar height="44" back-icon-size="0" title="租车" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<!-- <view class="title">租车</view> -->
 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRent">
 			<car-rent ref="rent"></car-rent>
 		</scroll-view>
@@ -66,6 +62,19 @@ page{
 	height: calc(100vh - var(--window-top));
 	width: 100%;
 	margin-bottom: 120rpx;
+	.title {
+		width: 100%;
+		height: 80rpx;
+		line-height: 80rpx;
+		text-align: center;
+		background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
+		color: #fff;
+		font-size: 30rpx;
+		font-weight: 900;
+		position: fixed;
+		top: 88rpx;
+		left: 0;
+	}
 }
 .swiper-box {
 	flex: 1;
