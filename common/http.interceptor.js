@@ -58,7 +58,7 @@ const install = (Vue, vm) => {
 			return res;
 		} else if(res.code === 401) {
 			uni.clearStorage('token')
-		    // vm.$u.route('/pages/login/login')
+		    vm.$u.route('/pages/login/login')
 		}else if(res.code == 500) {
 			vm.$u.toast(res.msg);
 			return false;
