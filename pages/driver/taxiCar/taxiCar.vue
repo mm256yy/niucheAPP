@@ -100,7 +100,7 @@
 				fileList: [],
 				radioList:[{name:'0',text:'女'},{name:'1',text:'男'}],
 				form: {
-					state:1,
+					type:1,
 					name:'',
 					sex: '',
 					licenseNumber:'',
@@ -146,7 +146,7 @@
 		},
 		methods: {
 			getInfo(){
-				this.$u.api.listDrivingLicense({type:1}).then(res => {
+				this.$u.api.listDrivingLicense({state:1}).then(res => {
 					if(res.code === 200){
 						let data = res.object;
 						this.form =data;
