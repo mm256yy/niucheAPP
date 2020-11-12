@@ -60,7 +60,7 @@ export default {
 				})
 			},
 			toView(id){
-				this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:id,flag:true})
+				this.$u.route("/pages/company/myPublish/qiugouView/qiugouView",{id:id,flag:true})
 			},
 			onreachBottom() {
 				let len = this.list.length;

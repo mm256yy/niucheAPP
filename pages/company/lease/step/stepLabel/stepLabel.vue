@@ -53,13 +53,22 @@ export default {
 		zdyList:[],
 		carPubFirst:{},
 		carPubSecond:{},
-		carPubType:''
+		carPubType:1
 		
 	}  
   },
   mounted() {
 	  this.initStorage()
-      this.getSysTags()
+	  let id = uni.getStorageSync('editId');
+	  if(id){
+		   this.xttjList = this.carPubSecond.SystemTag
+		   let list = this.carPubSecond.UserTag;
+		   list.forEach(item=>{
+			   this.zdyList.push({text:item,info:'success'})
+		   })
+	  }else {
+		  this.getSysTags()
+	  }
   },
   methods: {
 	initStorage(){
@@ -72,7 +81,7 @@ export default {
 	},
 	 getSysTags(){
 		let data = this.carPubFirst;
-		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,EndKm:data.EndKm};
+		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endKm:data.endKm};
 		this.$u.api.getSystemTag(obj).then(res=>{
 			if(res.code === 200){
 				this.xttjList = res.systemTagVo;

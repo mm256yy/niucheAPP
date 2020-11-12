@@ -90,13 +90,13 @@ export default {
 	},
 	onLoad(option) {
 		let id = option.id;
-		if(id){
-			this.id = id;
-		}
+		this.id = id;
+		uni.setStorageSync('inviteid',id)
 	},
 	onShow() {
 		this.initStorage()
-		if(this.id){
+		let id = uni.getStorageSync('inviteid')
+		if(id){
 			this.getInfo()
 		}else {
 		    this.setInfo()	
@@ -112,9 +112,24 @@ export default {
 		 uni.setStorageSync('carPubPosition', data);
 	 },
 	 getInfo(){
-		this.$u.api.saveCompanyInvite({id:this.id}).then(res=>{
+		this.$u.api.ComparyInviteEchoText({inviteid:this.id}).then(res=>{
 			if(res.code === 200){
-			     this.form = res.object;
+				let flag = uni.getStorageSync('inviteid');
+				if(flag){
+				 let carPubPosition = uni.getStorageSync('carPubPosition');
+				 let carPubUpload = uni.getStorageSync('carPubUpload');
+					if (carPubUpload){
+						let len = carPubUpload.length;
+						this.value= '已填加'+len+'辆';
+					}
+					this.form = carPubPosition
+				} else {
+					this.setStorage(res.object)
+					let len = res.object.carTagOneClickResultVos.length;
+					uni.setStorageSync('carPubUpload', res.object.carTagOneClickResultVos);
+					this.form = res.object;
+					this.value= '已填加'+len+'辆';
+				}
 			}else {
 				 this.$u.toast(res.msg);
 			}

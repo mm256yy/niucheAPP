@@ -9,7 +9,7 @@
 		</u-navbar>
 		<view class="view-content" >
 		   <view class="top-content-upload">
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="5" style="width: 100%;justify-content: center;" >
+			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					<view class="slot-tips">
@@ -37,7 +37,6 @@
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
 		import {action} from '@/utils/constant.js'
 	export default {
 		data() {
@@ -55,6 +54,11 @@
 		},
 		mounted() {
 			this.initStorage()
+			let id = uni.getStorageSync('editId');
+			if(id){
+			  this.form = this.carPubSix;
+			  this.fileList = [{url:this.form.elsephoto}]
+			}
 		},
 	     methods: {
 		    initStorage(){

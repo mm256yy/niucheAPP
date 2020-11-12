@@ -49,6 +49,10 @@ export default {
   },
   mounted() {
   	 this.initStorage()
+	 let id = uni.getStorageSync('editId');
+	 if(id){
+           this.form=this.carPubThree ;
+	 }
   },
   methods: {
 	    initStorage(){

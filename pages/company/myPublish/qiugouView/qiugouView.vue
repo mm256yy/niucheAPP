@@ -3,12 +3,12 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="购车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
+					<!-- <u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon> -->
 				</view>
 			</view>
 		 </u-navbar>
 		 <view class="list">
-		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="detail.comparyPhotoUrl"></u-image>
+		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="right">
 				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
 		 		<view class="name">{{detail.comparyname}}</view>
@@ -34,36 +34,37 @@
 					<u-form-item label="动力类型:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 </u-form>
 		 </view>
-
-		 <view class="bottom" @click="recommend()">
-		 			 <view>向他推荐本公司卖车信息</view>
-		 </view>
+		 <PubBottom :isOpen="detail.isOpen" :id="AskToShopId" :type="2"></PubBottom>
 	</view>
 </template>
 
 <script>
+	import PubBottom from '@/components/pubBottom.vue'
 	export default {
+		components: {
+			PubBottom
+		  },
 		data() {
 			return {
+				
 				backTextStyle:{
 					'color':'#ffffff'
 				},
-				driverDemandId: '',
+				AskToShopId: '',
 				detail: {},
 				comparyRefreshTimeStr: '',
+				type:4
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
-			if(id){
-			 this.driverDemandId = id;
-			}
+			this.AskToShopId = id;
 		},
 		mounted() {
 			this.getDetail()
 		},
 		methods: {
-		format(time, format) {
+		        format(time, format) {
 			            var t = new Date(time);
 			            var tf = function(i) {
 			                return (i < 10 ? '0' : '') + i
@@ -92,7 +93,7 @@
 			            });
 			        },
 			getDetail(){
-					this.$u.api.detailBuying({id: this.driverDemandId}).then(res=>{
+					this.$u.api.ComparyMyAskToShopForOne({AskToShopId:this.AskToShopId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
 							 this.comparyRefreshTimeStr = this.format(this.detail.comparyRefreshTime, 'yyyy-MM-dd HH:mm:ss');
@@ -106,11 +107,7 @@
 							 this.$u.toast(res.msg);
 						}
 					})
-			},
-		    recommend() {
-				this.$u.route("/pages/mymessage/company/components/index/buyingRecommend")
-			}
-			
+			},	
 		}
 	}
 </script>
@@ -136,7 +133,6 @@ page{
 		display: flex;
 	}
 	.detail {
-		background-color: #F5F5F8;
 		.list{
 			width: 671rpx;
 			height: 257rpx;
@@ -175,23 +171,23 @@ page{
 			}
 			.year,.type {
 				margin-left: 10rpx;
-				margin-top: 20rpx;
+				margin-top: 12rpx;
 			}
 			.time {
 				margin-top: 19rpx;
 			}
 			.box {
-				// width: 160rpx;
-				// height: 135rpx;
+				width: 180rpx;
+				height: 135rpx;
 				padding: 6rpx;
 				float: right;
-				margin-top: -116rpx;
-				margin-right: -80rpx;
+				margin-top: -96rpx;
+				margin-right: -76rpx;
 				font-size: 32rpx;
 				background: #fff;
 				color: #37AB63;
 				.num {
-					font-size: 72rpx;
+					font-size: 16pt;
 					font-weight: 900;
 				}
 			}

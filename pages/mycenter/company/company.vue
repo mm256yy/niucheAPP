@@ -34,11 +34,11 @@
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 						</view>
 					</u-col>
-					<u-col span="2" @click="toPub(1)">
+					<u-col span="2" @click="toPub(2)">
 						<!-- <u-image width="100%" height="50rpx" :src="zlzmsrc"></u-image> -->
 						<u-avatar :src="zlzmsrc" mode='square'></u-avatar>
 					</u-col>
-					<u-col span="4" @click="toPub(1)">
+					<u-col span="4" @click="toPub(2)">
 						<view class="font-14pt">车辆转卖</view>
 						<view class="font-10pt">
 						<text style="width: 60pt;display: inline-block;">{{myPublishObj.clzm}}</text>
@@ -47,22 +47,22 @@
 					</u-col>
 				</u-row>
 				<u-row style="padding:8pt 5pt">
-					<u-col span="2" @click="toPub(2)">
+					<u-col span="2" @click="toPub(3)">
 						<u-avatar :src="qgxxsrc" mode='square'></u-avatar>
 						<!-- <u-image width="100%" height="50rpx" :src="qgxxsrc"></u-image> -->
 					</u-col>
-					<u-col span="4" @click="toPub(2)">
+					<u-col span="4" @click="toPub(3)">
 						<view class="font-14pt">求购信息</view>
 						<view class="font-10pt">
 						<text style="width: 60pt;display: inline-block;">{{myPublishObj.qgxx}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
 						</view>
 					</u-col>
-					<u-col span="2" @click="toPub(3)">
+					<u-col span="2" @click="toPub(1)">
 						<u-avatar :src="zpxxsrc" mode='square'></u-avatar>
 						<!-- <u-image width="100%" height="130rpx" :src="zpxxsrc"></u-image> -->
 					</u-col>
-					<u-col span="4" @click="toPub(3)">
+					<u-col span="4" @click="toPub(1)">
 						<view class="font-14pt">招聘信息</view>
 						<view class="font-10pt">
 						<text style="width: 60pt;display: inline-block;">{{myPublishObj.zpxx}}</text>

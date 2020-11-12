@@ -31,7 +31,7 @@
 		<view @click="showDialog" style="padding: 20pt;">
 			<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加其他参数</text>
 		</view>
-		<view class="view-content" v-show="form.elseParamterList.length>0">
+		<view class="view-content" v-show="elseParamterList.length>0">
 		  <view style="margin-top: 20pt;font-size: 14pt;padding-left: 5pt;">
 		  	<view class="">
 		  		其他参数
@@ -107,10 +107,20 @@
 					  carPubSix:{},
 					   carPubSeven:{},
 					    carPubEight:{},
+						tagid:'',
 			}
 		},
 		mounted() {
 			this.initStorage()
+			let id = uni.getStorageSync('editId');
+			if(id){
+				this.tagid = id;
+				this.form = this.carPubEight;
+				if (this.carPubEight.elseParamterList){
+					this.elseParamterList = this.carPubEight.elseParamterList || []
+				}
+				
+			}
 		},
 		methods: {
 			initStorage(){

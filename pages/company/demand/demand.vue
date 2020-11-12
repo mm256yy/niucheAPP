@@ -103,17 +103,87 @@
 				},
 				radioType:'wycList',
 				showTips:false,
-				telephone:''
+				telephone:'',
+				AskToShopId:''
+			}
+		},
+		onLoad(option) {
+			let id = option.AskToShopId;
+			if(id){
+				this.AskToShopId = id;
 			}
 		},
 		mounted() {
-			this.initStorage()
+			this.initStorage();
+			if(this.AskToShopId){
+				this.editInfo()
+			}
 		},
 		methods: {
+			editInfo(){
+				this.$u.api.ComparyAskToShopEchoText({AskToShopId:this.AskToShopId}).then(res=>{
+					if(res.code === 200){
+						let data = res.object;
+						 this.form = data;
+						 this.radioType = data.businesstype=== '0'?'wycList':'czcList'
+						if (data.carmodel){
+							let carModel = data.carmodel.split(',');
+							carModel.forEach(obj=>{
+								 this.modelList.forEach(item=>{
+									 if(item.name === obj){
+										item.checked = true;
+									 }
+								 })
+							})
+						}
+						 let arr = []
+						if (data.carCard){
+							 let carCardList = data.intentionbrand.split(',');
+							 carCardList.forEach(item=>{
+								 this.brandList.forEach(obj=>{
+									 if(obj.name === item){
+										obj.checked = true;
+									 }
+									arr.push(obj.name)
+								 })
+							})
+							let arrset = new Set(arr);
+							carCardList.forEach(item=>{
+								if(!arrset.has(item)){
+									this.brandList.push({name:item,checked:true})
+								}
+							})
+						}
+						if (data.power){
+							let power = data.power.split(',');
+							power.forEach(obj=>{
+								 this.powerList.forEach(item=>{
+									 if(item.name === obj){
+										item.checked = true;
+									 }
+								 })
+							})
+					    }
+						// if (data.km){
+						// 	let power = data.power.split(',');
+						// 	power.forEach(obj=>{
+						// 		 this.powerList.forEach(item=>{
+						// 			 if(item.name === obj){
+						// 				item.checked = true;
+						// 			 }
+						// 		 })
+						// 	})
+						// }
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			initStorage(){
 					this.telephone = uni.getStorageSync('telephone');
 					this.form.userid = this.telephone;
 			},
+			
 			brandGroupChange(e) {this.form.intentionbrand = e;},
 			powerGroupChange(e) {this.form.power = e;},
 			modelGroupChange(e) {this.form.carmodel = e;},

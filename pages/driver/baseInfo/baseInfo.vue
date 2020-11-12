@@ -95,9 +95,14 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-			this.form.telephone = telephone;
+			this.form.telephone = uni.getStorageSync('telephone');
 		  // this.setPicToken()
 		  this.getInfo()
+		},
+		onShow() {
+			this.form.telephone = uni.getStorageSync('telephone');
+			// this.setPicToken()
+			this.getInfo()
 		},
 		methods: {
 			getInfo(){
