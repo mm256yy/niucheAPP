@@ -1,7 +1,7 @@
 <template>
 	<view :class="'company-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"

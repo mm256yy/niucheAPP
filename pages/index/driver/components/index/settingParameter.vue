@@ -2,8 +2,8 @@
 	<view class="setting">
 		<view class="top">
 			<view class="new">新</view>
-			<view class="year">车龄：<8个月</view>
-			<view class="distance">行驶里程：3-8万公里</view>
+			<view class="year">车龄：≤{{detail.carage}}年</view>
+			<view class="distance">行驶里程：{{detail.carkm}}万公里</view>
 		</view>
 		<view class="content">
 			<u-form label-width="200" label-align="left" :model="detail" ref="uForm">
@@ -22,7 +22,7 @@
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="驱动方式"><u-input :disabled="true" height="30" input-align="right" v-model="detail.otherparam[1]" /></u-form-item>
 			</u-form> -->
 			<view class="params" v-for="(item, index) in detail.otherparam" :key="index">
-				<text class="left">{{item.paramtername}}</text><text class="left">{{item.paramterunit}}</text>
+				<text class="left">{{item.paramtername}}</text><text class="left">({{item.paramterunit}})</text>
 				<text class="right">{{item.paramtertext}}</text>
 				<view class="clear"></view>
 			</view>

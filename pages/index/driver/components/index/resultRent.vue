@@ -26,7 +26,7 @@
 			 				<view class="box">
 			 					<view><text>￥{{item.rentprice}}</text>元/月起租</view>
 			 							<view>
-			 								<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+			 								<view v-show="items.length<8" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
 			 							</view>
 			 				</view>
 			 			</view>
@@ -184,8 +184,6 @@
 		  	}
 		  },
 		  onreachBottom() {
-			debugger
-		  	console.log(99)
 		  	this.pull()
 		  },
 		  clear() {
@@ -224,9 +222,6 @@ page{
 		display: flex;
 	}
 	.result {
-		.last .lists:last-child {
-			margin-bottom: 10000rpx;
-		}
 		.clear {
 			clear: both;
 		}

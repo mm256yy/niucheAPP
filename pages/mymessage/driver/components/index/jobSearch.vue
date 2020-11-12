@@ -275,7 +275,7 @@
 <style lang="scss" scoped>
 	.carRent {
 		.last .lists:last-child {
-			margin-bottom: 250rpx;
+			margin-bottom: 10rpx;
 		}
 		.wrap {
 			padding: 40rpx;

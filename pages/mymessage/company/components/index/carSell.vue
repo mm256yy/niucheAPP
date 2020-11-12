@@ -19,13 +19,13 @@
 		<view class="last">
 			<view class="lists" v-for="(item, index) in list" :key="index">
 				<view class="list" @click="detail(item.demandid)">
-					<u-image class="left" width="312rpx" height="231rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+					<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
 					<view class="right">
 						<view class="city">{{item.comparyarea}}</view>
 						<view class="clear"></view>
 						<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 						<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
-						<view v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
+						<view v-show="items.length<8" v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
 					</view>
 					<view class="clear"></view>
 					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>

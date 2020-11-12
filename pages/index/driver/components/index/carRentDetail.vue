@@ -177,6 +177,7 @@ page{
 		height: 100%;
 	}
 	.detail {
+		background: #F5F5F8;
 		.clear {
 			clear: both;
 		}
@@ -221,11 +222,12 @@ page{
 			margin-top: 39rpx;
 		}
 		.more {
-				   font-size: 20rpx;
-				   color: #7f7f7f;
-				   margin-top: 83rpx;
-				   margin-left: 220rpx;
-				   margin-bottom: 40rpx;
+			width: 100%;
+			text-align: center;
+			font-size: 20rpx;
+			color: #7f7f7f;
+			margin-top: 83rpx;
+			margin-bottom: 40rpx;
 		}
 		.last {
 				   width: 100%;
