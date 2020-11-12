@@ -26,17 +26,23 @@
 						</u-radio-group>
 					</u-form-item>
 				</u-form>
-				<view>
-					<u-radio-group v-model="xytype" :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'"  style="text-align: right;">
-						<u-radio name="1" style="margin-left: 10pt;">
-							<view class="u-line-2" style="font-size: 10pt;">
-								登录代表同意<text class="link">纽车用户协议、隐私政策，</text>
-							</view>
-					     </u-radio>
-					</u-radio-group>
+				<view style="padding-top: 20pt;">
+					<u-checkbox-group :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" shape="circle">
+						<u-checkbox v-model="xytype" shape="circle"></u-checkbox>
+						<view class="u-line-2" style="font-size: 8pt;">
+							注册或登录后，您即已同意<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toXy">《注册协议》</text>内容
+						</view>
+					</u-checkbox-group>
 				</view>
 				<view style="margin-top: 100pt;text-align: center;">
 					<u-button type="curThemeType ==='driver'?warning:success" shape='circle' class="btnFcd" @click="login('uForm')">登录</u-button>
+				</view>
+				<view style="font-size: 8pt;color: #7F7F7F;margin-top: 30pt;">
+					   1、请注意，同一个手机号只能注册一个账号（个人或公司）。
+					若您除了公事之外还有私事的使用需求，请更换手机号后再注册个人账号。
+				</view>
+				<view style="font-size: 8pt;color: #7F7F7F;margin-top: 10pt;">
+					2、注册或登录后，您即已同意《注册协议》内容。
 				</view>
 			</view>
 		</view>
@@ -63,14 +69,22 @@
 				<u-verification-code seconds="60" ref="uCode" unique-key="page-a" @change="codeChange"></u-verification-code>
 				<u-verification-code seconds="60" ref="dirverCodeChange" unique-key="page-b" :start-text='driverNumText' @change="dirverCodeChange"></u-verification-code>
 				<u-verification-code seconds="60" ref="companyNumChange" unique-key="page-b" :start-text='companyNumText' @change="companyNumChange"></u-verification-code>
+				<view style="padding-top: 20pt;">
+					<u-checkbox-group :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" shape="circle">
+						<u-checkbox v-model="xytype" shape="circle"></u-checkbox>
+						<view class="u-line-2" style="font-size: 8pt;">
+							注册或登录后，您即已同意<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toXy">《注册协议》</text>内容
+						</view>
+					</u-checkbox-group>
+				</view>
 				<view style="margin-top: 100pt;text-align: center;">
 					<u-button type="curThemeType ==='driver'?warning:success" shape='circle' class="btnFcd" @click="login('uFormPwd')">登录</u-button>
 				</view>
-				<view style="font-size: 10pt;color: #7F7F7F;margin-top: 30pt;">
+				<view style="font-size: 8pt;color: #7F7F7F;margin-top: 30pt;">
 					   1、请注意，同一个手机号只能注册一个账号（个人或公司）。
 					若您除了公事之外还有私事的使用需求，请更换手机号后再注册个人账号。
 				</view>
-				<view style="font-size: 10pt;color: #7F7F7F;margin-top: 10pt;">
+				<view style="font-size: 8pt;color: #7F7F7F;margin-top: 10pt;">
 					2、注册或登录后，您即已同意《注册协议》内容。
 				</view>
 			 </view>
@@ -123,7 +137,7 @@
 				errorType:[
 					'toast'
 				],
-				xytype:1
+				xytype:false
 			}
 		},
 		onReady() {
@@ -131,7 +145,6 @@
 			this.$refs.uFormPwd.setRules(this.rules1);
 		},
 		mounted() {
-			// this.init()
 			let token = uni.getStorageSync('token')
 			console.log(token)
 			if (token){
@@ -144,6 +157,7 @@
 					uni.setStorageSync('telephone', userInfo.telephone);
 					uni.setStorageSync('token', Authorization);
 					uni.setStorageSync('role', userInfo.role);
+					uni.setStorageSync('isauthencation',userInfo.isauthencation)
 			},
 			change(index) {
 				this.current = index;
@@ -205,9 +219,16 @@
 			companyNumChange(text) {
 				this.companyNumText = text;
 			},
+			toXy(){
+				this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+			},
 			login(ref){
 				this.$refs[ref].validate(valid=>{
 					if(valid) {
+						if(!this.xytype){
+							this.$u.toast('请勾选用户协议');
+							return false
+						}
 						let obj = this.form;
 						if(ref === 'uFormPwd') {
                           obj = this.formPwd;
@@ -217,19 +238,21 @@
 									let userInfo = obj;
 									userInfo.token = res.token;
 									this.setStorage(userInfo)
+								
 									if(res.userrole === 1){//司机
-									 uni.setStorageSync('curThemeType', 'driver');
+									    uni.setStorageSync('curThemeType', 'driver');
+										
 										if(res.userstate === '0'){
-											this.$u.route('/pages/driver/agreement/agreement',{type:'reLaunch'})
-										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+										} else {
+											this.$u.route({url:'/pages/index/index',type:'switchTab'})
 										}
 									} else {
 										 uni.setStorageSync('curThemeType', 'company');
 										if(res.userstate ==='0'){
-											this.$u.route('/pages/company/registrationAgreement/registrationAgreement',{type:'reLaunch'})
-										} else {
 											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+										} else {
+											this.$u.route({url:'/pages/index/index',type:'switchTab'})
 										}
 									}
 								}else {
@@ -282,5 +305,11 @@
 	}
 	.swiper-item {
 		height: 100%;
+	}
+	.driLink{
+		color:#FF9F31
+	}
+	.comLink{
+		color:#6DD99C
 	}
 </style>

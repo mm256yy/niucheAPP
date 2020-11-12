@@ -147,7 +147,7 @@
 		},
 		methods: {
 			getInfo(){
-				this.$u.api.listDrivingLicense({state:2}).then(res => {
+				this.$u.api.listDrivingLicense({type:2}).then(res => {
 					if(res.code === 200){
 					let data = res.object;
 						this.form =data;

@@ -7,7 +7,7 @@
 						<u-col span="3">
 							<u-avatar :src="comnpanySrc" mode="circle" size="large" ></u-avatar>
 						</u-col>
-						<u-col span="8" v-if="companyName === ''">
+						<u-col span="8" v-if="token === ''">
 							<view @click="toLogin" style="color: #fff;font-size: 14pt;">请登录/注册</view>
 						</u-col>
 						<u-col span="8" v-else>
@@ -15,6 +15,11 @@
 							<view class="colorF">{{companyStatus | state}}</view>
 							<view v-if="companyStatus === 4">原因 {{reson}}</view>
 						</u-col>
+						<u-col span="1">
+							<u-icon name="arrow-right" color="#fff" size="30"></u-icon>
+						</u-col>
+						
+						
 					</u-row>
 				</view>
 			<view class="bgf" style="margin: 15pt 0;">
@@ -110,6 +115,7 @@
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser();
+
 		},
 		filters: {
 		  state: function (value) {
@@ -137,6 +143,7 @@
 							this.comnpanySrc =data.comparylogophoto;
 							this.companyName = data.comparynickname;
 							this.companyStatus = data.state;
+							
 							this.reson = data.nostate;
 							let strF ='已发布';
 							let strE = '条'
@@ -148,13 +155,22 @@
 							this.otherObj.xx = data.messagenum;
 							this.otherObj.qz = data.groupmessagenum;
 						}else {
-							 this.$u.toast(res.message);
+							let phone = uni.getStorageSync('telephone')
+							this.companyName = phone
+							uni.setStorageSync('isauthencation',0)
+							 // this.$u.toast(res.message);
 						}
 					})
 				}
 			},
 			toAuth(){
-				this.$u.route('/pages/company/information/information')
+				let isauthencation = uni.getStorageSync('isauthencation');
+				if (isauthencation){
+					this.$u.route('/pages/company/information/information')
+				} else{
+					this.$u.route('/pages/company/identityAuth/identityAuth')
+				}
+				
 			},
 
 			toLogin(){
