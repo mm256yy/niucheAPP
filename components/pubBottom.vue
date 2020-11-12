@@ -73,12 +73,15 @@
 			},
 			toNext(){
 				let type = this.type;
-				if(type === 3){
-					 uni.setStorageSync('carPubType',3);
+				if(type === 3 || type === 1){
+					 uni.setStorageSync('carPubType',type);
 					 this.$u.route('/pages/company/lease/lease',{editId:this.id})
 				} else if(type ===4){
 					 uni.setStorageSync('carPubType',4);
 					  this.$u.route('/pages/company/demand/demand',{AskToShopId :this.id})
+				} else {
+					uni.setStorageSync('carPubType',2);
+					this.$u.route('/pages/company/recruit/recruit',{id:this.id})
 				}
 			}
 		}
