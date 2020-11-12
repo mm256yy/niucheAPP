@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="购车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
 				</view>
 			</view>
 		 </u-navbar>
@@ -109,23 +109,6 @@
 			},
 		    recommend() {
 				this.$u.route("/pages/mymessage/company/components/index/buyingRecommend")
-			},
-			shared(){
-				uni.share({
-				    provider: "weixin",
-				    scene: "WXSenceTimeline",
-				    type: 0,
-				    href: "http://uniapp.dcloud.io/",
-				    title: "uni-app分享",
-				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-				    imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
-				    success: function (res) {
-				        console.log("success:" + JSON.stringify(res));
-				    },
-				    fail: function (err) {
-				        console.log("fail:" + JSON.stringify(err));
-				    }
-				});
 			}
 			
 		}
@@ -153,6 +136,7 @@ page{
 		display: flex;
 	}
 	.detail {
+		background-color: #F5F5F8;
 		.list{
 			width: 671rpx;
 			height: 257rpx;
@@ -191,18 +175,18 @@ page{
 			}
 			.year,.type {
 				margin-left: 10rpx;
-				margin-top: 12rpx;
+				margin-top: 20rpx;
 			}
 			.time {
 				margin-top: 19rpx;
 			}
 			.box {
-				width: 160rpx;
-				height: 135rpx;
+				// width: 160rpx;
+				// height: 135rpx;
 				padding: 6rpx;
 				float: right;
-				margin-top: -96rpx;
-				margin-right: -76rpx;
+				margin-top: -116rpx;
+				margin-right: -80rpx;
 				font-size: 32rpx;
 				background: #fff;
 				color: #37AB63;

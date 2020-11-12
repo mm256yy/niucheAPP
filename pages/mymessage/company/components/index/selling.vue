@@ -139,7 +139,7 @@
 				margin-top: 14rpx;
 				margin-right: 20rpx;
 				position: absolute;
-				top: 246rpx;
+				top: 250rpx;
 			    right: 0rpx;
 			}
 			.list {
@@ -160,12 +160,9 @@
 					padding-left: 34rpx;
 				}
 				.city {
-					width: 96rpx;
-					height: 36rpx;
-					line-height: 30rpx;
-					text-align: center;
+					padding: 4rpx 14rpx;
 					font-size: 20rpx;
-					border-radius: 26rpx;
+					border-radius: 22rpx;
 					border: 1rpx solid rgba(0,0,0,0.3);
 					margin-top: 16rpx;
 					margin-right: 16rpx;
@@ -194,17 +191,17 @@
 				}
 				.clock {
 					margin-left: 30rpx;
-					margin-top: 14rpx;
+					margin-top: 18rpx;
 					margin-right: 4rpx;
 					float: left;
 				}
 				.img {
 					float: left;
-					margin-top: 10rpx;
+					margin-top: 16rpx;
 					margin-right: 4rpx;
 				}
 				.year {
-					margin-top: 8rpx;
+					margin-top: 14rpx;
 					margin-right: 50rpx;
 					float: left;
 				}
@@ -212,5 +209,6 @@
 		}
 	}
 </style>
+
 
 

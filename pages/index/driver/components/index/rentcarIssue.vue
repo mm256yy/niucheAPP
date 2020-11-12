@@ -12,7 +12,7 @@
 				<view class="limit">{{item.mobandaan}}</view>
 			</view>
 		</view>
-		<view class="ask">
+		<!-- <view class="ask">
 			<view class="box">
 				<u-icon class="question" name="question" size="28" color="#fff"></u-icon>
 			</view>
@@ -21,7 +21,7 @@
 				<view class="how">谁买过？怎么样？</view>
 			</view>
 			<view class="small">></view>
-		</view>
+		</view> -->
 	</view>
 </template>
 

@@ -220,6 +220,7 @@
 				}
 				.car {
 					float: left;
+					margin-top: 4rpx;
 				}
 				.year {
 					margin-left: 6rpx;

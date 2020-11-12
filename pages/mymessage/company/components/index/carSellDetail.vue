@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" :title="detail.carmodeltag" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
 				</view>
 			</view>
 		 </u-navbar>
@@ -161,7 +161,7 @@
 		}
 	}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 page{
 	// background-image: url(@/static/lease.png);
 	// background-repeat: no-repeat;
@@ -196,6 +196,8 @@ page{
 		height: 100%;
 	}
 	.detail {
+		background-color: #F5F5F8;
+		color: #7f7f7f;
 		.clear {
 			clear: both;
 		}
@@ -247,11 +249,12 @@ page{
 			margin-top: 39rpx;
 		}
 		.more {
-				   font-size: 20rpx;
-				   color: #7f7f7f;
-				   margin-top: 83rpx;
-				   margin-left: 220rpx;
-				   margin-bottom: 40rpx;
+			width: 100%;
+			text-align: center;
+			font-size: 20rpx;
+			color: #7f7f7f;
+			margin-top: 83rpx;
+			margin-bottom: 40rpx;
 		}
 		.last {
 				   width: 100%;

@@ -330,7 +330,7 @@
 				margin-top: 14rpx;
 				margin-right: 20rpx;
 				position: absolute;
-				top: 246rpx;
+				top: 250rpx;
 			    right: 0rpx;
 			}
 			.list {
@@ -382,17 +382,17 @@
 				}
 				.clock {
 					margin-left: 30rpx;
-					margin-top: 14rpx;
+					margin-top: 18rpx;
 					margin-right: 4rpx;
 					float: left;
 				}
 				.img {
 					float: left;
-					margin-top: 10rpx;
+					margin-top: 16rpx;
 					margin-right: 4rpx;
 				}
 				.year {
-					margin-top: 8rpx;
+					margin-top: 14rpx;
 					margin-right: 50rpx;
 					float: left;
 				}

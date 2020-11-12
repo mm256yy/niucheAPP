@@ -5,7 +5,7 @@
 			 inactive-color="#7f7f7f" activeColor="#FF6501" :tabs="tab" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carRentPriceCollection" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
-			        <view class="year">车龄：≤{{detail.carage}}个月</view>
+			        <view class="year">车龄：≤{{detail.carage}}年</view>
 			    	<view class="distance">{{detail.carkm}}万公里</view>
 			    	<view class="clear"></view>
 			    </view>
@@ -44,14 +44,14 @@
 					<view class="text">线下签约</view>
 				</view>
 			 </view>
-			 <view class="ask">
+			 <!-- <view class="ask">
 			 	<u-image class="question" width="66rpx" height="66rpx" src="@/static/question.png"></u-image>
 			 	<view class="problem">
 			 		<view class="everyone">问问大家</view>
 			 		<view class="how">谁买过？怎么样？</view>
 			 	</view>
 			 	<view class="small">></view>
-			 </view>
+			 </view> -->
 		</view>
 	</view>
 </template>
@@ -110,6 +110,7 @@
 				width: 670rpx;
 				height: 304rpx;
 				background: #fff;
+				margin-top: 0;
 				.left {
 					width: 279rpx;
 					height: 159rpx;

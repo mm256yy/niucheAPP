@@ -183,7 +183,7 @@
 				}
 				.car {
 					float: left;
-					margin-top: 14rpx;
+					margin-top: 18rpx;
 					margin-right: 4rpx;
 				}
 				.distance {

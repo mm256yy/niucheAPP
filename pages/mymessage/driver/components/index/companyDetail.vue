@@ -16,14 +16,14 @@
 			<view>更高的收入，多劳多得</view>
 			<view>更高的收入，多劳多得</view>
 		</view>
-		<view class="ask">
+		<!-- <view class="ask">
 			<u-image class="question" width="66rpx" height="66rpx" src="@/static/question.png"></u-image>
 			<view class="problem">
 				<view class="everyone">问问大家</view>
 				<view class="how">谁买过？怎么样？</view>
 			</view>
 			<view class="small">></view>
-		</view>
+		</view> -->
 	</view>
 </template>
 

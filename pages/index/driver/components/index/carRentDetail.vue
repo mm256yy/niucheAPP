@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="租车详情" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
 				</view>
 			</view>
 		</u-navbar>
@@ -44,11 +44,12 @@
 			</swiper>
 			<view class="more" @click="other()">上拉加载该公司其他信息</view>
 			<view class="last">
-				<view class="left">预约看车</view>
-				<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
-				<u-image width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
-				<view class="right">下单租车</view>
-				<view class="clear"></view>
+				<view class="bottom">
+					<view class="left">预约看车</view>
+					<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
+					<u-image class="chat" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
+					<view class="right">下单租车</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -104,7 +105,7 @@
 						 var text = '';
 						 if(this.detail.carRentPriceCollection) {
 						   this.detail.carRentPriceCollection.forEach(item=>{
-						   	if(item.carrentprice){
+						   	if(item.carrenttime){
 								text = item.carrenttime + '个月';
 							}
 						   	this.tab.push(text)						
@@ -232,7 +233,7 @@ page{
 		.last {
 				   width: 100%;
 				   height: 144rpx;
-				   padding: 55rpx 80rpx;
+				   // padding: 55rpx 80rpx;
 				   background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 				   font-size: 36rpx;
 				   font-weight: 900;
@@ -240,12 +241,20 @@ page{
 				   display: flex;
 				   justify-content: space-around;
 				   align-items: center;
-				  //  .icon-box {
-					 // width: 96rpx;
-					 // height: 96rpx;
-					 // border-radius: 50%;
-					 // background: #fff;
-				  //  }
+				  .bottom {
+					  line-height: 96rpx;
+					  .left {
+						  float: left;
+						  margin-right: 70rpx;
+					  }
+					  .chat {
+						  float: left;
+						  margin-right: 70rpx;
+					  }
+					  .right {
+						  float: left;
+					  }
+				  }
 		}
 	}
 </style>

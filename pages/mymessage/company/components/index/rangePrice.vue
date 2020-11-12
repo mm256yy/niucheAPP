@@ -90,6 +90,9 @@
 				width: 667rpx;
 				height: 280rpx;
 				background: #fff;
+				display: flex;
+				justify-content: center;
+				// align-items: center;
 				.left {
 					width: 279rpx;
 					height: 159rpx;
@@ -98,11 +101,16 @@
 					background: rgba(0,0,0,0.02);
 					font-size: 20rpx;
 					color: #7f7f7f;
-					margin-left: 43rpx;
-					float: left;
+					margin-right: 40rpx;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					// float: left;
 					.price text {
 						font-size: 46rpx;
 						font-weight: 900;
+						color: #7f7f7f;
 					}
 				}
 				.right {
@@ -110,11 +118,15 @@
 					height: 159rpx;
 					padding: 30rpx 0;
 					text-align: center;
-					margin-right: 40rpx;
+					// margin-right: 40rpx;
 					font-size: 20rpx;
 					color: #fff;
 					background: linear-gradient(115deg,#6DD99C, #37AB63);
-					float: right;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					// float: right;
 					.price text {
 						font-size: 46rpx;
 						font-weight: 900;
