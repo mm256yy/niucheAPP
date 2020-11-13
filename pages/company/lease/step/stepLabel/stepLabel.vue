@@ -81,7 +81,7 @@ export default {
 	},
 	 getSysTags(){
 		let data = this.carPubFirst;
-		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endKm:data.endKm};
+		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
 		this.$u.api.getSystemTag(obj).then(res=>{
 			if(res.code === 200){
 				this.xttjList = res.systemTagVo;

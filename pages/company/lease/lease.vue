@@ -179,7 +179,10 @@ export default {
 		 })
 	  },
 	  editSetStorage(data){
-		  this.form.isOneclickAndAdd = 1
+		  this.form.isOneclickAndAdd = 1;
+		  this.form.id = data.tagid;
+		  this.form.comparyid = data.comparyinviteid;
+		  this.form.cartagistag = data.tagistagid
 		  this.form.carbrand = data.carbrand;
 		  this.form.carmodel = data.carmodel;
 		  this.form.carxinghao = data.carxinghao;

@@ -173,6 +173,8 @@
 				uni.removeStorageSync('carPubSix');
 				uni.removeStorageSync('carPubSeven');
 				uni.removeStorageSync('carPubEight');
+				uni.removeStorageSync('isauthencation');
+				uni.removeStorageSync('editId');
 			},
 			actionSheetCallback(index) {
 				this.form.environmental = this.list[index].text;

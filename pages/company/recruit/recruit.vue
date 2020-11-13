@@ -114,8 +114,9 @@ export default {
 	 getInfo(){
 		this.$u.api.ComparyInviteEchoText({inviteid:this.id}).then(res=>{
 			if(res.code === 200){
+				debugger
 				let flag = uni.getStorageSync('inviteid');
-				if(flag){
+				if(!flag){
 				 let carPubPosition = uni.getStorageSync('carPubPosition');
 				 let carPubUpload = uni.getStorageSync('carPubUpload');
 					if (carPubUpload){
@@ -124,7 +125,7 @@ export default {
 					}
 					this.form = carPubPosition
 				} else {
-					this.setStorage(res.object)
+					// this.setStorage('carPubPosition',res.object)
 					let len = res.object.carTagOneClickResultVos.length;
 					uni.setStorageSync('carPubUpload', res.object.carTagOneClickResultVos);
 					this.form = res.object;
