@@ -12,7 +12,7 @@
 			</u-navbar>
 			<MyDriver ref="searchDri" v-if='curThemeType ==="driver"'></MyDriver>
 			<MyCompany ref="searchCom" v-else></MyCompany>
-             <u-modal v-model="showTips" @confirm="tipsConfirm" title="提示" :show-cancel-button="true" cancel-text="否"  confirm-text="是">
+             <u-modal v-model="showTips" @confirm="tipsConfirm" title="提示" @cancel="setNum" :show-cancel-button="true" cancel-text="否"  confirm-text="是">
              	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
                      亲，您尚未认证，是否立即去认证?
              	</view>
@@ -34,9 +34,11 @@
 			let type = uni.getStorageSync('curThemeType');
 			let token = uni.getStorageSync('token');
 			let isauthencation = uni.getStorageSync('isauthencation');
-			if(!isauthencation && token){
-				this.showTips = true
-			}
+			let Num = uni.getStorageSync('loginNum')
+			
+				if(!isauthencation && token && !Num){
+					this.showTips = true
+				}	
 			this.curThemeType = type
 			if (type === 'company'){
 				companyPages.forEach(item=>{
@@ -76,6 +78,9 @@
 					this.$u.route('/pages/driver/drivingLicense/drivingLicense')
 				}
 			},
+			setNum(){
+				 uni.setStorageSync('loginNum',true)
+			}
 			
 		}
 	}
