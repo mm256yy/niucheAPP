@@ -109,10 +109,10 @@
 					// uni.setStorageSync('carPubPositionEdit',id)
 					// uni.setStorageSync('carPubUploadEdit',id)
 					this.form = res.object
-					if (carPubUpload){
-						let len = carPubUpload.length;
-						this.value= '已填加'+len+'辆';
-					}
+					let len = res.object.carTagOneClickResultVos.length;
+				     uni.setStorageSync('carPubUploadEdit', res.object.carTagOneClickResultVos);
+				      this.form = res.object;
+                       this.value= '已填加'+len+'辆';
 				} else{
 					let flag = uni.getStorageSync('inviteid');
 					 let carPubPosition = uni.getStorageSync('carPubPositionEdit');

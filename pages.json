@@ -506,7 +506,23 @@
             
         }
         ,{
-            "path" : "pages/company/myPublish/qiugouView/qiugouView",
+            "path" : "pages/company/myPublish/recruit/carModel/carModel",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        },{
+            "path" : "pages/company/myPublish/recruit/recruit",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        },{
+            "path" : "pages/company/myPublish/recruit/carOther/carOther",
             "style" :                                                                                    
             {
                 "navigationStyle": "custom",

@@ -81,7 +81,7 @@
 					  this.$u.route('/pages/company/demand/demand',{AskToShopId :this.id})
 				} else {
 					uni.setStorageSync('carPubType',2);
-					this.$u.route('/pages/company/recruit/recruit',{id:this.id})
+					this.$u.route('/pages/company/myPublish/recruit/recruit',{id:this.id})
 				}
 			}
 		}
