@@ -72,6 +72,18 @@
 				 linesrc:'../../../static/juxing4@2x.png'
 			}
 		},
+		onShow() {
+			let isauthencation = uni.getStorageSync('isauthencation');
+			let token = uni.getStorageSync('token');
+			if(!isauthencation && token){
+				let role = uni.getStorageSync('role');
+				if (role === 2) {
+					this.$u.route('/pages/company/identityAuth/identityAuth')
+				} else {
+					this.$u.route('/pages/driver/drivingLicense/drivingLicense')
+				}
+			}
+		},
 		mounted() {
 			this.setDay()
 		},

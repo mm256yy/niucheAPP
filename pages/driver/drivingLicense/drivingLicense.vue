@@ -189,10 +189,6 @@
 			edit(){
 				this.type = true;
 			},
-			setPicToken(){
-				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.telephone;
-			},
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
@@ -227,8 +223,22 @@
 				this.form.endTime = companyDate;
 			},
 			uploadChange(res,index,lists,name){
-				let data = res.data;
-				this.driverPhoto = data.text
+				console.log(res)
+				if (res.code === 200){
+					let data = res.object;
+					this.form.name = data.name;
+					this.form.sex = data.sex === '男' ? '1':'0';
+					this.form.vehicleAge = data.clazz;
+					this.form.driverPhoto = data.imageuploadurl;
+					this.form.brithday = data.brithday;
+					this.form.licenseNumber = data.id;
+					this.form.issueDate = data.issue_date;
+					this.form.beginTime = data.valid_from;
+					this.form.endTime = data.valid_for;
+					console.log(data.birthday)
+				} else {
+					this.$u.toast(res.msg)
+				}
 			}
 		}
 	}
