@@ -45,7 +45,7 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
-				if (token){
+				if (token && this.$refs.searchCom){
 					this.$refs.searchCom.getUser()
 				}
 			} else {
@@ -55,7 +55,7 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
-				if (token){
+				if (token && this.$refs.searchDri){
 					this.$refs.searchDri.getUser()
 				}
 			}

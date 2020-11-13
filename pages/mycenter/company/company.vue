@@ -117,6 +117,9 @@
 			this.getUser();
 
 		},
+		onShow() {
+			this.token = uni.getStorageSync('token')
+		},
 		filters: {
 		  state: function (value) {
 		    if (!value) return ''

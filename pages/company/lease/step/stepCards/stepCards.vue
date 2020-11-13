@@ -25,7 +25,7 @@
 		</view>
 		<view class="view-content">
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
+			<u-upload :custom-btn="true" :action="action"
 			@on-success='uploadChange' upload-text="" index="cardivephoto"
 			 :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">

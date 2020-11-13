@@ -15,7 +15,7 @@
 			<view class="top-content-base" style="font-size: 12pt;">驾驶证正本照片</view>
 			<view class="top-content-upload" v-if='type'>
 				<view></view>
-				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" 
+				<u-upload :custom-btn="true" :action="action"  
 				@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024"
 				 max-count="1" style="width: 100%;justify-content: center;background-color: #FFFFFF;">
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">

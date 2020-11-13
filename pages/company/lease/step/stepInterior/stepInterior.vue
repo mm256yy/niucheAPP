@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆内饰" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
+			<u-upload :custom-btn="true" :action="action"
 			@on-success='uploadChange' upload-text="" :file-list="item.fileList" :index="item.resName" :max-size="4 * 1024 * 1024" max-count="1" 
 			style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
