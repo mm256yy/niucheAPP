@@ -8,6 +8,6 @@ if(process.env.NODE_ENV === 'development'){
     console.log('生产环境')
 }
 
-export const action =ipconfig+ "/user/image/carotherphoto";
+export const action =ipconfig+ "/sys/upload/uploadImage";
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';

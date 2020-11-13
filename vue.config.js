@@ -14,6 +14,7 @@ module.exports = {
 			       "/user" : target,
 				   "/captchaImage" : target,
 			       "/system" : target,
+				    "/sys" : target,
 			　　　　}
 			　　}
 		}
