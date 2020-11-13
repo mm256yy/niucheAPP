@@ -140,9 +140,7 @@
 				})
 			},
 			uploadChange(res,index,lists,name){
-				console.log(res)
-				let data = res.data;
-				this.form.headPhoto = data.text
+				this.form.headPhoto = res.object
 			},
 			loginOut(){
 				this.$u.api.logout({}).then(res=>{

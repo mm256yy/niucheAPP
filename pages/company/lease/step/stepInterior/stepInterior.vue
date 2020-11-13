@@ -65,7 +65,7 @@
 				 uni.setStorageSync('carPubFive', data);
 			  },
 			  uploadChange(data, index, lists, name){
-			  	this.form[name] = data.text;
+			  	this.form[name] = data.object;
 				this.$u.toast(data.msg);
 			  },
 			  setForm(){

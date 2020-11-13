@@ -135,7 +135,7 @@
 		},
 		uploadChange(res,index,lists,name){
 		   if(res.code === 200) {
-			   this.form.comparylogophoto = res.text;
+			   this.form.comparylogophoto = res.object
 		   }
 		},
 		toNext(){

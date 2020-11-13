@@ -68,7 +68,7 @@
 				 uni.setStorageSync('carPubSix', data);
 			},
 			  uploadChange(data, index, lists, name){
-				this.form.elsephoto = data.text;
+				this.form.elsephoto = data.object;
 				this.$u.toast(data.msg);
 			  },
 			toNext(){

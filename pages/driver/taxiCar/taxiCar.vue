@@ -167,7 +167,7 @@
 							this.reason = "* 信息已提交，在审核期间本页内容不能修改。"
 						}
 					 } else{
-						this.$u.toast(res.msg) 
+						// this.$u.toast(res.msg) 
 					 }
 				})
 			},
@@ -213,8 +213,7 @@
 				this.form.endTime = companyDate;
 			},
 			uploadChange(res,index,lists,name){
-				let data = res.data;
-				this.form.driverPhoto = data.text
+				this.form.driverPhoto = res.object
 			}
 		}
 	}

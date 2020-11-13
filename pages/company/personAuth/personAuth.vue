@@ -5,7 +5,7 @@
 			<view class="top-content-base">企业联系人身份认证</view>
 			<view class="top-content-base" style="font-size: 12pt;">身份证照片</view>
 			<view class="top-content-upload">
-				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -45,7 +45,7 @@
 					</u-row>
 			</view>
 			<view class="top-content-upload">
-				<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj" @on-success='uploadChange'
+				<u-upload :custom-btn="true" :action="action" @on-success='uploadChange'
 				 upload-text="" :file-list="fileList1" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -214,7 +214,7 @@
 			},
 			uploadChange(res,index,lists,name){
                if(res.code === 200) {
-				   this.form.comparypeoplephoto = res.text;
+				   this.form.comparypeoplephoto = res.object;
 			   }
 			},
 			toNext(){
