@@ -11,6 +11,11 @@
 			<!-- <u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image> -->
 			<view class="list">
 				<!-- <view class="tag">付费标签</view> -->
+				<view class="icon">
+					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
+					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+					<text>{{detail.collectionum}}</text>
+				</view>
 				<view class="name">高薪招聘{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.pay}}</text>月薪</view>
 				<view class="city">工作城市：{{detail.city}}<text>招聘：{{detail.invitepeoplenum}}人</text></view>
@@ -75,12 +80,12 @@
 			<swiper class="swiper-box" :current="swiperCurrentBottom" @transition="transitionBottom" @animationfinish="animationfinishBottom">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<job-detail ref="child"></job-detail>
+			 			<job-detail :detail="detail" ref="child"></job-detail>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<company-detail></company-detail>
+						<company-detail :detail="detail"></company-detail>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -135,6 +140,38 @@
 			this.getDetail()
 		},
 		methods: {
+			favorites(item,id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1,
+					collectionstate: 2,
+					iscollection: 1
+				};
+				item.isCollection = 1;
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
+			cancel(item,id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 1,
+					collectionstate: 2,
+					iscollection: 0
+				};
+				item.isCollection = 2;
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('取消收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
 			change(index) {
 				this.firstCurrent = index;
 			},
@@ -248,6 +285,12 @@ page{
 			background: #fff;
 			padding: 40rpx;
 			margin-top: 20rpx;
+			.icon{
+				float: right;
+				.heart{
+					margin-right: 10rpx;
+				}
+			}
 		}
 		.clear {
 			clear: both;

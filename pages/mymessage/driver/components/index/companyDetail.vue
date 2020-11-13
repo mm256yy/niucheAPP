@@ -1,6 +1,7 @@
 <template>
 	<view class="companyDetail">
 		<view class="content">
+			<view>{{detail.comparyIntroduce}}</view>
 			<view>为什么要加入T3出行？</view>
 			<view>更高的收入，多劳多得</view>
 			<view>我们提供（基础+提成+奖励+补贴）的薪酬体系，更有新人专享的保底薪资，每月发放5次薪水，只要够努力，
@@ -32,6 +33,12 @@
 		data() {
 			return {
 				
+			}
+		},
+		props: {
+			detail: {
+			    type: Object,
+			    default: function (){return {}}
 			}
 		},
 		mounted() {

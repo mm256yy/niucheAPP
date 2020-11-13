@@ -14,7 +14,8 @@
 				<view class="name">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
 				<view class="collect">
-					<u-icon class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
+					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.comparyid)" class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
+					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.comparyid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 					<text>{{detail.collectnum}}</text>
 				</view>
 				<view class="clear"></view>
@@ -107,6 +108,38 @@
 			this.getDetail()
 		},
 		methods: {
+			favorites(item,id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 2,
+					collectionstate: 3,
+					iscollection: 1
+				};
+				item.iscollection = 1;
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
+			cancel(item,id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 2,
+					collectionstate: 3,
+					iscollection: 0
+				};
+				item.iscollection = 2;
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('取消收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
 			getDetail(){
 					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){

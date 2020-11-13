@@ -47,7 +47,12 @@
 		},
 		methods: {
 			getList() {
-				this.$refs.carSell.search()
+				if(this.$refs.carSell != undefined){
+					this.$refs.carSell.search()
+				}
+				if(this.$refs.buying != undefined){
+					this.$refs.buying.search()
+				}
 			},
 			// tabs通知swiper切换
 			tabsChange(index) {

@@ -34,6 +34,12 @@
 				
 			}
 		},
+		props: {
+			detail: {
+			    type: Object,
+			    default: function (){return {}}
+			}
+		},
 		mounted() {
 			
 		},
