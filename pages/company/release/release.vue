@@ -50,14 +50,17 @@
 			</view>
 		</view>
 		<NotLogin></NotLogin>
+		<auth></auth>
 	</view>
 </template>
 
 <script>
 	import NotLogin from '@/components/notlogin/notlogin.vue'
+	import auth from '@/components/auth.vue'
 	export default {
 		components:{
-			NotLogin
+			NotLogin,
+			auth
 		},
 		data() {
 			return {

@@ -26,12 +26,18 @@
 		<view style="text-align: center; padding: 26pt 20pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
 		</view>
+		<NotLogin></NotLogin>
+		<auth></auth>
     </view>
 </template>
-
 <script>
-
+import NotLogin from '@/components/notlogin/notlogin.vue'
+import auth from '@/components/auth.vue'
 export default {
+	components:{
+		NotLogin,
+		auth
+	},
   data(){
 	return {
 		backTextStyle:{

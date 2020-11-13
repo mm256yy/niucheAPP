@@ -10,15 +10,23 @@
 			</view>
 		</view>
 	</u-index-list>
+	<NotLogin></NotLogin>
+	<auth></auth>
 	</view>
 </template>
 
 <script>
 import {list} from "@/utils/index.list.js";
+import NotLogin from '@/components/notlogin/notlogin.vue'
+import auth from '@/components/auth.vue'
 	const letterArr = list.map(val => {
 		return val.letter;
 	})
 	export default {
+		components:{
+			NotLogin,
+			auth
+		},
 		data() {
 			return {
 				scrollTop: 0,

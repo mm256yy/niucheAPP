@@ -65,11 +65,19 @@
 				您可在问题模板基础上编辑，也可自行编辑。是否现在开始？
 			</view>
 		</u-modal>
+		<NotLogin></NotLogin>
+		<auth></auth>
 	</view>
 </template>
 
 <script>
+	import NotLogin from '@/components/notlogin/notlogin.vue'
+	import auth from '@/components/auth.vue'
 	export default {
+		components:{
+			NotLogin,
+			auth
+		},
 		data() {
 			return {
 				backTextStyle:{

@@ -52,12 +52,19 @@
 			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toSubmit">完成</u-button>	
 			</view>
 		</view>
-
+        <NotLogin></NotLogin>
+        <auth></auth>
 	</view>
 </template>
 
 <script>
+	import NotLogin from '@/components/notlogin/notlogin.vue'
+	import auth from '@/components/auth.vue'
 	export default {
+		components:{
+			NotLogin,
+			auth
+		},
 		data() {
 			return {
 				backTextStyle:{

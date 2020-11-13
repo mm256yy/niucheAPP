@@ -66,7 +66,8 @@
 	    </view>
 		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
 		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
-		
+		<NotLogin></NotLogin>
+		<auth></auth>
      </view>
 </template>
 
@@ -74,6 +75,8 @@
 import {requiredRule,businessTypeRule} from '@/common/rule.js'
 import {mapGetters,mapActions} from 'vuex'
 import ChildPopup from '@/components/importCar.vue'
+import NotLogin from '@/components/notlogin/notlogin.vue'
+import auth from '@/components/auth.vue'
 
 export default {
   data(){
@@ -134,7 +137,11 @@ export default {
 		editId:''
 	}  
   },
-  components:{ChildPopup},
+  components:{
+	  ChildPopup,
+	  NotLogin,
+	  auth
+	  },
   onReady() {
        this.$refs.uForm.setRules(this.rules);
        this.$refs.uForm2.setRules(this.rules);

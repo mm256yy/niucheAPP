@@ -18,14 +18,14 @@
 		mounted() {
 			let isauthencation = uni.getStorageSync('isauthencation');
 			let token = uni.getStorageSync('token');
-			if(!isauthencation && token){
+			if(isauthencation == 0 && token){
 				this.showTips = true
 			}
 		},
 		methods:{
 			tipsConfirm(){
 				let role = uni.getStorageSync('role');
-				if (role === 2) {
+				if (role == 2) {
 					this.$u.route('/pages/company/identityAuth/identityAuth')
 				} else {
 					this.$u.route('/pages/driver/drivingLicense/drivingLicense')

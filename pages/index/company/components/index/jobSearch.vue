@@ -2,11 +2,11 @@
 	<view class="jobSearch">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="form.driverAgeKey" type="select" /></u-form-item>
+				<u-form-item style="width:240rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="driverAgeKey" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:180rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="form.typeBusinessKey" type="select" /></u-form-item>
+				<u-form-item style="width:240rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
+			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
@@ -107,7 +107,9 @@
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
 		        	pageSize: 10,
-					condition: this.form.driverAge ? 2:''
+					condition: this.form.driverAge ? 2:'',
+					orderByColumn: 'a.updateTime',
+					isAsc: 'desc'
 		        });
 		    		this.$u.api.askWork(params).then(res=>{
 		    			if(res.code === 200){
@@ -186,10 +188,12 @@
 		    confirm(arr){
 		    	this.form.driverAge = arr[0].value;
 		    	this.driverAgeKey = arr[0].label;
+				this.search()
 		    },
 		    confirmType(arr){
 		    	this.form.businessType = arr[0].value;
 		    	this.businessTypeKey = arr[0].label;
+				this.search()
 		    },
 			pull() {
 				let len = this.list.length;
@@ -212,9 +216,9 @@
 			padding: 40rpx;
 		}
 		.middle-content .u-form {
-			width: 621rpx;
+			width: 686rpx;
 			height: 71rpx;
-			border-radius: 40rpx 0 0 40rpx;
+			border-radius: 40rpx;
 			margin-left: 39rpx;
 			background-color: #CDE5E3;
 			margin-top: 30rpx;

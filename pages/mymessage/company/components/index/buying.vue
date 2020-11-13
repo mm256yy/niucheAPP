@@ -4,9 +4,9 @@
 			<u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:280rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="kmkey" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
+				<u-form-item style="width:240rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
+			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
 			<view class="clear"></view>
 			<u-select value-name='id' v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select value-name='value' v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select>
@@ -245,10 +245,12 @@
 		    confirm(arr){
 				this.form.km = arr[0].value;
 				this.kmkey = arr[0].label;
+				this.search()
 		    },
 			confirmPrice(arr){
 				this.form.packprice = arr[0].value;
 				this.packpricekey = arr[0].label;
+				this.search()
 			},
 			detail(id) {
 				this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:id})
@@ -274,9 +276,9 @@
 			padding: 40rpx;
 		}
 		.middle-content .u-form {
-			width: 621rpx;
+			width: 686rpx;
 			height: 71rpx;
-			border-radius: 40rpx 0 0 40rpx;
+			border-radius: 40rpx;
 			margin-left: 39rpx;
 			background-color: #CDE5E3;
 			margin-top: 30rpx;

@@ -21,13 +21,21 @@
 		<view style="text-align: center; padding: 5pt 20pt;margin-top: 10pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="setForm">下一步</u-button>
 		</view>
+		<NotLogin></NotLogin>
+		<auth></auth>
 	</view>
 </template>
 
 <script>
 	import {mapGetters,mapActions} from 'vuex'
-		import {action} from '@/utils/constant.js'
+	import {action} from '@/utils/constant.js'
+	import NotLogin from '@/components/notlogin/notlogin.vue'
+	import auth from '@/components/auth.vue'
 	export default {
+		components:{
+			NotLogin,
+			auth
+		},
 		data() {
 			return {
 				backTextStyle:{
