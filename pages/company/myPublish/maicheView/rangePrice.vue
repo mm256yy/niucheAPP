@@ -3,7 +3,7 @@
 		<view class="padding">
 			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx"
 			 inactive-color="#7f7f7f" activeColor="#40B36C" :tabs="tab" @change="change"></v-tabs>
-			 <view v-for="(item, index) in detail.pricesectionlist[0]" :key="index" class="" v-show="firstCurrent === index">
+			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
 			        <view class="year">车龄：≤{{item.rentCarTime}}</view>
 			    	<view class="distance">{{detail.carkm}}万公里</view>

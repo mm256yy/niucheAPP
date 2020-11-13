@@ -34,7 +34,7 @@
 					<u-form-item label="动力类型:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 </u-form>
 		 </view>
-		 <PubBottom :isOpen="detail.isOpen" :id="AskToShopId" :type="2"></PubBottom>
+		 <PubBottom :isopen="detail.isopen" :id="AskToShopId" :type="4"></PubBottom>
 	</view>
 </template>
 
@@ -53,6 +53,7 @@
 				AskToShopId: '',
 				detail: {},
 				comparyRefreshTimeStr: '',
+				isopen:0,
 				type:4
 			}
 		},

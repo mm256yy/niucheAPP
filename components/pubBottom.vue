@@ -8,13 +8,13 @@
 					<u-icon size="80" style="vertical-align: middle;" :name="delSrc" @click="delTips=true"></u-icon>
 				</view>
 				<view @click="opened">
-					{{isOpen === 0?'上架':'下架'}}
+					{{isopen === 1?'上架':'下架'}}
 				</view>
 		  </view>
 		</view>
 		<u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
-		        删除成功,点击我知道了,跳转到我的发布列表
+		        处理成功,点击我知道了,跳转到我的发布列表
 			</view>
 		</u-modal>
 		<u-modal v-model="delTips" title="提示" :show-cancel-button="true" @confirm="delConfirm">
@@ -39,8 +39,8 @@
 			id: {
 			  type: String,
 			},
-			isOpen:{
-				type:String,
+			isopen:{
+				// type:String,
 			},
 			type:{
 				type:Number,
@@ -53,8 +53,7 @@
 				});
 			},
 			delConfirm(){
-				let isopen = this.isopen === 0 ?1:0;
-				this.$u.api.MyIssueDelete({BusinessState:this.type,id:this.id,isopen:isopen}).then(res=>{
+				this.$u.api.MyIssueDelete({BusinessState:this.type,id:this.id}).then(res=>{
 					if(res.code === 200){
 						 this.showTips = true;
 					}else {
@@ -63,7 +62,8 @@
 				})
 			},
 			opened(){
-				this.$u.api.MyIssueHighLowLimit({BusinessState:this.type,id:this.id}).then(res=>{
+				let isopen = this.isopen === 0 ?1:0;
+				this.$u.api.MyIssueHighLowLimit({BusinessState:this.type,id:this.id,isopen:isopen}).then(res=>{
 					if(res.code === 200){
 						 this.showTips = true;
 					}else {

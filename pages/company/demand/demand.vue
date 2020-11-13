@@ -136,7 +136,7 @@
 						 this.form = data;
 						 this.radioType = data.businesstype=== '0'?'wycList':'czcList'
 						if (data.carmodel){
-							let carModel = data.carmodel.split(',');
+							let carModel = data.carmodel;
 							carModel.forEach(obj=>{
 								 this.modelList.forEach(item=>{
 									 if(item.name === obj){
@@ -144,10 +144,11 @@
 									 }
 								 })
 							})
+							console.log(this.modelList)
 						}
 						 let arr = []
-						if (data.carCard){
-							 let carCardList = data.intentionbrand.split(',');
+						if (data.intentionbrand){
+							 let carCardList = data.intentionbrand;
 							 carCardList.forEach(item=>{
 								 this.brandList.forEach(obj=>{
 									 if(obj.name === item){
@@ -164,7 +165,7 @@
 							})
 						}
 						if (data.power){
-							let power = data.power.split(',');
+							let power = data.power;
 							power.forEach(obj=>{
 								 this.powerList.forEach(item=>{
 									 if(item.name === obj){
@@ -173,16 +174,6 @@
 								 })
 							})
 					    }
-						// if (data.km){
-						// 	let power = data.power.split(',');
-						// 	power.forEach(obj=>{
-						// 		 this.powerList.forEach(item=>{
-						// 			 if(item.name === obj){
-						// 				item.checked = true;
-						// 			 }
-						// 		 })
-						// 	})
-						// }
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -206,11 +197,20 @@
 				}
 			},
 			toNext(){
-				// if (this.form.mainBusiness === ''){
-				// 	this.$u.toast('请选择业务类型');
-				// 	return
-				// }
-				this.$u.api.saveShoping(this.form).then(res=>{
+				if (this.form.id){
+					this.updateChange()
+				} else {
+					this.$u.api.saveShoping(this.form).then(res=>{
+						if(res.code === '200'){
+							this.showTips = true;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
+			updateChange(){
+				this.$u.api.ComparyAskToShopUpdate(this.form).then(res=>{
 					if(res.code === '200'){
 						this.showTips = true;
 					}else {

@@ -89,6 +89,7 @@ export default {
 		},
 		style:"color:#000000",
 		form:{
+			isOneclickAndAdd:2,
 			carbrand:'',
 			carmodel:'',
 			carxinghao:'',
@@ -185,6 +186,7 @@ export default {
 		 })
 	  },
 	  editSetStorage(data){
+		  this.form.isOneclickAndAdd = 1
 		  this.form.carbrand = data.carbrand;
 		  this.form.carmodel = data.carmodel;
 		  this.form.carxinghao = data.carxinghao;
@@ -198,6 +200,17 @@ export default {
 		  uni.setStorageSync('editId',data.tagid)
 		  uni.setStorageSync('carPubSecond',{SystemTag:data.systemok,UserTag:data.userok})
 			if (this.carPubType === 1) {
+				let carThree = {
+					yamoney:data.caryaprice,
+					rentCarPrice:[],
+				};
+				let arr = [];
+				data.rentAndSellPriceList.forEach(item=>{
+					arr.push({RentTime:item.rentCarTime,Rentprice:item.rentCarPrice})
+				})
+				 carThree.rentCarPrice = arr;
+				 uni.setStorageSync('carPubThree',carThree)
+			}else {
 				let sellCarPriceObj = {
 					sellCarPrice:[{
 							shoplow:'',shophigh:'',packprice:''
@@ -212,17 +225,6 @@ export default {
 					sellCarPriceObj.sellCarPrice = arr
 				}
 				 uni.setStorageSync('carPubThree',sellCarPriceObj)
-			}else {
-				let carThree = {
-					yamoney:data.caryaprice,
-					rentCarPrice:[],
-				};
-				let arr = [];
-				data.rentAndSellPriceList.forEach(item=>{
-					arr.push({RentTime:item.rentCarTime,Rentprice:item.rentCarPrice})
-				})
-				 carThree.rentCarPrice = arr;
-				 uni.setStorageSync('carPubThree',carThree)
 			}
 
 			uni.setStorageSync('carPubFour',{onephoto:data.onephoto,twophoto:data.twophoto,threephoto:data.threephoto,fourphoto:data.fourphoto})
@@ -236,18 +238,9 @@ export default {
 			uni.setStorageSync('carPubEight',objEight)
 	  },
 	 getChildId(item){
-		console.log(item)
-		let obj = item[0];
-		this.form.carbrand = obj.carBrand;
-		// this.selectObj.carbrand.forEach((item)=>{
-		// 	if(item.text = obj.carBrand) {
-		// 		this.getSelectFirst(item.id)
-		// 	}
-		// })
-		this.form.carmodel = obj.carModel;
-		this.form.carxinghao = obj.carxinghao;
-		this.form.cartype = obj.carType;
-	    this.form.power = obj.power;
+		 console.log(item)
+		this.editId = item[0].id;
+		this.editInit(this.editId)
 	},
 	setInfo(){
 		this.$u.api.getCarBrand({}).then(res=>{

@@ -156,7 +156,7 @@
 				    let Authorization ='Bearer '+ userInfo.token;
 					uni.setStorageSync('telephone', userInfo.telephone);
 					uni.setStorageSync('token', Authorization);
-					uni.setStorageSync('role', userInfo.role);
+					uni.setStorageSync('role', Number(userInfo.role));
 					uni.setStorageSync('isauthencation',userInfo.isauthencation)
 			},
 			change(index) {

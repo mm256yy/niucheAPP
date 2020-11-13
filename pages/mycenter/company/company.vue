@@ -16,7 +16,7 @@
 							<view v-if="companyStatus === 4">原因 {{reson}}</view>
 						</u-col>
 						<u-col span="1">
-							<u-icon name="arrow-right" color="#fff" size="30"></u-icon>
+							<u-icon name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>
 						</u-col>
 						
 						
@@ -110,6 +110,7 @@
 				otherObj:{
 					sc:'不可见',xx:'不可见',qz:'不可见'
 				},
+				token:''
 			}
 		},
 		mounted() {

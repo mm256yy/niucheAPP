@@ -32,7 +32,7 @@
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="220" :error-type="errorType" :border-bottom="false">
 				<u-form-item label="姓名" prop="name">
-					<u-input class="input-radius" v-model="form.name" :border="true" v-if="type"/>
+					<u-input class="input-radius" v-model="form.name" maxlength="10" :border="true" v-if="type"/>
 					<view v-else class="type-right">{{form.name}}</view>
 				</u-form-item>
 				<u-form-item label="性别" prop="sex">
@@ -48,7 +48,7 @@
 					<view class="type-right" v-show='!type'>{{form.brithday}}</view>
 				</u-form-item>
 				<u-form-item label="驾驶证号" prop="licenseNumber">
-					<u-input class="input-radius" v-model="form.licenseNumber" :border="true" v-if="type"/>
+					<u-input class="input-radius" v-model="form.licenseNumber" maxlength="18" type="number" :border="true" v-if="type"/>
 					<view class="type-right" v-else>{{form.licenseNumber}}</view>
 				</u-form-item>
 				<u-form-item label="初次领证" prop="username">
@@ -189,10 +189,6 @@
 			edit(){
 				this.type = true;
 			},
-			setPicToken(){
-				this.headerObj.Authorization = this.token;
-				this.formDataObj.phone = this.telephone;
-			},
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
@@ -209,26 +205,51 @@
 				})
 			},
 			dataChange(obj){
-				if (obj.year === this.today.year){
-					if (obj.month > this.today.month || obj.day > this.today.day){
+				if (obj.year == this.today.year){
+					if(obj.month>this.today.month){
 						this.$u.toast('选择日期大于当前日期')
 						return false
+					}else{
+						if (obj.day > this.today.day){
+							this.$u.toast('选择日期大于当前日期')
+							return false
+						}
 					}
 				}
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form[this.pickerName] = companyDate;
 			},
 			dataChangeEnd(obj){
-				if (obj.month < this.today.month || obj.day < this.today.day){
-					this.$u.toast('选择日期小于当前日期')
-					return false
+				if (obj.year == this.today.year){
+					if(obj.month<this.today.month){
+						this.$u.toast('选择日期小于当前日期')
+						return false
+					}else{
+						if (obj.day < this.today.day){
+							this.$u.toast('选择日期小于当前日期')
+							return false
+						}
+					}
 				}
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form.endTime = companyDate;
 			},
 			uploadChange(res,index,lists,name){
-				let data = res.data;
-				this.driverPhoto = data.text
+				if (res.code === 200){
+					let data = res.object;
+					this.form.name = data.name;
+					this.form.sex = data.sex === '男' ? '1':'0';
+					this.form.vehicleAge = data.clazz;
+					this.form.driverPhoto = data.imageuploadurl;
+					this.form.brithday = data.brithday;
+					this.form.licenseNumber = data.id;
+					this.form.issueDate = data.issue_date;
+					this.form.beginTime = data.valid_from;
+					this.form.endTime = data.valid_for;
+					console.log(data.birthday)
+				} else {
+					this.$u.toast(res.msg)
+				}
 			}
 		}
 	}

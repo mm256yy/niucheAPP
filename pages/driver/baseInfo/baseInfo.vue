@@ -28,8 +28,8 @@
 					<view v-else class="type-right">{{form.nickName}}</view>
 				</u-form-item>
 				<u-form-item label="手机号">
-					<u-input class="input-radius" v-model="telephone" :disabled="true" :border="true" v-if="type"/>
-					<view class="type-right" v-else>{{telephone}}</view>
+					<!-- <u-input class="input-radius" v-model="telephone" :disabled="true" :border="true" v-if="type"/> -->
+					<view class="type-right">{{telephone}}</view>
 				</u-form-item>
 				<u-form-item label="微信号" prop="wechatNum">
 					<u-input class="input-radius" v-model="form.wechatNum" :border="true" v-if="type"/>
@@ -110,7 +110,7 @@
 							this.fileList.push({url:data.headPhoto})
 						}
 						if (!data.nickName && !data.telephone){
-							this.type = true
+							this.type = fasle
 						} else{
 							this.form = data;
 						}

@@ -2,6 +2,7 @@
 		import {dirverPages,companyPages} from '@/utils/tabbar.js'
 	export default {
 		onLaunch: function() {
+			
 				let date = new Date();
 				let year = date.getFullYear();
 				let month = date.getMonth()+1;
@@ -16,7 +17,8 @@
 				   let token = uni.getStorageSync('token');
 				   if (token){
 					   let role = uni.getStorageSync('role');
-					   if (role === 2){
+					   console.log(role)
+					   if (role == 2){
 						  uni.navigateTo({
 						      url: '/pages/company/release/release'
 						  });
@@ -26,9 +28,14 @@
 						   });
 					   }
 				   } else {
-					   this.$u.toast("未登录不能发布信息，1.5秒后跳转我的页面")
+					   uni.switchTab({
+					       url: '/pages/mycenter/mycenter'
+					   });
+					   // this.$u.toast("未登录不能发布信息，1.5秒后跳转我的页面")
 					   setTimeout(function(){
-						   this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+						 uni.switchTab({
+						     url: '/pages/mycenter/mycenter'
+						 });
 					   },1500)
 				   }
 			})

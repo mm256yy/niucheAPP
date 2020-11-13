@@ -43,7 +43,7 @@
 			<view style="font-size: 10pt;">面试地址：浙江省杭州市江南大道3880号 华荣时代大厦 1806-2室</view>
 		  </scroll-view> 
 		</view>
-		 <PubBottom :isOpen="obj.isOpen" :id="inviteid" :type="2"></PubBottom>
+		 <PubBottom :isopen.sync="obj.isopen" :id="inviteid" :type="2"></PubBottom>
 	</view>
 </template>
 
