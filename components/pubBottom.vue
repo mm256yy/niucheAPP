@@ -40,7 +40,7 @@
 			  type: String,
 			},
 			isopen:{
-				type:String,
+				// type:String,
 			},
 			type:{
 				type:Number,

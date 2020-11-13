@@ -32,7 +32,7 @@
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="220" :error-type="errorType" :border-bottom="false">
 				<u-form-item label="姓名" prop="name">
-					<u-input class="input-radius" v-model="form.name" :border="true" v-if="type"/>
+					<u-input class="input-radius" v-model="form.name" maxlength="10" :border="true" v-if="type"/>
 					<view v-else class="type-right">{{form.name}}</view>
 				</u-form-item>
 				<u-form-item label="性别" prop="sex">
@@ -48,7 +48,7 @@
 					<view class="type-right" v-show='!type'>{{form.brithday}}</view>
 				</u-form-item>
 				<u-form-item label="驾驶证号" prop="licenseNumber">
-					<u-input class="input-radius" v-model="form.licenseNumber" :border="true" v-if="type"/>
+					<u-input class="input-radius" v-model="form.licenseNumber" maxlength="18" type="number" :border="true" v-if="type"/>
 					<view class="type-right" v-else>{{form.licenseNumber}}</view>
 				</u-form-item>
 				<u-form-item label="初次领证" prop="username">

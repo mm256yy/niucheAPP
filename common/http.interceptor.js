@@ -1,7 +1,7 @@
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	const config = {
-		baseUrl: 'http://161.189.168.218:9007',
+		// baseUrl: 'http://161.189.168.218:9007',
 		loadingText: '努力加载中~',
 		method: 'POST',
 		// 设置为json，返回后会对数据进行一次JSON.parse()

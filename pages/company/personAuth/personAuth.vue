@@ -16,7 +16,7 @@
 		</view>
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
-				<u-form-item label="姓名" prop="username"><u-input v-model="form.username" :border="true"/></u-form-item>
+				<u-form-item label="姓名" prop="username"><u-input maxlength="10" v-model="form.username" :border="true"/></u-form-item>
 				<u-form-item label="性别" prop="sex">
 				<u-radio-group v-model="form.sex" :active-color="'#6DD99C'" style="text-align: right;">
 					<u-radio name="0" style="margin-left: 10pt;">女</u-radio>
@@ -24,9 +24,9 @@
 				</u-radio-group>
 				</u-form-item>
 				<u-form-item label="出生日期" prop="birthday"><u-input v-model="form.birthday" :border="true" :disabled="true" @click="show = true" placeholder=""/><u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon></u-form-item>
-				<u-form-item label="身份证号" prop="idcardid"><u-input maxlength="24" v-model="form.idcardid" :border="true"/></u-form-item>
+				<u-form-item label="身份证号" prop="idcardid"><u-input maxlength="18" type="number" v-model="form.idcardid" :border="true"/></u-form-item>
 				<u-form-item label="手机号码" prop="telephone"><u-input type="number" maxlength="11" v-model="form.telephone" :border="true"/></u-form-item>
-				<u-form-item label="输入验证码" prop="identifyCode"><u-input v-model="form.identifyCode" type="number" maxlength="6" :border="true" />
+				<u-form-item label="输入验证码" prop="identifyCode"><u-input v-model="form.identifyCode" type="number" maxlength="4" :border="true" />
 				<u-button type="success" size="mini " shape='circle' @click="getCode" style="position: absolute;right: 10rpx;">{{codeTips}}</u-button>
 				</u-form-item>
 			</u-form>

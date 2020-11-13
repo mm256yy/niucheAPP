@@ -57,7 +57,7 @@ export default {
 		
 	}  
   },
-  mounted() {
+  onShow() {
 	  this.initStorage()
 	  let id = uni.getStorageSync('editId');
 	  if(id){

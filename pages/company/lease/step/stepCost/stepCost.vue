@@ -58,11 +58,14 @@ export default {
 	}  
   },
   mounted() {
-  	  this.initStorage()
-	  let id = uni.getStorageSync('editId');
-	  if(id){
-	  	this.form = this.carPubThree
-	  }
+  	  
+  },
+  onShow() {
+  	this.initStorage()
+  	let id = uni.getStorageSync('editId');
+  	if(id){
+  		this.form = this.carPubThree
+  	}
   },
   methods: {
 	  initStorage(){
@@ -80,6 +83,7 @@ export default {
 		 this.show = true;
 	 },
 	 addPriceObj(){
+		 console.log(this.form.rentCarPrice)
 		this.form.rentCarPrice.push({RentTime:'',Rentprice:''}) 
 	 },
 	 setForm(){

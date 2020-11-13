@@ -15,7 +15,7 @@
 							<view style="font-size: 14pt;">{{driverPub.name}}</view>
 							<text style="font-size: 12pt;">{{driverPub.telephone}}</text>
 						</u-col>
-						<u-col span="1">
+						<u-col span="1" @click="toMyInfo">
 							<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
 						</u-col>
 					</u-row>
