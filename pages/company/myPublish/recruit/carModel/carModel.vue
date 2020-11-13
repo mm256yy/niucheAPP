@@ -39,8 +39,6 @@
 
 <script>
 import ChildPopup from '@/components/importCar.vue'
-import NotLogin from '@/components/notlogin/notlogin.vue'
-import auth from '@/components/auth.vue'
 export default {
   data(){
 	return {
@@ -58,11 +56,6 @@ export default {
 	
 	}  
   },
-   components:{
-	   ChildPopup,
-	   NotLogin,
-	   auth
-   },
     onShow() {
 	   this.initStorage()
 	  let list = this.carPubUpload;
@@ -72,10 +65,10 @@ export default {
    },
   methods: {
 	initStorage(){
-		this.carPubUpload = uni.getStorageSync('carPubUpload');
+		this.carPubUpload = uni.getStorageSync('carPubUploadEdit');
 	},
 	setStorage(data){
-		uni.setStorageSync('carPubUpload', data);
+		uni.setStorageSync('carPubUploadEdit', data);
 	},
 	handleClick(){
 		this.$refs.importShow.importShow = true
@@ -94,10 +87,10 @@ export default {
 	},
 	toNext(){
 		this.setStorage(this.list)
-		this.$u.route('/pages/company/recruit/recruit')
+		this.$u.route('/pages/company/myPublish/recruit/recruit')
 	},
 	toNewCar(){
-		this.$u.route('/pages/company/recruit/carOther/carOther')
+		this.$u.route('/pages/company/myPublish/recruit/carOther/carOther')
 	}
   }
 }

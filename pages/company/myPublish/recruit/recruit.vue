@@ -43,24 +43,17 @@
 		        信息发布成功
 			</view>
 		</u-modal>
-		<NotLogin></NotLogin>
-		<auth></auth>
 	</view>
 </template>
 
 <script>
 	import {requiredRule} from '@/common/rule.js'
-	import NotLogin from '@/components/notlogin/notlogin.vue'
-	import auth from '@/components/auth.vue'
-export default {
-	components:{
-		NotLogin,
-		auth
-	},
+    export default {
 	data() {
 		return {
 			backTextStyle:{'color':'#ffffff'},
 			value:'',
+			id:'',
 			form:{
 				userid:'',
 				workname:'',
@@ -74,9 +67,6 @@ export default {
 			rules:{
 				userid:requiredRule,
 				workname:requiredRule,
-				lowmonthprice:requiredRule,
-				highmonthprice:requiredRule,
-				peoplenumber:requiredRule,
 				worktext:requiredRule,
 				AlreadHaveCarList:requiredRule
 			},
@@ -86,7 +76,6 @@ export default {
 				'message'
 			],
 			showTips:false,
-			telephone:'',
 			carPubUpload:{},
 			carPubPosition:{}
 			
@@ -95,20 +84,51 @@ export default {
 	onReady() {
 	    this.$refs.uForm.setRules(this.rules);
 	},
+	onLoad(option) {
+		let id = option.id;
+		this.id = id;
+	},
 	onShow() {
 		this.initStorage()
-		this.setInfo()	
-		
+		this.getInfo(this.id)
 	},
 	methods: {
  	  initStorage(){
-		this.carPubUpload = uni.getStorageSync('carPubUpload');
-		this.carPubPosition = uni.getStorageSync('carPubPosition');
-		this.telephone = uni.getStorageSync('telephone');
+		this.carPubUpload = uni.getStorageSync('carPubUploadEdit');
+		this.carPubPosition = uni.getStorageSync('carPubPositionEdit');
 	 },
 	 setStorage(data){
-		 uni.setStorageSync('carPubPosition', data);
+		 uni.setStorageSync('carPubPositionEdit', data);
 	 },
+	 getInfo(){
+		this.$u.api.ComparyInviteEchoText({inviteid:this.id}).then(res=>{
+			if(res.code === 200){
+				let id = uni.getStorageSync('inviteid',id)
+				if(id){
+					// uni.setStorageSync('inviteid',id)
+					// uni.setStorageSync('carPubPositionEdit',id)
+					// uni.setStorageSync('carPubUploadEdit',id)
+					this.form = res.object
+					if (carPubUpload){
+						let len = carPubUpload.length;
+						this.value= '已填加'+len+'辆';
+					}
+				} else{
+					let flag = uni.getStorageSync('inviteid');
+					 let carPubPosition = uni.getStorageSync('carPubPositionEdit');
+					 let carPubUpload = uni.getStorageSync('carPubUploadEdit');
+					if (carPubUpload){
+						let len = carPubUpload.length;
+						this.value= '已填加'+len+'辆';
+					}
+					this.form = carPubPosition
+				}
+
+			}else {
+				 this.$u.toast(res.msg);
+			}
+		}).catch(res=>{this.$u.toast(res.msg)})
+	},	
     setInfo(){
 		let pubUpload = this.carPubUpload;
 		let carPubPosition = this.carPubPosition;;
@@ -138,25 +158,27 @@ export default {
 	 },
 	 toCarModel(){
 		this.setStorage(this.form)
-		this.$u.route('/pages/company/recruit/carModel/carModel') 
+		this.$u.route('/pages/company/myPublish/recruit/carModel/carModel') 
 	 },
 	 saveStorage(){
-		  this.setStorage(this.form)
-		  this.$u.toast('草稿保存成功');
+		this.setStorage(this.form)
+		this.$u.toast('草稿保存成功');
 	 },
 	 saveForm(){
-			let obj = this.form;
-			this.$u.api.saveCompanyInvite(obj).then(res=>{
-				if(res.code === '200'){
-							this.showTips = true
-				}else {
-					 this.$u.toast(res.msg);
-				}
-			}).catch(res=>{this.$u.toast(res.msg)}) 
+		 let obj = this.form;
+		 this.$u.api.ComparyInviteAdd(obj).then(res=>{
+			if(res.code === '200'){
+				this.showTips = true
+			}else {
+				 this.$u.toast(res.msg);
+			}
+		 }).catch(res=>{this.$u.toast(res.msg)})
 	 },
 	 clearStorage(){
-		 uni.removeStorageSync('carPubUpload');
-		 uni.removeStorageSync('carPubPosition');
+		 uni.removeStorageSync('carPubUploadEdit');
+		 uni.removeStorageSync('carPubPositionEdit');
+		 uni.removeStorageSync('inviteid');
+		 uni.removeStorageSync('carPubType');
 	 },
 	 tipsConfirm(){
 		 this.clearStorage()
