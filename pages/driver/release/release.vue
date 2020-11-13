@@ -13,15 +13,17 @@
 			</view>
 		</view>
 		<NotLogin></NotLogin>
+		<auth></auth>
 	</view>
 </template>
 
 <script>
-	import {mapActions} from 'vuex'
 	import NotLogin from '@/components/notlogin/notlogin.vue'
+	import auth from '@/components/auth.vue'
 	export default {
 		components:{
-			NotLogin
+			NotLogin,
+			auth
 		},
 		data() {
 			return {
@@ -30,19 +32,7 @@
 				 }
 			}
 		},
-		mounted() {
-			this.setDay()
-		},
 		methods: {
-			...mapActions(['CARPUBTYPE','TODAY']),
-			setDay(){
-				let date = new Date();
-				let year = date.getFullYear();
-				let month = date.getMonth()+1;
-				let day = date.getDate();
-				let obj = {year:year,month:month,day:day};
-				this.TODAY(obj)
-			},
 			toPage(type){
 				if(type ===1 ){
 				   this.$u.route('/pages/driver/release/carRent')

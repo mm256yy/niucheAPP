@@ -2,14 +2,14 @@
 	<view class="carRent">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:200rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="priceid" type="select" /></u-form-item>
+				<u-form-item style="width:280rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="priceid" type="select" /></u-form-item>
 				<view class="line"></view>
-				<u-form-item style="width:160rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessType" type="select" /></u-form-item>
+				<u-form-item style="width:220rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessType" type="select" /></u-form-item>
 				<!-- <view class="line"></view> -->
 				<!-- <u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item> -->
 				<view class="clear"></view>
 			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
+			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
@@ -135,7 +135,6 @@
 			}else{
 				this.form.islogin = 0
 			}
-	        console.log(6)
 			this.search()
 		},
 		methods: {
@@ -250,10 +249,12 @@
 		    		this.form.startPriceid = '';
 		    		this.form.endPriceid = '';
 		    	}
+				this.search()
 		    },
 		    confirmType(arr){
 		    	this.businessType = arr[0].label;
 		    	this.form.businessType = arr[0].value;
+				this.search()
 		    },
 			pull() {
 				let len = this.list.length;
@@ -282,9 +283,9 @@
 			padding: 40rpx;
 		}
 		.middle-content .u-form {
-			width: 621rpx;
+			width: 686rpx;
 			height: 71rpx;
-			border-radius: 40rpx 0 0 40rpx;
+			border-radius: 40rpx;
 			border: 1rpx solid rgba(0,0,0,0.1);
 			margin-left: 39rpx;
 			margin-top: 30rpx;

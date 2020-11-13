@@ -36,12 +36,20 @@
 			</view>
 		</view>
 		<u-select v-model="show" :list="carmodel" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
+		<NotLogin></NotLogin>
+		<auth></auth>
      </view>
 </template>
 
 <script>
 	import {action} from '@/utils/constant.js'
+	import NotLogin from '@/components/notlogin/notlogin.vue'
+	import auth from '@/components/auth.vue'
 export default {
+	components:{
+		NotLogin,
+		auth
+	},
   data(){
 	return {
 		errorType:['message'],

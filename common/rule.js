@@ -39,7 +39,7 @@ message: '密码以字母开头，长度在6-18之间，只能包含字符、数
 export const requiredRule = [{
 	required: true, 
 	message: '请填写', 
-	trigger: ['blur'],
+	trigger: ['blur','change'],
 }];
 export const ruleMainBusiness= [
 	{

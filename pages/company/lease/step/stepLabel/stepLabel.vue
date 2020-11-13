@@ -38,11 +38,19 @@
 	  			“车辆特色标签”是指:用简短的文字描述车辆特色。例如“3厢5座”,"1.6T涡轮增压", "自动挡"等。您可自定义，也可选择系统推荐的标签。
 	  		</view>
 	  </u-modal>
+	  <NotLogin></NotLogin>
+	  <auth></auth>
     </view>
 </template>
 
 <script>
+	import NotLogin from '@/components/notlogin/notlogin.vue'
+	import auth from '@/components/auth.vue'
 export default {
+	components:{
+		NotLogin,
+		auth
+	},
   data(){
 	return {
 		backTextStyle:{'color':'#ffffff'},
