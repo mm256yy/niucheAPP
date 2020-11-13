@@ -43,7 +43,7 @@
 				</swiper-item>
 			</swiper>
 			<view class="more" @click="other()">上拉加载该公司其他信息</view>
-			<PubBottom :isOpen="detail.isOpen" :id="driverDemandId" :type="type"></PubBottom>
+			<PubBottom :isopen="detail.isopen" :id="driverDemandId" :type="type"></PubBottom>
 		</view>
 	</view>
 </template>
@@ -101,7 +101,7 @@
 						 this.arr =systemtag.concat(usertag);
 						 var text = [];
 						 if(data.pricesectionlist) {
-							 let list =  data.pricesectionlist[0];
+							 let list =  data.pricesectionlist;
 						    list.forEach(item=>{
 								console.log(item)
 									text.push(item.rentCarTime)		

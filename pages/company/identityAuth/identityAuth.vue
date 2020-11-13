@@ -6,7 +6,7 @@
 			<view class="top-content-base" style="font-size: 12pt;">营业执照照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" ref="uUpload" :action="action"  
+				<u-upload :custom-btn="true" ref="uUpload" :action="action" 
 				@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" 
 				max-count="2" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">

@@ -91,7 +91,7 @@
 				font-weight: 900;
 				color: #fff;
 				border-radius: 50%;
-				background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
+				background: linear-gradient(115deg, #37AB63, #6DD99C);
 				margin-left: 40rpx;
 				float: left;
 			}
