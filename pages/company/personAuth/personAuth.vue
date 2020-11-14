@@ -175,8 +175,8 @@
 						this.$u.toast('请输入手机号码');
 						return
 					}
-					this.$u.api.getPubSendMsg({phone:this.form.telephone}).then(res=>{			
-						 if (res.code === 1){
+					this.$u.api.getIdentifyCode({phone:this.form.telephone}).then(res=>{			
+						 if (res.code === 200){
 							uni.showLoading({
 								title: '正在获取验证码'
 							})

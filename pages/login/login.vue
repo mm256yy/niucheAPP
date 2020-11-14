@@ -191,7 +191,7 @@
 			getCode() {
 				if(this.$refs.uCode.canGetCode) {
 					this.$u.api.getIdentifyCode({phone:this.form.telephone}).then(res=>{			
-						 if (res.code === 1){
+						 if (res.code === 200){
 							uni.showLoading({
 								title: '正在获取验证码'
 							})

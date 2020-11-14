@@ -43,6 +43,7 @@
 			}
 		},
 		mounted() {
+			 this.list = [];
 			 this.getList(1)
 		},
 		methods: {
