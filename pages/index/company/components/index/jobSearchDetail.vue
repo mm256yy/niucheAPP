@@ -42,8 +42,8 @@
 			 			 v-model="form.myok" /></u-form-item>
 			 </u-form>
 		 </view>
-		 <view class="bottom" @click="recommend()">
-			 <view>向他推荐本公司招聘信息</view>
+		 <view class="bottom" @click="phone()">
+			 <view>拨打电话</view>
 		 </view>
 	</view>
 </template>
@@ -90,6 +90,9 @@
 			this.getDetail();
 		},
 		methods: {
+			phone() {
+				uni.makePhoneCall({ phoneNumber: '18748412671' });
+			},
 			getDetail(){
 				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){

@@ -28,7 +28,7 @@
 				<u-image class="img" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
 				<view class="car u-line-1"> {{item.carCard}}</view>
 				<view class="clear"></view>
-				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
+				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
 			</view>
 		</view>
 		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
@@ -120,7 +120,6 @@
 							 this.total = res.total;
 							 let arr = res.rows
 							 arr.forEach(item=>{
-							 	item.collectFlag = true;
 							 	this.list.push(item)
 							 })
 							 let len = this.list.length;
@@ -138,7 +137,6 @@
 								 }
 								
 							 })
-							 this.total= res.total;
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -172,7 +170,6 @@
 								 }
 							 								
 							 })
-							 this.total= res.total;
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -276,7 +273,7 @@
 		.list .right .name {
 			font-weight: 900;
 			font-size: 28rpx;
-			margin-top: 6rpx;
+			margin-top: 16rpx;
 		}
 		.list .right .time {
 			font-size: 16rpx;
