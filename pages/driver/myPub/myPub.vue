@@ -11,16 +11,16 @@
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
 					<view style="margin:10pt;background-color: #FFFFFF;" @click="toView(item)" v-for="item in zcList" :key="item.driverDemandId">
-						<view class="card-head" slot="head">
+						<view class="card-head">
 							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text><u-icon name="reload"
 							 @click="refresh(item)" color="#FE9B1C" size="28"></u-icon>
 						</view>
-						<view class="card-head"  slot="body" style="border-bottom: 0;">
+						<view class="card-head" style="border-bottom: 0;">
                            <text>意向品牌</text>
 								<u-subsection style="" :current="item.isOpen" @change="switchChange(item)"
 								 vibrateShort button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
 						</view>
-						<view  slot="foot" style="padding:5rpx 20rpx;">
+						<view  style="padding:5rpx 20rpx;">
 						<u-tag :text="obj" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"
 						 v-for="(obj,index) in item.carCardList" :key="index"/>
 						</view>
@@ -32,11 +32,11 @@
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomed">
 					<view style="margin:10pt;background-color: #FFFFFF;" @click="toView2(item)" v-for="item in qzList" :key="item.id">
-						<view class="card-head" slot="head">
+						<view class="card-head">
 							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
 							<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>
 						</view>
-						<view class="card-head"  slot="body" style="border-bottom: 0;">
+						<view class="card-head" style="border-bottom: 0;">
 							<view style="color: #000000;">
 								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
 								  <view class="u-line-2">工作车辆: {{item.carCards}}  </view>
@@ -93,8 +93,8 @@
 		onShow() {
 			this.zcList = [];
 			this.qzList = [];
-	           this.getList(1)
-			   this.getPageList(1)
+			this.getList(1)
+			this.getPageList(1)
 		},
 		methods: {
 			tabsChange(index) {
@@ -154,6 +154,7 @@
 					item.switchFlag = true;
 					this.qzList.push(item)
 				})
+				
 			},
 			setList(arr){
 				arr.forEach(item=>{
@@ -165,6 +166,7 @@
 					item.switchFlag = true;
 					this.zcList.push(item)
 				})
+				console.log(this.zcList)
 			},
 			timeZ(value){
 				let nowTime = new Date().getTime();
