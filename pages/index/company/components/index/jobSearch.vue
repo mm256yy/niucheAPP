@@ -116,7 +116,6 @@
 		    				 this.total= res.total;
 							 let arr = res.rows
 							 arr.forEach(item=>{
-							 	item.collectFlag = true;
 							 	this.list.push(item)
 							 })
 							 let len = this.list.length;

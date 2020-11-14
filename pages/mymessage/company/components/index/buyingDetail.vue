@@ -35,8 +35,8 @@
 			 </u-form>
 		 </view>
 
-		 <view class="bottom" @click="recommend()">
-		 			 <view>向他推荐本公司卖车信息</view>
+		 <view class="bottom" @click="phone()">
+		 	<view>拨打电话</view>
 		 </view>
 	</view>
 </template>
@@ -63,7 +63,10 @@
 			this.getDetail()
 		},
 		methods: {
-		format(time, format) {
+			phone() {
+				uni.makePhoneCall({ phoneNumber: '18748412671' });
+			},
+		    format(time, format) {
 			            var t = new Date(time);
 			            var tf = function(i) {
 			                return (i < 10 ? '0' : '') + i

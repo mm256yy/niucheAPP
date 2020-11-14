@@ -46,8 +46,8 @@
 			 			input-align="right" v-model="form.power" /></u-form-item>
 			  </u-form>
 		 </view>
-		 <view class="bottom" @click="recommend()">
-			 <view>向他推荐本公司租车信息</view>
+		 <view class="bottom" @click="phone()">
+			 <view>拨打电话</view>
 		 </view>
 	</view>
 </template>
@@ -94,8 +94,8 @@
 			this.getDetail();
 		},
 		methods: {
-		    recommend() {
-				this.$u.route("/pages/index/company/components/index/carRentRecommend")
+		    phone() {
+				uni.makePhoneCall({ phoneNumber: '18748412671' });
 			},
 			getDetail(){
 				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{

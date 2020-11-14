@@ -24,6 +24,7 @@
 		 		<u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 		 	</view>
 		 </view>
+		 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
 </template>
 
@@ -39,6 +40,13 @@
 				pagination: {
 				  pageNum: 1, 
 				  pageSize: 10
+				},
+				status: 'loadmore',
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
 				}
 			}
 		},
@@ -49,7 +57,7 @@
 			}
 		},
 		mounted() {
-			this.getDetail()
+			this.getList()
 		},
 		methods: {
 			favorites(item,id) {
@@ -84,14 +92,22 @@
 			    	}
 			    })
 			},
-		    getDetail(){
+		    getList(){
 		        const params = {
-		    		id: this.id
+		    		id: this.id,
+					pageNum: 1,
+					pageSize: 10
 		    	}
 		    		this.$u.api.detailOtherSelling(params).then(res=>{
 		    			if(res.code === 200){
-		    				 this.list = res.rows;
+							 this.list = res.rows
 							 this.total = res.total;
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
 							 this.list.forEach(item=>{
 							    if(item.systemok){
 							        if(item.systemok.length > 2) {
@@ -111,11 +127,51 @@
 		    			}
 		    		})
 		    },
+			getPage(){
+			    const params = {
+					id: this.id,
+					pageNum: this.pagination.pageNum + 1,
+					pageSize: 10
+				}
+					this.$u.api.detailOtherSelling(params).then(res=>{
+						if(res.code === 200){
+							 this.total = res.total;
+							 let arr = res.rows
+							 arr.forEach(item=>{
+							 	this.list.push(item)
+							 })
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
+							 this.list.forEach(item=>{
+							    if(item.systemok){
+							        if(item.systemok.length > 2) {
+							        	item.systemok = item.systemok.slice(0,2); 
+							        }else if(item.systemok.length <= 2){
+							        	if(item.userok) {
+							        		const arr = item.systemok.concat(item.userok);
+							        		if(arr.length > 2) {
+							        			item.systemok = arr.slice(0,2);
+							        		}						 											 
+							        	}
+							        } 
+							    }						
+							 })
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
 			pull() {
 				let len = this.list.length;
 				 if (len < this.total){
-					 this.getList()
-				 }
+					 this.getPage()
+				 }else{
+					this.status = 'nomore'
+				}
 			},
 			detail(id) {
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})

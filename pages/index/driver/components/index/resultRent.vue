@@ -83,9 +83,6 @@
 			}
 			this.search()
 		},
-		mounted() {
-			this.getList()
-		},
 		methods: {
 		  favorites(item,id) {
 		  	const params = {
@@ -127,8 +124,17 @@
 		      });
 		  		this.$u.api.homeRent(params).then(res=>{
 		  			if(res.code === 200){
-		  				 this.list = res.rows;
 		  				 this.total= res.total;
+						 let arr = res.rows
+						 arr.forEach(item=>{
+						 	this.list.push(item)
+						 })
+						 let len = this.list.length;
+						 if(len<this.total){
+						 	this.status = 'loadmore'
+						 } else{
+						 	this.status = 'nomore'
+						 }
 		  				 this.list.forEach(item=>{
 		  				 	if(item.systemtag.length > 2) {
 		  				 		item.systemtag = item.systemtag.slice(0,2); 
@@ -157,6 +163,12 @@
 		  			if(res.code === 200){
 		  				 this.list = res.rows;
 		  				 this.total = res.total;
+						 let len = this.list.length;
+						 if(len<this.total){
+						 	this.status = 'loadmore'
+						 } else{
+						 	this.status = 'nomore'
+						 }
 		  				 this.list.forEach(item=>{
 		  				 	if(item.systemtag.length > 2) {
 		  				 		item.systemtag = item.systemtag.slice(0,2); 

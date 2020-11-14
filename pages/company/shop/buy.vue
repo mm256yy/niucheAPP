@@ -45,12 +45,6 @@
 				}
 			}
 		},
-		props: {
-			id: {
-			    type: String,
-			    default: ''
-			}
-		},
 		mounted() {
 			this.getList()
 		},
@@ -87,13 +81,41 @@
 			    	}
 			    })
 			},
+			getPage(){
+				const params = {
+					pageNum: this.pagination.pageNum + 1,
+					pageSize: 10
+				}
+					this.$u.api.ComparyMyAskToShopList(params).then(res=>{
+						if(res.code === 200){
+							 this.total= res.total;
+							 let arr = res.rows
+							 arr.forEach(item=>{
+							 	this.list.push(item)
+							 })
+							 let len = this.list.length;
+							 if(len<this.total){
+							 	this.status = 'loadmore'
+							 } else{
+							 	this.status = 'nomore'
+							 }
+							 this.list.forEach(item=>{
+							 	if (item.refreshtime){
+							 		item.refreshtimeStr = this.timeZ(item.refreshtime)
+							 	}
+							 								
+							 })
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
 		    getList(){
 		        const params = {
-		    		id: this.id,
-					pageNum: 1,
-					pageSize: 10
+		    		pageNum: 1,
+		    		pageSize: 10
 		    	}
-		    		this.$u.api.detailOtherBuy(params).then(res=>{
+		    		this.$u.api.ComparyMyAskToShopList(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
@@ -115,37 +137,6 @@
 		    			}
 		    		})
 		    },
-			getPage(){
-			    const params = {
-					id: this.id,
-					pageNum: this.pagination.pageNum + 1,
-					pageSize: 10
-				}
-					this.$u.api.detailOtherBuy(params).then(res=>{
-						if(res.code === 200){
-							 this.total= res.total;
-							 let arr = res.rows
-							 arr.forEach(item=>{
-							 	this.list.push(item)
-							 })
-							 let len = this.list.length;
-							 if(len<this.total){
-							 	this.status = 'loadmore'
-							 } else{
-							 	this.status = 'nomore'
-							 }
-							 this.list.forEach(item=>{
-							 	if (item.refreshtime){
-									let date = new Date(item.refreshtime)
-							 		item.refreshtimeStr = this.timeZ(date.getTime())
-							 	}
-							 								
-							 })
-						}else {
-							 this.$u.toast(res.msg);
-						}
-					})
-			},
 			timeZ(value){
 				let nowTime = new Date().getTime();
 				let oneDay= 86400000;
