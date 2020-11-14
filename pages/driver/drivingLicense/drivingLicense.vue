@@ -41,11 +41,11 @@
 					</u-radio-group>
 					<view class="type-right" v-else>{{form.sex === '0' ? "女":"男"}}</view>
 				</u-form-item>
-				<u-form-item label="出生日期" prop="brithday">
-					<u-input v-model="form.brithday" :border="true" v-show='type'
-					 class="input-radius" :disabled="true" @click="showPicker('brithday')" placeholder=""/>
+				<u-form-item label="出生日期" prop="birthday">
+					<u-input v-model="form.birthday" :border="true" v-show='type'
+					 class="input-radius" :disabled="true" @click="showPicker('birthday')" placeholder=""/>
 					<u-icon class="iconAbs" v-show='type' name="calendar" color="#FFA032" size="40"></u-icon>
-					<view class="type-right" v-show='!type'>{{form.brithday}}</view>
+					<view class="type-right" v-show='!type'>{{form.birthday}}</view>
 				</u-form-item>
 				<u-form-item label="驾驶证号" prop="licenseNumber">
 					<u-input class="input-radius" v-model="form.licenseNumber" maxlength="18" type="number" :border="true" v-if="type"/>
@@ -110,7 +110,7 @@
 				form: {
 					name:'',
 					sex: '',
-					brithday:'',
+					birthday:'',
 					licenseNumber:'',
 					issueDate:'',
 					beginTime:'',
@@ -121,7 +121,7 @@
 				rules: {
 					name:requiredRule,
 					sex:requiredRule,
-					brithday:requiredRule,
+					birthday:requiredRule,
 					licenseNumber:requiredRule,
 					issueDate:requiredRule,
 					beginTime:requiredRule,
@@ -254,12 +254,11 @@
 					this.form.sex = data.sex === '男' ? '1':'0';
 					this.form.vehicleAge = data.clazz;
 					this.form.driverPhoto = data.imageuploadurl;
-					this.form.brithday = data.brithday;
 					this.form.licenseNumber = data.id;
 					this.form.issueDate = data.issue_date;
 					this.form.beginTime = data.valid_from;
 					this.form.endTime = data.valid_for;
-					console.log(data.birthday)
+					this.form.birthday = data.birthday;
 				} else {
 					this.$u.toast(res.msg)
 				}
