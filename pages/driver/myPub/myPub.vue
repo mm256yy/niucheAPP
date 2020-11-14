@@ -246,11 +246,13 @@
 		},
 	}
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss">
 	page{
 		background-color:#f5f5f8 ;
 	}
+</style>
+<style lang="scss" scoped>
+
 .driver-content{
 	.u-tabs{
 		background: linear-gradient(115deg,$bg-grad-FE, $bg-grad-FCD);
