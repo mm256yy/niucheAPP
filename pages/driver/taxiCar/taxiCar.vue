@@ -100,7 +100,7 @@
 				fileList: [],
 				radioList:[{name:'0',text:'女'},{name:'1',text:'男'}],
 				form: {
-					type:1,
+					type:2,
 					name:'',
 					sex: '',
 					licenseNumber:'',
@@ -141,12 +141,26 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-			this.today = uni.getStorageSync('today');
-		  this.getInfo()
+			let today = uni.getStorageSync('today');
+			if(today){
+				this.today = today
+			} else{
+				this.initDate()
+			}
+			this.getInfo()
 		},
 		methods: {
+			initDate(){
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let obj = {year:year,month:month,day:day};
+				uni.setStorage('today',obj)
+				this.today = obj;
+			},
 			getInfo(){
-				this.$u.api.listDrivingLicense({state:1}).then(res => {
+				this.$u.api.listDrivingLicense({state:2}).then(res => {
 					if(res.code === 200){
 						let data = res.object;
 						this.form =data;
@@ -184,7 +198,6 @@
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
-						this.form.state = 1;
 						this.$u.api.addDrivingLicense(this.form).then(res => {
 							if(res.code === 200){
 								this.showTips =true;

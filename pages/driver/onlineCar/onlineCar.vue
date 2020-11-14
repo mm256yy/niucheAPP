@@ -76,7 +76,7 @@
 			<u-picker v-model="showEnd" mode="time" :start-year="today.year" :params="params" @confirm="dataChangeEnd"></u-picker>
 		</view>
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
-			<u-button type="success" shape='circle' class="btn-orange" @click="toNext">提交</u-button>
+			<u-button type="warning" shape='circle' class="btn-orange" @click="toNext">提交</u-button>
 		</view>
 		<u-modal v-model="showTips" @confirm="confirm" confirm-text="我知道了">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
@@ -101,7 +101,7 @@
 				fileList: [],
 				radioList:[{name:'0',text:'女'},{name:'1',text:'男'}],
 				form: {
-					type:2,
+					type:1,//网约车1 出租车2 驾照0
 					name:'',
 					sex: '',
 					licenseNumber:'',
@@ -141,13 +141,27 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
-		mounted() {
-			this.today = uni.getStorageSync('today');
-		   this.getInfo()
+		onShow() {
+            let today = uni.getStorageSync('today');
+			if(today){
+				this.today = today
+			} else{
+				this.initDate()
+			}
+			this.getInfo()
 		},
 		methods: {
+			initDate(){
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let obj = {year:year,month:month,day:day};
+				uni.setStorage('today',obj)
+				this.today = obj;
+			},
 			getInfo(){
-				this.$u.api.listDrivingLicense({state:2}).then(res => {
+				this.$u.api.listDrivingLicense({state:1}).then(res => {
 					if(res.code === 200){
 					let data = res.object;
 						this.form =data;
@@ -167,7 +181,7 @@
 							this.reason = "* 信息已提交，在审核期间本页内容不能修改。"
 						}
 					 } else{
-						this.$u.toast(res.msg) 
+						// this.$u.toast(res.msg) 
 					 }
 				}).catch(res=>{this.$u.toast(res.msg)})
 			},

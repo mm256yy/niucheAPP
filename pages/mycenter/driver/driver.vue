@@ -191,7 +191,8 @@
 				} else {
 					if(this.driverPub.certificationType === 1){
 						this.$u.route("/pages/driver/onlineCar/onlineCar")
-					} else {
+					}
+					if(this.driverPub.certificationType === 2){
 						this.$u.route("/pages/driver/taxiCar/taxiCar")
 					}
 

@@ -149,11 +149,24 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-			this.today = uni.getStorageSync('today');
-	      // this.setPicToken()
+			let today = uni.getStorageSync('today');
+			if(today){
+				this.today = today
+			} else{
+				this.initDate()
+			}
 		  this.getInfo()
 		},
 		methods: {
+			initDate(){
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let obj = {year:year,month:month,day:day};
+				uni.setStorage('today',obj)
+				this.today = obj;
+			},
 			getInfo(){
 				this.$u.api.listDrivingLicense({state:0}).then(res => {
 					if(res.code === 200){
