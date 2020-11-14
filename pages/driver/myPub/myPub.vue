@@ -1,7 +1,8 @@
 <template>
 	<view :class="'driver-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回" :back-text-style="backTextStyle"  back-icon-size="0" title="我的发布" 
+		:background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -60,6 +61,9 @@
 	export default {
 		data() {
 			return {
+				backTextStyle:{
+					'color':'#ffffff'
+				},
 				list: [{
 					name: '我的租车'
 				}, {
