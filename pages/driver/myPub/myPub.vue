@@ -90,7 +90,9 @@
 			 this.swiperCurrent = index;	
 			}
 		},
-		mounted() {
+		onShow() {
+			this.zcList = [];
+			this.qzList = [];
 	           this.getList(1)
 			   this.getPageList(1)
 		},
@@ -109,20 +111,34 @@
 				this.current = current;
 			},
 			getList(pageNum){
+				this.status = 'loading';
 				this.$u.api.listUserWanted({pageNum:pageNum,pageSize:10,orderByColumn:'updateTime',isAsc:'desc'}).then(res=>{
 					if(res.code === 200){
 						this.total = res.total
 						this.setList(res.rows);
+						let len = res.rows.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
 			getPageList(pageNum){
+				this.status1 = 'loading';
 				this.$u.api.listUserJobWanted({pageNum:pageNum,pageSize:10,orderByColumn:'updateTime',isAsc:'desc'}).then(res=>{
 					if(res.code === 200){
 						this.total1 = res.total
 						this.setPageList(res.rows);
+						let len = res.rows.length;
+						if(len<this.total1){
+							this.status1 = 'loadmore'
+						} else{
+							this.status1 = 'nomore'
+						}
 					}else {
 						 this.$u.toast(res.msg);
 					}

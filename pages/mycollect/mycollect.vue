@@ -34,7 +34,9 @@ export default {
 			})
 		}
 		if(token){
-			this.$refs.collectRef.init()
+			if(this.$refs.collectRef !=undefined){
+				this.$refs.collectRef.init()
+			}
 		}
 	},
 	data() {
