@@ -157,7 +157,7 @@
 					uni.setStorageSync('telephone', userInfo.telephone);
 					uni.setStorageSync('token', Authorization);
 					uni.setStorageSync('role', Number(userInfo.role));
-					uni.setStorageSync('isauthencation',userInfo.isauthencation)
+					uni.setStorageSync('isauthencation',Number(userInfo.isauthencation))
 			},
 			change(index) {
 				this.current = index;

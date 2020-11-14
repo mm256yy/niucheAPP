@@ -196,18 +196,31 @@
 				})
 			},
 			dataChange(obj){
-				console.log(obj)
-				if (obj.month > this.today.month || obj.day > this.today.day){
-					this.$u.toast('选择日期大于当前日期')
-					return false
+				if (obj.year == this.today.year){
+					if(obj.month>this.today.month){
+						this.$u.toast('选择日期大于当前日期')
+						return false
+					}else{
+						if (obj.day > this.today.day){
+							this.$u.toast('选择日期大于当前日期')
+							return false
+						}
+					}
 				}
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form[this.pickerName] = companyDate;
 			},
 			dataChangeEnd(obj){
-				if (obj.month < this.today.month || obj.day < this.today.day){
-					this.$u.toast('选择日期小于当前日期')
-					return false
+				if (obj.year == this.today.year){
+					if(obj.month<this.today.month){
+						this.$u.toast('选择日期小于当前日期')
+						return false
+					}else{
+						if (obj.day < this.today.day){
+							this.$u.toast('选择日期小于当前日期')
+							return false
+						}
+					}
 				}
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form.endTime = companyDate;
