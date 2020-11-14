@@ -190,7 +190,7 @@
 			// 获取验证码
 			getCode() {
 				if(this.$refs.uCode.canGetCode) {
-					this.$u.api.getIdentifyCode({phone:this.form.telephone}).then(res=>{			
+					this.$u.api.getIdentifyCode({phone:this.form.telephone,codeType:'verificationCode'}).then(res=>{			
 						 if (res.code === 200){
 							uni.showLoading({
 								title: '正在获取验证码'

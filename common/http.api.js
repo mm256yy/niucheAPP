@@ -2,7 +2,7 @@ const install  = (Vue, vm) => {
 	//获取手机号
 	const getTelephone = (params = {}) => vm.$u.get("/user/carparamter/getphone", {});
 	//获取验证码
-	const getIdentifyCode = (params = {}) => vm.$u.get("/user/carparamter/sendnode", params);
+	const getIdentifyCode = (params = {}) => vm.$u.post("/sys/upload/sendSms?codeType="+params.codeType+"&phone="+params.phone, params);
 	//获取验证码
 	const getPubSendMsg = (params = {}) => vm.$u.get("/user/carparamter/PubSendMsg", params);
 	//获取UUID

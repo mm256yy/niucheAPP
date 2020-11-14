@@ -42,10 +42,10 @@
 				</u-checkbox-group>
 			</u-form-item> -->
 			<!-- <view class="more">*以下为加分项，可以不设置。</view> -->
-			<u-form-item label="工作经验" label-position="top" prop="workexperience">
+			<u-form-item label="网约车工作年限" label-position="top" prop="workexperience">
 				<u-input type="number" style="width: 607rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入网约车工作年限,单位不用输入" v-model="form.workexperience" />年
 			</u-form-item>
-			<u-form-item label="" label-position="top" prop="taxiExperience">
+			<u-form-item label="租车工作年限" label-position="top" prop="taxiExperience">
 				<u-input type="number" style="width: 607rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入出租车工作年限,单位不用输入" v-model="form.taxiExperience" />年
 			</u-form-item>
 			<u-form-item label="福利要求" label-position="top">
