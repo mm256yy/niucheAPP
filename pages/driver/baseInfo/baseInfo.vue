@@ -110,7 +110,7 @@
 							this.fileList.push({url:data.headPhoto})
 						}
 						if (!data.nickName && !data.telephone){
-							this.type = fasle
+							this.type = false
 						} else{
 							this.form = data;
 						}
@@ -145,10 +145,13 @@
 			loginOut(){
 				this.$u.api.logout({}).then(res=>{
 					if (res.code === 200){
-						this.$u.toast(res.msg) 
-						uni.clearStorage();
-						uni.setStorageSync('curThemeType','driver')
-						this.$u.route('/pages/login/login',{type:'reLaunch'});
+						this.$u.toast(res.msg);
+						uni.removeStorageSync('telephone');
+						uni.removeStorageSync('token');
+						uni.removeStorageSync('isauthencation');
+						uni.reLaunch({
+						    url: '/pages/login/login'
+						})
 					}
 				})
 			},
