@@ -4,20 +4,24 @@
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" style="margin-bottom: 20pt;">
 		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
-		   <view @click="toNewCar" style="padding:10pt 10pt;">
+		   <view @click="toCar" style="padding:10pt 10pt;">
 		   	<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon>
 		   	<text style="vertical-align: top;">添加新车辆</text>
 		   </view>
 			<u-card :show-head="false" v-for="(item,index) in list" :key="index">
 				<view style="position: relative;" slot="body">
 					<view class="u-flex">
-					 <image :src="item.carModelPhoto" class="card-img"></image>
+					 <image :src="item.carModelPhoto" class="card-img" v-show="item.carModelPhoto"></image>
+					 <image :src="item.carnameplatephoto" class="card-img" v-show="item.carnameplatephoto"></image>
 					 <view class="u-line-2 card-title">
 						 <view class="">
 						 	 {{item.carBrand}} {{item.carModel}} {{item.carxinghao}}
 						 </view>
 						 <view>
 						 	 {{item.CarBrand}} {{item.CarModel}} {{item.CarXilie}}
+						 </view>
+						 <view>
+						 	 {{item.carbrand}} {{item.carmodel}}
 						 </view>
 					 </view>
 					</view>
@@ -32,14 +36,15 @@
 			</view>
 		</view>
 		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
-		<NotLogin></NotLogin>
-		<auth></auth>
      </view>
 </template>
 
 <script>
 import ChildPopup from '@/components/importCar.vue'
 export default {
+	components:{
+		ChildPopup
+	},
   data(){
 	return {
 		errorType:[
@@ -61,6 +66,7 @@ export default {
 	  let list = this.carPubUpload;
   	  if(list){
 		 this.list = list
+		 console.log(this.list)
 	  }
    },
   methods: {
@@ -82,15 +88,22 @@ export default {
         this.setStorage(this.list)
 	},
 	delList(index){
+		let id = this.list[index].id;
+		let shanchuList = uni.getStorageSync('shanchuList') || [];
+		if(id){
+			shanchuList.push(id)
+		}
+	   uni.setStorageSync('shanchuList',shanchuList)
 	   this.list.splice(index,1)
-	   this.setStorage(this.list)	  
+	   this.setStorage(this.list)
+	  
 	},
 	toNext(){
 		this.setStorage(this.list)
-		this.$u.route('/pages/company/myPublish/recruit/recruit')
+		this.$u.route('/pages/company/myPublish/recruitEdit/index')
 	},
-	toNewCar(){
-		this.$u.route('/pages/company/myPublish/recruit/carOther/carOther')
+	toCar(){
+		this.$u.route('/pages/company/myPublish/recruitEdit/other')
 	}
   }
 }

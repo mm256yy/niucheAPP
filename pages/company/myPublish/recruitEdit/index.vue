@@ -33,14 +33,14 @@
 	   </view>
 	   <view class="fixed-btn">
 	   	<view class=" btn-inline">
-			<u-button type="success" class="btn-agree" style="width: 50%;" @click="saveStorage">保存草稿</u-button>
-			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toSubmit">提交审核</u-button>	
+			<!-- <u-button type="success" class="btn-agree" style="width: 50%;" @click="saveStorage">保存草稿</u-button> -->
+			<u-button type="success" class="btn-agree" style="width: 100%;" @click="toSubmit">提交审核</u-button>	
 	   	</view>
 	   </view>
 		<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
 		<u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
-		        信息发布成功
+		        信息修改成功
 			</view>
 		</u-modal>
 	</view>
@@ -61,8 +61,6 @@
 				highmonthprice:'',
 				peoplenumber:'',
 				worktext:'',
-				AlreadHaveCarList:[],
-				comparyInviteInsertCarVoList:[]
 			},
 			rules:{
 				userid:requiredRule,
@@ -87,86 +85,105 @@
 	onLoad(option) {
 		let id = option.id;
 		this.id = id;
+		uni.setStorageSync('inviteid',id)
 	},
 	onShow() {
 		this.initStorage()
-		this.getInfo(this.id)
+		this.getInfo()
 	},
 	methods: {
  	  initStorage(){
 		this.carPubUpload = uni.getStorageSync('carPubUploadEdit');
 		this.carPubPosition = uni.getStorageSync('carPubPositionEdit');
+		
 	 },
 	 setStorage(data){
 		 uni.setStorageSync('carPubPositionEdit', data);
 	 },
 	 getInfo(){
-		this.$u.api.ComparyInviteEchoText({inviteid:this.id}).then(res=>{
-			if(res.code === 200){
-				let id = uni.getStorageSync('inviteid',id)
-				if(id){
-					// uni.setStorageSync('inviteid',id)
-					// uni.setStorageSync('carPubPositionEdit',id)
-					// uni.setStorageSync('carPubUploadEdit',id)
-					this.form = res.object
-					let len = res.object.carTagOneClickResultVos.length;
-				     uni.setStorageSync('carPubUploadEdit', res.object.carTagOneClickResultVos);
-				      this.form = res.object;
-                       this.value= '已填加'+len+'辆';
-				} else{
-					let flag = uni.getStorageSync('inviteid');
-					 let carPubPosition = uni.getStorageSync('carPubPositionEdit');
-					 let carPubUpload = uni.getStorageSync('carPubUploadEdit');
-					if (carPubUpload){
-						let len = carPubUpload.length;
-						this.value= '已填加'+len+'辆';
-					}
-					this.form = carPubPosition
-				}
-
-			}else {
-				 this.$u.toast(res.msg);
+		 let id = this.id;
+		 if(id){
+			 this.$u.api.ComparyInviteEchoText({inviteid:id}).then(res=>{
+			 	if(res.code === 200){
+					    let data = res.object
+			 			this.form = data;
+						let yuanyouList =data.carTagOneClickResultVos.concat(data.listDoList);
+						console.log(yuanyouList)
+			 			let len = yuanyouList.length;
+						let arr = [];
+						yuanyouList.forEach(item=>{
+							arr.push(item.id)
+						})
+						uni.setStorageSync('yuanyouIdlist',arr)
+			 		    uni.setStorageSync('carPubUploadEdit', yuanyouList);
+						this.setStorage(res.object)
+			            this.value= '已填加'+len+'辆';
+			 	}else {
+			 		 this.$u.toast(res.msg);
+			 	}
+			 }).catch(res=>{this.$u.toast(res.msg)}) 
+			 
+		 } else {
+			 let carPubPosition = uni.getStorageSync('carPubPositionEdit');
+			 let carPubUpload = uni.getStorageSync('carPubUploadEdit');
+			 if (carPubUpload){
+				let len = carPubUpload.length;
+				this.value= '已填加'+len+'辆';
 			}
-		}).catch(res=>{this.$u.toast(res.msg)})
-	},	
-    setInfo(){
-		let pubUpload = this.carPubUpload;
-		let carPubPosition = this.carPubPosition;;
-		if (carPubPosition){
-			this.form = carPubPosition;
-		}
-			this.form.userid = this.telephone;
-		if (pubUpload){
-			let len = pubUpload.length;
-			this.value= '已填加'+len+'辆';
-			this.form.AlreadHaveCarList = [];
-			this.form.comparyInviteInsertCarVoList = [];
-			pubUpload.forEach((item)=>{
-				if (item.id){
-					this.form.AlreadHaveCarList.push(item.id)
-				} else {
-					this.form.comparyInviteInsertCarVoList.push(item)
-				}
-			})
-		} else{
-			this.value = ''
-		}
-	},	
+			this.form = carPubPosition
+		 }
+		
+	},		
 	 actionSheetCallback(index) {
 		let value = this.list[index].text;
 		this.form.workname = value
 	 },
 	 toCarModel(){
 		this.setStorage(this.form)
-		this.$u.route('/pages/company/myPublish/recruit/carModel/carModel') 
+		this.$u.route('/pages/company/myPublish/recruitEdit/list') 
 	 },
 	 saveStorage(){
 		this.setStorage(this.form)
-		this.$u.toast('草稿保存成功');
 	 },
 	 saveForm(){
 		 let obj = this.form;
-		 this.$u.api.ComparyInviteAdd(obj).then(res=>{
+		 let yuanlou = uni.getStorageSync('yuanyouIdlist');//初始化获取idlist
+		 let carPubUpload = uni.getStorageSync('carPubUploadEdit');//列表页面list
+		 let shanchuList = uni.getStorageSync('shanchuList');//删除idList
+		 let idList = [];//一键导入未删除的list
+		  let addCarInviteState = []; //新增idlist
+		 carPubUpload.forEach(item=>{
+				if (item.id){
+					 idList.push(item.id)
+				} else {
+					addCarInviteState.push(item)
+				}
+		 })
+		 let cancelCarInviteState= []; //取消的idlist
+		 yuanlou.forEach(item=>{
+			 shanchuList.forEach(list=>{
+				 if(item === list){
+					 cancelCarInviteState.push(list)
+				 }
+			 })
+		 })
+		 let saveobject = {
+			 cancelCarInviteState:cancelCarInviteState.join(','),
+			 addCarInviteState:idList,
+			 comparyInviteInsertCarVoList:addCarInviteState.join(','),
+			 workname:obj.workname,
+			 worktext:obj.worktext,
+			 business:obj.business,
+			 welfare:obj.welfare,
+			 highmonthprice:obj.highmonthprice,
+			 lowmonthprice:obj.lowmonthprice,
+			 peoplenumber:obj.peoplenumber,
+			 id:obj.id,
+			 comparyinviteid:obj.comparyinviteid,
+		 }
+		console.log(cancelCarInviteState)
+		 
+		 this.$u.api.ComparyInviteAdd(saveobject).then(res=>{
 			if(res.code === '200'){
 				this.showTips = true
 			}else {
@@ -179,6 +196,9 @@
 		 uni.removeStorageSync('carPubPositionEdit');
 		 uni.removeStorageSync('inviteid');
 		 uni.removeStorageSync('carPubType');
+		  uni.removeStorageSync('yuanyouIdlist');
+		  uni.removeStorageSync('shanchuList');
+		  uni.removeStorageSync('carPubType');
 	 },
 	 tipsConfirm(){
 		 this.clearStorage()

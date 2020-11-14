@@ -100,17 +100,17 @@ export default {
 		this.show = true;
 	 },
 	 toCarList(){
-	 	this.$u.route('/pages/company/lease/carList/carList',{source:2}) 
+	 	this.$u.route('/pages/company/lease/carList/carList',{source:3}) 
 	}, 
 	toNext(){
 		 let list = this.carPubUpload || [];
 		 this.$u.api.getCarLogo({CarBrand:this.form.CarModel,CarModel:this.form.CarXilie}).then(res=>{
 		 	if(res.code === 200){
 				let data = this.form;
-				data.carModelPhoto = res.data;
+				 data.carModelPhoto = res.data;
 		 		 list.push(data)
 				 this.setStorage(list)
-				 this.$u.route('/pages/company/myPublish/recruit/carModel/carModel') 
+				 this.$u.route('/pages/company/myPublish/recruitEdit/list') 
 		 	}else {
 		 		 this.$u.toast(res.msg);
 		 	}

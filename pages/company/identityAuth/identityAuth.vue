@@ -182,14 +182,18 @@
 			},
 			uploadChange(res,index,lists,name){
 				console.log(res)
-				let data = res.data;
-                 this.form.companyName = data.biz_license_company_name;
-				  this.form.socialCode = data.biz_license_credit_code;
-				   this.form.companyCreateTime = data.biz_license_start_time;
-				    this.form.registeredPrice = data.biz_license_reg_capital;
-					 this.form.legalPerson = data.biz_license_owner_name;
-					  this.form.area = data.biz_license_address;
-					  this.form.businesscard  = data.imagename;
+				if (res.code === 200){
+					let data = res.data;
+					 this.form.companyName = data.biz_license_company_name;
+					  this.form.socialCode = data.biz_license_credit_code;
+					   this.form.companyCreateTime = data.biz_license_start_time;
+					    this.form.registeredPrice = data.biz_license_reg_capital;
+						 this.form.legalPerson = data.biz_license_owner_name;
+						  this.form.area = data.biz_license_address;
+						  this.form.businesscard  = data.imagename;
+				} else {
+					this.$u.toast(res.msg)
+				}
 			}
 		}
 	}

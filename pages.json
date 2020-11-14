@@ -506,7 +506,7 @@
             
         }
         ,{
-            "path" : "pages/company/myPublish/recruit/carModel/carModel",
+            "path" : "pages/company/myPublish/recruitEdit/list",
             "style" :                                                                                    
             {
                 "navigationStyle": "custom",
@@ -514,7 +514,7 @@
             }
             
         },{
-            "path" : "pages/company/myPublish/recruit/recruit",
+            "path" : "pages/company/myPublish/recruitEdit/index",
             "style" :                                                                                    
             {
                 "navigationStyle": "custom",
@@ -522,7 +522,7 @@
             }
             
         },{
-            "path" : "pages/company/myPublish/recruit/carOther/carOther",
+            "path" : "pages/company/myPublish/recruitEdit/other",
             "style" :                                                                                    
             {
                 "navigationStyle": "custom",

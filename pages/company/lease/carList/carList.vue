@@ -48,8 +48,10 @@ import auth from '@/components/auth.vue'
 			toNext(v){
 				if (this.source === '1') {
 					 this.$u.route('/pages/company/lease/lease',v)
-				} else{
+				} else if(this.source === '2'){
 					 this.$u.route('/pages/company/recruit/carOther/carOther',v)
+				}else if(this.source === '3'){
+					 this.$u.route('/pages/company/myPublish/recruitEdit/other',v)
 				}
 			},	
 			onPageScroll(e) {

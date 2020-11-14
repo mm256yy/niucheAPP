@@ -30,7 +30,7 @@
 				<u-button type="success" size="mini " shape='circle' @click="getCode" style="position: absolute;right: 10rpx;">{{codeTips}}</u-button>
 				</u-form-item>
 			</u-form>
-			<u-picker v-model="show" mode="time" :params="params" @confirm="dataChange"></u-picker>
+			<u-picker v-model="show" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
 		</view>
 		<view class="top-content">
 			<view class="top-content-base">联系人工作认证</view>
@@ -120,6 +120,7 @@
 				companyThree:{},
 				peopleCard:'',
 				shengfenzheng:'',
+				today:{},
 			}
 		},
 		onLoad(option) {
@@ -128,6 +129,7 @@
 				this.comparyid = comparyid;
 			}
 		},
+		
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
@@ -142,6 +144,7 @@
 					this.companyThree = uni.getStorageSync('companyThree');
 					this.peopleCard = uni.getStorageSync('peopleCard');
 					this.shengfenzheng = uni.getStorageSync('shengfenzheng');
+					this.today = uni.getStorageSync('today')
 					if (this.companyThree){
 						this.form = this.companyThree;
 					}
@@ -154,6 +157,16 @@
 			},
 			setStorage(data){
 					 uni.setStorageSync('companySecond', data);
+			},
+			dataChange(obj){
+				
+				if(obj.year == this.today.year){
+					if (obj.month > this.today.month || obj.day > this.today.day){
+						return false
+					}
+				}
+				let birthday = obj.year+"-"+obj.month+"-"+obj.day;
+				this.form.birthday = birthday;
 			},
 			// 获取验证码
 			getCode() {
@@ -307,10 +320,6 @@
 				uni.removeStorageSync('shengfenzheng');
 				uni.removeStorageSync('comparyLogo');
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
-			},
-			dataChange(obj){
-				let birthday = obj.year+"-"+obj.month+"-"+obj.day;
-				this.form.birthday = birthday;
 			},
 		}
 	}
