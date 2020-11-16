@@ -1,20 +1,20 @@
 <template>
-	<view class="companyDetail">
+	<view class="jobDetail">
 		<view class="content">
-			<view>为什么要加入T3出行？</view>
-			<view>更高的收入，多劳多得</view>
-			<view>我们提供（基础+提成+奖励+补贴）的薪酬体系，更有新人专享的保底薪资，每月发放5次薪水，只要够努力，
-			就一定能打拼出属于自己的一片新天地；</view>
-			<view>司机薪资架构</view>
-			<view>基本工资、辛勤劳作奖励、流水奖励</view>
-			<view>冲单奖励、缴纳社保、充电补贴等。</view>
-			<view>更多的尊重，视你如家人</view>
-			<view>实力强大的合规平台，为每位司机提供完整的晋升体系和五险福利，让你时刻感受一家人的关怀和温暖；</view>
-			<view>更好的服务，无后顾之忧</view>
-			<view>我们提供全新的合规车辆，无需租金，车险和保养都由我们承担</view>
-			<view>更高的收入，多劳多得</view>
-			<view>更高的收入，多劳多得</view>
-			<view>更高的收入，多劳多得</view>
+			<view class="top">
+				<u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image>
+				<view class="right">
+					<view class="name u-line-1">{{detail.comparyname}}</view>
+					<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box u-line-1">{{item}}运营</view>
+					<view class="clear"></view>
+					<view class="size">公司规模：{{detail.comparyNum}}人以内</view>
+					<view class="funds">注册资金：{{detail.comparyPrice}}百万</view>
+					<view class="view">点击查看工商信息</view>
+					<view class="clear"></view>
+				</view>
+				<view class="clear"></view>
+			</view>
+			<view class="text">{{detail.jobText}}</view>
 		</view>
 		<!-- <view class="ask">
 			<u-image class="question" width="66rpx" height="66rpx" src="@/static/question.png"></u-image>
@@ -51,13 +51,58 @@
 	}
 </script>
 <style lang="scss" scoped>
-    .companyDetail {
+    .jobDetail {
 		.content {
 			width: 671rpx;
 			padding: 20rpx 40rpx;
-			background: #fff;
+			background-color: #fff;
 			margin-left: 40rpx;
-			view {
+			font-size: 20rpx;
+			.clear{
+				clear: both;
+			}
+			.top{
+				width: 591rpx;
+				background-color: #F5F5F8;
+				margin-bottom: 40rpx;
+				.left{
+					margin-left: 41rpx;
+					margin-right: 38rpx;
+					margin-top: 102rpx;
+					float: left;
+				}
+				.right{
+					width: 383rpx;
+					float: right;
+					.name{
+						width: 383rpx;
+						font-size: 36rpx;
+						font-weight: 900;
+						margin-top: 79rpx;
+						margin-bottom: 26rpx;
+					}
+					.box{
+						width: 383rpx;
+						margin-left: 2rpx;
+						margin-right: 38rpx;
+					}
+					.size{
+						margin-top: 45rpx;
+					}
+					.view{
+						width: 215rpx;
+						height: 38rpx;
+						line-height: 38rpx;
+						text-align: center;
+						background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
+						color: #fff;
+						float: right;
+						margin-right: 20rpx;
+						margin-bottom: 20rpx;
+					}
+				}
+			}
+		.text {
 				margin-bottom: 50rpx;
 			}
 		}

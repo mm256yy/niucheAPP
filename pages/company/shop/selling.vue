@@ -51,7 +51,10 @@
 			}
 		},
 		mounted() {
-			this.getList()
+			let token = uni.getStorageSync('token');
+			if(token){
+				this.getList()
+			}
 		},
 		methods: {
 			// favorites(item,id) {

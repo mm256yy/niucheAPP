@@ -355,7 +355,7 @@ page{
 			height: 144rpx;
 			line-height: 144rpx;
 			text-align: center;
-			background: linear-gradient(115deg, #6DD99B, #37AB63);
+			background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 			font-size: 36rpx;
 			font-weight: 900;
 			color: #fff;

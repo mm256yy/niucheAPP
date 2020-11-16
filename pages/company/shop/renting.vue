@@ -51,7 +51,10 @@
 			}
 		},
 		mounted() {
-			this.getList()
+			let token = uni.getStorageSync('token');
+			if(token){
+				this.getList()
+			}
 		},
 		methods: {
 			// favorites(item,id) {
@@ -91,7 +94,7 @@
 					pageNum: 1,
 					pageSize: 10
 		    	}
-		    		this.$u.api.ComparyMySellCarList(params).then(res=>{
+		    		this.$u.api.ComparyMyRentCarList(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 							 this.total = res.total;
