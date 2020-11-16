@@ -57,6 +57,7 @@ const install = (Vue, vm) => {
 		if(res.code === 200) {
 			return res;
 		} else if(res.code === 401) {
+				vm.$u.toast('未获取用户信息，跳转到登录页面');
 			uni.clearStorage('token')
 		    vm.$u.route('/pages/login/login')
 		}else if(res.code == 500) {
