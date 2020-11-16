@@ -1,11 +1,14 @@
 <template>
 		
 	<view class="wrap">
-		<u-navbar back-text="返回"  back-icon-size="0" title="公司信息" :background="backgroundDri"
+		<u-navbar back-text="返回"  back-icon-size="0" title="我的发布" :background="backgroundCom"
 			:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		<view style="">
-			<u-tabs-swiper ref="uTabs" :list="list" activeColor="#ffffff" inactive-color="#e5e5e5" bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
-			 swiperWidth="750"></u-tabs-swiper>
+		<view>
+<!-- 			<u-tabs-swiper ref="uTabs" :list="list" activeColor="#ffffff" inactive-color="#e5e5e5" bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 swiperWidth="750"></u-tabs-swiper> -->
+			 <u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
+			  bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			  swiperWidth="750"></u-tabs-swiper>
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
@@ -44,13 +47,13 @@
 					'color':'#ffffff'
 				},
 				list: [{
-					name: '我的租车'
+					name: '租车'
 				}, {
-					name: '我的招聘'
+					name: '招聘'
 				}, {
-					name: '我的卖车'
+					name: '卖车'
 				},{
-					name: '我的求购'
+					name: '求购'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
@@ -101,10 +104,13 @@
 
 <style lang="scss">
 page{
-	background-image: url(../../../static/lease.png);
-	background-repeat: no-repeat;
+	// background-image: url(../../../static/lease.png);
+	// background-repeat: no-repeat;
 	height: 100%;
 	background-size: cover;
+}
+.u-tabs{
+	background: linear-gradient(115deg, $bg-grad-AB, $bg-grad-DDC);
 }
 </style>
 <style lang="scss" scoped>
