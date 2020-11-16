@@ -5,7 +5,8 @@
 			<view class="top-content-base">企业联系人身份认证</view>
 			<view class="top-content-base" style="font-size: 12pt;">身份证照片</view>
 			<view class="top-content-upload">
-				<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" @on-success='uploadChange1' upload-text="" :file-list="fileList"
+				 :max-size="8 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -46,7 +47,7 @@
 			</view>
 			<view class="top-content-upload">
 				<u-upload :custom-btn="true" :action="action" @on-success='uploadChange'
-				 upload-text="" :file-list="fileList1" :max-size="8 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				 upload-text="" :file-list="fileList1" :max-size="8 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -133,11 +134,26 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
-		mounted() {
+	onShow() {
+			let today = uni.getStorageSync('today');
+			if(today){
+				this.today = today
+			} else{
+				this.initDate()
+			}
 			this.initStorage()
 			this.getInfo()
 		},
 		methods: {
+			initDate(){
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let obj = {year:year,month:month,day:day};
+				uni.setStorage('today',obj)
+				this.today = obj;
+			},
 			initStorage(){
 				    this.companyFirst = uni.getStorageSync('companyFirst');
 					this.companySecond = uni.getStorageSync('companySecond');
@@ -228,6 +244,11 @@
 			uploadChange(res,index,lists,name){
                if(res.code === 200) {
 				   this.form.comparypeoplephoto = res.object;
+			   }
+			},
+			uploadChange1(res,index,lists,name){
+               if(res.code === 200) {
+				   this.form.idcardphoto = res.object;
 			   }
 			},
 			toNext(){

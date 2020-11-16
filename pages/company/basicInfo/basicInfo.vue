@@ -6,7 +6,8 @@
 			<view class="top-content-base" >公司logo或经营场所照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="6" style="width: 100%;justify-content: center;" >
+				<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" upload-text=""
+				 :file-list="fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
@@ -96,10 +97,10 @@
 				this.comparyid = comparyid;
 			}
 		},
-		mounted() {
-			this.initStorage()
-			this.getInfo()
-		},
+	onShow() {
+		this.initStorage()
+		this.getInfo()
+	},
 	methods: {
 		initStorage(){
 				this.companySecond = uni.getStorageSync('companySecond');

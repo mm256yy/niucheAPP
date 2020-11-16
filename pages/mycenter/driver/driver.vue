@@ -47,10 +47,10 @@
 				</view>
 				<view class="bgf">
 					<u-cell-group >
-						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.carNum">
+						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.carNum === 0?'未发布':'已发布'">
 							<u-icon size="60" :name="zcxuSrc" slot="icon"></u-icon>
 						</u-cell-item>
-						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.jobNum">
+						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.jobNum === 0?'未发布':'已发布'">
 							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
 						</u-cell-item>
 					</u-cell-group>
@@ -109,8 +109,8 @@
 					telephone:'',
 					driverState:9,
 					postState:9,
-					jobNum:'',
-					carNum:'',
+					jobNum:0,
+					carNum:0,
 					certificationType:""
 				},
 			}

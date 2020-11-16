@@ -259,7 +259,9 @@
 					this.form.beginTime = data.valid_from;
 					this.form.endTime = data.valid_for;
 					this.form.birthday = data.birthday;
-				} else {
+				}else if(res.code === 100){
+					this.form.driverPhoto = res.data;
+				}else {
 					this.$u.toast(res.msg)
 				}
 			}
