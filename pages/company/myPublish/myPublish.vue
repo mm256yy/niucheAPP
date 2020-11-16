@@ -10,8 +10,6 @@
 			</view>
 		</u-navbar>
 		<view>
-<!-- 			<u-tabs-swiper ref="uTabs" :list="list" activeColor="#ffffff" inactive-color="#e5e5e5" bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
-			 swiperWidth="750"></u-tabs-swiper> -->
 			 <u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			  bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			  swiperWidth="750"></u-tabs-swiper>
