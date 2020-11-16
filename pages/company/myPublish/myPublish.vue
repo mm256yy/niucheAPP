@@ -1,8 +1,14 @@
 <template>
 		
 	<view class="wrap">
-		<u-navbar back-text="返回"  back-icon-size="0" title="我的发布" :background="backgroundCom"
-			:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar  back-icon-size="0" title="我的发布" :background="backgroundCom" :is-back="false"
+			:back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+			<view class="navbar-right">
+				<view class="message-box right-item">
+					<text  @click="toCenter">返回</text>
+				</view>
+			</view>
+		</u-navbar>
 		<view>
 <!-- 			<u-tabs-swiper ref="uTabs" :list="list" activeColor="#ffffff" inactive-color="#e5e5e5" bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper> -->
@@ -74,6 +80,9 @@
 			tabsChange(index) {
 				this.swiperCurrent = index;
 			},
+			toCenter(){
+				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
 				let dx = e.detail.dx;
@@ -116,11 +125,15 @@ background-color:#f5f5f8 ;
 }
 </style>
 <style lang="scss" scoped>
+
 .wrap {
 	display: flex;
 	flex-direction: column;
 	height: calc(100vh - var(--window-top));
 	width: 100%;
+	/deep/ .u-border-bottom:after{
+		border-bottom-width:0;
+	}
 }
 .swiper-box {
 	flex: 1;
@@ -177,4 +190,16 @@ background-color:#f5f5f8 ;
 
 
 	
+</style>
+<style lang="scss" scoped>
+	.navbar-right {
+		margin-left: 24rpx;
+		display: flex;
+	}
+	.right-item {
+		margin: 0 12rpx;
+		position: relative;
+		color: #ffffff;
+		display: flex;
+	}
 </style>
