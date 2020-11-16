@@ -4,7 +4,7 @@
 		<view style="padding: 10pt 0;">
 			<view class="" style="display: flex;text-align: center;flex-direction:column;">
 				<view class="">
-					<u-avatar :src="comnpanySrc" size="150"></u-avatar>
+					<u-avatar :src="companySrc" size="150"></u-avatar>
 				</view>
 				<view >{{companyName}}</view>
 			</view>
@@ -124,8 +124,8 @@
 				},
 				resData:{},
 				authFlag:false,//认证状态
-				comnpanySrc: '../../static/touxx.png',
-				telephone:''
+				companySrc: '../../static/touxx.png',
+				token:''
 			}
 		},
 		filters: {
@@ -150,7 +150,7 @@
         },
 		methods: {
 			initStorage(){
-				this.telephone = uni.getStorageSync('telephone');
+				this.token = uni.getStorageSync('token');
 			},
 			toAuth(){
 				this.$u.route('/pages/company/identityAuth/identityAuth',{id:this.form.comparyid})
@@ -159,9 +159,9 @@
 				this.$u.route('/pages/company/personAuth/personAuth',{id:this.form.comparyid})
 			},
 			getCompanyInfo(){
-				let phone = this.telephone;
-					if (phone) {
-						this.$u.api.getCompanyInfo({telephone:phone}).then(res=>{
+				let token = this.token;
+					if (token) {
+						this.$u.api.getCompanyInfo().then(res=>{
 							if(res.code === 200){
 								let data = res.comparySelectByidVo;
 								this.resData = data;
@@ -178,6 +178,7 @@
 								this.form.companyIntroduce = data.comparytext;
 								this.form.name = data.username;
 								this.form.phone = data.telephone;
+								this.companySrc = data.comparylogophoto
 								let list = data.mainbusiness;
 								if(list === null){
 									return

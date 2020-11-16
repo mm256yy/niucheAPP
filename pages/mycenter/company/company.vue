@@ -169,9 +169,6 @@
 				}
 			},
 			toAuth(){
-				if(companyStatus !==''){
-					return false
-				}
 				let isauthencation = uni.getStorageSync('isauthencation');
 				if (isauthencation){
 					this.$u.route('/pages/company/information/information')

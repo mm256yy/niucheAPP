@@ -1,7 +1,8 @@
+// import {baseUrl} from '@/utils/constant.js'
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	const config = {
-		baseUrl: 'http://192.168.3.5:9007',
+		baseUrl: 'http://server.neocab.cn',
 		loadingText: '努力加载中~',
 		method: 'POST',
 		// 设置为json，返回后会对数据进行一次JSON.parse()
@@ -57,9 +58,12 @@ const install = (Vue, vm) => {
 		if(res.code === 200) {
 			return res;
 		} else if(res.code === 401) {
-				vm.$u.toast('未获取用户信息，跳转到登录页面');
-			uni.clearStorage('token')
-		    vm.$u.route('/pages/login/login')
+			vm.$u.toast('未获取用户信息，跳转到登录页面');
+			uni.removeStorageSync('telephone');
+			uni.removeStorageSync('token');
+			uni.removeStorageSync('isauthencation');
+			setTimeout(vm.$u.route('/pages/login/login'),1000)
+		   
 		}else if(res.code == 500) {
 			vm.$u.toast(res.msg);
 			return false;
