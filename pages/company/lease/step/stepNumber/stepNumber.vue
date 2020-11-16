@@ -182,6 +182,15 @@
 				uni.removeStorageSync('carPubSeven');
 				uni.removeStorageSync('carPubEight');
 				uni.removeStorageSync('editId');
+				this.form = {
+					specification:'',
+					trunk:'',
+					wheel:'',
+					displacement:'',
+					environmental:'',
+					elseParamterList:''
+					
+				};
 			},
 			actionSheetCallback(index) {
 				this.form.environmental = this.list[index].text;
