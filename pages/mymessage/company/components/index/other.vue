@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image class="left" width="185rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
+		 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>
 		 		<view class="address">{{detail.area}}</view>
@@ -278,6 +278,7 @@
 			font-size: 36rpx;
 			font-weight: 900;
 			color: #fff;
+			margin-top: 40rpx;
 		}
 	}
 </style>

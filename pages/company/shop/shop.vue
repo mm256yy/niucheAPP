@@ -1,6 +1,6 @@
 <template>
 	<view class="other">
-		<u-navbar back-text="返回" back-icon-size="0" title="吉利 帝豪" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" title="我的店铺" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image class="left" width="185rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
+		 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>
 		 		<view class="address">{{detail.area}}</view>
@@ -89,6 +89,8 @@
 		},
 		methods: {
 			getDetail(){
+				let token = uni.getStorageSync('token');
+				if(token){
 					this.$u.api.getMessageCompany().then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
@@ -96,6 +98,7 @@
 							 this.$u.toast(res.msg);
 						}
 					})
+				}
 			},
 			// tabs通知swiper切换
 			tabsChange(index) {
