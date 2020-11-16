@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="公司信息" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" @custom-back="toCenter" title="公司信息" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view style="padding: 10pt 0;">
 			<view class="" style="display: flex;text-align: center;flex-direction:column;">
 				<view class="">
@@ -157,6 +157,9 @@
 			},
 			toPerson(){
 				this.$u.route('/pages/company/personAuth/personAuth',{id:this.form.comparyid})
+			},
+			toCenter(){
+				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			getCompanyInfo(){
 				let token = this.token;

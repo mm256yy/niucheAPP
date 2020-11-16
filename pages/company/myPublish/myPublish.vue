@@ -1,6 +1,9 @@
 <template>
+		
 	<view class="wrap">
-		<view style="padding-top: 38pt;">
+		<u-navbar back-text="返回"  back-icon-size="0" title="公司信息" :background="backgroundDri"
+			:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<view style="">
 			<u-tabs-swiper ref="uTabs" :list="list" activeColor="#ffffff" inactive-color="#e5e5e5" bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
@@ -37,6 +40,9 @@
 	export default {
 		data() {
 			return {
+				backTextStyle:{
+					'color':'#ffffff'
+				},
 				list: [{
 					name: '我的租车'
 				}, {
