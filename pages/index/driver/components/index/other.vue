@@ -8,14 +8,15 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
-		 	<view class="right">
-		 		<view class="name">{{detail.comparyname}}</view>
-		 		<view class="address">{{detail.area}}</view>
-				<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
-				<view class="clear"></view>
-		 	</view>
-		 	<view class="clear"></view>
+			 <view class="message">
+				<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
+				<view class="right">
+					<view class="name">{{detail.comparyname}}</view>
+					<view class="address">{{detail.area}}</view>
+					<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
+					<view class="clear"></view>
+				</view> 
+			 </view>
 		 </view>
 		 <view class="wrap">
 			 <view style="">
@@ -167,12 +168,12 @@
 			margin-top: 40rpx;
 			margin-bottom: 60rpx;
 			background-color: #ffffff;
-			.left {
-				float: left;
+			.message{
+				display: flex;
+				align-items: center;
 			}
 			.right {
 				padding: 30rpx 42rpx;
-				float: left;
 				font-size: 20rpx;
 				.name {
 					font-size: 36rpx;

@@ -3,7 +3,7 @@
 		<view class="wrap">
 		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
-			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="tablist" inactive-color="#e5e5e5"
+			<u-tabs-swiper style="position: fixed;" ref="uTabs" activeColor="#ffffff" :list="tablist" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
@@ -263,6 +263,7 @@
 }
 .swiper-box {
 	flex: 1;
+	margin-top: 80rpx;
 }
 .swiper-item {
 	height: 100%;

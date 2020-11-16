@@ -1,18 +1,19 @@
 <template>
 	<view class="jobDetail">
 		<view class="content">
-			<view class="top">
-				<u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image>
-				<view class="right">
-					<view class="name u-line-1">{{detail.comparyname}}</view>
-					<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box u-line-1">{{item}}运营</view>
-					<view class="clear"></view>
-					<view class="size">公司规模：{{detail.comparyNum}}人以内</view>
-					<view class="funds">注册资金：{{detail.comparyPrice}}百万</view>
-					<view class="view">点击查看工商信息</view>
-					<view class="clear"></view>
+			<view class="message">
+				<view class="top">
+					<u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image>
+					<view class="right">
+						<view class="name u-line-1">{{detail.comparyname}}</view>
+						<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box u-line-1">{{item}}运营</view>
+						<view class="clear"></view>
+						<view class="size">公司规模：{{detail.comparyNum}}人以内</view>
+						<view class="funds">注册资金：{{detail.comparyPrice}}百万</view>
+						<view class="view">点击查看工商信息</view>
+						<view class="clear"></view>
+					</view>
 				</view>
-				<view class="clear"></view>
 			</view>
 			<view class="text">{{detail.jobText}}</view>
 		</view>
@@ -65,15 +66,17 @@
 				width: 591rpx;
 				background-color: #F5F5F8;
 				margin-bottom: 40rpx;
+				.message{
+					display: flex;
+					align-items: center;
+				}
 				.left{
 					margin-left: 41rpx;
 					margin-right: 38rpx;
 					margin-top: 102rpx;
-					float: left;
 				}
 				.right{
 					width: 383rpx;
-					float: right;
 					.name{
 						width: 383rpx;
 						font-size: 36rpx;

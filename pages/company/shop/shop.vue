@@ -7,15 +7,16 @@
 				</view>
 			</view>
 		 </u-navbar>
-		 <view class="top">
-		 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
-		 	<view class="right">
-		 		<view class="name">{{detail.comparyname}}</view>
-		 		<view class="address">{{detail.area}}</view>
-				<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
-				<view class="clear"></view>
-		 	</view>
-		 	<view class="clear"></view>
+		 <view class="message">
+			 <view class="top">
+			 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
+			 	<view class="right">
+			 		<view class="name">{{detail.comparyname}}</view>
+			 		<view class="address">{{detail.area}}</view>
+			 		<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
+			 	    <view class="clear"></view>
+			 	</view>
+			 </view>
 		 </view>
 		 <view class="wrap">
 			 <view style="">
@@ -190,18 +191,16 @@
 		}
 		.top {
 			width: 666rpx;
-			height: 186rpx;
+			padding: 40rpx 39rpx;
 			margin-left: 42rpx;
 			margin-top: 40rpx;
 			margin-bottom: 60rpx;
-			.left {
-				float: left;
+			.message{
+				display: flex;
+				align-items: center;
 			}
 			.right {
-				width: 481rpx;
-				height: 186rpx;
 				padding: 30rpx 42rpx;
-				float: left;
 				font-size: 20rpx;
 				.name {
 					font-size: 36rpx;
