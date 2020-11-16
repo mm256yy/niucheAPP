@@ -133,7 +133,7 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
-		onShow() {
+	onShow() {
 			let today = uni.getStorageSync('today');
 			if(today){
 				this.today = today

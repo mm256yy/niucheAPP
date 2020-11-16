@@ -92,11 +92,26 @@
 				this.comparyid = comparyid;
 			}
 		},
-		mounted() {
-		  this.initStorage()
-		  this.getInfo()
+		onShow() {
+			let today = uni.getStorageSync('today');
+			if(today){
+				this.today = today
+			} else{
+				this.initDate()
+			}
+			this.initStorage()
+			this.getInfo()
 		},
 		methods: {
+			initDate(){
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let obj = {year:year,month:month,day:day};
+				uni.setStorage('today',obj)
+				this.today = obj;
+			},
 			getInfo(){
 				if(this.comparyid){
 					this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
