@@ -191,6 +191,8 @@
 						 this.form.legalPerson = data.biz_license_owner_name;
 						  this.form.area = data.biz_license_address;
 						  this.form.businesscard  = data.imagename;
+				}else if(res.code === 100){
+					this.form.businesscard = res.data;
 				} else {
 					this.$u.toast(res.msg)
 				}

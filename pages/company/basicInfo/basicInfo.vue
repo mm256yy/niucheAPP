@@ -96,10 +96,10 @@
 				this.comparyid = comparyid;
 			}
 		},
-		mounted() {
-			this.initStorage()
-			this.getInfo()
-		},
+	onShow() {
+		this.initStorage()
+		this.getInfo()
+	},
 	methods: {
 		initStorage(){
 				this.companySecond = uni.getStorageSync('companySecond');
