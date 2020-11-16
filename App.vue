@@ -28,15 +28,12 @@
 						   });
 					   }
 				   } else {
+					    uni.showToast({
+					        title:"请先登录，认证" 
+					      })
 					   uni.switchTab({
 					       url: '/pages/mycenter/mycenter'
 					   });
-					   // this.$u.toast("未登录不能发布信息，1.5秒后跳转我的页面")
-					   setTimeout(function(){
-						 uni.switchTab({
-						     url: '/pages/mycenter/mycenter'
-						 });
-					   },1500)
 				   }
 			})
 		},

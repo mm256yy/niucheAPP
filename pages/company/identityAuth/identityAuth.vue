@@ -109,7 +109,7 @@
 				let month = date.getMonth()+1;
 				let day = date.getDate();
 				let obj = {year:year,month:month,day:day};
-				uni.setStorage('today',obj)
+				uni.setStorageSync('today',obj)
 				this.today = obj;
 			},
 			getInfo(){

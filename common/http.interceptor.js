@@ -1,7 +1,7 @@
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	const config = {
-		baseUrl: 'http://server.neocab.cn',
+		baseUrl: 'http://192.168.3.5:9007',
 		loadingText: '努力加载中~',
 		method: 'POST',
 		// 设置为json，返回后会对数据进行一次JSON.parse()
@@ -62,7 +62,10 @@ const install = (Vue, vm) => {
 		}else if(res.code == 500) {
 			vm.$u.toast(res.msg);
 			return false;
-		} else {
+		}else if(res.code == 502) {
+			vm.$u.toast('服务异常');
+			// return false;
+		}  else {
 			// 如果返回false，则会调用Promise的reject回调，
 			// 并将进入this.$u.post(url).then().catch(res=>{})的catch回调中，res为服务端的返回值
 			return res;
