@@ -47,10 +47,10 @@
 				</view>
 				<view class="bgf">
 					<u-cell-group >
-						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.jobNum">
+						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.carNum">
 							<u-icon size="60" :name="zcxuSrc" slot="icon"></u-icon>
 						</u-cell-item>
-						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.carNum">
+						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.jobNum">
 							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
 						</u-cell-item>
 					</u-cell-group>
