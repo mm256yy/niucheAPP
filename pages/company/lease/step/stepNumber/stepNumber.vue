@@ -181,7 +181,6 @@
 				uni.removeStorageSync('carPubSix');
 				uni.removeStorageSync('carPubSeven');
 				uni.removeStorageSync('carPubEight');
-				uni.removeStorageSync('isauthencation');
 				uni.removeStorageSync('editId');
 			},
 			actionSheetCallback(index) {
@@ -199,7 +198,10 @@
 				if (this.carPubType === 1) {
 					index = 0
 				}
-				this.$u.route('/pages/company/myPublish/myPublish', {index: index});
+				uni.reLaunch({
+				    url: '/pages/company/myPublish/myPublish?index='+index
+				});
+				// this.$u.route('/pages/company/myPublish/myPublish', {index: index});
 			},
 			confirm(){
 				if(this.addForm.paramtername === '' || this.addForm.paramtertext === '' || this.addForm.paramterunit === ''){

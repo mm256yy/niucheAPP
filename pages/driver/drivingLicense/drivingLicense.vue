@@ -249,7 +249,7 @@
 			},
 			uploadChange(res,index,lists,name){
 				if (res.code === 200){
-					let data = res.object;
+					let data = res.data;
 					this.form.name = data.name;
 					this.form.sex = data.sex === '男' ? '1':'0';
 					this.form.vehicleAge = data.clazz;

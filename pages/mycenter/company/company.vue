@@ -10,7 +10,7 @@
 						<u-col span="8" v-if="token === ''">
 							<view @click="toLogin" style="color: #fff;font-size: 14pt;">请登录/注册</view>
 						</u-col>
-						<u-col span="8" v-else>
+						<u-col span="8" v-else @click="toAuth">
 							<view @click="toAuth" style="color: #fff;font-size: 14pt;">{{companyName}}</view>
 							<view class="colorF">{{companyStatus | state}}</view>
 							<view v-if="companyStatus === 4">原因 {{reson}}</view>

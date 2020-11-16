@@ -50,7 +50,7 @@
 			</view>
 		</view>
 		<NotLogin></NotLogin>
-		<auth></auth>
+		<auth ref="auth"></auth>
 	</view>
 </template>
 
@@ -75,16 +75,7 @@
 			}
 		},
 		onShow() {
-			let isauthencation = uni.getStorageSync('isauthencation');
-			let token = uni.getStorageSync('token');
-			if(!isauthencation && token){
-				let role = uni.getStorageSync('role');
-				if (role === 2) {
-					this.$u.route('/pages/company/identityAuth/identityAuth')
-				} else {
-					this.$u.route('/pages/driver/drivingLicense/drivingLicense')
-				}
-			}
+
 		},
 		mounted() {
 			this.setDay()
@@ -99,9 +90,15 @@
 				 uni.setStorageSync('today', obj);
 			},
 			setStorage(data){
-					 uni.setStorageSync('carPubType', data);
+				uni.setStorageSync('carPubType', data);
 			},
 			toPage(type){
+				let isauthencation = uni.getStorageSync('isauthencation');
+				let token = uni.getStorageSync('token');
+				if(!isauthencation && token){
+					this.$refs.auth.showTips = true;
+					return false
+				}
 				if(type ===1 ){
 				  this.setStorage(1)
 				   this.$u.route('/pages/company/lease/lease')
