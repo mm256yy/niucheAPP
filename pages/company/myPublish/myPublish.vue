@@ -106,11 +106,13 @@
 page{
 	// background-image: url(../../../static/lease.png);
 	// background-repeat: no-repeat;
-	height: 100%;
-	background-size: cover;
+background-color:#f5f5f8 ;
 }
 .u-tabs{
 	background: linear-gradient(115deg, $bg-grad-AB, $bg-grad-DDC);
+}
+/deep/ .u-border-bottom:after{
+	border-bottom-width:0;
 }
 </style>
 <style lang="scss" scoped>

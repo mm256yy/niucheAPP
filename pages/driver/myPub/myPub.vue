@@ -42,9 +42,9 @@
 								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
 								  <view class="u-line-2">工作车辆: {{item.carCards}}  </view>
 							</view>
-					        <view style="width: 30%;">
+					        <view style="width: 40%;">
 								<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
-								 font-size="20" button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
+								 button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
 								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice}}月薪</view>
 							</view>
 						</view>
