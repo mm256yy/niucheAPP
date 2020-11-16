@@ -67,7 +67,6 @@
 				 backTextStyle:{
 				 	'color':'#ffffff'
 				 },
-				 src: 'https://cdn.uviewui.com/uview/example/fade.jpg',
 				 zcxxsrc:'../../../static/sign104@2x.png',
 				 zlzmsrc:'../../../static/iconfontzhizuobiaozhun023120@2x.png',
 				 qgxxsrc:'../../../static/xuqiuguanli@2x.png',
