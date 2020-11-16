@@ -8,13 +8,13 @@
 				<view></view>
 				<u-upload :custom-btn="true" ref="uUpload" :action="action" 
 				@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="4 * 1024 * 1024" 
-				max-count="2" style="width: 100%;justify-content: center;" >
+				max-count="1" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					</view>
 				</u-upload>
 			</view>
-			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过4M</view>
+			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张且不得超过4M</view>
 			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
 		</view>
 		<view class="middle-content">
