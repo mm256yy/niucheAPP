@@ -10,7 +10,7 @@
 		<view class="top-content" >
             <view class="top-content-upload" v-if="type">
             	<u-upload :custom-btn="true" :action="action"
-            	@on-success='uploadChange' @on-change="uploadChange" upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024"
+            	@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024"
             	 max-count="1" style="width: 100%;justify-content: center;background-color: #FFFFFF;">
             		<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
             			<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>

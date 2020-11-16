@@ -35,10 +35,9 @@
 			let token = uni.getStorageSync('token');
 			let isauthencation = uni.getStorageSync('isauthencation');
 			let Num = uni.getStorageSync('loginNum')
-			
-				if(!isauthencation && token && !Num){
-					this.showTips = true
-				}	
+			if(!isauthencation && token && !Num){
+				this.showTips = true
+			}	
 			this.curThemeType = type
 			if (type === 'company'){
 				companyPages.forEach(item=>{

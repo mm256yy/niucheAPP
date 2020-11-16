@@ -158,6 +158,7 @@
 							this.otherObj.sc = data.collectnum+strE;
 							this.otherObj.xx = data.messagenum;
 							this.otherObj.qz = data.groupmessagenum;
+							uni.setStorageSync('isauthencation',1)
 						}else {
 							let phone = uni.getStorageSync('telephone')
 							this.companyName = phone
@@ -168,6 +169,9 @@
 				}
 			},
 			toAuth(){
+				if(companyStatus !==''){
+					return false
+				}
 				let isauthencation = uni.getStorageSync('isauthencation');
 				if (isauthencation){
 					this.$u.route('/pages/company/information/information')
