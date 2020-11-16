@@ -15,7 +15,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
-			<u-image class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
+			<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 			<view class="right">
 				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
 				<view class="clear"></view>
@@ -27,7 +27,7 @@
 				<view class="clear"></view>
 				<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
 				<view class="car u-line-1"">求职意向：{{item.carCard}}</view>
-				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
+				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
 			</view>
 		</view>
 		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />

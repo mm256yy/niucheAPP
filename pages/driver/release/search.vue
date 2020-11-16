@@ -1,5 +1,5 @@
 <template>
-	<view class="filter">
+	<view class="search">
 	  <u-navbar back-text="返回" back-icon-size="0" title="求职发布" :background="backgroundDri" 
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 	   <view class="view-content">
@@ -42,11 +42,11 @@
 				</u-checkbox-group>
 			</u-form-item> -->
 			<!-- <view class="more">*以下为加分项，可以不设置。</view> -->
-			<u-form-item label="网约车工作年限" label-position="top" prop="workexperience">
-				<u-input type="number" style="width: 607rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入网约车工作年限,单位不用输入" v-model="form.workexperience" />年
+			<u-form-item label="网约车工作年限" prop="workexperience">
+				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入网约车工作年限" v-model="form.workexperience" />年
 			</u-form-item>
-			<u-form-item label="租车工作年限" label-position="top" prop="taxiExperience">
-				<u-input type="number" style="width: 607rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入出租车工作年限,单位不用输入" v-model="form.taxiExperience" />年
+			<u-form-item label="租车工作年限" prop="taxiExperience">
+				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入出租车工作年限" v-model="form.taxiExperience" />年
 			</u-form-item>
 			<u-form-item label="福利要求" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="benefitGroupChange" shape="circle">
@@ -56,7 +56,7 @@
 				</u-checkbox-group>
 			</u-form-item>
 			<u-form-item label="我的优势" label-position="top">
-				<u-input style="width: 607rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;text-indent: 31rpx;" placeholder="退伍军人英语口语交际能力" v-model="form.myok" />
+				<u-input type="textarea" maxlength="50" style="width: 607rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;text-indent: 31rpx;" placeholder="退伍军人英语口语交际能力" v-model="form.myok" />
 			</u-form-item>
 		  </u-form>
 	   </view>
@@ -205,7 +205,10 @@ page{
  .btn-agree{
 	background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
  }
- .filter {
+ .search {
+	 .inp{
+		 width: 10rpx;
+	 }
 	 .u-slot-content {
 		 width: 100rpx;
 		 color: #fff;

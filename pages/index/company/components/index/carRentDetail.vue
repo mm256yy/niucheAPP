@@ -101,6 +101,8 @@
 				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.form = res.object
+						 this.form.carCard = this.form.carCard.split(',').join('/')
+						 this.form.power = this.form.power.split(',').join('/')
 						 this.xslc.forEach(item=>{
 							 if(item.name === this.form.km){
 								 this.form.kmStr = item.text;

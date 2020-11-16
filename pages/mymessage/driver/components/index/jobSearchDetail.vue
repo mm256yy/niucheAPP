@@ -36,40 +36,8 @@
 			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true"
 			 pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#FF6501" :tabs="list" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carphotolist" :key="index" class="" v-show="firstCurrent === index">
-				<u-image class="img" width="671rpx" height="504rpx" :src="item.neionephoto"></u-image>
+				<u-image class="img" width="100%" height="504rpx" :src="item.neionephoto"></u-image>
 			 </view>
-			<!-- <view class="u-tabs-box">
-			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
-				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
-			 	swiperWidth="750" active-color="#FF6501"></u-tabs-swiper>
-			</view>
-			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
-			 			<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-			 		</scroll-view>
-			 	</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
-						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
-						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
-						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 671rpx;width: 100%;" @scrolltolower="onreachBottom">
-						<u-image class="img" width="671rpx" height="504rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
-					</scroll-view>
-				</swiper-item>
-			</swiper> -->
 		</view>
 		<view class="wrapBottom">
 			<view class="u-tabs-box">
@@ -342,7 +310,6 @@ page{
 			margin-top: 39rpx;
 		}
 		.img {
-			margin-left: 40rpx;
 			margin-top: 40rpx;
 		}
 		.more {

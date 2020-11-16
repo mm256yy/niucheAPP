@@ -20,8 +20,8 @@
 					<view class="clear"></view>
 		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		 		</view>
-		 		<u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-		 		<u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+		 		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		 		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 		 	</view>
 		 </view>
 		 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
@@ -60,38 +60,38 @@
 			this.getList()
 		},
 		methods: {
-			favorites(item,id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 2,
-					collectionstate: 3,
-					iscollection: 1
-				};
-				item.iscollection = 1;
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
-			cancel(item,id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 2,
-					collectionstate: 3,
-					iscollection: 0
-				};
-				item.iscollection = 2;
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('取消收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
+			// favorites(item,id) {
+			// 	const params = {
+			// 		BeCollectedId: id,
+			// 		isDriveAndCompary: 2,
+			// 		collectionstate: 3,
+			// 		iscollection: 1
+			// 	};
+			// 	item.iscollection = 1;
+			//     this.$u.api.collect(params).then(res=>{
+			//     	if(res.code === 200){
+			//     		 this.$u.toast('收藏成功');
+			//     	}else {
+			//     		 this.$u.toast(res.msg);
+			//     	}
+			//     })
+			// },
+			// cancel(item,id) {
+			// 	const params = {
+			// 		BeCollectedId: id,
+			// 		isDriveAndCompary: 2,
+			// 		collectionstate: 3,
+			// 		iscollection: 0
+			// 	};
+			// 	item.iscollection = 2;
+			//     this.$u.api.collect(params).then(res=>{
+			//     	if(res.code === 200){
+			//     		 this.$u.toast('取消收藏成功');
+			//     	}else {
+			//     		 this.$u.toast(res.msg);
+			//     	}
+			//     })
+			// },
 		    getList(){
 		        const params = {
 		    		id: this.id,

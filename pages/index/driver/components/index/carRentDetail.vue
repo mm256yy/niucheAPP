@@ -7,9 +7,9 @@
 				</view>
 			</view>
 		</u-navbar>
-		 <view class="" style="padding: 40rpx;">
-			<u-image class="img" width="669rpx" height="503rpx" :src="detail.photourl"></u-image>
-			<view>
+		 <view class="">
+			<u-image class="img" width="100%" height="503rpx" :src="detail.photourl"></u-image>
+			<view style="padding:40rpx">
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.rentprice}}</text>元/月起租</view>
@@ -179,6 +179,9 @@ page{
 	}
 	.detail {
 		background: #F5F5F8;
+		.img{
+			margin-top: 40rpx;
+		}
 		.clear {
 			clear: both;
 		}

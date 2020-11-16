@@ -6,17 +6,17 @@
 		 			<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		 			<view class="clear"></view>
-		 			<u-image class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
+		 			<u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
 		 			<view class="right">
 		 				<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆{{item.teXtTile}}</view>
 		 				<view class="type">{{item.comparyname}}<text>{{item.area}}</text></view>
-		 				<view class="price">打包价:<text>￥{{item.packprice}}</text></view>
-		 				<u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image>
+		 				<view class="price">打包价:<text>{{item.packprice}}</text></view>
+		 				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
 		 			</view>
 		 			<view class="clear"></view>
 		 		</view>
-		 		<u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon>
-		 		<u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+		 		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		 		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 		 	</view>
 		 </view>
 		 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
@@ -55,38 +55,38 @@
 			this.getList()
 		},
 		methods: {
-			favorites(item,id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 2,
-					collectionstate: 3,
-					iscollection: 1
-				};
-				item.iscollection = 1;
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
-			cancel(item,id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 2,
-					collectionstate: 3,
-					iscollection: 0
-				};
-				item.iscollection = 2;
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('取消收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
+			// favorites(item,id) {
+			// 	const params = {
+			// 		BeCollectedId: id,
+			// 		isDriveAndCompary: 2,
+			// 		collectionstate: 3,
+			// 		iscollection: 1
+			// 	};
+			// 	item.iscollection = 1;
+			//     this.$u.api.collect(params).then(res=>{
+			//     	if(res.code === 200){
+			//     		 this.$u.toast('收藏成功');
+			//     	}else {
+			//     		 this.$u.toast(res.msg);
+			//     	}
+			//     })
+			// },
+			// cancel(item,id) {
+			// 	const params = {
+			// 		BeCollectedId: id,
+			// 		isDriveAndCompary: 2,
+			// 		collectionstate: 3,
+			// 		iscollection: 0
+			// 	};
+			// 	item.iscollection = 2;
+			//     this.$u.api.collect(params).then(res=>{
+			//     	if(res.code === 200){
+			//     		 this.$u.toast('取消收藏成功');
+			//     	}else {
+			//     		 this.$u.toast(res.msg);
+			//     	}
+			//     })
+			// },
 		    getList(){
 		        const params = {
 		    		id: this.id,
@@ -198,7 +198,7 @@
 			.list {
 				width: 702rpx;
 				height: 286rpx;
-				padding: 38rpx;
+				padding: 58rpx 38rpx;
 				margin-left: 24rpx;
 				margin-top: 24rpx;
 				font-size: 20rpx;
@@ -243,9 +243,6 @@
 				}
 				.type text {
 					margin-left: 22rpx;
-				}
-				.price {
-					margin-top: 9rpx;
 				}
 				.price text {
 					font-size: 36rpx;

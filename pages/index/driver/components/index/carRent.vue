@@ -21,7 +21,10 @@
 			<view class="lists" v-for="(item, index) in list" :key="index">
 				<view class="list" @click="detail(item.id)">
 					<view class="right">
-						<view class="name u-line-2">{{item.texttitle}}</view>
+						<view class="name u-line-2">
+						<text v-show="item.businesstypetag == 1">[网约车]</text>
+						<text v-show="item.businesstypetag == 2">[出租车]</text>
+						{{item.texttitle}}</view>
 						<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
 						<view class="year">车龄≤{{item.carAge}}年
 						</view>
@@ -30,9 +33,7 @@
 						<view class="distance">{{item.km}}万公里</view>
 						<view class="clear"></view>
 					</view>
-					<view v-show="item.businesstypetag == 1" class="label">网约车</view>
-					<view v-show="item.businesstypetag == 2" class="label">出租车</view>
-					<u-image class="left" width="306rpx" height="180rpx" :src="item.photourl"></u-image>
+					<u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
 					<view class="clear"></view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="box">
@@ -42,8 +43,8 @@
 						</view>
 					</view>
 				</view>
-				<u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
-				<u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+				<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
+				<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 			</view>
 		</view>
 		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
@@ -151,38 +152,38 @@
 			this.search()
 		},
 		methods: {
-			favorites(item,id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 1,
-					collectionstate: 1,
-					iscollection: 1
-				};
-				item.iscollect = 1;
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
-			cancel(item,id) {
-				const params = {
-					BeCollectedId: id,
-					isDriveAndCompary: 1,
-					collectionstate: 1,
-					iscollection: 0
-				};
-				item.iscollect = 2;
-			    this.$u.api.collect(params).then(res=>{
-			    	if(res.code === 200){
-			    		 this.$u.toast('取消收藏成功');
-			    	}else {
-			    		 this.$u.toast(res.msg);
-			    	}
-			    })
-			},
+			// favorites(item,id) {
+			// 	const params = {
+			// 		BeCollectedId: id,
+			// 		isDriveAndCompary: 1,
+			// 		collectionstate: 1,
+			// 		iscollection: 1
+			// 	};
+			// 	item.iscollect = 1;
+			//     this.$u.api.collect(params).then(res=>{
+			//     	if(res.code === 200){
+			//     		 this.$u.toast('收藏成功');
+			//     	}else {
+			//     		 this.$u.toast(res.msg);
+			//     	}
+			//     })
+			// },
+			// cancel(item,id) {
+			// 	const params = {
+			// 		BeCollectedId: id,
+			// 		isDriveAndCompary: 1,
+			// 		collectionstate: 1,
+			// 		iscollection: 0
+			// 	};
+			// 	item.iscollect = 2;
+			//     this.$u.api.collect(params).then(res=>{
+			//     	if(res.code === 200){
+			//     		 this.$u.toast('取消收藏成功');
+			//     	}else {
+			//     		 this.$u.toast(res.msg);
+			//     	}
+			//     })
+			// },
 		    getList(){
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
@@ -377,7 +378,7 @@
 				.left {
 					float: right;
 					margin-top: 20rpx;
-					margin-right: 10rpx;
+					margin-bottom: 6rpx;
 				}
 				.right{
 					width: 363rpx;
@@ -386,21 +387,10 @@
 					background: #fff;
 					float: left;
 				}
-				.label {
-					width: 86rpx;
-					height: 36rpx;
-					line-height: 36rpx;
-					text-align: center;
-					background: rgba(0,0,0,0.1);
-					font-size: 20rpx;
-					float: right;
-					margin-top: 10rpx;
-					margin-right: 70rpx;
-				}
 				.name {
 					font-weight: 900;
 					font-size: 34rpx;
-					margin-top: 63rpx;
+					margin-top: 14rpx;
 				}
 				.clock,.year {
 					float: left;
@@ -412,7 +402,7 @@
 				}
 				.car {
 					float: left;
-					margin-top: 4rpx;
+					margin-top: 14rpx;
 				}
 				.year {
 					margin-left: 6rpx;
@@ -421,6 +411,7 @@
 				}
 				.distance {
 					margin-left: 6rpx;
+					margin-top: 12rpx;
 					color: #7f7f7f;
 					float: left;
 				}

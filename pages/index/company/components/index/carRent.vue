@@ -3,7 +3,8 @@
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item style="width:240rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="driverAgeKey" type="select" /></u-form-item>
-				<view class="line"></view>
+				<view class="line
+				"></view>
 				<u-form-item style="width:240rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
 			</u-form>
 			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
@@ -15,7 +16,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<view  class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
-			<u-image class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
+			<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 			<view class="right">
 				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
 				<view class="clear"></view>
@@ -287,7 +288,7 @@
 			font-size: 20rpx;
 			color: #fff;
 			float: left;
-			margin-top: 10rpx;
+			margin-top: 14rpx;
 		}
 		.list .right .type {
 			padding: 4rpx 16rpx;
@@ -299,18 +300,18 @@
 			font-size: 20rpx;
 			color: #fff;
 			float: left;
-			margin-top: 10rpx;
+			margin-top: 14rpx;
 		}
 		.list .right {
 			.img {
 				float: left;
-				margin-top: 4rpx;
+				margin-top: 14rpx;
 			}
 			.car {
 				width: 362rpx;
 				color: #7f7f7f;
 				font-size: 20rpx;
-				margin-top: 6rpx;
+				margin-top: 16rpx;
 				margin-left: 4rpx;
 				float: left;
 			}
