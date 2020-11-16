@@ -42,11 +42,11 @@
 				</u-checkbox-group>
 			</u-form-item> -->
 			<!-- <view class="more">*以下为加分项，可以不设置。</view> -->
-			<u-form-item label="网约车工作年限" prop="workexperience">
-				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入网约车工作年限" v-model="form.workexperience" />年
+			<u-form-item style="width: 670rpx;" label="网约车工作年限" prop="workexperience">
+				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.workexperience" />年
 			</u-form-item>
-			<u-form-item label="租车工作年限" prop="taxiExperience">
-				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入出租车工作年限" v-model="form.taxiExperience" />年
+			<u-form-item style="width: 670rpx;" label="出租车工作年限" prop="taxiExperience">
+				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.taxiExperience" />年
 			</u-form-item>
 			<u-form-item label="福利要求" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="benefitGroupChange" shape="circle">
@@ -206,8 +206,8 @@ page{
 	background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
  }
  .search {
-	 .inp{
-		 width: 10rpx;
+	 .u-form{
+		 width: 700rpx;
 	 }
 	 .u-slot-content {
 		 width: 100rpx;

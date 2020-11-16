@@ -91,8 +91,14 @@
 				total: 0
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.driverDemandId = id;
+			}
+		},
 		mounted() {
-			
+			this.getDetail()
 		},
 		methods: {
 			favorites(id) {
@@ -121,15 +127,13 @@
 			    	}
 			    })
 			},
-			getList(){
-			    const params = Object.assign({
-			    	pageNum: this.pagination.pageNum + 1,
-			    	pageSize: 10
-			    });
-					this.$u.api.getCarSystem(params).then(res=>{
+			getDetail(){
+			    const params = {
+					id: this.driverDemandId
+				}
+					this.$u.api.MessageCompany(params).then(res=>{
 						if(res.code === 200){
-							 this.list = res.rows;
-							 this.total= res.total;
+							 this.detail = res.object;
 						}else {
 							 this.$u.toast(res.msg);
 						}

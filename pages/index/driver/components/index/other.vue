@@ -1,6 +1,6 @@
 <template>
 	<view class="other">
-		<u-navbar back-text="返回" back-icon-size="0" title="公司简称" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" :title="detail.comparyname" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
@@ -36,6 +36,7 @@
 			 	</swiper-item>
 			 </swiper>
 		 </view>
+		 <view class="phone" @click="phone()">拨打电话</view>
 	</view>
 </template>
 
@@ -83,7 +84,7 @@
 			    const params = {
 					id: this.driverDemandId
 				}
-					this.$u.api.MessageCompany(params).then(res=>{
+					this.$u.api.messageCompany(params).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
 						}else {
@@ -124,6 +125,9 @@
 			},
 			details() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")
+			},
+			phone() {
+				uni.makePhoneCall({ phoneNumber: '18748412671' });
 			}
 		}
 	}
@@ -288,6 +292,16 @@
 					margin-right: 10rpx;
 				}
 			}
+		}
+		.phone{
+			width: 100%;
+			height: 144rpx;
+			line-height: 144rpx;
+			text-align: center;
+			background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
+			font-size: 36rpx;
+			font-weight: 900;
+			color: #fff;
 		}
 	}
 </style>

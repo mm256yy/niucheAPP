@@ -43,14 +43,15 @@
 				</swiper-item>
 			</swiper>
 			<view class="more" @click="other()">上拉加载该公司其他信息</view>
-			<view class="last">
+			<view class="phone" @click="phone()">拨打电话</view>
+			<!-- <view class="last">
 				<view class="bottom">
 					<view class="left">预约看车</view>
-					<!-- <view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view> -->
+					<view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view>
 					<u-image class="chat" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
 					<view class="right">下单租车</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -139,7 +140,10 @@
 			},
 			other() {
 				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
-			}	
+			},
+			phone() {
+				uni.makePhoneCall({ phoneNumber: '18748412671' });
+			}
 		}
 	}
 </script>
@@ -258,6 +262,16 @@ page{
 						  float: left;
 					  }
 				  }
+		}
+		.phone{
+			width: 100%;
+			height: 144rpx;
+			line-height: 144rpx;
+			text-align: center;
+			background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
+			font-size: 36rpx;
+			font-weight: 900;
+			color: #fff;
 		}
 	}
 </style>

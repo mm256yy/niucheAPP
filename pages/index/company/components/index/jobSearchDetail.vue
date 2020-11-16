@@ -16,7 +16,7 @@
 		 			<u-icon width="39" height="39" class="clock" name="clock"></u-icon>
 		 			<view class="year">驾龄{{form.drivingYear}}年</view>
 		 			<view class="clear"></view>
-		 			<u-image class="img" width="42rpx" height="37rpx" src="@/static/cert.png"></u-image>
+		 			<u-image class="img" width="36rpx" height="32rpx" src="@/static/cert.png"></u-image>
 		 			<view v-show="form.ifAuthentication == 0" class="type">未认证</view>
 		 			<view v-show="form.ifAuthentication == 1"  class="type">网约车认证</view>
 		 			<view v-show="form.ifAuthentication == 2"  class="type">出租车认证</view>
@@ -184,8 +184,8 @@ page{
 				float: left;
 				margin-top: 6rpx;
 			}
-			.clock {
-				font-size: 50rpx;
+			.clock{
+				margin-top: 16rpx;
 			}
 			.year {
 				margin-left: 10rpx;
@@ -193,12 +193,14 @@ page{
 				font-size: 20rpx;
 			}
 			.type {
-				margin-left: 10rpx;
+				margin-left: 8rpx;
 				margin-top: -2rpx;
 				font-size: 20rpx;
-			}
-			.img,.type {
 				float: left;
+			}
+			.img{
+				float: left;
+				margin-left: -6rpx;
 			}
 			.time {
 				margin-top: 19rpx;

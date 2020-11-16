@@ -1,6 +1,6 @@
 <template>
 	<view class="other">
-		<u-navbar back-text="返回" back-icon-size="0" title="吉利 帝豪" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<u-navbar back-text="返回" back-icon-size="0" :title="title" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
@@ -36,6 +36,7 @@
 			 	</swiper-item>
 			 </swiper>
 		 </view>
+		 <view class="phone" @click="phone()">拨打电话</view>
 	</view>
 </template>
 
@@ -62,13 +63,18 @@
 				detail: {},
 				isChildUpdate1:true,
 				isChildUpdate2:false,
-				driverDemandId: ''
+				driverDemandId: '',
+				title: ''
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
 			if(id){
 			 this.driverDemandId = id;
+			}
+			let title = option.title;
+			if(title){
+			 this.title = title;
 			}
 		},
 		mounted() {
@@ -80,7 +86,7 @@
 			    const params = {
 					id: this.driverDemandId
 				}
-					this.$u.api.MessageCompany(params).then(res=>{
+					this.$u.api.messageCompany(params).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
 						}else {
@@ -121,6 +127,9 @@
 			},
 			details() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")
+			},
+			phone() {
+				uni.makePhoneCall({ phoneNumber: '18748412671' });
 			}
 		}
 	}
@@ -259,6 +268,16 @@
 			.chat {
 				float: right;
 			}
+		}
+		.phone{
+			width: 100%;
+			height: 144rpx;
+			line-height: 144rpx;
+			text-align: center;
+			background: linear-gradient(115deg, #6DD99B, #37AB63);
+			font-size: 36rpx;
+			font-weight: 900;
+			color: #fff;
 		}
 	}
 </style>

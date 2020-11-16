@@ -65,8 +65,8 @@ const install  = (Vue, vm) => {
 	 const  sellCar = (params = {}) => vm.$u.get('/system/usermain/UsermainSellCar', params);
 	 //公司卖车详情
 	 const  detailSellCar = (params = {}) => vm.$u.get('/system/usermain/ComparySellCarTextByid', params);
-	 //详情页面查看公司信息
-	 const  MessageCompany = (params = {}) => vm.$u.get('/system/usermain/ComparySellThenComparyText', params);
+	 //公司其他信息页面查看公司信息
+	 const  messageCompany = (params = {}) => vm.$u.get('/system/usermain/ComparySellThenComparyText', params);
 	 //公司该店其他信息-在售
 	 const  detailOtherSelling = (params = {}) => vm.$u.get('/system/usermain/ComparySellCarThenComparyOherText', params);
 	 //公司该店其他信息-求购
@@ -143,6 +143,8 @@ const install  = (Vue, vm) => {
 				const  ComparyInviteAdd = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyInviteAdd', params);
 				//我的租车
 				// const  ComparyInviteAdd = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyInviteAdd', params);
+				//公司我的店铺查看公司信息
+				const  getMessageCompany = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparySellThenComparyText', params);
 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
@@ -213,11 +215,12 @@ const install  = (Vue, vm) => {
 		detailSellCar,
 		detailRent,
 		detailSearch,
-		MessageCompany,
+		messageCompany,
 		detailOtherSelling,
 		detailOtherBuy,
 		detailOtherRenting,
-		detailOtherSearching
+		detailOtherSearching,
+		getMessageCompany
 	 };
 }
 

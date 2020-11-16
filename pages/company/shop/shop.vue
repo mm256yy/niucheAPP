@@ -89,7 +89,7 @@
 		},
 		methods: {
 			getDetail(){
-					this.$u.api.MessageCompany().then(res=>{
+					this.$u.api.getMessageCompany().then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
 						}else {

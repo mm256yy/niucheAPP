@@ -34,9 +34,15 @@
 		},
 		methods: {
 			toPage(type){
-				if(type ===1 ){
+				let isauthencation = uni.getStorageSync('isauthencation');
+				if(type ===1 && isauthencation == 0){
+				   return
+				} else if(type === 2 && isauthencation == 0){
+					return
+				}
+				if(type ===1 && isauthencation == 1){
 				   this.$u.route('/pages/driver/release/carRent')
-				} else if(type === 2){
+				} else if(type === 2 && isauthencation == 1){
 					this.$u.route('/pages/driver/release/search')
 				}
 			}
