@@ -31,11 +31,9 @@
     </view>
 </template>
 <script>
-import NotLogin from '@/components/notlogin/notlogin.vue'
 import auth from '@/components/auth.vue'
 export default {
 	components:{
-		NotLogin,
 		auth
 	},
   data(){

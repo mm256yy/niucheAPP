@@ -71,11 +71,9 @@
 </template>
 
 <script>
-	import NotLogin from '@/components/notlogin/notlogin.vue'
 	import auth from '@/components/auth.vue'
 	export default {
 		components:{
-			NotLogin,
 			auth
 		},
 		data() {
@@ -160,12 +158,12 @@
 				this.$u.api.saveMainBusiness(obj).then(res=>{
 					if(res.code === 200){
 						this.clearStorage()
-						let data = res.object;
-						if (data.isfirst === 1){
-							this.showTips = true;
-						} else{
-							this.tipsCancel()
-						}
+						// let data = res.object;
+						// if (data.isfirst === 1){
+						// 	this.showTips = true;
+						// } else{
+						 this.tipsCancel()
+						// }
 					}else {
 						 this.$u.toast(res.msg);
 					}
