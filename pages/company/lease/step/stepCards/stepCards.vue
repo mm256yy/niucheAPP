@@ -32,7 +32,7 @@
 					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 					<view class="slot-tips">
 						<view>请上传批次中1辆车的《车辆行驶证》</view>
-						<view>图片尺寸建议：xxxx*xxxx，大小不超过：XXX MB</view>
+						<!-- <view>图片尺寸建议：xxxx*xxxx，大小不超过：XXX MB</view> -->
 					</view>
 				</view>
 			</u-upload>
