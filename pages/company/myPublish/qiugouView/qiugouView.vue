@@ -28,10 +28,14 @@
 		 </view>
 		 <view class="content">
 			 <u-form label-width="150" label-align="right" :model="detail" ref="uForm">
-			 		<u-form-item label="打包价:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.packprice" /></u-form-item>
-					<u-form-item label="意向品牌:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
-					<u-form-item label="行驶里程:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
-					<u-form-item label="动力类型:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
+			 		<u-form-item label="打包价:"><u-input style="padding-top: 60rpx;" :disabled="true"
+					 height="100" type="textarea" input-align="right" placeholder="" v-model="detail.packprice" /></u-form-item>
+					<u-form-item label="意向品牌:"><u-input style="padding-top: 60rpx;" placeholder=""
+					 :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
+					<u-form-item label="行驶里程:"><u-input style="padding-top: 60rpx;" placeholder=""
+					:disabled="true" height="100" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
+					<u-form-item label="动力类型:"><u-input style="padding-top: 60rpx;" :disabled="true" placeholder=""
+					 height="100" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 </u-form>
 		 </view>
 		 <PubBottom :isopen="detail.isopen" :id="AskToShopId" :type="4"></PubBottom>
