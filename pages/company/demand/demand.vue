@@ -43,7 +43,7 @@
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="数量" label-width="150">
-				<u-input v-model="form.intentioncarbrandnum" maxlength="6" type="number" :border="true" placeholder="请输入车辆品牌"/>
+				<u-input v-model="form.intentioncarbrandnum" maxlength="6" type="number" :border="true" placeholder="请输入"/>
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top">
 				<u-radio-group v-model="form.carage"  :active-color="'#6DD99C'" style="text-align: right;">
