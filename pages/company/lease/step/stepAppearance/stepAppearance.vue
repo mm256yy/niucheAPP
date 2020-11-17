@@ -29,7 +29,7 @@
 		</view>
 		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
 		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" :header="headerObj" :form-data="formDataObj"
+			<u-upload :custom-btn="true" :action="action"
 			 @on-success='uploadChange' :index="item.resName" upload-text="" 
 			:file-list="item.fileList" :max-size="4 * 1024 * 1024" max-count="1" style="width: 100%;justify-content: center;" >
 				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
@@ -66,8 +66,6 @@
 					'color':'#ffffff'
 				},
 				action: action,
-				headerObj:{Authorization:''},
-				formDataObj:{phone:''},
 				uploadList:[
 					{fileList:[],tipText:'请上传车辆右前方或左前方45°照片',resName:'twophoto'},
 					{fileList:[],tipText:'请上传车辆正前方照片',resName:'threephoto',},

@@ -10,7 +10,7 @@
 		<view class="top-content" >
             <view class="top-content-upload" v-if="type">
             	<u-upload :custom-btn="true" :action="action"
-            	@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024"
+            	@on-success='uploadChange' :file-list="fileList" :max-size="8 * 1024 * 1024"
             	 max-count="1" style="width: 100%;justify-content: center;background-color: #FFFFFF;">
             		<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
             			<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -93,13 +93,14 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
-		onShow() {
+		mounted() {
 			this.telephone = uni.getStorageSync('telephone');
 			// this.setPicToken()
 			this.getInfo()
 		},
 		methods: {
 			getInfo(){
+				console.log(1)
 				let token = uni.getStorageSync('token');
 				if(token){
 				  this.$u.api.listUserMessageInfo().then(res=>{

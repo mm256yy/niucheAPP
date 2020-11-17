@@ -8,7 +8,10 @@
 			<view class="company-yw" :class="curThemeType ==='driver'?'driver-color':'company-color'">网约车  |  租车  |  招聘  |  卖车</view>
 			<view class="company-phone">服务电话:0571-88888888 </view>
 		 </view>
-		 <view class="company-version">当前版本 1.00 </view>
+		 <view class="company-version">
+			 <view style="color: #C0C4CC;" v-show="curThemeType ==='company'" @click="loginOut">退出</view>
+			 <view>当前版本 1.00 </view>
+		 </view>
 	</view>
 </template>
 
@@ -23,6 +26,19 @@
 		methods: {
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+			},
+			loginOut(){
+				this.$u.api.logout({}).then(res=>{
+					if (res.code === 200){
+						this.$u.toast(res.msg);
+						uni.removeStorageSync('telephone');
+						uni.removeStorageSync('token');
+						uni.removeStorageSync('isauthencation');
+						uni.reLaunch({
+						    url: '/pages/login/login'
+						})
+					}
+				})
 			}
 		}
 	}
