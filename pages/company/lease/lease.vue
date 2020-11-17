@@ -156,7 +156,7 @@ export default {
 	let editId = option.editId;
 	this.editId = editId
   },
-  mounted() {
+  onShow() {
     this.initStorage()
 	if(this.editId){
 		this.editInit()
