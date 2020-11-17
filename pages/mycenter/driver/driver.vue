@@ -82,9 +82,8 @@
 		 @confirm="tipsConfirm" @cancel="tipsCancel" >
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 		        <view class="">
-		        	请选择要上传的职业资格证件是哪种?
+		        	请选择要上传的职业资格证件!
 		        </view>
-				在不选择的情况下，想关闭本提示，可点击提示窗外阴影区域就可以了。
 			</view>
 		</u-modal>
 	</view>

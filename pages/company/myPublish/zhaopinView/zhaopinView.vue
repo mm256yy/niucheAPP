@@ -32,7 +32,9 @@
 				</u-row>
 		 	</view>
 			<view style="margin-top: 20pt;">
-                 <v-tabs v-model="current" :scroll="false" bgColor="#40B36C" lineHeight='0rpx' color="#ffffff" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#000000" :tabs="['职位详情', '公司介绍']"></v-tabs>
+                 <v-tabs v-model="current" :scroll="false" bgColor="#40B36C" @change="changeTab"
+				  lineHeight='0rpx' color="#ffffff" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" 
+				  ="#000000" :tabs="['职位详情', '公司介绍']"></v-tabs>
 			     <view class="" style="padding: 10pt;background: #FFFFFF;" v-show="current === 0">
 						{{obj.jobText}}
 				 </view>
@@ -70,7 +72,7 @@
 			this.init()
 		},
 		methods: {
-			change(index) {
+			changeTab(index) {
 				this.current = index;
 			},
 			init(){
