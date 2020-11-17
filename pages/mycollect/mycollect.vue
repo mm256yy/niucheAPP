@@ -9,7 +9,6 @@
 <script>
 import 	CollectCompany from './company/company.vue'
 import 	CollectDriver from './driver/driver.vue'
-import NotLogin from '@/components/notlogin/notlogin.vue'
 import {dirverPages,companyPages} from '@/utils/tabbar.js'
 export default {
 	components:{

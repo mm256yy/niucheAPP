@@ -31,7 +31,6 @@
 	import auth from '@/components/auth.vue'
 	export default {
 		components:{
-			NotLogin,
 			auth
 		},
 		data() {
