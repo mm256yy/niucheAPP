@@ -188,19 +188,22 @@
 			toCard(){
 				let token = uni.getStorageSync('token')
 				if (token){
-				if(this.driverPub.postState === 0 || this.driverPub.postState === 9){
-					this.showTips = true
-				} else {
-					if(this.driverPub.certificationType === 1){
+					if(this.driverPub.driverState ===9 || this.driverPub.driverState === 0){
+						this.$u.toast('请先认证驾照')
+						return
+					}
+				   if(this.driverPub.postState === 0 || this.driverPub.postState === 9){
+					     this.showTips = true
+				     } else {
+					  if(this.driverPub.certificationType === 1){
 						this.$u.route("/pages/driver/onlineCar/onlineCar")
-					}
-					if(this.driverPub.certificationType === 2){
+					  }
+					   if(this.driverPub.certificationType === 2){
 						this.$u.route("/pages/driver/taxiCar/taxiCar")
-					}
-
-				}
-			  }
-			}
+					  }
+				  }
+			   }
+			},
 		}
 	}
 </script>
