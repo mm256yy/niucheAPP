@@ -144,11 +144,11 @@
 						if(res.code === 200){
 							let data = res.personalVo;
 							this.comnpanySrc =data.comparylogophoto;
-							if (data.comparynickname === ''){
+							if (data.comparynickname){
+								this.companyName = data.comparynickname;
+							} else {
 								let phone = uni.getStorageSync('telephone')
 								this.companyName = phone
-							} else {
-								this.companyName = data.comparynickname;
 							}
 							this.companyStatus = data.state;
 							this.reson = data.nostate;

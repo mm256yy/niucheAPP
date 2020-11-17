@@ -130,18 +130,17 @@
 		},
 		filters: {
 		  state: function (value) {
-		    if (!value) return ''
-		    if (value === 1) {
-				return '已认证不可更改'
-			} else if (value === 2){
-				return '未认证'
-			} else if (value === 3){
-				return '审核中'
-			} else if (value === 4){
-				return '认证未通过'
-			}else {
-				return ''
-			}
+				if (value === 2) {
+					return '已认证不可更改'
+				} else if (value === 0){
+					return '未认证'
+				} else if (value === 1){
+					return '审核中'
+				} else if (value === 3){
+					return '认证未通过'
+				}else {
+					return ''
+				}
 		  }
 		},
         mounted() {
