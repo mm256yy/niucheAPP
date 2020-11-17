@@ -31,6 +31,7 @@
 			}
 		},
 		onShow() {
+			this.showTips = false;
 			let type = uni.getStorageSync('curThemeType');
 			let token = uni.getStorageSync('token');
 			let isauthencation = uni.getStorageSync('isauthencation');

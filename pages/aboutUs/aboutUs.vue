@@ -9,9 +9,15 @@
 			<view class="company-phone">服务电话:0571-88888888 </view>
 		 </view>
 		 <view class="company-version">
-			 <view style="color: #C0C4CC;" v-show="curThemeType ==='company'" @click="loginOut">退出</view>
-			 <view>当前版本 1.00 </view>
+			 <view class="login-out" v-show="curThemeType ==='company' && tokenFlag" @click="showLogut=true">退出</view>
+			 <view>当前版本 1.0.0 </view>
 		 </view>
+		 <u-modal v-model="showLogut" title="提示" :show-cancel-button="true" confirm-text="是" cancel-text="否"
+		  @confirm="loginOut">
+		 	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		         是否确定要退出当前账号？
+		 	</view>
+		 </u-modal>
 	</view>
 </template>
 
@@ -21,6 +27,14 @@
 			return {
 				comnpanySrc: '../../static/touxx.png',
 				driverSrc: '../../static/driverSrc.png',
+				showLogut:false,
+				tokenFlag:false,
+			}
+		},
+		mounted() {
+			let token = uni.getStorageSync('token');
+			if(token){
+				this.tokenFlag = true
 			}
 		},
 		methods: {
@@ -86,5 +100,8 @@
 	  text-align: center;
 	  color: #fff;
 	  z-index: 2;
+  }
+  .login-out{
+	  color: #C0C4CC;padding-bottom: 30rpx;font-size: 12pt;
   }
 </style>
