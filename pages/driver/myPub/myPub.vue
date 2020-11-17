@@ -48,10 +48,10 @@
 								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
 								  <view class="u-line-2">工作车辆: {{item.carCards}}  </view>
 							</view>
-					        <view style="width: 40%;">
+					        <view style="width: 50%;">
 								<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
 								 button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
-								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice}}月薪</view>
+								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice | prices}}月薪</view>
 							</view>
 						</view>
 					</view>
@@ -105,6 +105,21 @@
 			this.qzList = [];
 			this.getList(1)
 			this.getPageList(1)
+		},
+		filters: {
+		  prices: function (value) {
+				if (value === 0) {
+					return '6000以内'
+				} else if (value === 1){
+					return '6000-8000'
+				} else if (value === 2){
+					return '8000-10000'
+				} else if (value === 3){
+					return '10000以上'
+				}else {
+					return ''
+				}
+		  }
 		},
 		methods: {
 			tabsChange(index) {
@@ -305,6 +320,15 @@ background: #fff;margin: 20rpx;padding-top: 30rpx;
 	background-color: #FFFFFF;
 	margin-right: 8pt;margin-bottom: 5pt;
 }
-
+	.navbar-right {
+		// margin-left: 24rpx;
+		display: flex;
+	}
+	.right-item {
+		margin: 0 12rpx;
+		position: relative;
+		color: #ffffff;
+		display: flex;
+	}
 	
 </style>
