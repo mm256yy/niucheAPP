@@ -105,7 +105,7 @@ export default {
 		border-radius: 10rpx;
 	}
 	.border-left{
-		border-left: 1px solid #7F7F7F;
+		border-left: 1px solid #e5e5e5;
 		padding-left: 30rpx!important;
 	}
 	.title{
