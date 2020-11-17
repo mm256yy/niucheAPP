@@ -11,7 +11,7 @@
 		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
 		 	<view class="right">
 				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
-		 		<view class="name">{{detail.comparyname}}</view>
+		 		<view class="name u-line-1" style="width: 100%;">{{detail.comparyname}}</view>
 				<view class="clear"></view>
 				<view v-for="(item, index) in detail.comparytag" :key="index">
 					<u-image class="car" width="29rpx" height="26rpx" src="@/static/car.png"></u-image>
@@ -161,7 +161,7 @@ page{
 			}
 			.name {
 				font-weight: 900;
-				font-size: 36rpx;
+				font-size: 12pt;
 				float: left;
 			}
 			.clock,.year,.car,.type {
@@ -183,10 +183,10 @@ page{
 			}
 			.box {
 				width: 180rpx;
-				height: 135rpx;
+				height: 125rpx;
 				padding: 6rpx;
 				float: right;
-				margin-top: -96rpx;
+				margin-top: -82rpx;
 				margin-right: -76rpx;
 				font-size: 32rpx;
 				background: #fff;

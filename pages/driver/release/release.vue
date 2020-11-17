@@ -12,17 +12,14 @@
 				<text class="text">求职</text>
 			</view>
 		</view>
-		<NotLogin></NotLogin>
 		<auth></auth>
 	</view>
 </template>
 
 <script>
-	import NotLogin from '@/components/notlogin/notlogin.vue'
 	import auth from '@/components/auth.vue'
 	export default {
 		components:{
-			NotLogin,
 			auth
 		},
 		data() {
@@ -34,15 +31,9 @@
 		},
 		methods: {
 			toPage(type){
-				let isauthencation = uni.getStorageSync('isauthencation');
-				if(type ===1 && isauthencation == 0){
-				   return
-				} else if(type === 2 && isauthencation == 0){
-					return
-				}
-				if(type ===1 && isauthencation == 1){
+				if(type ===1){
 				   this.$u.route('/pages/driver/release/carRent')
-				} else if(type === 2 && isauthencation == 1){
+				} else {
 					this.$u.route('/pages/driver/release/search')
 				}
 			}
