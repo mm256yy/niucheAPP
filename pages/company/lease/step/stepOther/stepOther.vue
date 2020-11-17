@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆外观" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<u-navbar back-text="返回"  back-icon-size="0" title="上传车辆其他" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item" @click="toNext">
 					<text>跳过</text>
@@ -26,7 +26,7 @@
 		  	  	  您可以上传贵公司的车辆宣传视频，活动等。 
 		  	  </view>
 			<view class="">
-				 您最多可以上传5张其他图
+				 <!-- 您最多可以上传5张其他图 -->
 			</view>
 		  </view>
 		</view>

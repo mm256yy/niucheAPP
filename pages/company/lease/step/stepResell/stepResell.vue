@@ -95,7 +95,7 @@ export default {
 			this.$u.toast('请填写完整');
 			return
 		}
-		this.setStorage(this.form.sellCarPrice)
+		this.setStorage(this.form)
 		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
 	}
   }
