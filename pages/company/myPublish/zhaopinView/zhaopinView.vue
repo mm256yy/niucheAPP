@@ -12,21 +12,20 @@
 			<view class="" style="background: #FFFFFF;padding: 20rpx;">	
 				<u-row>
 					<u-col span="12" style="text-align: right;">
-						<u-icon name="heart-fill" color="#3FB26C" size="36">
-							
-						</u-icon>
-						<text style="color:#3FB26C ;padding-left: 5px;">{{obj.collectionnum}}</text>
-						</u-col>
+						<u-icon name="heart-fill" color="#3FB26C" size="36"></u-icon>
+						   <text style="color:#3FB26C ;padding-left: 5px;">{{obj.collectionnum}}</text>
+					</u-col>
 					<u-col span="10">
 						<view style="font-size: 16pt;color: #000000;">{{obj.texttitle}}</view>
 					</u-col>
 					<u-col span="10" style="padding: 20rpx;">
-						<text style="color: #40B36C;font-size: 14pt;padding-right: 5pt;font-weight: bold;">¥{{obj.pay}} </text><text>月薪</text>
+						<text style="color: #40B36C;font-size: 16pt;padding-right: 5pt;font-weight: bold;">¥{{obj.pay}} </text><text>月薪</text>
 					</u-col>
-					<u-col span="6">
+					<u-col span="6" class="u-line-1">
 						工作城市：{{obj.city}}
 					</u-col>
-					<u-col span="6">
+					<u-col span="1"></u-col>
+					<u-col span="5">
 						招聘：{{obj.invitepeoplenum}}人 
 					</u-col>
 				</u-row>
@@ -42,7 +41,7 @@
                        {{obj.comparyIntroduce}}
 				 </view>
 			</view>
-			<view style="font-size: 10pt;padding: 10pt 5pt;">面试地址：{{obj.interviewAddress}}</view>
+			<view style="font-size: 10pt;padding: 20pt 5pt;">面试地址：{{obj.city}}</view>
 		  </scroll-view> 
 		</view>
 		 <PubBottom :isopen.sync="obj.isopen" :id="inviteid" :type="2"></PubBottom>
