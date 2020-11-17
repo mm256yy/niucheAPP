@@ -49,17 +49,14 @@
 				</view>
 			</view>
 		</view>
-		<NotLogin></NotLogin>
 		<auth ref="auth"></auth>
 	</view>
 </template>
 
 <script>
-	import NotLogin from '@/components/notlogin/notlogin.vue'
 	import auth from '@/components/auth.vue'
 	export default {
 		components:{
-			NotLogin,
 			auth
 		},
 		data() {
@@ -75,7 +72,7 @@
 			}
 		},
 		onShow() {
-
+             
 		},
 		mounted() {
 			this.setDay()
@@ -93,12 +90,8 @@
 				uni.setStorageSync('carPubType', data);
 			},
 			toPage(type){
-				let isauthencation = uni.getStorageSync('isauthencation');
-				let token = uni.getStorageSync('token');
-				if(!isauthencation && token){
-					this.$refs.auth.showTips = true;
-					return false
-				}
+				// let token = uni.getStorageSync('token');
+
 				if(type ===1 ){
 				  this.setStorage(1)
 				   this.$u.route('/pages/company/lease/lease')

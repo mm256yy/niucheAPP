@@ -13,7 +13,7 @@
 						<u-col span="8" v-else @click="toAuth">
 							<view @click="toAuth" style="color: #fff;font-size: 14pt;">{{companyName}}</view>
 							<view class="colorF">{{companyStatus | state}}</view>
-							<view v-if="companyStatus === 4">原因 {{reson}}</view>
+							<view v-if="companyStatus === 3">原因 {{reson}}</view>
 						</u-col>
 						<u-col span="1">
 							<u-icon name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>
@@ -123,14 +123,13 @@
 		},
 		filters: {
 		  state: function (value) {
-		    if (!value) return ''
-		    if (value === 1) {
+		    if (value === 2) {
 				return '已认证'
-			} else if (value === 2){
+			} else if (value === 0){
 				return '未认证'
-			} else if (value === 3){
+			} else if (value === 1){
 				return '审核中'
-			} else if (value === 4){
+			} else if (value === 3){
 				return '认证未通过'
 			}else {
 				return ''
@@ -145,9 +144,13 @@
 						if(res.code === 200){
 							let data = res.personalVo;
 							this.comnpanySrc =data.comparylogophoto;
-							this.companyName = data.comparynickname;
+							if (data.comparynickname === ''){
+								let phone = uni.getStorageSync('telephone')
+								this.companyName = phone
+							} else {
+								this.companyName = data.comparynickname;
+							}
 							this.companyStatus = data.state;
-							
 							this.reson = data.nostate;
 							let strF ='已发布';
 							let strE = '条'

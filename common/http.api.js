@@ -145,9 +145,14 @@ const install  = (Vue, vm) => {
 				// const  ComparyInviteAdd = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyInviteAdd', params);
 				//公司我的店铺查看公司信息
 				const  getMessageCompany = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparySellThenComparyText', params);
+				//获取认证状态
+				const  getStatus = (params = {}) => vm.$u.post('/user/drivingLicense/getStatus', params);
+				
+				
 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getStatus,
 		ComparyInviteAdd,
 		ComparyAskToShopUpdate,
 		ComparyInviteEchoText,
