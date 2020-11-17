@@ -101,7 +101,7 @@
 		text-align: right!important;
 	}
 	image {
-		width: 200rpx;
+		width: 220rpx;
 		height: 200rpx;
 		border-radius: 10rpx;
 	}
