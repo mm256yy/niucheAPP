@@ -32,14 +32,12 @@
 			</view>
 		</view>
 		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
-		<NotLogin></NotLogin>
 		<auth></auth>
      </view>
 </template>
 
 <script>
 import ChildPopup from '@/components/importCar.vue'
-import NotLogin from '@/components/notlogin/notlogin.vue'
 import auth from '@/components/auth.vue'
 export default {
   data(){
@@ -60,7 +58,6 @@ export default {
   },
    components:{
 	   ChildPopup,
-	   NotLogin,
 	   auth
    },
     onShow() {

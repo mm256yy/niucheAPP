@@ -65,7 +65,6 @@
 				您可在问题模板基础上编辑，也可自行编辑。是否现在开始？
 			</view>
 		</u-modal>
-		<NotLogin></NotLogin>
 		<auth></auth>
 	</view>
 </template>

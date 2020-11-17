@@ -57,7 +57,6 @@
 		<view style="text-align: center; padding: 5pt 25pt;margin-top: 10pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">下一步</u-button>
 		</view>
-		<NotLogin></NotLogin>
 		<auth></auth>
 	</view>
 </template>
