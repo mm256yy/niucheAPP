@@ -57,7 +57,7 @@
 		  </u-form>	
 	   </view>
 		<view class="bottom">
-			<view class="btn">重置</view>
+			<view class="btn" @click="reset()">重置</view>
 			<view class="total" @click="result()">当前选择条件的检索结果，共{{total}}条>></view>
 		</view>
 	</view>
@@ -121,6 +121,23 @@
 			this.select()
 		},
 		methods: {
+			reset() {
+				this.form={
+					businessType:0,
+					km: 100,
+					packprice:''
+				};
+				this.brandList.map( item => {
+				  item.checked=false;
+				});
+				this.modelList.map( item => {
+				  item.checked=false;
+				});
+				this.powerList.map( item => {
+				  item.checked=false;
+				});
+				this.carage='';
+			},
 			add() {
 				this.addkey = this.businessTypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
 				(this.cartypekey?'/':'')+this.cartypekey + (this.powerkey?'/':'')+this.powerkey +

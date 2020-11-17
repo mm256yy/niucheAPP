@@ -19,7 +19,17 @@
 				</view>
 		 	</view>
 		</view>
-		<view class="wrap">
+		<view style="padding: 20rpx 40rpx;">价格区间</view>
+		<range-price :tab="tab" :detail="detail"></range-price>
+		<view style="padding: 20rpx 40rpx;">参数配置</view>
+		<setting-parameter :detail="detail"></setting-parameter>
+		<view class="phone">
+			<view class="left" @click="other()">公司其他</view>
+			<view class="right">拨打电话</view>
+		</view>
+		<!-- <view class="phone" @click="phone()">拨打电话</view> -->
+		<view style="width: 100%;height:144rpx"></view>
+		<!-- <view class="wrap">
 			<view class="u-tabs-box">
 			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
 				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
@@ -28,7 +38,7 @@
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :tab="tab" :detail="detail" ref="child"></range-price>
+			 			<range-price :tab="tab" :detail="detail"></range-price>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
@@ -44,15 +54,15 @@
 			</swiper>
 			<view class="more" @click="other()">上拉加载该公司其他信息</view>
 			<view class="phone" @click="phone()">拨打电话</view>
-			<!-- <view class="last">
+			<view class="last">
 				<view class="bottom">
 					<view class="left">预约看车</view>
 					<view class="icon-box"><u-image class="img" width="53rpx" height="45rpx" src="@/static/chat.png"></u-image></view>
 					<u-image class="chat" width="96rpx" height="96rpx" src="@/static/chatDri.png"></u-image>
 					<view class="right">下单租车</view>
 				</view>
-			</view> -->
-		</view>
+			</view>
+		</view> -->
 	</view>
 </template>
 
@@ -266,12 +276,16 @@ page{
 		.phone{
 			width: 100%;
 			height: 144rpx;
-			line-height: 144rpx;
-			text-align: center;
-			background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 			font-size: 36rpx;
 			font-weight: 900;
 			color: #fff;
+			position: fixed;
+			bottom: 0;
+			left: 0;
 		}
 	}
 </style>

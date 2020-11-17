@@ -39,7 +39,7 @@
 					<view class="box">
 						<view><text>￥{{item.rentprice}}</text>元/月起租</view>
 						<view>
-							<view v-show="items.length<8" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+							<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
 						</view>
 					</view>
 				</view>
@@ -205,13 +205,13 @@
 							 }
 							 this.list.forEach(item=>{
 								 if(item.systemtag){
-									if(item.systemtag.length > 3) {
-										item.systemtag = item.systemtag.slice(0,3); 
-									}else if(item.systemtag.length <= 3){
+									if(item.systemtag.length > 2) {
+										item.systemtag = item.systemtag.slice(0,2); 
+									}else if(item.systemtag.length <= 2){
 										if(item.usertag) {
 											const arr = item.systemtag.concat(item.usertag);
-											if(arr.length > 3) {
-												item.systemtag = arr.slice(0,3);
+											if(arr.length > 2) {
+												item.systemtag = arr.slice(0,2);
 											}						 											 
 										}
 									} 
@@ -240,13 +240,13 @@
 							 }
 							 this.list.forEach(item=>{
 							 	if(item.systemtag){
-							 		if(item.systemtag.length > 3) {
-							 			item.systemtag = item.systemtag.slice(0,3); 
-							 		}else if(item.systemtag.length <= 3){
+							 		if(item.systemtag.length > 2) {
+							 			item.systemtag = item.systemtag.slice(0,2); 
+							 		}else if(item.systemtag.length <= 2){
 							 			if(item.usertag) {
 							 				const arr = item.systemtag.concat(item.usertag);
-							 				if(arr.length > 3) {
-							 					item.systemtag = arr.slice(0,3);
+							 				if(arr.length > 2) {
+							 					item.systemtag = arr.slice(0,2);
 							 				}						 											 
 							 			}
 							 		} 

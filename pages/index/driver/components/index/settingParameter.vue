@@ -77,7 +77,6 @@
 			height: 84rpx;
 			background: #FFF;
 			margin-left: 40rpx;
-			margin-top: 42rpx;
 			margin-bottom: 33rpx;
 			padding: 9rpx 0;
 			font-size: 28rpx;
