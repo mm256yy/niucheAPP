@@ -287,9 +287,6 @@
 
 <style lang="scss" scoped>
 	.carSell {
-		.last .lists:last-child {
-			margin-bottom: 90rpx;
-		}
 		.wrap {
 			padding: 40rpx;
 		}

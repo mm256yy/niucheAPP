@@ -7,37 +7,37 @@
 				</view>
 			</view>
 		 </u-navbar>
-		 <view class="message">
-			 <view class="top">
-			 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
-			 	<view class="right">
-			 		<view class="name">{{detail.comparyname}}</view>
-			 		<view class="address">{{detail.area}}</view>
-			 		<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
-			 		<view class="clear"></view>
-			 	</view>
-			 </view>
+		 <view class="top">
+		 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
+		 	<view class="right">
+		 		<view class="name">{{detail.comparyname}}</view>
+		 		<view class="address">{{detail.area}}</view>
+		 		<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
+		 		<view class="clear"></view>
+		 	</view>
 		 </view>
 		 <view class="wrap">
-			 <view style="">
-			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
-			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
-			 	 swiperWidth="750"></u-tabs-swiper>
-			 </view>
-			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
-			 			<selling :id="driverDemandId" v-if="isChildUpdate1" ref="selling"></selling>
-			 		</scroll-view>
-			 	</swiper-item>
-			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuy">
-			 			<buy :id="driverDemandId" v-if="isChildUpdate2" ref="buy"></buy>
-			 		</scroll-view>
-			 	</swiper-item>
-			 </swiper>
+			 <u-sticky class="wrap" bg-color="#fff">
+			 	<view style="">
+			 		<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
+			 	   bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 		 swiperWidth="750"></u-tabs-swiper>
+			 	</view>
+			 	<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			 		<swiper-item class="swiper-item">
+			 			<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
+			 				<selling :id="driverDemandId" v-if="isChildUpdate1" ref="selling"></selling>
+			 			</scroll-view>
+			 		</swiper-item>
+			 		<swiper-item class="swiper-item">
+			 			<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuy">
+			 				<buy :id="driverDemandId" v-if="isChildUpdate2" ref="buy"></buy>
+			 			</scroll-view>
+			 		</swiper-item>
+			 	</swiper>
+			 </u-sticky>
 		 </view>
-		 <view class="phone" @click="phone()">拨打电话</view>
+		 <!-- <view class="phone" @click="phone()">拨打电话</view> -->
 	</view>
 </template>
 
@@ -152,7 +152,7 @@
 	.wrap {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - 400rpx);
+		height: calc(100vh - var(--window-top));
 		width: 100%;
 	}
 	.swiper-box {
@@ -162,6 +162,7 @@
 		height: 100%;
 	}
 	.other {
+		background-color: #F5F5F8;
 		.heart {
 			margin-top: 14rpx;
 			margin-right: 20rpx;
@@ -175,10 +176,8 @@
 			margin-left: 42rpx;
 			margin-top: 40rpx;
 			margin-bottom: 60rpx;
-			.message{
-				display: flex;
-				align-items: center;
-			}
+			display: flex;
+			align-items: center;
 			.right {
 				padding: 30rpx 42rpx;
 				font-size: 20rpx;

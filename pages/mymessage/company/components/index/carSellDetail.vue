@@ -13,7 +13,7 @@
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
-				<view class="collect">
+				<view class="collect" v-if="!viewFlag">
 					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.comparyid)" class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
 					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.comparyid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 					<text>{{detail.collectnum}}</text>
@@ -25,7 +25,22 @@
 				</view>
 		 	</view>
 		</view>
-		<view class="wrap">
+		<view style="padding: 20rpx 40rpx;">价格区间</view>
+		<range-price :tab="tab" :detail="detail"></range-price>
+		<view style="padding: 20rpx 40rpx;">参数配置</view>
+		<setting-parameter :detail="detail"></setting-parameter>
+		<view class="phone">
+			<view class="left" @click="other()">公司其他</view>
+			<view class="right">拨打电话</view>
+		</view>
+		<view style="width: 100%;height:144rpx"></view>
+		<!-- <view class="last">
+			<view class="left">预约看车</view>
+			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
+			<view class="right">下单租车</view>
+		</view> -->
+		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :id="driverDemandId" :type="3"></PubBottom>
+		<!-- <view class="wrap">
 			<view class="u-tabs-box">
 			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="listTab" 
 				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
@@ -48,15 +63,7 @@
 					</scroll-view>
 				</swiper-item>
 			</swiper>
-			<view @click="other" class="more">上拉加载该公司其他信息</view>
-			<view class="phone" @click="phone()">拨打电话</view>
-			<!-- <view class="last">
-				<view class="left">预约看车</view>
-				<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
-				<view class="right">下单租车</view>
-			</view> -->
-			<PubBottom v-if="viewFlag" :isopen="detail.isopen" :id="driverDemandId" :type="3"></PubBottom>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -314,12 +321,16 @@ page{
 		.phone{
 			width: 100%;
 			height: 144rpx;
-			line-height: 144rpx;
-			text-align: center;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
 			background: linear-gradient(115deg, #6DD99B, #37AB63);
 			font-size: 36rpx;
 			font-weight: 900;
 			color: #fff;
+			position: fixed;
+			bottom: 0;
+			left: 0;
 		}
 	}
 </style>

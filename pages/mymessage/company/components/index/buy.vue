@@ -178,9 +178,6 @@
 </script>
 <style lang="scss" scoped>
 	.buy {
-		.last .lists:last-child {
-			margin-bottom: 70rpx;
-		}
 		.clear {
 			clear: both;
 		}

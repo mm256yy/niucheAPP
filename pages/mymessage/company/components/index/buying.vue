@@ -268,9 +268,6 @@
 
 <style lang="scss" scoped>
 	.buying {
-		.last .lists:last-child {
-			margin-bottom: 70rpx;
-		}
 		.wrap {
 			padding: 40rpx;
 		}

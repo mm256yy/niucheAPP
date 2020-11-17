@@ -24,6 +24,30 @@
 		 		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 		 	</view>
 		 </view>
+		 <view class="last">
+		 	<view class="lists" v-for="(item, index) in list" :key="index">
+		 		<view class="list" @click="detail(item.demandid)">
+		 			<u-image class="left" width="312rpx" height="231rpx" :src="item.onephoto"></u-image>
+		 			<view class="right">
+		 						<view v-show="item.businesstype == 1" class="city">网约车</view>
+		 						<view v-show="item.businesstype == 2" class="city">出租车</view>
+		 				<view class="clear"></view>
+		 				<view class="name u-line-2">{{item.cartitle}}</view>
+		 				<view class="price">打包价<text>{{item.packprice}}</text></view>
+		 				<view v-show="items.length<8" v-for="(items, index) in item.systemok" :key="index" class="case">{{items}}</view>
+		 			</view>
+		 			<view class="clear"></view>
+		 			<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+		 			<view class="year">{{item.carage}}</view>
+		 			<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+		 			<view class="year">{{item.carkm}}万公里</view>
+		 					<view class="clear"></view>
+		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		 		</view>
+		 		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		 		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+		 	</view>
+		 </view>
 		 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
 </template>
@@ -181,9 +205,6 @@
 </script>
 <style lang="scss" scoped>
 	.selling {
-		.last .lists:last-child {
-			margin-bottom: 90rpx;
-		}
 		.clear {
 			clear: both;
 		}
