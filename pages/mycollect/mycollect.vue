@@ -12,7 +12,7 @@ import 	CollectDriver from './driver/driver.vue'
 import {dirverPages,companyPages} from '@/utils/tabbar.js'
 export default {
 	components:{
-		CollectCompany,CollectDriver,NotLogin
+		CollectCompany,CollectDriver
 	},
 	onShow() {
 		let type = uni.getStorageSync('curThemeType');

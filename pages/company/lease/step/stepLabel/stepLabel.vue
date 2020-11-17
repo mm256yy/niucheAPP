@@ -71,6 +71,7 @@ export default {
 		   list.forEach(item=>{
 			   this.zdyList.push({text:item,info:'success'})
 		   })
+		    this.getSysTags()
 	  }else {
 		  this.getSysTags()
 	  }
