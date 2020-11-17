@@ -95,12 +95,10 @@
 		},
 		mounted() {
 			this.telephone = uni.getStorageSync('telephone');
-			// this.setPicToken()
 			this.getInfo()
 		},
 		methods: {
 			getInfo(){
-				console.log(1)
 				let token = uni.getStorageSync('token');
 				if(token){
 				  this.$u.api.listUserMessageInfo().then(res=>{

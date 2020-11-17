@@ -1,8 +1,14 @@
 <template>
 	<view :class="'driver-content'"> 
 		<view class="wrap">
-		<u-navbar back-text="返回" :back-text-style="backTextStyle"  back-icon-size="0" title="我的发布" 
-		:background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<u-navbar :back-text-style="backTextStyle"  back-icon-size="0" title="我的发布" 
+		:background="backgroundDri" title-color="#FFFFFF">
+		<view class="navbar-right">
+			<view class="message-box right-item">
+				<text  @click="toCenter">返回</text>
+			</view>
+		</view>
+		</u-navbar>
 		<view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -103,6 +109,9 @@
 		methods: {
 			tabsChange(index) {
 				this.swiperCurrent = index;
+			},
+			toCenter(){
+				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			transition(e) {
 				let dx = e.detail.dx;
