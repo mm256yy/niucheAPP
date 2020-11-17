@@ -32,17 +32,17 @@
 				</u-row>
 		 	</view>
 			<view style="margin-top: 20pt;">
-                 <v-tabs v-model="current" :scroll="false" bgColor="#40B36C" @change="changeTab"
-				  lineHeight='0rpx' color="#ffffff" :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx" 
-				  ="#000000" :tabs="['职位详情', '公司介绍']"></v-tabs>
-			     <view class="" style="padding: 10pt;background: #FFFFFF;" v-show="current === 0">
+                 <v-tabs v-model="current" :scroll="false" @change="changeTab" activeColor="#ffffff"
+				  lineHeight='0rpx' color="#000000" :pills="true" pillsColor="#40B36C" pillsBorderRadius="0rpx" 
+				   :tabs="['职位详情', '公司介绍']"></v-tabs>
+			     <view class="" style="padding: 10pt;background: #FFFFFF;min-height: 100pt;" v-show="current === 0">
 						{{obj.jobText}}
 				 </view>
-				 <view style="padding: 10pt;background: #FFFFFF;" v-show="current === 1">
+				 <view style="padding: 10pt;background: #FFFFFF;min-height: 100pt;" v-show="current === 1">
                        {{obj.comparyIntroduce}}
 				 </view>
 			</view>
-			<view style="font-size: 10pt;">面试地址：浙江省杭州市江南大道3880号 华荣时代大厦 1806-2室</view>
+			<view style="font-size: 10pt;padding: 10pt 5pt;">面试地址：{{obj.interviewAddress}}</view>
 		  </scroll-view> 
 		</view>
 		 <PubBottom :isopen.sync="obj.isopen" :id="inviteid" :type="2"></PubBottom>
