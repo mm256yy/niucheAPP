@@ -1,12 +1,12 @@
 <template>
 	<view>
-		<view class="scroll-item" @click="toView(item.inviteId)" v-for="(item,index) in list" :key="item.index">
+		<view class="scroll-item" v-for="(item,index) in list" :key="item.index">
 			<u-row class="" style="padding: 8pt 15pt;">
-				<u-col span="11" style="padding: 5pt 0;">
+				<u-col span="11" style="padding: 5pt 0;" @click="toView(item.inviteId)">
 					<view>{{item.createtime}}</view>
 				</u-col>
 				<u-col span="1" style="padding: 5pt 0;">
-					<u-icon name="reload" color="#36AB62" size="40" @click="reload(item.inviteId)"></u-icon>
+					<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
 				</u-col>
 				<u-col span="12" @click="toView(item.inviteId)" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
 					<view style="font-size: 12pt;font-weight: bold;">{{item.texttitle}}</view>
@@ -53,6 +53,7 @@
 						let arr = res.rows;
 						this.total = res.total
 						arr.forEach(item=>{
+							item.reloadFlag = true;
 							this.list.push(item)
 						})
 						let len = this.list.length;
@@ -69,8 +70,16 @@
 			toView(id){
 				this.$u.route("/pages/company/myPublish/zhaopinView/zhaopinView",{id:id})
 			},
-			reload(id){
-				console.log(id)
+			reload(item){
+				item.reloadFlag = false
+				this.$u.api.MyIssueRefresh({id:item.inviteId,BusinessState:2}).then(res=>{
+					if(res.code === 200){
+						item.reloadFlag = true
+						this.$u.toast('刷新成功')
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			onreachBottom() {
 				let len = this.list.length;

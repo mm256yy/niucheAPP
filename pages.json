@@ -529,6 +529,14 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/company/myPublish/qiugouView/qiugouView",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {
