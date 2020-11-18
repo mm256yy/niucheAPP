@@ -45,7 +45,7 @@
 		 <view class="fixed-btn" style="">
 		   <view class="btn-inline">
 				<view class="">
-					<u-icon size="80" :name="xxSrc" @click="delSubmit"></u-icon>
+					<u-icon size="80" :name="xxSrc" @click="delTips = true"></u-icon>
 				</view>
 				<view class="btn-edit" @click="toNext">编辑</view>
 				<view class="btn-edit">|</view>
@@ -55,6 +55,16 @@
 				</view>
            </view>
 		 </view>
+		 <u-modal v-model="delTips" @confirm="delSubmit" :show-cancel-button="true" confirm-text="是" cancel-text="否">
+		 	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		         请确认是否删除该条信息？
+		 	</view>
+		 </u-modal>
+		 <u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
+		 	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		         删除成功,点击我知道了,跳转到我的发布列表
+		 	</view>
+		 </u-modal>
 	</view>
 </template>
 
@@ -67,6 +77,7 @@ export default {
 				},
 				hailing: '网约车',
 				taxi: '出租车',
+				delTips:false,
 				driverDemandId:'',
 				showTips:false,
 				titleStyle:{'fontSize': '12pt','color':'#000000'},
@@ -94,8 +105,8 @@ export default {
 				},
 				salaryList:[{name: 0,text:'6000以内' },{name: 1,text:'6000-8000' },{name: 2,text:'8000-10000' },{name: 3,text:'10000以上' }],
 				hoursList:[{name: 0,text:'8小时' },{name: 1,text:'8-10小时' },{name: 2,text:'10小时以上' },{name: 3,text:'不限' }],
-				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2万公里-5万公里' },
-					  {name: 2,text:'5万公里-10万公里' },{name: 3,text:'10万公里-20万公里' },{name: 4,text:'20万公里-30万公里' },],
+				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2-5万公里' },
+					  {name: 2,text:'5-10万公里' },{name: 3,text:'10-20万公里' },{name: 4,text:'20-30万公里' },],
 			}
 		},
 		onLoad(option) {
@@ -288,5 +299,6 @@ page{
 		height: 40px;line-height: 40px;color: #FFFFFF;
 	}
 </style>
+
 
 
