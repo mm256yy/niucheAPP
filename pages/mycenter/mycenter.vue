@@ -34,11 +34,7 @@
 			this.showTips = false;
 			let type = uni.getStorageSync('curThemeType');
 			let token = uni.getStorageSync('token');
-			let isauthencation = uni.getStorageSync('isauthencation');
-			let Num = uni.getStorageSync('loginNum')
-			if(!isauthencation && token && !Num){
-				this.showTips = true
-			}	
+			
 			this.curThemeType = type
 			if (type === 'company'){
 				companyPages.forEach(item=>{
@@ -47,8 +43,20 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#41B36D',
 				})
-				if (token && this.$refs.searchCom){
-					this.$refs.searchCom.getUser()
+				if (token){
+					if (this.$refs.searchCom){
+						this.$refs.searchCom.getUser()
+					}
+					this.$u.api.getStatus().then(res=>{
+						 if (res.code === 200) {
+							 let Num = uni.getStorageSync('loginNum')
+							 let data = res.object;
+							 let flag = Number(data.checkstate)
+							 if(flag === 0 && !Num){
+							 	this.showTips = true
+							 }
+						 }
+					})
 				}
 			} else {
 				dirverPages.forEach(item=>{
@@ -57,11 +65,22 @@
 				uni.setTabBarStyle({
 				  selectedColor: '#FE9217',
 				})
-				if (token && this.$refs.searchDri){
-					this.$refs.searchDri.getUser()
+				if (token){
+					if (this.$refs.searchDri){
+						this.$refs.searchDri.getUser()
+					}
+					this.$u.api.getStatus().then(res=>{
+						 if (res.code === 200) {
+							 let Num = uni.getStorageSync('loginNum')
+							 let data = res.object;
+							 let flag = data.driverphotostate
+							 if(flag === 0 && !Num){
+							 	this.showTips = true
+							 }
+						 }
+					})
 				}
 			}
-			
 		},
 		components:{
 			MyCompany,MyDriver
