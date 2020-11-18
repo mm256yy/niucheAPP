@@ -17,25 +17,23 @@
 		 	</view>
 		 </view>
 		 <view class="wrap">
-			 <u-sticky bg-color="#F5F5F8">
-			 	<view style="">
-			 		<u-tabs-swiper ref="uTabs" activeColor="#FF6501" :list="listTab" inactive-color="#000"
-			 	   bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
-			 		 swiperWidth="750"></u-tabs-swiper>
-			 	</view>
-				<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-					<swiper-item class="swiper-item">
-						<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRenting">
-							<renting v-if="isChildUpdate1" :id="driverDemandId" ref="renting"></renting>
-						</scroll-view>
-					</swiper-item>
-					<swiper-item class="swiper-item">
-						<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearching">
-							<searching v-if="isChildUpdate2" :id="driverDemandId" ref="searching"></searching>
-						</scroll-view>
-					</swiper-item>
-				</swiper>
-			 </u-sticky>
+			 <view style="">
+			 	<u-tabs-swiper ref="uTabs" activeColor="#FF6501" :list="listTab" inactive-color="#000"
+			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 	 swiperWidth="750"></u-tabs-swiper>
+			 </view>
+			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRenting">
+			 			<renting v-if="isChildUpdate1" :id="driverDemandId" ref="renting"></renting>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearching">
+			 			<searching v-if="isChildUpdate2" :id="driverDemandId" ref="searching"></searching>
+			 		</scroll-view>
+			 	</swiper-item>
+			 </swiper>
 		 </view>
 		 <view style="width: 100%;height: 1000rpx;"></view>
 		 <!-- <view class="phone" @click="phone()">拨打电话</view> -->
@@ -164,10 +162,7 @@
 		background-color: #F5F5F8;
 		.top {
 			width: 666rpx;
-			padding: 40rpx 39rpx;
 			margin-left: 42rpx;
-			margin-top: 40rpx;
-			margin-bottom: 60rpx;
 			display: flex;
 			align-items: center;
 			.right {

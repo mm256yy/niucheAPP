@@ -35,7 +35,7 @@
 			 				<u-input :disabled="true" height="80" input-align="right" v-model="form.workCity" />
 			 			</u-form-item>
 			 			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" placeholder="" input-align="right"
-			 			 v-model="form.businessType===0?'网约车':'出租车'" /></u-form-item>
+			 			 v-model="form.businessType===1?'网约车':'出租车'" /></u-form-item>
 			 			<u-form-item label="求职意向:"><u-input :disabled="true" height="80" placeholder="" 
 			 			type="textarea" input-align="right" v-model="form.str" /></u-form-item>
 			 			<u-form-item label="我的优势:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
