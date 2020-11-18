@@ -59,6 +59,7 @@
 				this.showMsg = ' 亲，您尚未登录不能使用该功能，现在去登录'
 				this.confirmText = '好的';
 				this.loginStatus = false;
+				this.showTips = true;
 			}
 		},
 		methods:{
