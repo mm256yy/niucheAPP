@@ -46,7 +46,7 @@
 						</view>
 						
 					</view>
-						<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+						<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
 			</swiper-item>
 			<!-- 我的招聘 -->

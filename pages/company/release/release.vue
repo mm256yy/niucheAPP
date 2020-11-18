@@ -99,19 +99,27 @@
 				uni.setStorageSync('carPubType', data);
 			},
 			toPage(type){
-				// let token = uni.getStorageSync('token');
-
-				if(type ===1 ){
-				  this.setStorage(1)
-				   this.$u.route('/pages/company/lease/lease')
-				} else if(type === 2){
-					this.$u.route('/pages/company/recruit/recruit')
-				}else if(type === 3){
-					this.setStorage(3)
-					this.$u.route('/pages/company/lease/lease')
-				}else{
-					this.$u.route('/pages/company/demand/demand')
-				}
+				let token = uni.getStorageSync('token');
+                let isauthencation = uni.getStorageSync('isauthencation');
+				if(token){
+					if (isauthencation === 2) {
+						if(type ===1 ){
+						  this.setStorage(1)
+						   this.$u.route('/pages/company/lease/lease')
+						} else if(type === 2){
+							this.$u.route('/pages/company/recruit/recruit')
+						}else if(type === 3){
+							this.setStorage(3)
+							this.$u.route('/pages/company/lease/lease')
+						}else{
+							this.$u.route('/pages/company/demand/demand')
+						}
+					} else {
+						this.$u.toast('未认证通过，不能发布信息');
+					}
+			   } else {
+				    this.$u.route('/pages/login/login');
+			   }
 			}
 		}
 	}
@@ -169,11 +177,9 @@ page{
 	height: 100%;
 }
  .navbar-right {
- 	margin-left: 24rpx;
  	display: flex;
  }
  .right-item {
- 	margin: 0 12rpx;
  	position: relative;
  	color: #ffffff;
  	display: flex;

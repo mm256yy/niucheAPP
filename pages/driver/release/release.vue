@@ -31,10 +31,20 @@
 		},
 		methods: {
 			toPage(type){
-				if(type ===1){
-				   this.$u.route('/pages/driver/release/carRent')
-				} else {
-					this.$u.route('/pages/driver/release/search')
+				let token = uni.getStorageSync('token');
+				let isauthencation = uni.getStorageSync('isauthencation');
+				if(token) {
+					if (isauthencation === 2) {
+						if(type ===1){
+						   this.$u.route('/pages/driver/release/carRent')
+						} else {
+							this.$u.route('/pages/driver/release/search')
+						}
+					} else {
+						this.$u.toast('未认证通过，不能发布信息');
+					}
+				} else{
+					 this.$u.route('/pages/login/login');
 				}
 			}
 		}

@@ -21,48 +21,53 @@
 			};
 		},
 		mounted() {
-			let token = uni.getStorageSync('token');
-			if(token){
-				this.loginStatus = true;
-				this.$u.api.getStatus().then(res=>{
-					if(res.code === 200){
-						let role = uni.getStorageSync('role');
-						let data = res.object;
-						let flag = 0
-						if (role === 2){//公司
-							flag = Number(data.checkstate)
-						 } else {
-							flag = data.driverphotostate
-						}
-						this.authFlag = flag;
-						if(flag === 0){
-							this.showMsg = '亲，您尚未认证，是否立即去认证'
-							this.confirmText = '是';
-							this.showCancel = true;
-							this.showTips = true;
-						} else if (flag === 1){
-							this.showMsg = '亲，您提交的认证信息，正在审核中,将跳转到我的页面'
-							this.confirmText = '好的'
-							this.showCancel = false;
-							this.showTips = true;
-						} else if (flag === 2) {
-							this.showTips = false;
-						} else if (flag === 3 ){
-							this.showMsg = '亲，您提交的认证信息,未通过,将跳转到我的页面'
-							this.confirmText = '好的'
-							this.showCancel = false;
-							this.showTips = true;
-						} else {}
-					}//
-				})
-			} else {
-				this.showMsg = ' 亲，您尚未登录不能使用该功能，现在去登录'
-				this.confirmText = '好的';
-				this.loginStatus = false;
-				this.showTips = true;
-			}
+			this.getStatus()
 		},
 		methods:{
+			getStatus(){
+				let token = uni.getStorageSync('token');
+				if(token){
+					this.loginStatus = true;
+					this.$u.api.getStatus().then(res=>{
+						if(res.code === 200){
+							let role = uni.getStorageSync('role');
+							let data = res.object;
+							let flag = 0
+							if (role === 2){//公司
+								flag = Number(data.checkstate)
+							 } else {
+								flag = data.driverphotostate
+							}
+							this.authFlag = flag;
+							uni.setStorageSync('isauthencation',flag)
+							if(flag === 0){
+								this.showMsg = '亲，您尚未认证，是否立即去认证'
+								this.confirmText = '是';
+								this.showCancel = true;
+								this.showTips = true;
+							} else if (flag === 1){
+								this.showMsg = '亲，您提交的认证信息，正在审核中,将跳转到我的页面'
+								this.confirmText = '好的'
+								this.showCancel = false;
+								this.showTips = true;
+							} else if (flag === 2) {
+								this.showTips = false;
+							} else if (flag === 3 ){
+								this.showMsg = '亲，您提交的认证信息,未通过,将跳转到我的页面'
+								this.confirmText = '好的'
+								this.showCancel = false;
+								this.showTips = true;
+								
+							} else {}
+						}//
+					})
+				} else {
+					this.showMsg = ' 亲，您尚未登录不能使用该功能，现在去登录'
+					this.confirmText = '好的';
+					this.loginStatus = false;
+					this.showTips = true;
+				}
+			},
 			tipsConfirm(){
 				let loginStatus = this.loginStatus;//登录状态 true 已登录 false 未登录
 				if (loginStatus) {

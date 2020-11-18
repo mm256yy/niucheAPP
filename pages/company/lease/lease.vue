@@ -405,11 +405,9 @@ page{
 	background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC);
  }
  .navbar-right {
- 	margin-left: 24rpx;
  	display: flex;
  }
  .right-item {
- 	margin: 0 12rpx;
  	position: relative;
  	color: #ffffff;
  	display: flex;
