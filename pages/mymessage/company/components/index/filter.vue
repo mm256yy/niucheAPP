@@ -124,8 +124,13 @@
 			reset() {
 				this.form={
 					businessType:0,
+					carbrand:'',
+					cartype:'',
 					km: 100,
-					packprice:''
+					power:'',
+					packprice:'',
+					startCarAge:'',
+					endCarAge:''
 				};
 				this.brandList.map( item => {
 				  item.checked=false;
@@ -138,6 +143,17 @@
 				});
 				this.carage='';
 				this.addkey = '不限';
+				this.businessTypekey='不限';
+				this.carbrandkey='';
+				this.cartypekey='';
+				this.powerkey='';
+				this.packpricekey={
+					text:''
+				};
+				this.caragekey='';
+				this.kmkey={
+					text:''
+				};
 			},
 			add() {
 				this.addkey = this.businessTypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
