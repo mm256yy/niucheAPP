@@ -4,15 +4,15 @@
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 	   <view class="view-content">
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
-	   	  	<u-form-item label="业务类型" prop="businesstype">
+	   	  	<u-form-item label="业务类型(必选)" prop="businesstype">
 				<u-radio-group v-model="form.businesstype" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">网约车 </u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">出租车 </u-radio>
+					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
+					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
-				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
+				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
-			<view style="background-color: #dedede;font-size: 10pt;padding: 5pt 0;">* 以下为加分项，可以不设置。</view>
-			<u-form-item label="意向品牌" label-position="top">
+			<!-- <view style="background-color: #dedede;font-size: 10pt;padding: 5pt 0;">* 以下为加分项，可以不设置。</view> -->
+			<u-form-item label="意向品牌(多选)" label-position="top">
 				<u-checkbox-group active-color="#6DD99C" @change="brandGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
 						{{ item.name }}
@@ -23,14 +23,14 @@
 				<u-col span="8"><u-input v-model="value" maxlength="30" :border="true" placeholder="请输入车辆品牌"/></u-col>
 				<u-col span="3"><u-button type="success" shape='circle' class="btn-agree" @click="addBrand">添加</u-button></u-col>
 			</u-row>
-			<u-form-item label="车型" label-position="top">
+			<u-form-item label="车型(多选)" label-position="top">
 				<u-checkbox-group active-color="#6DD99C" @change="modelGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
 				</u-checkbox-group>
 			</u-form-item>
-			<u-form-item label="动力" label-position="top">
+			<u-form-item label="动力(多选)" label-position="top">
 				<u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
 						{{ item.name }}
@@ -43,7 +43,7 @@
 				</u-radio-group>
 			</u-form-item>
 			<u-form-item label="数量" label-width="150">
-				<u-input v-model="form.intentioncarbrandnum" maxlength="6" type="number" :border="true" placeholder="请输入"/>
+				<u-input v-model="form.intentioncarbrandnum" maxlength="8" type="number" :border="true" placeholder="请输入"/>
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top">
 				<u-radio-group v-model="form.carage"  :active-color="'#6DD99C'" style="text-align: right;">
@@ -83,7 +83,7 @@
 				},
 				form:{
 					userid:'',
-					businesstype:0,
+					businesstype:1,
 					carmodel:[],
 					intentionbrand:[],
 					power:[],
@@ -194,9 +194,39 @@
 				}
 			},
 			toNext(){
+				if (this.form.intentionbrand.length === 0){
+					this.$u.toast('品牌不能未空')
+					return
+				}
+					
+				if (this.form.carmodel.length === 0){
+					this.$u.toast('车型价不能未空')
+					return
+				}
+				if (this.form.power.length === 0){
+					this.$u.toast('动力不能未空')
+					return
+				}
+				if (this.form.monthzu === ''){
+					this.$u.toast('打包价不能未空')
+					return
+				}
+				if (this.form.intentioncarbrandnum === ''){
+					this.$u.toast('数量不能未空')
+					return
+				}
+				if (this.form.carage === ''){
+					this.$u.toast('车龄不能未空')
+					return
+				}
+				if (this.form.km === ''){
+					this.$u.toast('行驶里程不能未空')
+					return
+				}
 				if (this.form.id){
 					this.updateChange()
 				} else {
+					
 					this.$u.api.saveShoping(this.form).then(res=>{
 						if(res.code === '200'){
 							this.showTips = true;
