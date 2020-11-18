@@ -150,7 +150,7 @@
 				this.carage='';
 				this.priceid='';
 				this.addkey = '不限';
-				this.businessTypekey='不限';
+				this.businesstypekey='不限';
 				this.carbrandkey='';
 				this.cartypekey='';
 				this.powerkey='';

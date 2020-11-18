@@ -1,17 +1,22 @@
 <template>
 	<view class="carSell">
 		<view class="middle-content">
-			<u-form :model="form" ref="uForm" :border-bottom="false">
+			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:220rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="kmkey" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:100rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
 			</u-form>
-			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select>
+			<u-select v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select> -->
+			<u-dropdown style="width: 50rpx;">
+				<u-dropdown-item @change="change()" v-model="form.km" title="行驶里程" :options="select"></u-dropdown-item>
+				<u-dropdown-item @change="changePrice()" v-model="form.packprice" title="打包价" :options="selectPrice"></u-dropdown-item>
+			</u-dropdown>
+			<view @click="filter()" style="width: 100rpx;text-align: center;margin-right: 40rpx;">筛选</view>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -55,7 +60,6 @@
 			return {
 				show:false,
 				showPrice:false,
-				change: false,
 				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
@@ -158,6 +162,12 @@
 			this.search()
 		},
 		methods: {
+			change(){
+				this.search()
+			},
+			changePrice(){
+				this.search()
+			},
 			// favorites(item,id) {
 			// 	const params = {
 			// 		BeCollectedId: id,
@@ -302,6 +312,11 @@
 		.wrap {
 			padding: 40rpx;
 		}
+		.middle-content{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.middle-content .u-form {
 			width: 686rpx;
 			height: 71rpx;
@@ -348,7 +363,6 @@
 				// height: 308rpx;
 				padding: 18rpx 15rpx;
 				margin-left: 24rpx;
-				margin-top: 24rpx;
 				font-size: 20rpx;
 				background-image: url(@/static/bgcarsell.png);
 				background-repeat: no-repeat;

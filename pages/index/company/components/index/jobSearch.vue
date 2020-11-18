@@ -1,33 +1,39 @@
 <template>
 	<view class="jobSearch">
 		<view class="middle-content">
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+			<!-- <u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item style="width:240rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="driverAgeKey" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:240rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
 			</u-form>
-			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
+			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
+			<u-dropdown>
+				<u-dropdown-item @change="change()" v-model="form.driverAge" title="选择驾龄" :options="select"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="form.businessType" title="业务类型" :options="selectType"></u-dropdown-item>
+			</u-dropdown>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-show="list.length" class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
-			<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
-			<view class="right">
-				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
-				<view class="clear"></view>
-				<view class="name">{{item.drivername}}</view>
-				<view class="year">驾龄{{item.driverAgeTag}}年</view>
-				<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
-				<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
-				<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
-				<view class="clear"></view>
-				<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
-				<view class="car u-line-1"">求职意向：{{item.carCard}}</view>
-				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
+		<view v-show="list.length">
+			<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
+				<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
+				<view class="right">
+					<view class="time">刷新时间：{{item.updateTimeStr}}</view>
+					<view class="clear"></view>
+					<view class="name">{{item.drivername}}</view>
+					<view class="year">驾龄{{item.driverAgeTag}}年</view>
+					<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
+					<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
+					<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
+					<view class="clear"></view>
+					<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
+					<view class="car u-line-1"">求职意向：{{item.carCard}}</view>
+					<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
+				</view>
 			</view>
 			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 		</view>
@@ -109,6 +115,12 @@
 			this.search()	
 		},
 		methods: {
+			change(){
+				this.search()
+			},
+			changeType(){
+				this.search()
+			},
 		    getList(){
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
@@ -260,7 +272,6 @@
 			width: 702rpx;
 			height: 286rpx;
 			margin-left: 24rpx;
-			margin-top: 24rpx;
 			background-image: url(@/static/bgjobsearch.png);
 			background-repeat: no-repeat;
 			background-size: cover;

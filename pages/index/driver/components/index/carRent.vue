@@ -13,10 +13,11 @@
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
-			<u-dropdown>
-				<u-dropdown-item v-model="value1" title="租金" :options="select"></u-dropdown-item>
-				<u-dropdown-item v-model="value2" title="业务类型" :options="selectType"></u-dropdown-item>
+			<u-dropdown style="width: 50rpx;">
+				<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="form.businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
 			</u-dropdown>
+			<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -67,7 +68,6 @@
 			return {
 				show:false,
 				showType:false,
-				change: false,
 				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
@@ -100,7 +100,6 @@
 				  pageSize: 10
 				},
 				priceid: '',
-				businesstype: '',
 				total: 0,
 				select: [
 					{
@@ -157,6 +156,32 @@
 			this.search()
 		},
 		methods: {
+			change(){
+				if(this.priceid == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				if(this.priceid == 2) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '2000';
+				}
+				if(this.priceid == 3) {
+					this.form.startPriceid = '2000';
+					this.form.endPriceid = '3000';
+				}
+				if(this.priceid == 4) {
+					this.form.startPriceid = '3000';
+					this.form.endPriceid = '4000';
+				}
+				if(this.priceid == 5) {
+					this.form.startPriceid = '4000';
+					this.form.endPriceid = '';
+				}
+				this.search()
+			},
+			changeType(){
+				this.search()
+			},
 			// favorites(item,id) {
 			// 	const params = {
 			// 		BeCollectedId: id,
@@ -324,6 +349,11 @@
 		.wrap {
 			padding: 40rpx;
 		}
+		.middle-content{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.middle-content .u-form {
 			width: 686rpx;
 			height: 71rpx;
@@ -372,7 +402,7 @@
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				margin-top: 40rpx;
+				// margin-top: 40rpx;
 				background: #fff;
 				.left {
 					float: right;

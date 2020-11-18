@@ -11,28 +11,30 @@
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
 			<u-dropdown>
-				<u-dropdown-item v-model="value1" title="距离" :options="options1"></u-dropdown-item>
-				<u-dropdown-item v-model="value2" title="温度" :options="options2"></u-dropdown-item>
+				<u-dropdown-item @change="change()" v-model="form.driverAge" title="选择驾龄" :options="select"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="form.businessType" title="业务类型" :options="selectType"></u-dropdown-item>
 			</u-dropdown>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-show="list.length" class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
-			<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
-			<view class="right">
-				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
-				<view class="clear"></view>
-				<view class="name">{{item.drivername}}</view>
-				<view class="year">驾龄{{item.driverAgeTag}}年</view>
-				<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
-				<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
-				<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
-				<view class="clear"></view>
-				<u-image class="img" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-				<view class="car u-line-1"> {{item.carCard}}</view>
-				<view class="clear"></view>
-				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
+		<view v-show="list.length">
+			<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
+				<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
+				<view class="right">
+					<view class="time">刷新时间：{{item.updateTimeStr}}</view>
+					<view class="clear"></view>
+					<view class="name">{{item.drivername}}</view>
+					<view class="year">驾龄{{item.driverAgeTag}}年</view>
+					<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
+					<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
+					<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
+					<view class="clear"></view>
+					<u-image class="img" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
+					<view class="car u-line-1"> {{item.carCard}}</view>
+					<view class="clear"></view>
+					<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
+				</view>
 			</view>
 			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 		</view>
@@ -114,6 +116,12 @@
 			this.search()
 		},
 		methods: {
+			change(){
+				this.search()
+			},
+			changeType(){
+				this.search()
+			},
 			// transform(str) {
 			// 	return str.replace(/,/g,'\');
 			// },

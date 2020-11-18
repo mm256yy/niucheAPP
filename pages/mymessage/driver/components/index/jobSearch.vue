@@ -1,18 +1,22 @@
 <template>
 	<view class="jobSearch">
 		<view class="middle-content">
-			<u-form :model="form" ref="uForm" :border-bottom="false">
+			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:280rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="priceid" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:220rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessType" type="select" /></u-form-item>
-				<!-- <view class="line"></view> -->
-				<!-- <u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item> -->
+				<view class="line"></view>
+				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
 				<view class="clear"></view>
 			</u-form>
-			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
+			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
+			<u-dropdown style="width: 50rpx;">
+				<u-dropdown-item @change="change()" v-model="priceid" title="月薪区间" :options="select"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="form.businessType" title="业务类型" :options="selectType"></u-dropdown-item>
+			</u-dropdown>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -61,7 +65,6 @@
 			return {
 				show:false,
 				showType:false,
-				change: false,
 				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
@@ -126,7 +129,7 @@
 					}
 				],
 				list: [],
-				status:0,
+				status: 'loadmore',
 				loadText: {
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
@@ -144,6 +147,32 @@
 			this.search()
 		},
 		methods: {
+			change(){
+				if(this.priceid == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '6000';
+				}
+				if(this.priceid == 2) {
+					this.form.startPriceid = '6000';
+					this.form.endPriceid = '8000';
+				}
+				if(this.priceid == 3) {
+					this.form.startPriceid = '8000';
+					this.form.endPriceid = '10000';
+				}
+				if(this.priceid == 4) {
+					this.form.startPriceid = '10000';
+					this.form.endPriceid = '';
+				}
+				if(this.priceid == 5) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				this.search()
+			},
+			changeType(){
+				this.search()
+			},
 			// favorites(item,id) {
 			// 	const params = {
 			// 		BeCollectedId: id,
@@ -192,8 +221,7 @@
 							 if(len<this.total){
 							 	this.status = 'loadmore'
 							 } else{
-								 debugger
-							 	// this.status = 'nomore'
+							 	this.status = 'nomore'
 							 }
 							 this.list.forEach(item=>{
 							    if (item.intentionBrand){
@@ -219,7 +247,7 @@
 							 if(len<this.total){
 							 	this.status = 'loadmore'
 							 } else{
-							 	// this.status = 'nomore'
+							 	this.status = 'nomore'
 							 }
 							 this.list.forEach(item=>{
 							    if (item.intentionBrand){
@@ -267,7 +295,7 @@
 				 if (len < this.total){
 					 this.getList()
 				 }else{
-					// this.status = 'nomore'
+					this.status = 'nomore'
 				}
 			},
 			detail(id) {
@@ -293,6 +321,11 @@
 		}
 		.wrap {
 			padding: 40rpx;
+		}
+		.middle-content{
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		.middle-content .u-form {
 			width: 686rpx;
@@ -340,7 +373,6 @@
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				margin-top: 40rpx;
 				background: #fff;
 				.left {
 					float: left;
