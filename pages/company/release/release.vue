@@ -1,6 +1,12 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar  back-icon-size="0" title="" :background="{}" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+			<view class="navbar-right">
+				<view class="message-box right-item">
+					<text  @click="toCenter">返回</text>
+				</view>
+			</view>
+		</u-navbar>
 		<view class="content" style="text-align: center;padding: 40pt;">
 			<view class="" style="font-size: 18pt;color: #fff;">
 				您要发布什么信息？
@@ -86,6 +92,9 @@
 				let obj = {year:year,month:month,day:day};
 				 uni.setStorageSync('today', obj);
 			},
+			toCenter(){
+				this.$u.route({url:'/pages/index/index',type:'switchTab'})
+			},
 			setStorage(data){
 				uni.setStorageSync('carPubType', data);
 			},
@@ -159,4 +168,14 @@ page{
 	background-repeat: no-repeat;
 	height: 100%;
 }
+ .navbar-right {
+ 	margin-left: 24rpx;
+ 	display: flex;
+ }
+ .right-item {
+ 	margin: 0 12rpx;
+ 	position: relative;
+ 	color: #ffffff;
+ 	display: flex;
+ }
 </style>

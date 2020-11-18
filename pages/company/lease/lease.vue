@@ -1,7 +1,13 @@
 <template>
     <view class="wrap">
-		<u-navbar back-text="返回" :custom-back='customBack'  back-icon-size="0" title="租赁车辆发布" 
-		:background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar  back-icon-size="0" title="租赁车辆发布" 
+		:background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<view class="navbar-right">
+			<view class="message-box right-item">
+				<text  @click="toCenter">返回</text>
+			</view>
+		</view>
+		</u-navbar>
 		<view class="zlcontent">
 		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
 		   <view class="zlcontent-mid">
@@ -174,7 +180,7 @@ export default {
 	 toCarList(){
 		this.$u.route('/pages/company/lease/carList/carList',{source:1}) 
 	 }, 
-	  customBack(){
+	  toCenter(){
 		  this.$u.route('/pages/company/release/release') 
 	  },
 	  editInit(){
@@ -397,5 +403,15 @@ page{
 }
  .btn-agree{
 	background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC);
+ }
+ .navbar-right {
+ 	margin-left: 24rpx;
+ 	display: flex;
+ }
+ .right-item {
+ 	margin: 0 12rpx;
+ 	position: relative;
+ 	color: #ffffff;
+ 	display: flex;
  }
 </style>
