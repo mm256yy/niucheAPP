@@ -128,8 +128,15 @@
 			reset() {
 				this.form={
 				  businesstype: 0,
+				  carbrand: '',
+				  cartype: '',
 				  city: '杭州',
-				  km: 100
+				  startCarAge: '',
+				  endCarAge: '',
+				  startPriceid: '',
+				  endPriceid: '',
+				  km: 100,
+				  power: ''
 				};
 				this.brandList.map( item => {
 				  item.checked=false;
@@ -143,6 +150,15 @@
 				this.carage='';
 				this.priceid='';
 				this.addkey = '不限';
+				this.businessTypekey='不限';
+				this.carbrandkey='';
+				this.cartypekey='';
+				this.powerkey='';
+				this.priceidkey='';
+				this.caragekey='';
+				this.kmkey={
+					text:''
+				};
 			},
 			add() {
 				this.addkey = this.businesstypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
