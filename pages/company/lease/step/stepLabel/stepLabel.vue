@@ -112,7 +112,7 @@ export default {
 		   	}, 100)
 		  return false
 	   }
-	   this.zdyList.push({text:this.value,info:'info'})
+	   this.zdyList.push({text:this.value,info:'success'})
 	   this.show = false;
     },
 	setForm(){

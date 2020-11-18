@@ -46,7 +46,7 @@
 						 <u-input v-model="form.firsttime" :border="true" :disabled="true" @click="timeShow = true" placeholder=""/>
 						 <u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon>
 					 </u-form-item>
-					 <u-form-item label="行驶里程" prop="firstkm">
+					 <u-form-item label="行驶里程">
 						 <u-input v-model="form.firstkm" type="number" maxlength="3" 
 						  :clearable="false" :border="true" placeholder="请输入"/>
 						 <text style="padding: 0 5pt;">-</text>
