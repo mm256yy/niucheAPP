@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-modal v-model="showTips" @confirm="tipsConfirm" title="提示" :show-cancel-button="showCancel" cancel-text="否" :confirm-text="confirmText">
+		<u-modal v-model="showTips" @confirm="tipsConfirm" title="提示" :show-cancel-button="showCancel" @cancel="toIndex" cancel-text="否" :confirm-text="confirmText">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 		       {{showMsg}}
 			</view>
@@ -82,9 +82,10 @@
 				} else {
 					  this.$u.route('/pages/login/login');
 				}
-				
-				
 			},
+			toIndex(){
+			   this.$u.route({url:'/pages/index/index',type:'switchTab'})	
+			}
 		}
 	}
 </script>
