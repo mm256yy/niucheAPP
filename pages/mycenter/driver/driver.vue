@@ -114,6 +114,7 @@
 					carNum:0,
 					certificationType:""
 				},
+				token:''
 			}
 		},
 		filters: {
