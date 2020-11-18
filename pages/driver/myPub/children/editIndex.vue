@@ -1,11 +1,11 @@
 <template>
 	<view class="filter">
 	  <u-navbar back-text="返回" back-icon-size="0" title="求职发布" :background="backgroundDri" 
-	   :back-text-style="backTextStyle" height='98' title-color="#FFFFFF"></u-navbar>
+	   :back-text-style="backTextStyle" height='40' title-color="#FFFFFF"></u-navbar>
 	   <view class="view-content">
 	   	  <u-form :model="form" ref="uForm" label-width="320" :border-bottom="false">
 			  <u-form-item label="是否公开我的求职信息？" prop="isOpen">
-			  	<u-radio-group v-model="form.isOpen" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
+			  	<u-radio-group v-model="form.isOpen" :active-color="'#FFA032'" style="text-align: right;">
 			  		<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
 			  		<u-radio name="0" style="margin-left: 10pt;">不公开 </u-radio>
 			  	</u-radio-group>
@@ -13,7 +13,7 @@
 			  <view class="public">*公开，则该条消息将被租车公司看到。</view>
 			  <view class="public">不公开，则隐藏该消息 租车公司不可见。</view>
 	   	  	<u-form-item label="业务类型" prop="businessType">
-				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
+				<u-radio-group v-model="form.businessType" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>

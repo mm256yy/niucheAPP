@@ -4,18 +4,18 @@
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 	   <view class="view-content">
 	   	  <u-form :model="form" ref="uForm" label-width="320" :border-bottom="false">
-			  <u-form-item label="是否公开我的租车需求？" prop="isOpen">
+			  <u-form-item label="是否公开我的租车需求?(必选)" prop="isOpen">
 			  	<u-radio-group v-model="form.isOpen" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
 			  		<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
 			  		<u-radio name="0" style="margin-left: 10pt;">不公开 </u-radio>
 			  	</u-radio-group>
 			  </u-form-item>
-	   	  	<u-form-item label="业务类型" prop="businessType">
+	   	  	<u-form-item label="业务类型(必选)" prop="businessType">
 				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
-				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
+				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
 			<u-form-item label="意向品牌(多选)" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="brandGroupChange" shape="circle">
@@ -187,6 +187,18 @@
 				this.form.monthzu = this.form.monthlyRent;
 				this.form.carmodel = this.form.carModel;
 				this.form.carage = this.form.carAge;
+				if(this.form.carCard === ''){
+					this.$u.toast('请选择车辆品牌')
+					return 
+				}
+				if(this.form.carModel === ''){
+					this.$u.toast('请选择车型')
+					return 
+				}
+				if(this.form.power === ''){
+					this.$u.toast('请选择动力')
+					return 
+				}
 				this.$u.api.updateUserWanted(this.form).then(res=>{
 						if(res.code === 200){
 							this.showTips = true
