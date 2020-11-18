@@ -17,9 +17,9 @@
 				<text class="middle-content-label">mm</text></u-form-item>
 				<u-form-item label="行李箱容积"><u-input v-model="form.trunk" :clearable="false"  maxlength="30" :border="true" class="form_input"/>
 				<text class="middle-content-label">L</text></u-form-item>
-				<u-form-item label="轴距"><u-input v-model="form.wheel" type="number" :clearable="false" maxlength="30" :border="true" class="form_input"/>
+				<u-form-item label="轴距"><u-input v-model="form.wheel" :clearable="false" maxlength="30" :border="true" class="form_input"/>
 				<text class="middle-content-label">mm</text></u-form-item>
-				<u-form-item label="排量"><u-input v-model="form.displacement" type="number" :clearable="false" maxlength="30" :border="true"
+				<u-form-item label="排量"><u-input v-model="form.displacement" :clearable="false" maxlength="30" :border="true"
 				 class="form_input"/><text class="middle-content-label">L</text></u-form-item>
 			    <u-form-item label="环 保 标 准 ">
 			    	<u-input v-model="form.environmental" class="form_input" type="select" :border="true" placeholder="请选择" @click="show = true" />
