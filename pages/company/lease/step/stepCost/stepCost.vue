@@ -54,10 +54,11 @@ export default {
 		  yamoney:'',
 		  rentCarPrice:[{RentTime:'',Rentprice:''}],	  
 		},
-		editId:'',
+		
 		priceIndex:0,
 		show:false,
 		deposit:'',
+		editId:'',
 		telephone:'',
 		carPubType:'',
 		carPubFirst:{},
@@ -115,28 +116,23 @@ export default {
 			 this.$u.toast('请至少填写一个价格');
 			 return
 		 }
-		this.setStorage(this.form) 
+		this.toSubmit() 
 	 },
 	 toSubmit(){
+		 let obj = Object.assign(this.carPubFirst,this.carPubSecond,this.form)
 		 obj.mainbusinesstype = this.carPubType;
 		 obj.businesstype = Number(obj.businesstype)
+		 
 		 this.$u.api.saveMainBusiness(obj).then(res=>{
 		 	if(res.code === 200){
 		 		this.clearStorage()
-		 		 this.tipsCancel()
+		 		 uni.reLaunch({
+		 		     url: '/pages/company/myPublish/myPublish?index=0'
+		 		 });
 		 	}else {
 		 		 this.$u.toast(res.msg);
 		 	}
 		 })
-	 },
-	 tipsCancel(){
-	 	let index = 2
-	 	if (this.carPubType === 1) {
-	 		index = 0
-	 	}
-	 	uni.reLaunch({
-	 	    url: '/pages/company/myPublish/myPublish?index='+index
-	 	});
 	 },
   }
 }

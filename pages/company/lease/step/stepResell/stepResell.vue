@@ -1,6 +1,6 @@
 <template>
     <view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="卖车价格" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="租车价格(3/3)" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" >
 		   <view class="zlcontent-mid price-list" v-for="(item,index) in form.sellCarPrice" :key='index'>
 			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
@@ -47,23 +47,43 @@ export default {
 				}
 			],
 		},
+		editId:'',
+		telephone:'',
+		carPubType:'',
+		carPubFirst:{},
+		carPubSecond:{},
 		carPubThree:{}
 	}  
   },
   mounted() {
-  	 this.initStorage()
-	 let id = uni.getStorageSync('editId');
-	 if(id){
-           this.form=this.carPubThree ;
-	 }
+  	this.initStorage()
+  	let id = uni.getStorageSync('editId');
+  	if(id){
+  		this.editId = id;
+  		this.form = this.carPubThree;
+  	}
   },
   methods: {
-	    initStorage(){
-				this.carPubThree = uni.getStorageSync('carPubThree');
-		},
-		setStorage(data){
-			 uni.setStorageSync('carPubThree', data);
-		},
+	  initStorage(){
+	  		  this.telephone = uni.getStorageSync('telephone');
+	  		  this.carPubType = uni.getStorageSync('carPubType');
+	  		  this.carPubFirst = uni.getStorageSync('carPubFirst');
+	  		  this.carPubSecond = uni.getStorageSync('carPubSecond');
+	  	  this.carPubThree = uni.getStorageSync('carPubThree');
+	  },
+	  clearStorage(){
+	  	uni.removeStorageSync('carPubType');
+	  	uni.removeStorageSync('carPubFirst');
+	  	uni.removeStorageSync('carPubSecond');
+	  	uni.removeStorageSync('carPubThree');
+	  	uni.removeStorageSync('editId');
+	  	this.form = {
+			sellCarPrice:[{
+					shoplow:'',shophigh:'',packprice:''
+				}
+			],
+		 }
+	  },
 	  addPriceObj(){
 		this.form.sellCarPrice.push({
 				shoplow:'',shophigh:'',packprice:''
@@ -92,9 +112,21 @@ export default {
 			this.$u.toast('请填写完整');
 			return
 		}
-		this.setStorage(this.form)
-		this.$u.route("/pages/company/lease/step/stepInterior/stepInterior")
-	}
+		this.toSubmit()
+	  },
+	  toSubmit(){
+		 let obj = Object.assign(this.carPubFirst,this.carPubSecond,this.form)
+		  obj.mainbusinesstype = this.carPubType;
+		  obj.businesstype = Number(obj.businesstype)
+		  this.$u.api.saveMainBusiness(obj).then(res=>{
+			if(res.code === 200){
+			   this.clearStorage()
+			   uni.reLaunch({ url: '/pages/company/myPublish/myPublish?index=2'});
+			}else {
+				 this.$u.toast(res.msg);
+			}
+		 })
+	  },
   }
 }
 </script>

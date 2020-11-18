@@ -243,18 +243,18 @@
 									if(res.userrole === 1){//司机
 									    uni.setStorageSync('curThemeType', 'driver');
 										
-										if(res.userstate === '0'){
-											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
-										} else {
+										// if(res.userstate === '0'){
+										// 	this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+										// } else {
 											this.$u.route({url:'/pages/index/index',type:'switchTab'})
-										}
+										// }
 									} else {
 										 uni.setStorageSync('curThemeType', 'company');
-										if(res.userstate ==='0'){
-											this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
-										} else {
+										// if(res.userstate ==='0'){
+										// 	this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+										// } else {
 											this.$u.route({url:'/pages/index/index',type:'switchTab'})
-										}
+										// }
 									}
 								}else {
 									 this.$u.toast(res.msg);

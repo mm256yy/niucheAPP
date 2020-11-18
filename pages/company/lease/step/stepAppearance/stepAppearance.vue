@@ -73,18 +73,15 @@
 			this.initStorage()
 			let id = uni.getStorageSync('editId');
 			if(id){
-				let onephotoList = [];
-				let oneneishiphotoList = [];
-				let oneList = this.carPubSecond.onephoto.join(',');
-				let twoList = this.carPubSecond.oneneishiphoto.join(',');
-				oneList.forEach(item=>{
-					onephotoList.push({url:item})
+				let onephotoList = this.carPubSecond.onephoto;
+				let oneneishiphotoList =this.carPubSecond.oneneishiphoto;
+				onephotoList.forEach(item=>{
+					this.fileList.push({url:item})
 				})
-				twoList.forEach(item=>{
-					oneneishiphotoList.push({url:item})
+				oneneishiphotoList.forEach(item=>{
+					this.fileList1.push({url:item})
 				})
-				this.form.onephoto =onephotoList;
-				this.form.oneneishiphoto =oneneishiphotoList;
+				this.form = this.carPubSecond
 			}
 		},
 		methods: {
