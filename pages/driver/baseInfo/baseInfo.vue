@@ -87,6 +87,7 @@
 				errorType:[
 					'message'
 				],
+				telephone:'',
 				showLogut:false
 			}
 		},
