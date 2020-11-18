@@ -13,7 +13,7 @@
 						<u-col span="8" v-else @click="toAuth">
 							<view @click="toAuth" style="color: #fff;font-size: 14pt;">{{companyName}}</view>
 							<view class="colorF">{{companyStatus | state}}</view>
-							<view v-if="companyStatus === 3">原因 {{reson}}</view>
+							<view class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
 						</u-col>
 						<u-col span="1">
 							<u-icon name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>

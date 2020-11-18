@@ -168,7 +168,7 @@
 								let data = res.comparySelectByidVo;
 								this.resData = data;
 								this.checkstate = data.checkstate;
-								if (data.checkstate === 1 || data.checkstate === 3 || data.checkstate === 2) {
+								if (data.checkstate === 1 || data.checkstate === 2) {
 									this.authFlag = true
 								}
 								this.companyName = data.comparynickname;
