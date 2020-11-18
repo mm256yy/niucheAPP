@@ -97,51 +97,15 @@
 				"navigationStyle": "custom" 
 			}
         }
-        ,{//租车标签
-            "path" : "pages/company/lease/step/stepLabel/stepLabel",
-            "style" : {
-				"navigationStyle": "custom" 
-			}
-        }
         ,{//租车价格
             "path" : "pages/company/lease/step/stepCost/stepCost",
             "style" : {
 				"navigationStyle": "custom" 
 			}
         }
-        ,{//车辆内饰
-            "path" : "pages/company/lease/step/stepInterior/stepInterior",
-			"style" : {
-				"navigationStyle": "custom" 
-			}
-        }
-        ,{//车辆外观
+        ,{//车辆图片
             "path" : "pages/company/lease/step/stepAppearance/stepAppearance",
 			"style" : {
-				"navigationStyle": "custom" 
-			}
-        }
-        ,{//车辆其他
-            "path" : "pages/company/lease/step/stepOther/stepOther",
-           "style" : {
-           	"navigationStyle": "custom" 
-           }
-        }
-        ,{//车辆证件
-            "path" : "pages/company/lease/step/stepCards/stepCards",
-            "style" : {
-				"navigationStyle": "custom" 
-			}
-        }
-        ,{//车辆参数
-            "path" : "pages/company/lease/step/stepNumber/stepNumber",
-            "style" : {
-				"navigationStyle": "custom" 
-			}
-        }
-        ,{//问题
-            "path" : "pages/company/lease/step/setpQuestion/setpQuestion",
-            "style" : {
 				"navigationStyle": "custom" 
 			}
         }

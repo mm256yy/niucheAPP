@@ -1,6 +1,6 @@
 <template>
     <view class="wrap">
-		<u-navbar  back-icon-size="0" title="租赁车辆发布" 
+		<u-navbar  back-icon-size="0" title="租赁发布(1/3)" 
 		:background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 		<view class="navbar-right">
 			<view class="message-box right-item">
@@ -53,10 +53,10 @@
 						 <u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon>
 					 </u-form-item>
 					 <u-form-item label="行驶里程">
-						 <u-input v-model="form.firstkm" type="number" maxlength="3" 
+						 <u-input v-model="form.firstkm" type="number" maxlength="5" 
 						  :clearable="false" :border="true" placeholder="请输入"/>
 						 <text style="padding: 0 5pt;">-</text>
-						 <u-input v-model="form.endkm" type="number" maxlength="3"
+						 <u-input v-model="form.endkm" type="number" maxlength="5"
 						 :clearable="false" :border="true" placeholder="请输入"/>
 						 <text style="padding-left: 5pt;">万公里</text>
 					 </u-form-item>
@@ -208,7 +208,7 @@ export default {
 		  this.form.endkm = data.endkm;
 		  this.form.carnbumber = data.carnbumber;
 		  uni.setStorageSync('editId',data.tagid)
-		  uni.setStorageSync('carPubSecond',{SystemTag:data.systemok,UserTag:data.userok})
+		  uni.setStorageSync('carPubSecond',{onephoto:data.onephoto,oneneishiphoto:data.oneneishiphoto})
 			if (this.carPubType === 1) {
 				let carThree = {
 					yamoney:data.caryaprice,
@@ -234,18 +234,8 @@ export default {
 				if (arr.length>0){
 					sellCarPriceObj.sellCarPrice = arr
 				}
-				 uni.setStorageSync('carPubThree',sellCarPriceObj)
+		  uni.setStorageSync('carPubThree',sellCarPriceObj)
 			}
-
-			uni.setStorageSync('carPubFour',{onephoto:data.onephoto,twophoto:data.twophoto,threephoto:data.threephoto,fourphoto:data.fourphoto})
-		    uni.setStorageSync('carPubFive',{oneneishiphoto:data.oneneishiphoto,twoneishiphoto:data.twoneishiphoto,threeneishiphoto:data.threeneishiphoto,
-		    fourneishiphoto:data.fourneishiphoto})
-		    uni.setStorageSync('carPubSix',{elsephoto:data.elsephoto})
-			uni.setStorageSync('carPubSeven',{cardivephoto:data.cardivephoto,cardrivepeople:data.cardrivepeople,taxiphoto:data.taxiphoto,
-			taxipeople:data.taxipeople,type:2})
-			let objEight = {specification:data.specification,trunk:data.trunk,wheel:data.wheel,displacement:data.displacement,
-			environmental:data.environmental,elseParamterList:data.elseparamter};
-			uni.setStorageSync('carPubEight',objEight)
 	  },
 	 getChildId(item){
 		 console.log(item)
@@ -332,7 +322,8 @@ export default {
 							this.$u.toast('行驶里程填写有误');
 							return
 						}
-		             this.$u.route('/pages/company/lease/step/stepLabel/stepLabel')
+						this.$u.route("/pages/company/lease/step/stepAppearance/stepAppearance")
+
 		        	}
 		        })
 			}

@@ -1,6 +1,6 @@
 <template>
     <view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="租车价格" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="租车价格(3/3)" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" >
 		   <view class="zlcontent-mid" style="margin: 20pt 0;">
 			   <u-form-item label="押金">
@@ -30,7 +30,7 @@
 	    </view>
 		
 		<view style="text-align: center; padding: 26pt 20pt;">
-			<u-button type="success" shape='circle' class="btn-agree" @click="setForm">下一步</u-button>
+			<u-button type="success" shape='circle' class="btn-agree" @click="setForm">提交审核</u-button>
 		</view>
 		<auth></auth>
     </view>
@@ -54,29 +54,44 @@ export default {
 		  yamoney:'',
 		  rentCarPrice:[{RentTime:'',Rentprice:''}],	  
 		},
+		editId:'',
 		priceIndex:0,
 		show:false,
 		deposit:'',
+		telephone:'',
+		carPubType:'',
+		carPubFirst:{},
+		 carPubSecond:{},
 		carPubThree:{}
 		
 	}  
   },
   mounted() {
-  	  
-  },
-  onShow() {
-  	this.initStorage()
-  	let id = uni.getStorageSync('editId');
-  	if(id){
-  		this.form = this.carPubThree
-  	}
+  	  this.initStorage()
+  	  let id = uni.getStorageSync('editId');
+  	  if(id){
+		this.editId = id;
+  	  	this.form = this.carPubThree;
+  	  }
   },
   methods: {
 	  initStorage(){
-	  	this.carPubThree = uni.getStorageSync('carPubThree');
+		  this.telephone = uni.getStorageSync('telephone');
+		  this.carPubType = uni.getStorageSync('carPubType');
+		  this.carPubFirst = uni.getStorageSync('carPubFirst');
+		  this.carPubSecond = uni.getStorageSync('carPubSecond');
+	  	  this.carPubThree = uni.getStorageSync('carPubThree');
 	  },
-	  setStorage(data){
-	  	 uni.setStorageSync('carPubThree', data);
+	  clearStorage(){
+	  	uni.removeStorageSync('carPubType');
+	  	uni.removeStorageSync('carPubFirst');
+	  	uni.removeStorageSync('carPubSecond');
+	  	uni.removeStorageSync('carPubThree');
+	  	uni.removeStorageSync('editId');
+	  	this.form = {
+		  yamoney:'',
+		  rentCarPrice:[{RentTime:'',Rentprice:''}],	  
+		}
 	  },
 	 actionSheetCallback(index) {
 		let value = this.list[index].text;
@@ -101,7 +116,27 @@ export default {
 			 return
 		 }
 		this.setStorage(this.form) 
-		this.$u.route("/pages/company/lease/step/stepAppearance/stepAppearance")
+	 },
+	 toSubmit(){
+		 obj.mainbusinesstype = this.carPubType;
+		 obj.businesstype = Number(obj.businesstype)
+		 this.$u.api.saveMainBusiness(obj).then(res=>{
+		 	if(res.code === 200){
+		 		this.clearStorage()
+		 		 this.tipsCancel()
+		 	}else {
+		 		 this.$u.toast(res.msg);
+		 	}
+		 })
+	 },
+	 tipsCancel(){
+	 	let index = 2
+	 	if (this.carPubType === 1) {
+	 		index = 0
+	 	}
+	 	uni.reLaunch({
+	 	    url: '/pages/company/myPublish/myPublish?index='+index
+	 	});
 	 },
   }
 }
