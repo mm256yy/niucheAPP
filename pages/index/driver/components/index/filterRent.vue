@@ -159,6 +159,12 @@
 				this.kmkey={
 					text:''
 				};
+				const token = uni.getStorageSync('token');
+				if(token) {
+					this.form.islogin = 1
+				}else{
+					this.form.islogin = 0
+				}
 			},
 			add() {
 				this.addkey = this.businesstypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
