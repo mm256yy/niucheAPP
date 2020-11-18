@@ -11,8 +11,7 @@
 		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="detail.comparyPhotoUrl"></u-image>
 		 	<view class="right">
 				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
-		 		<view class="name">{{detail.comparyname}}</view>
-				<view class="clear"></view>
+		 		<view class="name u-line-2">{{detail.comparyname}}</view>
 				<view v-for="(item, index) in detail.comparytag" :key="index">
 					<u-image class="car" width="29rpx" height="26rpx" src="@/static/car.png"></u-image>
 					<view class="year">{{item}}运营</view>
@@ -28,10 +27,10 @@
 		 </view>
 		 <view class="content">
 			 <u-form label-width="150" label-align="right" :model="detail" ref="uForm">
-			 		<u-form-item label="打包价:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.packprice" /></u-form-item>
-					<u-form-item label="意向品牌:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
-					<u-form-item label="行驶里程:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
-					<u-form-item label="动力类型:"><u-input style="padding-top: 60rpx;" :disabled="true" height="100" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
+			 		<u-form-item label="打包价:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.packprice" /></u-form-item>
+					<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
+					<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
+					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 </u-form>
 		 </view>
 
@@ -164,21 +163,17 @@ page{
 			.name {
 				font-weight: 900;
 				font-size: 36rpx;
+				margin-bottom: 4rpx;
 				float: left;
 			}
 			.clock,.year,.car,.type {
 				float: left;
-				margin-top: 6rpx;
 			}
 			.clock {
 				font-size: 40rpx;
 			}
-			.car {
-				font-size: 36rpx;
-			}
 			.year,.type {
 				margin-left: 10rpx;
-				margin-top: 20rpx;
 			}
 			.time {
 				margin-top: 19rpx;
@@ -186,15 +181,15 @@ page{
 			.box {
 				// width: 160rpx;
 				// height: 135rpx;
-				padding: 6rpx;
+				padding: 4rpx;
 				float: right;
-				margin-top: -116rpx;
+				margin-top: -80rpx;
 				margin-right: -80rpx;
-				font-size: 32rpx;
+				font-size: 20rpx;
 				background: #fff;
 				color: #37AB63;
 				.num {
-					font-size: 72rpx;
+					font-size: 36rpx;
 					font-weight: 900;
 				}
 			}

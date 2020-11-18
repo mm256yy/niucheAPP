@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" :title="detail.carmodeltag" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<u-navbar z-index="2000" back-text="返回" back-icon-size="0" :title="detail.carmodeltag" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
@@ -33,7 +33,7 @@
 			<view class="left" @click="other()">公司其他</view>
 			<view class="right">拨打电话</view>
 		</view>
-		<view style="width: 100%;height:144rpx"></view>
+		<view style="width: 100%;height:154rpx"></view>
 		<!-- <view class="last">
 			<view class="left">预约看车</view>
 			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>

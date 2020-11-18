@@ -68,19 +68,15 @@
 		        信息发布成功
 			</view>
 		</u-modal>
-		<NotLogin></NotLogin>
 		<auth></auth>
 	</view>
 </template>
 
 <script>
-	import {mapGetters,mapActions} from 'vuex'
-	import NotLogin from '@/components/notlogin/notlogin.vue'
 	import auth from '@/components/auth.vue'
 	import {requiredRule} from '@/common/rule.js'
 	export default {
 		components:{
-			NotLogin,
 			auth
 		},
 		data() {

@@ -34,8 +34,12 @@
 			 			<u-form-item label="租车城市:">
 			 				<u-input :disabled="true" height="80" input-align="right" placeholder="" v-model="form.workCity" />
 			 			</u-form-item>
-			 			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" placeholder="" input-align="right"
-			 			 v-model="form.businessType===1?'网约车':'出租车'" /></u-form-item>
+			 			<u-form-item label="业务类型:">
+							<u-input v-show="form.businessType==1" :disabled="true" height="80" placeholder="" input-align="right"
+			 			    v-model="hailing" />
+						    <u-input v-show="form.businessType==2" :disabled="true" height="80" placeholder="" input-align="right"
+						    v-model="taxi" />
+						 </u-form-item>
 			 			<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" placeholder="" 
 			 			type="textarea" input-align="right" v-model="form.carCard" /></u-form-item>
 			 			<u-form-item label="月租:"><u-input :disabled="true" height="80" type="textarea" placeholder="" input-align="right"
@@ -46,6 +50,7 @@
 			 			input-align="right" v-model="form.power" /></u-form-item>
 			  </u-form>
 		 </view>
+		 <view style="width: 100%;height: 124rpx;"></view>
 		 <view class="bottom" @click="phone()">
 			 <view>拨打电话</view>
 		 </view>
@@ -59,6 +64,8 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				hailing:'网约车',
+				taxi:'出租车',
 				driverDemandId:'',
 				form: {
 					kmStr:'',
@@ -238,6 +245,9 @@ page{
 			font-size: 40rpx;
 			font-weight: 900;
 			background: linear-gradient(115deg,#6DD99C, #37AB63);
+			position: fixed;
+			bottom: 0;
+			left: 0;
 		}
 	}
 </style>

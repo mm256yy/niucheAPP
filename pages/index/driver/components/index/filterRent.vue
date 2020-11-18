@@ -142,6 +142,7 @@
 				});
 				this.carage='';
 				this.priceid='';
+				this.addkey = '不限';
 			},
 			add() {
 				this.addkey = this.businesstypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 

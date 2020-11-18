@@ -137,6 +137,7 @@
 				  item.checked=false;
 				});
 				this.carage='';
+				this.addkey = '不限';
 			},
 			add() {
 				this.addkey = this.businessTypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 

@@ -1,6 +1,6 @@
 <template>
 	<view class="detail">
-		<u-navbar back-text="返回" back-icon-size="0" title="租车详情" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<u-navbar z-index="2000" back-text="返回" back-icon-size="0" title="租车详情" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
@@ -14,7 +14,7 @@
 				<view class="name">{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.rentprice}}</text>元/月起租</view>
 				<view class="box">
-					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
+					<view v-show="item!=''" v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
 				</view>
 		 	</view>
@@ -28,7 +28,7 @@
 			<view class="right">拨打电话</view>
 		</view>
 		<!-- <view class="phone" @click="phone()">拨打电话</view> -->
-		<view style="width: 100%;height:144rpx"></view>
+		<view style="width: 100%;height:154rpx"></view>
 		<!-- <view class="wrap">
 			<view class="u-tabs-box">
 			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
@@ -117,7 +117,7 @@
 						 if(this.detail.carRentPriceCollection) {
 						   this.detail.carRentPriceCollection.forEach(item=>{
 						   	if(item.carrenttime){
-								text = item.carrenttime + '个月';
+								text = item.carrenttime;
 							}
 						   	this.tab.push(text)						
 						   })
