@@ -1,7 +1,7 @@
 <template>
 	<view class="carRent">
 		<view class="middle-content">
-			<u-form :model="form" ref="uForm" :border-bottom="false">
+			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="priceid" type="select" /></u-form-item>
 				<view class="line"></view>
 				<u-form-item style="width:170rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businesstype" type="select" /></u-form-item>
@@ -9,15 +9,19 @@
 				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter()" type="text" :disabled="true" /></u-form-item>
 				<view class="clear"></view>
 			</u-form>
-			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
+			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
+			<u-dropdown>
+				<u-dropdown-item v-model="value1" title="租金" :options="select"></u-dropdown-item>
+				<u-dropdown-item v-model="value2" title="业务类型" :options="selectType"></u-dropdown-item>
+			</u-dropdown>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="last">
+		<view v-show="list.length" class="last">
 			<view class="lists" v-for="(item, index) in list" :key="index">
 				<view class="list" @click="detail(item.id)">
 					<view class="right">
@@ -46,13 +50,14 @@
 				<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
 				<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 			</view>
+			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 		</view>
-		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
-		<!-- <view class="null" v-show="!list.length">
-			<u-image width="371rpx" height="171rpx" src="@/static/empty.png"></u-image>
-			<view class="tip">很抱歉，没有找到符合条件的内容。请修改条件后再试。</view>
-		</view> -->
-		
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -307,20 +312,14 @@
 
 <style lang="scss" scoped>
 	.carRent {
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.last .lists:last-child {
 			margin-bottom: 10rpx;
-		}
-		.null {
-			margin-left: 198rpx;
-			margin-top: 229rpx;
-			.tip {
-				width: 384rpx;
-				height: 49rpx;
-				line-height: 49rpx;
-				text-align: center;
-				margin-top: 60rpx;
-				font-size: 20rpx;
-			}
 		}
 		.wrap {
 			padding: 40rpx;

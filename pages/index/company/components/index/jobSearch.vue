@@ -14,7 +14,7 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
+		<view v-show="list.length" class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 			<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 			<view class="right">
 				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
@@ -29,8 +29,14 @@
 				<view class="car u-line-1"">求职意向：{{item.carCard}}</view>
 				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
 			</view>
+			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 		</view>
-		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -211,6 +217,12 @@
 
 <style lang="scss" scoped>
 	.jobSearch {
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.wrap {
 			padding: 40rpx;
 		}

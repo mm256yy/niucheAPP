@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="list">
-		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="form.userAvatar"></u-image>
 		 	<view class="right">
 		 		<view class="name">{{form.userName}}</view>
 				<!-- <view class="special">加急</view> -->
@@ -86,9 +86,9 @@
 					carAge:'',
 					km:'',
 				},
-				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2万公里-5万公里' },
-					  {name: 2,text:'5万公里-10万公里' },{name: 3,text:'10万公里-20万公里' },{name: 4,text:'20万公里-30万公里' },
-					  {name: 5,text:'30万公里-50万公里' },{name: 6,text:'50万公里-70万公里' },{name: 7,text:'70万公里以上'},{name: 8,text:'30万公里以上'},]
+				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2-5万公里' },
+					  {name: 2,text:'5-10万公里' },{name: 3,text:'10-20万公里' },{name: 4,text:'20-30万公里' },
+					  {name: 5,text:'30-50万公里' },{name: 6,text:'50-70万公里' },{name: 7,text:'70万公里以上'},{name: 8,text:'30万公里以上'},]
 			}
 		},
 		onLoad(option) {

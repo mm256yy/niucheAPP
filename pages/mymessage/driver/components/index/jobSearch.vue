@@ -1,5 +1,5 @@
 <template>
-	<view class="carRent">
+	<view class="jobSearch">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:280rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="priceid" type="select" /></u-form-item>
@@ -17,7 +17,7 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="last">
+		<view class="last" v-show="list.length">
 			<view class="lists" v-for="(item, index) in list" :key="index">
 				<view class="list" @click="detail(item.companyMainId)">
 						<u-image class="left" width="264rpx" height="199rpx" src="item.photoUrl"></u-image>
@@ -44,8 +44,14 @@
 				<!-- <u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
 				<!-- <u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 			</view>
+			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 		</view>
-		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -120,7 +126,7 @@
 					}
 				],
 				list: [],
-				status: 'loadmore',
+				status:0,
 				loadText: {
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
@@ -186,7 +192,8 @@
 							 if(len<this.total){
 							 	this.status = 'loadmore'
 							 } else{
-							 	this.status = 'nomore'
+								 debugger
+							 	// this.status = 'nomore'
 							 }
 							 this.list.forEach(item=>{
 							    if (item.intentionBrand){
@@ -212,7 +219,7 @@
 							 if(len<this.total){
 							 	this.status = 'loadmore'
 							 } else{
-							 	this.status = 'nomore'
+							 	// this.status = 'nomore'
 							 }
 							 this.list.forEach(item=>{
 							    if (item.intentionBrand){
@@ -260,7 +267,7 @@
 				 if (len < this.total){
 					 this.getList()
 				 }else{
-					this.status = 'nomore'
+					// this.status = 'nomore'
 				}
 			},
 			detail(id) {
@@ -274,7 +281,13 @@
 </script>
 
 <style lang="scss" scoped>
-	.carRent {
+	.jobSearch {
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.last .lists:last-child {
 			margin-bottom: 10rpx;
 		}

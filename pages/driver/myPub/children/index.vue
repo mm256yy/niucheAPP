@@ -30,8 +30,12 @@
 			<u-form-item label="工作城市:">
 				<u-input :disabled="true" height="80" input-align="right" v-model="form.workCity" />
 			</u-form-item>
-			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
-			 v-model="form.businessType===0?'网约车':'出租车'" /></u-form-item>
+			<u-form-item label="业务类型:">
+				<u-input v-show="form.businessType==1" :disabled="true" height="80" placeholder="" input-align="right"
+			    v-model="hailing" />
+			    <u-input v-show="form.businessType==2" :disabled="true" height="80" placeholder="" input-align="right"
+			    v-model="taxi" />
+			</u-form-item>
 			<u-form-item label="求职意向:"><u-input :disabled="true" height="80" placeholder="" 
 			type="textarea" input-align="right" v-model="form.str" /></u-form-item>
 			<u-form-item label="我的优势:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
@@ -61,6 +65,8 @@ export default {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				hailing: '网约车',
+				taxi: '出租车',
 				driverDemandId:'',
 				showTips:false,
 				titleStyle:{'fontSize': '12pt','color':'#000000'},

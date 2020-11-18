@@ -25,7 +25,7 @@
 						<view class="clear"></view>
 						<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 						<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
-						<view  v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
+						<view v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
 					</view>
 					<view class="clear"></view>
 					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
@@ -38,11 +38,14 @@
 				<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 				<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 			</view>
+			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 		</view>
 		<view class="null" v-show="!list.length">
-			<view>亲，当前空空如也</view>
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
 		</view>
-		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 	</view>
 </template>
 
@@ -88,31 +91,31 @@
 				total: 0,
 				select: [
 					{
-						label: '0万公里-2万公里',
+						label: '0-2万公里',
 						value: '1'
 					},
 					{
-						label: '2万公里-5万公里',
+						label: '2-5万公里',
 						value: '2'
 					},
 					{
-						label: '5万公里-10万公里',
+						label: '5-10万公里',
 						value: '3'
 					},
 					{
-						label: '10万公里-20万公里',
+						label: '10-20万公里',
 						value: '4'
 					},
 					{
-						label: '20万公里-30万公里',
+						label: '20-30万公里',
 						value: '5'
 					},
 					{
-						label: '30万公里-50万公里',
+						label: '30-50万公里',
 						value: '6'
 					},
 					{
-						label: '50万公里-70万公里',
+						label: '50-70万公里',
 						value: '7'
 					},
 					{
@@ -143,7 +146,7 @@
 					}
 				],
 				list: [],
-				status: '',
+				status: 'loadmore',
 				loadText: {
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
@@ -291,7 +294,7 @@
 <style lang="scss" scoped>
 	.carSell {
 		.null{
-			height: calc(86vh - var(--window-top));
+			height: calc(73vh - var(--window-top));
 			display: flex;
 			justify-content: center;
 			align-items: center;

@@ -30,8 +30,12 @@
 			<u-form-item label="租车城市:">
 				<u-input :disabled="true" height="80" input-align="right" placeholder="" v-model="form.workCity" />
 			</u-form-item>
-			<u-form-item label="业务类型:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
-			 v-model="form.businessType===0?'网约车':'出租车'" /></u-form-item>
+			<u-form-item label="业务类型:">
+				<u-input v-show="form.businessType==1" :disabled="true" height="80" placeholder="" input-align="right"
+			    v-model="hailing" />
+			    <u-input v-show="form.businessType==2" :disabled="true" height="80" placeholder="" input-align="right"
+			    v-model="taxi" />
+			</u-form-item>
 			<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" placeholder="" 
 			type="textarea" input-align="right" v-model="form.carCard" /></u-form-item>
 			<u-form-item label="月租:"><u-input :disabled="true" height="80" type="textarea" placeholder="" input-align="right"
@@ -96,7 +100,9 @@
 					monthlyRent:'',
 					carAge:'',
 					km:'',
-				}
+				},
+				hailing: '网约车',
+				taxi: '出租车'
 			}
 		},
 		onLoad(option) {

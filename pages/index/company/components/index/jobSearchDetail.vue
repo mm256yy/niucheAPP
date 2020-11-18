@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="list">
-		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image>
+		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="form.userAvatar"></u-image>
 		 	<view class="right">
 		 		<view class="name">{{form.userName}}</view>
 		 			<!-- <view class="special">加急</view> -->
@@ -46,6 +46,7 @@
 			 			 v-model="form.myok" /></u-form-item>
 			 </u-form>
 		 </view>
+		 <view style="width: 100%;height: 124rpx;"></view>
 		 <view class="bottom" @click="phone()">
 			 <view>拨打电话</view>
 		 </view>
@@ -249,6 +250,9 @@ page{
 			font-size: 40rpx;
 			font-weight: 900;
 			background: linear-gradient(115deg,#6DD99C, #37AB63);
+			position: fixed;
+			bottom: 0;
+			left: 0;
 		}
 	}
 </style>

@@ -33,7 +33,7 @@
 					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
 			 </u-form>
 		 </view>
-
+         <view style="width: 100%;height: 124rpx;"></view>
 		 <view class="bottom" @click="phone()">
 		 	<view>拨打电话</view>
 		 </view>
@@ -217,7 +217,9 @@ page{
 			font-size: 40rpx;
 			font-weight: 900;
 			background: linear-gradient(115deg,#6DD99C, #37AB63);
-			margin-top: 40rpx;
+			position: fixed;
+			bottom: 0;
+			left: 0;
 		}
 	}
 </style>

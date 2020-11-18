@@ -57,8 +57,11 @@
 					</scroll-view>
 				</swiper-item>
 			</swiper>
-			<view class="more" @click="other()">上拉加载该公司其他信息</view>
-			<view class="phone" @click="phone()">拨打电话</view>
+			<view class="phone">
+				<view class="left" @click="other()">公司其他</view>
+				<view class="right">拨打电话</view>
+			</view>
+			<view style="width: 100%;height:154rpx"></view>
 			<!-- <view class="last">
 				<view class="bottom">
 					<view class="left">预约看车</view>
@@ -353,12 +356,16 @@ page{
 		.phone{
 			width: 100%;
 			height: 144rpx;
-			line-height: 144rpx;
-			text-align: center;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
 			background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
 			font-size: 36rpx;
 			font-weight: 900;
 			color: #fff;
+			position: fixed;
+			bottom: 0;
+			left: 0;
 		}
 	}
 </style>

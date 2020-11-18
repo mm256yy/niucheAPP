@@ -1,21 +1,24 @@
 <template>
-	<view class="buying">
+	<view class="carRent">
 		<view class="middle-content">
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+			<!-- <u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item style="width:240rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="driverAgeKey" type="select" /></u-form-item>
-				<view class="line
-				"></view>
+				<view class="line"></view>
 				<u-form-item style="width:240rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
 			</u-form>
-			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
+			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
+			<u-dropdown>
+				<u-dropdown-item v-model="value1" title="距离" :options="options1"></u-dropdown-item>
+				<u-dropdown-item v-model="value2" title="温度" :options="options2"></u-dropdown-item>
+			</u-dropdown>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view  class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
+		<view v-show="list.length" class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 			<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 			<view class="right">
 				<view class="time">刷新时间：{{item.updateTimeStr}}</view>
@@ -31,8 +34,14 @@
 				<view class="clear"></view>
 				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
 			</view>
+			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 		</view>
-		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -218,7 +227,13 @@
 </script>
 
 <style lang="scss" scoped>
-	.buying {
+	.carRent {
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.wrap {
 			padding: 40rpx;
 		}
@@ -256,7 +271,6 @@
 			width: 702rpx;
 			height: 286rpx;
 			margin-left: 24rpx;
-			margin-top: 24rpx;
 			background-image: url(@/static/bgrentcar.png);
 			background-repeat: no-repeat;
 			background-size: cover;
