@@ -84,9 +84,9 @@
 				showTips:false,
 				titleStyle:{'fontSize': '12pt','color':'#000000'},
 				xxSrc:"../../../../static/lajitongshanchu.png",
-				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2万公里-5万公里' },
-					  {name: 2,text:'5万公里-10万公里' },{name: 3,text:'10万公里-20万公里' },{name: 4,text:'20万公里-30万公里' },
-					  {name: 5,text:'30万公里-50万公里' },{name: 6,text:'50万公里-70万公里' },{name: 7,text:'70万公里以上'},{name: 8,text:'30万公里以上'},],
+				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2-5万公里' },
+					  {name: 2,text:'5-10万公里' },{name: 3,text:'10-20万公里' },{name: 4,text:'20-30万公里' },
+					  {name: 5,text:'30-50万公里' },{name: 6,text:'50-70万公里' },{name: 7,text:'70万公里以上'},{name: 8,text:'30万公里以上'},],
 				form: {
 					kmStr:'',
 					userName:'',
