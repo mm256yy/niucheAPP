@@ -4,20 +4,20 @@
 	   :back-text-style="backTextStyle" height='40' title-color="#FFFFFF"></u-navbar>
 	   <view class="view-content">
 	   	  <u-form :model="form" ref="uForm" label-width="320" :border-bottom="false">
-			  <u-form-item label="是否公开我的求职信息？" prop="isOpen">
+			  <u-form-item label="是否公开我的求职信息?(必选)" prop="isOpen">
 			  	<u-radio-group v-model="form.isOpen" :active-color="'#FFA032'" style="text-align: right;">
 			  		<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
 			  		<u-radio name="0" style="margin-left: 10pt;">不公开 </u-radio>
 			  	</u-radio-group>
 			  </u-form-item>
-			  <view class="public">*公开，则该条消息将被租车公司看到。</view>
-			  <view class="public">不公开，则隐藏该消息 租车公司不可见。</view>
-	   	  	<u-form-item label="业务类型" prop="businessType">
+<!-- 			  <view class="public">*公开，则该条消息将被租车公司看到。</view>
+			  <view class="public">不公开，则隐藏该消息 租车公司不可见。</view> -->
+	   	  	<u-form-item label="业务类型(必选)" prop="businessType">
 				<u-radio-group v-model="form.businessType" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
-				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
+				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
 			<u-form-item label="月薪" label-position="top" prop="monthprice">
 				<u-radio-group v-model="form.monthprice"  :active-color="'#FFA032'" style="text-align: right;">
@@ -43,7 +43,7 @@
 					</u-checkbox>
 				</u-checkbox-group>
 			</u-form-item>
-			<view class="more">*以下为加分项，可以不设置。</view>
+			<!-- <view class="more">*以下为加分项，可以不设置。</view> -->
 			<u-form-item label="工作经验" label-position="top">
 				<u-input style="width: 607rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入网约车工作年限,单位不用输入" v-model="form.workexperience" />年
 			</u-form-item>
