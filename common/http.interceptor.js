@@ -62,6 +62,7 @@ const install = (Vue, vm) => {
 			uni.removeStorageSync('telephone');
 			uni.removeStorageSync('token');
 			uni.removeStorageSync('isauthencation');
+			uni.removeStorageSync('loginNum')
 			setTimeout(vm.$u.route('/pages/login/login'),1000)
 		   
 		}else if(res.code == 500) {

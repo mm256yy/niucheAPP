@@ -48,6 +48,7 @@
 						uni.removeStorageSync('telephone');
 						uni.removeStorageSync('token');
 						uni.removeStorageSync('isauthencation');
+						uni.removeStorageSync('loginNum')
 						uni.reLaunch({
 						    url: '/pages/login/login'
 						})
