@@ -45,7 +45,7 @@
 		 <view class="fixed-btn" style="">
 		   <view class="btn-inline">
 				<view class="">
-					<u-icon size="80" :name="xxSrc" @click="delSubmit"></u-icon>
+					<u-icon size="80" :name="xxSrc" @click="delTips = true"></u-icon>
 				</view>
 				<view class="btn-edit" @click="toNext">编辑</view>
 				<view class="btn-edit">|</view>
@@ -55,6 +55,11 @@
 				</view>
            </view>
 		 </view>
+		 <u-modal v-model="delTips" @confirm="delSubmit" :show-cancel-button="true" confirm-text="是" cancel-text="否">
+		 	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		         请确认是否删除该条信息？
+		 	</view>
+		 </u-modal>
 		 <u-modal v-model="showTips" @confirm="tipsConfirm"  confirm-text="我知道了">
 		 	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 		         删除成功,点击我知道了,跳转到我的发布列表
@@ -67,6 +72,7 @@
 	export default {
 		data() {
 			return {
+				delTips:false,
 				backTextStyle:{
 					'color':'#ffffff'
 				},
