@@ -14,8 +14,8 @@
 			  <view class="public">不公开，则隐藏该消息 租车公司不可见。</view> -->
 	   	  	<u-form-item label="业务类型(必选)" prop="businessType">
 				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio name="0" style="margin-left: 10pt;">网约车 </u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">出租车 </u-radio>
+					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
+					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
 				</u-radio-group>
 				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
@@ -93,7 +93,7 @@
 				],
 				showTips: false,
 				form:{
-					businessType:0,
+					businessType:1,
 					isOpen: 1,
 					monthprice:'',
 					myok:'',

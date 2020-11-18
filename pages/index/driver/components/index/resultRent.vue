@@ -27,7 +27,7 @@
 			 				<view class="box">
 			 					<view><text>￥{{item.rentprice}}</text>元/月起租</view>
 			 							<view>
-			 								<view v-show="items.length<8" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+			 								<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
 			 							</view>
 			 				</view>
 			 			</view>
@@ -294,6 +294,7 @@ page{
 				}
 				.distance {
 					margin-left: 6rpx;
+					margin-top: 12rpx;
 					color: #7f7f7f;
 					float: left;
 				}

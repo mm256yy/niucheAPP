@@ -58,7 +58,7 @@
 		  </u-form>	
 	   </view>
 		<view class="bottom">
-			<view class="btn">重置</view>
+			<view class="btn" @click="reset()">重置</view>
 			<view class="total" @click="result()">当前选择条件的检索结果，共{{total}}条>></view>
 		</view>
 	</view>
@@ -72,7 +72,7 @@
 					'color':'#ffffff'
 				},
 				form: {
-				  businesstype: '',
+				  businesstype: 0,
 				  carbrand: '',
 				  cartype: '',
 				  city: '杭州',
@@ -80,7 +80,7 @@
 				  endCarAge: '',
 				  startPriceid: '',
 				  endPriceid: '',
-				  km: '',
+				  km: 100,
 				  power: '',
 				  islogin: ''
 				},
@@ -96,9 +96,9 @@
 				rentList:[{name: '1',text:'不限' },{name: '2',text:'2000以内' },{name: '3',text:'2000-3000' },{name: '4',text:'3000-4000' },{name: '5',text:'4000以上' }],
 				ageList:[{name: '1',text:'不限' },{name: '2',text:'1年内' },{name: '3',text:'1年-3年' },{name: '4',text:'3年-5年' },{name: '5',text:'5年以上' }],
 				objType:{
-					wycList:[{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里'},{name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },
+					wycList:[{name: '',text:'不限' },{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里'},{name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },
 					     {name: '4',text:'20-30万公里' },{name: '5',text:'30万公里以上'},],
-					      czcList:[{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里' },
+					      czcList:[{name: '',text:'不限' },{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里' },
 					      {name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },{name: '4',text:'20-30万公里' },
 					      {name: '5',text:'30-50万公里' },{name: '6',text:'50-70万公里' },{name: '7',text:'70万公里以上'}],
 				},
@@ -125,6 +125,24 @@
 			this.select()
 		},
 		methods: {
+			reset() {
+				this.form={
+				  businesstype: 0,
+				  city: '杭州',
+				  km: 100
+				};
+				this.brandList.map( item => {
+				  item.checked=false;
+				});
+				this.modelList.map( item => {
+				  item.checked=false;
+				});
+				this.powerList.map( item => {
+				  item.checked=false;
+				});
+				this.carage='';
+				this.priceid='';
+			},
 			add() {
 				this.addkey = this.businesstypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
 				(this.cartypekey?'/':'')+this.cartypekey + (this.powerkey?'/':'')+this.powerkey +
@@ -164,7 +182,6 @@
 				this.select()
 			},
 			radioGroupChangeRent(e){
-				console.log(e)
 				if(this.priceid == '1') {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '';

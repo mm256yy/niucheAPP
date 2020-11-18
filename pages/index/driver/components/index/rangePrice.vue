@@ -18,14 +18,14 @@
 			    		<view class="price"><text>￥3000</text></view>
 			    		<view>-2人拼租价-</view>
 			    	</view> -->
-			    	<view class="clear"></view>
 			    	<view class="deposit">押金：<text>￥{{detail.cashPrice}}</text></view>
+					<view class="clear"></view>
 			    </view>
 			 </view>
-			 <view class="discount">
+			 <!-- <view class="discount">
 				 <text>优惠</text>
 				 租满12个月，免费送3个月！
-			 </view>
+			 </view> -->
 			 <view class="icon">
 				<view class="text-box">
 					<u-image width="45rpx" height="62rpx" src="@/static/selectCar.png"></u-image>
@@ -145,6 +145,7 @@
 					font-size: 28rpx;
 					margin-top: 46rpx;
 					margin-left: 42rpx;
+					float: left;
 					text {
 						font-size: 40rpx;
 						font-weight: 900;

@@ -17,25 +17,23 @@
 		 	</view>
 		 </view>
 		 <view class="wrap">
-			 <u-sticky class="wrap" bg-color="#fff">
-			 	<view style="">
-			 		<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
-			 	   bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
-			 		 swiperWidth="750"></u-tabs-swiper>
-			 	</view>
-			 	<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			 		<swiper-item class="swiper-item">
-			 			<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
-			 				<selling :id="driverDemandId" v-if="isChildUpdate1" ref="selling"></selling>
-			 			</scroll-view>
-			 		</swiper-item>
-			 		<swiper-item class="swiper-item">
-			 			<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuy">
-			 				<buy :id="driverDemandId" v-if="isChildUpdate2" ref="buy"></buy>
-			 			</scroll-view>
-			 		</swiper-item>
-			 	</swiper>
-			 </u-sticky>
+			 <view style="">
+			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
+			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 	 swiperWidth="750"></u-tabs-swiper>
+			 </view>
+			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
+			 			<selling :id="driverDemandId" v-if="isChildUpdate1" ref="selling"></selling>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuy">
+			 			<buy :id="driverDemandId" v-if="isChildUpdate2" ref="buy"></buy>
+			 		</scroll-view>
+			 	</swiper-item>
+			 </swiper>
 		 </view>
 		 <!-- <view class="phone" @click="phone()">拨打电话</view> -->
 	</view>
@@ -172,10 +170,8 @@
 		}
 		.top {
 			width: 666rpx;
-			padding: 40rpx 39rpx;
 			margin-left: 42rpx;
 			margin-top: 40rpx;
-			margin-bottom: 60rpx;
 			display: flex;
 			align-items: center;
 			.right {
