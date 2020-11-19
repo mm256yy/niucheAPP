@@ -1,6 +1,6 @@
 <template>
     <view class="wrap">
-		<u-navbar  back-icon-size="0" title="租赁发布(1/3)" 
+		<u-navbar  back-icon-size="0" :title="title" 
 		:background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 		<view class="navbar-right">
 			<view class="message-box right-item">
@@ -36,8 +36,8 @@
 					<u-input v-model="form.power" class="input_select" type="select" :border="true"
 					 placeholder="请选择动力类型" :placeholder-style="style" @click="showSelect('power')" />
 				</u-form-item>
-		   	 	<u-form-item label="业务类型" prop="businesstype" label-width='100pt'>
-					<u-radio-group v-model="form.businesstype" active-color="#6DD99C" style="text-align: right;">
+		   	 	<u-form-item label="业务类型" prop="onlineistaxi" label-width='100pt'>
+					<u-radio-group v-model="form.onlineistaxi" active-color="#6DD99C" style="text-align: right;">
 						<u-radio name="1" style="margin-left: 10pt;">网约车</u-radio>
 						<u-radio name="2" style="margin-left: 10pt;">出租车</u-radio>
 					</u-radio-group>
@@ -99,7 +99,7 @@ export default {
 			carxinghao:'',
 			cartype:'',
 			power:'',
-			businesstype:'',
+			onlineistaxi:'',
 			firsttime:'',
 			firstkm:'',
 			endkm:'',
@@ -118,7 +118,7 @@ export default {
 			carxinghao:requiredRule,
 			cartype:requiredRule,
 			power:requiredRule,
-			businesstype:requiredRule,
+			onlineistaxi:requiredRule,
 			firsttime:requiredRule,
 			firstkm:requiredRule,
 			carnbumber:requiredRule,
@@ -146,7 +146,8 @@ export default {
 		childType:true,
 		carPubType:1,
 		today:{},
-		editId:''
+		editId:'',
+		title:'租赁发布(1/3)'
 	}  
   },
   components:{
@@ -181,6 +182,11 @@ export default {
 	  initStorage(){
 		this.today = uni.getStorageSync('today');
 		this.carPubType = uni.getStorageSync('carPubType');
+		if (this.carPubType === 1) {
+			this.title = '租赁发布(1/3)'
+		} else {
+			this.title = '转卖发布(1/3)'
+		}
 	  },
 	  setStorage(data){
 	  		 uni.setStorageSync('carPubFirst', data);
@@ -194,26 +200,37 @@ export default {
 	  editInit(){
 		 this.$u.api.ComparyRentCarEchoText({IsRentAndSell:this.carPubType,cartagid:this.editId}).then(res=>{
 		 	if(res.code === 200){
+				 this.form.isOneclickAndAdd = 3;
 				this.editSetStorage(res.object)
 		 	}else {
 		 		 this.$u.toast(res.message);
 		 	}
 		 })
 	  },
-	   getSysTags(){
-	  		let data = this.form;
-	  		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
-	  		this.$u.api.getSystemTag(obj).then(res=>{
-	  			if(res.code === 200){
-	  				this.form.SystemTag = res.systemTagVo;
-					this.setStorage(this.form)
-	  			}else {
-	  				 this.$u.toast(res.msg);
-	  			}
-	  		})
-	  	},
+	  importInit(){
+		  this.$u.api.ComparyRentCarEchoText({IsRentAndSell:this.carPubType,cartagid:this.editId}).then(res=>{
+		  	if(res.code === 200){
+				 this.form.isOneclickAndAdd = 1;//一键导入1  修改3  新增2
+				this.editSetStorage(res.object)
+		  	}else {
+		  		 this.$u.toast(res.message);
+		  	}
+		  })
+	  },
+   getSysTags(){
+		let data = this.form;
+		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
+		this.$u.api.getSystemTag(obj).then(res=>{
+			if(res.code === 200){
+				this.form.SystemTag = res.systemTagVo;
+				this.setStorage(this.form)
+			}else {
+				 this.$u.toast(res.msg);
+			}
+		})
+	},
 	  editSetStorage(data){
-		  this.form.isOneclickAndAdd = 1;
+		 
 		  this.form.id = data.tagid;
 		  this.form.comparyid = data.comparyinviteid;
 		  this.form.cartagistag = data.tagistagid
@@ -222,7 +239,7 @@ export default {
 		  this.form.carxinghao = data.carxinghao;
 		  this.form.cartype = data.cartype;
 		  this.form.power = data.power;
-		  this.form.businesstype = data.businesstype;
+		  this.form.onlineistaxi = data.onlineistaxi;
 		  this.form.firsttime = data.firsttime;
 		  this.form.firstkm = data.firstkm;
 		  this.form.endkm = data.endkm;
@@ -236,6 +253,7 @@ export default {
 		  this.form.SystemTag= data.SystemTag;
 		  uni.setStorageSync('editId',data.tagid)
 		  uni.setStorageSync('carPubSecond',{onephoto:data.onephoto,oneneishiphoto:data.oneneishiphoto})
+		  if(this.form.isOneclickAndAdd === 3){
 			if (this.carPubType === 1) {
 				let carThree = {
 					yamoney:data.caryaprice,
@@ -263,13 +281,14 @@ export default {
 				if (arr.length>0){
 					sellCarPriceObj.sellCarPrice = arr
 				}
-		  uni.setStorageSync('carPubThree',sellCarPriceObj)
+		        uni.setStorageSync('carPubThree',sellCarPriceObj)
+			   }
 			}
 	  },
 	 getChildId(item){
 		 console.log(item)
 		this.editId = item[0].id;
-		this.editInit(this.editId)
+		this.importInit(this.editId)
 	},
 	setInfo(){
 		this.$u.api.getCarBrand({}).then(res=>{

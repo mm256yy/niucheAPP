@@ -60,16 +60,18 @@ export default {
   	let id = uni.getStorageSync('editId');
   	if(id){
   		this.editId = id;
-  		this.form = this.carPubThree;
+  		if(this.carPubFirst.isOneclickAndAdd === 3){
+  			this.form = this.carPubThree;
+  		}
   	}
   },
   methods: {
 	  initStorage(){
-	  		  this.telephone = uni.getStorageSync('telephone');
-	  		  this.carPubType = uni.getStorageSync('carPubType');
-	  		  this.carPubFirst = uni.getStorageSync('carPubFirst');
-	  		  this.carPubSecond = uni.getStorageSync('carPubSecond');
-	  	  this.carPubThree = uni.getStorageSync('carPubThree');
+		  this.telephone = uni.getStorageSync('telephone');
+		  this.carPubType = uni.getStorageSync('carPubType');
+		  this.carPubFirst = uni.getStorageSync('carPubFirst');
+		  this.carPubSecond = uni.getStorageSync('carPubSecond');
+		  this.carPubThree = uni.getStorageSync('carPubThree');
 	  },
 	  clearStorage(){
 	  	uni.removeStorageSync('carPubType');
@@ -116,8 +118,8 @@ export default {
 	  },
 	  toSubmit(){
 		 let obj = Object.assign(this.carPubFirst,this.carPubSecond,this.form)
-		  obj.mainbusinesstype = this.carPubType;
-		  obj.businesstype = Number(obj.businesstype)
+			  obj.businesstype = 1;
+			  obj.mainbusinesstype = 3;
 		  this.$u.api.saveMainBusiness(obj).then(res=>{
 			if(res.code === 200){
 			   this.clearStorage()
