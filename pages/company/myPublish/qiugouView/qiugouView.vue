@@ -13,9 +13,9 @@
 				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
 		 		<view class="name u-line-1" style="width: 100%;">{{detail.comparyname}}</view>
 				<view class="clear"></view>
-				<view v-for="(item, index) in detail.comparytag" :key="index">
+				<view>
 					<u-image class="car" width="29rpx" height="26rpx" src="@/static/car.png"></u-image>
-					<view class="year">{{item}}运营</view>
+					<view class="year">{{detail.comparytag === 1?'网约车运营':'出租车运营' }}</view>
 					<view class="clear"></view>
 				</view>
 				<view class="box">
