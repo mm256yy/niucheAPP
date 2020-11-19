@@ -15,7 +15,7 @@
 				<view class="clear"></view>
 				<view>
 					<u-image class="car" width="29rpx" height="26rpx" src="@/static/car.png"></u-image>
-					<view class="year">{{detail.comparytag === 1?'网约车运营':'出租车运营' }}</view>
+					<view class="year">{{detail.comparytag === '1'?'网约车运营':'出租车运营' }}</view>
 					<view class="clear"></view>
 				</view>
 				<view class="box">
