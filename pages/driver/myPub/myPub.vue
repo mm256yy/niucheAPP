@@ -45,7 +45,7 @@
 						</view>
 						<view class="card-head" style="border-bottom: 0;">
 							<view style="color: #000000;">
-								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
+								  <view style="font-size: 16pt;">{{item.businessType === 1 ?'网约车':'出租车'}}</view>
 								  <view class="u-line-2">工作车辆: {{item.carCards}}  </view>
 							</view>
 					        <view style="width: 50%;">
