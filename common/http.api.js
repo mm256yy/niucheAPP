@@ -30,9 +30,9 @@ const install  = (Vue, vm) => {
 	//获取车辆品牌
 	const  getCarBrand =  (params = {}) => vm.$u.get('/user/carall/AlibabaCarBrandAll', params);
 	//获取车辆品牌
-	const  getCarSystem =  (params = {}) => vm.$u.get('/user/carall/AlibabaCarBrandGetCarXilie', params);
+	const  getCarSystem =  (params = {}) => vm.$u.get('/user/carall/CarAllSelectCarSeriesname', params);
 	//获取车辆品牌
-	const  getCarModel =  (params = {}) => vm.$u.get('/user/carall/AlibabaCarXilieGetCarXinghao', params);
+	const  getCarModel =  (params = {}) => vm.$u.get('/user/carall/CarAllSelectCarModel', params);
 	//获取系统特色标签
 	const  getSystemTag =  (params = {}) => vm.$u.post('/system/comparymain/SystemTag', params);
 	//转卖转租保存

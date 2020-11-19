@@ -70,7 +70,7 @@
 				</view>
 			</view>
 	    </view>
-		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
+		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='carseriesname' value-name='carseriesid' @confirm="actionSheetCallback"></u-select>
 		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
 		<auth></auth>
      </view>
@@ -104,6 +104,13 @@ export default {
 			firstkm:'',
 			endkm:'',
 			carnbumber:'',
+			displacement:'',
+			specification:'',
+			trunk:'',
+			wheel:'',
+			variablebox:'',
+			carseriesid:'',
+			SystemTag:[]
 		},
 		rules:{
 			carbrand:requiredRule,
@@ -120,8 +127,9 @@ export default {
 			carbrand:[],
 			carmodel:[],
 			carxinghao:[],
-			cartype:[{value: '1',text: '轿车'},{value: '2',text: 'SUV'},{value: '3',text: 'MPV'},{value: '4',text: '其他'}],
-			power:[{value: '1',text: '纯电动'},{value: '2',text: '插电混动'},{value: '3',text: '燃油车(含油电混动)'}]
+			cartype:[{carseriesid: '1',carseriesname: '轿车'},{carseriesid: '2',carseriesname: 'SUV'},{carseriesid: '3',carseriesname: 'MPV'},
+			{carseriesid: '4',carseriesname: '其他'}],
+			power:[{carseriesid: '1',carseriesname: '纯电动'},{carseriesid: '2',carseriesname: '插电混动'},{carseriesid: '3',carseriesname: '燃油车(含油电混动)'}]
 		},
 		selectObjType:'carbrand',
 		params: {
@@ -192,6 +200,18 @@ export default {
 		 	}
 		 })
 	  },
+	   getSysTags(){
+	  		let data = this.form;
+	  		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
+	  		this.$u.api.getSystemTag(obj).then(res=>{
+	  			if(res.code === 200){
+	  				this.form.SystemTag = res.systemTagVo;
+					this.setStorage(this.form)
+	  			}else {
+	  				 this.$u.toast(res.msg);
+	  			}
+	  		})
+	  	},
 	  editSetStorage(data){
 		  this.form.isOneclickAndAdd = 1;
 		  this.form.id = data.tagid;
@@ -207,6 +227,13 @@ export default {
 		  this.form.firstkm = data.firstkm;
 		  this.form.endkm = data.endkm;
 		  this.form.carnbumber = data.carnbumber;
+		  this.form.displacement= data.displacement;
+		  this.form.specification= data.specification;
+		  this.form.trunk= data.trunk;
+		  this.form.wheel= data.wheel;
+		  this.form.variablebox= data.variablebox;
+		  this.form.carseriesid= data.carseriesid;
+		  this.form.SystemTag= data.SystemTag;
 		  uni.setStorageSync('editId',data.tagid)
 		  uni.setStorageSync('carPubSecond',{onephoto:data.onephoto,oneneishiphoto:data.oneneishiphoto})
 			if (this.carPubType === 1) {
@@ -268,31 +295,46 @@ export default {
 			this.form.carxinghao = '';
 			this.getSelectSecond(id)
 		}
+		if (type === 'carxinghao') {
+			let list =this.selectObj[type];
+			list.forEach(item=>{
+				if(item.carseriesid === id){
+					this.form.power = item.powertype;//动力
+					this.form.cartype = item.cartype;//类型
+					this.form.displacement= item.displacement;
+					this.form.specification= item.specification;
+					this.form.trunk= item.trunk;
+					this.form.wheel= item.wheel;
+					this.form.variablebox= item.variablebox;
+					this.form.carseriesid= item.carseriesid;
+				}
+			})
+		}
 		this.form[type] = val;
+		console.log(this.form)
 	},
-	getSelect(){
-		this.$u.api.getCarBrand({}).then(res=>{
-			if(res.code === 200){
-	           this.selectObj.carbrand = res.alibabaCarModelVoList;
-			}else {
-				 this.$u.toast(res.message);
-			}
-		})
-	},
+	// getSelect(){
+	// 	this.$u.api.getCarBrand({}).then(res=>{
+	// 		if(res.code === 200){
+	//            this.selectObj.carbrand = res.alibabaCarModelVoList;
+	// 		}else {
+	// 			 this.$u.toast(res.message);
+	// 		}
+	// 	})
+	// },
 	getSelectFirst(id){
-		console.log(id)
-		this.$u.api.getCarSystem({parentid:id}).then(res=>{
+		this.$u.api.getCarSystem({carbrandid:id}).then(res=>{
 			if(res.code === 200){
-	           this.selectObj.carmodel = res.alibabaCarModelVoList;
+	           this.selectObj.carmodel = res.object;
 			}else {
 				 this.$u.toast(res.msg);
 			}
 		}).catch(res=>{console.log(res)})
 	},
 	getSelectSecond(id){
-		this.$u.api.getCarModel({parentid:id}).then(res=>{
+		this.$u.api.getCarModel({carseriesid:id}).then(res=>{
 			if(res.code === 200){
-			   this.selectObj.carxinghao = res.alibabaCarModelVoList;
+			   this.selectObj.carxinghao = res.object;
 			}else {
 				 this.$u.toast(res.msg);
 			}
@@ -311,7 +353,7 @@ export default {
 		this.$refs.importShow.importShow = true
     },
 	toNext(){
-		this.setStorage(this.form)
+		
 		this.$refs.uForm.validate(valid=>{
 			if(valid) {
 		        this.$refs.uForm2.validate(valid=>{
@@ -322,6 +364,8 @@ export default {
 							this.$u.toast('行驶里程填写有误');
 							return
 						}
+						this.getSysTags();
+						this.setStorage(this.form)
 						this.$u.route("/pages/company/lease/step/stepAppearance/stepAppearance")
 
 		        	}

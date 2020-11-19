@@ -63,7 +63,9 @@
 		},
 		mounted() {
 			this.telephone = uni.getStorageSync('telephone')
-			this.initList()
+			if (this.list.length === 0){
+				this.initList()
+			}
 		},
 		methods:{
 			radioChange(name){
@@ -76,7 +78,6 @@
 				this.$u.api.getMyCar({State:this.carPubType,telephone:this.telephone}).then(res=>{
 					if(res.code === 200){
 						this.list = res.object;
-
 					}else {
 						 this.$u.toast(res.msg);
 					}

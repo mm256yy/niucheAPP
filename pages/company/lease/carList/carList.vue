@@ -10,20 +10,15 @@
 			</view>
 		</view>
 	</u-index-list>
-	<auth></auth>
 	</view>
 </template>
 
 <script>
 import {list} from "@/utils/index.list.js";
-import auth from '@/components/auth.vue'
 	const letterArr = list.map(val => {
 		return val.letter;
 	})
 	export default {
-		components:{
-			auth
-		},
 		data() {
 			return {
 				scrollTop: 0,
@@ -36,7 +31,6 @@ import auth from '@/components/auth.vue'
 		onLoad(option) {
 			let index = option.source;
 			this.source = index;
-			console.log(this.source)
 		},
 		mounted() {
 
