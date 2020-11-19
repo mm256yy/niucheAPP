@@ -286,7 +286,6 @@ export default {
 			}
 	  },
 	 getChildId(item){
-		 console.log(item)
 		this.editId = item[0].id;
 		this.importInit(this.editId)
 	},
