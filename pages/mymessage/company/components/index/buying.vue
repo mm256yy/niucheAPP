@@ -26,7 +26,7 @@
 					<view class="clear"></view>
 					<u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
 					<view class="right">
-						<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆{{item.teXtTile}}</view>
+						<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆/{{item.teXtTile}}</view>
 						<view class="type">{{item.comparyName}}<text>{{item.comparyArea}}</text></view>
 						<view class="price">打包价:<text>{{item.packprice}}</text></view>
 						<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
