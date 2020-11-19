@@ -245,7 +245,9 @@ export default {
 				data.rentAndSellPriceList.forEach(item=>{
 					arr.push({RentTime:item.rentCarTime,Rentprice:item.rentCarPrice})
 				})
-				 carThree.rentCarPrice = arr;
+				if (arr.length>0){
+					 carThree.rentCarPrice = arr;
+				}
 				 uni.setStorageSync('carPubThree',carThree)
 			}else {
 				let sellCarPriceObj = {
@@ -254,7 +256,7 @@ export default {
 						}
 					]
 				};
-				let arr = []
+				let arr = [];
 				data.rentAndSellPriceList.forEach(item=>{
 					arr.push({shoplow:item.sellCarLowPrice,shophigh:item.sellCarHighPrice,packprice:item.sellCarPackPrice})
 				})
