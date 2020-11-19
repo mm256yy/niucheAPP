@@ -1,8 +1,8 @@
 <template>
 	<view class="setting">
 		<view class="top">
-			<view class="new">新</view>
-			<view class="year">车龄：≤{{detail.carage}}年</view>
+			<!-- <view class="new">新</view> -->
+			<view class="year">{{detail.carage}}</view>
 			<view class="distance">行驶里程：{{detail.carkm}}万公里</view>
 		</view>
 		<view class="content">
@@ -19,23 +19,6 @@
 					<u-input :disabled="true" height="30" input-align="right" v-model="detail.displacement" placeholder="无数据"/></u-form-item>
 			</u-form>
 		</view>
-<!-- 		<view class="other">其他参数</view>
-		<view class="list">
-
-			<view class="params" v-for="(item, index) in detail.otherparam" :key="index">
-				<text class="left">{{item.paramtername}}</text><text class="left">({{item.paramterunit}})</text>
-				<text class="right">{{item.paramtertext}}</text>
-				<view class="clear"></view>
-			</view>
-		</view> -->
-<!-- 		<view class="ask">
-			<u-image class="question" width="66rpx" height="66rpx" src="@/static/question.png"></u-image>
-			<view class="problem">
-				<view class="everyone">问问大家</view>
-				<view class="how">谁买过？怎么样？</view>
-			</view>
-			<view class="small">></view>
-		</view> -->
 	</view>
 </template>
 
@@ -91,13 +74,13 @@
 				font-weight: 900;
 				color: #fff;
 				border-radius: 50%;
-				background: linear-gradient(115deg, #37AB63, #6DD99C);
+				background: linear-gradient(115deg, #6DD99B, #37AB63);
 				margin-left: 40rpx;
 				float: left;
 			}
 			.year {
 				margin-left: 25rpx;
-				margin-right: 85rpx;
+				margin-right: 15rpx;
 				float: left;
 				margin-top: 18rpx;
 			}
