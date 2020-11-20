@@ -80,7 +80,7 @@
 				  endCarAge: '',
 				  startPriceid: '',
 				  endPriceid: '',
-				  km: 100,
+				  km: '',
 				  power: '',
 				  islogin: ''
 				},

@@ -47,7 +47,7 @@
 			 </u-form>
 		 </view>
 		 <view style="width: 100%;height: 124rpx;"></view>
-		 <view class="bottom" @click="phone()">
+		 <view v-show="token" class="bottom" @click="phone()">
 			 <view>拨打电话</view>
 		 </view>
 	</view>
@@ -60,6 +60,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				token:'',
 				hailing:'网约车',
 				taxi:'出租车',
 				driverDemandId:'',
@@ -95,10 +96,11 @@
 		},
 		mounted() {
 			this.getDetail();
+			this.token = uni.getStorageSync('token');
 		},
 		methods: {
 			phone() {
-				uni.makePhoneCall({ phoneNumber: '18748412671' });
+				uni.makePhoneCall({ phoneNumber: this.form.phone });
 			},
 			getDetail(){
 				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{

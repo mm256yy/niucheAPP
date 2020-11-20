@@ -11,7 +11,10 @@
 			<u-image class="img" width="669rpx" height="503rpx" :src="detail.photourl"></u-image>
 			<view>
 				<!-- <view class="tag">付费标签</view> -->
-				<view class="name">{{detail.titletext}}</view>
+				<view class="name u-line-2">
+				  <text v-show="detail.businesstypetag == 1">[网约车]</text>
+				  <text v-show="detail.businesstypetag == 2">[出租车]</text>
+				{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>元/月起租</view>
 				<view class="box">
 					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>

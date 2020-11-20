@@ -54,9 +54,7 @@
 					this.$refs.jobsearch.search()
 				}
 			},
-			// tabs通知swiper切换
-			tabsChange(index) {
-				this.swiperCurrent = index;
+			create(index){
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
 				    this.isChildUpdate2 = false;
@@ -64,6 +62,11 @@
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = true;
 				}
+			},
+			// tabs通知swiper切换
+			tabsChange(index) {
+				this.swiperCurrent = index;
+				this.create(index)
 			},
 			// init(){
 			// 	this.$refs.child.search()
@@ -80,6 +83,7 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
+				this.create(current)
 			},
 			toView(){
 				console.log(11111111111111)
@@ -91,7 +95,7 @@
 			},
 			onreachBottomjobsearch() {
 				//监听上拉触底事件
-				this.$refs.search.pull();
+				this.$refs.jobsearch.pull();
 			},
 			onPullDownRefreshRent() {
 				this.$refs.rent.refresh();

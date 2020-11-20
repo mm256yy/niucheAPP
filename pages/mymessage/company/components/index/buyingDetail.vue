@@ -35,7 +35,7 @@
 			 </u-form>
 		 </view>
          <view style="width: 100%;height: 124rpx;"></view>
-		 <view class="bottom" @click="phone()">
+		 <view v-show="token" class="bottom" @click="phone()">
 		 	<view>拨打电话</view>
 		 </view>
 	</view>
@@ -48,6 +48,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				token:'',
 				driverDemandId: '',
 				detail: {},
 				comparyRefreshTimeStr: '',
@@ -61,10 +62,11 @@
 		},
 		mounted() {
 			this.getDetail()
+			this.token = uni.getStorageSync('token');
 		},
 		methods: {
 			phone() {
-				uni.makePhoneCall({ phoneNumber: '18748412671' });
+				uni.makePhoneCall({ phoneNumber: this.form.phone });
 			},
 		    format(time, format) {
 			            var t = new Date(time);
@@ -184,7 +186,6 @@ page{
 				// height: 135rpx;
 				padding: 4rpx;
 				float: right;
-				margin-top: -80rpx;
 				margin-right: -80rpx;
 				font-size: 20rpx;
 				background: #fff;

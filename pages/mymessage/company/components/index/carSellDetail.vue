@@ -8,7 +8,9 @@
 			</view>
 		 </u-navbar>
 		 <view class="">
-			<u-image class="img" width="100%" height="503rpx" :src="detail.photourl"></u-image>
+			 <view class="wraps img">
+			 	<u-swiper height="503" bg-color="#CDE5E3" mode="dot" :list="detail.photourl"></u-swiper>
+			 </view>
 			<view style="padding: 40rpx;">
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.titletext}}</view>
@@ -20,7 +22,7 @@
 				</view>
 				<view class="clear"></view>
 				<view class="box">
-					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
+					<view v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
 				</view>
 		 	</view>
@@ -29,9 +31,12 @@
 		<range-price :tab="tab" :detail="detail"></range-price>
 		<view style="padding: 20rpx 40rpx;">参数配置</view>
 		<setting-parameter :detail="detail"></setting-parameter>
-		<view class="phone">
+		<view class="phone" v-show="token">
 			<view class="left" @click="other()">公司其他</view>
 			<view class="right">拨打电话</view>
+		</view>
+		<view class="phone">
+			<view class="left" @click="other()">公司其他</view>
 		</view>
 		<view style="width: 100%;height:154rpx"></view>
 		<!-- <view class="last">
@@ -86,6 +91,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				token:'',
 				driverDemandId: '',
 				listTab: [{
 					name: '价格区间'
@@ -98,7 +104,6 @@
 				swiperCurrent: 0,
 				detail:{},
 				tab: [],
-				arr: [],
 				viewFlag:false//发布页详情true,列表页详情false
 			}
 		},
@@ -114,6 +119,7 @@
 		},
 		mounted() {
 			this.getDetail()
+			this.token = uni.getStorageSync('token');
 		},
 		methods: {
 			favorites(item,id) {
@@ -152,9 +158,6 @@
 					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
-							 const systemtag = this.detail.systemtag;
-							 const usertag = this.detail.usertag;
-							 this.arr =systemtag.concat(usertag);
 							 var text = '';
 							 if(this.detail.pricesectionlist) {
 								this.detail.pricesectionlist.forEach(item=>{
@@ -244,6 +247,10 @@ page{
 	}
 	.detail {
 		background-color: #F5F5F8;
+		.wraps{
+			width: 100%;
+			height: 503rpx;
+		}
 		.img{
 			margin-top: 40rpx;
 		}

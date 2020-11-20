@@ -15,7 +15,7 @@
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
 			<u-dropdown style="width: 50rpx;">
 				<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
-				<u-dropdown-item @change="changeType()" v-model="form.businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
 			</u-dropdown>
 			<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
 		</view>
@@ -101,6 +101,7 @@
 				  power: '',
 				  islogin: ''
 				},
+				businesstype: 100,
 				pagination: {
 				  pageNum: 1, 
 				  pageSize: 10
@@ -142,7 +143,7 @@
 					},
 					{
 						label: '不限',
-						value: '0'
+						value: ''
 					}
 				],
 				list: [],
@@ -199,7 +200,7 @@
 					}
 				})
 				this.selectType.forEach(item=>{
-					if(item.value === this.form.businesstype){
+					if(item.value === this.businesstype){
 					    this.businesstypekey = item.label;
 					}
 				})
@@ -237,6 +238,7 @@
 			//     })
 			// },
 		    getList(){
+				this.form.businesstype=this.businesstype==100?'':this.businesstype;
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
 		        	pageSize: 10,
@@ -275,6 +277,7 @@
 		    		})
 		    },
 		    search(){
+				this.form.businesstype=this.businesstype==100?'':this.businesstype;
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
 		    		pageSize: 10,
