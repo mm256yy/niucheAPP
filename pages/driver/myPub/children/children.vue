@@ -14,7 +14,7 @@
 		 		<view class="year">驾龄{{form.drivingYear}}年</view>
 				<view class="clear"></view>
 				<u-icon class="car" name="car" width="42" height="37"></u-icon>
-		 		<view class="type">{{form.ifAuthentication === 2 ?'出租车认证':'网约车认证'}}</view>
+		 		<view class="type">{{form.ifAuthentication == 2 ?'出租车认证':'网约车认证'}}</view>
 		 		<view class="clear"></view>
 				<view class="box">
 				    <view>准驾类型</view>
