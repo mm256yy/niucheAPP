@@ -523,7 +523,7 @@
 	        "pagePath": "pages/mymessage/mymessage",
 	        "iconPath": "static/tabbar/message.png",
 	        "selectedIconPath": "static/tabbar/message-select.png",
-	        "text": "消息"
+	        "text": "买车"
 	    }, {
 	        "pagePath": "pages/mycollect/mycollect",
 	        "iconPath": "static/tabbar/collect.png",
