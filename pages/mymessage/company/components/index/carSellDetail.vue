@@ -153,8 +153,8 @@
 						if(res.code === 200){
 							 this.detail = res.object;
 							 const systemtag = this.detail.systemtag;
-							 const usertag = this.detail.usertag;
-							 this.arr =systemtag.concat(usertag);
+							 // const usertag = this.detail.usertag;
+							 this.arr =systemtag;
 							 var text = '';
 							 if(this.detail.pricesectionlist) {
 								this.detail.pricesectionlist.forEach(item=>{
