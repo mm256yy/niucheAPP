@@ -17,7 +17,7 @@
 				{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>元/月起租</view>
 				<view class="box">
-					<view v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
+					<view v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
 				</view>
 		 	</view>
@@ -79,10 +79,6 @@
 					if(res.code === 200){
 						let data =res.object;
 						 this.detail = data;
-						 const systemtag =data.systemtag;
-						 this.arr = systemtag
-						 // const usertag =data.usertag;
-						 // this.arr =systemtag.concat(usertag);
 						 var text = [];
 						 if(data.pricesectionlist) {
 							 let list =  data.pricesectionlist;
