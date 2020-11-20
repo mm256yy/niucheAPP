@@ -15,6 +15,12 @@
 				<u-dropdown-item @change="changePrice()" v-model="form.packprice" title="打包价" :options="selectPrice"></u-dropdown-item>
 			</u-dropdown>
 		</view>
+		<view class="tagBox">
+			<view v-show="kmkey" class="selectTag">{{kmkey}}</view>
+			<view v-show="packpricekey" class="selectTag">{{packpricekey}}</view>
+			<view v-show="kmkey||packpricekey" class="clearNull" @click="clear()">清空</view>
+			<view class="clear"></view>
+		</view>
 		<!-- <view class="wrap">
 			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -149,9 +155,23 @@
 		methods: {
 			change(){
 				this.search()
+				this.add()
 			},
 			changePrice(){
 				this.search()
+				this.add()
+			},
+			add(){
+				this.select.forEach(item=>{
+					if(item.value === this.form.km){
+					    this.kmkey = item.label;
+					}
+				})
+				this.selectPrice.forEach(item=>{
+					if(item.value === this.form.packprice){
+					    this.packpricekey = item.label;
+					}
+				})
 			},
 			// favorites(item,id) {
 			// 	const params = {
@@ -276,6 +296,13 @@
 				 }else{
 					this.status = 'nomore'
 				}
+			},
+			clear(){
+				this.kmkey='';
+				this.packpricekey='',
+				this.form.km='';
+				this.form.packprice='';
+				this.search()
 			}
 		}
 	}
@@ -283,6 +310,22 @@
 
 <style lang="scss" scoped>
 	.buying {
+		.tagBox{
+			padding: 10rpx 100rpx 10rpx 80rpx;
+			.selectTag{
+				padding: 4rpx 8rpx;
+				border: 1rpx solid rgba(0,0,0,0.1);
+				float: left;
+				font-size: 24rpx;
+				margin-right: 40rpx;
+			}
+			.selectTag:last-child{
+				margin-right: 0;
+			}
+			.clearNull{
+				float: right;
+			}
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;
