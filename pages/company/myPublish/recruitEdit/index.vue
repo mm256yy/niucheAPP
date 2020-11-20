@@ -99,6 +99,7 @@
 	 },
 	 setStorage(data){
 		 uni.setStorageSync('carPubPositionEdit', data);
+		  uni.setStorageSync('carPubUploadEdit', data.listDoList);
 	 },
 	 getInfo(){
 		 let id = this.id;
@@ -108,7 +109,6 @@
 					    let data = res.object
 			 			this.form = data;
 						this.carPubUpload = data.listDoList
-			 		    uni.setStorageSync('carPubUploadEdit', data.listDoList);
 						let len = data.listDoList.length;
 						this.setStorage(res.object)
 			            this.value= '已填加'+len+'辆';
@@ -135,9 +135,6 @@
 	 toCarModel(){
 		this.setStorage(this.form)
 		this.$u.route('/pages/company/myPublish/recruitEdit/list') 
-	 },
-	 saveStorage(){
-		this.setStorage(this.form)
 	 },
 	 saveForm(){
 		 let obj = this.form;
