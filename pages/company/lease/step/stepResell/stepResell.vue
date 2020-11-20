@@ -1,6 +1,6 @@
 <template>
     <view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="租车价格(3/3)" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="卖车价格(3/3)" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" >
 		   <view class="zlcontent-mid price-list" v-for="(item,index) in form.sellCarPrice" :key='index'>
 			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
@@ -12,7 +12,7 @@
 					  <u-input v-model="item.shophigh" type="number" @input="endValChange(index)" :clearable="false" :border="true" placeholder="请输入"/>
 					  <text style="padding-left: 15pt;">台</text>
 				 </u-form-item>
-				 <u-form-item label="租金">
+				 <u-form-item label="价格">
 				 	 <u-input v-model="item.packprice" type="number" :clearable="false" :border="true" placeholder="请输入"/>
 					 <text style="position: absolute;right: 10px;">元/台</text>
 				 </u-form-item>
