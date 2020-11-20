@@ -107,15 +107,9 @@
 			 	if(res.code === 200){
 					    let data = res.object
 			 			this.form = data;
-						let yuanyouList =data.carTagOneClickResultVos.concat(data.listDoList);
-						console.log(yuanyouList)
-			 			let len = yuanyouList.length;
-						let arr = [];
-						yuanyouList.forEach(item=>{
-							arr.push(item.id)
-						})
-						uni.setStorageSync('yuanyouIdlist',arr)
-			 		    uni.setStorageSync('carPubUploadEdit', yuanyouList);
+						this.carPubUpload = data.listDoList
+			 		    uni.setStorageSync('carPubUploadEdit', data.listDoList);
+						let len = data.listDoList.length;
 						this.setStorage(res.object)
 			            this.value= '已填加'+len+'辆';
 			 	}else {
@@ -147,30 +141,9 @@
 	 },
 	 saveForm(){
 		 let obj = this.form;
-		 let yuanlou = uni.getStorageSync('yuanyouIdlist');//初始化获取idlist
 		 let carPubUpload = uni.getStorageSync('carPubUploadEdit');//列表页面list
-		 let shanchuList = uni.getStorageSync('shanchuList');//删除idList
-		 let idList = [];//一键导入未删除的list
-		  let addCarInviteState = []; //新增idlist
-		 carPubUpload.forEach(item=>{
-				if (item.id){
-					 idList.push(item.id)
-				} else {
-					addCarInviteState.push(item)
-				}
-		 })
-		 let cancelCarInviteState= []; //取消的idlist
-		 yuanlou.forEach(item=>{
-			 shanchuList.forEach(list=>{
-				 if(item === list){
-					 cancelCarInviteState.push(list)
-				 }
-			 })
-		 })
 		 let saveobject = {
-			 cancelCarInviteState:cancelCarInviteState.join(','),
-			 addCarInviteState:idList,
-			 comparyInviteInsertCarVoList:addCarInviteState.join(','),
+			 addCarInviteState:carPubUpload,
 			 workname:obj.workname,
 			 worktext:obj.worktext,
 			 business:obj.business,
@@ -181,10 +154,8 @@
 			 id:obj.id,
 			 comparyinviteid:obj.comparyinviteid,
 		 }
-		console.log(cancelCarInviteState)
-		 
 		 this.$u.api.ComparyInviteAdd(saveobject).then(res=>{
-			if(res.code === '200'){
+			if(res.code === 200){
 				this.showTips = true
 			}else {
 				 this.$u.toast(res.msg);
@@ -196,8 +167,6 @@
 		 uni.removeStorageSync('carPubPositionEdit');
 		 uni.removeStorageSync('inviteid');
 		 uni.removeStorageSync('carPubType');
-		  uni.removeStorageSync('yuanyouIdlist');
-		  uni.removeStorageSync('shanchuList');
 		  uni.removeStorageSync('carPubType');
 	 },
 	 tipsConfirm(){

@@ -35,7 +35,7 @@
 			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">添加</u-button>
 			</view>
 		</view>
-		<u-select v-model="show" :list="carmodel" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
+		<u-select v-model="show" :list="carmodel" label-name='carseriesname' value-name='carseriesid' @confirm="actionSheetCallback"></u-select>
      </view>
 </template>
 
@@ -84,9 +84,9 @@ export default {
 		this.form[name] = data.text;
 	  },
 	  getSelectFirst(id){
-		this.$u.api.getCarSystem({parentid:id}).then(res=>{
+		this.$u.api.getCarSystem({carbrandid:id}).then(res=>{
 			if(res.code === 200){
-				 this.carmodel = res.alibabaCarModelVoList;
+				 this.carmodel = res.object;
 			}else {
 				 this.$u.toast(res.msg);
 			}
