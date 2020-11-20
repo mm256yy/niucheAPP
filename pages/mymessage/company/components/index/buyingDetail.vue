@@ -144,7 +144,6 @@ page{
 		// background-color: #F5F5F8;
 		.list{
 			width: 671rpx;
-			height: 257rpx;
 			border-radius: 60rpx 0 60rpx 60rpx;
 			padding: 40rpx;
 			color: #fff;
@@ -184,14 +183,15 @@ page{
 			.box {
 				// width: 160rpx;
 				// height: 135rpx;
-				padding: 4rpx;
+				padding: 4rpx 30rpx;
 				float: right;
-				margin-right: -80rpx;
+				margin-right: -76rpx;
 				font-size: 20rpx;
 				background: #fff;
 				color: #37AB63;
+				margin-top: -70rpx;
 				.num {
-					font-size: 36rpx;
+					font-size: 72rpx;
 					font-weight: 900;
 				}
 			}
