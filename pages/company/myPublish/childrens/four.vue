@@ -9,7 +9,7 @@
 						<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
 					</u-col>
 					<u-col span="12" @click="toView(item.askToShopId)" style="border-top: 1px solid #E5E5E5;padding: 8.5pt 0 10pt;">
-						<view style="font-size: 12pt;font-weight: bold;" @click="toView(item.askToShopId)">求购：{{item.inviteCar}}...</view>
+						<view style="font-size: 12pt;font-weight: bold;" @click="toView(item.askToShopId)">求购：{{item.inviteCar}}</view>
 						<view class="" style="padding-top: 8pt;">
 							<text style="">打包价：</text><text style="color: #3FB26C;font-size: 16pt;">{{item.packprice}}</text>
 						</view>
