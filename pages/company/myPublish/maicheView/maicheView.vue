@@ -3,19 +3,21 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="租车详情" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+					<!-- <u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon> -->
 				</view>
 			</view>
 		</u-navbar>
+		<view class="wraps img">
+			<u-swiper height="503" bg-color="#CDE5E3" mode="dot" :list="detail.photourl"></u-swiper>
+		</view>
 		 <view class="" style="padding: 40rpx;">
-			<u-image class="img" width="669rpx" height="503rpx" :src="detail.photourl"></u-image>
 			<view>
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name u-line-2">
 				  <text v-show="detail.businesstypetag == 1">[网约车]</text>
 				  <text v-show="detail.businesstypetag == 2">[出租车]</text>
 				{{detail.titletext}}</view>
-				<view class="price"><text>￥{{detail.packprice}}</text>元/月起租</view>
+				<view class="price"><text>￥{{prices}}</text>元/月起租</view>
 				<view class="box">
 					<view v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
@@ -61,7 +63,8 @@
 				detail: {},
 				tab: [],
 				arr: [],
-				type:1
+				type:1,
+				prices:0
 			}
 		},
 		onLoad(option) {
@@ -82,11 +85,17 @@
 						 var text = [];
 						 if(data.pricesectionlist) {
 							 let list =  data.pricesectionlist;
-						    list.forEach(item=>{
-								console.log(item)
+							 let price = 0
+						    list.forEach((item,index)=>{
+								if (index === 0) {
+								   price = item.rentCarPrice;
+								}
+								if(item.rentCarPrice < price){
+									price = item.rentCarPrice
+								}
 									text.push(item.rentCarTime)		
-								
 						   })
+						   this.prices = price
 						   this.tab = text
 						 }
 					}else {
@@ -159,6 +168,13 @@ page{
 		background: #F5F5F8;
 		.clear {
 			clear: both;
+		}
+		.wraps{
+			width: 100%;
+			height: 503rpx;
+		}
+		.img{
+			margin-top: 40rpx;
 		}
 		.tag {
 			width: 169rpx;
