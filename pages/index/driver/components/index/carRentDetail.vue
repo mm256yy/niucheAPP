@@ -17,7 +17,7 @@
 				{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.rentprice}}</text>元/月起租</view>
 				<view class="box">
-					<view v-show="item!=''" v-for="(item, index) in arr" :key="index" class="text">{{item}}</view>
+					<view v-show="item!=''" v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
 				</view>
 		 	</view>
@@ -26,9 +26,12 @@
 		<range-price :tab="tab" :detail="detail"></range-price>
 		<view style="padding: 20rpx 40rpx;">参数配置</view>
 		<setting-parameter :detail="detail"></setting-parameter>
-		<view class="phone">
+		<view class="phone" v-show="token">
 			<view class="left" @click="other()">公司其他</view>
-			<view class="right">拨打电话</view>
+			<view class="right" @click="phone()">拨打电话</view>
+		</view>
+		<view class="phone" v-show="!token">
+			<view class="left" @click="other()">公司其他</view>
 		</view>
 		<!-- <view class="phone" @click="phone()">拨打电话</view> -->
 		<view style="width: 100%;height:154rpx"></view>
@@ -84,6 +87,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				token:'',
 				driverDemandId: '',
 				list: [{
 					name: '租车价格'
@@ -95,8 +99,7 @@
 				current: 0,
 				swiperCurrent: 0,
 				detail: {},
-				tab: [],
-				arr: []
+				tab: []
 			}
 		},
 		onLoad(option) {
@@ -107,15 +110,13 @@
 		},
 		mounted() {
 			this.getDetail()
+			this.token = uni.getStorageSync('token');
 		},
 		methods: {
 			getDetail(){
 				this.$u.api.detailRent({id:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.detail = res.object;
-						 const systemtag = this.detail.systemtag;
-						 const usertag = this.detail.usertag;
-						 this.arr =systemtag.concat(usertag);
 						 var text = '';
 						 if(this.detail.carRentPriceCollection) {
 						   this.detail.carRentPriceCollection.forEach(item=>{
@@ -155,7 +156,7 @@
 				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
 			},
 			phone() {
-				uni.makePhoneCall({ phoneNumber: '18748412671' });
+				uni.makePhoneCall({ phoneNumber: this.detail.phone });
 			}
 		}
 	}

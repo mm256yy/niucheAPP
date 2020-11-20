@@ -28,19 +28,25 @@
 			 </view> -->
 			 <view class="icon">
 				<view class="text-box">
-					<u-image width="45rpx" height="62rpx" src="@/static/selectCar.png"></u-image>
+					<view class="imgBox">
+						<u-image width="45rpx" height="62rpx" src="@/static/selectCar.png"></u-image>
+					</view>
 					<view class="text">线上选车</view>
 				</view>
 				<view class="text-box">
-					<u-image width="56rpx" height="56rpx" src="@/static/interview.png"></u-image>
+					<view class="imgBox"><u-image width="56rpx" height="56rpx" src="@/static/interview.png"></u-image></view>
 					<view class="text">线上约谈</view> 
 				</view>
 				<view class="text-box">
-					<u-image width="48rpx" height="42rpx" src="@/static/viewCar.png"></u-image>
+					<view class="imgBox">
+						<u-image width="48rpx" height="42rpx" src="@/static/viewCar.png"></u-image>
+					</view>
 					<view class="text">线下看车</view>
 				</view>
 				<view class="text-box">
-					<u-image width="50rpx" height="49rpx" src="@/static/bi.png"></u-image>
+					<view class="imgBox">
+						<u-image width="50rpx" height="49rpx" src="@/static/bi.png"></u-image>
+					</view>
 					<view class="text">线下签约</view>
 				</view>
 			 </view>
@@ -175,6 +181,13 @@
 				display: flex;
 				justify-content: space-around;
 				align-items: center;
+				.imgBox{
+					width: 56rpx;
+					height: 62rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
 				.text-box {
 					display: flex;
 					flex-direction: column;

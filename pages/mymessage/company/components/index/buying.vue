@@ -208,7 +208,9 @@
 			getList(){
 			    const params = Object.assign(this.form, {
 			    	pageNum: this.pagination.pageNum + 1,
-			    	pageSize: 10
+			    	pageSize: 10,
+					orderByColumn: 'refreshtime',
+					isAsc: 'desc'
 			    });
 					this.$u.api.buying(params).then(res=>{
 						if(res.code === 200){
@@ -237,7 +239,9 @@
 			search(){
                     const params = Object.assign(this.form, {
                     	pageNum: 1,
-                    	pageSize: 10
+                    	pageSize: 10,
+						orderByColumn: 'refreshtime',
+						isAsc: 'desc'
                     });
 					this.$u.api.buying(params).then(res=>{
 						if(res.code === 200){
@@ -314,6 +318,7 @@
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			.selectTag{
 				padding: 4rpx 8rpx;
+				border-radius: 20rpx;
 				border: 1rpx solid rgba(0,0,0,0.1);
 				float: left;
 				font-size: 24rpx;

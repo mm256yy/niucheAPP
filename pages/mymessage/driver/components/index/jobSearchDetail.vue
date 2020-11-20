@@ -11,7 +11,7 @@
 			<!-- <u-image class="img" width="669rpx" height="503rpx" src="https://cdn.uviewui.com/uview/example/fade.jpg"></u-image> -->
 			<view class="list">
 				<!-- <view class="tag">付费标签</view> -->
-				<view class="icon">
+				<view class="icon" v-show="token">
 					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
 					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 					<text>{{detail.collectionum}}</text>
@@ -56,10 +56,13 @@
 						<company-detail :detail="detail"></company-detail>
 					</scroll-view>
 				</swiper-item>
-			</swiper>
-			<view class="phone">
+			</swiper
+			<view class="phone" v-show="token">
 				<view class="left" @click="other()">公司其他</view>
-				<view class="right">拨打电话</view>
+				<view class="right" @click="phone()">拨打电话</view>
+			</view>
+			<view class="phone" v-show="!token">
+				<view class="left" @click="other()">公司其他</view>
 			</view>
 			<view style="width: 100%;height:154rpx"></view>
 			<!-- <view class="last">
@@ -87,6 +90,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				token:'',
 				driverDemandId: '',
 				list: [],
 				listBottom: [{
@@ -110,6 +114,7 @@
 		},
 		mounted() {
 			this.getDetail()
+			this.token = uni.getStorageSync('token');
 		},
 		methods: {
 			favorites(item,id) {
@@ -199,7 +204,7 @@
 				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
 			},
 			phone() {
-				uni.makePhoneCall({ phoneNumber: '18748412671' });
+				uni.makePhoneCall({ phoneNumber: this.detail.phone});
 			}
 		}
 	}

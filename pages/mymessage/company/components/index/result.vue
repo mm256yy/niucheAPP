@@ -123,22 +123,6 @@
 							 } else{
 							 	this.status = 'nomore'
 							 }
-							 this.list.forEach(item=>{
-							 	if(item.carSystemTag){
-							 		if(item.carSystemTag){
-							 			if(item.carSystemTag.length > 2) {
-							 				item.carSystemTag = item.carSystemTag.slice(0,2); 
-							 			}else if(item.carSystemTag.length <= 2){
-							 			    if(item.carUserTag) {
-							 			    	const arr = item.carSystemTag.concat(item.carUserTag);
-							 			    	if(arr.length > 2) {
-							 			    		item.carSystemTag = arr.slice(0,2);
-							 			    	} 
-							 			    }
-							 			} 
-							 		}
-								}
-							 })
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -159,20 +143,6 @@
 							 } else{
 							 	this.status = 'nomore'
 							 }
-							 this.list.forEach(item=>{
-								 if(item.carSystemTag){
-									if(item.carSystemTag.length > 2) {
-										item.carSystemTag = item.carSystemTag.slice(0,2); 
-									}else if(item.carSystemTag.length <= 2){
-								        if(item.carUserTag) {
-								        	const arr = item.carSystemTag.concat(item.carUserTag);
-								        	if(arr.length > 2) {
-								        		item.carSystemTag = arr.slice(0,2);
-								        	} 
-								        }
-									} 
-								 }							
-							 })
 						}else {
 							 this.$u.toast(res.msg);
 						}

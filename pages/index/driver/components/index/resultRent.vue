@@ -137,17 +137,7 @@
 						 	this.status = 'nomore'
 						 }
 		  				 this.list.forEach(item=>{
-		  				 	if(item.systemtag.length > 2) {
-		  				 		item.systemtag = item.systemtag.slice(0,2); 
-		  				 	}else if(item.systemtag.length <= 2){
-		  				 		if(item.usertag.length) {
-		  				 			const arr = item.systemtag.concat(item.usertag);
-		  				 			if(arr.length > 2) {
-		  				 				item.systemtag = arr.slice(0,2);
-		  				 			}						 											 
-		  				 		}
-		  				 	}
-		  				 								
+		  				 	item.systemtag = item.systemtag.splice(1,3);							
 		  				 })
 		  			}else {
 		  				 this.$u.toast(res.msg);
@@ -171,17 +161,7 @@
 						 	this.status = 'nomore'
 						 }
 		  				 this.list.forEach(item=>{
-		  				 	if(item.systemtag.length > 2) {
-		  				 		item.systemtag = item.systemtag.slice(0,2); 
-		  				 	}else if(item.systemtag.length <= 2){
-		  				 		if(item.usertag.length) {
-		  				 			const arr = item.systemtag.concat(item.usertag);
-		  				 			if(arr.length > 2) {
-		  				 				item.systemtag = arr.slice(0,2);
-		  				 			}						 											 
-		  				 		}
-		  				 	}
-		  				 								
+		  				 	item.systemtag = item.systemtag.splice(1,3);							
 		  				 })
 		  			}else {
 		  				 this.$u.toast(res.msg);
@@ -273,7 +253,7 @@ page{
 				.name {
 					font-weight: 900;
 					font-size: 34rpx;
-					margin-top: 63rpx;
+					margin-top: 22rpx;
 				}
 				.clock,.year {
 					float: left;

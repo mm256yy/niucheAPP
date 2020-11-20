@@ -17,35 +17,33 @@
 		 	</view>
 		 </view>
 		 <view class="wrap">
-			 <u-sticky bg-color="#fff">
-			 	<view style="">
-			 		<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
-			 	   bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
-			 		 swiperWidth="750"></u-tabs-swiper>
-			 	</view>
-			 	<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			 		<swiper-item class="swiper-item">
-			 			<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
-			 				<selling v-if="isChildUpdate1" ref="selling"></selling>
-			 			</scroll-view>
-			 		</swiper-item>
-			 		<swiper-item class="swiper-item">
-			 			<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuy">
-			 				<buy v-if="isChildUpdate2" ref="buy"></buy>
-			 			</scroll-view>
-			 		</swiper-item>
-			 					<swiper-item class="swiper-item">
-			 						<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
-			 							<renting v-if="isChildUpdate3" ref="selling"></renting>
-			 						</scroll-view>
-			 					</swiper-item>
-			 					<swiper-item class="swiper-item">
-			 						<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
-			 							<search v-if="isChildUpdate4" ref="selling"></search>
-			 						</scroll-view>
-			 					</swiper-item>
-			 	</swiper>
-			 </u-sticky>
+			 <view style="">
+			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
+			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 	 swiperWidth="750"></u-tabs-swiper>
+			 </view>
+			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
+			 			<selling v-if="isChildUpdate1" ref="selling"></selling>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuy">
+			 			<buy v-if="isChildUpdate2" ref="buy"></buy>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
+			 			<renting v-if="isChildUpdate3" ref="selling"></renting>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
+			 			<search v-if="isChildUpdate4" ref="selling"></search>
+			 		</scroll-view>
+			 	</swiper-item>
+			 </swiper>
 		 </view>
 	</view>
 </template>
@@ -101,9 +99,7 @@
 					})
 				}
 			},
-			// tabs通知swiper切换
-			tabsChange(index) {
-				this.swiperCurrent = index;
+			create(index){
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
 				    this.isChildUpdate2 = false;
@@ -126,6 +122,11 @@
 				    this.isChildUpdate4 = true;
 				}
 			},
+			// tabs通知swiper切换
+			tabsChange(index) {
+				this.swiperCurrent = index;
+				this.create(index)
+			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
 				let dx = e.detail.dx;
@@ -138,6 +139,7 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
+				this.create(current)
 			},
 			// scroll-view到底部加载更多
 			onreachBottomSelling() {

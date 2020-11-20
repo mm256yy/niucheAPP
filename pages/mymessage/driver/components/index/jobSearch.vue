@@ -231,7 +231,9 @@
 				this.form.businessType=this.businessType==100?'':this.businessType;
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
-		        	pageSize: 10
+		        	pageSize: 10,
+					orderByColumn: 'm.refreshtime',
+					isAsc: 'desc'
 		        });
 		    		this.$u.api.homeSearch(params).then(res=>{
 		    			if(res.code === 200){
@@ -261,7 +263,9 @@
 				this.form.businessType=this.businessType==100?'':this.businessType;
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
-		    		pageSize: 10
+		    		pageSize: 10,
+					orderByColumn: 'm.refreshtime',
+					isAsc: 'desc'
 		    	});
 		    		this.$u.api.homeSearch(params).then(res=>{
 		    			if(res.code === 200){

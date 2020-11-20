@@ -223,7 +223,9 @@
 		    getList(){
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
-		        	pageSize: 10
+		        	pageSize: 10,
+					orderByColumn: 'tag.refreshtime',
+					isAsc: 'desc'
 		        });
 		    		this.$u.api.sellCar(params).then(res=>{
 		    			if(res.code === 200){
@@ -238,22 +240,6 @@
 							 } else{
 							 	this.status = 'nomore'
 							 }
-							 this.list.forEach(item=>{
-							 	if(item.carSystemTag){
-							 		if(item.carSystemTag){
-							 			if(item.carSystemTag.length > 2) {
-							 				item.carSystemTag = item.carSystemTag.slice(0,2); 
-							 			}else if(item.carSystemTag.length <= 2){
-							 			    if(item.carUserTag) {
-							 			    	const arr = item.carSystemTag.concat(item.carUserTag);
-							 			    	if(arr.length > 2) {
-							 			    		item.carSystemTag = arr.slice(0,2);
-							 			    	} 
-							 			    }
-							 			} 
-							 		}
-								}
-							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -262,7 +248,9 @@
 		    search(){
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
-		    		pageSize: 10
+		    		pageSize: 10,
+					orderByColumn: 'tag.refreshtime',
+					isAsc: 'desc'
 		    	});
 		    		this.$u.api.sellCar(params).then(res=>{
 		    			if(res.code === 200){
@@ -274,20 +262,6 @@
 							 } else{
 							 	this.status = 'nomore'
 							 }
-							 this.list.forEach(item=>{
-								 if(item.carSystemTag){
-									if(item.carSystemTag.length > 2) {
-										item.carSystemTag = item.carSystemTag.slice(0,2); 
-									}else if(item.carSystemTag.length <= 2){
-								        if(item.carUserTag) {
-								        	const arr = item.carSystemTag.concat(item.carUserTag);
-								        	if(arr.length > 2) {
-								        		item.carSystemTag = arr.slice(0,2);
-								        	} 
-								        }
-									} 
-								 }							
-							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -334,6 +308,7 @@
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			.selectTag{
 				padding: 4rpx 8rpx;
+				border-radius: 20rpx;
 				border: 1rpx solid rgba(0,0,0,0.1);
 				float: left;
 				font-size: 24rpx;

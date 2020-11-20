@@ -15,7 +15,7 @@
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
-				<view class="collect" v-if="!viewFlag">
+				<view class="collect" v-if="!viewFlag&&token">
 					<u-icon v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
 					<u-icon v-show="detail.iscollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 					<text>{{detail.collectnum}}</text>
@@ -33,9 +33,9 @@
 		<setting-parameter :detail="detail"></setting-parameter>
 		<view class="phone" v-show="token">
 			<view class="left" @click="other()">公司其他</view>
-			<view class="right">拨打电话</view>
+			<view class="right" @click="phone()">拨打电话</view>
 		</view>
-		<view class="phone">
+		<view class="phone" v-show="!token">
 			<view class="left" @click="other()">公司其他</view>
 		</view>
 		<view style="width: 100%;height:154rpx"></view>
@@ -130,6 +130,7 @@
 					iscollection: 1
 				};
 				item.iscollection = 1;
+				item.collectnum = item.collectnum+1;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('收藏成功');
@@ -146,6 +147,7 @@
 					iscollection: 0
 				};
 				item.iscollection = 2;
+				item.collectnum = item.collectnum-1;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('取消收藏成功');

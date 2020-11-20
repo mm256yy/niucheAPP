@@ -72,7 +72,7 @@
 					'color':'#ffffff'
 				},
 				form: {
-				  businesstype: 0,
+				  businesstype: '',
 				  carbrand: '',
 				  cartype: '',
 				  city: '杭州',

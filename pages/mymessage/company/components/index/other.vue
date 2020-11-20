@@ -93,9 +93,7 @@
 						}
 					})
 			},
-			// tabs通知swiper切换
-			tabsChange(index) {
-				this.swiperCurrent = index;
+			create(index){
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
 				    this.isChildUpdate2 = false;
@@ -103,6 +101,11 @@
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = true;
 				}
+			},
+			// tabs通知swiper切换
+			tabsChange(index) {
+				this.swiperCurrent = index;
+				this.create(index)
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
@@ -116,6 +119,7 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
+				this.create(current)
 			},
 			// scroll-view到底部加载更多
 			onreachBottomSelling() {

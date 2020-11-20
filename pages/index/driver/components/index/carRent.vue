@@ -242,7 +242,9 @@
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
 		        	pageSize: 10,
-					isCount: 0
+					isCount: 0,
+					orderByColumn: 'm.refreshtime',
+					isAsc: 'desc'
 		        });
 		    		this.$u.api.homeRent(params).then(res=>{
 		    			if(res.code === 200){
@@ -257,20 +259,6 @@
 							 } else{
 							 	this.status = 'nomore'
 							 }
-							 this.list.forEach(item=>{
-								 if(item.systemtag){
-									if(item.systemtag.length > 2) {
-										item.systemtag = item.systemtag.slice(0,2); 
-									}else if(item.systemtag.length <= 2){
-										if(item.usertag) {
-											const arr = item.systemtag.concat(item.usertag);
-											if(arr.length > 2) {
-												item.systemtag = arr.slice(0,2);
-											}						 											 
-										}
-									} 
-								 }						
-							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -281,7 +269,9 @@
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
 		    		pageSize: 10,
-					isCount: 0
+					isCount: 0,
+					orderByColumn: 'm.refreshtime',
+					isAsc: 'desc'
 		    	});
 		    		this.$u.api.homeRent(params).then(res=>{
 		    			if(res.code === 200){
@@ -293,20 +283,6 @@
 							 } else{
 							 	this.status = 'nomore'
 							 }
-							 this.list.forEach(item=>{
-							 	if(item.systemtag){
-							 		if(item.systemtag.length > 2) {
-							 			item.systemtag = item.systemtag.slice(0,2); 
-							 		}else if(item.systemtag.length <= 2){
-							 			if(item.usertag) {
-							 				const arr = item.systemtag.concat(item.usertag);
-							 				if(arr.length > 2) {
-							 					item.systemtag = arr.slice(0,2);
-							 				}						 											 
-							 			}
-							 		} 
-							 	}							
-							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
 		    			}
@@ -390,6 +366,7 @@
 			padding: 10rpx 80rpx;
 			.selectTag{
 				padding: 4rpx 8rpx;
+				border-radius: 20rpx;
 				border: 1rpx solid rgba(0,0,0,0.1);
 				float: left;
 				font-size: 24rpx;

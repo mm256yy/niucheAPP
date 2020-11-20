@@ -8,14 +8,16 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom" ,
-				"navigationBarTitleText": " "
+				"navigationBarTitleText": " ",
+				"enablePullDownRefresh": true
 			}
 		},
 		{//我的消息
 			"path": "pages/mymessage/mymessage",
 			"style": {
 				"navigationStyle": "custom" ,
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true
 			}
 		},
 		{//我的收藏

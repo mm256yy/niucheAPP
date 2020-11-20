@@ -97,11 +97,14 @@
 				//监听上拉触底事件
 				this.$refs.jobsearch.pull();
 			},
-			onPullDownRefreshRent() {
-				this.$refs.rent.refresh();
-			},
-			onPullDownRefreshSearch() {
-				this.$refs.search.refresh();
+			// 下拉刷新
+			onPullDownRefresh(){
+				debugger
+				console.log('刷新中');
+				setTimeout(function(){
+					uni.stopPullDownRefresh();
+					console.log("OK了")
+				},2000)
 			}
 		}
 	}

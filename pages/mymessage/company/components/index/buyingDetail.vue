@@ -66,7 +66,7 @@
 		},
 		methods: {
 			phone() {
-				uni.makePhoneCall({ phoneNumber: this.form.phone });
+				uni.makePhoneCall({ phoneNumber: this.detail.phone });
 			},
 		    format(time, format) {
 			            var t = new Date(time);

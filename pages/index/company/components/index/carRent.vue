@@ -279,6 +279,7 @@
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			.selectTag{
 				padding: 4rpx 8rpx;
+				border-radius: 20rpx;
 				border: 1rpx solid rgba(0,0,0,0.1);
 				float: left;
 				font-size: 24rpx;
