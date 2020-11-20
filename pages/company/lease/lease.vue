@@ -9,7 +9,7 @@
 		</view>
 		</u-navbar>
 		<view class="zlcontent">
-		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
+		   <!-- <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view> -->
 		   <view class="zlcontent-mid">
 		   	 <text style="font-size:10pt;">* 请注意本页内容除 
 			 <text v-if="carPubType===1">“车辆在租总数”</text><text v-else>“车辆在售总数”</text>外，其他都是必填项！未填写不能进入下一步</text>
@@ -71,7 +71,7 @@
 			</view>
 	    </view>
 		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='carseriesname' value-name='carseriesid' @confirm="actionSheetCallback"></u-select>
-		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
+		<!-- <ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup> -->
 		<auth></auth>
      </view>
 </template>
@@ -79,7 +79,7 @@
 <script>
 import {requiredRule,businessTypeRule} from '@/common/rule.js'
 import {mapGetters,mapActions} from 'vuex'
-import ChildPopup from '@/components/importCar.vue'
+// import ChildPopup from '@/components/importCar.vue'
 import auth from '@/components/auth.vue'
 
 export default {
@@ -151,7 +151,7 @@ export default {
 	}  
   },
   components:{
-	  ChildPopup,
+	  // ChildPopup,
 	  auth
 	  },
   onReady() {

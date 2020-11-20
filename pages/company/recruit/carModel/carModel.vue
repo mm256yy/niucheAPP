@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回"  back-icon-size="0" title="工作车型列表" :background="backgroundCom" 
 		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" style="margin-bottom: 20pt;">
-		   <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view>
+		   <!-- <view class="zlyjdr" @click="handleClick">一键导入已有车辆为“在租”车辆</view> -->
 		   <view @click="toNewCar" style="padding:10pt 10pt;">
 		   	<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon>
 		   	<text style="vertical-align: top;">添加新车辆</text>
@@ -31,13 +31,13 @@
 			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">完成</u-button>
 			</view>
 		</view>
-		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
+		<!-- <ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup> -->
 		<auth></auth>
      </view>
 </template>
 
 <script>
-import ChildPopup from '@/components/importCar.vue'
+// import ChildPopup from '@/components/importCar.vue'
 import auth from '@/components/auth.vue'
 export default {
   data(){
@@ -57,7 +57,7 @@ export default {
 	}  
   },
    components:{
-	   ChildPopup,
+	   // ChildPopup,
 	   auth
    },
     onShow() {
