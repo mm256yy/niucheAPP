@@ -183,7 +183,7 @@
 				}
 				if(this.priceid == 5) {
 					this.form.startPriceid = '4000';
-					this.form.endPriceid = '';
+					this.form.endPriceid = '-1';
 				}
 				this.search()
 				this.add()
