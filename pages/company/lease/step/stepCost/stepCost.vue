@@ -72,7 +72,9 @@ export default {
   	  let id = uni.getStorageSync('editId');
   	  if(id){
 		this.editId = id;
-  	  	this.form = this.carPubThree;
+		if(this.carPubFirst.isOneclickAndAdd === 3){
+				this.form = this.carPubThree;
+		}
   	  }
   },
   methods: {
@@ -120,9 +122,8 @@ export default {
 	 },
 	 toSubmit(){
 		 let obj = Object.assign(this.carPubFirst,this.carPubSecond,this.form)
-		 obj.mainbusinesstype = this.carPubType;
-		 obj.businesstype = Number(obj.businesstype)
-		 
+		  obj.businesstype = 3;
+		  obj.mainbusinesstype = 1;
 		 this.$u.api.saveMainBusiness(obj).then(res=>{
 		 	if(res.code === 200){
 		 		this.clearStorage()

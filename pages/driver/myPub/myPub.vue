@@ -45,7 +45,7 @@
 						</view>
 						<view class="card-head" style="border-bottom: 0;">
 							<view style="color: #000000;">
-								  <view style="font-size: 16pt;">{{item.businessType === 0 ?'网约车':'出租车'}}</view>
+								  <view style="font-size: 16pt;">{{item.businessType === 1 ?'网约车':'出租车'}}</view>
 								  <view class="u-line-2">工作车辆: {{item.carCards}}  </view>
 							</view>
 					        <view style="width: 50%;">
@@ -124,6 +124,13 @@
 		methods: {
 			tabsChange(index) {
 				this.swiperCurrent = index;
+				if (index === 0){
+					this.zcList = [];
+					this.getList(1)
+				} else {
+					this.qzList = [];
+					this.getPageList(1)
+				}
 			},
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})

@@ -1,6 +1,6 @@
 <template>
     <view class="wrap">
-		<u-navbar  back-icon-size="0" title="租赁发布(1/3)" 
+		<u-navbar  back-icon-size="0" :title="title" 
 		:background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 		<view class="navbar-right">
 			<view class="message-box right-item">
@@ -36,8 +36,8 @@
 					<u-input v-model="form.power" class="input_select" type="select" :border="true"
 					 placeholder="请选择动力类型" :placeholder-style="style" @click="showSelect('power')" />
 				</u-form-item>
-		   	 	<u-form-item label="业务类型" prop="businesstype" label-width='100pt'>
-					<u-radio-group v-model="form.businesstype" active-color="#6DD99C" style="text-align: right;">
+		   	 	<u-form-item label="业务类型" prop="onlineistaxi" label-width='100pt'>
+					<u-radio-group v-model="form.onlineistaxi" active-color="#6DD99C" style="text-align: right;">
 						<u-radio name="1" style="margin-left: 10pt;">网约车</u-radio>
 						<u-radio name="2" style="margin-left: 10pt;">出租车</u-radio>
 					</u-radio-group>
@@ -70,7 +70,7 @@
 				</view>
 			</view>
 	    </view>
-		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='text' value-name='id' @confirm="actionSheetCallback"></u-select>
+		<u-select v-model="show" :list="selectObj[selectObjType]" label-name='carseriesname' value-name='carseriesid' @confirm="actionSheetCallback"></u-select>
 		<ChildPopup  ref='importShow' :childType='childType' :carPubType='carPubType'  @handleId = 'getChildId'></ChildPopup>
 		<auth></auth>
      </view>
@@ -99,11 +99,18 @@ export default {
 			carxinghao:'',
 			cartype:'',
 			power:'',
-			businesstype:'',
+			onlineistaxi:'',
 			firsttime:'',
 			firstkm:'',
 			endkm:'',
 			carnbumber:'',
+			displacement:'',
+			specification:'',
+			trunk:'',
+			wheel:'',
+			variablebox:'',
+			carseriesid:'',
+			SystemTag:[]
 		},
 		rules:{
 			carbrand:requiredRule,
@@ -111,7 +118,7 @@ export default {
 			carxinghao:requiredRule,
 			cartype:requiredRule,
 			power:requiredRule,
-			businesstype:requiredRule,
+			onlineistaxi:requiredRule,
 			firsttime:requiredRule,
 			firstkm:requiredRule,
 			carnbumber:requiredRule,
@@ -120,8 +127,9 @@ export default {
 			carbrand:[],
 			carmodel:[],
 			carxinghao:[],
-			cartype:[{value: '1',text: '轿车'},{value: '2',text: 'SUV'},{value: '3',text: 'MPV'},{value: '4',text: '其他'}],
-			power:[{value: '1',text: '纯电动'},{value: '2',text: '插电混动'},{value: '3',text: '燃油车(含油电混动)'}]
+			cartype:[{carseriesid: '1',carseriesname: '轿车'},{carseriesid: '2',carseriesname: 'SUV'},{carseriesid: '3',carseriesname: 'MPV'},
+			{carseriesid: '4',carseriesname: '其他'}],
+			power:[{carseriesid: '1',carseriesname: '纯电动'},{carseriesid: '2',carseriesname: '插电混动'},{carseriesid: '3',carseriesname: '燃油车(含油电混动)'}]
 		},
 		selectObjType:'carbrand',
 		params: {
@@ -138,7 +146,8 @@ export default {
 		childType:true,
 		carPubType:1,
 		today:{},
-		editId:''
+		editId:'',
+		title:'租赁发布(1/3)'
 	}  
   },
   components:{
@@ -173,6 +182,11 @@ export default {
 	  initStorage(){
 		this.today = uni.getStorageSync('today');
 		this.carPubType = uni.getStorageSync('carPubType');
+		if (this.carPubType === 1) {
+			this.title = '租赁发布(1/3)'
+		} else {
+			this.title = '转卖发布(1/3)'
+		}
 	  },
 	  setStorage(data){
 	  		 uni.setStorageSync('carPubFirst', data);
@@ -186,14 +200,37 @@ export default {
 	  editInit(){
 		 this.$u.api.ComparyRentCarEchoText({IsRentAndSell:this.carPubType,cartagid:this.editId}).then(res=>{
 		 	if(res.code === 200){
+				 this.form.isOneclickAndAdd = 3;
 				this.editSetStorage(res.object)
 		 	}else {
 		 		 this.$u.toast(res.message);
 		 	}
 		 })
 	  },
+	  importInit(){
+		  this.$u.api.ComparyRentCarEchoText({IsRentAndSell:this.carPubType,cartagid:this.editId}).then(res=>{
+		  	if(res.code === 200){
+				 this.form.isOneclickAndAdd = 1;//一键导入1  修改3  新增2
+				this.editSetStorage(res.object)
+		  	}else {
+		  		 this.$u.toast(res.message);
+		  	}
+		  })
+	  },
+   getSysTags(){
+		let data = this.form;
+		let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
+		this.$u.api.getSystemTag(obj).then(res=>{
+			if(res.code === 200){
+				this.form.SystemTag = res.systemTagVo;
+				this.setStorage(this.form)
+			}else {
+				 this.$u.toast(res.msg);
+			}
+		})
+	},
 	  editSetStorage(data){
-		  this.form.isOneclickAndAdd = 1;
+		 
 		  this.form.id = data.tagid;
 		  this.form.comparyid = data.comparyinviteid;
 		  this.form.cartagistag = data.tagistagid
@@ -202,13 +239,21 @@ export default {
 		  this.form.carxinghao = data.carxinghao;
 		  this.form.cartype = data.cartype;
 		  this.form.power = data.power;
-		  this.form.businesstype = data.businesstype;
+		  this.form.onlineistaxi = data.onlineistaxi;
 		  this.form.firsttime = data.firsttime;
 		  this.form.firstkm = data.firstkm;
 		  this.form.endkm = data.endkm;
 		  this.form.carnbumber = data.carnbumber;
+		  this.form.displacement= data.displacement;
+		  this.form.specification= data.specification;
+		  this.form.trunk= data.trunk;
+		  this.form.wheel= data.wheel;
+		  this.form.variablebox= data.variablebox;
+		  this.form.carseriesid= data.carseriesid;
+		  this.form.SystemTag= data.SystemTag;
 		  uni.setStorageSync('editId',data.tagid)
 		  uni.setStorageSync('carPubSecond',{onephoto:data.onephoto,oneneishiphoto:data.oneneishiphoto})
+		  if(this.form.isOneclickAndAdd === 3){
 			if (this.carPubType === 1) {
 				let carThree = {
 					yamoney:data.caryaprice,
@@ -218,7 +263,9 @@ export default {
 				data.rentAndSellPriceList.forEach(item=>{
 					arr.push({RentTime:item.rentCarTime,Rentprice:item.rentCarPrice})
 				})
-				 carThree.rentCarPrice = arr;
+				if (arr.length>0){
+					 carThree.rentCarPrice = arr;
+				}
 				 uni.setStorageSync('carPubThree',carThree)
 			}else {
 				let sellCarPriceObj = {
@@ -227,20 +274,20 @@ export default {
 						}
 					]
 				};
-				let arr = []
+				let arr = [];
 				data.rentAndSellPriceList.forEach(item=>{
 					arr.push({shoplow:item.sellCarLowPrice,shophigh:item.sellCarHighPrice,packprice:item.sellCarPackPrice})
 				})
 				if (arr.length>0){
 					sellCarPriceObj.sellCarPrice = arr
 				}
-		  uni.setStorageSync('carPubThree',sellCarPriceObj)
+		        uni.setStorageSync('carPubThree',sellCarPriceObj)
+			   }
 			}
 	  },
 	 getChildId(item){
-		 console.log(item)
 		this.editId = item[0].id;
-		this.editInit(this.editId)
+		this.importInit(this.editId)
 	},
 	setInfo(){
 		this.$u.api.getCarBrand({}).then(res=>{
@@ -268,31 +315,46 @@ export default {
 			this.form.carxinghao = '';
 			this.getSelectSecond(id)
 		}
+		if (type === 'carxinghao') {
+			let list =this.selectObj[type];
+			list.forEach(item=>{
+				if(item.carseriesid === id){
+					this.form.power = item.powertype;//动力
+					this.form.cartype = item.cartype;//类型
+					this.form.displacement= item.displacement;
+					this.form.specification= item.specification;
+					this.form.trunk= item.trunk;
+					this.form.wheel= item.wheel;
+					this.form.variablebox= item.variablebox;
+					this.form.carseriesid= item.carseriesid;
+				}
+			})
+		}
 		this.form[type] = val;
+		console.log(this.form)
 	},
-	getSelect(){
-		this.$u.api.getCarBrand({}).then(res=>{
-			if(res.code === 200){
-	           this.selectObj.carbrand = res.alibabaCarModelVoList;
-			}else {
-				 this.$u.toast(res.message);
-			}
-		})
-	},
+	// getSelect(){
+	// 	this.$u.api.getCarBrand({}).then(res=>{
+	// 		if(res.code === 200){
+	//            this.selectObj.carbrand = res.alibabaCarModelVoList;
+	// 		}else {
+	// 			 this.$u.toast(res.message);
+	// 		}
+	// 	})
+	// },
 	getSelectFirst(id){
-		console.log(id)
-		this.$u.api.getCarSystem({parentid:id}).then(res=>{
+		this.$u.api.getCarSystem({carbrandid:id}).then(res=>{
 			if(res.code === 200){
-	           this.selectObj.carmodel = res.alibabaCarModelVoList;
+	           this.selectObj.carmodel = res.object;
 			}else {
 				 this.$u.toast(res.msg);
 			}
 		}).catch(res=>{console.log(res)})
 	},
 	getSelectSecond(id){
-		this.$u.api.getCarModel({parentid:id}).then(res=>{
+		this.$u.api.getCarModel({carseriesid:id}).then(res=>{
 			if(res.code === 200){
-			   this.selectObj.carxinghao = res.alibabaCarModelVoList;
+			   this.selectObj.carxinghao = res.object;
 			}else {
 				 this.$u.toast(res.msg);
 			}
@@ -311,7 +373,7 @@ export default {
 		this.$refs.importShow.importShow = true
     },
 	toNext(){
-		this.setStorage(this.form)
+		
 		this.$refs.uForm.validate(valid=>{
 			if(valid) {
 		        this.$refs.uForm2.validate(valid=>{
@@ -322,6 +384,8 @@ export default {
 							this.$u.toast('行驶里程填写有误');
 							return
 						}
+						this.getSysTags();
+						this.setStorage(this.form)
 						this.$u.route("/pages/company/lease/step/stepAppearance/stepAppearance")
 
 		        	}

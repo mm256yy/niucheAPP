@@ -25,32 +25,6 @@
 		<setting-parameter :detail="detail"></setting-parameter>
 		<view style="width: 100%;height:144rpx"></view>
 		<PubBottom :isopen="detail.isopen" :id="driverDemandId" :type="type"></PubBottom>
-		<!-- <view class="wrap">
-			<view class="u-tabs-box">
-			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="list" 
-				:current="current" @change="tabsChange" :is-scroll="false" :bold="true" inactive-color="#7f7f7f"
-			 	swiperWidth="750" active-color="#40B36C"></u-tabs-swiper>
-			</view>
-			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<range-price :tab="tab" :detail="detail"></range-price>
-			 		</scroll-view>
-			 	</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<rentcar-issue :detail="detail.problem"></rentcar-issue>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-						<setting-parameter :detail="detail"></setting-parameter>
-					</scroll-view>
-				</swiper-item>
-			</swiper>
-			<view class="more" @click="other()">上拉加载该公司其他信息</view>
-			<PubBottom :isopen="detail.isopen" :id="driverDemandId" :type="type"></PubBottom>
-		</view> -->
 	</view>
 </template>
 

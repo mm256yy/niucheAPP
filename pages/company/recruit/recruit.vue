@@ -33,7 +33,7 @@
 	   </view>
 	   <view class="fixed-btn">
 	   	<view class=" btn-inline">
-			<u-button type="success" class="btn-agree" style="width: 50%;" @click="saveStorage">保存草稿</u-button>
+			<u-button type="info" style="width: 50%;" @click="clearStorage">重置</u-button>
 			<u-button type="success" class="btn-agree" style="width: 50%;" @click="toSubmit">提交审核</u-button>	
 	   	</view>
 	   </view>
@@ -139,7 +139,7 @@ export default {
 	 },
 	 saveStorage(){
 		  this.setStorage(this.form)
-		  this.$u.toast('草稿保存成功');
+		  // this.$u.toast('草稿保存成功');
 	 },
 	 saveForm(){
 			let obj = this.form;
@@ -154,6 +154,17 @@ export default {
 	 clearStorage(){
 		 uni.removeStorageSync('carPubUpload');
 		 uni.removeStorageSync('carPubPosition');
+		 this.form = {
+				userid:'',
+				workname:'',
+				lowmonthprice:'',
+				highmonthprice:'',
+				peoplenumber:'',
+				worktext:'',
+				AlreadHaveCarList:[],
+				comparyInviteInsertCarVoList:[]
+			};
+	    this.value = ''		
 	 },
 	 tipsConfirm(){
 		 this.clearStorage()

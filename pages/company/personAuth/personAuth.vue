@@ -224,8 +224,18 @@
 					this.$u.api.getCompanyPerson({comparyid:this.comparyid}).then(res => {
 						if(res.code === 200){
 							let data = res.usercomparypeople;
-							this.form.idcardphoto = data.idcardphoto;
-							this.form.comparypeoplephoto = data.comparypeoplephoto;
+							let idcardphoto = data.idcardphoto;
+							let comparypeoplephoto = data.comparypeoplephoto;               
+							this.form.idcardphoto = idcardphoto;
+							this.form.comparypeoplephoto = comparypeoplephoto;
+							if (idcardphoto){
+								this.fileList = []
+								this.fileList.push({url:idcardphoto})
+							}
+							if (comparypeoplephoto){
+								this.fileList1 = []
+								this.fileList1.push({url:comparypeoplephoto})
+							}
 							this.form.username = data.username;
 							this.form.sex = data.sex;
 							this.form.birthday = data.birthday;

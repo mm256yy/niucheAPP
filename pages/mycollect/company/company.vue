@@ -20,8 +20,8 @@
 						<view class="border-left">
 							<view class="title u-line-2">{{item.carText}}</view>
 							<view class="type"><text>打包价</text><text class="type-money">￥{{item.packprice}}</text></view>
-							<view class="u-line-1"><u-tag :text="it" type="success" mode="dark" v-for="(it,index) in item.carSystemTag" 
-							:key="index" class="tag-style" v-show="it.length<7"/></view>
+							<view class="u-line-1"><u-tag :text="it" type="success" mode="dark" v-for="(it,i) in item.carSystemTag" 
+							:key="i" class="tag-style" v-show="it.length<7"/></view>
 						</view>
 						<view class="bottom">
 					        <view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAge}}</view>
@@ -97,6 +97,7 @@
 		methods: {
 			tabsChange(index) {
 				this.swiperCurrent = index;
+				console.log(index)
 			},
 			transition(e) {
 				let dx = e.detail.dx;
