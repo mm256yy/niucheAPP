@@ -13,7 +13,7 @@
 				<u-form :model="form" :label-style="labelStyle" :error-type="errorType" ref='uForm'>
 					<u-form-item label="" prop="telephone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 						<u-input v-model="form.telephone" type="number" placeholder="请输入手机号" placeholder-style="color:'#7F7F7F'"/>
-						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('dirverCodeChange')">{{driverNumText}}</u-button>
+						<!-- <u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('dirverCodeChange')">{{driverNumText}}</u-button> -->
 					</u-form-item>
 					<u-form-item label="" prop="code" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 						<u-input v-model="form.code" type="number" placeholder="请输入验证码" maxlength="4" placeholder-style="color:'#7F7F7F'"/>
@@ -54,7 +54,7 @@
 				<u-form :model="formPwd" :label-style="labelStyle1" ref="uFormPwd" :error-type="errorType" label-width='50pt'>
 					<u-form-item label="手机号" prop="telephone" >
 						<u-input v-model="formPwd.telephone" type="number" placeholder="" border style="border-radius: 18px;"/>
-						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('companyNumChange')" style="position: absolute;right: 10rpx;">{{companyNumText}}</u-button>
+<!-- 						<u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('companyNumChange')" style="position: absolute;right: 10rpx;">{{companyNumText}}</u-button> -->
 					</u-form-item>
 					<u-form-item label="密码" prop="code">
 						<u-input v-model="formPwd.code" type="password" maxlength="18" placeholder="" border style="border-radius: 18px;"/>
