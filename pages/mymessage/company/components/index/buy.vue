@@ -2,7 +2,7 @@
 	<view class="buy">
 		 <view class="last">
 		 	<view class="lists" v-for="(item, index) in list" :key="index">
-		 		<view class="list" @click="detail(item.demandid)">
+		 		<view class="list" @click="detail(item.id)">
 		 			<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		 			<view class="clear"></view>
@@ -171,7 +171,7 @@
 				}
 			},
 			detail(id) {
-				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
+				this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:id})
 			}
 		}
 	}

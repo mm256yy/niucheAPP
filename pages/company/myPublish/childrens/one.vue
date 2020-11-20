@@ -9,10 +9,7 @@
 					<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
 				</u-col>
 				<u-col span="6" class="border-left" @click="toView(item.rentCarId)">
-					<view class="title u-line-2">
-					  <text v-show="item.businesstypetag == 1">[网约车]</text>
-					  <text v-show="item.businesstypetag == 2">[出租车]</text>
-					{{item.textTitle}}</view>
+					<view class="title u-line-2">{{item.textTitle}}</view>
 					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
 				</u-col>
 				<u-col span="12" class="bottom">

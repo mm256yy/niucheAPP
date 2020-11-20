@@ -165,7 +165,10 @@
 			},
 			clear() {
 			   this.$u.route({url:'/pages/mymessage/mymessage',type:'switchTab'});
-		    }
+		    },
+			detail(id) {
+				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
+			}
 		}
 	}
 </script>

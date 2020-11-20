@@ -163,7 +163,10 @@
 			},
 		  clear() {
 				this.$u.route("pages/mymessage/mymessage")
-		  	}
+		  	},
+			detail(id) {
+				this.$u.route("/pages/mymessage/driver/components/index/jobSearchDetail",{id:id})
+			}
 		}
 	}
 </script>

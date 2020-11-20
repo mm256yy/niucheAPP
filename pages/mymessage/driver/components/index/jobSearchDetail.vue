@@ -48,7 +48,7 @@
 			<swiper class="swiper-box" :current="swiperCurrentBottom" @transition="transitionBottom" @animationfinish="animationfinishBottom">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<job-detail :detail="detail" ref="child"></job-detail>
+			 			<job-detail :detail="detail"></job-detail>
 			 		</scroll-view>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
@@ -103,7 +103,7 @@
 				swiperCurrent: 0,
 				currentBottom: 0,
 				swiperCurrentBottom: 0,
-				detail: '',
+				detail: {},
 				firstCurrent:0
 			}
 		},
@@ -126,6 +126,7 @@
 					iscollection: 1
 				};
 				item.isCollection = 1;
+				item.collectionum = item.collectionum+1;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('收藏成功');
@@ -142,6 +143,7 @@
 					iscollection: 0
 				};
 				item.isCollection = 2;
+				item.collectionum = item.collectionum-1;
 			    this.$u.api.collect(params).then(res=>{
 			    	if(res.code === 200){
 			    		 this.$u.toast('取消收藏成功');

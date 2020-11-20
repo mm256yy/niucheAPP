@@ -332,15 +332,6 @@
 			filter() {
 				this.$u.route("/pages/index/driver/components/index/filterRent")
 			},
-			// 下拉刷新
-			onPullDownRefresh(){
-				debugger
-				console.log('刷新中');
-				setTimeout(function(){
-					uni.stopPullDownRefresh();
-					console.log("OK了")
-				},2000)
-			},
 			clear(){
 				this.priceidkey='';
 				this.businesstypekey='',

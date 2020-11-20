@@ -185,7 +185,10 @@
 		  },
 		  clear() {
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
-		  	}
+		  	},
+			detail(id) {
+				this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:id})
+			}
 		}
 	}
 </script>

@@ -13,10 +13,7 @@
 		 <view class="" style="padding: 40rpx;">
 			<view>
 				<!-- <view class="tag">付费标签</view> -->
-				<view class="name u-line-2">
-				  <text v-show="detail.businesstypetag == 1">[网约车]</text>
-				  <text v-show="detail.businesstypetag == 2">[出租车]</text>
-				{{detail.titletext}}</view>
+				<view class="name u-line-2">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{prices}}</text>元/月起租</view>
 				<view class="box">
 					<view v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>

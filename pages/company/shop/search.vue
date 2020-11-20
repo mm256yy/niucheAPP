@@ -1,7 +1,7 @@
 <template>
 	<view class="search">
 		<view class="lists" v-for="(item, index) in list" :key="index">
-			<view class="list" @click="detail(item.demandid)">
+			<view class="list" @click="detail(item.inviteId)">
 				<view class="left">
 					<view class="name">{{item.texttitle}}</view>
 					<view class="car u-line-1">工作车辆：{{item.intentionBrand}}</view>
@@ -109,7 +109,7 @@
 				}
 			},
 			detail(id) {
-				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
+				this.$u.route("/pages/index/company/components/index/jobSearchDetail",{id:id})
 			}
 		}
 	}

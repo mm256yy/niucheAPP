@@ -209,7 +209,7 @@
 					});
 			},
 			phone() {
-				uni.makePhoneCall({ phoneNumber: '18748412671' });
+				uni.makePhoneCall({ phoneNumber: this.detail.phone });
 			}
 		}
 	}

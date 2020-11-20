@@ -122,15 +122,6 @@
 		mounted() {
 			this.search()
 		},
-		// 下拉刷新
-		onPullDownRefresh(){
-			debugger
-			console.log('刷新中');
-			setTimeout(function(){
-				uni.stopPullDownRefresh();
-				console.log("OK了")
-			},2000)
-		},
 		methods: {
 			change(){
 				this.search()
@@ -261,14 +252,6 @@
 			},
 			detail(id) {
 				this.$u.route("/pages/index/company/components/index/carRentDetail",{id:id})
-			},
-			// 下拉刷新
-			refresh(){
-				console.log('刷新中');
-				setTimeout(function(){
-					uni.stopPullDownRefresh();
-					console.log("OK了")
-				},2000)
 			},
 			clear(){
 				this.driverAgekey='';

@@ -2,7 +2,7 @@
 	<view class="renting">
 		 <view class="last">
 		 	<view class="lists" v-for="(item, index) in list" :key="index">
-		 		<view class="list" @click="detail(item.demandid)">
+		 		<view class="list" @click="detail(item.rentCarId)">
 		 			<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
 		 			<view class="right">
 						<view v-show="item.businesstype == 1" class="city">网约车</view>
@@ -169,7 +169,7 @@
 				}
 			},
 			detail(id) {
-				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
+				this.$u.route("/pages/index/company/components/index/carRentDetail",{id:id})
 			}
 		}
 	}

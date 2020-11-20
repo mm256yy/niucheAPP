@@ -45,15 +45,6 @@
 				isChildUpdate2:false
 			}
 		},
-		// 下拉刷新
-		onPullDownRefresh(){
-			debugger
-			console.log('刷新中');
-			setTimeout(function(){
-				uni.stopPullDownRefresh();
-				console.log("OK了")
-			},2000)
-		},
 		methods: {
 			getList() {
 				if(this.$refs.carSell != undefined){

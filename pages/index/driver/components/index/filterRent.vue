@@ -14,7 +14,7 @@
 				</u-radio-group>
 				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
-			<u-form-item label="工作城市(必选)"><u-input v-model="form.city" /></u-form-item>
+			<u-form-item label="工作城市(必选)"><u-input :disabled="true" v-model="form.city" /></u-form-item>
 			<u-form-item label="意向品牌(多选)" label-position="top">
 				<u-checkbox-group active-color="#FFA032" @change="brandGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">

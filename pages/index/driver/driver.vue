@@ -3,7 +3,7 @@
 		<view class="wrap">
 		<u-navbar height="44" back-icon-size="0" title="租车" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<!-- <view class="title">租车</view> -->
-		<scroll-view scroll-y="true" refresher-enabled="true" style="height: 100%;width: 100%;" @down="onPullDownRefreshRent()" @scrolltolower="onreachBottomRent">
+		<scroll-view scroll-y style="height: 100%;width: 100%;" @down="onPullDownRefreshRent()" @scrolltolower="onreachBottomRent">
 			<view>
 				<car-rent ref="rent"></car-rent>
 			</view>
