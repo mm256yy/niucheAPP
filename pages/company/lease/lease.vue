@@ -211,7 +211,22 @@ export default {
 		  this.$u.api.ComparyRentCarEchoText({IsRentAndSell:this.carPubType,cartagid:this.editId}).then(res=>{
 		  	if(res.code === 200){
 				 this.form.isOneclickAndAdd = 1;//一键导入1  修改3  新增2
-				this.editSetStorage(res.object)
+				 this.editSetStorage(res.object)
+				let data = this.form;
+				let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
+				this.$u.api.getSystemTag(obj).then(res=>{
+					if(res.code === 200){
+						this.form.SystemTag = res.systemTagVo;
+						this.setStorage(this.form)
+						if(this.carPubType === 1) {
+							this.$u.route("/pages/company/lease/step/stepCost/stepCost")
+						} else {
+							this.$u.route("/pages/company/lease/step/stepResell/stepResell")
+						}
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 		  	}else {
 		  		 this.$u.toast(res.message);
 		  	}
