@@ -15,8 +15,14 @@
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
 			<u-dropdown style="width: 50rpx;">
 				<u-dropdown-item @change="change()" v-model="priceid" title="月薪区间" :options="select"></u-dropdown-item>
-				<u-dropdown-item @change="changeType()" v-model="form.businessType" title="业务类型" :options="selectType"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="businessType" title="业务类型" :options="selectType"></u-dropdown-item>
 			</u-dropdown>
+		</view>
+		<view class="tagBox">
+			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
+			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
+			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
+			<view class="clear"></view>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -85,8 +91,10 @@
 				  endPriceid: '',
 				  islogin: ''
 				},
+				priceidkey: '',
+				businesstypekey: '',
 				priceid: '',
-				businessType: '',
+				businessType: 100,
 				pagination: {
 				  pageNum: 1, 
 				  pageSize: 10
@@ -169,9 +177,23 @@
 					this.form.endPriceid = '';
 				}
 				this.search()
+				this.add()
 			},
 			changeType(){
 				this.search()
+				this.add()
+			},
+			add(){
+				this.select.forEach(item=>{
+					if(item.value === this.priceid){
+					    this.priceidkey = item.label;
+					}
+				})
+				this.selectType.forEach(item=>{
+					if(item.value === this.businessType){
+					    this.businesstypekey = item.label;
+					}
+				})
 			},
 			// favorites(item,id) {
 			// 	const params = {
@@ -206,6 +228,7 @@
 			//     })
 			// },
 		    getList(){
+				this.form.businessType=this.businessType==100?'':this.businessType;
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pagination.pageNum + 1,
 		        	pageSize: 10
@@ -235,6 +258,7 @@
 		    		})
 		    },
 		    search(){
+				this.form.businessType=this.businessType==100?'':this.businessType;
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
 		    		pageSize: 10
@@ -303,6 +327,22 @@
 			},
 			filter() {
 				this.$u.route("/pages/mymessage/driver/components/index/filterSearch")
+			},
+			clear(){
+				this.priceidkey='';
+				this.businesstypekey='',
+				this.businessType=100;
+				this.priceid='';
+				this.form.businessType='';
+				this.form.startPriceid='';
+				this.form.endPriceid='';
+				const token = uni.getStorageSync('token');
+				if(token) {
+					this.form.islogin = 1
+				}else{
+					this.form.islogin = 0
+				}
+				this.search()
 			}
 		}
 	}
@@ -310,6 +350,22 @@
 
 <style lang="scss" scoped>
 	.jobSearch {
+		.tagBox{
+			padding: 10rpx 100rpx 10rpx 80rpx;
+			.selectTag{
+				padding: 4rpx 8rpx;
+				border: 1rpx solid rgba(0,0,0,0.1);
+				float: left;
+				font-size: 24rpx;
+				margin-right: 40rpx;
+			}
+			.selectTag:last-child{
+				margin-right: 0;
+			}
+			.clearNull{
+				float: right;
+			}
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;

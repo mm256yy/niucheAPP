@@ -19,6 +19,12 @@
 			</u-dropdown>
 			<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
 		</view>
+		<view class="tagBox">
+			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
+			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
+			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
+			<view class="clear"></view>
+		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -27,8 +33,8 @@
 				<view class="list" @click="detail(item.id)">
 					<view class="right">
 						<view class="name u-line-2">
-						<text v-show="item.businesstypetag == 1">[网约车]</text>
-						<text v-show="item.businesstypetag == 2">[出租车]</text>
+						  <text v-show="item.businesstypetag == 1">[网约车]</text>
+						  <text v-show="item.businesstypetag == 2">[出租车]</text>
 						{{item.texttitle}}</view>
 						<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
 						<view class="year">车龄≤{{item.carAge}}年
@@ -100,6 +106,8 @@
 				  pageSize: 10
 				},
 				priceid: '',
+				priceidkey: '',
+				businesstypekey: '',
 				total: 0,
 				select: [
 					{
@@ -162,7 +170,7 @@
 					this.form.endPriceid = '';
 				}
 				if(this.priceid == 2) {
-					this.form.startPriceid = '';
+					this.form.startPriceid = '0';
 					this.form.endPriceid = '2000';
 				}
 				if(this.priceid == 3) {
@@ -178,9 +186,23 @@
 					this.form.endPriceid = '';
 				}
 				this.search()
+				this.add()
 			},
 			changeType(){
 				this.search()
+				this.add()
+			},
+		    add(){
+				this.select.forEach(item=>{
+					if(item.value === this.priceid){
+					    this.priceidkey = item.label;
+					}
+				})
+				this.selectType.forEach(item=>{
+					if(item.value === this.form.businesstype){
+					    this.businesstypekey = item.label;
+					}
+				})
 			},
 			// favorites(item,id) {
 			// 	const params = {
@@ -330,6 +352,30 @@
 			},
 			filter() {
 				this.$u.route("/pages/index/driver/components/index/filterRent")
+			},
+			// 下拉刷新
+			onPullDownRefresh(){
+				debugger
+				console.log('刷新中');
+				setTimeout(function(){
+					uni.stopPullDownRefresh();
+					console.log("OK了")
+				},2000)
+			},
+			clear(){
+				this.priceidkey='';
+				this.businesstypekey='',
+				this.priceid='';
+				this.form.businesstype='';
+				this.form.startPriceid='';
+				this.form.endPriceid='';
+				const token = uni.getStorageSync('token');
+				if(token) {
+					this.form.islogin = 1
+				}else{
+					this.form.islogin = 0
+				}
+				this.search()
 			}
 		}
 	}
@@ -337,6 +383,22 @@
 
 <style lang="scss" scoped>
 	.carRent {
+		.tagBox{
+			padding: 10rpx 80rpx;
+			.selectTag{
+				padding: 4rpx 8rpx;
+				border: 1rpx solid rgba(0,0,0,0.1);
+				float: left;
+				font-size: 24rpx;
+				margin-right: 40rpx;
+			}
+			.selectTag:last-child{
+				margin-right: 0;
+			}
+			.clearNull{
+				float: right;
+			}
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;

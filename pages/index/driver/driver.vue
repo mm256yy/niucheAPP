@@ -3,8 +3,10 @@
 		<view class="wrap">
 		<u-navbar height="44" back-icon-size="0" title="租车" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<!-- <view class="title">租车</view> -->
-		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRent">
-			<car-rent ref="rent"></car-rent>
+		<scroll-view scroll-y="true" refresher-enabled="true" style="height: 100%;width: 100%;" @down="onPullDownRefreshRent()" @scrolltolower="onreachBottomRent">
+			<view>
+				<car-rent ref="rent"></car-rent>
+			</view>
 		</scroll-view>
 	</view>
 	</view>
@@ -32,6 +34,18 @@
 				//监听上拉触底事件
 				this.$refs.rent.pull();
 			},
+			onPullDownRefreshRent() {
+				this.$refs.rent.refresh();
+			},
+			// 下拉刷新
+			onPullDownRefresh(){
+				debugger
+				console.log('刷新中');
+				setTimeout(function(){
+					uni.stopPullDownRefresh();
+					console.log("OK了")
+				},2000)
+			}
 		}
 	}
 </script>

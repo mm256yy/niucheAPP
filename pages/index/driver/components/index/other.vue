@@ -161,10 +161,13 @@
 	.other {
 		background-color: #F5F5F8;
 		.top {
-			width: 666rpx;
-			margin-left: 42rpx;
+			width: 673rpx;
+			padding: 36rpx 39rpx;
+			margin-left: 38rpx;
 			display: flex;
 			align-items: center;
+			background: #fff;
+			margin-top: 39rpx;
 			.right {
 				padding: 30rpx 42rpx;
 				font-size: 20rpx;
