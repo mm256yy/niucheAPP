@@ -211,7 +211,7 @@
 					this.priceidkey = '不限';
 				}
 				if(this.priceid == '2') {
-					this.form.startPriceid = '';
+					this.form.startPriceid = '0';
 					this.form.endPriceid = '2000';
 					this.priceidkey = '2000以内';
 				}
@@ -227,7 +227,7 @@
 				}
 				if(this.priceid == '5') {
 					this.form.startPriceid = '4000';
-					this.form.endPriceid = '';
+					this.form.endPriceid = '-1';
 					this.priceidkey = '4000以上';
 				}
 				this.add()
