@@ -19,7 +19,7 @@
 							<u-avatar :src="zcxxsrc" mode='square' size="50" class='vermiddle'></u-avatar>
 							<text class="border-dotted"></text>
 						</u-col>
-						<u-col span="4" @click="toPage(1)" class="fontbold">车辆租赁</u-col>
+						<u-col span="7" @click="toPage(1)" class="fontbold">车辆租赁</u-col>
 					</u-row>	
 				</view>
 				<view class="zlzl">
