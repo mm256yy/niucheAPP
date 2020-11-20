@@ -80,10 +80,11 @@
 				
 			<view class="colorF">
 				<u-cell-group>
-					<u-cell-item  title="其他" :title-style="titleStyle" :arrow="false"></u-cell-item>
+					<u-cell-item  title="客服" value="niuchekeji" :title-style="titleStyle"></u-cell-item>
+					<!-- <u-cell-item  title="其他" :title-style="titleStyle" :arrow="false"></u-cell-item>
 					<u-cell-item  title="收藏" :value="otherObj.sc" :title-style="titleStyle"></u-cell-item>
 					<u-cell-item  title="消息" :value="otherObj.xx" :title-style="titleStyle"></u-cell-item>
-					<u-cell-item  title="群组" :value="otherObj.qz" :title-style="titleStyle"></u-cell-item>
+					<u-cell-item  title="群组" :value="otherObj.qz" :title-style="titleStyle"></u-cell-item> -->
 				</u-cell-group>
 			</view>
 		</view>

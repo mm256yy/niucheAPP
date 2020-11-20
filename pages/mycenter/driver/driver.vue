@@ -62,7 +62,10 @@
 				</view>
 				<view class="colorF">
 					<u-cell-group>
-						<u-cell-item title="我的拼单" :title-style="titleStyle">
+						<u-cell-item  title="客服" value="niuchekeji" :title-style="titleStyle" :arrow="false">
+							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
+						</u-cell-item>
+						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
 							<u-icon size="60" :name="wdpdSrc" slot="icon"></u-icon>
 						</u-cell-item>
 						<u-cell-item title="收藏" :title-style="titleStyle">
@@ -73,7 +76,7 @@
 						</u-cell-item>
 						<u-cell-item title="通讯录" :title-style="titleStyle">
 							<u-icon size="60" :name="txlSrc" slot="icon"></u-icon>
-						</u-cell-item>
+						</u-cell-item> -->
 					</u-cell-group>
 				</view>
 			</view>
