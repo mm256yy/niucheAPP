@@ -33,7 +33,7 @@
 						<u-image width="100%" height="48rpx"  :src="zcxxsrc"></u-image>
 					</u-col>
 					<u-col span="4" @click="toPub(0)">
-						<view class="font-14pt">租车信息</view>
+						<view class="font-14pt">车辆租赁</view>
 						<view class="font-10pt">
 						<text style="width: 60pt;display: inline-block;">{{myPublishObj.zcxx}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>
@@ -68,7 +68,7 @@
 						<!-- <u-image width="100%" height="130rpx" :src="zpxxsrc"></u-image> -->
 					</u-col>
 					<u-col span="4" @click="toPub(1)">
-						<view class="font-14pt">招聘信息</view>
+						<view class="font-14pt">司机招募</view>
 						<view class="font-10pt">
 						<text style="width: 60pt;display: inline-block;">{{myPublishObj.zpxx}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>

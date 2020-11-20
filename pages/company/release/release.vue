@@ -50,7 +50,7 @@
 							<u-avatar :src="zpxxsrc" mode='square' size="50" class='vermiddle'></u-avatar>
 							<text class="border-dotted"></text>
 						</u-col>
-						<u-col span="7" class="fontbold" @click="toPage(4)">购车需求</u-col>
+						<u-col span="7" class="fontbold" @click="toPage(4)">求购信息</u-col>
 					</u-row>
 				</view>
 			</view>
