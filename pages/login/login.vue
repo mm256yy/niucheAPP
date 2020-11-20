@@ -146,7 +146,16 @@
 		},
 		mounted() {
 			let token = uni.getStorageSync('token')
-			console.log(token)
+			let phone = uni.getStorageSync('telephone')
+			let role = uni.getStorageSync('role')
+			if (phone){
+				this.form.telephone = phone;
+				this.formPwd.telephone = phone;
+			}
+			if (role){
+				this.form.role = role;
+				this.formPwd.role = role;
+			}
 			if (token){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			}

@@ -140,7 +140,7 @@
 		 let obj = this.form;
 		 let carPubUpload = uni.getStorageSync('carPubUploadEdit');//列表页面list
 		 let saveobject = {
-			 addCarInviteState:carPubUpload,
+			 comparyInviteInsertCarVoList:carPubUpload,
 			 workname:obj.workname,
 			 worktext:obj.worktext,
 			 business:obj.business,
@@ -164,7 +164,6 @@
 		 uni.removeStorageSync('carPubPositionEdit');
 		 uni.removeStorageSync('inviteid');
 		 uni.removeStorageSync('carPubType');
-		  uni.removeStorageSync('carPubType');
 	 },
 	 tipsConfirm(){
 		 this.clearStorage()

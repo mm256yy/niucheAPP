@@ -146,7 +146,7 @@
 				this.$u.api.logout({}).then(res=>{
 					if (res.code === 200){
 						this.$u.toast(res.msg);
-						uni.removeStorageSync('telephone');
+						// uni.removeStorageSync('telephone');
 						uni.removeStorageSync('token');
 						uni.removeStorageSync('isauthencation');
 						uni.removeStorageSync('loginNum')
