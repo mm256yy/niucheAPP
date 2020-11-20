@@ -12,8 +12,14 @@
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
 			<u-dropdown>
 				<u-dropdown-item @change="change()" v-model="form.driverAge" title="选择驾龄" :options="select"></u-dropdown-item>
-				<u-dropdown-item @change="changeType()" v-model="form.businessType" title="业务类型" :options="selectType"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="businessType" title="业务类型" :options="selectType"></u-dropdown-item>
 			</u-dropdown>
+		</view>
+		<view class="tagBox">
+			<view v-show="driverAgekey" class="selectTag">{{driverAgekey}}</view>
+			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
+			<view v-show="driverAgekey||businesstypekey" class="clearNull" @click="clear()">清空</view>
+			<view class="clear"></view>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -72,8 +78,9 @@
 				  businessType: 0,
 				  type: 1
 				},
-				driverAgeKey: '',
-				businessTypeKey: '',
+				driverAgekey: '',
+				businesstypekey: '',
+				businessType: '',
 				pagination: {
 				  pageNum: 1, 
 				  pageSize: 10
@@ -118,14 +125,29 @@
 		methods: {
 			change(){
 				this.search()
+				this.add()
 			},
 			changeType(){
 				this.search()
+				this.add()
+			},
+			add(){
+				this.select.forEach(item=>{
+					if(item.value === this.form.driverAge){
+					    this.driverAgekey = item.label;
+					}
+				})
+				this.selectType.forEach(item=>{
+					if(item.value === this.businessType){
+					    this.businesstypekey = item.label;
+					}
+				})
 			},
 			// transform(str) {
 			// 	return str.replace(/,/g,'\');
 			// },
 			getList(){
+				this.form.businessType=this.businessType==''?0:this.businessType;
 			    const params = Object.assign(this.form, {
 			    	pageNum: this.pagination.pageNum + 1,
 			    	pageSize: 10,
@@ -161,6 +183,7 @@
 					})
 			},
 			search(){
+				this.form.businessType=this.businessType==''?0:this.businessType;
 			    const params = Object.assign(this.form, {
 					pageNum: 1,
 					pageSize: 10,
@@ -229,6 +252,22 @@
 			},
 			detail(id) {
 				this.$u.route("/pages/index/company/components/index/carRentDetail",{id:id})
+			},
+			// 下拉刷新
+			refresh(){
+				console.log('刷新中');
+				setTimeout(function(){
+					uni.stopPullDownRefresh();
+					console.log("OK了")
+				},2000)
+			},
+			clear(){
+				this.driverAgekey='';
+				this.businesstypekey='',
+				this.form.driverAge='';
+				this.form.businessType='';
+				this.businessType='';
+				this.search()
 			}
 		}
 	}
@@ -236,6 +275,22 @@
 
 <style lang="scss" scoped>
 	.carRent {
+		.tagBox{
+			padding: 10rpx 100rpx 10rpx 80rpx;
+			.selectTag{
+				padding: 4rpx 8rpx;
+				border: 1rpx solid rgba(0,0,0,0.1);
+				float: left;
+				font-size: 24rpx;
+				margin-right: 40rpx;
+			}
+			.selectTag:last-child{
+				margin-right: 0;
+			}
+			.clearNull{
+				float: right;
+			}
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;

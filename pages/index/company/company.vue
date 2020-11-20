@@ -9,12 +9,12 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomrentcar">
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @onPullDownRefresh="onPullDownRefreshRent()" @scrolltolower="onreachBottomrentcar">
 					<car-rent v-if="isChildUpdate1" ref="rent"></car-rent>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomjobsearch">
+				<scroll-view scroll-y style="height: 100%;width: 100%;" @onPullDownRefresh="onPullDownRefreshSearch()" @scrolltolower="onreachBottomjobsearch">
 					<job-search v-if="isChildUpdate2" ref="jobsearch"></job-search>
 				</scroll-view>
 			</swiper-item>
@@ -93,6 +93,12 @@
 				//监听上拉触底事件
 				this.$refs.search.pull();
 			},
+			onPullDownRefreshRent() {
+				this.$refs.rent.refresh();
+			},
+			onPullDownRefreshSearch() {
+				this.$refs.search.refresh();
+			}
 		}
 	}
 </script>

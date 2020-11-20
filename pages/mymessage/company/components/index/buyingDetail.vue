@@ -138,7 +138,7 @@ page{
 		display: flex;
 	}
 	.detail {
-		background-color: #F5F5F8;
+		// background-color: #F5F5F8;
 		.list{
 			width: 671rpx;
 			height: 257rpx;

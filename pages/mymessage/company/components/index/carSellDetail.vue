@@ -14,8 +14,8 @@
 				<view class="name">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
 				<view class="collect" v-if="!viewFlag">
-					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.comparyid)" class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
-					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.comparyid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+					<u-icon v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
+					<u-icon v-show="detail.iscollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
 					<text>{{detail.collectnum}}</text>
 				</view>
 				<view class="clear"></view>

@@ -5,8 +5,8 @@
 				<view class="list" @click="detail(item.id)">
 					<view class="right">
 						<view class="name u-line-2">
-						<text v-show="item.businesstypetag == 1">[网约车]</text>
-						<text v-show="item.businesstypetag == 2">[出租车]</text>
+						  <text v-show="item.businesstypetag == 1">[网约车]</text>
+						  <text v-show="item.businesstypetag == 2">[出租车]</text>
 						{{item.cartext}}</view>
 						<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
 						<view class="year">{{item.carage}}</view>
@@ -15,7 +15,7 @@
 						<view class="distance">{{item.carkm}}万公里</view>
 						<view class="clear"></view>
 					</view>
-					<u-image class="left" width="306rpx" height="200rpx" :src="item.onephoto"></u-image>
+					<u-image class="left" width="306rpx" height="226rpx" :src="item.onephoto"></u-image>
 					<view class="clear"></view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="box">
@@ -227,7 +227,8 @@
 				.name {
 					font-weight: 900;
 					font-size: 34rpx;
-					margin-top: 63rpx;
+					margin-top: 20rpx;
+					margin-bottom: 6rpx;
 				}
 				.clock,.year {
 					float: left;
