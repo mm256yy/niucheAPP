@@ -10,7 +10,7 @@
 				</u-col>
 				<u-col span="6" class="border-left" @click="toView(item.rentCarId)">
 					<view class="title u-line-2">{{item.textTitle}}</view>
-					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
+					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起售</view>
 				</u-col>
 				<u-col span="12" class="bottom">
 					<view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAgeTag}}</view>

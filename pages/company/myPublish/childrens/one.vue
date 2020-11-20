@@ -3,7 +3,7 @@
 		<view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 			<u-row>
 				<u-col span="12" class="time">
-					<view style="padding-right: 10pt;">2020/09/2</view>
+					<view style="padding-right: 10pt;">{{item.createTime}}</view>
 				</u-col>
 				<u-col span="5" @click="toView(item.rentCarId)">
 					<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
@@ -12,7 +12,7 @@
 					<view class="title u-line-2">
 					  <text v-show="item.businesstypetag == 1">[网约车]</text>
 					  <text v-show="item.businesstypetag == 2">[出租车]</text>
-					{{item.texttitle}}</view>
+					{{item.textTitle}}</view>
 					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起租</view>
 				</u-col>
 				<u-col span="12" class="bottom">
