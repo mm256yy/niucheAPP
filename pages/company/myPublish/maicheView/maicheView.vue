@@ -80,8 +80,9 @@
 						let data =res.object;
 						 this.detail = data;
 						 const systemtag =data.systemtag;
-						 const usertag =data.usertag;
-						 this.arr =systemtag.concat(usertag);
+						 this.arr = systemtag
+						 // const usertag =data.usertag;
+						 // this.arr =systemtag.concat(usertag);
 						 var text = [];
 						 if(data.pricesectionlist) {
 							 let list =  data.pricesectionlist;

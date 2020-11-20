@@ -5,6 +5,7 @@ const install = (Vue, vm) => {
 		baseUrl: 'http://server.neocab.cn',
 		loadingText: '努力加载中~',
 		method: 'POST',
+		timeout:5000,
 		// 设置为json，返回后会对数据进行一次JSON.parse()
 		dataType: 'json',
 		showLoading: true, // 是否显示请求中的loading
