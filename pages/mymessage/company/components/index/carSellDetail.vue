@@ -3,7 +3,7 @@
 		<u-navbar z-index="2000" back-text="返回" back-icon-size="0" :title="detail.carmodeltag" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
+					<!-- <u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon> -->
 				</view>
 			</view>
 		 </u-navbar>
@@ -31,6 +31,8 @@
 		<range-price :tab="tab" :detail="detail"></range-price>
 		<view style="padding: 20rpx 40rpx;">参数配置</view>
 		<setting-parameter :detail="detail"></setting-parameter>
+		<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
+		<view style="width: 100%;height:154rpx"></view>
 		<view class="phone" v-show="token">
 			<view class="left" @click="other()">公司其他</view>
 			<view class="right" @click="phone()">拨打电话</view>
@@ -38,7 +40,6 @@
 		<view class="phone" v-show="!token">
 			<view class="left" @click="other()">公司其他</view>
 		</view>
-		<view style="width: 100%;height:154rpx"></view>
 		<!-- <view class="last">
 			<view class="left">预约看车</view>
 			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>

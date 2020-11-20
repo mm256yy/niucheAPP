@@ -121,7 +121,9 @@
 		      const params = Object.assign(this.form, {
 		      	pageNum: this.pagination.pageNum + 1,
 		      	pageSize: 10,
-		  		isCount: 0
+		  		isCount: 0,
+				orderByColumn: 'm.refreshtime',
+				isAsc: 'desc'
 		      });
 		  		this.$u.api.homeRent(params).then(res=>{
 		  			if(res.code === 200){
@@ -148,7 +150,9 @@
 		      const params = Object.assign(this.form, {
 		  		pageNum: 1,
 		  		pageSize: 10,
-		  		isCount: 0
+		  		isCount: 0,
+				orderByColumn: 'm.refreshtime',
+				isAsc: 'desc'
 		  	});
 		  		this.$u.api.homeRent(params).then(res=>{
 		  			if(res.code === 200){

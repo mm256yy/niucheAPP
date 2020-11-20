@@ -48,7 +48,8 @@
 		},
 		methods: {
 			getList(pageNum){
-				this.$u.api.ComparyMyRentCarList({pageNum:pageNum,pageSize:10}).then(res=>{
+				this.$u.api.ComparyMyRentCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
+					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
 						this.total = res.total
 						let arr = res.rows

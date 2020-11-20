@@ -45,6 +45,15 @@
 				isChildUpdate2:false
 			}
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			debugger
+			console.log('刷新中');
+			setTimeout(function(){
+				uni.stopPullDownRefresh();
+				console.log("OK了")
+			},2000)
+		},
 		methods: {
 			getList() {
 				if(this.$refs.rent != undefined){
@@ -96,15 +105,6 @@
 			onreachBottomjobsearch() {
 				//监听上拉触底事件
 				this.$refs.jobsearch.pull();
-			},
-			// 下拉刷新
-			onPullDownRefresh(){
-				debugger
-				console.log('刷新中');
-				setTimeout(function(){
-					uni.stopPullDownRefresh();
-					console.log("OK了")
-				},2000)
 			}
 		}
 	}

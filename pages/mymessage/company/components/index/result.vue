@@ -108,7 +108,9 @@
 			getList(){
 			    const params = Object.assign(this.form, {
 			    	pageNum: this.pagination.pageNum + 1,
-			    	pageSize: 10
+			    	pageSize: 10,
+					orderByColumn: 'tag.refreshtime',
+					isAsc: 'desc'
 			    });
 					this.$u.api.sellCar(params).then(res=>{
 						if(res.code === 200){
@@ -131,7 +133,9 @@
 			search(){
 			    const params = Object.assign(this.form, {
 					pageNum: 1,
-					pageSize: 10
+					pageSize: 10,
+					orderByColumn: 'tag.refreshtime',
+					isAsc: 'desc'
 				});
 					this.$u.api.sellCar(params).then(res=>{
 						if(res.code === 200){

@@ -3,7 +3,7 @@
 		<u-navbar z-index="2000" back-text="返回" back-icon-size="0" title="招聘详情" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 		    <view class="navbar-right" slot="right">
 		    	<view class="message-box right-item">
-		    		<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
+		    		<!-- <u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon> -->
 		    	</view>
 		    </view>
 		 </u-navbar>
@@ -56,7 +56,8 @@
 						<company-detail :detail="detail"></company-detail>
 					</scroll-view>
 				</swiper-item>
-			</swiper
+			</swiper>
+			<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
 			<view class="phone" v-show="token">
 				<view class="left" @click="other()">公司其他</view>
 				<view class="right" @click="phone()">拨打电话</view>

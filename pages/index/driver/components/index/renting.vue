@@ -2,7 +2,7 @@
 	<view class="renting">
 		<view class="last">
 			<view class="lists" v-for="(item, index) in list" :key="index">
-				<view class="list" @click="detail(item.id)">
+				<view class="list" @click="detail(item.mainid)">
 					<view class="right">
 						<view class="name u-line-2">
 						  <text v-show="item.businesstypetag == 1">[网约车]</text>
@@ -180,7 +180,10 @@
 			},
 		  clear() {
 				this.$u.route("pages/mymessage/mymessage")
-		  	}
+		  },
+		  detail(id) {
+			this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:id})
+		  },
 		}
 	}
 </script>

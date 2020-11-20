@@ -42,7 +42,8 @@ export default {
 		},
 		methods: {
 			getList(pageNum){
-				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10}).then(res=>{
+				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
+					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
 						let arr = res.rows
 						this.total = res.total

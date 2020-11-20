@@ -228,8 +228,7 @@
 							 this.list.forEach(item=>{
 							 	if (item.refreshtime){
 							 		item.refreshtimeStr = this.timeZ(item.refreshtime)
-							 	}
-							 								
+							 	}							
 							 })
 						}else {
 							 this.$u.toast(res.msg);

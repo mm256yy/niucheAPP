@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="司机租车需求详情" :background="backgroundCom" :back-text-style="backTextStyle" title-width="300" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
+					<!-- <u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon> -->
 				</view>
 			</view>
 		 </u-navbar>
