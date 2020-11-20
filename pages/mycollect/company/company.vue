@@ -118,7 +118,7 @@
 			collectOr(item,index){
 				item.collectFlag = false;
 				const params = {
-				     BeCollectedId: item.demandid,
+				     BeCollectedId: item.comparymainid,
 				     isDriveAndCompary: 2,//公司2
 				     collectionstate: 3,
 				     iscollection: 0
@@ -136,7 +136,7 @@
 			collectOr1(item,index){
 				item.collectFlag = false;
 				const params = {
-				     BeCollectedId: item.demandid,
+				     BeCollectedId: item.comparymainid,
 				     isDriveAndCompary: 2,//公司2
 				     collectionstate: 4,
 				     iscollection: 0
@@ -282,6 +282,7 @@
 		display: inline-block;width:40% ;
 		border-right: 1px solid #CDE5E3;
 		text-align: center;
+		margin-bottom: 5pt;
 	}
 	image {
 		width: 200rpx;
