@@ -502,6 +502,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/customer/customer",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",

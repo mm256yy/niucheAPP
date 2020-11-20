@@ -62,7 +62,7 @@
 				</view>
 				<view class="colorF">
 					<u-cell-group>
-						<u-cell-item  title="客服" value="niuchekeji" :title-style="titleStyle" :arrow="false">
+						<u-cell-item  title="客服" value="niuchekeji" :title-style="titleStyle" @click="toCustomer">
 							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
 						</u-cell-item>
 						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
@@ -155,6 +155,9 @@
 					}
 				})
 			  }
+			},
+			toCustomer(){
+				this.$u.route('pages/customer/customer')
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');
