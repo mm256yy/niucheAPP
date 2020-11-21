@@ -140,7 +140,7 @@
 			},
 			addBrand(){
 				if (this.value){
-					this.brandList.push({name:this.value,checked:false})
+					this.brandList.push({name:this.value,checked:true})
 					this.value = ''
 				}
 			},

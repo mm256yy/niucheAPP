@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
+		 	<u-image mode="aspectFill" shape="circle" class="left" :src="detail.comparylogophoto"></u-image>
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>
 		 		<view class="address">{{detail.area}}</view>
@@ -187,8 +187,7 @@
 					margin-bottom: 17rpx;
 				}
 				.box {
-					width: 139rpx;
-					height: 36rpx;
+					padding: 4rpx;
 					line-height: 36rpx;
 					text-align: center;
 					border-radius: 10rpx;

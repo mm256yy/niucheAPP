@@ -35,7 +35,7 @@
 		<view style="width: 100%;height:154rpx"></view>
 		<view class="phone" v-show="token">
 			<view class="left" @click="other()">公司其他</view>
-			<view class="right" @click="phone()">拨打电话</view>
+			<view class="right" @click="dial()">拨打电话</view>
 		</view>
 		<view class="phone" v-show="!token">
 			<view class="left" @click="other()">公司其他</view>
@@ -70,6 +70,7 @@
 				</swiper-item>
 			</swiper>
 		</view> -->
+		<phone-auth ref="phone" :phone="detail.phone"></phone-auth>
 	</view>
 </template>
 
@@ -79,13 +80,15 @@
 	import settingParameter from './settingParameter'
 	import carInstall from './carInstall'
 	import PubBottom from '@/components/pubBottom.vue'
+	import phoneAuth from '@/components/phoneAuth.vue'
 	export default {
 		components: {
 		    rangePrice,
 			rentcarIssue,
 			settingParameter,
 			carInstall,
-			PubBottom
+			PubBottom,
+			phoneAuth
 		  },
 		data() {
 			return {
@@ -208,8 +211,9 @@
 					title:this.detail.titletext
 					});
 			},
-			phone() {
-				uni.makePhoneCall({ phoneNumber: this.detail.phone });
+			dial() {
+				console.log(this.$refs.phone)
+				this.$refs.phone.getStatus()
 			}
 		}
 	}

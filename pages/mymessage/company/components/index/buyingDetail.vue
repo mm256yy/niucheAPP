@@ -11,7 +11,7 @@
 		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="detail.comparyPhotoUrl"></u-image>
 		 	<view class="right">
 				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
-		 		<view class="name u-line-2">{{detail.comparyname}}</view>
+		 		<view class="name u-line-1">{{detail.comparyname}}</view>
 				<view class="clear"></view>
 				<view>
 					<u-image class="car" width="29rpx" height="26rpx" src="@/static/car.png"></u-image>
@@ -183,13 +183,13 @@ page{
 			.box {
 				// width: 160rpx;
 				// height: 135rpx;
-				padding: 4rpx 30rpx;
+				padding: 2rpx 30rpx;
 				float: right;
 				margin-right: -76rpx;
 				font-size: 20rpx;
 				background: #fff;
 				color: #37AB63;
-				margin-top: -70rpx;
+				margin-top: -20rpx;
 				.num {
 					font-size: 72rpx;
 					font-weight: 900;
