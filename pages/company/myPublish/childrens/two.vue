@@ -16,7 +16,7 @@
 				</u-col>
 			</u-row>
 			<view class="bottom u-line-1">
-				<view class="bottom-left"><u-icon :name="company" size="30"></u-icon>
+				<view class="bottom-left"><u-icon :name="company" size="40" style="vertical-align: bottom;"></u-icon>
 				<text style="padding-left: 10px;" v-for="photo in item.intentionBrand">{{photo}}</text></view>
 			</view>
 		</view>
@@ -30,7 +30,7 @@
 			return {
 				status: 'loadmore',
 				pageNum:1,
-				company:'../../../static/company.png',
+				company:'../../../static/tabbar/car.png',
 				list:[],
 				total:0,
 				status: 'loadmore',
