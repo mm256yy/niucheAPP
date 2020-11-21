@@ -463,7 +463,7 @@
             
         }
         ,{
-            "path" : "pages/company/myPublish/maicheView/maicheView",
+            "path" : "pages/company/myPublish/zucheView/zucheView",
             "style" :                                                                                    
             {
                 "navigationStyle": "custom",
