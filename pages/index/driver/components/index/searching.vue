@@ -13,7 +13,7 @@
 							<view class="name u-line-2">高薪招聘{{item.workname}}</view>
 							<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
 							<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-							<view class="distance">{{item.intentionBrand}}</view>
+							<view class="distance u-line-1">{{item.intentionBrand}}</view>
 							<view class="clear"></view>
 						</view>
 						<view class="clear"></view>
@@ -194,7 +194,7 @@
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				margin-top: 40rpx;
+				margin-top: 20rpx;
 				background: #fff;
 				.left {
 					float: left;
@@ -204,9 +204,9 @@
 				.right{
 					width: 396rpx;
 					height: 226rpx;
-					padding: 0 30rpx;
 					background: #fff;
 					float: left;
+					padding-left: 30rpx;
 				}
 				.name {
 					font-weight: 900;
@@ -219,6 +219,7 @@
 					margin-right: 4rpx;
 				}
 				.distance {
+					width: 260rpx;
 					margin-left: 6rpx;
 					color: #7f7f7f;
 					float: left;

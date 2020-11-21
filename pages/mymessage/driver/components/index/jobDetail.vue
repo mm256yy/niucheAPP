@@ -2,7 +2,8 @@
 	<view class="jobDetail">
 		<view class="content">
 			<view class="top">
-				<u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image>
+				<img class="left" :src="detail.comparyLogoPhoto" alt="">
+				<!-- <u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image> -->
 				<view class="right">
 					<view class="name u-line-1">{{detail.comparyname}}</view>
 					<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box u-line-1">{{item}}运营</view>
@@ -66,10 +67,12 @@
 				margin-bottom: 40rpx;
 			    display: flex;
 			    align-items: center;
+				justify-content: center;
 				.left{
-					margin-left: 41rpx;
-					margin-right: 38rpx;
-					margin-top: 102rpx;
+					width: 128rpx;
+					height: 128rpx;
+					border-radius: 50%;
+					margin-right: 20rpx;
 				}
 				.right{
 					width: 383rpx;
@@ -77,16 +80,11 @@
 						width: 383rpx;
 						font-size: 36rpx;
 						font-weight: 900;
-						margin-top: 79rpx;
-						margin-bottom: 26rpx;
 					}
 					.box{
 						width: 383rpx;
 						margin-left: 2rpx;
 						margin-right: 38rpx;
-					}
-					.size{
-						margin-top: 45rpx;
 					}
 					.view{
 						width: 215rpx;

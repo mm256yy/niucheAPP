@@ -107,7 +107,7 @@
 		}
 	    .content {
 			width: 670rpx;
-			height: 485rpx;
+			// height: 485rpx;
 			background: #fff;
 			margin-left: 40rpx;
 		}

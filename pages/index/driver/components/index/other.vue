@@ -8,7 +8,9 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image>
+			 <!-- <image class="left" :src="detail.comparylogophoto" mode="aspectFill"></image> -->
+		 	<!-- <u-image class="left" :src="detail.comparylogophoto"></u-image> -->
+			<img class="left" :src="detail.comparylogophoto" alt="">
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>
 		 		<view class="address">{{detail.area}}</view>
@@ -172,6 +174,11 @@
 			align-items: center;
 			background: #fff;
 			margin-top: 39rpx;
+			.left{
+				width: 186rpx;
+				height: 186rpx;
+				border-radius: 50%;
+			}
 			.right {
 				padding: 30rpx 42rpx;
 				font-size: 20rpx;
@@ -181,8 +188,7 @@
 					margin-bottom: 17rpx;
 				}
 				.box {
-					width: 139rpx;
-					height: 36rpx;
+					padding: 4rpx;
 					line-height: 36rpx;
 					text-align: center;
 					border-radius: 10rpx;
@@ -223,9 +229,9 @@
 			.right{
 				width: 396rpx;
 				height: 226rpx;
-				padding: 0 30rpx;
 				background: #fff;
 				float: left;
+				margin-left: 20rpx;
 			}
 			.name {
 				font-weight: 900;

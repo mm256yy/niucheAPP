@@ -50,7 +50,7 @@
 					<view class="box">
 						<view><text>￥{{item.rentprice}}</text>元/月起租</view>
 						<view>
-							<view v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+							<view v-show="items.length<6" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
 						</view>
 					</view>
 				</view>
@@ -435,7 +435,7 @@
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				// margin-top: 40rpx;
+				margin-bottom: 20rpx;
 				background: #fff;
 				.left {
 					float: right;

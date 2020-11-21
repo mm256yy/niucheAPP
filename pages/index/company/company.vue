@@ -47,7 +47,6 @@
 		},
 		// 下拉刷新
 		onPullDownRefresh(){
-			debugger
 			console.log('刷新中');
 			setTimeout(function(){
 				uni.stopPullDownRefresh();

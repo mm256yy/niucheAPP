@@ -94,11 +94,12 @@
 			}
 			.box {
 				width: 667rpx;
-				height: 280rpx;
+				// height: 280rpx;
 				background: #fff;
 				display: flex;
 				justify-content: center;
 				// align-items: center;
+				padding-bottom: 20rpx;
 				.left {
 					width: 279rpx;
 					height: 159rpx;

@@ -55,7 +55,11 @@
 								this.showTips = true;
 							} else if (flag === 2) {
 								this.showTips = false;
-								uni.makePhoneCall({ phoneNumber: this.phone });
+								if(this.phone){
+									uni.makePhoneCall({ phoneNumber: this.phone });
+								}else{
+									this.$u.toast('未获取到手机号');
+								}
 							} else if (flag === 3 ){
 								this.showMsg = '亲，您提交的认证信息,未通过,将跳转到我的页面'
 								this.confirmText = '好的'

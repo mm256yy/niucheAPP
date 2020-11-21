@@ -35,14 +35,19 @@
 			 </u-form>
 		 </view>
          <view style="width: 100%;height: 124rpx;"></view>
-		 <view v-show="token" class="bottom" @click="phone()">
+		 <view class="bottom" @click="dial()">
 		 	<view>拨打电话</view>
 		 </view>
+		 <phone-auth ref="phone" :phone="detail.phone"></phone-auth>
 	</view>
 </template>
 
 <script>
+	import phoneAuth from '@/components/phoneAuth.vue'
 	export default {
+		components: {
+			phoneAuth
+		  },
 		data() {
 			return {
 				backTextStyle:{
@@ -65,9 +70,6 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
-			phone() {
-				uni.makePhoneCall({ phoneNumber: this.detail.phone });
-			},
 		    format(time, format) {
 			            var t = new Date(time);
 			            var tf = function(i) {
@@ -114,8 +116,10 @@
 			},
 		    recommend() {
 				this.$u.route("/pages/mymessage/company/components/index/buyingRecommend")
+			},
+			dial() {
+				this.$refs.phone.getStatus()
 			}
-			
 		}
 	}
 </script>

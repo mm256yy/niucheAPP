@@ -213,7 +213,7 @@
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				margin-top: 40rpx;
+				margin-top: 20rpx;
 				background: #fff;
 				.left {
 					float: right;

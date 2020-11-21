@@ -114,9 +114,10 @@
 			}
 			.box {
 				width: 670rpx;
-				height: 304rpx;
+				// height: 304rpx;
 				background: #fff;
 				margin-top: 0;
+			    padding-bottom: 20rpx;
 				.left {
 					width: 279rpx;
 					height: 159rpx;
@@ -152,6 +153,9 @@
 					margin-top: 46rpx;
 					margin-left: 42rpx;
 					float: left;
+					display: flex;
+					justify-content: center;
+					align-items: center;
 					text {
 						font-size: 40rpx;
 						font-weight: 900;

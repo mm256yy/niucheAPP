@@ -3,12 +3,13 @@
 		<u-navbar back-text="返回" back-icon-size="0" :title="title" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
+					<!-- <u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon> -->
 				</view>
 			</view>
 		 </u-navbar>
 		 <view class="top">
-		 	<u-image mode="aspectFill" shape="circle" class="left" :src="detail.comparylogophoto"></u-image>
+			 <img class="left" :src="detail.comparylogophoto" alt="">
+		 	<!-- <u-image mode="aspectFill" shape="circle" class="left" :src="detail.comparylogophoto"></u-image> -->
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>
 		 		<view class="address">{{detail.area}}</view>
@@ -178,6 +179,11 @@
 			margin-top: 40rpx;
 			display: flex;
 			align-items: center;
+			.left{
+				width: 186rpx;
+				height: 186rpx;
+				border-radius: 50%;
+			}
 			.right {
 				padding: 30rpx 42rpx;
 				font-size: 20rpx;

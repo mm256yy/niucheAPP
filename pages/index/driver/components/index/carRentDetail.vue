@@ -27,12 +27,9 @@
 		<view style="padding: 20rpx 40rpx;">参数配置</view>
 		<setting-parameter :detail="detail"></setting-parameter>
 		<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
-		<view class="phone" v-show="token">
+		<view class="phone">
 			<view class="left" @click="other()">公司其他</view>
-			<view class="right" @click="phone()">拨打电话</view>
-		</view>
-		<view class="phone" v-show="!token">
-			<view class="left" @click="other()">公司其他</view>
+			<view class="right" @click="dial()">拨打电话</view>
 		</view>
 		<!-- <view class="phone" @click="phone()">拨打电话</view> -->
 		<view style="width: 100%;height:154rpx"></view>
@@ -70,6 +67,7 @@
 				</view>
 			</view>
 		</view> -->
+		<phone-auth ref="phone" :phone="detail.phone"></phone-auth>
 	</view>
 </template>
 
@@ -77,11 +75,13 @@
 	import rangePrice from './rangePrice'
 	import rentcarIssue from './rentcarIssue'
 	import settingParameter from './settingParameter'
+	import phoneAuth from '@/components/phoneAuth.vue'
 	export default {
 		components: {
 		    rangePrice,
 			rentcarIssue,
-			settingParameter
+			settingParameter,
+			phoneAuth
 		  },
 		data() {
 			return {
@@ -156,8 +156,8 @@
 			other() {
 				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
 			},
-			phone() {
-				uni.makePhoneCall({ phoneNumber: this.detail.phone });
+			dial() {
+				this.$refs.phone.getStatus()
 			}
 		}
 	}
