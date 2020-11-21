@@ -189,7 +189,9 @@
 			},
 			addBrand(){
 				if (this.value){
-					this.brandList.push({name:this.value,checked:false})
+					this.brandList.push({name:this.value,checked:true})
+					this.form.intentionbrand.push(this.value)
+					console.log(this.form.intentionbrand)
 					this.value = ''
 				}
 			},
