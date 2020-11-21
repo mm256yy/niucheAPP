@@ -10,8 +10,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyDriver ref="searchDri" v-if='curThemeType ==="driver"'></MyDriver>
-			<MyCompany ref="searchCom" v-else></MyCompany>
+			<MyDriver ref="searchDri" :authFlag="authFlag" v-if='curThemeType ==="driver"'></MyDriver>
+			<MyCompany ref="searchCom" :authFlag="authFlag" v-else></MyCompany>
              <u-modal v-model="showTips" @confirm="tipsConfirm" title="提示" @cancel="setNum" :show-cancel-button="true" cancel-text="否"  confirm-text="是">
              	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
                      亲，您尚未认证，是否立即去认证?
@@ -27,7 +27,8 @@
 	export default {
 		data() {
 			return {
-				showTips:false
+				showTips:false,
+				authFlag:1,
 			}
 		},
 		onShow() {
@@ -52,6 +53,7 @@
 							 let Num = uni.getStorageSync('loginNum')
 							 let data = res.object;
 							 let flag = Number(data.checkstate)
+							 this.authFlag = flag
 							 if(flag === 0 && !Num){
 							 	this.showTips = true
 							 }
@@ -74,6 +76,7 @@
 							 let Num = uni.getStorageSync('loginNum')
 							 let data = res.object;
 							 let flag = data.driverphotostate
+							  this.authFlag = flag
 							 if(flag === 0 && !Num){
 							 	this.showTips = true
 							 }

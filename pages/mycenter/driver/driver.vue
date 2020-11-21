@@ -7,17 +7,17 @@
 						<u-col span="3">
 							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
 						</u-col>
-						<u-col span="8" v-show="!driverPub.telephone">
+						<u-col span="8" v-show="token === ''">
 							<view style="font-size: 14pt;">欢迎来到纽车科技</view>
 							<text class="btn-mini bg" @click="toLogin">登录/注册</text>
 						</u-col>
-						<u-col span="8" v-show="driverPub.telephone" >
+						<u-col span="8" v-show="token !== ''" >
 							<view @click="toMyInfo">
 							<view style="font-size: 14pt;">{{driverPub.name}}</view>
 							<text style="font-size: 12pt;">{{driverPub.telephone}}</text>
 							</view>
 						</u-col>
-						<u-col span="1" @click="toMyInfo">
+						<u-col span="1" @click="toMyInfo" v-show="token !== ''">
 							<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
 						</u-col>
 					</u-row>
@@ -146,7 +146,7 @@
 				 this.$u.api.listUserMessage().then(res=>{
 					if(res.code === 200){
 						let data = res.object;
-						uni.setStorageSync('isauthencation',data.driverState)
+						// uni.setStorageSync('isauthencation',data.driverState)
 						this.driverPub = data
 						this.driverPub.jobNum = this.driverPub.jobNum.toString()
 						this.driverPub.carNum = this.driverPub.carNum.toString()
