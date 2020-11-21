@@ -10,7 +10,6 @@
 		 <view class="list">
 		 	<u-image class="left" width="152rpx" height="152rpx"  shape="circle" :src="detail.comparyPhotoUrl"></u-image>
 		 	<view class="right">
-				<!-- <u-icon class="reload" name="reload" color="#ffffff" size="50" @click="shared"></u-icon> -->
 		 		<view class="name u-line-1" style="width: 100%;">{{detail.comparyname}}</view>
 				<view class="clear"></view>
 				<view>
@@ -186,7 +185,7 @@ page{
 				height: 125rpx;
 				padding: 6rpx;
 				float: right;
-				margin-top: -82rpx;
+				margin-top: -32rpx;
 				margin-right: -76rpx;
 				font-size: 32rpx;
 				background: #fff;
