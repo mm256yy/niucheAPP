@@ -127,8 +127,12 @@
 				padding: 36rpx;
 				font-size: 20rpx;
 				border-bottom: 1rpx solid rgba(0,0,0,0.05);
+				display: flex;
+				justify-content: center;
+				align-items: center;
 				.left{
-					float: left;
+					width: 300rpx;
+					// float: left;
 					.name{
 						font-size: 36rpx;
 						font-weight: 900;
@@ -139,7 +143,7 @@
 					}
 				}
 				.right{
-					float: right;
+					// float: right;
 					.text{
 						float: right;
 						margin-bottom: 25rpx;

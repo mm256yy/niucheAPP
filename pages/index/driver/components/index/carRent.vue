@@ -336,9 +336,10 @@
 				this.priceidkey='';
 				this.businesstypekey='',
 				this.priceid='';
-				this.form.businesstype='';
+				this.businesstype=100;
 				this.form.startPriceid='';
 				this.form.endPriceid='';
+				this.form.businesstype='';
 				const token = uni.getStorageSync('token');
 				if(token) {
 					this.form.islogin = 1

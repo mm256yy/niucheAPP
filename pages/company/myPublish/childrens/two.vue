@@ -48,7 +48,7 @@
 		},
 		methods: {
 			getList(pageNum){
-				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
+				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'cmain.refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
 						let arr = res.rows;

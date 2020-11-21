@@ -9,7 +9,7 @@
 						<view v-show="item.businesstype == 2" class="city">出租车</view>
 		 				<view class="clear"></view>
 		 				<view class="name u-line-2">{{item.textTitle}}</view>
-		 				<view class="price">打包价<text>{{item.rentCarPrice}}</text></view>
+		 				<view class="price">打包价<text>￥{{item.rentCarPrice}}</text></view>
 		 				<view v-for="(items, index) in item.systemok" :key="index" class="case">{{items}}</view>
 		 			</view>
 		 			<view class="clear"></view>
