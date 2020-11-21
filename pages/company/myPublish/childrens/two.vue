@@ -29,7 +29,7 @@
 		data() {
 			return {
 				status: 'loadmore',
-				pageNum:0,
+				pageNum:1,
 				company:'../../../static/company.png',
 				list:[],
 				total:0,
@@ -85,8 +85,8 @@
 			onreachBottom() {
 				let len = this.list.length;
 				 if (len < this.total){
-					 this.pageNum++;
-					 this.getList(this.pageNum)
+					 let page = this.pageNum+1;
+					  this.getList(page)
 				 }else{
 					this.status = 'nomore'
 				}
