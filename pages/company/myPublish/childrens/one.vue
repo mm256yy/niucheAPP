@@ -71,7 +71,6 @@
 				let len = this.list.length;
 				 if (len < this.total){
 					let page = this.pageNum+1;
-					console.log(page)
 					 this.getList(page)
 				 }else{
 					this.status = 'nomore'

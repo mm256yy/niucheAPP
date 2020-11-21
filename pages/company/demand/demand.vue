@@ -195,32 +195,32 @@
 			},
 			toNext(){
 				if (this.form.intentionbrand.length === 0){
-					this.$u.toast('品牌不能未空')
+					this.$u.toast('品牌不能为空')
 					return
 				}
 					
 				if (this.form.carmodel.length === 0){
-					this.$u.toast('车型价不能未空')
+					this.$u.toast('车型价不能为空')
 					return
 				}
 				if (this.form.power.length === 0){
-					this.$u.toast('动力不能未空')
+					this.$u.toast('动力不能为空')
 					return
 				}
 				if (this.form.monthzu === ''){
-					this.$u.toast('打包价不能未空')
+					this.$u.toast('打包价不能为空')
 					return
 				}
 				if (this.form.intentioncarbrandnum === ''){
-					this.$u.toast('数量不能未空')
+					this.$u.toast('数量不能为空')
 					return
 				}
 				if (this.form.carage === ''){
-					this.$u.toast('车龄不能未空')
+					this.$u.toast('车龄不能为空')
 					return
 				}
 				if (this.form.km === ''){
-					this.$u.toast('行驶里程不能未空')
+					this.$u.toast('行驶里程不能为空')
 					return
 				}
 				if (this.form.id){
@@ -246,6 +246,17 @@
 				})
 			},
 			tipsConfirm(){
+				this.form = {
+					userid:'',
+					businesstype:1,
+					carmodel:[],
+					intentionbrand:[],
+					power:[],
+					monthzu:'',
+					carage:'',
+					km:'',
+					intentioncarbrandnum:''
+				}
 				this.$u.route('/pages/company/myPublish/myPublish', {index: 3});
 			}
 		}
