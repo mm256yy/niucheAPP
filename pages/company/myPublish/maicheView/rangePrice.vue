@@ -14,12 +14,11 @@
 			    		<view class="price"><text>￥{{item.rentCarPrice}}</text></view>
 			    		<view>-月租-</view>
 			    	</view>
-			    	<!-- <view class="right">
-			    		<view class="price"><text>￥3000</text></view>
-			    		<view>-2人拼租价-</view>
-			    	</view> -->
-			    	<view class="clear"></view>
-			    	<view class="deposit">押金：<text>￥{{detail.packprice}}</text></view>
+			    	<view class="right">
+			    		<view class="price"><text>￥{{item.packprice}}</text></view>
+			    		<view>-押金-</view>
+			    	</view>
+			    	
 			    </view>
 			 </view>
 			 <view class="icon">
@@ -110,7 +109,7 @@
 			}
 			.box {
 				width: 670rpx;
-				height: 304rpx;
+				height: 190rpx;
 				background: #fff;
 				.left {
 					width: 279rpx;
@@ -135,7 +134,7 @@
 					margin-right: 40rpx;
 					font-size: 20rpx;
 					color: #fff;
-					background: linear-gradient(115deg, $bg-grad-FCD, $bg-grad-FE);
+					background: linear-gradient(55deg, #37AB63, #6DD99C);
 					float: right;
 					.price text {
 						font-size: 46rpx;
