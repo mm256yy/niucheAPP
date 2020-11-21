@@ -259,8 +259,8 @@
 			onreachBottom() {
                  let len = this.zcList.length;
 				 if (len < this.total){
-					this.pageNum++;
-					 this.getList(this.pageNum)
+					let page = this.pageNum+1;
+					 this.getList(page)
 				 }else{
 					this.status = 'nomore'
 				}
@@ -268,8 +268,8 @@
 			onreachBottomed() {
 				let len = this.qzList.length;
 				if (len < this.total1){
-				  this.pageNum1++
-				  this.getPageList(this.pageNum1)
+				let page = this.pageNum1+1;
+				  this.getPageList(page)
 				} else{
 					this.status1 = 'nomore'
 				}

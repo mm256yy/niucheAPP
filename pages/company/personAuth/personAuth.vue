@@ -277,7 +277,7 @@
 			personSave(){
 				this.$u.api.editCompanyPerson(this.form).then(res => {
 						if(res.code === '200'){
-							uni.setStorageSync('isauthencation',1)
+							// uni.setStorageSync('isauthencation',1)
 							this.showTips = true
 						}else{
 							  this.$u.toast(res.msg);

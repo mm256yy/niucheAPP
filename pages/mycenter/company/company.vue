@@ -15,7 +15,7 @@
 							<view class="colorF">{{companyStatus | state}}</view>
 							<view class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
 						</u-col>
-						<u-col span="1">
+						<u-col span="1" v-if="token !== ''">
 							<u-icon name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>
 						</u-col>
 						
@@ -114,6 +114,7 @@
 				token:''
 			}
 		},
+		props:["authFlag"],
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser();
@@ -162,22 +163,23 @@
 							this.otherObj.sc = data.collectnum+strE;
 							this.otherObj.xx = data.messagenum;
 							this.otherObj.qz = data.groupmessagenum;
-							uni.setStorageSync('isauthencation',1)
+							// uni.setStorageSync('isauthencation',1)
 						}else {
 							let phone = uni.getStorageSync('telephone')
 							this.companyName = phone
-							uni.setStorageSync('isauthencation',0)
+							// uni.setStorageSync('isauthencation',0)
 							 // this.$u.toast(res.message);
 						}
 					})
 				}
 			},
 			toAuth(){
-				let isauthencation = uni.getStorageSync('isauthencation');
-				if (isauthencation){
-					this.$u.route('/pages/company/information/information')
-				} else{
+				let authFlag = this.authFlag;
+				if (authFlag === 0){
 					this.$u.route('/pages/company/identityAuth/identityAuth')
+				} else{
+					this.$u.route('/pages/company/information/information')
+					
 				}
 				
 			},

@@ -25,7 +25,7 @@
 export default {
 		data() {
 			return {
-				pageNum:0,
+				pageNum:1,
 				distance:'../../../static/distance.png',
 				list:[],
 				total:0,
@@ -69,8 +69,8 @@ export default {
 			onreachBottom() {
 				let len = this.list.length;
 				 if (len < this.total){
-					 this.pageNum++;
-					 this.getList(this.pageNum)
+					let page = this.pageNum+1;
+					 this.getList(page)
 				 }else{
 					this.status = 'nomore'
 				}
