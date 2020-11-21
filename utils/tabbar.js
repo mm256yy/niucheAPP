@@ -4,6 +4,7 @@ export const dirverPages = [{
   selectedIconPath: '/static/tabbar/index-select-d.png'
 },{
   index: 1,
+  iconPath: "static/tabbar/message.png",
   selectedIconPath: '/static/tabbar/message-select-d.png',
   text:'招聘'
 },{
@@ -19,6 +20,7 @@ export const companyPages =[{
   selectedIconPath: '/static/tabbar/index-select.png'
 },{
   index: 1,
+  iconPath: "static/tabbar/car.png",
   selectedIconPath: '/static/tabbar/message-select.png',
   text:'买车'
 },{
