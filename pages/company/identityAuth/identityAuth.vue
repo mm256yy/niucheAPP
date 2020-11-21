@@ -199,6 +199,7 @@
 				console.log(res)
 				if (res.code === 200){
 					let data = res.data;
+					uni.setStorageSync('xunfei',data)
 					 this.form.companyName = data.biz_license_company_name;
 					  this.form.socialCode = data.biz_license_credit_code;
 					   this.form.companyCreateTime = data.biz_license_start_time;

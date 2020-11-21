@@ -331,7 +331,10 @@
 				} else {
 					//新增
 					obj.userid = this.telephone;
-					console.log(obj)
+					let xunfei = uni.getStorageSync('xunfei');
+					if(xunfei){
+						obj.xunFei = xunfei;
+					}
 					this.$u.api.saveAuth(obj).then(res => {
 							if(res.code === '200'){
 					            this.showTips = true
