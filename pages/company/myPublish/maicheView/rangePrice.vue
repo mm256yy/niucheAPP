@@ -175,14 +175,21 @@
 				display: flex;
 				justify-content: space-around;
 				align-items: center;
-				.text-box {
-					display: flex;
-					flex-direction: column;
-					justify-content: space-between;
-					align-items: center;
-					.text {
-						margin-top: 35rpx;
+				.imgBox{
+						width: 56rpx;
+						height: 62rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
 					}
+					.text-box {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						align-items: center;
+						.text {
+							margin-top: 35rpx;
+						}
 				}
 			}
 		}
