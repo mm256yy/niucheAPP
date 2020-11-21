@@ -37,7 +37,7 @@
 				list: [{
 					name: '租车'
 				}, {
-					name: '招聘'
+					name: '招募'
 				}],
 				current: 0, 
 				swiperCurrent: 0,

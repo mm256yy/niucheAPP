@@ -102,6 +102,7 @@
 							 this.detail = res.object;
 							 this.comparyRefreshTimeStr = this.format(this.detail.comparyRefreshTime, 'yyyy-MM-dd HH:mm:ss');
 							 if(this.detail.intenitonBrand) {
+								 console.log(this.detail.intenitonBrand)
 								this.detail.intenitonBrand = this.detail.intenitonBrand.join('/') 
 							 }
 							 if(this.detail.power) {

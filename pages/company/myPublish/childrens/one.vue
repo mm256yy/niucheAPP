@@ -65,7 +65,7 @@
 				})
 			},
 			toView(id){
-				this.$u.route("/pages/company/myPublish/maicheView/maicheView",{id:id})
+				this.$u.route("/pages/company/myPublish/zucheView/zucheView",{id:id})
 			},
 			onreachBottom() {
 				let len = this.list.length;

@@ -1,14 +1,14 @@
 <template>
 	<view class="company-content"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
-		<view style="">
+		<u-navbar  back-icon-size="0" title="在售" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
+<!-- 		<view style="">
 			<u-tabs-swiper style="position: fixed;" ref="uTabs" activeColor="#ffffff" :list="tablist" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
-		</view>
-		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
-			<swiper-item class="swiper-item">
+		</view> -->
+		<!-- <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish"> -->
+			<!-- <swiper-item class="swiper-item"> -->
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
 					<view class="scroll-item" @click="toView(item)" v-for="(item,index) in list" :key='item.demandid'>
 						<view class="time">
@@ -31,9 +31,9 @@
 					</view>
 						 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
-			</swiper-item>
+			<!-- </swiper-item> -->
 			<!-- 我的招聘 -->
-			<swiper-item class="swiper-item">
+		<!-- 	<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom1">
 					<view class="scroll-item" @click="toView1(item)" v-for="item in list1" :key='item.demandid'>
 						<view class="zplist">
@@ -54,7 +54,7 @@
 					</view>
 							<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
 				</scroll-view>
-			</swiper-item>
+			</swiper-item> -->
 		</swiper>
 	</view>
 	</view>
@@ -66,8 +66,6 @@
 			return {
 				tablist: [{
 					name: '在售'
-				}, {
-					name: '求购'
 				}],
 				distance:'../../static/distance.png',
 				current: 0,
@@ -113,7 +111,7 @@
 				this.list = [];
 				this.list1 = [];
 				this.getList(1)
-				this.getList1(1)
+				// this.getList1(1)
 			},
 			collectOr(item,index){
 				item.collectFlag = false;
