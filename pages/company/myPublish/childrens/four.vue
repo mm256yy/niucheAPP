@@ -3,13 +3,14 @@
 			<view class="scroll-item"  v-for="item in list" :key="item.askToShopId">
 				<u-row class="" style="padding: 8pt 15pt;" >
 					<u-col span="11" style="padding: 5pt 0;" @click="toView(item.askToShopId)">
-						<view>{{item.createtime}}</view>
+						<view >{{item.createtime}}</view>
 					</u-col>
 					<u-col span="1" style="padding: 5pt 0;">
 						<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
 					</u-col>
 					<u-col span="12" @click="toView(item.askToShopId)" style="border-top: 1px solid #E5E5E5;padding: 8.5pt 0 10pt;">
-						<view style="font-size: 12pt;font-weight: bold;" @click="toView(item.askToShopId)">求购：{{item.inviteCar}}</view>
+						<view class="u-line-2" style="font-size: 12pt;font-weight: bold;" @click="toView(item.askToShopId)">
+							求购：{{item.inviteCar}}</view>
 						<view class="" style="padding-top: 8pt;">
 							<text style="">打包价：</text><text style="color: #3FB26C;font-size: 16pt;">{{item.packprice}}</text>
 						</view>
@@ -68,7 +69,7 @@ export default {
 			},
 			reload(item){
 				item.reloadFlag = false
-				this.$u.api.MyIssueRefresh({id:item.askToShopId,BusinessState:4}).then(res=>{
+				this.$u.api.MyIssueRefresh({comparyMainId:item.comparyMainId,BusinessState:4}).then(res=>{
 					if(res.code === 200){
 						item.reloadFlag = true
 						this.$u.toast('刷新成功')

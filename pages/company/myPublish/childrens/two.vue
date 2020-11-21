@@ -73,7 +73,7 @@
 			},
 			reload(item){
 				item.reloadFlag = false
-				this.$u.api.MyIssueRefresh({id:item.inviteId,BusinessState:2}).then(res=>{
+				this.$u.api.MyIssueRefresh({comparyMainId:item.comparyMainId,BusinessState:2}).then(res=>{
 					if(res.code === 200){
 						item.reloadFlag = true
 						this.$u.toast('刷新成功')
