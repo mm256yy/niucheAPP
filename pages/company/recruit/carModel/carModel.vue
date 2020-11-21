@@ -14,10 +14,10 @@
 					 <image :src="item.carModelPhoto" class="card-img"></image>
 					 <view class="u-line-2 card-title">
 						 <view class="">
-						 	 {{item.carBrand}} {{item.carModel}} {{item.carxinghao}}
+						 	 {{item.carBrand}} {{item.carmodel}}
 						 </view>
 						 <view>
-						 	 {{item.CarBrand}} {{item.CarModel}} {{item.CarXilie}}
+						 	 {{item.CarBrand}} {{item.CarModel}} 
 						 </view>
 					 </view>
 					</view>

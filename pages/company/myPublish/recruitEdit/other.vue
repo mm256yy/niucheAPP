@@ -1,42 +1,37 @@
 <template>
-    <view class="wrap">
-		<u-navbar back-text="返回"  back-icon-size="0" title="上传其他车辆" :background="backgroundCom" 
-		:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		<view class="zlcontent">
-			<u-form-item label="" prop="CarModel" label-width='0'>
-				 <u-input v-model="form.CarModel" class="input_select" type="select" :border="true"
-				  placeholder="请选择车辆品牌" @click="toCarList" />
-		   	 	</u-form-item>
-				<u-form-item label="" prop="CarXilie" label-width='0'>
-					<u-input v-model="form.CarXilie" class="input_select" type="select" :border="true"
-					 placeholder="请选择车系" @click="showSelect" />
-			</u-form-item>
-	    </view>
-		<view class="zlcontent">正确的车辆照片和证件照片 可帮助您更快通过审核</view>
-		<view class="view-content" v-for="(item,index) in uploadList" :key='index'>
-		   <view class="top-content-upload" >
-			<u-upload :custom-btn="true" :action="action" @on-success='uploadChange' upload-text="" :file-list="item.fileList" 
-			:index="item.resName" :max-size="4 * 1024 * 1024" max-count="1" 
-			style="width: 100%;justify-content: center;" >
-				<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
-					<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
-					<view class="slot-tips">
-						<view>{{item.tipText}}</view>
-					</view>
-				</view>
-			</u-upload>
-		  </view>
-		</view>
-		<view class="" style="height: 20pt;">
-			
-		</view>
-		<view class="fixed-btn">
-			<view class=" btn-inline">
-			 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">添加</u-button>
-			</view>
-		</view>
-		<u-select v-model="show" :list="carmodel" label-name='carseriesname' value-name='carseriesid' @confirm="actionSheetCallback"></u-select>
-     </view>
+   <view class="wrap">
+   	<u-navbar back-text="返回"  back-icon-size="0" title="上传其他车辆" :background="backgroundCom" 
+   	:back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+   	<view class="zlcontent">
+   		<u-form-item label="" prop="CarModel" label-width='0'>
+   			 <u-input v-model="form.CarModel" class="input_select" type="select" :border="true"
+   			  placeholder="请选择车辆品牌" @click="toCarList" />
+   	   	 	</u-form-item>
+   			<u-form-item label="" prop="CarXilie" label-width='0'>
+   				<u-input v-model="form.CarXilie" class="input_select" type="select" :border="true"
+   				 placeholder="请选择车系" @click="showSelect" />
+   		</u-form-item>
+       </view>
+   	<view class="zlcontent">正确的车辆照片和证件照片 可帮助您更快通过审核</view>
+   	<view class="view-content">
+   	   <view class="top-content-upload" >
+   		<u-upload :custom-btn="true" :action="action" max-count="18" ref="upload"
+   		 @on-success='uploadChange' index="onephoto" upload-text="" @on-remove="removeOne"
+   		 :file-list="fileList" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
+   			<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+   				<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
+   			</view>
+   		</u-upload>
+   	  </view>
+   	</view>
+   	<view class="fixed-btn">
+   		<view class=" btn-inline">
+   		 <u-button type="success" class="btn-agree" style="width: 100%;" @click="toNext">添加</u-button>
+   		</view>
+   	</view>
+   	<u-select v-model="show" :list="carmodel" label-name='carseriesname' value-name='carseriesid' @confirm="actionSheetCallback"></u-select>
+   	<!-- <auth></auth> -->
+    </view>
 </template>
 
 <script>
@@ -50,15 +45,10 @@ export default {
 		show:false,
 		form:{
 			CarModel:'',CarXilie:'',
-			onephoto:'',CarNamePlate:'',drivephoto:'',TransportationCard:''
+			onephoto:[],
 		},
 		action: action,
-		uploadList:[
-			{fileList:[],tipText:'请上传车辆右前方或左前方45°照片',resName:'onephoto'},
-			{fileList:[],tipText:'请上传车辆铭牌',resName:'CarNamePlate'},
-			{fileList:[],tipText:'请上传行驶证/运输证或二合一证件照片',resName:'drivephoto'},
-			{fileList:[],tipText:'请上传运输证件照片（如已上传二合一证请忽略）',resName:'TransportationCard',},
-		],
+		fileList:[],
 		carPubUpload:'',
 	
 	}  
@@ -80,9 +70,14 @@ export default {
 	  setStorage(data){
 	  		 uni.setStorageSync('carPubUploadEdit', data);
 	  },
-	  uploadChange(data, index, lists, name){
-		this.form[name] = data.text;
-	  },
+	uploadChange(data, index, lists, name){
+		this.form[name].push(data.object);
+		this.$u.toast(data.msg);
+	},
+	removeOne(index,lists,name){
+		this.form[name].splice(index,1);
+		console.log(this.form[name])
+	},
 	  getSelectFirst(id){
 		this.$u.api.getCarSystem({carbrandid:id}).then(res=>{
 			if(res.code === 200){
@@ -103,6 +98,10 @@ export default {
 	 	this.$u.route('/pages/company/lease/carList/carList',{source:3}) 
 	}, 
 	toNext(){
+		if (this.form.onephoto.length === 0){
+			this.$u.toast('请添加车辆照片')
+			return
+		}
 		 let list = this.carPubUpload || [];
 		 this.$u.api.getCarLogo({CarBrand:this.form.CarModel,CarModel:this.form.CarXilie}).then(res=>{
 		 	if(res.code === 200){
@@ -142,7 +141,7 @@ page{
 	width: 100%;
 	background: #FFFFFF;
 	position: relative;
-	height: 118pt;
+	// height: 118pt;
 }
 .slot-btn {
 	width: 230rpx;

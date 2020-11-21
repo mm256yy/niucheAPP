@@ -15,9 +15,9 @@
 					</view>
 				</u-col>
 			</u-row>
-			<view class="bottom">
+			<view class="bottom u-line-1">
 				<view class="bottom-left"><u-icon :name="company" size="30"></u-icon>
-				<text style="padding-left: 10px;">{{item.intentionBrand[0]}}</text></view>
+				<text style="padding-left: 10px;" v-for="photo in item.intentionBrand">{{photo}}</text></view>
 			</view>
 		</view>
 			 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
