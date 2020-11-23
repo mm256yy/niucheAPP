@@ -41,7 +41,7 @@
 							<view style="font-size: 12pt;">工作证明照片</view>
 						</u-col>
 						<u-col span="6">
-							<view style="font-size: 10pt;color: #0096FF;text-align: right;">查看工作证明文案</view>
+							<view style="font-size: 10pt;color: #0096FF;text-align: right;" @click="wenanTips = true">查看工作证明文案</view>
 						</u-col>
 					</u-row>
 			</view>
@@ -65,6 +65,15 @@
 		<view style="text-align: center; padding: 12pt 20pt;">
 			<u-button type="success" shape='circle' class="btn-agree" @click="toNext">提交审核</u-button>
 		</view>
+		<u-modal v-model="wenanTips" @confirm="wenanTips = false" title="" confirm-text="我知道了">
+				<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+					<view>兹证明_______是我公司员工(身份证号码_______________)，在______部门任________职务，已有_______年。</view>
+					特此证明。
+					<view>单位名称(盖章)：____________________</view>
+					<view style="text-align: right;">日期：______年___月___日</view>
+				</view>
+		</u-modal>
+
 	</view>
 </template>
 
@@ -74,7 +83,7 @@
 	export default {
 		data() {
 			return {
-				
+				wenanTips:false,
 				labelStyle:{
 					'color':'#7F7F7F'
 				},
