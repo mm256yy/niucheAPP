@@ -32,7 +32,7 @@
 					<text style="position: absolute;top: 8pt;left: 50pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
 				</u-form-item>
 				<u-form-item label="公司介绍" label-position="top" prop="companyIntroduce">
-					<u-input v-model="form.companyIntroduce" type="textarea" :border="true" :height="150" :auto-height="true" />
+					<u-input v-model="form.companyIntroduce" type="textarea" :border="true" :height="150" maxlength="300" :auto-height="true" />
 			    </u-form-item>		
 			</u-form>
 		</view>
