@@ -100,11 +100,8 @@
 			 this.swiperCurrent = index;	
 			}
 		},
-		onShow() {
-			this.zcList = [];
-			this.qzList = [];
-			this.getList(1)
-			this.getPageList(1)
+		mounted() {
+			 this.init(this.current)
 		},
 		filters: {
 		  prices: function (value) {
@@ -122,9 +119,17 @@
 		  }
 		},
 		methods: {
+			init(index){
+				if (index === 0){
+					this.zcList = [];
+					this.getList(1)
+				}else{
+					this.qzList = [];
+					this.getPageList(1)
+				}
+			},
 			tabsChange(index) {
 				this.swiperCurrent = index;
-				
 			},
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
@@ -138,13 +143,7 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
-				if (current === 0){
-					this.zcList = [];
-					this.getList(1)
-				} else {
-					this.qzList = [];
-					this.getPageList(1)
-				}
+				this.init(current)
 			},
 			getList(pageNum){
 				this.status = 'loading';

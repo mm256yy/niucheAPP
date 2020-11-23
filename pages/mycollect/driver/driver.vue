@@ -114,7 +114,7 @@
 				mounted() {
 					let token = uni.getStorageSync('token');
 					if (token){
-						this.init()
+						this.init(this.current)
 					}
 				},
 				methods: {
@@ -130,12 +130,16 @@
 						this.$refs.uTabs.setFinishCurrent(current);
 						this.swiperCurrent = current;
 						this.current = current;
+						this.init(current)
 					},
-					init(){
-						this.list = [];
-						this.list1 = [];
-						this.getList(1)
-						this.getList1(1)
+					init(index){
+						if (index === 0){
+							this.list = [];
+							this.getList(1)
+						} else {
+							this.list1 = [];
+							this.getList1(1)
+						}
 					},
 					collectOr(item,index){
 						item.collectFlag = false;
