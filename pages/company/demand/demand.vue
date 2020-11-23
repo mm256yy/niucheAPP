@@ -202,7 +202,7 @@
 				}
 					
 				if (this.form.carmodel.length === 0){
-					this.$u.toast('车型价不能为空')
+					this.$u.toast('车型不能为空')
 					return
 				}
 				if (this.form.power.length === 0){
@@ -228,7 +228,6 @@
 				if (this.form.id){
 					this.updateChange()
 				} else {
-					
 					this.$u.api.saveShoping(this.form).then(res=>{
 						if(res.code === '200'){
 							this.showTips = true;
@@ -258,7 +257,11 @@
 					carage:'',
 					km:'',
 					intentioncarbrandnum:''
-				}
+				};
+				this.brandList=[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
+						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}];
+				this.modelList=[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}];
+				this.powerList=[{name:'纯电动',checked: false},{name:'插电混动',checked:false},{name:'燃油车(含油电混动)',checked: false}]
 				this.$u.route('/pages/company/myPublish/myPublish', {index: 3});
 			}
 		}
