@@ -15,7 +15,7 @@
 			    		<view>-月租-</view>
 			    	</view>
 			    	<view class="right">
-			    		<view class="price"><text>￥{{detail.packprice}}</text></view>
+			    		<view class="price"><text style="color: #FFFFFF;">￥{{detail.packprice}}</text></view>
 			    		<view>-押金-</view>
 			    	</view>
 			    	
