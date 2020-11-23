@@ -44,7 +44,9 @@
 						<view class="distance">{{item.km}}万公里</view>
 						<view class="clear"></view>
 					</view>
-					<u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
+					<u-image v-show="item.photourl" class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
+					<u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+					<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 					<view class="clear"></view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="box">

@@ -13,9 +13,11 @@
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>
 		 		<view class="address">{{detail.area}}</view>
-		 		<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
-		 		<view class="clear"></view>
 		 	</view>
+		 </view>
+		 <view class="tagBox">
+			<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
+			<view class="clear"></view> 
 		 </view>
 		 <view class="wrap">
 			 <view style="">
@@ -207,17 +209,22 @@
 					font-weight: 900;
 					margin-bottom: 17rpx;
 				}
-				.box {
-					padding: 4rpx;
-					line-height: 36rpx;
-					text-align: center;
-					border-radius: 10rpx;
-					background: rgba(0,0,0,0.1);
-					color: #7f7f7f;
-					float: left;
-					margin-right: 10rpx;
-					margin-top: 19rpx;
-				}
+			}
+		}
+		.tagBox{
+			margin-left: 38rpx;
+			margin-right: 38rpx;
+			.box {
+				padding: 8rpx;
+				line-height: 36rpx;
+				text-align: center;
+				border-radius: 10rpx;
+				background: rgba(0,0,0,0.1);
+				color: #7f7f7f;
+				float: left;
+				margin-right: 10rpx;
+				margin-top: 19rpx;
+				font-size: 20rpx;
 			}
 		}
 		.clear {

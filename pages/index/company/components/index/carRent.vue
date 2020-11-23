@@ -26,7 +26,9 @@
 		</view> -->
 		<view v-show="list.length">
 			<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
-				<u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
+				<u-image v-show="item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
+				<u-image v-show="!item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+				<!-- <u-image shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image> -->
 				<view class="right">
 					<view class="time">刷新时间：{{item.updateTimeStr}}</view>
 					<view class="clear"></view>

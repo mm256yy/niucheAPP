@@ -30,7 +30,9 @@
 					<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 					<view class="clear"></view>
-					<u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
+					<u-image v-show="item.photoUrl" shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
+					<u-image v-show="!item.photoUrl" shape="circle" class="left" width="125rpx" height="125rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+					<!-- <u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image> -->
 					<view class="right">
 						<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆&nbsp;{{item.teXtTile}}</view>
 						<view class="type">{{item.comparyName}}<text>{{item.comparyArea}}</text></view>
@@ -227,7 +229,8 @@
 							 }
 							 this.list.forEach(item=>{
 							 	if (item.refreshtime){
-							 		item.refreshtimeStr = this.timeZ(item.refreshtime)
+							 		let date = new Date(item.refreshtime)
+							 		item.refreshtimeStr = this.timeZ(date.getTime())
 							 	}							
 							 })
 						}else {
@@ -254,9 +257,9 @@
 							 }
 							 this.list.forEach(item=>{
 							 	if (item.refreshtime){
-							 		item.refreshtimeStr = this.timeZ(item.refreshtime)
-							 	}
-							 								
+							 		let date = new Date(item.refreshtime)
+							 		item.refreshtimeStr = this.timeZ(date.getTime())
+							 	}							
 							 })
 						}else {
 							 this.$u.toast(res.msg);

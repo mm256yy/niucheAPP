@@ -18,7 +18,7 @@
 				<view class="collect" v-if="!viewFlag&&token">
 					<u-icon v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
 					<u-icon v-show="detail.iscollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
-					<text>{{detail.collectnum}}</text>
+					<!-- <text>{{detail.collectnum}}</text> -->
 				</view>
 				<view class="clear"></view>
 				<view class="box">

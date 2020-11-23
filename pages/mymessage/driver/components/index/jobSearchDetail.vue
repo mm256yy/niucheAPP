@@ -14,7 +14,7 @@
 				<view class="icon" v-show="token">
 					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
 					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
-					<text>{{detail.collectionum}}</text>
+					<!-- <text>{{detail.collectionum}}</text> -->
 				</view>
 				<view class="name">高薪招聘{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.pay}}</text>月薪</view>
@@ -36,7 +36,7 @@
 			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true"
 			 pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#FF6501" :tabs="list" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carphotolist" :key="index" class="" v-show="firstCurrent === index">
-				<u-image class="img" width="100%" height="504rpx" :src="item.neionephoto"></u-image>
+				<u-image class="img" width="100%" height="504rpx" :src="item.onephoto"></u-image>
 			 </view>
 		</view>
 		<view class="wrapBottom">

@@ -7,16 +7,18 @@
 				</view>
 			</view>
 		 </u-navbar>
-		 <view class="top">
-			 <!-- <image class="left" :src="detail.comparylogophoto" mode="aspectFill"></image> -->
-		 	<!-- <u-image class="left" :src="detail.comparylogophoto"></u-image> -->
-			<img class="left" :src="detail.comparylogophoto" alt="">
-		 	<view class="right">
-		 		<view class="name">{{detail.comparyname}}</view>
-		 		<view class="address">{{detail.area}}</view>
-		 		<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
-		 		<view class="clear"></view>
-		 	</view>
+		 <view style="background: #fff;margin-left: 38rpx;margin-right: 38rpx;padding: 30rpx 40rpx;margin-top: 40rpx;">
+			<view class="top">
+						 <!-- <image class="left" :src="detail.comparylogophoto" mode="aspectFill"></image> -->
+				<!-- <u-image class="left" :src="detail.comparylogophoto"></u-image> -->
+						<img class="left" :src="detail.comparylogophoto" alt="">
+				<view class="right">
+					<view class="name">{{detail.comparyname}}</view>
+					<view class="address">{{detail.area}}</view>
+				</view>		
+			</view>
+			 <view v-for="(item, index) in detail.mainbusiness" :key="index" class="box">{{item}}运营</view>
+			 <view class="clear"></view>
 		 </view>
 		 <view class="wrap">
 			 <view style="">
@@ -182,13 +184,8 @@
 	.other {
 		background-color: #F5F5F8;
 		.top {
-			width: 673rpx;
-			padding: 36rpx 39rpx;
-			margin-left: 38rpx;
 			display: flex;
 			align-items: center;
-			background: #fff;
-			margin-top: 39rpx;
 			.left{
 				width: 186rpx;
 				height: 186rpx;
@@ -202,18 +199,20 @@
 					font-weight: 900;
 					margin-bottom: 17rpx;
 				}
-				.box {
-					padding: 4rpx;
-					line-height: 36rpx;
-					text-align: center;
-					border-radius: 10rpx;
-					background: rgba(0,0,0,0.1);
-					color: #7f7f7f;
-					float: left;
-					margin-right: 10rpx;
-					margin-top: 19rpx;
-				}
 			}
+		}
+		.box {
+			padding: 8rpx;
+			line-height: 36rpx;
+			text-align: center;
+			border-radius: 10rpx;
+			background: rgba(0,0,0,0.1);
+			color: #7f7f7f;
+			float: left;
+			margin-left: 10rpx;
+			margin-right: 10rpx;
+			margin-bottom: 19rpx;
+			font-size: 20rpx;
 		}
 		.clear {
 			clear: both;

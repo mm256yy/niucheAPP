@@ -30,7 +30,9 @@
 		<view class="last" v-show="list.length">
 			<view class="lists" v-for="(item, index) in list" :key="index">
 				<view class="list" @click="detail(item.demandid)">
-					<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
+					<u-image v-show="item.photoUrl" class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
+					<u-image v-show="!item.photoUrl" class="left" width="312rpx" height="231rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+					<!-- <u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image> -->
 					<view class="right">
 						<view class="city">{{item.city}}</view>
 						<view class="clear"></view>

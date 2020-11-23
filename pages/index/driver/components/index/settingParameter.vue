@@ -9,7 +9,7 @@
 			<u-form label-width="200" label-align="left" :model="detail" ref="uForm">
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="长*宽*高(mm)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.specification" placeholder="暂无数据" /></u-form-item>
 				<!-- <u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="手机号"><u-input :disabled="true" height="30" input-align="right" v-model="detail.specification" placeholder="暂无数据" /></u-form-item> -->
-				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="续航里程(km)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.trunk" placeholder="暂无数据" /></u-form-item>
+				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="行李箱容积"><u-input :disabled="true" height="30" input-align="right" v-model="detail.trunk" placeholder="暂无数据" /></u-form-item>
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="轴距(mm)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.wheel" placeholder="暂无数据" /></u-form-item>
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="环保标准"><u-input :disabled="true" height="30" input-align="right" v-model="detail.environmental" placeholder="暂无数据" /></u-form-item>
 				<u-form-item style="margin-left: 39rpx;margin-right: 46rpx;padding: 6rpx 0;" label="排量(L)"><u-input :disabled="true" height="30" input-align="right" v-model="detail.displacement" placeholder="暂无数据" /></u-form-item>

@@ -8,13 +8,15 @@
 <script>
 import Company from './company/company.vue'
 import Driver from './driver/driver.vue'
-import {dirverPages,companyPages} from '@/utils/tabbar.js'
+import {dirverPages,companyPages} from '@/utils/tabbar.js' 
 export default {
 	components:{
 		Company,Driver
 	},
 	data() {
 		return {
+			upOption:{},
+			downOption:{}
 			}
 	},
 	onShow() {
@@ -37,13 +39,6 @@ export default {
 		if(this.$refs.driver != undefined){
 			this.$refs.driver.getList()
 		}	
-	},
-	// 下拉刷新
-	onPullDownRefresh(){
-		this.$refs.driver.getList()
-		setTimeout(function(){
-			uni.stopPullDownRefresh();
-		},2000)
 	},
 	methods:{
 		tipsConfirm(){

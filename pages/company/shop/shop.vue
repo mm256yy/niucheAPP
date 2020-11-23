@@ -221,6 +221,7 @@
 		}
 		.tagBox{
 			margin-left: 36rpx;
+			margin-right: 36rpx;
 			.box {
 				padding: 8rpx;
 				border-radius: 10rpx;
@@ -229,6 +230,7 @@
 				float: left;
 				margin-right: 10rpx;
 				margin-bottom: 19rpx;
+				font-size: 20rpx;
 			}
 		}
 		.top {

@@ -239,10 +239,7 @@
 					margin-top: 20rpx;
 				}
 				.type {
-					width: 86rpx;
-					height: 28rpx;
-					line-height: 28rpx;
-					text-align: center;
+					padding: 4rpx;
 					background: rgba(0,0,0,0.1);
 					font-size: 20rpx;
 					float: right;

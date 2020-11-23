@@ -30,7 +30,9 @@
 		<view class="last" v-show="list.length">
 			<view class="lists" v-for="(item, index) in list" :key="index">
 				<view class="list" @click="detail(item.companyMainId)">
-						<u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
+					<u-image v-show="item.photoUrl" class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
+					<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+						<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
 						<view class="right">
 							<!-- <view class="tag">付费标签</view> -->
 							<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
@@ -478,10 +480,7 @@
 					margin-top: 20rpx;
 				}
 				.type {
-					width: 86rpx;
-					height: 28rpx;
-					line-height: 28rpx;
-					text-align: center;
+					padding: 4rpx;
 					background: rgba(0,0,0,0.1);
 					font-size: 20rpx;
 					float: right;

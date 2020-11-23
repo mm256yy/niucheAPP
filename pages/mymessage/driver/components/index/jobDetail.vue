@@ -54,7 +54,7 @@
     .jobDetail {
 		.content {
 			width: 671rpx;
-			padding: 20rpx 40rpx;
+			padding: 40rpx 40rpx;
 			background-color: #fff;
 			margin-left: 40rpx;
 			font-size: 20rpx;
@@ -63,7 +63,7 @@
 			}
 			.top{
 				width: 591rpx;
-				padding: 80rpx 40rpx;
+				padding: 40rpx 40rpx;
 				background-color: #F5F5F8;
 				margin-bottom: 40rpx;
 			    display: flex;
@@ -103,7 +103,6 @@
 						color: #fff;
 						float: right;
 						margin-right: 20rpx;
-						margin-bottom: 20rpx;
 					}
 				}
 			}
