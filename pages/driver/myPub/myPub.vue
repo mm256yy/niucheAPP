@@ -100,7 +100,7 @@
 			 this.swiperCurrent = index;	
 			}
 		},
-		mounted() {
+		onShow() {
 			 this.init(this.current)
 		},
 		filters: {
