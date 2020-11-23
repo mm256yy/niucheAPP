@@ -6,7 +6,7 @@ export const dirverPages = [{
   index: 1,
   iconPath: "static/tabbar/message.png",
   selectedIconPath: '/static/tabbar/message-select-d.png',
-  text:'招聘'
+  text:'招募'
 },{
   index: 2,
   selectedIconPath: '/static/tabbar/collect-select-d.png'

@@ -1,7 +1,7 @@
 <template>
 	<view :class="'driver-content'"> 
 		<view class="wrap">
-		<u-navbar height="44" back-icon-size="0" title="招聘" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<u-navbar height="44" back-icon-size="0" title="招募" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<!-- <view style="">
 			<u-tabs-swiper ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
 			 bg-color="" :is-scroll="false"
@@ -23,7 +23,7 @@
 		data() {
 			return {
 				list: [{
-					name: '招聘'
+					name: '招募'
 				}],
 			}
 		},
