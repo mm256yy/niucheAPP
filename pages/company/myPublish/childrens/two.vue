@@ -3,7 +3,7 @@
 		<view class="scroll-item" v-for="(item,index) in list" :key="item.index">
 			<u-row class="" style="padding: 8pt 15pt;">
 				<u-col span="11" style="padding: 5pt 0;" @click="toView(item.inviteId)">
-					<view>{{item.createtime}}</view>
+					<view>{{item.refreshtime}}</view>
 				</u-col>
 				<u-col span="1" style="padding: 5pt 0;">
 					<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>

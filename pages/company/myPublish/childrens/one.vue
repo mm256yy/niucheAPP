@@ -3,7 +3,7 @@
 		<view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 			<u-row>
 				<u-col span="12" class="time">
-					<view style="padding-right: 10pt;">{{item.createTime}}</view>
+					<view style="padding-right: 10pt;">{{item.refreshtime}}</view>
 				</u-col>
 				<u-col span="5" @click="toView(item.rentCarId)">
 					<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
@@ -74,6 +74,7 @@
 				let len = this.list.length;
 				 if (len < this.total){
 					let page = this.pageNum+1;
+					console.log(page)
 					 this.getList(page)
 				 }else{
 					this.status = 'nomore'
