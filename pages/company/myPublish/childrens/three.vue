@@ -39,10 +39,13 @@ export default {
 			}
 		},
 		mounted() {
-			 this.list = [];
-			 this.getList(1)
+			
 		},
 		methods: {
+			init(){
+				this.list = [];
+				this.getList(1)
+			},
 			getList(pageNum){
 				this.$u.api.ComparyMySellCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
 					isAsc: 'desc'}).then(res=>{

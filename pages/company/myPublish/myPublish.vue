@@ -73,10 +73,27 @@
 			 this.swiperCurrent = index;	
 			}
 		},
+		mounted() {
+			let index = this.current;
+			this.init(index)
+		},
 		methods: {
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
+				// this.init(index)
+			},
+			init(index){
+				
+				if (index === 0) {
+					this.$refs.onelist.init()
+				} else if (index ===1) {
+					this.$refs.twolist.init()
+				}else if (index ===2) {
+					this.$refs.threelist.init()
+				}else if (index ===3) {
+					this.$refs.fourlist.init()
+				} else{}
 			},
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
@@ -91,6 +108,8 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
+				// console.log(this.current)
+				this.init(current)
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {

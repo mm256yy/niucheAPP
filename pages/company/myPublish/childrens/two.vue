@@ -43,10 +43,13 @@
 			}
 		},
 		mounted() {
-			 this.list = [];
-			 this.getList(1)
+	
 		},
 		methods: {
+			init(){
+				this.list = [];
+				this.getList(1)
+			},
 			getList(pageNum){
 				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'cmain.refreshtime',
 					isAsc: 'desc'}).then(res=>{

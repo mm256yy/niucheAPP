@@ -6,7 +6,7 @@
 				</view>
 			<view class="company-name">纽  车  科  技 </view>
 			<view class="company-yw" :class="curThemeType ==='driver'?'driver-color':'company-color'">网约车  |  租车  |  招聘  |  卖车</view>
-			<view class="company-phone">服务电话:0571-88888888 </view>
+			<view class="company-phone">服务电话:0571-87815287</view>
 		 </view>
 		 <view class="company-version">
 			 <view class="login-out" v-show="curThemeType ==='company' && tokenFlag" @click="showLogut=true">退出</view>
