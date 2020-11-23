@@ -8,7 +8,9 @@
 			</view>
 		</u-navbar>
 		 <view class="">
-			<u-image class="img" width="100%" height="503rpx" :src="detail.photourl"></u-image>
+			 <view class="wraps img">
+			 	<u-swiper height="503" bg-color="#CDE5E3" mode="dot" :list="detail.photourl"></u-swiper>
+			 </view>
 			<view style="padding:40rpx">
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name u-line-2">

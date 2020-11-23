@@ -88,6 +88,12 @@
 						margin-right: 38rpx;
 						float: left;
 					}
+					.size{
+						margin-top: 50rpx;
+					}
+					.funds{
+						margin-bottom: 20rpx;
+					}
 					.view{
 						width: 215rpx;
 						height: 38rpx;

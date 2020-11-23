@@ -30,7 +30,7 @@
 		<view class="last" v-show="list.length">
 			<view class="lists" v-for="(item, index) in list" :key="index">
 				<view class="list" @click="detail(item.companyMainId)">
-						<u-image class="left" width="264rpx" height="199rpx" src="item.photoUrl"></u-image>
+						<u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
 						<view class="right">
 							<!-- <view class="tag">付费标签</view> -->
 							<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
