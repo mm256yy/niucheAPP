@@ -222,12 +222,12 @@
 					},
 					toView(item){
 						if (item.collectFlag){
-							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.inviteId})
+							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.pubMainComparyId})
 						}
 					},
 					toView1(item){
 						if (item.collectFlag){
-							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.inviteId})
+							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.pubMainComparyId})
 						}
 					},
 					onreachBottom() {
