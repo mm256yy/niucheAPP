@@ -124,13 +124,7 @@
 		methods: {
 			tabsChange(index) {
 				this.swiperCurrent = index;
-				if (index === 0){
-					this.zcList = [];
-					this.getList(1)
-				} else {
-					this.qzList = [];
-					this.getPageList(1)
-				}
+				
 			},
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
@@ -144,6 +138,13 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
+				if (current === 0){
+					this.zcList = [];
+					this.getList(1)
+				} else {
+					this.qzList = [];
+					this.getPageList(1)
+				}
 			},
 			getList(pageNum){
 				this.status = 'loading';
