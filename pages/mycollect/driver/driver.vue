@@ -120,6 +120,7 @@
 				methods: {
 					tabsChange(index) {
 						this.swiperCurrent = index;
+						this.init(index)
 					},
 					transition(e) {
 						let dx = e.detail.dx;
@@ -130,7 +131,7 @@
 						this.$refs.uTabs.setFinishCurrent(current);
 						this.swiperCurrent = current;
 						this.current = current;
-						this.init(current)
+						
 					},
 					init(index){
 						if (index === 0){

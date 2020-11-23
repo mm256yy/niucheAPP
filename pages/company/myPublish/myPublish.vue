@@ -81,7 +81,7 @@
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
-				// this.init(index)
+				this.init(index)
 			},
 			init(index){
 				
@@ -102,14 +102,13 @@
 			transition(e) {
 				let dx = e.detail.dx;
 				this.$refs.uTabs.setDx(dx);
+					
 			},
 			animationfinish(e) {
 				let current = e.detail.current;
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
-				// console.log(this.current)
-				this.init(current)
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
