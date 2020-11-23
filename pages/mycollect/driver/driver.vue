@@ -62,8 +62,8 @@
 								  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
 							   </view>
 							  <view class="u-line-2">{{item.texttitle}}</view>
-							 <view style="color: #7F7F7F;"><u-icon name="tags" size="28"></u-icon>
-							  <text v-for="(car,index) in item.intentionBrand" :key="index">{{car}}</text>
+							 <view style="color: #7F7F7F;" class="u-line-2"><u-icon name="tags" size="28"></u-icon>
+							  <text v-for="(car,index) in item.intentionBrand" :key="index">{{car}}</text>/
 							 </view>
 						  </view>
 						</view>
