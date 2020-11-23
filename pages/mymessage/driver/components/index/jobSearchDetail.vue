@@ -60,6 +60,7 @@
 			<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
 			<view class="phone">
 				<view class="left" @click="other()">公司其他</view>
+				<view style="height: 50rpx;width: 4rpx;background: #fff;"></view>
 				<view class="right" @click="dial()">拨打电话</view>
 			</view>
 			<view style="width: 100%;height:154rpx"></view>
@@ -121,7 +122,7 @@
 			favorites(item,id) {
 				const params = {
 					BeCollectedId: id,
-					isDriveAndCompary: 1,
+					isDriveAndCompary: 2,
 					collectionstate: 2,
 					iscollection: 1
 				};
@@ -138,7 +139,7 @@
 			cancel(item,id) {
 				const params = {
 					BeCollectedId: id,
-					isDriveAndCompary: 1,
+					isDriveAndCompary: 2,
 					collectionstate: 2,
 					iscollection: 0
 				};

@@ -38,6 +38,13 @@ export default {
 			}
 		}
 	},
+	// 下拉刷新
+	onPullDownRefresh(){
+		this.$refs.collectRef.init()
+		setTimeout(function(){
+			uni.stopPullDownRefresh();
+		},2000)
+	},
 	data() {
 		return {
 

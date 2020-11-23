@@ -37,13 +37,13 @@
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
-			 			<renting v-if="isChildUpdate3" ref="selling"></renting>
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRenting">
+			 			<renting v-if="isChildUpdate3" ref="renting"></renting>
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSelling">
-			 			<search v-if="isChildUpdate4" ref="selling"></search>
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearch">
+			 			<search v-if="isChildUpdate4" ref="search"></search>
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>
@@ -89,7 +89,28 @@
 		mounted() {
 			this.getDetail()
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.getList()
+			setTimeout(function(){
+				uni.stopPullDownRefresh();
+			},2000)
+		},
 		methods: {
+			getList() {
+				if(this.$refs.selling != undefined){
+					this.$refs.selling.getList()
+				}
+				if(this.$refs.buy != undefined){
+					this.$refs.buy.getList()
+				}
+				if(this.$refs.renting != undefined){
+					this.$refs.renting.getList()
+				}
+				if(this.$refs.search != undefined){
+					this.$refs.search.getList()
+				}
+			},
 			getDetail(){
 				let token = uni.getStorageSync('token');
 				if(token){
@@ -151,8 +172,11 @@
 			onreachBottomBuy() {
 				this.$refs.buy.pull()
 			},
-			details() {
-				this.$u.route("/pages/mymessage/components/index/buyingDetail")
+			onreachBottomRenting() {
+				this.$refs.renting.pull()
+			},
+			onreachBottomSearch() {
+				this.$refs.search.pull()
 			}
 		}
 	}
@@ -204,7 +228,7 @@
 				color: #7f7f7f;
 				float: left;
 				margin-right: 10rpx;
-				margin-top: 19rpx;
+				margin-bottom: 19rpx;
 			}
 		}
 		.top {

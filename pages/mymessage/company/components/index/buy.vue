@@ -6,9 +6,9 @@
 		 			<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		 			<view class="clear"></view>
-		 			<u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
+		 			<u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.comparylogophoto"></u-image>
 		 			<view class="right">
-		 				<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆{{item.teXtTile}}</view>
+		 				<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆&nbsp;{{item.intentionbrand}}</view>
 		 				<view class="type">{{item.comparyname}}<text>{{item.area}}</text></view>
 		 				<view class="price">打包价:<text>{{item.packprice}}</text></view>
 		 				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
@@ -97,6 +97,9 @@
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
 		    				 this.total= res.total;
+							 if(this.detail.intenitonBrand) {
+							 	this.detail.intenitonBrand = this.detail.intenitonBrand.join('/') 
+							 }
 							 let len = this.list.length;
 							 if(len<this.total){
 							 	this.status = 'loadmore'
@@ -108,7 +111,9 @@
 									let date = new Date(item.refreshtime)
 		    				 		item.refreshtimeStr = this.timeZ(date.getTime())
 		    				 	}
-		    				 								
+		    				 	if (item.intentionbrand.length){
+		    				 		item.intentionbrand = item.intentionbrand.join('/')
+		    				 	}							
 		    				 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
@@ -139,7 +144,9 @@
 									let date = new Date(item.refreshtime)
 							 		item.refreshtimeStr = this.timeZ(date.getTime())
 							 	}
-							 								
+							 	if (item.intentionbrand.length){
+							 		item.intentionbrand = item.intentionbrand.join('/')
+							 	}							
 							 })
 						}else {
 							 this.$u.toast(res.msg);

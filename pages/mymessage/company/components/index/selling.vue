@@ -9,8 +9,8 @@
 						<view v-show="item.businesstype == 2" class="city">出租车</view>
 		 				<view class="clear"></view>
 		 				<view class="name u-line-2">{{item.cartitle}}</view>
-		 				<view class="price">打包价<text>{{item.packprice}}</text></view>
-		 				<view v-for="(items, index) in item.systemok" :key="index" class="case">{{items}}</view>
+		 				<view class="price">打包价<text>￥{{item.packprice}}</text></view>
+		 				<view v-show="items.length<4" v-for="(items, index) in item.systemok" :key="index" class="case">{{items}}</view>
 		 			</view>
 		 			<view class="clear"></view>
 		 			<u-icon class="clock" name="clock" width="23" height="22"></u-icon>

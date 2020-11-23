@@ -5,8 +5,8 @@
 				<img class="left" :src="detail.comparyLogoPhoto" alt="">
 				<!-- <u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image> -->
 				<view class="right">
-					<view class="name u-line-1">{{detail.comparyname}}</view>
-					<view v-for="(item, index) in detail.mainbusiness" :key="index" class="box u-line-1">{{item}}运营</view>
+					<view class="name">{{detail.comparyname}}</view>
+					<view v-for="(item, index) in detail.comparyMainBusinessTag" :key="index" class="box">{{item}}运营</view>
 					<view class="clear"></view>
 					<view class="size">公司规模：{{detail.comparyNum}}人以内</view>
 					<view class="funds">注册资金：{{detail.comparyPrice}}百万</view>
@@ -63,6 +63,7 @@
 			}
 			.top{
 				width: 591rpx;
+				padding: 80rpx 40rpx;
 				background-color: #F5F5F8;
 				margin-bottom: 40rpx;
 			    display: flex;
@@ -80,11 +81,12 @@
 						width: 383rpx;
 						font-size: 36rpx;
 						font-weight: 900;
+						margin-bottom: 17rpx;
 					}
 					.box{
-						width: 383rpx;
 						margin-left: 2rpx;
 						margin-right: 38rpx;
+						float: left;
 					}
 					.view{
 						width: 215rpx;

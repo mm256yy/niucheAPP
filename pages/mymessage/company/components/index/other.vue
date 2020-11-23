@@ -77,11 +77,26 @@
 			 this.title = title;
 			}
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.getList()
+			setTimeout(function(){
+				uni.stopPullDownRefresh();
+			},2000)
+		},
 		mounted() {
 			this.getDetail()
 			// this.$refs.selling.getDetail()
 		},
 		methods: {
+			getList() {
+				if(this.$refs.selling != undefined){
+					this.$refs.selling.getList()
+				}
+				if(this.$refs.buy != undefined){
+					this.$refs.buy.getList()
+				}
+			},
 			getDetail(){
 			    const params = {
 					id: this.driverDemandId

@@ -69,6 +69,13 @@
 			 this.title = title;
 			}
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.getList()
+			setTimeout(function(){
+				uni.stopPullDownRefresh();
+			},2000)
+		},
 		mounted() {
 			this.search()
 		},

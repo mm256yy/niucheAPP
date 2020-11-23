@@ -38,6 +38,13 @@ export default {
 			this.$refs.driver.getList()
 		}	
 	},
+	// 下拉刷新
+	onPullDownRefresh(){
+		this.$refs.driver.getList()
+		setTimeout(function(){
+			uni.stopPullDownRefresh();
+		},2000)
+	},
 	methods:{
 		tipsConfirm(){
 			let role = uni.getStorageSync('role');

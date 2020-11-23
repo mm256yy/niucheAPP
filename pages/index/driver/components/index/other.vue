@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" :title="detail.comparyname" :background="backgroundDri" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
-					<u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon>
+					<!-- <u-icon name="zhuanfa" color="#ffffff" size="40" @click="shared"></u-icon> -->
 				</view>
 			</view>
 		 </u-navbar>
@@ -78,10 +78,25 @@
 			 this.driverDemandId = id;
 			}
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.getList()
+			setTimeout(function(){
+				uni.stopPullDownRefresh();
+			},2000)
+		},
 		mounted() {
 			this.getDetail()
 		},
 		methods: {
+			getList() {
+				if(this.$refs.renting != undefined){
+					this.$refs.renting.getList()
+				}
+				if(this.$refs.searching != undefined){
+					this.$refs.searching.getList()
+				}
+			},
 			getDetail(){
 			    const params = {
 					id: this.driverDemandId

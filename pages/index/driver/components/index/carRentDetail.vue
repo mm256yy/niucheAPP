@@ -16,6 +16,12 @@
 				  <text v-show="detail.businesstypetag == 2">[出租车]</text>
 				{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.rentprice}}</text>元/月起租</view>
+				<view class="collect" v-if="token">
+					<u-icon v-show="detail.iscollect === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="28"></u-icon>
+					<u-icon v-show="detail.iscollect === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+					<text>{{detail.collectnum}}</text>
+				</view>
+				<view class="clear"></view>
 				<view class="box">
 					<view v-show="item!=''" v-for="(item, index) in detail.systemtag" :key="index" class="text">{{item}}</view>
 					<view class="clear"></view>
@@ -29,6 +35,7 @@
 		<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
 		<view class="phone">
 			<view class="left" @click="other()">公司其他</view>
+			<view style="height: 50rpx;width: 4rpx;background: #fff;"></view>
 			<view class="right" @click="dial()">拨打电话</view>
 		</view>
 		<!-- <view class="phone" @click="phone()">拨打电话</view> -->
@@ -114,6 +121,40 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			favorites(item,id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 2,
+					collectionstate: 1,
+					iscollection: 1
+				};
+				item.iscollect = 1;
+				item.collectnum = item.collectnum+1;
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
+			cancel(item,id) {
+				const params = {
+					BeCollectedId: id,
+					isDriveAndCompary: 2,
+					collectionstate: 1,
+					iscollection: 0
+				};
+				item.iscollect = 2;
+				item.collectnum = item.collectnum-1;
+			    this.$u.api.collect(params).then(res=>{
+			    	if(res.code === 200){
+			    		 this.$u.toast('取消收藏成功');
+			    	}else {
+			    		 this.$u.toast(res.msg);
+			    	}
+			    })
+			},
 			getDetail(){
 				this.$u.api.detailRent({id:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
@@ -224,12 +265,19 @@ page{
 		}
 		.price {
 			font-size: 20rpx;
+			float: left;
 		}
 		.price text {
 			font-size: 40rpx;
 			font-weight: 900;
 			color: #FF6501;
 			margin-right: 12rpx;
+		}
+		.collect {
+			float: right;
+			.heart {
+				margin-right: 6rpx;
+			}
 		}
 	    .box .text {
 			padding: 14rpx;
