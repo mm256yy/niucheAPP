@@ -28,6 +28,9 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
+		  v-show="list.length"
+		  :pageNo='pageNum'
+		  :totalPageNo='Math.ceil(this.total/10)'
 		  ref="loadRefresh"
 		  :isRefresh="true"
 		  refreshType="halfCircle"
@@ -38,7 +41,7 @@
 		  @loadMore="loadMore" 
 		  @refresh="refresh">
 		  <view slot="content-list">
-		    <view class="last" v-show="list.length">
+		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.companyMainId)">
 		    			<u-image v-show="item.photoUrl" class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
@@ -161,7 +164,8 @@
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
-				}
+				},
+				pageNum: 1
 			}
 		},
 		mounted() {
@@ -174,6 +178,13 @@
 			this.search()
 		},
 		methods: {
+			// 上划加载更多
+			      loadMore() {
+			        this.getList()
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
 			// 下拉刷新数据列表
 			refresh() {
 			    const token = uni.getStorageSync('token');
@@ -257,9 +268,11 @@
 			//     })
 			// },
 		    getList(){
+				console.log(99)
+				this.pageNum = this.pageNum + 1;
 				this.form.businessType=this.businessType==100?'':this.businessType;
 		        const params = Object.assign(this.form, {
-		        	pageNum: this.pagination.pageNum + 1,
+		        	pageNum: this.pageNum,
 		        	pageSize: 10,
 					orderByColumn: 'm.refreshtime',
 					isAsc: 'desc'

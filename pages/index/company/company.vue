@@ -89,14 +89,14 @@
 				console.log(11111111111111)
 			},
 			// scroll-view到底部加载更多
-			onreachBottomrentcar() {
-				//监听上拉触底事件
-				this.$refs.rent.pull();
-			},
-			onreachBottomjobsearch() {
-				//监听上拉触底事件
-				this.$refs.jobsearch.pull();
-			}
+			// onreachBottomrentcar() {
+			// 	//监听上拉触底事件
+			// 	this.$refs.rent.pull();
+			// },
+			// onreachBottomjobsearch() {
+			// 	//监听上拉触底事件
+			// 	this.$refs.jobsearch.pull();
+			// }
 		}
 	}
 </script>

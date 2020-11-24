@@ -140,12 +140,12 @@
 				this.create(current)
 			},
 			// scroll-view到底部加载更多
-			onreachBottomSelling() {
-				this.$refs.selling.pull()
-			},
-			onreachBottomBuy() {
-				this.$refs.buy.pull()
-			},
+			// onreachBottomSelling() {
+			// 	this.$refs.selling.pull()
+			// },
+			// onreachBottomBuy() {
+			// 	this.$refs.buy.pull()
+			// },
 			details() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")
 			},

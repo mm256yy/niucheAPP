@@ -82,12 +82,12 @@
 				this.create(current)
 			},
 			// scroll-view到底部加载更多
-			onreachBottomCarSell() {
-				this.$refs.carSell.pull()
-			},
-			onreachBottomBuying() {
-				this.$refs.buying.pull()
-			}
+			// onreachBottomCarSell() {
+			// 	this.$refs.carSell.pull()
+			// },
+			// onreachBottomBuying() {
+			// 	this.$refs.buying.pull()
+			// }
 		}
 	}
 </script>

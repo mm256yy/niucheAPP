@@ -7,7 +7,10 @@
 			 </u-navbar>
 			 <scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
 				 <load-refresh
+				   v-show="list.length"
 				   ref="loadRefresh"
+				   :pageNo='pageNum'
+				   :totalPageNo='Math.ceil(this.total/10)'
 				   :isRefresh="true"
 				   refreshType="halfCircle"
 				   refreshTime="1000"
@@ -49,6 +52,12 @@
 				     <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 				   </view>
 				 </load-refresh>
+				 <view class="null" v-show="!list.length">
+				 	<view>
+				 		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				 		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+				 	</view>
+				 </view>
 			 </scroll-view>
 		</view>
 	</view>
@@ -79,7 +88,8 @@
 					nomore: '我也是有底线的'
 				},
 				iconType: 'flower',
-				title: ''
+				title: '',
+				pageNum: 1
 			}
 		},
 		onLoad(option) {
@@ -102,6 +112,19 @@
 			this.search()
 		},
 		methods: {
+			// 上划加载更多
+			      loadMore() {
+					  const token = uni.getStorageSync('token');
+					  if(token) {
+					  	this.form.islogin = 1
+					  }else{
+					  	this.form.islogin = 0
+					  }
+			        this.getList()
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
 			// 下拉刷新数据列表
 			refresh() {
 			    const token = uni.getStorageSync('token');
@@ -145,8 +168,9 @@
 		  //     })
 		  // },
 		  getList(){
+			  this.pageNum = this.pageNum + 1;
 		      const params = Object.assign(this.form, {
-		      	pageNum: this.pagination.pageNum + 1,
+		      	pageNum: this.pageNum,
 		      	pageSize: 10,
 		  		isCount: 0,
 				orderByColumn: 'm.refreshtime',
@@ -193,17 +217,17 @@
 		  			}
 		  		})
 		  },
-		  pull() {
-		  	let len = this.list.length;
-		  	 if (len < this.total){
-		  		 this.getList()
-		  	 }else{
-		  		this.status = 'nomore'
-		  	}
-		  },
-		  onreachBottom() {
-		  	this.pull()
-		  },
+		  // pull() {
+		  // 	let len = this.list.length;
+		  // 	 if (len < this.total){
+		  // 		 this.getList()
+		  // 	 }else{
+		  // 		this.status = 'nomore'
+		  // 	}
+		  // },
+		  // onreachBottom() {
+		  // 	this.pull()
+		  // },
 		  clear() {
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 		  	},
@@ -243,6 +267,12 @@ page{
 		display: flex;
 	}
 	.result {
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.clear {
 			clear: both;
 		}

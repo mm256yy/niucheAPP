@@ -1,7 +1,10 @@
 <template>
 	<view class="selling">
 		<load-refresh
+		  v-show="list.length"
 		  ref="loadRefresh"
+		  :pageNo='pageNum'
+		  :totalPageNo='Math.ceil(this.total/10)'
 		  :isRefresh="true"
 		  refreshType="halfCircle"
 		  refreshTime="1000"
@@ -38,6 +41,12 @@
 		    <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 		  </view>
 		</load-refresh>
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -64,7 +73,8 @@
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
-				}
+				},
+				pageNum: 1
 			}
 		},
 		props: {
@@ -77,6 +87,13 @@
 			this.getList()
 		},
 		methods: {
+			// 上划加载更多
+			      loadMore() {
+					  this.getPage()
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
 			// 下拉刷新数据列表
 			refresh() {
 			    this.getList()
@@ -149,9 +166,10 @@
 		    		})
 		    },
 			getPage(){
+				this.pageNum = this.pageNum + 1;
 			    const params = {
 					id: this.id,
-					pageNum: this.pagination.pageNum + 1,
+					pageNum: this.pageNum,
 					pageSize: 10
 				}
 					this.$u.api.detailOtherSelling(params).then(res=>{
@@ -186,14 +204,14 @@
 						}
 					})
 			},
-			pull() {
-				let len = this.list.length;
-				 if (len < this.total){
-					 this.getPage()
-				 }else{
-					this.status = 'nomore'
-				}
-			},
+			// pull() {
+			// 	let len = this.list.length;
+			// 	 if (len < this.total){
+			// 		 this.getPage()
+			// 	 }else{
+			// 		this.status = 'nomore'
+			// 	}
+			// },
 			detail(id) {
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
 			}
@@ -202,6 +220,12 @@
 </script>
 <style lang="scss" scoped>
 	.selling {
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.clear {
 			clear: both;
 		}

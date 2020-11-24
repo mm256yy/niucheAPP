@@ -1,7 +1,10 @@
 <template>
 	<view class="selling">
 		<load-refresh
+		  v-show="list.length"
 		  ref="loadRefresh"
+		  :pageNo='pageNum'
+		  :totalPageNo='Math.ceil(this.total/10)'
 		  :isRefresh="true"
 		  refreshType="halfCircle"
 		  refreshTime="1000"
@@ -11,34 +14,39 @@
 		  @loadMore="loadMore" 
 		  @refresh="refresh">
 		  <view slot="content-list">
-		    
+		    <view class="last">
+		    	<view class="lists" v-for="(item, index) in list" :key="index">
+		    		<view class="list" @click="detail(item.rentCarId)">
+		    			<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
+		    			<view class="right">
+		    						<view v-show="item.businesstype == 1" class="city">网约车</view>
+		    						<view v-show="item.businesstype == 2" class="city">出租车</view>
+		    				<view class="clear"></view>
+		    				<view class="name u-line-2">{{item.textTitle}}</view>
+		    				<view class="price">打包价<text>￥{{item.rentCarPrice}}</text></view>
+		    				<view v-show="items.length<4" v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
+		    			</view>
+		    			<view class="clear"></view>
+		    			<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+		    			<view class="year">{{item.carAgeTag}}</view>
+		    			<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+		    			<view class="year">{{item.priceTag}}</view>
+		    					<view class="clear"></view>
+		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		    		</view>
+		    		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		    		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+		    	</view>
+		    </view>
+		    <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 		  </view>
 		</load-refresh>
-		 <view class="last">
-		 	<view class="lists" v-for="(item, index) in list" :key="index">
-		 		<view class="list" @click="detail(item.rentCarId)">
-		 			<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
-		 			<view class="right">
-						<view v-show="item.businesstype == 1" class="city">网约车</view>
-						<view v-show="item.businesstype == 2" class="city">出租车</view>
-		 				<view class="clear"></view>
-		 				<view class="name u-line-2">{{item.textTitle}}</view>
-		 				<view class="price">打包价<text>￥{{item.rentCarPrice}}</text></view>
-		 				<view v-show="items.length<4" v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
-		 			</view>
-		 			<view class="clear"></view>
-		 			<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-		 			<view class="year">{{item.carAgeTag}}</view>
-		 			<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-		 			<view class="year">{{item.priceTag}}</view>
-					<view class="clear"></view>
-		 			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-		 		</view>
-		 		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-		 		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
-		 	</view>
-		 </view>
-		 <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -65,7 +73,8 @@
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
-				}
+				},
+				pageNum: 1
 			}
 		},
 		mounted() {
@@ -75,6 +84,16 @@
 			}
 		},
 		methods: {
+			// 上划加载更多
+			      loadMore() {
+			        let token = uni.getStorageSync('token');
+			        if(token){
+			        	this.getPage()
+			        }
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
 			// 下拉刷新数据列表
 			refresh() {
 			    let token = uni.getStorageSync('token');
@@ -149,10 +168,11 @@
 		    		})
 		    },
 			getPage(){
+			    this.pageNum = this.pageNum + 1;
 			    const params = {
-					pageNum: this.pagination.pageNum + 1,
-					pageSize: 10
-				}
+			    	pageNum: this.pageNum,
+			    	pageSize: 10
+			    }
 					this.$u.api.ComparyMySellCarList(params).then(res=>{
 						if(res.code === 200){
 							 this.total = res.total;
@@ -185,14 +205,6 @@
 						}
 					})
 			},
-			pull() {
-				let len = this.list.length;
-				 if (len < this.total){
-					 this.getPage()
-				 }else{
-					this.status = 'nomore'
-				}
-			},
 			detail(id) {
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
 			}
@@ -201,6 +213,12 @@
 </script>
 <style lang="scss" scoped>
 	.selling {
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		.clear {
 			clear: both;
 		}

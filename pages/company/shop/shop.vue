@@ -143,19 +143,6 @@
 				this.swiperCurrent = current;
 				this.current = current;
 				this.create(current)
-			},
-			// scroll-view到底部加载更多
-			onreachBottomSelling() {
-				this.$refs.selling.pull()
-			},
-			onreachBottomBuy() {
-				this.$refs.buy.pull()
-			},
-			onreachBottomRenting() {
-				this.$refs.renting.pull()
-			},
-			onreachBottomSearch() {
-				this.$refs.search.pull()
 			}
 		}
 	}

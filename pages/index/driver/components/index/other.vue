@@ -140,12 +140,12 @@
 				this.create(current)
 			},
 			// scroll-view到底部加载更多
-			onreachBottomRenting() {
-				this.$refs.renting.pull()
-			},
-			onreachBottomSearching() {
-				this.$refs.searching.pull()
-			},
+			// onreachBottomRenting() {
+			// 	this.$refs.renting.pull()
+			// },
+			// onreachBottomSearching() {
+			// 	this.$refs.searching.pull()
+			// },
 			details() {
 				this.$u.route("/pages/mymessage/components/index/buyingDetail")
 			},

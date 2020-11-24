@@ -25,6 +25,9 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
+		  v-show="list.length"
+		  :pageNo='pageNum'
+		  :totalPageNo='Math.ceil(this.total/10)'
 		  ref="loadRefresh"
 		  :isRefresh="true"
 		  refreshType="halfCircle"
@@ -35,7 +38,7 @@
 		  @loadMore="loadMore" 
 		  @refresh="refresh">
 		  <view slot="content-list">
-		    <view v-show="list.length">
+		    <view>
 		    	<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 		    		<u-image v-show="item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 		    		<u-image v-show="!item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
@@ -55,14 +58,14 @@
 		    	</view>
 		    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 		    </view>
-		    <view class="null" v-show="!list.length">
-		    	<view>
-		    		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-		    		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-		    	</view>
-		    </view>
 		  </view>
 		</load-refresh>
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -133,13 +136,21 @@
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
-				}
+				},
+				pageNum: 1
 			}
 		},
 		mounted() {
 			this.search()	
 		},
 		methods: {
+			// 上划加载更多
+			      loadMore() {
+			        this.getList()
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
 			// 下拉刷新数据列表
 			refresh() {
 			    this.search()
@@ -165,8 +176,9 @@
 				})
 			},
 		    getList(){
+				this.pageNum = this.pageNum + 1;
 		        const params = Object.assign(this.form, {
-		        	pageNum: this.pagination.pageNum + 1,
+		        	pageNum: this.pageNum,
 		        	pageSize: 10,
 					condition: this.form.driverAge ? 2:'',
 					orderByColumn: 'a.updateTime',

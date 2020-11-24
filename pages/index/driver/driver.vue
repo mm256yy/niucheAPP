@@ -30,13 +30,10 @@
 				this.$refs.rent.search()
 			},
 			// scroll-view到底部加载更多
-			onreachBottomRent() {
-				//监听上拉触底事件
-				this.$refs.rent.pull();
-			},
-			onPullDownRefreshRent() {
-				this.$refs.rent.refresh();
-			}
+			// onreachBottomRent() {
+			// 	监听上拉触底事件
+			// 	this.$refs.rent.pull();
+			// }
 		}
 	}
 </script>

@@ -29,7 +29,10 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
+		  v-show="list.length"
 		  ref="loadRefresh"
+		  :pageNo='pageNum'
+		  :totalPageNo='Math.ceil(this.total/10)'
 		  :isRefresh="true"
 		  refreshType="halfCircle"
 		  refreshTime="1000"
@@ -39,7 +42,7 @@
 		  @loadMore="loadMore" 
 		  @refresh="refresh">
 		  <view slot="content-list">
-		    <view v-show="list.length" class="last">
+		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.id)">
 		    			<view class="right">
@@ -72,14 +75,14 @@
 		    	</view>
 		    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 		    </view>
-		    <view class="null" v-show="!list.length">
-		    	<view>
-		    		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-		    		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-		    	</view>
-		    </view>
 		  </view>
 		</load-refresh>
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -171,7 +174,8 @@
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
-				}
+				},
+				pageNum: 1
 			}
 		},
 		mounted() {
@@ -184,6 +188,19 @@
 			this.search()
 		},
 		methods: {
+			// 上划加载更多
+			      loadMore() {
+					  const token = uni.getStorageSync('token');
+					  if(token) {
+					  	this.form.islogin = 1
+					  }else{
+					  	this.form.islogin = 0
+					  }
+			        this.getList()
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
 			// 下拉刷新数据列表
 			refresh() {
 			    const token = uni.getStorageSync('token');
@@ -267,9 +284,10 @@
 			//     })
 			// },
 		    getList(){
+				this.pageNum = this.pageNum + 1;
 				this.form.businesstype=this.businesstype==100?'':this.businesstype;
 		        const params = Object.assign(this.form, {
-		        	pageNum: this.pagination.pageNum + 1,
+		        	pageNum: this.pageNum,
 		        	pageSize: 10,
 					isCount: 0,
 					orderByColumn: 'm.refreshtime',

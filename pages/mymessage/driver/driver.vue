@@ -32,10 +32,10 @@
 				console.log(1)
 				this.$refs.search.search()
 			},
-			onreachBottomSearch() {
-				//监听上拉触底事件
-				this.$refs.search.pull();
-			}
+			// onreachBottomSearch() {
+			// 	监听上拉触底事件
+			// 	this.$refs.search.pull();
+			// }
 		}
 	}
 </script>
