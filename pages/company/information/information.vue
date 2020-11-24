@@ -66,7 +66,7 @@
 					<u-icon name="checkbox-mark" @click="editSave('companyIntroduce')" style="padding-left: 15rpx;" color="#6DD99C" size='40' v-show="form.companyIntroduceFlag"></u-icon>
 					</u-col>
 				<u-col span='12' style="padding: 8pt 0;">
-					<u-input v-model="form.companyIntroduce" type="textarea" maxlength='1000' :disabled="!form.companyIntroduceFlag" :border="form.companyIntroduceFlag" :auto-height="true" placeholder=""/>
+					<u-input v-model="form.companyIntroduce" type="textarea" maxlength='300' :disabled="!form.companyIntroduceFlag" :border="form.companyIntroduceFlag" :auto-height="true" placeholder=""/>
 				</u-col>
 			</u-row>
 			 </view>

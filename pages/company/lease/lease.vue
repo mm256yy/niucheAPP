@@ -61,7 +61,7 @@
 						 <text style="padding-left: 5pt;">万公里</text>
 					 </u-form-item>
 					 <u-form-item :label="carPubType === 1?'车辆在租总数':'车辆在售总数'">
-						 <u-input v-model="form.carnbumber" :clearable="false" :border="true"/><text style="position: absolute;right: 10px;">辆</text>
+						 <u-input v-model="form.carnbumber" :clearable="false" :border="true" maxlength="10"/><text style="position: absolute;right: 10px;">辆</text>
 					 </u-form-item>
 			      </u-form>	
 				<u-picker v-model="timeShow" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>

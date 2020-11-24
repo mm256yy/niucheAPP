@@ -52,7 +52,7 @@
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				<view style="margin:10pt;background-color: #FFFFFF;"  @click="toView(item)"  v-for="(item,index) in list1" :key="item.id">
+				<view style="margin:10pt;background-color: #FFFFFF;"  @click="toView1(item)"  v-for="(item,index) in list1" :key="item.id">
 					<view  style="padding:10rpx 20rpx;">
 						<view class="u-body-item u-flex ">
 							<image :src="item.photourl"></image>
@@ -222,12 +222,12 @@
 					},
 					toView(item){
 						if (item.collectFlag){
-							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.inviteId})
+							this.$u.route("/pages/index/driver/components/index/carRentDetail",{id:item.pubMainComparyId})
 						}
 					},
 					toView1(item){
 						if (item.collectFlag){
-							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.inviteId})
+							this.$u.route("/pages/mymessage/driver/components/index/jobSearchDetail",{id:item.pubMainComparyId})
 						}
 					},
 					onreachBottom() {
