@@ -91,7 +91,7 @@
 					    		  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
 					    			  <view style="text-align: right;">
 					    				  <u-tag :text="item.businesstypetag"  type="info" class="tag-style" size="mini"/>
-					    				  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
+					    				  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr1(item,index)"></u-icon>
 					    			   </view>
 					    			  <view class="u-line-2">{{item.texttitle}}</view>
 					    			 <view style="color: #7F7F7F;" class="u-line-2"><u-icon name="tags" size="28"></u-icon>
@@ -312,7 +312,7 @@
 					},
 					toView1(item){
 						if (item.collectFlag){
-							this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.pubMainComparyId})
+							this.$u.route("/pages/mymessage/driver/components/index/jobSearchDetail",{id:item.pubMainComparyId})
 						}
 					},
 					onreachBottom() {
