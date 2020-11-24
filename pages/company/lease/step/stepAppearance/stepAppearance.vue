@@ -29,7 +29,7 @@
 		<view class="view-content">
 		   <view style="padding-bottom: 10pt;">2.车辆证件上传</view>
 		    <view class="top-content-upload" >
-				<u-upload :custom-btn="true" :action="action" max-count="18" ref='upload1'
+				<u-upload :custom-btn="true" :action="action" max-count="100" ref='upload1'
 				 @on-success='uploadChange' index="oneneishiphoto" upload-text=""  @on-remove="removeOne"
 				 :file-list="fileList1" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
@@ -38,7 +38,7 @@
 				</u-upload>
 		   </view>
 		   <view style="margin-top: 10pt;font-size: 10pt;padding-left: 5pt;">
-		   	    <view>请上传该批次车辆《行驶证》和《运输证》，建议每车各上传一份！</view>
+		   	    <view>请上传该批次车辆《行驶证》或《运输证》，建议每辆车上传一份！</view>
 		   </view>
 		</view>
         <view class="view-content" style="color: #f00;font-size: 8pt;">*上传的车辆证件须与认证主体名称一致，否则可能会造成审核失败。</view>

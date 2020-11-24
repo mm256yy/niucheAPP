@@ -35,10 +35,10 @@
 					<u-input class="input-radius" v-model="form.wechatNum" :border="true" v-if="type"/>
 					<view v-else class="type-right">{{form.wechatNum}}</view>
 				</u-form-item>
-				<u-form-item label="QQ号" prop="qqNum">
+<!-- 				<u-form-item label="QQ号" prop="qqNum">
 					<u-input class="input-radius" v-model="form.qqNum" :border="true" v-if="type"/>
 					<view v-else class="type-right">{{form.qqNum}}</view>
-				</u-form-item>
+				</u-form-item> -->
 			</u-form>
 		</view>
 		<view style="text-align: center; padding: 15pt 30pt;">
@@ -74,13 +74,12 @@
 				form: {
 					nickName:'',
 					wechatNum:'',
-					qqNum:'',
+					// qqNum:'',
 					headPhoto:'',
 				},
 				rules: {
 					nickName:requiredRule,
 					wechatNum:requiredRule,
-					qqNum:requiredRule,
                 },
 				showTips:false,
 				type:false,
@@ -129,6 +128,7 @@
 			toNext(){
 				this.$refs.uForm.validate(valid=>{
 					if(valid) {
+						this.form.telephone = this.telephone
 						this.$u.api.addUserMessageInfo(this.form).then(res => {
 							if(res.code === 200){
 								this.showTips =true;
