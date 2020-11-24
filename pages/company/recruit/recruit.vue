@@ -1,6 +1,9 @@
 <template>
 	<view>
 	   <u-navbar back-text="返回" back-icon-size="0" title="招募发布" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+	   <view class="zlcontent-mid">
+	   	 <text style="font-size:10pt;">* 请注意本页内容都是必填项！未填写不能提交审核</text>
+	   </view>
 	   <view class="view-content">
 	   	 <view class="">
 	   	 	<u-form :model="form" ref="uForm" :error-type="errorType" label-width="160" :border-bottom="false">
@@ -89,9 +92,6 @@ export default {
 				carmodel:requiredRule,
 				carbrand:requiredRule,
 				workname:requiredRule,
-				lowmonthprice:requiredRule,
-				highmonthprice:requiredRule,
-				peoplenumber:requiredRule,
 				worktext:requiredRule,
 			},
 			carmodel:[],
@@ -101,6 +101,7 @@ export default {
 				'message'
 			],
 			showTips:false,
+			editId:'',
 			carPubPosition:{}
 		}
 	},
@@ -120,7 +121,7 @@ export default {
 	onShow() {	
 		if(this.editId){
 			this.editInit()
-			uni.setStorage('inviteid',this.editId)
+			
 		}
 	},
 	methods: {
@@ -150,7 +151,8 @@ export default {
 		 if(id){
 			 this.$u.api.ComparyInviteEchoText({inviteid:id}).then(res=>{
 				if(res.code === 200){
-						let data = res.object
+						let data = res.object;
+						uni.setStorageSync('inviteid',id)
 						this.form = data;
 						if(data.fivephoto){
 							this.fileList = [];
@@ -199,7 +201,7 @@ export default {
 	 },
 	 saveFormEdit(){
 		 let saveobject = this.form
-		 this.$u.api.ComparyInviteAdd(saveobject).then(res=>{
+		 this.$u.api.ComparyInviteUpdate(saveobject).then(res=>{
 				if(res.code === 200){
 					this.showTips = true
 				}else {
@@ -220,6 +222,7 @@ export default {
 			worktext:'',
 			fivephoto:'',
 			};
+			this.fileList = []
 	 },
 	 tipsConfirm(){
 		 this.clearStorage()
@@ -242,11 +245,17 @@ export default {
 					this.$u.toast('月薪填写有误');
 					return
 				}
+				if(this.form.peoplenumber === ''){
+					this.$u.toast('请填写招聘人数')
+					return
+				}
 				if (this.form.fivephoto === ''){
 					this.$u.toast('请上传图片')
 					return
 				}
-				if (this.editId){
+				debugger
+				let id = uni.getStorageSync('inviteid')
+				if (id){
 					this.saveFormEdit()
 				} else {
 					this.saveForm()

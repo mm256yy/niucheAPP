@@ -140,7 +140,7 @@ const install  = (Vue, vm) => {
 				//购车需求更新
 				const  ComparyAskToShopUpdate = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyAskToShopUpdate', params);
 				//我的招聘
-				const  ComparyInviteAdd = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyInviteAdd', params);
+				const  ComparyInviteUpdate = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyInviteUpdate', params);
 				//我的租车
 				// const  ComparyInviteAdd = (params = {}) => vm.$u.post('/system/usercomparybasictext/ComparyInviteAdd', params);
 				//公司我的店铺查看公司信息
@@ -155,7 +155,7 @@ const install  = (Vue, vm) => {
 	vm.$u.api = {
 		MyIssueRefresh,
 		getStatus,
-		ComparyInviteAdd,
+		ComparyInviteUpdate,
 		ComparyAskToShopUpdate,
 		ComparyInviteEchoText,
 		ComparyMySellCarForOne,
