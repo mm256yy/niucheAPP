@@ -9,7 +9,7 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<load-refresh
 					  v-show="list.length"
 					  ref="loadRefresh"
@@ -19,7 +19,9 @@
 					  color="#04C4C4"
 					  heightReduce="10"
 					  backgroundCover="#F3F5F5"
-					  @loadMore="loadMore" 
+					  :pageNo="pageNum"
+					  :totalPageNo="total" 
+					  @loadMore="loadMoreList" 
 					  @refresh="refresh">
 					  <view slot="content-list">
 					    <view  @click="toView(item)" v-for="(item,index) in list" :key="item.id" style="margin:10pt;background-color: #FFFFFF;">
@@ -71,17 +73,17 @@
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<load-refresh
 					  v-show="list1.length"
-					  ref="loadRefresh"
+					  ref="loadRefresh1"
 					  :isRefresh="true"
 					  refreshType="halfCircle"
 					  refreshTime="1000"
 					  color="#04C4C4"
 					  heightReduce="10"
 					  backgroundCover="#F3F5F5"
-					  @loadMore="loadMore" 
+					  @loadMore="loadMoreList" 
 					  @refresh="refresh">
 					  <view slot="content-list">
 					    <view style="margin:10pt;background-color: #FFFFFF;"  @click="toView1(item)"  v-for="(item,index) in list1" :key="item.id">
@@ -139,21 +141,13 @@
 				distance:'../../static/distance.png',
 			    current: 0,
 				swiperCurrent: 0,
-				pageNum:0,
-				pageNum1:0,
+				pageNum:1,
+				pageNum1:1,
 				list:[],
 				list1:[],
 				total:0,
 				total2:0,
-				status: 'nomore',
-				status1: 'loadmore',
-				iconType: 'flower',
-				loadText: {
-					loadmore: '轻轻上拉',
-					loading: '努力加载中',
-					nomore: '我也是有底线的'
 				}
-			     }
 			},
 				mounted() {
 					let token = uni.getStorageSync('token');
@@ -167,9 +161,9 @@
 					    let token = uni.getStorageSync('token');
 					    if (token){
 					    	if (this.swiperCurrent === 0){
-					    		this.getData(1)
+					    		this.getList(1)
 					    	} else {
-					    		this.getdataed(1)
+					    		this.getList1(1)
 					    	}
 					    }
 					},
@@ -234,51 +228,26 @@
 							}
 						   })
 					},
-					getData(pageNum){
-						this.status = 'loading';
-						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:1}).then(res=>{
-							if(res.code === 200){
-								this.total = res.total
-								this.list = res.rows
-								this.list.forEach(item=>{
-									item.collectFlag = true;
-								})
-							}else {
-								item.collectFlag = true;
-								 this.$u.toast(res.msg);
-							}
-						})
-					},
+		
 					getList(pageNum){
-						this.status = 'loading';
+						console.log(pageNum)
 						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:1}).then(res=>{
 							if(res.code === 200){
-								this.total = res.total
+								this.total = parseFloat(5)
 								let arr = res.rows
-								arr.forEach(item=>{
-									item.collectFlag = true;
-									this.list.push(item)
-								})
-								let len = this.list.length;
-								if(len<this.total){
-									this.status = 'loadmore'
-								} else{
-									this.status = 'nomore'
+								if(pageNum === 1){
+									this.list = res.rows
+									this.list.forEach(item=>{
+										item.collectFlag = true;
+									})
+								}else {
+									arr.forEach(item=>{
+										item.collectFlag = true;
+										this.list.push(item)
+									})
+									this.$refs.loadRefresh.loadOver()
+									this.pageNum =pageNum
 								}
-							}else {
-								 this.$u.toast(res.msg);
-							}
-						})
-					},
-					getDataed(pageNum){
-						this.status1 = 'loading';
-						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:2}).then(res=>{
-							if(res.code === 200){
-								this.total2 = res.total
-								this.list1 = res.rows
-								this.list1.forEach(item=>{
-									item.collectFlag = true;
-								})
 							}else {
 								 this.$u.toast(res.msg);
 							}
@@ -290,15 +259,18 @@
 							if(res.code === 200){
 								this.total2 = res.total
 								let arr = res.rows
-								arr.forEach(item=>{
-									item.collectFlag = true;
-									this.list1.push(item)
-								})
-								let len = this.list1.length;
-								if(len<this.total2){
-									this.status1 = 'loadmore'
-								} else{
-									this.status1 = 'nomore'
+								if(pageNum === 1){
+									this.list1 = res.rows
+									this.list1.forEach(item=>{
+										item.collectFlag = true;
+									})
+								} else {
+									arr.forEach(item=>{
+										item.collectFlag = true;
+										this.list1.push(item)
+									})
+									this.$refs.loadRefresh1.loadOver()
+									this.pageNum1 =pageNum
 								}
 							}else {
 								 this.$u.toast(res.msg);
@@ -315,22 +287,13 @@
 							this.$u.route("/pages/mymessage/driver/components/index/jobSearchDetail",{id:item.pubMainComparyId})
 						}
 					},
-					onreachBottom() {
-						let len = this.list.length;
-						 if (len < this.total){
-							 this.pageNum++;
-							 this.getList(this.pageNum)
-						 }else{
-							this.status = 'nomore'
-						}
-					},
-					onreachBottom1() {
-						let len = this.list1.length;
-						 if (len < this.total1){
-							 this.pageNum1++;
-							 this.getList1(this.pageNum1)
-						 }else{
-							this.status1 = 'nomore'
+					loadMoreList(){
+						if(this.current === 0) {
+							let pageNo = this.pageNum+1
+							this.getList(pageNo)
+						} else{
+							let pageNo = this.pageNum1+1
+							this.getList1(pageNo)
 						}
 					},
 				}
