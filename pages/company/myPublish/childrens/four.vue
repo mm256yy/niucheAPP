@@ -8,8 +8,10 @@
 		  color="#04C4C4"
 		  heightReduce="10"
 		  backgroundCover="#F3F5F5"
-		  @loadMore="loadMore" 
-		  @refresh="refresh">
+		  :pageNo="pageNum"
+		 :totalPageNo="total"
+		 @loadMore="loadMoreList" 
+		 @refresh="refresh">
 		  <view slot="content-list">
 		    <view class="scroll-item"  v-for="item in list" :key="item.askToShopId">
 		    	<u-row class="" style="padding: 8pt 15pt;" >
@@ -45,13 +47,6 @@ export default {
 				pageNum:1,
 				list:[],
 				total:0,
-				status: 'loadmore',
-				iconType: 'flower',
-				loadText: {
-					loadmore: '轻轻上拉',
-					loading: '努力加载中',
-					nomore: '我也是有底线的'
-				}
 			}
 		},
 		mounted() {
@@ -61,37 +56,26 @@ export default {
 		methods: {
 			// 下拉刷新数据列表
 			refresh() {
-			    this.getData(1)
-			},
-			getData(pageNum){
-				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
-					isAsc: 'desc'}).then(res=>{
-					if(res.code === 200){
-						this.list = res.rows
-						this.total = res.total
-						arr.forEach(item=>{
-							item.reloadFlag = true;
-						})
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
+			    this.getList(1)
 			},
 			getList(pageNum){
 				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
+						this.total = Math.ceil(res.total/10);
 						let arr = res.rows
-						this.total = res.total
-						arr.forEach(item=>{
-							item.reloadFlag = true
-							this.list.push(item)
-						})
-						let len = this.list.length;
-						if(len<this.total){
-							this.status = 'loadmore'
-						} else{
-							this.status = 'nomore'
+						if(pageNum === 1){
+							arr.forEach(item=>{
+								item.reloadFlag = true;
+							})
+							this.list = arr
+						}else {
+							arr.forEach(item=>{
+								item.reloadFlag = true;
+								this.list.push(item)
+							})
+							this.$refs.loadRefresh.loadOver()
+							this.pageNum =pageNum
 						}
 					}else {
 						 this.$u.toast(res.msg);
@@ -99,7 +83,6 @@ export default {
 				})
 			},
 			toView(id){
-				console.log(id)
 				this.$u.route("/pages/company/myPublish/qiugouView/qiugouView",{id:id,flag:true})
 			},
 			reload(item){
@@ -109,18 +92,10 @@ export default {
 						item.reloadFlag = true
 						this.$u.toast('刷新成功')
 					}else {
+						item.reloadFlag = false
 						 this.$u.toast(res.msg);
 					}
 				})
-			},
-			onreachBottom() {
-				let len = this.list.length;
-				 if (len < this.total){
-					let page = this.pageNum+1;
-					 this.getList(page)
-				 }else{
-					this.status = 'nomore'
-				}
 			}
 		}
 	}

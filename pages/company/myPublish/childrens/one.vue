@@ -8,8 +8,10 @@
 		  color="#04C4C4"
 		  heightReduce="10"
 		  backgroundCover="#F3F5F5"
-		  @loadMore="loadMore" 
-		  @refresh="refresh">
+		  :pageNo="pageNum"
+		 :totalPageNo="total"
+		 @loadMore="loadMoreList" 
+		 @refresh="refresh">
 		  <view slot="content-list">
 		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 		    	<u-row>
@@ -57,8 +59,7 @@
 			}
 		},
 		mounted() {
-			this.list = [];
-			this.getList(1)
+             this.init()
 		},
 		methods: {
 			// 下拉刷新数据列表
@@ -68,6 +69,10 @@
 			init(){
 				this.list = [];
 				this.getList(1)
+			},
+			loadMoreList(){
+				let pageNo = this.pageNum+1
+				this.getList(pageNo)
 			},
 			getData(pageNum){
 				this.$u.api.ComparyMyRentCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
@@ -84,16 +89,16 @@
 				this.$u.api.ComparyMyRentCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
-						this.total = res.total
+						this.total = Math.ceil(res.total/10);
 						let arr = res.rows
-						arr.forEach(item=>{
-							this.list.push(item)
-						})
-						let len = this.list.length;
-						if(len<this.total){
-							this.status = 'loadmore'
-						} else{
-							this.status = 'nomore'
+						if(pageNum === 1){
+							this.list = res.rows
+						}else {
+							arr.forEach(item=>{
+								this.list.push(item)
+							})
+							this.$refs.loadRefresh.loadOver()
+							this.pageNum =pageNum
 						}
 					}else {
 						 this.$u.toast(res.msg);

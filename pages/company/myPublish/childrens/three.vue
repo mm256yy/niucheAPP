@@ -8,8 +8,10 @@
 		  color="#04C4C4"
 		  heightReduce="10"
 		  backgroundCover="#F3F5F5"
-		  @loadMore="loadMore" 
-		  @refresh="refresh">
+		  :pageNo="pageNum"
+		 :totalPageNo="total"
+		 @loadMore="loadMoreList" 
+		 @refresh="refresh">
 		  <view slot="content-list">
 		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 		    	<u-row>
@@ -46,53 +48,38 @@ export default {
 				distance:'../../../static/distance.png',
 				list:[],
 				total:0,
-				status: 'loadmore',
-				iconType: 'flower',
-				loadText: {
-					loadmore: '轻轻上拉',
-					loading: '努力加载中',
-					nomore: '我也是有底线的'
-				}
 			}
 		},
 		mounted() {
-			this.list = [];
-			this.getList(1)
+			this.init()
 		},
 		methods: {
 			// 下拉刷新数据列表
 			refresh() {
-			    this.getData(1)
+			    this.getList(1)
 			},
 			init(){
 				this.list = [];
 				this.getList(1)
 			},
-			getData(pageNum){
-				this.$u.api.ComparyMySellCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
-					isAsc: 'desc'}).then(res=>{
-					if(res.code === 200){
-						this.list = res.rows;
-						this.total = res.total
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
+			loadMoreList(){
+				let pageNo = this.pageNum+1
+				this.getList(pageNo)
 			},
 			getList(pageNum){
 				this.$u.api.ComparyMySellCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
-						let arr = res.rows;
-						this.total = res.total
-						arr.forEach(item=>{
-							this.list.push(item)
-						})
-						let len = this.list.length;
-						if(len<this.total){
-							this.status = 'loadmore'
-						} else{
-							this.status = 'nomore'
+						this.total = Math.ceil(res.total/10);
+						let arr = res.rows
+						if(pageNum === 1){
+							this.list = arr
+						}else {
+							arr.forEach(item=>{
+								this.list.push(item)
+							})
+							this.$refs.loadRefresh.loadOver()
+							this.pageNum =pageNum
 						}
 					}else {
 						 this.$u.toast(res.msg);
@@ -102,15 +89,6 @@ export default {
 			toView(id){
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id,flag:true})
 			},
-			onreachBottom() {
-				let len = this.list.length;
-				 if (len < this.total){
-					let page = this.pageNum+1;
-					 this.getList(page)
-				 }else{
-					this.status = 'nomore'
-				}
-			}
 		}
 	}
 </script>

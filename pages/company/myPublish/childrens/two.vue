@@ -8,8 +8,10 @@
 		  color="#04C4C4"
 		  heightReduce="10"
 		  backgroundCover="#F3F5F5"
-		  @loadMore="loadMore" 
-		  @refresh="refresh">
+		  :pageNo="pageNum"
+		 :totalPageNo="total"
+		 @loadMore="loadMoreList" 
+		 @refresh="refresh">
 		  <view slot="content-list">
 		    <view class="scroll-item" v-for="(item,index) in list" :key="item.index">
 		    	<u-row class="" style="padding: 8pt 15pt;">
@@ -60,48 +62,36 @@
 			}
 		},
 		mounted() {
-			console.log(99)
-	      this.list = [];
-	      this.getList(1)
+	      this.init()
 		},
 		methods: {
 			// 下拉刷新数据列表
 			refresh() {
-			    this.getData(1)
+			    this.getList(1)
 			},
 			init(){
 				this.list = [];
 				this.getList(1)
 			},
-			getData(pageNum){
-				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'cmain.refreshtime',
-					isAsc: 'desc'}).then(res=>{
-					if(res.code === 200){
-						this.list = res.rows;
-						this.total = res.total
-						arr.forEach(item=>{
-							item.reloadFlag = true;
-						})
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
+			loadMoreList(){
+				let pageNo = this.pageNum+1
+				this.getList(pageNo)
 			},
 			getList(pageNum){
 				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'cmain.refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
-						let arr = res.rows;
-						this.total = res.total
-						arr.forEach(item=>{
-							item.reloadFlag = true;
-							this.list.push(item)
-						})
-						let len = this.list.length;
-						if(len<this.total){
-							this.status = 'loadmore'
-						} else{
-							this.status = 'nomore'
+						this.total = Math.ceil(res.total/10);
+						let arr = res.rows
+						if(pageNum === 1){
+							this.list = res.rows
+						}else {
+							arr.forEach(item=>{
+								item.reloadFlag = true;
+								this.list.push(item)
+							})
+							this.$refs.loadRefresh.loadOver()
+							this.pageNum =pageNum
 						}
 					}else {
 						 this.$u.toast(res.msg);
@@ -112,24 +102,16 @@
 				this.$u.route("/pages/company/myPublish/zhaopinView/zhaopinView",{id:id})
 			},
 			reload(item){
-				// item.reloadFlag = false
+				item.reloadFlag = false
 				this.$u.api.MyIssueRefresh({comparyMainId:item.comparyMainId,BusinessState:2}).then(res=>{
 					if(res.code === 200){
 						item.reloadFlag = true
 						this.$u.toast('刷新成功')
 					}else {
+						item.reloadFlag = false
 						 this.$u.toast(res.msg);
 					}
 				})
-			},
-			onreachBottom() {
-				let len = this.list.length;
-				 if (len < this.total){
-					 let page = this.pageNum+1;
-					  this.getList(page)
-				 }else{
-					this.status = 'nomore'
-				}
 			}
 		}
 	}
