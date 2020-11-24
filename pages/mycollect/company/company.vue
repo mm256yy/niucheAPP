@@ -134,7 +134,7 @@
 			refresh() {
 			    let token = uni.getStorageSync('token');
 			    if (token){
-			    	this.getData(1)()
+			    	this.getData(1)
 			    }
 			},
 			tabsChange(index) {

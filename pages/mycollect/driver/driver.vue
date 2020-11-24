@@ -73,7 +73,7 @@
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
 					<load-refresh
-					  v-show="!list.length"
+					  v-show="list1.length"
 					  ref="loadRefresh"
 					  :isRefresh="true"
 					  refreshType="halfCircle"
@@ -110,7 +110,7 @@
 					    		<!-- <u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" /> -->
 					  </view>
 					</load-refresh>
-					<view class="null" v-show="list.length">
+					<view class="null" v-show="!list1.length">
 						<view>
 							<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
 							<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>

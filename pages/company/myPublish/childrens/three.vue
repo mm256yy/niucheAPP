@@ -14,7 +14,7 @@
 		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 		    	<u-row>
 		    		<u-col span="12" class="time">
-		    			<view style="padding-right: 10pt;">{{item.refreshtime}}</view>
+		    			<view style="padding-right: 10pt;">{{item.refreshTime}}</view>
 		    		</u-col>
 		    		<u-col span="5" @click="toView(item.rentCarId)">
 		    			<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
