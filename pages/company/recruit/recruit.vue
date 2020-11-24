@@ -1,7 +1,7 @@
 <template>
 	<view>
 	   <u-navbar back-text="返回" back-icon-size="0" title="招募发布" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-	   <view class="zlcontent-mid">
+	   <view style="padding: 0 10pt;">
 	   	 <text style="font-size:10pt;">* 请注意本页内容都是必填项！未填写不能提交审核</text>
 	   </view>
 	   <view class="view-content">
@@ -19,10 +19,10 @@
 					<u-input v-model="form.workname" class="input_select" type="select" :border="true" placeholder="请选择" @click="show = true" />
 				</u-form-item>
 				<u-form-item label="月薪(元)" label-position="top">
-				  <u-input v-model="form.lowmonthprice" type="number" maxlength="7" class="input_select" @input="startValChange" 
+				  <u-input v-model="form.lowmonthprice" type="number" maxlength="7" class="input_select"  
 				  :clearable="false" :border="true" placeholder="请输入最低值"/>
 				  <text style="padding: 0 10pt;">-</text>
-				  <u-input v-model="form.highmonthprice" type="number" maxlength="7" class="input_select" @input="endValChange" 
+				  <u-input v-model="form.highmonthprice" type="number" maxlength="7" class="input_select"  
 				  :clearable="false" :border="true" placeholder="请输入最高值"/>
 				</u-form-item>
 				<u-form-item label="招聘人数" prop="peoplenumber">
@@ -41,9 +41,12 @@
 	      <view class="top-content-upload">
 	   	   <u-upload :custom-btn="true" :action="action" max-count="1" ref="upload"
 	   	    @on-success='uploadChange' index="onephoto" upload-text="" @on-remove="removeOne"
-	   	    :file-list="fileList" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;height: 100px;">
+	   	    :file-list="fileList" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
 	   		<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 	   			<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
+				<view class="slot-tips">
+					<view>请上传车辆照片</view>
+				</view>
 	   		</view>
 	   	</u-upload>
 	     </view>
@@ -121,7 +124,6 @@ export default {
 	onShow() {	
 		if(this.editId){
 			this.editInit()
-			
 		}
 	},
 	methods: {
@@ -178,8 +180,10 @@ export default {
 	 	this.form.fivephoto = '';
 	 },
 	 toCarList(){
+		this.form.carmodel = ''
 	    this.setStorage(this.form)
 	  	this.$u.route('/pages/company/lease/carList/carList',{source:2}) 
+		
 	 },
     setInfo(){
 		let pubUpload = this.carPubUpload;
@@ -253,7 +257,6 @@ export default {
 					this.$u.toast('请上传图片')
 					return
 				}
-				debugger
 				let id = uni.getStorageSync('inviteid')
 				if (id){
 					this.saveFormEdit()
@@ -262,12 +265,6 @@ export default {
 				}
 			} 
 		}) 
-	 },
-	 startValChange(){
-
-	 },
-	 endValChange(){
-
 	 },
 	}
 }
@@ -316,5 +313,17 @@ page{
  .btn-agree{
 	 width: 50%;
 	background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC);
+ }
+ .slot-btn {
+ 	width: 230rpx;
+ 	height: 100pt;
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ 	background: #fff;
+ 	border-radius: 10rpx;
+ }
+ .slot-tips{
+ 	position: absolute;top: 62pt;font-size: 10pt;text-align: center;
  }
 </style>

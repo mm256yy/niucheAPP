@@ -107,6 +107,8 @@
 						  this.setStorage(1)
 						   this.$u.route('/pages/company/lease/lease')
 						} else if(type === 2){
+							uni.removeStorageSync('inviteid');
+							uni.removeStorageSync('carPubPosition');
 							this.$u.route('/pages/company/recruit/recruit')
 						}else if(type === 3){
 							this.setStorage(3)
