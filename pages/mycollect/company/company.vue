@@ -9,28 +9,48 @@
 		</view> -->
 		<!-- <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish"> -->
 			<!-- <swiper-item class="swiper-item"> -->
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<view class="scroll-item" @click="toView(item)" v-for="(item,index) in list" :key='item.demandid'>
-						<view class="time">
-							<view class="padding15">{{item.comparyArea}}</view>
-						</view>
-						<view class="img">
-							<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
-						</view>
-						<view class="border-left">
-							<view class="title u-line-2">{{item.carText}}</view>
-							<view class="type"><text>打包价</text><text class="type-money">￥{{item.packprice}}</text></view>
-							<view class="u-line-1"><u-tag :text="it" type="success" mode="dark" v-for="(it,i) in item.carSystemTag" 
-							:key="i" class="tag-style" v-show="it.length<7"/></view>
-						</view>
-						<view class="bottom">
-					        <view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAge}}</view>
-					        <view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.km}}</view>
-							<u-icon name="heart-fill" color="#3FB26C" size="36" @click="collectOr(item,index)"></u-icon>
-						</view>
+			    <load-refresh
+				v-show="list.length"
+			      ref="loadRefresh"
+			      :isRefresh="true"
+			      refreshType="halfCircle"
+			      refreshTime="1000"
+			      color="#04C4C4"
+			      heightReduce="10"
+			      backgroundCover="#F3F5F5"
+			      @loadMore="loadMore" 
+			      @refresh="refresh">
+			      <view slot="content-list">
+			        <scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+			        	<view class="scroll-item" @click="toView(item)" v-for="(item,index) in list" :key='item.demandid'>
+			        		<view class="time">
+			        			<view class="padding15">{{item.comparyArea}}</view>
+			        		</view>
+			        		<view class="img">
+			        			<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
+			        		</view>
+			        		<view class="border-left">
+			        			<view class="title u-line-2">{{item.carText}}</view>
+			        			<view class="type"><text>打包价</text><text class="type-money">￥{{item.packprice}}</text></view>
+			        			<view class="u-line-1"><u-tag :text="it" type="success" mode="dark" v-for="(it,i) in item.carSystemTag" 
+			        			:key="i" class="tag-style" v-show="it.length<7"/></view>
+			        		</view>
+			        		<view class="bottom">
+			        	        <view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAge}}</view>
+			        	        <view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.km}}</view>
+			        			<u-icon name="heart-fill" color="#3FB26C" size="36" @click="collectOr(item,index)"></u-icon>
+			        		</view>
+			        	</view>
+			        		 <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+			        </scroll-view>
+			      </view>
+			    </load-refresh>
+				<view class="null" v-show="!list.length">
+					<view>
+						<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+						<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
 					</view>
-						 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
-				</scroll-view>
+				</view>
 			<!-- </swiper-item> -->
 			<!-- 我的招聘 -->
 		<!-- 	<swiper-item class="swiper-item">
@@ -74,7 +94,11 @@
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				tablist: [{
@@ -106,6 +130,13 @@
 			}
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    let token = uni.getStorageSync('token');
+			    if (token){
+			    	this.getData(1)()
+			    }
+			},
 			tabsChange(index) {
 				this.swiperCurrent = index;
 				console.log(index)
@@ -161,6 +192,20 @@
 					  this.$u.toast(res.msg);
 					}
 				   })
+			},
+			getData(pageNum){
+				this.status = 'loading';
+				this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:3}).then(res=>{
+					if(res.code === 200){
+						this.total = res.total
+						this.list = res.rows
+						this.list.forEach(item=>{
+							item.collectFlag = true;
+						})
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			getList(pageNum){
 				this.status = 'loading';
@@ -278,6 +323,12 @@
 .swiper-item {
 	height: 100%;
 }
+.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 .scroll-item{
 	background: #fff;margin: 20rpx;padding-top: 10rpx;
 	border-radius: 40rpx;

@@ -67,10 +67,10 @@ export default {
 				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
-						let arr = res.rows
+						this.list = res.rows
 						this.total = res.total
 						arr.forEach(item=>{
-							this.list.push(item)
+							item.reloadFlag = true;
 						})
 					}else {
 						 this.$u.toast(res.msg);

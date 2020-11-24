@@ -57,7 +57,7 @@
 			padding: 40rpx 40rpx;
 			background-color: #fff;
 			margin-left: 40rpx;
-			font-size: 20rpx;
+			font-size: 28rpx;
 			.clear{
 				clear: both;
 			}

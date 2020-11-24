@@ -72,7 +72,7 @@ export default {
 				this.$u.api.ComparyMySellCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
-						let arr = res.rows;
+						this.list = res.rows;
 						this.total = res.total
 					}else {
 						 this.$u.toast(res.msg);

@@ -60,6 +60,7 @@
 			}
 		},
 		mounted() {
+			console.log(99)
 	      this.list = [];
 	      this.getList(1)
 		},
@@ -76,7 +77,7 @@
 				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'cmain.refreshtime',
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
-						let arr = res.rows;
+						this.list = res.rows;
 						this.total = res.total
 						arr.forEach(item=>{
 							item.reloadFlag = true;

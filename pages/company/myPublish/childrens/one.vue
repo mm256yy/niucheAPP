@@ -74,7 +74,7 @@
 					isAsc: 'desc'}).then(res=>{
 					if(res.code === 200){
 						this.total = res.total
-						let arr = res.rows
+						this.list = res.rows
 					}else {
 						 this.$u.toast(res.msg);
 					}

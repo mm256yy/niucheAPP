@@ -92,7 +92,7 @@
 				} else if (pageNo < totalPageNo) {
 					return '上拉加载更多'
 				} else {
-					return '已经到底啦~'
+					return '没有更多了~'
 				}
 			}
 		},

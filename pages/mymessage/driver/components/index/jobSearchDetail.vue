@@ -18,7 +18,8 @@
 				</view>
 				<view class="name">高薪招聘{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.pay}}</text>月薪</view>
-				<view class="city">工作城市：{{detail.city}}<text>招聘：{{detail.invitepeoplenum}}人</text></view>
+				<view style="font-size: 28rpx;margin-top: 20rpx;">招聘：{{detail.invitepeoplenum}}人</view>
+				<view style="font-size: 28rpx;" class="city">工作城市：{{detail.city}}</view>
 				<!-- <view class="box">
 					<view class="text">帆帆帆帆66</view>
 					<view class="text">帆帆帆帆</view>
@@ -96,7 +97,7 @@
 				driverDemandId: '',
 				list: [],
 				listBottom: [{
-					name: '职位详情'
+					name: '职位介绍'
 					}, {
 				    name: '公司介绍'
 					}],

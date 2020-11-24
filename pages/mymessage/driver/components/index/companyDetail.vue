@@ -58,7 +58,7 @@
 			padding: 20rpx 40rpx;
 			background: #fff;
 			margin-left: 40rpx;
-			font-size: 20rpx;
+			font-size: 28rpx;
 		    .text {
 				margin-bottom: 50rpx;
 			}
