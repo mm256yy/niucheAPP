@@ -165,7 +165,8 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				pageNum: 1
+				pageNum: 1,
+				pageNumber: 1
 			}
 		},
 		mounted() {
@@ -181,6 +182,9 @@
 			// 上划加载更多
 			      loadMore() {
 			        this.getList()
+					if(this.pageNum == Math.ceil(this.total/10)){
+						this.pageNumber = 1;
+					}
 			        // 请求新数据完成后调用 组件内loadOver()方法
 			        // 注意更新当前页码 currPage
 			        this.$refs.loadRefresh.loadOver()
@@ -268,11 +272,11 @@
 			//     })
 			// },
 		    getList(){
-				console.log(99)
 				this.pageNum = this.pageNum + 1;
+				this.pageNumber = this.pageNumber + 1;
 				this.form.businessType=this.businessType==100?'':this.businessType;
 		        const params = Object.assign(this.form, {
-		        	pageNum: this.pageNum,
+		        	pageNum: this.pageNumber,
 		        	pageSize: 10,
 					orderByColumn: 'm.refreshtime',
 					isAsc: 'desc'

@@ -108,6 +108,8 @@
 			// 根据pageNo和totalPageNo的值来判断 是否触发@loadMore
 			loadMore() {
 				const { pageNo, totalPageNo } = this
+				console.log(pageNo)
+				console.log(totalPageNo)
 				if (pageNo < totalPageNo) {
 					this.loading = true
 					this.$emit('loadMore')
