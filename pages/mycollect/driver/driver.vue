@@ -41,7 +41,7 @@
 					    		  </view>
 					    		   <view>
 					    			   <view style="text-align: right;">
-					    				  <u-tag :text="item.businesstypetag" type="info" class="tag-style" size="mini"/>
+					    				  <u-tag :text="item.businesstype === 1?'网约车':'出租车'" type="info" class="tag-style" size="mini"/>
 					    				  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
 					    			    </view>
 					    		   	<image :src="item.photourl"></image>
@@ -93,7 +93,7 @@
 					    			<image :src="item.photourl"></image>
 					    		  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
 					    			  <view style="text-align: right;">
-					    				  <u-tag :text="item.businesstypetag"  type="info" class="tag-style" size="mini"/>
+					    				  <u-tag :text="item.businesstype === 1?'网约车':'出租车'"  type="info" class="tag-style" size="mini"/>
 					    				  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr1(item,index)"></u-icon>
 					    			   </view>
 					    			  <view class="u-line-2">{{item.texttitle}}</view>
