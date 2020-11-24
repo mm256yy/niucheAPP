@@ -67,7 +67,7 @@ const install = (Vue, vm) => {
 			setTimeout(vm.$u.route('/pages/login/login'),1000)
 		   
 		}else if(res.code == 500) {
-			vm.$u.toast(res.msg);
+			vm.$u.toast("服务错误");
 			return false;
 		}else if(res.code == 502) {
 			vm.$u.toast('服务异常');
