@@ -89,28 +89,7 @@
 		mounted() {
 			this.getDetail()
 		},
-		// 下拉刷新
-		onPullDownRefresh(){
-			this.getList()
-			setTimeout(function(){
-				uni.stopPullDownRefresh();
-			},2000)
-		},
 		methods: {
-			getList() {
-				if(this.$refs.selling != undefined){
-					this.$refs.selling.getList()
-				}
-				if(this.$refs.buy != undefined){
-					this.$refs.buy.getList()
-				}
-				if(this.$refs.renting != undefined){
-					this.$refs.renting.getList()
-				}
-				if(this.$refs.search != undefined){
-					this.$refs.search.getList()
-				}
-			},
 			getDetail(){
 				let token = uni.getStorageSync('token');
 				if(token){

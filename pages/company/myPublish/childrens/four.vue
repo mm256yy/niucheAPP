@@ -1,28 +1,45 @@
 <template>
 	<view>
-			<view class="scroll-item"  v-for="item in list" :key="item.askToShopId">
-				<u-row class="" style="padding: 8pt 15pt;" >
-					<u-col span="11" style="padding: 5pt 0;" @click="toView(item.askToShopId)">
-						<view >{{item.refreshtime}}</view>
-					</u-col>
-					<u-col span="1" style="padding: 5pt 0;">
-						<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
-					</u-col>
-					<u-col span="12" @click="toView(item.askToShopId)" style="border-top: 1px solid #E5E5E5;padding: 8.5pt 0 10pt;">
-						<view class="u-line-2" style="font-size: 12pt;font-weight: bold;" @click="toView(item.askToShopId)">
-							求购：{{item.inviteCar}}</view>
-						<view class="" style="padding-top: 8pt;">
-							<text style="">打包价：</text><text style="color: #3FB26C;font-size: 16pt;">{{item.packprice}}</text>
-						</view>
-					</u-col>
-				</u-row>
-			</view>
-				 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view class="scroll-item"  v-for="item in list" :key="item.askToShopId">
+		    	<u-row class="" style="padding: 8pt 15pt;" >
+		    		<u-col span="11" style="padding: 5pt 0;" @click="toView(item.askToShopId)">
+		    			<view >{{item.createtime}}</view>
+		    		</u-col>
+		    		<u-col span="1" style="padding: 5pt 0;">
+		    			<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
+		    		</u-col>
+		    		<u-col span="12" @click="toView(item.askToShopId)" style="border-top: 1px solid #E5E5E5;padding: 8.5pt 0 10pt;">
+		    			<view class="u-line-2" style="font-size: 12pt;font-weight: bold;" @click="toView(item.askToShopId)">
+		    				求购：{{item.inviteCar}}</view>
+		    			<view class="" style="padding-top: 8pt;">
+		    				<text style="">打包价：</text><text style="color: #3FB26C;font-size: 16pt;">{{item.packprice}}</text>
+		    			</view>
+		    		</u-col>
+		    	</u-row>
+		    </view>
+		    	 <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 export default {
+	components: {
+		loadRefresh
+	},
 		data() {
 			return {
 				pageNum:1,
@@ -38,12 +55,27 @@ export default {
 			}
 		},
 		mounted() {
-			
+			 this.list = [];
+			 this.getList(1)
 		},
 		methods: {
-			init(){
-				this.list = [];
-				this.getList(1)
+			// 下拉刷新数据列表
+			refresh() {
+			    this.getData(1)
+			},
+			getData(pageNum){
+				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
+					isAsc: 'desc'}).then(res=>{
+					if(res.code === 200){
+						let arr = res.rows
+						this.total = res.total
+						arr.forEach(item=>{
+							this.list.push(item)
+						})
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			getList(pageNum){
 				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',

@@ -27,48 +27,65 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="last" v-show="list.length">
-			<view class="lists" v-for="(item, index) in list" :key="index">
-				<view class="list" @click="detail(item.companyMainId)">
-					<u-image v-show="item.photoUrl" class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
-					<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
-						<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
-						<view class="right">
-							<!-- <view class="tag">付费标签</view> -->
-							<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
-							<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
-							<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
-							<view class="clear"></view>
-							<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
-							<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
-							<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-							<view class="distance u-line-1">{{item.intentionBrand}}</view>
-							<view class="clear"></view>
-						</view>
-						<view class="clear"></view>
-						<view class="box">
-							<view><text>￥{{item.pay}}</text>月薪</view>
-							<!-- <view class="case">自动挡</view>
-							<view class="case">SUV</view>
-							<view class="case">纯电动</view> -->
-						</view>
-				</view>
-				<!-- <u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
-				<!-- <u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
-			</view>
-			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
-		</view>
-		<view class="null" v-show="!list.length">
-			<view>
-				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-			</view>
-		</view>
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view class="last" v-show="list.length">
+		    	<view class="lists" v-for="(item, index) in list" :key="index">
+		    		<view class="list" @click="detail(item.companyMainId)">
+		    			<u-image v-show="item.photoUrl" class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
+		    			<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+		    				<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
+		    				<view class="right">
+		    					<!-- <view class="tag">付费标签</view> -->
+		    					<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
+		    					<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
+		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
+		    					<view class="clear"></view>
+		    					<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
+		    					<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
+		    					<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
+		    					<view class="distance u-line-1">{{item.intentionBrand}}</view>
+		    					<view class="clear"></view>
+		    				</view>
+		    				<view class="clear"></view>
+		    				<view class="box">
+		    					<view><text>￥{{item.pay}}</text>月薪</view>
+		    					<!-- <view class="case">自动挡</view>
+		    					<view class="case">SUV</view>
+		    					<view class="case">纯电动</view> -->
+		    				</view>
+		    		</view>
+		    		<!-- <u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
+		    		<!-- <u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+		    	</view>
+		    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		    </view>
+		    <view class="null" v-show="!list.length">
+		    	<view>
+		    		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+		    		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+		    	</view>
+		    </view>
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				show:false,
@@ -157,6 +174,16 @@
 			this.search()
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    const token = uni.getStorageSync('token');
+			    if(token) {
+			    	this.form.islogin = 1
+			    }else{
+			    	this.form.islogin = 0
+			    }
+			    this.search()
+			},
 			change(){
 				if(this.priceid == 1) {
 					this.form.startPriceid = '';

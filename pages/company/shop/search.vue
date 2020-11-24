@@ -1,28 +1,45 @@
 <template>
 	<view class="search">
-		<view class="lists" v-for="(item, index) in list" :key="index">
-			<view class="list" @click="detail(item.inviteId)">
-				<view class="left">
-					<view class="name">{{item.texttitle}}</view>
-					<view class="car u-line-1">工作车辆：{{item.intentionBrand}}</view>
-				</view>
-				<view class="right">
-					<view class="text">月薪</view>
-					<view class="clear"></view>
-					<view class="salary">￥{{item.monthprice}}</view>
-					<view class="clear"></view>
-				</view>
-				<view class="clear"></view>
-			</view>
-			<view class="city">浙江-杭州</view>
-			<view class="clear"></view>
-		</view>
-		 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view class="lists" v-for="(item, index) in list" :key="index">
+		    	<view class="list" @click="detail(item.inviteId)">
+		    		<view class="left">
+		    			<view class="name">{{item.texttitle}}</view>
+		    			<view class="car u-line-1">工作车辆：{{item.intentionBrand}}</view>
+		    		</view>
+		    		<view class="right">
+		    			<view class="text">月薪</view>
+		    			<view class="clear"></view>
+		    			<view class="salary">￥{{item.monthprice}}</view>
+		    			<view class="clear"></view>
+		    		</view>
+		    		<view class="clear"></view>
+		    	</view>
+		    	<view class="city">浙江-杭州</view>
+		    	<view class="clear"></view>
+		    </view>
+		     <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				list: [],
@@ -47,6 +64,13 @@
 			}
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    let token = uni.getStorageSync('token');
+			    if(token){
+			    	this.getList()
+			    }
+			},
 		    getList(){
 		        const params = {
 		        	pageNum: 1,

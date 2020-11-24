@@ -35,25 +35,38 @@
 			<!-- 我的招聘 -->
 		<!-- 	<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom1">
-					<view class="scroll-item" @click="toView1(item)" v-for="item in list1" :key='item.demandid'>
-						<view class="zplist">
-							<view style="padding: 5pt 0;">
-								<text class="zplist-time">刷新时间：{{item.refreshtimeStr}}</text>
-								<u-icon name="heart-fill" color="#36AB62" size="40" @click="collectOr1(item,index)"></u-icon>
-							</view>
-							<view class="zplist-carName">
-								<view class="zplist-qg u-line-1">求购：{{item.intentioncarbrandnum}}辆 {{item.teXtTile}}</view>
-								<view style="color: #7F7F7F;padding-top: 5pt;">
-									<text>{{item.comparyName}}</text><text style="padding-left: 10pt;">{{item.comparyArea}}</text>
-								</view>
-								<view>
-									<text>打包价：</text><text class="zplist-price">{{item.packprice}}</text>
-								</view>
-							</view>
-						</view>
-					</view>
-							<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
-				</scroll-view>
+				<load-refresh
+				  ref="loadRefresh"
+				  :isRefresh="true"
+				  refreshType="halfCircle"
+				  refreshTime="1000"
+				  color="#04C4C4"
+				  heightReduce="10"
+				  backgroundCover="#F3F5F5"
+				  @loadMore="loadMore" 
+				  @refresh="refresh">
+				  <view slot="content-list">
+				    <view class="scroll-item" @click="toView1(item)" v-for="item in list1" :key='item.demandid'>
+				    		<view class="zplist">
+				    			<view style="padding: 5pt 0;">
+				    				<text class="zplist-time">刷新时间：{{item.refreshtimeStr}}</text>
+				    				<u-icon name="heart-fill" color="#36AB62" size="40" @click="collectOr1(item,index)"></u-icon>
+				    			</view>
+				    			<view class="zplist-carName">
+				    				<view class="zplist-qg u-line-1">求购：{{item.intentioncarbrandnum}}辆 {{item.teXtTile}}</view>
+				    				<view style="color: #7F7F7F;padding-top: 5pt;">
+				    					<text>{{item.comparyName}}</text><text style="padding-left: 10pt;">{{item.comparyArea}}</text>
+				    				</view>
+				    				<view>
+				    					<text>打包价：</text><text class="zplist-price">{{item.packprice}}</text>
+				    				</view>
+				    			</view>
+				    		</view>
+				    	</view>
+				    			<u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
+				    </scroll-view>
+				  </view>
+				</load-refresh>
 			</swiper-item> -->
 		</swiper>
 	</view>

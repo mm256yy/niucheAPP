@@ -1,28 +1,45 @@
 <template>
 	<view>
-		<view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
-			<u-row>
-				<u-col span="12" class="time">
-					<view style="padding-right: 10pt;">{{item.refreshtime}}</view>
-				</u-col>
-				<u-col span="5" @click="toView(item.rentCarId)">
-					<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
-				</u-col>
-				<u-col span="6" class="border-left" @click="toView(item.rentCarId)">
-					<view class="title u-line-2">{{item.textTitle}}</view>
-					<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起售</view>
-				</u-col>
-				<u-col span="12" class="bottom">
-					<view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAgeTag}}</view>
-					<view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.priceTag}}</view>
-				</u-col>
-			</u-row>
-		</view>
-			 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
+		    	<u-row>
+		    		<u-col span="12" class="time">
+		    			<view style="padding-right: 10pt;">{{item.refreshtime}}</view>
+		    		</u-col>
+		    		<u-col span="5" @click="toView(item.rentCarId)">
+		    			<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
+		    		</u-col>
+		    		<u-col span="6" class="border-left" @click="toView(item.rentCarId)">
+		    			<view class="title u-line-2">{{item.textTitle}}</view>
+		    			<view class="type"><text class="type-money">￥{{item.rentCarPrice}}</text>元/月起售</view>
+		    		</u-col>
+		    		<u-col span="12" class="bottom">
+		    			<view class="bottom-left"><u-icon size="32" name="clock"></u-icon>{{item.carAgeTag}}</view>
+		    			<view class="bottom-right"><u-icon size="30" style="vertical-align: bottom;":name="distance"></u-icon>{{item.priceTag}}</view>
+		    		</u-col>
+		    	</u-row>
+		    </view>
+		    	 <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 <script>
+import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 export default {
+	components: {
+		loadRefresh
+	},
 		data() {
 			return {
 				pageNum:1,
@@ -39,12 +56,28 @@ export default {
 			}
 		},
 		mounted() {
-			
+			this.list = [];
+			this.getList(1)
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    this.getData(1)
+			},
 			init(){
 				this.list = [];
 				this.getList(1)
+			},
+			getData(pageNum){
+				this.$u.api.ComparyMySellCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
+					isAsc: 'desc'}).then(res=>{
+					if(res.code === 200){
+						let arr = res.rows;
+						this.total = res.total
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			getList(pageNum){
 				this.$u.api.ComparyMySellCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',

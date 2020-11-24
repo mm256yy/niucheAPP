@@ -6,43 +6,60 @@
 				</view>
 			 </u-navbar>
 			 <scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 	<view class="last">
-			 		<view class="lists" v-for="(item, index) in list" :key="index">
-			 			<view class="list" @click="detail(item.id)">
-			 				<view class="right">
-			 					<view class="name u-line-2">
-			 					<text v-show="item.businesstypetag == 1">[网约车]</text>
-			 					<text v-show="item.businesstypetag == 2">[出租车]</text>
-			 					{{item.texttitle}}</view>
-			 					<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-			 					<view class="year">车龄≤{{item.carAge}}年</view>
-			 					<view class="clear"></view>
-			 					<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-			 					<view class="distance">{{item.km}}万公里</view>
-			 					<view class="clear"></view>
-			 				</view>
-			 				<u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
-			 				<view class="clear"></view>
-			 				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-			 				<view class="box">
-			 					<view><text>￥{{item.rentprice}}</text>元/月起租</view>
-			 							<view>
-			 								<view v-show="items.length<6" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
-			 							</view>
-			 				</view>
-			 			</view>
-			 			<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
-			 			<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
-			 		</view>
-			 	</view>
-				<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+				 <load-refresh
+				   ref="loadRefresh"
+				   :isRefresh="true"
+				   refreshType="halfCircle"
+				   refreshTime="1000"
+				   color="#04C4C4"
+				   heightReduce="10"
+				   backgroundCover="#F3F5F5"
+				   @loadMore="loadMore" 
+				   @refresh="refresh">
+				   <view slot="content-list">
+				     <view class="last">
+				     	<view class="lists" v-for="(item, index) in list" :key="index">
+				     		<view class="list" @click="detail(item.id)">
+				     			<view class="right">
+				     				<view class="name u-line-2">
+				     				<text v-show="item.businesstypetag == 1">[网约车]</text>
+				     				<text v-show="item.businesstypetag == 2">[出租车]</text>
+				     				{{item.texttitle}}</view>
+				     				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+				     				<view class="year">车龄≤{{item.carAge}}年</view>
+				     				<view class="clear"></view>
+				     				<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+				     				<view class="distance">{{item.km}}万公里</view>
+				     				<view class="clear"></view>
+				     			</view>
+				     			<u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
+				     			<view class="clear"></view>
+				     			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+				     			<view class="box">
+				     				<view><text>￥{{item.rentprice}}</text>元/月起租</view>
+				     						<view>
+				     							<view v-show="items.length<6" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+				     						</view>
+				     			</view>
+				     		</view>
+				     		<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
+				     		<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+				     	</view>
+				     </view>
+				     <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+				   </view>
+				 </load-refresh>
 			 </scroll-view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				backTextStyle:{
@@ -75,13 +92,6 @@
 			 this.title = title;
 			}
 		},
-		// 下拉刷新
-		onPullDownRefresh(){
-			this.getList()
-			setTimeout(function(){
-				uni.stopPullDownRefresh();
-			},2000)
-		},
 		mounted() {
 			const token = uni.getStorageSync('token');
 			if(token) {
@@ -92,6 +102,16 @@
 			this.search()
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    const token = uni.getStorageSync('token');
+			    if(token) {
+			    	this.form.islogin = 1
+			    }else{
+			    	this.form.islogin = 0
+			    }
+			    this.search()
+			},
 		  // favorites(item,id) {
 		  // 	const params = {
 		  // 		BeCollectedId: id,

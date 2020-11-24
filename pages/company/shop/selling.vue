@@ -1,5 +1,19 @@
 <template>
 	<view class="selling">
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    
+		  </view>
+		</load-refresh>
 		 <view class="last">
 		 	<view class="lists" v-for="(item, index) in list" :key="index">
 		 		<view class="list" @click="detail(item.rentCarId)">
@@ -24,12 +38,16 @@
 		 		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 		 	</view>
 		 </view>
-		 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		 <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				backTextStyle:{
@@ -57,6 +75,13 @@
 			}
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    let token = uni.getStorageSync('token');
+			    if(token){
+			    	this.getList()
+			    }
+			},
 			// favorites(item,id) {
 			// 	const params = {
 			// 		BeCollectedId: id,

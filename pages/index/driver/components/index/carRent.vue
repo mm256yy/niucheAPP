@@ -28,50 +28,67 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-show="list.length" class="last">
-			<view class="lists" v-for="(item, index) in list" :key="index">
-				<view class="list" @click="detail(item.id)">
-					<view class="right">
-						<view class="name u-line-2">
-						  <text v-show="item.businesstypetag == 1">[网约车]</text>
-						  <text v-show="item.businesstypetag == 2">[出租车]</text>
-						{{item.texttitle}}</view>
-						<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-						<view class="year">车龄≤{{item.carAge}}年
-						</view>
-						<view class="clear"></view>
-						<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-						<view class="distance">{{item.km}}万公里</view>
-						<view class="clear"></view>
-					</view>
-					<u-image v-show="item.photourl" class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
-					<u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
-					<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
-					<view class="clear"></view>
-					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-					<view class="box">
-						<view><text>￥{{item.rentprice}}</text>元/月起租</view>
-						<view>
-							<view v-show="items.length<6" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
-						</view>
-					</view>
-				</view>
-				<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
-				<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
-			</view>
-			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
-		</view>
-		<view class="null" v-show="!list.length">
-			<view>
-				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-			</view>
-		</view>
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view v-show="list.length" class="last">
+		    	<view class="lists" v-for="(item, index) in list" :key="index">
+		    		<view class="list" @click="detail(item.id)">
+		    			<view class="right">
+		    				<view class="name u-line-2">
+		    				  <text v-show="item.businesstypetag == 1">[网约车]</text>
+		    				  <text v-show="item.businesstypetag == 2">[出租车]</text>
+		    				{{item.texttitle}}</view>
+		    				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+		    				<view class="year">车龄≤{{item.carAge}}年
+		    				</view>
+		    				<view class="clear"></view>
+		    				<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+		    				<view class="distance">{{item.km}}万公里</view>
+		    				<view class="clear"></view>
+		    			</view>
+		    			<u-image v-show="item.photourl" class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
+		    			<u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
+		    			<view class="clear"></view>
+		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		    			<view class="box">
+		    				<view><text>￥{{item.rentprice}}</text>元/月起租</view>
+		    				<view>
+		    					<view v-show="items.length<6" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+		    				</view>
+		    			</view>
+		    		</view>
+		    		<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
+		    		<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+		    	</view>
+		    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		    </view>
+		    <view class="null" v-show="!list.length">
+		    	<view>
+		    		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+		    		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+		    	</view>
+		    </view>
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				show:false,
@@ -167,6 +184,16 @@
 			this.search()
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    const token = uni.getStorageSync('token');
+			    if(token) {
+			    	this.form.islogin = 1
+			    }else{
+			    	this.form.islogin = 0
+			    }
+			    this.search()
+			},
 			change(){
 				if(this.priceid == 1) {
 					this.form.startPriceid = '';

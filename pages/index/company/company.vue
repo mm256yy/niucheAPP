@@ -1,10 +1,10 @@
 <template>
 	<view :class="'company-content'"> 
 		<view class="wrap">
-		<u-navbar height="20" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
+		<!-- <u-navbar height="20" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar> -->
 		<view style="">
 			<u-tabs-swiper style="position: fixed;" ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
-			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false" height="88"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">

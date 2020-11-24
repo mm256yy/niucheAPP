@@ -17,45 +17,71 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-					<view style="margin:10pt;background-color: #FFFFFF;" @click="toView(item)" v-for="item in zcList" :key="item.driverDemandId">
-						<view class="card-head">
-							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text><u-icon name="reload"
-							 @click="refresh(item)" color="#FE9B1C" size="28"></u-icon>
-						</view>
-						<view class="card-head" style="border-bottom: 0;">
-                           <text>意向品牌</text>
-								<u-subsection style="" :current="item.isOpen" @change="switchChange(item)"
-								 vibrateShort button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
-						</view>
-						<view  style="padding:5rpx 20rpx;">
-						<u-tag :text="obj" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"
-						 v-for="(obj,index) in item.carCardList" :key="index"/>
-						</view>
-					</view>
-					    <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+					<load-refresh
+					  ref="loadRefresh"
+					  :isRefresh="true"
+					  refreshType="halfCircle"
+					  refreshTime="1000"
+					  color="#04C4C4"
+					  heightReduce="10"
+					  backgroundCover="#F3F5F5"
+					  @loadMore="loadMore" 
+					  @refresh="refreshed">
+					  <view slot="content-list">
+					    <view style="margin:10pt;background-color: #FFFFFF;" @click="toView(item)" v-for="item in zcList" :key="item.driverDemandId">
+					    	<view class="card-head">
+					    		<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text><u-icon name="reload"
+					    		 @click="refresh(item)" color="#FE9B1C" size="28"></u-icon>
+					    	</view>
+					    	<view class="card-head" style="border-bottom: 0;">
+					           <text>意向品牌</text>
+					    			<u-subsection style="" :current="item.isOpen" @change="switchChange(item)"
+					    			 vibrateShort button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
+					    	</view>
+					    	<view  style="padding:5rpx 20rpx;">
+					    	<u-tag :text="obj" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"
+					    	 v-for="(obj,index) in item.carCardList" :key="index"/>
+					    	</view>
+					    </view>
+					        <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+					  </view>
+					</load-refresh>
 				</scroll-view>
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomed">
-					<view style="margin:10pt;background-color: #FFFFFF;" @click="toView2(item)" v-for="item in qzList" :key="item.id">
-						<view class="card-head">
-							<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
-							<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>
-						</view>
-						<view class="card-head" style="border-bottom: 0;">
-							<view style="color: #000000;">
-								  <view style="font-size: 16pt;">{{item.businessType == 1 ?'网约车':'出租车'}}</view>
-								  <!-- <view class="u-line-2">工作车辆: {{item.carCards}}  </view> -->
-							</view>
-					        <view style="width: 50%;">
-								<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
-								 button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
-								<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice | prices}}月薪</view>
-							</view>
-						</view>
-					</view>
-							 <u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" />
+					<load-refresh
+					  ref="loadRefresh"
+					  :isRefresh="true"
+					  refreshType="halfCircle"
+					  refreshTime="1000"
+					  color="#04C4C4"
+					  heightReduce="10"
+					  backgroundCover="#F3F5F5"
+					  @loadMore="loadMore" 
+					  @refresh="refreshed">
+					  <view slot="content-list">
+					    <view style="margin:10pt;background-color: #FFFFFF;" @click="toView2(item)" v-for="item in qzList" :key="item.id">
+					    	<view class="card-head">
+					    		<text style="color:#7E7E7E;">刷新时间:{{item.updateTimeStr}}</text>
+					    		<u-icon name="reload" color="#FE9B1C" size="28"  @click="refresh(item)"></u-icon>
+					    	</view>
+					    	<view class="card-head" style="border-bottom: 0;">
+					    		<view style="color: #000000;">
+					    			  <view style="font-size: 16pt;">{{item.businessType == 1 ?'网约车':'出租车'}}</view>
+					    			  <!-- <view class="u-line-2">工作车辆: {{item.carCards}}  </view> -->
+					    		</view>
+					            <view style="width: 50%;">
+					    			<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
+					    			 button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
+					    			<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice | prices}}月薪</view>
+					    		</view>
+					    	</view>
+					    </view>
+					    		 <!-- <u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" /> -->
+					  </view>
+					</load-refresh>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -64,7 +90,11 @@
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				backTextStyle:{
@@ -119,6 +149,10 @@
 		  }
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refreshed() {
+			    this.init(this.current)
+			},
 			init(index){
 				if (index === 0){
 					this.zcList = [];

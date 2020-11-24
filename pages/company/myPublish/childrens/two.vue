@@ -1,31 +1,48 @@
 <template>
 	<view>
-		<view class="scroll-item" v-for="(item,index) in list" :key="item.index">
-			<u-row class="" style="padding: 8pt 15pt;">
-				<u-col span="11" style="padding: 5pt 0;" @click="toView(item.inviteId)">
-					<view>{{item.refreshtime}}</view>
-				</u-col>
-				<u-col span="1" style="padding: 5pt 0;">
-					<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
-				</u-col>
-				<u-col span="12" @click="toView(item.inviteId)" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
-					<view style="font-size: 12pt;font-weight: bold;">{{item.texttitle}}</view>
-					<view>
-						<text style="">月薪：</text><text style="color: #3FB26C;font-size: 16pt;">¥{{item.monthprice}}</text>
-					</view>
-				</u-col>
-			</u-row>
-			<view class="bottom u-line-1">
-				<view class="bottom-left"><u-icon :name="company" size="40" style="vertical-align: bottom;"></u-icon>
-				<text style="padding-left: 10px;" v-for="photo in item.intentionBrand">{{photo}}</text></view>
-			</view>
-		</view>
-			 <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view class="scroll-item" v-for="(item,index) in list" :key="item.index">
+		    	<u-row class="" style="padding: 8pt 15pt;">
+		    		<u-col span="11" style="padding: 5pt 0;" @click="toView(item.inviteId)">
+		    			<view>{{item.refreshtime}}</view>
+		    		</u-col>
+		    		<u-col span="1" style="padding: 5pt 0;">
+		    			<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
+		    		</u-col>
+		    		<u-col span="12" @click="toView(item.inviteId)" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
+		    			<view style="font-size: 12pt;font-weight: bold;">{{item.texttitle}}</view>
+		    			<view>
+		    				<text style="">月薪：</text><text style="color: #3FB26C;font-size: 16pt;">¥{{item.monthprice}}</text>
+		    			</view>
+		    		</u-col>
+		    	</u-row>
+		    	<view class="bottom u-line-1">
+		    		<view class="bottom-left"><u-icon :name="company" size="40" style="vertical-align: bottom;"></u-icon>
+		    		<text style="padding-left: 10px;" v-for="photo in item.intentionBrand">{{photo}}</text></view>
+		    	</view>
+		    </view>
+		    	 <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				status: 'loadmore',
@@ -43,12 +60,31 @@
 			}
 		},
 		mounted() {
-	
+	      this.list = [];
+	      this.getList(1)
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    this.getData(1)
+			},
 			init(){
 				this.list = [];
 				this.getList(1)
+			},
+			getData(pageNum){
+				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'cmain.refreshtime',
+					isAsc: 'desc'}).then(res=>{
+					if(res.code === 200){
+						let arr = res.rows;
+						this.total = res.total
+						arr.forEach(item=>{
+							item.reloadFlag = true;
+						})
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			getList(pageNum){
 				this.$u.api.ComparyMyInviteList({pageNum:pageNum,pageSize:10,orderByColumn: 'cmain.refreshtime',
@@ -75,7 +111,7 @@
 				this.$u.route("/pages/company/myPublish/zhaopinView/zhaopinView",{id:id})
 			},
 			reload(item){
-				item.reloadFlag = false
+				// item.reloadFlag = false
 				this.$u.api.MyIssueRefresh({comparyMainId:item.comparyMainId,BusinessState:2}).then(res=>{
 					if(res.code === 200){
 						item.reloadFlag = true

@@ -24,39 +24,56 @@
 		<!-- <view class="wrap">
 			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view class="last" v-show="list.length">
-			<view class="lists" v-for="(item, index) in list" :key="index">
-				<view class="list" @click="detail(item.demandid)">
-					<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
-					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-					<view class="clear"></view>
-					<u-image v-show="item.photoUrl" shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
-					<u-image v-show="!item.photoUrl" shape="circle" class="left" width="125rpx" height="125rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
-					<!-- <u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image> -->
-					<view class="right">
-						<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆&nbsp;{{item.teXtTile}}</view>
-						<view class="type">{{item.comparyName}}<text>{{item.comparyArea}}</text></view>
-						<view class="price">打包价:<text>{{item.packprice}}</text></view>
-						<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
-					</view>
-					<view class="clear"></view>
-				</view>
-				<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-				<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
-			</view>
-			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
-		</view>
-		<view class="null" v-show="!list.length">
-			<view>
-				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-			</view>
-		</view>
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view class="last" v-show="list.length">
+		    	<view class="lists" v-for="(item, index) in list" :key="index">
+		    		<view class="list" @click="detail(item.demandid)">
+		    			<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
+		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		    			<view class="clear"></view>
+		    			<u-image v-show="item.photoUrl" shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
+		    			<u-image v-show="!item.photoUrl" shape="circle" class="left" width="125rpx" height="125rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+		    			<!-- <u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image> -->
+		    			<view class="right">
+		    				<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆&nbsp;{{item.teXtTile}}</view>
+		    				<view class="type">{{item.comparyName}}<text>{{item.comparyArea}}</text></view>
+		    				<view class="price">打包价:<text>{{item.packprice}}</text></view>
+		    				<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
+		    			</view>
+		    			<view class="clear"></view>
+		    		</view>
+		    		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+		    		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+		    	</view>
+		    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		    </view>
+		    <view class="null" v-show="!list.length">
+		    	<view>
+		    		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+		    		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+		    	</view>
+		    </view>
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				show:false,
@@ -155,6 +172,10 @@
 			this.search()
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    this.search()
+			},
 			change(){
 				this.search()
 				this.add()

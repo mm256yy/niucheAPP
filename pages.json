@@ -9,7 +9,7 @@
 			"style": {
 				"navigationStyle": "custom" ,
 				"navigationBarTitleText": " ",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh":false
 			}
 		},
 		{//我的消息
@@ -17,7 +17,7 @@
 			"style": {
 				"navigationStyle": "custom" ,
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		},
 		{//我的收藏
@@ -25,7 +25,7 @@
 			"style": {
 				"navigationStyle": "custom" ,
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		},
 		{//我的
@@ -170,7 +170,7 @@
 		    "path" : "pages/mymessage/company/components/index/result",
 		    "style" : {
 				"navigationStyle": "custom",
-				 "enablePullDownRefresh": true
+				 "enablePullDownRefresh": false
 			}
 		}
 		,{//首页-卖车-筛选-历史
@@ -189,7 +189,7 @@
 		    "path" : "pages/mymessage/company/components/index/other",
 		    "style" : {
 				"navigationStyle": "custom" ,
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		}
 		,{//首页-求购
@@ -226,7 +226,7 @@
 		    "path" : "pages/index/driver/components/index/other",
 		    "style" : {
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		}
 		,{//首页-租车-筛选-司机
@@ -239,7 +239,7 @@
 		    "path" : "pages/index/driver/components/index/resultRent",
 		    "style" : {
 				"navigationStyle": "custom",
-				 "enablePullDownRefresh": true
+				 "enablePullDownRefresh": false
 			}
 		}
 		,{//首页-租车-筛选-历史-司机
@@ -312,7 +312,7 @@
             "path" : "pages/company/shop/shop",
             "style" : {
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
         }
         ,{//公用选择车品牌
@@ -410,7 +410,7 @@
             "style" :                                                                                    
             {
                 "navigationStyle": "custom",
-                "enablePullDownRefresh": true
+                "enablePullDownRefresh": false
             }
             
         }

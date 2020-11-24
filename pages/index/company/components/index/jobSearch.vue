@@ -24,37 +24,54 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-show="list.length">
-			<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
-				<u-image v-show="item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
-				<u-image v-show="!item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
-				<view class="right">
-					<view class="time">刷新时间：{{item.updateTimeStr}}</view>
-					<view class="clear"></view>
-					<view class="name">{{item.drivername}}</view>
-					<view class="year">驾龄{{item.driverAgeTag}}年</view>
-					<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
-					<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
-					<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
-					<view class="clear"></view>
-					<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
-					<view class="car u-line-1"">求职意向：{{item.carCard}}</view>
-					<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
-				</view>
-			</view>
-			<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
-		</view>
-		<view class="null" v-show="!list.length">
-			<view>
-				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-			</view>
-		</view>
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view v-show="list.length">
+		    	<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
+		    		<u-image v-show="item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
+		    		<u-image v-show="!item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+		    		<view class="right">
+		    			<view class="time">刷新时间：{{item.updateTimeStr}}</view>
+		    			<view class="clear"></view>
+		    			<view class="name">{{item.drivername}}</view>
+		    			<view class="year">驾龄{{item.driverAgeTag}}年</view>
+		    			<view v-show="item.onlinecarcardis == 0" class="type">未认证</view>
+		    			<view v-show="item.onlinecarcardis == 1"  class="type">网约车认证</view>
+		    			<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
+		    			<view class="clear"></view>
+		    			<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
+		    			<view class="car u-line-1"">求职意向：{{item.carCard}}</view>
+		    			<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
+		    		</view>
+		    	</view>
+		    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		    </view>
+		    <view class="null" v-show="!list.length">
+		    	<view>
+		    		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+		    		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+		    	</view>
+		    </view>
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				show:false,
@@ -123,6 +140,10 @@
 			this.search()	
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    this.search()
+			},
 			change(){
 				this.search()
 				this.add()

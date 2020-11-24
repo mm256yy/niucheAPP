@@ -1,39 +1,56 @@
 <template>
 	<view class="searching">
-		<view class="last">
-			<view class="lists" v-for="(item, index) in list" :key="index">
-				<view class="list" @click="detail(item.mainid)">
-						<u-image class="left" width="264rpx" height="199rpx" src="item.photoUrl"></u-image>
-						<view class="right">
-							<!-- <view class="tag">付费标签</view> -->
-							<view v-show="item.workname == '网约车司机'" class="type">网约车</view>
-							<view v-show="item.workname == '出租车司机'" class="type">出租车</view>
-							<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
-							<view class="clear"></view>
-							<view class="name u-line-2">高薪招聘{{item.workname}}</view>
-							<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
-							<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-							<view class="distance u-line-1">{{item.intentionBrand}}</view>
-							<view class="clear"></view>
-						</view>
-						<view class="clear"></view>
-						<view class="box">
-							<view><text>￥{{item.highmonthprice}}</text>月薪</view>
-							<!-- <view class="case">自动挡</view>
-							<view class="case">SUV</view>
-							<view class="case">纯电动</view> -->
-						</view>
-				</view>
-				<!-- <u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
-				<!-- <u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
-			</view>
-		</view>
-		<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+		<load-refresh
+		  ref="loadRefresh"
+		  :isRefresh="true"
+		  refreshType="halfCircle"
+		  refreshTime="1000"
+		  color="#04C4C4"
+		  heightReduce="10"
+		  backgroundCover="#F3F5F5"
+		  @loadMore="loadMore" 
+		  @refresh="refresh">
+		  <view slot="content-list">
+		    <view class="last">
+		    	<view class="lists" v-for="(item, index) in list" :key="index">
+		    		<view class="list" @click="detail(item.mainid)">
+		    				<u-image class="left" width="264rpx" height="199rpx" src="item.photoUrl"></u-image>
+		    				<view class="right">
+		    					<!-- <view class="tag">付费标签</view> -->
+		    					<view v-show="item.workname == '网约车司机'" class="type">网约车</view>
+		    					<view v-show="item.workname == '出租车司机'" class="type">出租车</view>
+		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
+		    					<view class="clear"></view>
+		    					<view class="name u-line-2">高薪招聘{{item.workname}}</view>
+		    					<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
+		    					<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
+		    					<view class="distance u-line-1">{{item.intentionBrand}}</view>
+		    					<view class="clear"></view>
+		    				</view>
+		    				<view class="clear"></view>
+		    				<view class="box">
+		    					<view><text>￥{{item.highmonthprice}}</text>月薪</view>
+		    					<!-- <view class="case">自动挡</view>
+		    					<view class="case">SUV</view>
+		    					<view class="case">纯电动</view> -->
+		    				</view>
+		    		</view>
+		    		<!-- <u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
+		    		<!-- <u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+		    	</view>
+		    </view>
+		    <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+		  </view>
+		</load-refresh>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				backTextStyle:{
@@ -64,6 +81,10 @@
 			this.getList()
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    this.getList()
+			},
 			// favorites(item,id) {
 			// 	const params = {
 			// 		BeCollectedId: id,
@@ -172,9 +193,6 @@
 </script>
 <style lang="scss" scoped>
 	.searching {
-		.last .lists:last-child {
-			margin-bottom: 90rpx;
-		}
 		.clear {
 			clear: both;
 		}

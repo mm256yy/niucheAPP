@@ -6,37 +6,53 @@
 				</view>
 			 </u-navbar>
 			 <scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 	<view class="last">
-			 		<view class="lists" v-for="(item, index) in list" :key="index">
-			 			<view class="list" @click="detail(item.demandid)">
-			 				<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
-			 				<view class="right">
-			 					<view class="city">{{item.city}}</view>
-			 					<view class="clear"></view>
-			 					<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
-			 					<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
-			 					<view v-show="items.length<4" v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
-			 				</view>
-			 				<view class="clear"></view>
-			 				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-			 				<view class="year">{{item.carAge}}</view>
-			 				<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-			 				<view class="year">{{item.km}}</view>
-			 				<view class="clear"></view>
-			 				<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-			 			</view>
-			 			<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-			 			<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
-			 		</view>
-			 	</view>
-				<u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" />
+				 <load-refresh
+				   ref="loadRefresh"
+				   :isRefresh="true"
+				   refreshType="halfCircle"
+				   refreshTime="1000"
+				   color="#04C4C4"
+				   heightReduce="10"
+				   backgroundCover="#F3F5F5" 
+				   @refresh="refresh">
+				   <view slot="content-list">
+				     <view class="last">
+				     	<view class="lists" v-for="(item, index) in list" :key="index">
+				     		<view class="list" @click="detail(item.demandid)">
+				     			<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
+				     			<view class="right">
+				     				<view class="city">{{item.city}}</view>
+				     				<view class="clear"></view>
+				     				<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
+				     				<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
+				     				<view v-show="items.length<4" v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
+				     			</view>
+				     			<view class="clear"></view>
+				     			<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+				     			<view class="year">{{item.carAge}}</view>
+				     			<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
+				     			<view class="year">{{item.km}}</view>
+				     			<view class="clear"></view>
+				     			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+				     		</view>
+				     		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+				     		<!-- <u-icon v-show="item.iscollection === 2" @click="favorites(item,item.demandid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+				     	</view>
+				     </view>
+				     <!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
+				   </view>
+				 </load-refresh>
 			 </scroll-view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
+		components: {
+			loadRefresh
+		},
 		data() {
 			return {
 				backTextStyle:{
@@ -69,17 +85,14 @@
 			 this.title = title;
 			}
 		},
-		// 下拉刷新
-		onPullDownRefresh(){
-			this.getList()
-			setTimeout(function(){
-				uni.stopPullDownRefresh();
-			},2000)
-		},
 		mounted() {
 			this.search()
 		},
 		methods: {
+			// 下拉刷新数据列表
+			refresh() {
+			    this.search()
+			},
 			// favorites(item,id) {
 			// 	const params = {
 			// 		BeCollectedId: id,
@@ -208,9 +221,6 @@ page{
 		display: flex;
 	}
 	.result {
-		.last .lists:last-child {
-			margin-bottom: 1000rpx;
-		}
 		.clear {
 			clear: both;
 		}

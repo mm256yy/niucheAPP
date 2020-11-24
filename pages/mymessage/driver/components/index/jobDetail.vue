@@ -1,9 +1,9 @@
 <template>
 	<view class="jobDetail">
 		<view class="content">
-			<view class="top">
+			<!-- <view class="top">
 				<img class="left" :src="detail.comparyLogoPhoto" alt="">
-				<!-- <u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image> -->
+				<u-image shape="circle" class="left" width="128rpx" height="128rpx" :src="detail.comparyLogoPhoto"></u-image>
 				<view class="right">
 					<view class="name">{{detail.comparyname}}</view>
 					<view v-for="(item, index) in detail.comparyMainBusinessTag" :key="index" class="box">{{item}}运营</view>
@@ -13,7 +13,7 @@
 					<view class="view">点击查看工商信息</view>
 					<view class="clear"></view>
 				</view>
-			</view>
+			</view> -->
 			<view class="text">{{detail.jobText}}</view>
 		</view>
 		<!-- <view class="ask">
@@ -92,7 +92,7 @@
 						margin-top: 50rpx;
 					}
 					.funds{
-						margin-bottom: 20rpx;
+						// margin-bottom: 20rpx;
 					}
 					.view{
 						width: 215rpx;

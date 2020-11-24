@@ -17,22 +17,22 @@
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-				 <OneList ref="onelist"></OneList>
+				 <OneList v-if="isChildUpdate1" ref="onelist"></OneList>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom1">
-				  <TwoList ref="twolist"></TwoList>
+				  <TwoList v-if="isChildUpdate2" ref="twolist"></TwoList>
 			    </scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom2">
-				  <ThreeList ref="threelist"></ThreeList>
+				  <ThreeList v-if="isChildUpdate3" ref="threelist"></ThreeList>
 			    </scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom3">
-				  <FourList ref="fourlist"></FourList>
+				  <FourList v-if="isChildUpdate4" ref="fourlist"></FourList>
 			    </scroll-view>
 			</swiper-item>	
 		</swiper>
@@ -61,6 +61,10 @@
 				}],
 				current: 0, 
 				swiperCurrent: 0,
+				isChildUpdate1:true,
+				isChildUpdate2:false,
+				isChildUpdate3:false,
+				isChildUpdate4:false
 			}
 		},
 		components:{
@@ -74,27 +78,50 @@
 			}
 		},
 		mounted() {
-			let index = this.current;
-			this.init(index)
+			// let index = this.current;
+			// this.init(index)
 		},
 		methods: {
+			create(index){
+				if(index == 0) {
+				    this.isChildUpdate1 = true;
+				    this.isChildUpdate2 = false;
+					this.isChildUpdate3 = false;
+					this.isChildUpdate4 = false;
+				} else if(index == 1) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = true;
+				    this.isChildUpdate3 = false;
+				    this.isChildUpdate4 = false;
+				}else if(index == 2) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = false;
+				    this.isChildUpdate3 = true;
+				    this.isChildUpdate4 = false;
+				}else if(index == 3) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = false;
+				    this.isChildUpdate3 = false;
+				    this.isChildUpdate4 = true;
+				}
+			},
 			// tabs通知swiper切换
 			tabsChange(index) {
 				this.swiperCurrent = index;
-				this.init(index)
+				this.create(index)
 			},
-			init(index){
+			// init(index){
 				
-				if (index === 0) {
-					this.$refs.onelist.init()
-				} else if (index ===1) {
-					this.$refs.twolist.init()
-				}else if (index ===2) {
-					this.$refs.threelist.init()
-				}else if (index ===3) {
-					this.$refs.fourlist.init()
-				} else{}
-			},
+			// 	if (index === 0) {
+			// 		this.$refs.onelist.init()
+			// 	} else if (index ===1) {
+			// 		this.$refs.twolist.init()
+			// 	}else if (index ===2) {
+			// 		this.$refs.threelist.init()
+			// 	}else if (index ===3) {
+			// 		this.$refs.fourlist.init()
+			// 	} else{}
+			// },
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
@@ -109,6 +136,7 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
+				this.create(current)
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
