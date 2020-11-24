@@ -74,7 +74,8 @@
 			let index  = Number(option.index)
 			if(index){
 			 this.current = index;
-			 this.swiperCurrent = index;	
+			 this.swiperCurrent = index;
+			 this.create(index)
 			}
 		},
 		mounted() {
