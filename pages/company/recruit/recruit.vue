@@ -128,7 +128,7 @@ export default {
 		this.carPubPosition = uni.getStorageSync('carPubPosition');
 		this.editId = uni.getStorageSync('inviteid');
 		this.form = this.carPubPosition;
-		if(this.form.fivephoto){
+		if(this.carPubPosition.fivephoto){
 			this.fileList = [];
 			this.fileList.push({url:this.form.fivephoto})
 		}
@@ -152,6 +152,10 @@ export default {
 				if(res.code === 200){
 						let data = res.object
 						this.form = data;
+						if(data.fivephoto){
+							this.fileList = [];
+							this.fileList.push({url:this.form.fivephoto})
+						}
 						this.setStorage(data)
 				}else {
 					 this.$u.toast(res.msg);

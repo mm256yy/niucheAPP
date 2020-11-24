@@ -296,18 +296,6 @@
 				"navigationStyle": "custom"
 			}
         }
-        ,{//工作车型列表
-            "path" : "pages/company/recruit/carModel/carModel",
-            "style" : {
-				"navigationStyle": "custom"
-			}
-        }
-        ,{//上传车辆其他
-            "path" : "pages/company/recruit/carOther/carOther",
-            "style" : {
-				"navigationStyle": "custom"
-			}
-        }
         ,{//公司店铺
             "path" : "pages/company/shop/shop",
             "style" : {
@@ -477,31 +465,7 @@
             }
             
         }
-        ,{
-            "path" : "pages/company/myPublish/recruitEdit/list",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom",
-                "enablePullDownRefresh": false
-            }
-            
-        },{
-            "path" : "pages/company/myPublish/recruitEdit/index",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom",
-                "enablePullDownRefresh": false
-            }
-            
-        },{
-            "path" : "pages/company/myPublish/recruitEdit/other",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom",
-                "enablePullDownRefresh": false
-            }
-            
-        },{
+         ,{
             "path" : "pages/company/myPublish/qiugouView/qiugouView",
             "style" :                                                                                    
             {
