@@ -35,8 +35,7 @@
 					    	</view>
 					    	<view class="card-head" style="border-bottom: 0;">
 					           <text>意向品牌</text>
-					    			<u-subsection style="" :current="item.isOpen" @change="switchChange(item)"
-					    			 vibrateShort button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
+							   <text>状态：{{item.isOpen === 0?'不公开':'公开'}}</text>
 					    	</view>
 					    	<view  style="padding:5rpx 20rpx;">
 					    	<u-tag :text="obj" type="info" style="color: #000000;" mode="plain" shape="circle" class="tag-style"
@@ -72,9 +71,8 @@
 					    			  <view style="font-size: 16pt;">{{item.businessType == 1 ?'网约车':'出租车'}}</view>
 					    			  <!-- <view class="u-line-2">工作车辆: {{item.carCards}}  </view> -->
 					    		</view>
-					            <view style="width: 50%;">
-					    			<u-subsection style="width: 100%;" :current="item.isOpen" @change="switchChange(item)"
-					    			 button-color="#FE9B1C" active-color="#fff" :list="['不公开', '公开']"></u-subsection>
+					            <view style="text-align: center;">
+					    			 <text>状态：{{item.isOpen === 0?'不公开':'公开'}}</text>
 					    			<view style="font-size: 14pt;color:#FE9B1C ;">¥{{item.monthprice | prices}}月薪</view>
 					    		</view>
 					    	</view>
