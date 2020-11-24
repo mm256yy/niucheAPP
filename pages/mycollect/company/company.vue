@@ -18,10 +18,12 @@
 			      color="#04C4C4"
 			      heightReduce="10"
 			      backgroundCover="#F3F5F5"
-			      @loadMore="loadMore" 
-			      @refresh="refresh">
+			     :pageNo="pageNum"
+			     :totalPageNo="total"
+			     @loadMore="loadMoreList" 
+			     @refresh="refresh">
 			      <view slot="content-list">
-			        <scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+			        <scroll-view scroll-y style="height: 100%;width: 100%;">
 			        	<view class="scroll-item" @click="toView(item)" v-for="(item,index) in list" :key='item.demandid'>
 			        		<view class="time">
 			        			<view class="padding15">{{item.comparyArea}}</view>
@@ -134,7 +136,7 @@
 			refresh() {
 			    let token = uni.getStorageSync('token');
 			    if (token){
-			    	this.getData(1)
+			    	this.getList(1)
 			    }
 			},
 			tabsChange(index) {
@@ -171,6 +173,7 @@
 						item.collectFlag = true;
 					   this.$u.toast('取消收藏成功');
 					}else {
+					  item.collectFlag = false;
 					  this.$u.toast(res.msg);
 					}
 				   })
@@ -193,35 +196,23 @@
 					}
 				   })
 			},
-			getData(pageNum){
-				this.status = 'loading';
-				this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:3}).then(res=>{
-					if(res.code === 200){
-						this.total = res.total
-						this.list = res.rows
-						this.list.forEach(item=>{
-							item.collectFlag = true;
-						})
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
 			getList(pageNum){
-				this.status = 'loading';
 				this.$u.api.MyCollectionSell({pageNum:pageNum,pageSize:10,isSellAndAsktoShop:3}).then(res=>{
 					if(res.code === 200){
-						this.total = res.total
+						this.total = Math.ceil(res.total/10);
 						let arr = res.rows
-						arr.forEach(item=>{
-							item.collectFlag = true;
-							this.list.push(item)
-						})
-						let len = this.list.length;
-						if(len<this.total){
-							this.status = 'loadmore'
-						} else{
-							this.status = 'nomore'
+						if(pageNum === 1){
+							this.list = res.rows
+							this.list.forEach(item=>{
+								item.collectFlag = true;
+							})
+						}else {
+							arr.forEach(item=>{
+								item.collectFlag = true;
+								this.list.push(item)
+							})
+							this.$refs.loadRefresh.loadOver()
+							this.pageNum =pageNum
 						}
 					}else {
 						 this.$u.toast(res.msg);
@@ -263,7 +254,7 @@
 				} else if (timeDiff<oneDay){
 					return '刚刚'
 				} else {
-					console.log(timeDiff)
+					// console.log(timeDiff)
 				 }
 			},
 			toView(item){
@@ -276,23 +267,9 @@
 					this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:item.demandid})
 				}
 			},
-			onreachBottom() {
-				let len = this.list.length;
-				 if (len < this.total){
-					 this.pageNum++;
-					 this.getList(this.pageNum)
-				 }else{
-					this.status = 'nomore'
-				}
-			},
-			onreachBottom1() {
-				let len = this.list1.length;
-				 if (len < this.total1){
-					 this.pageNum1++;
-					 this.getList1(this.pageNum1)
-				 }else{
-					this.status1 = 'nomore'
-				}
+			loadMoreList(){
+				let pageNo = this.pageNum+1
+				this.getList(pageNo)
 			},
 		}
 	}

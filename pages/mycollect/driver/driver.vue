@@ -60,7 +60,6 @@
 					    	</view>
 					    	
 					    </view>
-					    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 					  </view>
 					</load-refresh>
 					<view class="null" v-show="!list.length">
@@ -83,6 +82,8 @@
 					  color="#04C4C4"
 					  heightReduce="10"
 					  backgroundCover="#F3F5F5"
+					  :pageNo="pageNum1"
+					  :totalPageNo="total2"
 					  @loadMore="loadMoreList" 
 					  @refresh="refresh">
 					  <view slot="content-list">
@@ -109,7 +110,6 @@
 					    		</view> 
 					    	</view>
 					    </view>
-					    		<!-- <u-loadmore :status="status1" :icon-type="iconType" :load-text="loadText" /> -->
 					  </view>
 					</load-refresh>
 					<view class="null" v-show="!list1.length">
@@ -233,7 +233,7 @@
 						console.log(pageNum)
 						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:1}).then(res=>{
 							if(res.code === 200){
-								this.total = parseFloat(5)
+								this.total = Math.ceil(res.total/10);
 								let arr = res.rows
 								if(pageNum === 1){
 									this.list = res.rows
@@ -257,7 +257,7 @@
 						this.status1 = 'loading';
 						this.$u.api.DriverMyCollectionRent({pageNum:pageNum,pageSize:10,IsRentCarAndInvite:2}).then(res=>{
 							if(res.code === 200){
-								this.total2 = res.total
+								this.total2 = Math.ceil(res.total/10);
 								let arr = res.rows
 								if(pageNum === 1){
 									this.list1 = res.rows

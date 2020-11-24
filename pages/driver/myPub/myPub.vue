@@ -16,7 +16,7 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<load-refresh
 					  ref="loadRefresh"
 					  :isRefresh="true"
@@ -25,8 +25,10 @@
 					  color="#04C4C4"
 					  heightReduce="10"
 					  backgroundCover="#F3F5F5"
-					  @loadMore="loadMore" 
-					  @refresh="refreshed">
+					 :pageNo="pageNum"
+					 :totalPageNo="total"
+					 @loadMore="loadMoreList" 
+					 @refresh="refreshed">
 					  <view slot="content-list">
 					    <view style="margin:10pt;background-color: #FFFFFF;" @click="toView(item)" v-for="item in zcList" :key="item.driverDemandId">
 					    	<view class="card-head">
@@ -49,17 +51,19 @@
 			</swiper-item>
 			<!-- 我的招聘 -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomed">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<load-refresh
-					  ref="loadRefresh"
+					  ref="loadRefresh1"
 					  :isRefresh="true"
 					  refreshType="halfCircle"
 					  refreshTime="1000"
 					  color="#04C4C4"
 					  heightReduce="10"
 					  backgroundCover="#F3F5F5"
-					  @loadMore="loadMore" 
-					  @refresh="refreshed">
+					 :pageNo="pageNum1"
+					 :totalPageNo="total1"
+					 @loadMore="loadMoreList" 
+					 @refresh="refreshed">
 					  <view slot="content-list">
 					    <view style="margin:10pt;background-color: #FFFFFF;" @click="toView2(item)" v-for="item in qzList" :key="item.id">
 					    	<view class="card-head">
@@ -111,14 +115,6 @@
 				total:0,
 				pageNum1:1,
 				total1:0,
-				status: 'loadmore',
-				status1:'loadmore',
-				iconType: 'flower',
-				loadText: {
-					loadmore: '轻轻上拉',
-					loading: '努力加载中',
-					nomore: '我也是有底线的'
-				}
 			}
 		},
 		onLoad(option) {
@@ -149,7 +145,20 @@
 		methods: {
 			// 下拉刷新数据列表
 			refreshed() {
-			    this.init(this.current)
+			    if (this.current === 0){
+			    	this.getList(1)
+			    }else{
+			    	this.getPageList(1)
+			    }
+			},
+			loadMoreList(){
+				if(this.current === 0) {
+					let pageNo = this.pageNum+1
+					this.getList(pageNo)
+				} else{
+					let pageNo = this.pageNum1+1
+					this.getPageList(pageNo)
+				}
 			},
 			init(index){
 				if (index === 0){
@@ -178,16 +187,24 @@
 				this.current = current;
 			},
 			getList(pageNum){
-				this.status = 'loading';
 				this.$u.api.listUserWanted({pageNum:pageNum,pageSize:10,orderByColumn:'updateTime',isAsc:'desc'}).then(res=>{
 					if(res.code === 200){
-						this.total = res.total
-						this.setList(res.rows);
-						let len = res.rows.length;
-						if(len<this.total){
-							this.status = 'loadmore'
-						} else{
-							this.status = 'nomore'
+						this.total = Math.ceil(res.total/10);
+						let arr = res.rows;
+						if(pageNum === 1){
+							arr.forEach(item=>{
+								if (item.carCard){
+									item.carCardList = item.carCard.split(',');
+								}
+								item.updateTimeStr = this.timeZ(item.updateTime)
+								item.refreshFlag = true;
+								item.switchFlag = true;
+							})
+							this.zcList = arr;
+						}else {
+							this.setList(arr);
+							this.$refs.loadRefresh.loadOver()
+							this.pageNum =pageNum
 						}
 					}else {
 						 this.$u.toast(res.msg);
@@ -195,16 +212,24 @@
 				})
 			},
 			getPageList(pageNum){
-				this.status1 = 'loading';
 				this.$u.api.listUserJobWanted({pageNum:pageNum,pageSize:10,orderByColumn:'updateTime',isAsc:'desc'}).then(res=>{
 					if(res.code === 200){
-						this.total1 = res.total
-						this.setPageList(res.rows);
-						let len = res.rows.length;
-						if(len<this.total1){
-							this.status1 = 'loadmore'
-						} else{
-							this.status1 = 'nomore'
+						this.total1 = Math.ceil(res.total/10);
+						let arr =res.rows;
+						if(pageNum === 1){
+							arr.forEach(item=>{
+								if (item.carCard){
+									item.carCardList = item.carCard.split(',');
+								}
+								item.updateTimeStr = this.timeZ(item.updateTime)
+								item.refreshFlag = true;
+								item.switchFlag = true;
+							})
+							this.qzList = arr
+						}else {
+							this.setPageList(arr);
+							this.$refs.loadRefresh1.loadOver()
+							this.pageNum1 =pageNum
 						}
 					}else {
 						 this.$u.toast(res.msg);
@@ -233,7 +258,6 @@
 					item.switchFlag = true;
 					this.zcList.push(item)
 				})
-				console.log(this.zcList)
 			},
 			timeZ(value){
 				let nowTime = new Date().getTime();
@@ -248,7 +272,7 @@
 				} else if (timeDiff<oneDay){
 					return '刚刚'
 				} else {
-					console.log(timeDiff)
+					// console.log(timeDiff)
 				 }
 			},
 			switchChange(item){
@@ -259,6 +283,7 @@
 						item.switchFlag = true
 						 this.$u.toast(res.msg);
 					}else {
+						item.switchFlag = false
 						this.$u.toast(res.msg);
 					}
 				})
@@ -271,6 +296,7 @@
 						item.updateTimeStr = '刚刚'
 						 this.$u.toast(res.msg);
 					}else {
+						 item.refreshFlag = false;
 						 this.$u.toast(res.msg);
 					}
 				})
@@ -288,24 +314,6 @@
 					this.$u.route("/pages/driver/myPub/children/index",{id:item.driverDemandId})
 				}
 			},
-			onreachBottom() {
-                 let len = this.zcList.length;
-				 if (len < this.total){
-					let page = this.pageNum+1;
-					 this.getList(page)
-				 }else{
-					this.status = 'nomore'
-				}
-			},
-			onreachBottomed() {
-				let len = this.qzList.length;
-				if (len < this.total1){
-				let page = this.pageNum1+1;
-				  this.getPageList(page)
-				} else{
-					this.status1 = 'nomore'
-				}
-			}
 		},
 	}
 </script>
