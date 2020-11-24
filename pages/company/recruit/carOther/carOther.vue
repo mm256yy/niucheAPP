@@ -60,6 +60,7 @@ export default {
   onLoad(option) {
   	let index = option.id;
 	if(index){
+		debugger
 		 this.form.CarModel =option.text;
 		 this.getSelectFirst(index)
 	}

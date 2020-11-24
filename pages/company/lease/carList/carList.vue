@@ -40,7 +40,7 @@ import {list} from "@/utils/index.list.js";
 				if (this.source === '1') {
 					 this.$u.route('/pages/company/lease/lease',v)
 				} else if(this.source === '2'){
-					 this.$u.route('/pages/company/recruit/carOther/carOther',v)
+					 this.$u.route('/pages/company/recruit/recruit',v)
 				}else if(this.source === '3'){
 					 this.$u.route('/pages/company/myPublish/recruitEdit/other',v)
 				}
