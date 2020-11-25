@@ -131,6 +131,9 @@
 				this.init()
 			}
 		},
+		onShow() {
+			this.pageNum = 1;
+		},
 		methods: {
 			// 下拉刷新数据列表
 			refresh() {

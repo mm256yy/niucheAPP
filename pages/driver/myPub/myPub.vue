@@ -124,7 +124,7 @@
 			 this.swiperCurrent = index;	
 			}
 		},
-		onShow() {
+		mounted() {
 			 this.init(this.current)
 		},
 		filters: {
@@ -161,6 +161,8 @@
 				}
 			},
 			init(index){
+				this.pageNum =1;
+				this.pageNum1 =1;
 				if (index === 0){
 					this.zcList = [];
 					this.getList(1)
