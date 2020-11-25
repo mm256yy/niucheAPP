@@ -8,7 +8,7 @@
 					<u-icon size="80" style="vertical-align: middle;" :name="delSrc" @click="delTips=true"></u-icon>
 				</view>
 				<view @click="opened">
-					{{isopen === 1?'上架':'下架'}}
+					{{isopen == 0?'上架':'下架'}}
 				</view>
 		  </view>
 		</view>
@@ -62,7 +62,7 @@
 				})
 			},
 			opened(){
-				let isopen = this.isopen === 0 ?1:0;
+				let isopen = this.isopen == 0 ?1:0;
 				this.$u.api.MyIssueHighLowLimit({BusinessState:this.type,id:this.id,isopen:isopen}).then(res=>{
 					if(res.code === 200){
 						 this.showTips = true;
