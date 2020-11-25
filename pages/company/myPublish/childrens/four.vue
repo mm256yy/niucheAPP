@@ -50,13 +50,18 @@ export default {
 			}
 		},
 		mounted() {
-			 this.list = [];
-			 this.getList(1)
+			this.init()
+
 		},
 		methods: {
 			// 下拉刷新数据列表
 			refresh() {
 			    this.getList(1)
+			},
+			init(){
+				this.pageNum =1;
+				 this.list = [];
+				 this.getList(1)
 			},
 			getList(pageNum){
 				this.$u.api.ComparyMyAskToShopList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
