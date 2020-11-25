@@ -77,7 +77,7 @@
 				comparyid:'',
 				checkboxList: [
 					{name: '网约车',checked: false,disabled: false},{name: '出租车',checked: false,disabled: false},
-					{name: '长短组',checked: false,disabled: false},
+					{name: '长短租',checked: false,disabled: false},
 					{name: '汽车生产',checked: false,disabled: false},{name: '车辆销售',checked: false,disabled: false},
 					{name: '维修与保养',checked: false,disabled: false},
 					{name: '汽车金融',checked: false,disabled: false},{name: '汽车保险',checked: false,disabled: false},
