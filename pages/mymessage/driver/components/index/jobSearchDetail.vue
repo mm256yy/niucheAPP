@@ -12,14 +12,14 @@
 			<view class="list">
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="icon" v-show="token">
-					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
-					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+					<u-icon v-show="detail.isCollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#FCD03C" size="40"></u-icon>
+					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
 					<!-- <text>{{detail.collectionum}}</text> -->
 				</view>
 				<view class="name">高薪招聘{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.pay}}</text>月薪</view>
-				<view style="font-size: 28rpx;margin-top: 20rpx;">招聘：{{detail.invitepeoplenum}}人</view>
-				<view style="font-size: 28rpx;" class="city">工作城市：{{detail.city}}</view>
+				<view style="font-size: 28rpx;margin-top: 20rpx;">招聘人数：{{detail.invitepeoplenum}}人</view>
+				<!-- <view style="font-size: 28rpx;" class="city">工作城市：{{detail.city}}</view> -->
 				<!-- <view class="box">
 					<view class="text">帆帆帆帆66</view>
 					<view class="text">帆帆帆帆</view>
@@ -61,7 +61,7 @@
 					</scroll-view>
 				</swiper-item>
 			</swiper>
-			<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
+			<view style="padding: 40rpx;">公司地址：{{detail.city}}</view>
 			<view class="phone">
 				<view class="left" @click="other()">公司其他</view>
 				<view style="height: 50rpx;width: 4rpx;background: #fff;"></view>
@@ -273,6 +273,7 @@ page{
 				float: right;
 				.heart{
 					margin-right: 10rpx;
+					margin-top: 30rpx;
 				}
 			}
 		}

@@ -19,8 +19,8 @@
 				{{detail.texttitle}}</view>
 				<view class="price"><text>￥{{detail.rentprice}}</text>元/月起租</view>
 				<view class="collect" v-if="token">
-					<u-icon v-show="detail.iscollect === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon>
-					<u-icon v-show="detail.iscollect === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon>
+					<u-icon v-show="detail.iscollect === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#FCD03C" size="40"></u-icon>
+					<u-icon v-show="detail.iscollect === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
 					<!-- <text>{{detail.collectnum}}</text> -->
 				</view>
 				<view class="clear"></view>
@@ -279,6 +279,7 @@ page{
 			float: right;
 			.heart {
 				margin-right: 6rpx;
+				margin-top: 10rpx;
 			}
 		}
 	    .box .text {
