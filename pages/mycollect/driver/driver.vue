@@ -187,7 +187,6 @@
 						this.pageNum1 = 1
 						if (index === 0){
 							this.list = [];
-							
 							this.getList(1)
 						} else {
 							this.list1 = [];

@@ -157,6 +157,7 @@
 				this.current = current;
 			},
 			init(){
+				this.pageNum = 1;
 				this.list = [];
 				// this.list1 = [];
 				this.getList(1)
