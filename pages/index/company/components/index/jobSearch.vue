@@ -375,7 +375,7 @@
 			font-size: 28rpx;
 		}
 		.list .right .time {
-			font-size: 16rpx;
+			font-size: 24rpx;
 			float: right;
 			margin-top: 39rpx;
 		}
@@ -383,7 +383,7 @@
 			padding: 4rpx 16rpx;
 			border-radius: 12rpx;
 			background: #37AB63;
-			font-size: 20rpx;
+			font-size: 24rpx;
 			color: #fff;
 			float: left;
 			margin-top: 10rpx;
@@ -393,7 +393,7 @@
 			margin-left: 8rpx;
 			border-radius: 12rpx;
 			background: #37AB63;
-			font-size: 20rpx;
+			font-size: 24rpx;
 			color: #fff;
 			float: left;
 			margin-top: 10rpx;
@@ -402,7 +402,7 @@
 			.car {
 				width: 365rpx;
 				color: #7f7f7f;
-				font-size: 20rpx;
+				font-size: 24rpx;
 				margin-top: 18rpx;
 				overflow: hidden;
 				text-overflow:ellipsis; 

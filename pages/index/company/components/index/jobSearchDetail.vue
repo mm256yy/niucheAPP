@@ -32,18 +32,14 @@
 		 <view class="content">
 			 <u-form label-width="150" label-align="left" :model="form" ref="uForm">
 			 			<u-form-item label="工作城市:">
-			 				<u-input :disabled="true" height="80" input-align="right" v-model="form.workCity" />
+			 				{{form.workCity}}
 			 			</u-form-item>
 			 			<u-form-item label="业务类型:">
-			 				<u-input v-show="form.businessType==1" :disabled="true" height="80" placeholder="" input-align="right"
-			 			    v-model="hailing" />
-			 			    <u-input v-show="form.businessType==2" :disabled="true" height="80" placeholder="" input-align="right"
-			 			    v-model="taxi" />
+			 			    <text v-show="form.businessType==1">网约车</text>
+			 				<text v-show="form.businessType==2">出租车</text>
 			 			 </u-form-item>
-			 			<u-form-item label="求职意向:"><u-input :disabled="true" height="80" placeholder="" 
-			 			type="textarea" input-align="right" v-model="form.str" /></u-form-item>
-			 			<u-form-item label="我的优势:"><u-input :disabled="true" height="80" placeholder="" type="textarea" input-align="right"
-			 			 v-model="form.myok" /></u-form-item>
+			 			<u-form-item label="求职意向:">{{form.str}}</u-form-item>
+			 			<u-form-item label="我的优势:">{{form.myok}}</u-form-item>
 			 </u-form>
 		 </view>
 		 <view style="width: 100%;height: 124rpx;"></view>

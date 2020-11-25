@@ -56,7 +56,7 @@
 		    				<view v-show="items.length<4" v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
 		    			</view>
 		    			<view class="clear"></view>
-		    			<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
+		    			<u-icon class="clock" name="clock" width="27rpx" height="26rpx"></u-icon>
 		    			<view class="year">{{item.carAge}}</view>
 		    			<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
 		    			<view class="year">{{item.km}}</view>
@@ -434,7 +434,7 @@
 				}
 				.city {
 					padding: 4rpx 14rpx;
-					font-size: 20rpx;
+					font-size: 24rpx;
 					border-radius: 22rpx;
 					border: 1rpx solid rgba(0,0,0,0.3);
 					margin-top: 16rpx;
@@ -446,6 +446,9 @@
 					line-height: 34rpx;
 					font-weight: 900;
 					margin-top: 6rpx;
+				}
+				.price{
+					font-size: 24rpx;
 				}
 				.price text {
 					font-size: 36rpx;
@@ -461,22 +464,24 @@
 					float: left;
 					margin-right: 10rpx;
 					margin-top: 6rpx;
+					font-size: 24rpx;
 				}
 				.clock {
 					margin-left: 30rpx;
-					margin-top: 18rpx;
+					margin-top: 21rpx;
 					margin-right: 4rpx;
 					float: left;
 				}
 				.img {
 					float: left;
-					margin-top: 16rpx;
+					margin-top: 19rpx;
 					margin-right: 4rpx;
 				}
 				.year {
 					margin-top: 14rpx;
 					margin-right: 50rpx;
 					float: left;
+					font-size: 24rpx;
 				}
 			}
 		}

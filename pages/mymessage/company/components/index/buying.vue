@@ -466,12 +466,15 @@
 					margin-top: 8rpx;
 				}
 				.type {
-					font-size: 20rpx;
+					font-size: 24rpx;
 					color: #7f7f7f;
 					margin-top: 8rpx;
 				}
 				.type text {
 					margin-left: 22rpx;
+				}
+				.price{
+					font-size: 24rpx;
 				}
 				.price text {
 					font-size: 36rpx;
@@ -481,6 +484,7 @@
 				}
 				.year {
 					float: left;
+					font-size: 24rpx;
 				}
 			}
 		}

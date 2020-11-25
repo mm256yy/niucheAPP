@@ -36,7 +36,7 @@
 		  :isRefresh="true"
 		  refreshType="halfCircle"
 		  refreshTime="1000"
-		  color="#04C4C4"
+		  color="#FF6501"
 		  heightReduce="10"
 		  backgroundCover="#F3F5F5"
 		  @loadMore="loadMore" 

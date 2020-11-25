@@ -27,11 +27,11 @@
 			<view class="time">刷新时间：{{comparyRefreshTimeStr}}</view>
 		 </view>
 		 <view class="content">
-			 <u-form label-width="150" label-align="right" :model="detail" ref="uForm">
-			 		<u-form-item label="打包价:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.packprice" /></u-form-item>
-					<u-form-item label="意向品牌:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.intenitonBrand" /></u-form-item>
-					<u-form-item label="行驶里程:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.driveKm" /></u-form-item>
-					<u-form-item label="动力类型:"><u-input :disabled="true" height="80" type="textarea" input-align="right" v-model="detail.power" /></u-form-item>
+			 <u-form label-width="150" label-align="left" :model="detail" ref="uForm">
+			 		<u-form-item label="打包价:">{{detail.packprice}}</u-form-item>
+					<u-form-item label="意向品牌:">{{detail.intenitonBrand}}</u-form-item>
+					<u-form-item label="行驶里程:">{{detail.driveKm}}</u-form-item>
+					<u-form-item label="动力类型:">{{detail.power}}</u-form-item>
 			 </u-form>
 		 </view>
          <view style="width: 100%;height: 124rpx;"></view>
@@ -167,6 +167,7 @@ page{
 				padding: 0 30rpx;
 			}
 			.name {
+				width: 450rpx;
 				font-weight: 900;
 				font-size: 36rpx;
 				margin-bottom: 4rpx;
@@ -189,7 +190,7 @@ page{
 				// height: 135rpx;
 				padding: 2rpx 30rpx;
 				float: right;
-				margin-right: -76rpx;
+				margin-right: -80rpx;
 				font-size: 20rpx;
 				background: #fff;
 				color: #37AB63;
