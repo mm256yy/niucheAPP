@@ -67,6 +67,7 @@
 			    this.getData(1)
 			},
 			init(){
+				this.pageNum =1;
 				this.list = [];
 				this.getList(1)
 			},
