@@ -21,11 +21,11 @@
 					<u-col span="10" style="padding: 20rpx;">
 						<text style="color: #40B36C;font-size: 16pt;padding-right: 5pt;font-weight: bold;">¥{{obj.pay}} </text><text>月薪</text>
 					</u-col>
-					<u-col span="6" class="u-line-1">
+					<u-col span="12">
 						工作城市：{{obj.city}}
 					</u-col>
-					<u-col span="1"></u-col>
-					<u-col span="5">
+					<!-- <u-col span="1"></u-col> -->
+					<u-col span="12" style="margin-top: 10rpx;">
 						招聘：{{obj.invitepeoplenum}}人 
 					</u-col>
 				</u-row>

@@ -78,6 +78,7 @@
 			}
 		},
 		mounted() {
+			this.pageNum = 1;
 			let token = uni.getStorageSync('token');
 			if(token){
 				this.getList()

@@ -48,9 +48,11 @@
 			getList() {
 				if(this.$refs.carSell != undefined){
 					this.$refs.carSell.search()
+					this.$refs.carSell.page()
 				}
 				if(this.$refs.buying != undefined){
 					this.$refs.buying.search()
+					this.$refs.buying.page()
 				}
 			},
 			create(index){

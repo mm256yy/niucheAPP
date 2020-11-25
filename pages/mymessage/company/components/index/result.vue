@@ -24,7 +24,8 @@
 				     		<view class="list" @click="detail(item.demandid)">
 				     			<u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
 				     			<view class="right">
-				     				<view class="city">{{item.city}}</view>
+				     				<view v-show="item.businesstype == 1" class="city">网约车</view>
+				     				<view v-show="item.businesstype == 2" class="city">出租车</view>
 				     				<view class="clear"></view>
 				     				<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 				     				<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
@@ -96,6 +97,7 @@
 			}
 		},
 		mounted() {
+			this.pageNum = 1;
 			this.search()
 		},
 		methods: {

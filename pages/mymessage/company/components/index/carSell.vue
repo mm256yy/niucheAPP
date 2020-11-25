@@ -48,7 +48,8 @@
 		    			<u-image v-show="!item.photoUrl" class="left" width="312rpx" height="231rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
 		    			<!-- <u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image> -->
 		    			<view class="right">
-		    				<view class="city">{{item.city}}</view>
+		    				<view v-show="item.businesstype == 1" class="city">网约车</view>
+		    				<view v-show="item.businesstype == 2" class="city">出租车</view>
 		    				<view class="clear"></view>
 		    				<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 		    				<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
@@ -188,9 +189,13 @@
 			}
 		},
 		mounted() {
+			this.pageNum = 1;
 			this.search()
 		},
 		methods: {
+			page() {
+			    this.pageNum = 1;	
+			},
 			// 上划加载更多
 			      loadMore() {
 					  this.getList()

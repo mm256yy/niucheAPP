@@ -32,14 +32,17 @@
 				</view> -->
 		 	</view>
 		 </view>
-		<view class="title">车型</view>
-		<view class="wrap">
+		<view class="title">工作车型</view>
+		<!-- <view class="wrap">
 			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true"
 			 pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#FF6501" :tabs="list" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carphotolist" :key="index" class="" v-show="firstCurrent === index">
 				<u-image class="img" width="100%" height="504rpx" :src="item.onephoto"></u-image>
 			 </view>
-		</view>
+		</view> -->
+		<view style="float: left;margin-top: 40rpx;margin-left: 20rpx;font-size: 30rpx;font-weight: 900;">{{detail.carname}}</view>
+		<view class="clear"></view>
+		<u-image class="img" width="100%" height="504rpx" :src="detail.carphotolist"></u-image>
 		<view class="wrapBottom">
 			<view class="u-tabs-box">
 			 	<u-tabs-swiper ref="uTabsBottom" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="listBottom" 
@@ -161,11 +164,6 @@
 				this.$u.api.detailSearch({id:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.detail = res.object;
-						 if(this.detail.carphotolist) {
-						   this.detail.carphotolist.forEach(item=>{
-						       this.list.push(item.carBrandAndModel)						
-						   })
-						 }
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -246,7 +244,7 @@ page{
 	.wrapBottom {
 		display: flex;
 		flex-direction: column;
-		height: calc(70vh - var(--window-top));
+		// height: calc(70vh - var(--window-top));
 		// height: auto;
 		width: 100%;
 	}
@@ -259,11 +257,12 @@ page{
 	.detail {
 		background: #F5F5F8;
 		.title {
-			font-size: 36rpx;
+			font-size: 30rpx;
 			font-weight: 900;
 			margin-left: 40rpx;
 			margin-top: 40rpx;
 			margin-bottom: 20rpx;
+			float: left;
 		}	
 		.list {
 			width: 669rpx;
@@ -327,7 +326,7 @@ page{
 			margin-top: 39rpx;
 		}
 		.img {
-			margin-top: 40rpx;
+			margin-top: 10rpx;
 		}
 		.more {
 			width: 100%;

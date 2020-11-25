@@ -173,9 +173,13 @@
 			}
 		},
 		mounted() {
+			this.pageNum = 1;
 			this.search()
 		},
 		methods: {
+			page() {
+			    this.pageNum = 1;	
+			},
 			// 上划加载更多
 			      loadMore() {
 					  this.getList()

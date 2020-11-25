@@ -89,6 +89,7 @@
 			}
 		},
 		mounted() {
+			this.pageNum = 1;
 			this.getList()
 		},
 		methods: {

@@ -31,6 +31,7 @@
 			getList() {
 				console.log(1)
 				this.$refs.search.search()
+				this.$refs.search.page()
 			},
 			// onreachBottomSearch() {
 			// 	监听上拉触底事件

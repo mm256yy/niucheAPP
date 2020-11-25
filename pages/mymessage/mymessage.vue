@@ -38,13 +38,6 @@ export default {
 		if(this.$refs.driver != undefined){
 			this.$refs.driver.getList()
 		}
-	},
-	// 下拉刷新
-	onPullDownRefresh(){
-		this.$refs.driver.getList()
-		setTimeout(function(){
-			uni.stopPullDownRefresh();
-		},2000)
 	}	
 };
 </script>

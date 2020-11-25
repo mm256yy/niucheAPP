@@ -9,12 +9,12 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @onPullDownRefresh="onPullDownRefreshRent()" @scrolltolower="onreachBottomrentcar">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<car-rent v-if="isChildUpdate1" ref="rent"></car-rent>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @onPullDownRefresh="onPullDownRefreshSearch()" @scrolltolower="onreachBottomjobsearch">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<job-search v-if="isChildUpdate2" ref="jobsearch"></job-search>
 				</scroll-view>
 			</swiper-item>
@@ -49,9 +49,11 @@
 			getList() {
 				if(this.$refs.rent != undefined){
 					this.$refs.rent.search()
+					this.$refs.rent.page()
 				}
 				if(this.$refs.jobsearch != undefined){
 					this.$refs.jobsearch.search()
+					this.$refs.jobsearch.page()
 				}
 			},
 			create(index){

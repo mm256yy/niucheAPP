@@ -28,6 +28,7 @@
 		methods: {
 			getList() {
 				this.$refs.rent.search()
+				this.$refs.rent.page()
 			},
 			// scroll-view到底部加载更多
 			// onreachBottomRent() {

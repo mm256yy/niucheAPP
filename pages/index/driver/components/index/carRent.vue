@@ -66,7 +66,7 @@
 		    			<view class="box">
 		    				<view><text>￥{{item.rentprice}}</text>元/月起租</view>
 		    				<view>
-		    					<view v-show="items.length<6" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
+		    					<view v-show="items.length<6&&items!==''" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
 		    				</view>
 		    			</view>
 		    		</view>
@@ -188,6 +188,9 @@
 			this.search()
 		},
 		methods: {
+			page() {
+			    this.pageNum = 1;	
+			},
 			// 上划加载更多
 			      loadMore() {
 					  const token = uni.getStorageSync('token');
