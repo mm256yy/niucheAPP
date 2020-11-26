@@ -215,13 +215,15 @@
 		    		})
 		    },
 		    search(){
-		        const params = Object.assign(this.form, {
-		    		pageNum: 1,
-		    		pageSize: 10,
+				this.form.businessType=this.businessType==''?0:this.businessType;
+				const params = Object.assign(this.form, {
+					pageNum: 1,
+					pageSize: 10,
 					condition: this.form.driverAge ? 2:'',
 					orderByColumn: 'a.updateTime',
 					isAsc: 'desc'
-		    	});
+				});
+		       
 		    		this.$u.api.askWork(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
