@@ -3,7 +3,12 @@
 		<u-navbar back-text="返回"  back-icon-size="0" title="卖车价格(3/3)" :background="backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view class="zlcontent" >
 		   <view class="zlcontent-mid price-list" v-for="(item,index) in form.sellCarPrice" :key='index'>
-			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
+			  <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">
+				   <text>价格{{index+1}} </text>
+				   <view style="display: inline-block;width: 80%;text-align: right;">
+						<u-icon name="trash" color="#6DD99B" size="40" @click="delList(index)"></u-icon>
+				   </view>
+			    </view>
 			   <view>
 				<u-form :model="item" label-width="130">
 				 <u-form-item label="起售量">
@@ -91,6 +96,13 @@ export default {
 				shoplow:'',shophigh:'',packprice:''
 			}) 
 	 },
+	 delList(index){
+		  if(this.form.sellCarPrice.length ===1){
+			  this.$u.toast('请至少填写一个价格')
+			  return
+		  }
+		 this.form.sellCarPrice.splice(index,1)
+	 },
 	 startValChange(index){
 		 // let obj = this.form.sellCarPrice[index];
 		 // let startV = Number(obj.startVal);
@@ -114,7 +126,17 @@ export default {
 			this.$u.toast('请填写完整');
 			return
 		}
-		this.toSubmit()
+		let priceList = this.form.sellCarPrice;
+		 let flag = true;
+		 priceList.forEach((item,index)=>{
+			 if(item.shoplow === '' || item.shophigh === '' || item.packprice === ''){
+				 this.$u.toast('第'+(index+1)+'条价格数据为空或不完整,请删除后提交审核')
+				 flag = false
+			 }
+		 })
+		if(flag){
+			this.toSubmit() 
+		}
 	  },
 	  toSubmit(){
 		 let obj = Object.assign(this.carPubFirst,this.carPubSecond,this.form)

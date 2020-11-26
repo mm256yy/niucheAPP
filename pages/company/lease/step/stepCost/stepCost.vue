@@ -11,7 +11,12 @@
 		   </view>
 		   
 		   <view class="zlcontent-mid price-list" v-for="(item,index) in form.rentCarPrice" :key='index'>
-			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">价格{{index+1}}</view>
+			   <view style="font-size: 14pt;color: #000000;padding-bottom: 10pt;">
+				   <text>价格{{index+1}} </text>
+				   <view style="display: inline-block;width: 80%;text-align: right;">
+					    <u-icon name="trash" color="#6DD99B" size="40" @click="delList(index)"></u-icon>
+				   </view>
+			     </view>
 			   <view>
 				<u-form :model="item" label-width="150">
 				 <u-form-item label="租赁周期">
@@ -96,6 +101,13 @@ export default {
 		  rentCarPrice:[{RentTime:'',Rentprice:''}],	  
 		}
 	  },
+	  delList(index){
+		  if(this.form.rentCarPrice.length ===1){
+			  this.$u.toast('请至少填写一个价格')
+			  return
+		  }
+		 this.form.rentCarPrice.splice(index,1)
+	  },
 	 actionSheetCallback(index) {
 		let value = this.list[index].text;
 		this.form.rentCarPrice[this.priceIndex].RentTime = value
@@ -118,9 +130,20 @@ export default {
 			 this.$u.toast('请至少填写一个价格');
 			 return
 		 }
-		this.toSubmit() 
+		 let priceList = this.form.rentCarPrice;
+		 let flag = true;
+		 priceList.forEach((item,index)=>{
+			 if(item.RentTime === '' || item.Rentprice === ''){
+				 this.$u.toast('第'+(index+1)+'条价数据为空或不完整,请删除后提交审核')
+				 flag = false
+			 }
+		 })
+		if(flag){
+			this.toSubmit() 
+		}
 	 },
 	 toSubmit(){
+		 
 		 let obj = Object.assign(this.carPubFirst,this.carPubSecond,this.form)
 		  obj.businesstype = 3;
 		  obj.mainbusinesstype = 1;
