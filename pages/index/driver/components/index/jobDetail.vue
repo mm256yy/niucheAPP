@@ -8,7 +8,7 @@
 			</view>
 			<view class="small">></view>
 		</view>
-		<view class="more">上拉加载该公司其他信息</view>
+		<view class="more">上拉加载该公司店铺信息</view>
 		<view class="last">
 			<view class="left">预约看车</view>
 			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>

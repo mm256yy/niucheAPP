@@ -63,7 +63,7 @@
 			</swiper>
 			<view style="padding: 40rpx;">公司地址：{{detail.city}}</view>
 			<view class="phone">
-				<view class="left" @click="other()">公司其他</view>
+				<view class="left" @click="other()">公司店铺</view>
 				<view style="height: 50rpx;width: 4rpx;background: #fff;"></view>
 				<view class="right" @click="dial()">拨打电话</view>
 			</view>
