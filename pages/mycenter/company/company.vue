@@ -184,7 +184,9 @@
 				
 			},
 			toCustomer(){
-				// this.$u.route('pages/customer/customer')
+				uni.makePhoneCall({
+				    phoneNumber: '0571-87815287' 
+				});
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');

@@ -62,7 +62,7 @@
 				</view>
 				<view class="colorF">
 					<u-cell-group>
-					   <u-cell-item  title="客服" value="0571-87815287" :arrow="false" :title-style="titleStyle">
+					   <u-cell-item  title="客服" value="0571-87815287" :arrow="false" @click="toCustomer" :title-style="titleStyle">
 							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
 						</u-cell-item>
 						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
@@ -157,7 +157,9 @@
 			  }
 			},
 			toCustomer(){
-				this.$u.route('pages/customer/customer')
+				uni.makePhoneCall({
+				    phoneNumber: '0571-87815287' 
+				});
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');
