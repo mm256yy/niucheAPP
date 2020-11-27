@@ -75,17 +75,6 @@
 				let pageNo = this.pageNum+1
 				this.getList(pageNo)
 			},
-			getData(pageNum){
-				this.$u.api.ComparyMyRentCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
-					isAsc: 'desc'}).then(res=>{
-					if(res.code === 200){
-						this.total = res.total
-						this.list = res.rows
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
 			getList(pageNum){
 				this.$u.api.ComparyMyRentCarList({pageNum:pageNum,pageSize:10,orderByColumn: 'refreshtime',
 					isAsc: 'desc'}).then(res=>{
