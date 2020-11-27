@@ -141,6 +141,14 @@
 			addBrand(){
 				if (this.value){
 					this.brandList.push({name:this.value,checked:true})
+					let arr = []
+					this.brandList.forEach(item=>{
+						if(item.checked){
+							arr.push(item.name)
+						}
+					})
+					this.brandGroupChange(arr)
+					// this.brandGroupChange()
 					this.value = ''
 				}
 			},
@@ -151,7 +159,7 @@
 							if(res.code === 200){
 								this.showTips = true;
 								this.form = {
-							        businessType:0,
+							        businessType:1,
 							        carCard:'',
 							        carmodel: '',
 							        power:'',

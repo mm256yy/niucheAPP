@@ -127,7 +127,7 @@
 								if(res.code === 200){
 									this.showTips = true;
 									this.form = {
-							           businessType:0,
+							           businessType:1,
 							           isOpen: 1,
 							           monthprice:'',
 							           myok:'',
