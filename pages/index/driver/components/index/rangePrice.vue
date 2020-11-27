@@ -11,7 +11,7 @@
 			    </view>
 			    <view class="box">
 			    	<view class="left">
-			    		<view class="price"><text>￥{{item.carrentprice}}</text></view>
+			    		<view class="price" style="width: 100%;"><text>￥{{item.carrentprice}}</text></view>
 			    		<view>-月租-</view>
 			    	</view>
 			    	<!-- <view class="right">
