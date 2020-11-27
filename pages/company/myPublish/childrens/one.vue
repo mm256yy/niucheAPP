@@ -64,7 +64,7 @@
 		methods: {
 			// 下拉刷新数据列表
 			refresh() {
-			    this.getData(1)
+			    this.getList(1)
 			},
 			init(){
 				this.pageNum =1;
