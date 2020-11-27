@@ -148,7 +148,6 @@
 						}
 					})
 					this.brandGroupChange(arr)
-					// this.brandGroupChange()
 					this.value = ''
 				}
 			},
