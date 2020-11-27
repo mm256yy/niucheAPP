@@ -134,6 +134,7 @@
 			    }else{
 			    	this.form.islogin = 0
 			    }
+				this.pageNum = 1;
 			    this.search()
 			},
 		  // favorites(item,id) {

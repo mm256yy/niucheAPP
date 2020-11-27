@@ -205,6 +205,7 @@
 			      },
 			// 下拉刷新数据列表
 			refresh() {
+				this.pageNum = 1;
 			    this.search()
 			},
 			change(){

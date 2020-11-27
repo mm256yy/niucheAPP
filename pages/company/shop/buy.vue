@@ -94,6 +94,7 @@
 			refresh() {
 			    let token = uni.getStorageSync('token');
 			    if(token){
+					this.pageNum = 1;
 			    	this.getList()
 			    }
 			},
