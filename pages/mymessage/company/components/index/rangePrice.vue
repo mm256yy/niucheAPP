@@ -1,8 +1,11 @@
 <template>
 	<view class="range-price">
 		<view class="padding">
-			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" 
-			pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab" @change="change"></v-tabs>
+			<v-tabs v-model="firstCurrent" :scroll="false" @change="change" activeColor="#ffffff"
+			 lineHeight='0rpx' color="#000000" :pills="true" pillsColor="#40B36C" pillsBorderRadius="0rpx" 
+			  :tabs="tab"></v-tabs>
+	<!-- 		<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" 
+			pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab" @change="change"></v-tabs> -->
 			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 				<view class="bg">
 					<view class="year">{{detail.carage}}</view>
@@ -63,8 +66,24 @@
 			},
 			tab: {
 			    type: Array,
-			    default: function (){return []}
+			    default: function (){return ['一个月']}
 			}
+		},
+		beforeCreate() {
+			// console.log(this.tab)
+		},
+		created() {
+			console.log(this.tab,'creted')
+		},
+		mounted() {
+			// this.$nextTick(() => {
+			//  this.firstCurrent = 1
+			// })
+			setTimeout(()=>{
+				console.log(111111)
+				this.firstCurrent = 1
+			},2000)
+			console.log(this.tab,'mounted')
 		},
 		methods: {
 			change(index) {
