@@ -76,14 +76,14 @@
 			console.log(this.tab,'creted')
 		},
 		mounted() {
-			// this.$nextTick(() => {
-			//  this.firstCurrent = 1
-			// })
-			setTimeout(()=>{
-				console.log(111111)
-				this.firstCurrent = 1
-			},2000)
-			console.log(this.tab,'mounted')
+			this.$nextTick(() => {
+			 this.firstCurrent = 0
+			})
+			// setTimeout(()=>{
+			// 	console.log(111111)
+			// 	this.firstCurrent = 1
+			// },2000)
+			// console.log(this.tab,'mounted')
 		},
 		methods: {
 			change(index) {

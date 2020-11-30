@@ -1,19 +1,15 @@
 <template>
 	<view :class="curThemeType ==='driver'?'driver-content':'company-content'">
         <u-navbar back-text="返回" back-icon-size="0" title="登录/注册" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		 
-		<view class="u-tabs-box" >
-		    <u-tabs :list="list" :is-scroll="false" bg-color='c' bar-height='0' active-color="#ffffff" inactive-color="#e5e5e5" :current="current" @change="change"></u-tabs>
-		  </view>
+		
 		<view class="" v-show="current === 0">
-			<view class="" style="display: flex;justify-content: center;margin-top: -36px;padding-bottom: 40pt;">
-				<u-avatar :src="curThemeType ==='driver'?driverSrc:comnpanySrc" size="150"></u-avatar>
+			<view class="" style="display: flex;justify-content: center;margin-top: 36px;padding-bottom: 40pt;">
+				<u-avatar :src="curThemeType ==='driver'?driverSrc:comnpanySrc" size="180"></u-avatar>
 			</view>
 			<view class="" style="padding: 5pt 25pt">
 				<u-form :model="form" :label-style="labelStyle" :error-type="errorType" ref='uForm'>
 					<u-form-item label="" prop="telephone" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 						<u-input v-model="form.telephone" type="number" placeholder="请输入手机号" placeholder-style="color:'#7F7F7F'"/>
-						<!-- <u-button type="curThemeType ==='driver'?warning:success" size="mini" shape='circle' class="btnFcd" @click="getPhoneNumber('dirverCodeChange')">{{driverNumText}}</u-button> -->
 					</u-form-item>
 					<u-form-item label="" prop="code" label-width='0' style="border-bottom: 1px solid #f6f6f6;">
 						<u-input v-model="form.code" type="number" placeholder="请输入验证码" maxlength="4" placeholder-style="color:'#7F7F7F'"/>
@@ -113,8 +109,7 @@
 				companyNumText:'一键获取本机号码',
 				companyNumTextDis:false,
 				current:0,
-				list: [{name: '验证码登录'},
-					   {name: '密码登录'}],
+				list: [{name: '验证码登录'}],
 				form:{
 					telephone:'',
 					code:'',
