@@ -72,14 +72,14 @@
 		    	</view>
 		    	<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 		    </view>
-		    <view class="null" v-show="!list.length">
-		    	<view>
-		    		<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-		    		<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-		    	</view>
-		    </view>
 		  </view>
 		</load-refresh>
+		<view class="null" v-show="!list.length">
+			<view>
+				<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+				<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
+			</view>
+		</view>
 	</view>
 </template>
 
