@@ -92,6 +92,7 @@
  * @property {Boolean} fixed = [true | false] 是否固定
  * @property {String} paddingItem = '0 22rpx' 选项的边距
  *
+ * 
  * @event {Function(current)} change 改变标签触发
  */
 export default {

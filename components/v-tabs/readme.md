@@ -110,6 +110,7 @@ data() {
 |       fixed       | Boolean |   false   |               是否固定在顶部               |
 |    paddingItem    | String  | '0 22rpx' | 选项的边距（设置上下不生效，需要设置高度） |
 
+
 ### 2、事件说明
 
 |  名称  | 参数  |                说明                |
