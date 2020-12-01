@@ -266,6 +266,8 @@ export default {
 		  this.form.variablebox= data.variablebox;
 		  this.form.carseriesid= data.carseriesid;
 		  this.form.SystemTag= data.SystemTag;
+		  this.form.environmental = data.environmental;
+		  this.form.carmodelurl =data.carmodelurl;
 		  uni.setStorageSync('editId',data.tagid)
 		  uni.setStorageSync('carPubSecond',{onephoto:data.onephoto,oneneishiphoto:data.oneneishiphoto})
 		  if(this.form.isOneclickAndAdd === 3){
@@ -342,6 +344,8 @@ export default {
 					this.form.wheel= item.wheel;
 					this.form.variablebox= item.variablebox;
 					this.form.carseriesid= item.carseriesid;
+					this.form.environmental = item.environmental;
+					this.form.carmodelurl =item.carmodelurl;
 				}
 			})
 		}
