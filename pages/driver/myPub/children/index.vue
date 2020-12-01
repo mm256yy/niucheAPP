@@ -26,17 +26,22 @@
 		</view>
 		  <view style="color: #7F7F7F;text-align: right;padding:2pt 20pt;font-size: 12px;">*刷新需求可提高曝光率哦</view>
 		 <view class="content">
-		  <u-form label-width="150" label-align="left" :model="form" ref="uForm">
-		  			<u-form-item label="工作城市:">
-		  				{{form.workCity}}
-		  			</u-form-item>
-		  			<u-form-item label="业务类型:">
-		  			    <text v-show="form.businessType==1">网约车</text>
-		  				<text v-show="form.businessType==2">出租车</text>
-		  			 </u-form-item>
-		  			<u-form-item label="求职意向:">{{form.str}}</u-form-item>
-		  			<u-form-item label="我的优势:">{{form.myok}}</u-form-item>
-		  </u-form>
+		 			 <u-form label-width="300" label-align="left" :model="form" ref="uForm">
+		 			 			<u-form-item label="工作城市:">
+		 			 				{{form.workCity}}
+		 			 			</u-form-item>
+		 			 			<u-form-item label="业务类型:">
+		 			 			    <text v-show="form.businessType==1">网约车</text>
+		 			 				<text v-show="form.businessType==2">出租车</text>
+		 			 			</u-form-item>
+		 			 			<u-form-item label="月薪:">{{form.monthprice}}</u-form-item>
+		 			 			<!-- <u-form-item label="押金:">{{form.myok}}</u-form-item> -->
+		 						<u-form-item label="能接受的工作时长:">{{form.worktime}}</u-form-item>
+		 						<u-form-item label="福利要求:">{{form.welfare}}</u-form-item>
+		 						<u-form-item label="网约车工作年限:">{{form.workexperience}}&nbsp;年</u-form-item>
+		 						<u-form-item label="出租车工作年限:">{{form.taxiExperience}}&nbsp;年</u-form-item>
+		 						<u-form-item label="我的优势:">{{form.myok}}</u-form-item>
+		 			 </u-form>
 		 </view>
 		 <view class="fixed-btn" style="">
 		   <view class="btn-inline">
@@ -148,19 +153,16 @@ export default {
 				this.$u.api.getUserJobWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.form = res.object;
-						 let price="";
 						 this.salaryList.forEach(item=>{
-							 if(item.name === this.form.monthprice){
-								 price = item.text;
-							 }
+						 	if(item.name == this.form.monthprice){
+						 		this.form.monthprice = item.text;
+						 	}
 						 })
-						 let worktime = "";
 						 this.hoursList.forEach(item=>{
-							 if(item.name === this.form.worktime){
-							 		worktime = item.text;
-							 }
+						 	if(item.name == this.form.worktime){
+						 		this.form.worktime = item.text;
+						 	}
 						 })
-						 this.form.str = '月薪'+price+'/'+worktime+'工作时长'+'/'+this.form.welfare
 					}else {
 						 this.$u.toast(res.msg);
 					}

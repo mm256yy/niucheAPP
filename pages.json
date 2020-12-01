@@ -39,6 +39,18 @@
 				"navigationBarTitleText": ""
 			}
 		}
+		,{//意见反馈-司机
+		    "path" : "pages/mycenter/driver/feedback",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//意见反馈-公司
+		    "path" : "pages/mycenter/driver/feedback",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
 	    ,{//登录
             "path" : "pages/login/login",
             "style" : {

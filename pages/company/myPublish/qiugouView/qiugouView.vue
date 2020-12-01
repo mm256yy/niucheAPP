@@ -25,14 +25,20 @@
 			<view class="clear"></view>
 			<view class="time">刷新时间：{{comparyRefreshTimeStr}}</view>
 		 </view>
-		<view class="content">
-					 <u-form label-width="150" label-align="left" :model="detail" ref="uForm">
-					 		<u-form-item label="打包价:">{{detail.packprice}}</u-form-item>
-							<u-form-item label="意向品牌:">{{detail.intenitonBrand}}</u-form-item>
-							<u-form-item label="行驶里程:">{{detail.driveKm}}</u-form-item>
-							<u-form-item label="动力类型:">{{detail.power}}</u-form-item>
-					 </u-form>
-		</view>
+		 <view class="content">
+		 			 <u-form label-width="150" label-align="left" :model="detail" ref="uForm">
+		 				<u-form-item label="业务类型:">
+		 				    <text v-show="detail.comparytag==1">网约车</text>
+		 					<text v-show="detail.comparytag==2">出租车</text>
+		 				</u-form-item>
+		 				<u-form-item label="意向品牌:">{{detail.intenitonBrand}}</u-form-item>
+		 				<u-form-item label="车型:">{{detail.carmodel}}</u-form-item>
+		 				<u-form-item label="动力类型:">{{detail.power}}</u-form-item>
+		 				<u-form-item label="打包价">{{detail.packprice}}</u-form-item>
+		 				<u-form-item label="车龄:">{{detail.carage}}</u-form-item>
+		 				<u-form-item label="行驶里程:">{{detail.driveKm}}</u-form-item>
+		 			 </u-form>
+		 </view
 		 <PubBottom :isopen="detail.isopen" :id="AskToShopId" :type="4"></PubBottom>
 	</view>
 </template>
@@ -102,7 +108,7 @@
 								this.detail.intenitonBrand = this.detail.intenitonBrand.join('/') 
 							 }
 							 if(this.detail.power) {
-							    this.detail.power = this.detail.power.join('/') 
+							    this.detail.power = this.detail.power.join(',') 
 							 }
 						}else {
 							 this.$u.toast(res.msg);

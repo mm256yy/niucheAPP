@@ -62,6 +62,9 @@
 				</view>
 				<view class="colorF">
 					<u-cell-group>
+						<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle">
+							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
+						</u-cell-item>
 					   <u-cell-item  title="客服" value="0571-87815287" @click="toCustomer" :title-style="titleStyle">
 							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
 						</u-cell-item>
@@ -155,6 +158,9 @@
 					}
 				})
 			  }
+			},
+			toFeedback(){
+				this.$u.route('/pages/mycenter/driver/feedback');
 			},
 			toCustomer(){
 				uni.makePhoneCall({

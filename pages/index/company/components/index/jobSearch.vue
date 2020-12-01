@@ -211,6 +211,11 @@
 								if (item.updateTime){
 									item.updateTimeStr = this.timeZ(item.updateTime)
 								}
+								this.salaryList.forEach(items=>{
+								    if(items.name == item.monthprice){
+								    	item.monthprice = items.text;
+								    }
+								})
 							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);
@@ -244,6 +249,11 @@
 								if (item.updateTime){
 									item.updateTimeStr = this.timeZ(item.updateTime)
 								}
+								this.salaryList.forEach(items=>{
+							        if(items.name == item.monthprice){
+							        	item.monthprice = items.text;
+							        }
+								})
 							 })					
 		    			}else {
 		    				 this.$u.toast(res.msg);

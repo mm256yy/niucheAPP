@@ -26,19 +26,21 @@
 		 </view>
 		  <view style="color: #7F7F7F;text-align: right;padding:2pt 20pt;font-size: 12px;">*刷新需求可提高曝光率哦</view>
 		 <view class="content">
-		  <u-form label-width="150" label-align="left" :model="form" ref="uForm">
-		  			<u-form-item label="租车城市:">
-		  				{{form.workCity}}
-		  			</u-form-item>
-		  			<u-form-item label="业务类型:">
-		  						    <text v-show="form.businessType==1">网约车</text>
-		  							<text v-show="form.businessType==2">出租车</text>
-		  						 </u-form-item>
-		  			<u-form-item label="意向品牌:">{{form.carCard}}</u-form-item>
-		  			<u-form-item label="月租:">{{form.monthlyRent===0?'3000以内(含3000)':'3000以上'}}</u-form-item>
-		  			<u-form-item label="行驶里程:">{{form.kmStr}}</u-form-item>
-		  			<u-form-item label="动力类型:">{{form.power}}</u-form-item>
-		   </u-form>
+		 			 <u-form label-width="150" label-align="left" :model="form" ref="uForm">
+		 			 			<u-form-item label="租车城市:">
+		 			 				{{form.workCity}}
+		 			 			</u-form-item>
+		 			 			<u-form-item label="业务类型:">
+		 						    <text v-show="form.businessType==1">网约车</text>
+		 							<text v-show="form.businessType==2">出租车</text>
+		 						 </u-form-item>
+		 			 			<u-form-item label="意向品牌:">{{form.carCard}}</u-form-item>
+		 						<u-form-item label="车型:">{{form.carModel}}</u-form-item>
+		 						<u-form-item label="动力类型:">{{form.power}}</u-form-item>
+		 			 			<u-form-item label="月租:">{{form.monthlyRent===0?'3000以内(含3000)':'3000以上'}}</u-form-item>
+		 			 			<u-form-item label="车龄:">{{form.carAgeStr}}</u-form-item>
+		 			 			<u-form-item label="行驶里程:">{{form.kmStr}}</u-form-item>
+		 			  </u-form>
 		 </view>
 		 <view class="fixed-btn" style="">
 		   <view class="btn-inline">
@@ -78,6 +80,7 @@
 				showTips:false,
 				titleStyle:{'fontSize': '12pt','color':'#000000'},
 				xxSrc:"../../../../static/lajitongshanchu.png",
+				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2-5万公里' },
 					  {name: 2,text:'5-10万公里' },{name: 3,text:'10-20万公里' },{name: 4,text:'20-30万公里' },
 					  {name: 5,text:'30-50万公里' },{name: 6,text:'50-70万公里' },{name: 7,text:'70万公里以上'},{name: 8,text:'30万公里以上'},],
@@ -167,6 +170,11 @@
 							 if(item.name === this.form.km){
 								 this.form.kmStr = item.text;
 							 }
+						 })
+						 this.ageList.forEach(item=>{
+						    if(item.name == this.form.carAge){
+						    	this.form.carAgeStr = item.text;
+						    }
 						 })
 					}else {
 						 this.$u.toast(res.msg);
