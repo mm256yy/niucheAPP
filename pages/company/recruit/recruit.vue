@@ -177,6 +177,7 @@ export default {
 	 	this.$u.toast(data.msg);
 	 },
 	 removeOne(index,lists,name){
+		this.fileList.splice(index,1)
 	 	this.form.fivephoto = '';
 	 },
 	 toCarList(){
