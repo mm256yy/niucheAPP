@@ -3,6 +3,7 @@
 		import {dirverPages,companyPages} from '@/utils/tabbar.js'
 	export default {
 		onLaunch: function() {
+			
 			// #ifdef APP-PLUS
 			 plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) { 
 			    uni.request({  

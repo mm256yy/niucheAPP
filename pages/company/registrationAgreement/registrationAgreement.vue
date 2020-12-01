@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回"  back-icon-size="0" title="纽车平台用户服务协议" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
+		<u-navbar back-text="返回"  back-icon-size="0" title="用户服务协议" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<view style="padding: 5pt;">
 <scroll-view scroll-y style="height: 100%;width: 100%;" id="content-xy">
 <view class="fontBold">本协议签订地：杭州市滨江区</view>
