@@ -24,6 +24,7 @@
 			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
 			<view class="clear"></view>
 		</view>
+		<view v-show="priceidkey||businesstypekey" style="width: 100%;height: 50rpx;"></view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -400,7 +401,13 @@
 <style lang="scss" scoped>
 	.jobSearch {
 		.tagBox{
+			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
+			position: fixed;
+			top: 150rpx;
+			left: 0;
+			z-index: 1;
+			background-color: #f5f5f8;
 			.selectTag{
 				padding: 4rpx 8rpx;
 				border: 1rpx solid rgba(0,0,0,0.1);
@@ -415,6 +422,9 @@
 				float: right;
 			}
 		}
+		.last{
+			margin-top: 80rpx;
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;
@@ -425,9 +435,18 @@
 			padding: 40rpx;
 		}
 		.middle-content{
+			width: 100%;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			position: fixed;
+			top: 80rpx;
+			left: 0;
+			z-index: 2;
+			background-color: #f5f5f8;
+			/deep/ .u-dropdown__content {
+			    overflow: visible;
+			}
 		}
 		.middle-content .u-form {
 			width: 686rpx;

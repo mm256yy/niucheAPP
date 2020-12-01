@@ -21,6 +21,7 @@
 			<view v-show="driverAgekey||businesstypekey" class="clearNull" @click="clear()">清空</view>
 			<view class="clear"></view>
 		</view>
+		<view v-show="driverAgekey||businesstypekey" style="width: 100%;height: 50rpx;"></view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -38,7 +39,7 @@
 		  @loadMore="loadMore" 
 		  @refresh="refresh">
 		  <view slot="content-list">
-		    <view>
+		    <view style="margin-top: 80rpx;">
 		    	<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 		    		<u-image v-show="item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 		    		<u-image v-show="!item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
@@ -308,7 +309,13 @@
 <style lang="scss" scoped>
 	.carRent {
 		.tagBox{
+			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
+			position: fixed;
+			top: 70rpx;
+			left: 0;
+			z-index: 1;
+			background-color: #f5f5f8;
 			.selectTag{
 				padding: 4rpx 8rpx;
 				border-radius: 20rpx;
@@ -332,6 +339,20 @@
 		}
 		.wrap {
 			padding: 40rpx;
+		}
+		.middle-content{
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 2;
+			background-color: #f5f5f8;
+			/deep/ .u-dropdown__content {
+			    overflow: visible;
+			}
 		}
 		.middle-content .u-form {
 			width: 686rpx;

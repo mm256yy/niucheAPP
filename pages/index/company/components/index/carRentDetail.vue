@@ -39,9 +39,11 @@
 							<text v-show="form.businessType==2">出租车</text>
 						 </u-form-item>
 			 			<u-form-item label="意向品牌:">{{form.carCard}}</u-form-item>
+						<u-form-item label="车型:">{{form.carModel}}</u-form-item>
+						<u-form-item label="动力类型:">{{form.power}}</u-form-item>
 			 			<u-form-item label="月租:">{{form.monthlyRent===0?'3000以内(含3000)':'3000以上'}}</u-form-item>
+			 			<u-form-item label="车龄:">{{form.carAgeStr}}</u-form-item>
 			 			<u-form-item label="行驶里程:">{{form.kmStr}}</u-form-item>
-			 			<u-form-item label="动力类型:">{{form.power}}</u-form-item>
 			  </u-form>
 		 </view>
 		 <view style="width: 100%;height: 124rpx;"></view>
@@ -85,7 +87,9 @@
 					monthlyRent:'',
 					carAge:'',
 					km:'',
+					carAgeStr:'',
 				},
+				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				xslc:[{name: 0,text:'0-2万公里' },{name: 1,text:'2-5万公里' },
 					  {name: 2,text:'5-10万公里' },{name: 3,text:'10-20万公里' },{name: 4,text:'20-30万公里' },
 					  {name: 5,text:'30-50万公里' },{name: 6,text:'50-70万公里' },{name: 7,text:'70万公里以上'},{name: 8,text:'30万公里以上'},]
@@ -106,12 +110,15 @@
 				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.form = res.object
-						 this.form.carCard = this.form.carCard.split(',').join('/')
-						 this.form.power = this.form.power.split(',').join('/')
 						 this.xslc.forEach(item=>{
-							 if(item.name === this.form.km){
+							 if(item.name == this.form.km){
 								 this.form.kmStr = item.text;
 							 }
+						 })
+						 this.ageList.forEach(item=>{
+						    if(item.name == this.form.carAge){
+						    	this.form.carAgeStr = item.text;
+						    }
 						 })
 					}else {
 						 this.$u.toast(res.msg);

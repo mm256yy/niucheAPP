@@ -21,6 +21,7 @@
 			<view v-show="driverAgekey||businesstypekey" class="clearNull" @click="clear()">清空</view>
 			<view class="clear"></view>
 		</view>
+		<view v-show="driverAgekey||businesstypekey" style="width: 100%;height: 50rpx;"></view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -38,7 +39,7 @@
 		  @loadMore="loadMore" 
 		  @refresh="refresh">
 		  <view slot="content-list">
-		    <view>
+		    <view style="margin-top: 80rpx;">
 		    	<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 		    		<u-image v-show="item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 		    		<u-image v-show="!item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
@@ -52,7 +53,7 @@
 		    			<view v-show="item.onlinecarcardis == 2"  class="type">出租车认证</view>
 		    			<view class="clear"></view>
 		    			<!-- <u-image class="img" width="20rpx" height="19rpx" src="@/static/distance.png"></u-image> -->
-		    			<view class="car u-line-1">求职意向：{{item.welfare}}</view>
+		    			<view class="car u-line-1">月薪：{{item.monthprice}}</view>
 		    			<!-- <u-image class="chat" width="38rpx" height="32rpx" src="@/static/chat.png"></u-image> -->
 		    		</view>
 		    	</view>
@@ -137,7 +138,8 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				pageNum: 1
+				pageNum: 1,
+				salaryList:[{name: 0,text:'6000以内' },{name: 1,text:'6000-8000' },{name: 2,text:'8000-10000' },{name: 3,text:'10000以上' }]
 			}
 		},
 		mounted() {
@@ -300,7 +302,13 @@
 <style lang="scss" scoped>
 	.jobSearch {
 		.tagBox{
+			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
+			position: fixed;
+			top: 70rpx;
+			left: 0;
+			z-index: 1;
+			background-color: #f5f5f8;
 			.selectTag{
 				padding: 4rpx 8rpx;
 				border-radius: 20rpx;
@@ -324,6 +332,20 @@
 		}
 		.wrap {
 			padding: 40rpx;
+		}
+		.middle-content{
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 2;
+			background-color: #f5f5f8;
+			/deep/ .u-dropdown__content {
+			    overflow: visible;
+			}
 		}
 		.middle-content .u-form {
 			width: 686rpx;
