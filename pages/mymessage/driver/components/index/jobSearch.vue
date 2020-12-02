@@ -29,6 +29,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
+		style="margin-top: 80rpx;"
 		  v-show="list.length"
 		  :pageNo='pageNum'
 		  :totalPageNo='Math.ceil(this.total/10)'
@@ -404,7 +405,7 @@
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			position: fixed;
-			top: 150rpx;
+			top: 230rpx;
 			left: 0;
 			z-index: 1;
 			background-color: #f5f5f8;
@@ -422,9 +423,6 @@
 				float: right;
 			}
 		}
-		.last{
-			margin-top: 80rpx;
-		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;
@@ -440,7 +438,7 @@
 			justify-content: center;
 			align-items: center;
 			position: fixed;
-			top: 80rpx;
+			top: 160rpx;
 			left: 0;
 			z-index: 2;
 			background-color: #f5f5f8;

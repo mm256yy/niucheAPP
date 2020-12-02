@@ -26,6 +26,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
+		  style="margin-top: 80rpx;"
 		  v-show="list.length"
 		  :pageNo='pageNum'
 		  :totalPageNo='Math.ceil(this.total/10)'
@@ -39,7 +40,7 @@
 		  @loadMore="loadMore" 
 		  @refresh="refresh">
 		  <view slot="content-list">
-		    <view style="margin-top: 80rpx;">
+		    <view>
 		    	<view class="list" v-for="(item, index) in list" :key="index" @click="detail(item.driverDemandId)">
 		    		<u-image v-show="item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" :src="item.headphoto"></u-image>
 		    		<u-image v-show="!item.headphoto" shape="circle" class="left" width="190rpx" height="190rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>

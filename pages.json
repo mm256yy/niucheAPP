@@ -46,7 +46,7 @@
 			}
 		}
 		,{//意见反馈-公司
-		    "path" : "pages/mycenter/driver/feedback",
+		    "path" : "pages/mycenter/company/feedback",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}

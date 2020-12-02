@@ -185,7 +185,7 @@
 				
 			},
 			toFeedback(){
-				this.$u.route('/pages/mycenter/driver/feedback');
+				this.$u.route('/pages/mycenter/company/feedback');
 			},
 			toCustomer(){
 				uni.makePhoneCall({

@@ -29,6 +29,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
+		  style="margin-top: 80rpx;"
 		  v-show="list.length"
 		  ref="loadRefresh"
 		  :pageNo='pageNum'
@@ -368,9 +369,6 @@
 			.clearNull{
 				float: right;
 			}
-		}
-		.last{
-			margin-top: 80rpx;
 		}
 		.null{
 			height: calc(73vh - var(--window-top));

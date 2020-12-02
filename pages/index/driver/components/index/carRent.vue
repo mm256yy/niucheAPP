@@ -13,11 +13,13 @@
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
-			<u-dropdown style="width: 50rpx;">
-				<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
-				<u-dropdown-item @change="changeType()" v-model="businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
-			</u-dropdown>
-			<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
+			<view class="select">
+				<u-dropdown style="width: 50rpx;">
+					<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
+					<u-dropdown-item @change="changeType()" v-model="businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
+				</u-dropdown>
+				<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
+			</view>
 		</view>
 		<view class="tagBox">
 			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
@@ -30,6 +32,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
+		style="margin-top: 80rpx;"
 		  v-show="list.length"
 		  ref="loadRefresh"
 		  :pageNo='pageNum'
@@ -410,7 +413,7 @@
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			position: fixed;
-			top: 150rpx;
+			top: 230rpx;
 			left: 0;
 			z-index: 1;
 			background-color: #f5f5f8;
@@ -435,9 +438,6 @@
 			justify-content: center;
 			align-items: center;
 		}
-		.last{
-			margin-top: 80rpx;
-		}
 		.last .lists:last-child {
 			margin-bottom: 10rpx;
 		}
@@ -446,14 +446,16 @@
 		}
 		.middle-content{
 			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			position: fixed;
-			top: 80rpx;
+			top: 160rpx;
 			left: 0;
 			z-index: 2;
 			background-color: #f5f5f8;
+			.select{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
