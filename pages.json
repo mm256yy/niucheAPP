@@ -549,6 +549,42 @@
             }
             
         }
+        ,{
+            "path" : "pages/driver/helps/helps",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/driver/helps/one",
+            "style" :                                                                                    
+            {
+             "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/driver/helps/two",
+            "style" :                                                                                    
+            {
+           "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/driver/helps/three",
+            "style" :                                                                                    
+            {
+             "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
