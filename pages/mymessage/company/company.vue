@@ -9,12 +9,12 @@
 		</view>
 		<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomCarSell">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<car-sell v-if="isChildUpdate1" ref="carSell"></car-sell>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomBuying">
+				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<buying v-if="isChildUpdate2" ref="buying"></buying>
 				</scroll-view>
 			</swiper-item>

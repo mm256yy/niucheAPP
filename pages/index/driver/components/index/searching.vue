@@ -194,14 +194,6 @@
 						}
 					})
 			},
-			// pull() {
-			// 	let len = this.list.length;
-			// 	 if (len < this.total){
-			// 		 this.getPage()
-			// 	 }else{
-			// 		this.status = 'nomore'
-			// 	}
-			// },
 		  clear() {
 				this.$u.route("pages/mymessage/mymessage")
 		  	},

@@ -206,14 +206,6 @@
 						}
 					})
 			},
-			// pull() {
-			// 	let len = this.list.length;
-			// 	 if (len < this.total){
-			// 		 this.getPage()
-			// 	 }else{
-			// 		this.status = 'nomore'
-			// 	}
-			// },
 			detail(id) {
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
 			}
