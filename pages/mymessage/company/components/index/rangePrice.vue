@@ -97,7 +97,7 @@
 		.padding {
 			padding: 0 40rpx;
 			.bg {
-				width: 667rpx;
+				width: 676rpx;
 				height: 80rpx;
 				line-height: 80rpx;
 				background: #fff;
@@ -112,7 +112,7 @@
 				}
 			}
 			.box {
-				width: 667rpx;
+				width: 676rpx;
 				// height: 280rpx;
 				background: #fff;
 				display: flex;

@@ -291,7 +291,7 @@ export default {
     this.$nextTick(() => {
 		setTimeout(()=>{
 			this.getTabItemWidth()
-		},100)
+		},200)
     })
   }
 }

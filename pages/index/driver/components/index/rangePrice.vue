@@ -1,7 +1,7 @@
 <template>
 	<view class="range-price">
 		<view class="padding">
-			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' :pills="true" pillsColor="#FF6501" pillsBorderRadius="0rpx"
+			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' :pills="true" pillsColor="#FE9217" pillsBorderRadius="0rpx"
 			 inactive-color="#000000" activeColor="#ffffff" :tabs="tab" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.carRentPriceCollection" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
@@ -85,8 +85,6 @@
 		},
 		mounted() {
 			this.change(0)
-			let query = uni.createSelectorQuery();
-			// console.log(query.select(`.v-tabs__container-pills`))
 		},
 		methods: {
 			change(index) {
