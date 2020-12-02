@@ -1,8 +1,8 @@
 <template>
 	<view class="range-price">
 		<view class="padding">
-			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' :pills="true" pillsColor="#ffffff" pillsBorderRadius="0rpx"
-			 inactive-color="#7f7f7f" activeColor="#40B36C" :tabs="tab" @change="change"></v-tabs>
+			<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' :pills="true" pillsColor="#40B36C" pillsBorderRadius="0rpx"
+			 inactive-color="#000000" activeColor="#ffffff" :tabs="tab" @change="change"></v-tabs>
 			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
 			        <view class="year">车龄：≤{{item.rentCarTime}}</view>
