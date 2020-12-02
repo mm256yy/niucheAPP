@@ -10,8 +10,8 @@
 					</view>
 				</view>
 			</u-navbar>
-			<MyDriver ref="searchDri" :authFlag="authFlag" v-if='curThemeType ==="driver"'></MyDriver>
-			<MyCompany ref="searchCom" :authFlag="authFlag" v-else></MyCompany>
+			<MyDriver ref="searchDri" :authFlag="authFlag" :tokenFlag='tokenFlag' v-if='curThemeType ==="driver"'></MyDriver>
+			<MyCompany ref="searchCom" :authFlag="authFlag" :tokenFlag='tokenFlag' v-else></MyCompany>
              <u-modal v-model="showTips" @confirm="tipsConfirm" title="提示" @cancel="setNum" :show-cancel-button="true" cancel-text="否"  confirm-text="是">
              	<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
                      亲，您尚未认证，是否立即去认证?
@@ -29,6 +29,7 @@
 			return {
 				showTips:false,
 				authFlag:1,
+				tokenFlag:false,
 			}
 		},
 		onShow() {
@@ -36,6 +37,11 @@
 			let type = uni.getStorageSync('curThemeType');
 			let token = uni.getStorageSync('token');
 			
+			if(token){
+			  this.tokenFlag = true;	
+			} else{
+			  this.tokenFlag = false;
+			}
 			this.curThemeType = type
 			if (type === 'company'){
 				companyPages.forEach(item=>{

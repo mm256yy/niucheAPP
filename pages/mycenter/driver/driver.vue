@@ -7,17 +7,17 @@
 						<u-col span="3">
 							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
 						</u-col>
-						<u-col span="8" v-show="token === ''">
+						<u-col span="8" v-show="!tokenFlag">
 							<view style="font-size: 14pt;">欢迎来到纽车科技</view>
 							<text class="btn-mini bg" @click="toLogin">登录/注册</text>
 						</u-col>
-						<u-col span="8" v-show="token !== ''" >
+						<u-col span="8" v-show="tokenFlag" >
 							<view @click="toMyInfo">
 							<view style="font-size: 14pt;">{{driverPub.name}}</view>
 							<text style="font-size: 12pt;">{{driverPub.telephone}}</text>
 							</view>
 						</u-col>
-						<u-col span="1" @click="toMyInfo" v-show="token !== ''">
+						<u-col span="1" @click="toMyInfo" v-show="tokenFlag">
 							<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
 						</u-col>
 					</u-row>
@@ -146,6 +146,7 @@
 			this.token = uni.getStorageSync('token')
 			this.getUser()  
 		},
+		props:["authFlag","tokenFlag"],
 		methods: {
 			getUser(){
 			this.token = uni.getStorageSync('token')

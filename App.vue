@@ -3,7 +3,12 @@
 		import {dirverPages,companyPages} from '@/utils/tabbar.js'
 	export default {
 		onLaunch: function() {
-			
+			// #ifdef APP-PLUS
+			//设置2.4秒后主动关闭，最多设置6秒
+				setTimeout(() => {
+					plus.navigator.closeSplashscreen();
+				}, 2400);
+			// #endif
 			// #ifdef APP-PLUS
 			 plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) { 
 			    uni.request({  

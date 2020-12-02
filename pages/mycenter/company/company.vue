@@ -7,7 +7,7 @@
 						<u-col span="3">
 							<u-avatar :src="comnpanySrc" mode="circle" size="large" ></u-avatar>
 						</u-col>
-						<u-col span="8" v-if="token === ''">
+						<u-col span="8" v-if="tokenFlag === ''">
 							<view @click="toLogin" style="color: #fff;font-size: 14pt;">请登录/注册</view>
 						</u-col>
 						<u-col span="8" v-else @click="toAuth">
@@ -15,7 +15,7 @@
 							<view class="colorF">{{companyStatus | state}}</view>
 							<view class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
 						</u-col>
-						<u-col span="1" v-if="token !== ''">
+						<u-col span="1" v-if="tokenFlag !== ''">
 							<u-icon name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>
 						</u-col>
 						
@@ -115,7 +115,7 @@
 				token:''
 			}
 		},
-		props:["authFlag"],
+		props:["authFlag","tokenFlag"],
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser();
