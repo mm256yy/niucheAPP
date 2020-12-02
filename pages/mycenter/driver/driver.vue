@@ -62,13 +62,16 @@
 				</view>
 				<view class="colorF">
 					<u-cell-group>
-						<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle">
-							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
-						</u-cell-item>
+						
 					   <u-cell-item  title="客服" value="0571-87815287" @click="toCustomer" :title-style="titleStyle">
 							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
 						</u-cell-item>
-						<u-cell-item  title="用户帮助" :title-style="titleStyle" @click="tohelps"></u-cell-item>
+						<u-cell-item  title="用户帮助" :title-style="titleStyle" @click="tohelps">
+							<u-icon size="60" name="question-circle-fill" color="#FF9400" slot="icon"></u-icon>
+						</u-cell-item>
+						<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle">
+							<u-icon size="60" name="edit-pen-fill" color="#FF9400" slot="icon"></u-icon>
+						</u-cell-item>
 						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
 							<u-icon size="60" :name="wdpdSrc" slot="icon"></u-icon>
 						</u-cell-item>
