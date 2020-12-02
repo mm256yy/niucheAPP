@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回" back-icon-size="0" title="帮助列表" :background="backgroundCom"
+		<u-navbar back-text="返回" back-icon-size="0" title="帮助列表" :background="backgroundDri"
 		 :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 		<u-cell-group>
 			<u-cell-item  title="教你搞定注册教程" value="" :title-style="titleStyle" @click="toPage(1)"></u-cell-item>
