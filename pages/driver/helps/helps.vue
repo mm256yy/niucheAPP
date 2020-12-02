@@ -28,7 +28,6 @@
 					this.$u.route('/pages/company/helps/two')
 				}else if (flag === 3 ){
 					this.$u.route('/pages/company/helps/three')
-				}
 				}else {}
 			}
 		}
