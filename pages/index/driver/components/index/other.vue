@@ -28,12 +28,12 @@
 			 </view>
 			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomRenting">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
 			 			<renting v-if="isChildUpdate1" :id="driverDemandId" ref="renting"></renting>
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearching">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
 			 			<searching v-if="isChildUpdate2" :id="driverDemandId" ref="searching"></searching>
 			 		</scroll-view>
 			 	</swiper-item>

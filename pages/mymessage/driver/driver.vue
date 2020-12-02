@@ -7,7 +7,7 @@
 			 bg-color="" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view> -->
-		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottomSearch">
+		<scroll-view scroll-y style="height: 100%;width: 100%;">
 			<job-search ref="search"></job-search>
 		</scroll-view>
 	</view>

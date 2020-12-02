@@ -5,7 +5,7 @@
 				<view @click="clear()" class="navbar-right" slot="right">清除
 				</view>
 			 </u-navbar>
-			 <scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+			 <scroll-view scroll-y style="height: 100%;width: 100%;">
 				 <load-refresh
 				   v-show="list.length"
 				   ref="loadRefresh"
