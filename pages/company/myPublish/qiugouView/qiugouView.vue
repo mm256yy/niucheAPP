@@ -38,7 +38,7 @@
 		 				<u-form-item label="车龄:">{{detail.carage}}</u-form-item>
 		 				<u-form-item label="行驶里程:">{{detail.driveKm}}</u-form-item>
 		 			 </u-form>
-		 </view
+		 </view>
 		 <PubBottom :isopen="detail.isopen" :id="AskToShopId" :type="4"></PubBottom>
 	</view>
 </template>
@@ -104,12 +104,15 @@
 							 this.detail = res.object;
 							 this.comparyRefreshTimeStr = this.format(this.detail.comparyRefreshTime, 'yyyy-MM-dd HH:mm:ss');
 							 if(this.detail.intenitonBrand) {
-								 console.log(this.detail.intenitonBrand)
-								this.detail.intenitonBrand = this.detail.intenitonBrand.join('/') 
+								this.detail.intenitonBrand = this.detail.intenitonBrand.join(',') 
 							 }
 							 if(this.detail.power) {
 							    this.detail.power = this.detail.power.join(',') 
 							 }
+							 if(this.detail.carmodel) {
+							    this.detail.carmodel = this.detail.carmodel.join(',') 
+							 }
+							 
 						}else {
 							 this.$u.toast(res.msg);
 						}

@@ -107,8 +107,8 @@
                 "androidStyle" : "default",
                 "android" : {
                     "hdpi" : "D:/zhuceye_3_slices/zhuceye_3.png",
-                    "xhdpi" : "C:/Users/niuche/Desktop/zhuceye_1_slices/zhuceye_1@2x.png",
-                    "xxhdpi" : "C:/Users/niuche/Desktop/zhuceye_1_slices/zhuceye_1@3x.png"
+                    "xhdpi" : "D:/zhuceye_3_slices/zhuceye_3@2x.png",
+                    "xxhdpi" : "D:/zhuceye_3_slices/zhuceye_3@3x.png"
                 }
             }
         },
