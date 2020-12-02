@@ -289,7 +289,9 @@ export default {
     this.elId = 'xfjpeter_' + this.randomString()
     this.current = this.value
     this.$nextTick(() => {
-      this.getTabItemWidth()
+		setTimeout(()=>{
+			this.getTabItemWidth()
+		},100)
     })
   }
 }
@@ -304,7 +306,9 @@ export default {
   ::-webkit-scrollbar {
     display: none;
   }
-
+.v-tabs__container-pills{
+	background:#ff6501;
+}
   &__container {
     min-width: 100%;
     position: relative;
