@@ -154,6 +154,7 @@
 				this.kmkey={
 					text:''
 				};
+				this.select()
 			},
 			add() {
 				this.addkey = this.businessTypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 

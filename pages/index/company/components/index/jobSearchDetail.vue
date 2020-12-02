@@ -219,11 +219,12 @@ page{
 				font-size: 20rpx;
 			}
 			.box {
-				padding: 4rpx;
+				width: 180rpx;
+				padding: 8rpx;
 				background: #fff;
 				float: right;
 				margin-top: -40rpx;
-				margin-right: -76rpx;
+				margin-right: -70rpx;
 				font-size: 36rpx;
 				font-weight: 900;
 				color: #37AB63;

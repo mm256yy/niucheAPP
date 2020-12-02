@@ -199,7 +199,7 @@ page{
 				// height: 135rpx;
 				padding: 2rpx 30rpx;
 				float: right;
-				margin-right: -80rpx;
+				margin-right: -70rpx;
 				font-size: 20rpx;
 				background: #fff;
 				color: #37AB63;

@@ -165,6 +165,7 @@
 				}else{
 					this.form.islogin = 0
 				}
+				this.select()
 			},
 			add() {
 				this.addkey = this.businesstypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
