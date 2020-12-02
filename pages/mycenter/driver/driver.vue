@@ -68,6 +68,7 @@
 					   <u-cell-item  title="客服" value="0571-87815287" @click="toCustomer" :title-style="titleStyle">
 							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
 						</u-cell-item>
+						<u-cell-item  title="用户帮助" :title-style="titleStyle" @click="tohelps"></u-cell-item>
 						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
 							<u-icon size="60" :name="wdpdSrc" slot="icon"></u-icon>
 						</u-cell-item>
@@ -161,6 +162,9 @@
 			},
 			toFeedback(){
 				this.$u.route('/pages/mycenter/driver/feedback');
+			},
+			tohelps(){
+				this.$u.route('/pages/driver/helps/helps')
 			},
 			toCustomer(){
 				uni.makePhoneCall({

@@ -23,11 +23,11 @@
 		methods: {
 			toPage(flag){
 				if (flag === 1){
-					this.$u.route('/pages/company/helps/one')
+					this.$u.route('/pages/driver/helps/one')
 				} else if (flag === 2 ){
-					this.$u.route('/pages/company/helps/two')
+					this.$u.route('/pages/driver/helps/two')
 				}else if (flag === 3 ){
-					this.$u.route('/pages/company/helps/three')
+					this.$u.route('/pages/driver/helps/three')
 				}else {}
 			}
 		}
