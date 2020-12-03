@@ -19,7 +19,7 @@
 		    			<view style="padding-right: 10pt;">{{item.refreshTime}}</view>
 		    		</u-col>
 		    		<u-col span="5" @click="toView(item.rentCarId)">
-		    			<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFill"></image></view>
+		    			<view style="text-align: center;"><image :src="item.photoUrl" mode="aspectFit"></image></view>
 		    		</u-col>
 		    		<u-col span="6" class="border-left" @click="toView(item.rentCarId)">
 		    			<view class="title u-line-2">{{item.textTitle}}</view>
@@ -135,7 +135,7 @@
 	}
 	image {
 		width: 220rpx;
-		height: 200rpx;
+		height: 220rpx;
 		border-radius: 10rpx;
 	}
 	.border-left{

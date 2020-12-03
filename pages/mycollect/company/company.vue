@@ -29,7 +29,7 @@
 			        			<view class="padding15">{{item.comparyArea}}</view>
 			        		</view>
 			        		<view class="img">
-			        			<view><image :src="item.photoUrl" mode="aspectFill"></image></view>
+			        			<view><image :src="item.photoUrl" mode="aspectFit"></image></view>
 			        		</view>
 			        		<view class="border-left">
 			        			<view class="title u-line-2">{{item.carText}}</view>
@@ -328,11 +328,9 @@
 		margin-bottom: 5pt;
 	}
 	image {
-		width: 200rpx;
-		height: 200rpx;
-		
+		width: 220rpx;
+		height: 220rpx;
 		border-radius: 10rpx;
-		
 	}
 	.border-left{
 		padding-left: 30rpx;
