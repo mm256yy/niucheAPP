@@ -90,7 +90,7 @@
 					    <view style="margin:10pt;background-color: #FFFFFF;"  @click="toView1(item)"  v-for="(item,index) in list1" :key="item.id">
 					    	<view  style="padding:10rpx 20rpx;">
 					    		<view class="u-body-item u-flex ">
-					    			<image :src="item.photourl"></image>
+					    			<image :src="item.photourl" mode="aspectFit"></image>
 					    		  <view class="u-line-4" style="padding-left: 15pt;width: 100%;">
 					    			  <view style="text-align: right;">
 					    				  <u-tag :text="item.businesstype === 1?'网约车':'出租车'"  type="info" class="tag-style" size="mini"/>
