@@ -8,7 +8,8 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-			 <img class="left" :src="detail.comparylogophoto" alt="">
+			 <u-avatar :src="detail.comparylogophoto"" mode="circle" size="large" ></u-avatar>
+			 <!-- <img class="left" :src="detail.comparylogophoto" alt=""> -->
 		 	<!-- <u-image shape="circle" class="left" width="186rpx" height="186rpx" :src="detail.comparylogophoto"></u-image> -->
 		 	<view class="right">
 		 		<view class="name">{{detail.comparyname}}</view>

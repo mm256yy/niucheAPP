@@ -10,8 +10,9 @@
 		 <view style="background: #fff;margin-left: 38rpx;margin-right: 38rpx;padding: 30rpx 40rpx;margin-top: 40rpx;">
 			<view class="top">
 						 <!-- <image class="left" :src="detail.comparylogophoto" mode="aspectFill"></image> -->
-				<!-- <u-image class="left" :src="detail.comparylogophoto"></u-image> -->
-						<img class="left" :src="detail.comparylogophoto" alt="">
+				<!-- <u-image  :src="detail.comparylogophoto"></u-image> -->
+				<u-avatar :src="detail.comparylogophoto"" mode="circle" size="large" ></u-avatar>
+						<!-- <img class="left" :src="detail.comparylogophoto" alt=""> -->
 				<view class="right">
 					<view class="name">{{detail.comparyname}}</view>
 					<view class="address">{{detail.area}}</view>
@@ -187,9 +188,9 @@
 			display: flex;
 			align-items: center;
 			.left{
-				width: 186rpx;
-				height: 186rpx;
-				border-radius: 50%;
+				width: 100px;
+				height: 100px;
+				// border-radius: 50%;
 			}
 			.right {
 				padding: 30rpx 42rpx;

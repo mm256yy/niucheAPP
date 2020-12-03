@@ -41,10 +41,10 @@
 			 </u-form>
 		 </view>
          <view style="width: 100%;height: 124rpx;"></view>
-		 <view class="bottom" @click="dial()">
+		 <view v-show="show" class="bottom" @click="dial()">
 		 	<view>拨打电话</view>
 		 </view>
-		 <phone-auth ref="phone" :phone="detail.phone"></phone-auth>
+		 <phone-auth v-show="show"  ref="phone" :phone="detail.phone"></phone-auth>
 	</view>
 </template>
 
@@ -63,12 +63,16 @@
 				driverDemandId: '',
 				detail: {},
 				comparyRefreshTimeStr: '',
+				show:true
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
 			if(id){
 			 this.driverDemandId = id;
+			}
+			if(option.show){
+				this.show = false
 			}
 		},
 		mounted() {
@@ -197,7 +201,7 @@ page{
 			.box {
 				// width: 160rpx;
 				// height: 135rpx;
-				padding: 2rpx 30rpx;
+				padding: 2rpx 10px;
 				float: right;
 				margin-right: -70rpx;
 				font-size: 20rpx;

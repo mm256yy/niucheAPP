@@ -148,7 +148,7 @@
 					})
 			},
 			detail(id) {
-				this.$u.route("/pages/index/company/components/index/jobSearchDetail",{id:id})
+				this.$u.route("/pages/company/myPublish/zhaopinView/zhaopinView",{id:id,show:false})
 			}
 		}
 	}

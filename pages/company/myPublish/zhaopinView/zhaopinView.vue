@@ -44,7 +44,7 @@
 			<view style="font-size: 10pt;padding: 20pt 5pt;">面试地址：{{obj.city}}</view>
 		  </scroll-view> 
 		</view>
-		 <PubBottom :isopen.sync="obj.isopen" :id="inviteid" :type="2"></PubBottom>
+		 <PubBottom v-show="show" :isopen.sync="obj.isopen" :id="inviteid" :type="2"></PubBottom>
 	</view>
 </template>
 
@@ -61,11 +61,15 @@
 				},
 				inviteid:'',
 				current: 0,
-				obj:{}
+				obj:{},
+				show: true
 			}
 		},
 		onLoad(option) {
 			this.inviteid = option.id;
+			if(option.show){
+				this.show = false
+			}
 		},
 		mounted() {
 			this.init()

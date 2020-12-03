@@ -20,7 +20,9 @@
 		    			<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    			<view class="clear"></view>
-		    			<u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.comparylogophoto"></u-image>
+						<img style="width: 125rpx;height: 125rpx;border-radius: 50%;" v-show="!item.comparylogophoto" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 125rpx;height: 125rpx;border-radius: 50%;" v-show="item.comparylogophoto" class="left" :src="item.comparylogophoto" alt="">
+		    			<!-- <u-image shape="circle" class="left" width="125rpx" height="125rpx" :src="item.comparylogophoto"></u-image> -->
 		    			<view class="right">
 		    				<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆&nbsp;{{item.intentionbrand}}</view>
 		    				<view class="type">{{item.comparyname}}<text>{{item.area}}</text></view>

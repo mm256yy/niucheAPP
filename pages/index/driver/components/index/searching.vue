@@ -17,7 +17,9 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.mainid)">
-		    				<u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
+						<img style="width: 264rpx;height: 199rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 264rpx;height: 199rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt="">
+		    				<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
 		    				<view class="right">
 		    					<!-- <view class="tag">付费标签</view> -->
 		    					<view v-show="item.workname == '网约车司机'" class="type">网约车</view>

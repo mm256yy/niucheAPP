@@ -13,15 +13,13 @@
 			<view class="clear"></view>
 			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
-			<view class="select">
-				<u-dropdown style="width: 50rpx;">
-					<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
-					<u-dropdown-item @change="changeType()" v-model="businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
-				</u-dropdown>
-				<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
-			</view>
+			<u-dropdown style="width: 50rpx;">
+				<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
+				<u-dropdown-item @change="changeType()" v-model="businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
+			</u-dropdown>
+			<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
 		</view>
-		<view class="tagBox">
+		<view v-show="priceidkey||businesstypekey" class="tagBox">
 			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
 			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
 			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
@@ -62,8 +60,9 @@
 		    				<view class="distance">{{item.km}}万公里</view>
 		    				<view class="clear"></view>
 		    			</view>
-		    			<u-image v-show="item.photourl" class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image>
-		    			<u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image>
+						<img style="width: 306rpx;height: 226rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 306rpx;height: 226rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
+		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 		    			<view class="clear"></view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
@@ -413,7 +412,7 @@
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			position: fixed;
-			top: 230rpx;
+			top: 220rpx;
 			left: 0;
 			z-index: 1;
 			background-color: #f5f5f8;
@@ -446,16 +445,14 @@
 		}
 		.middle-content{
 			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			position: fixed;
-			top: 160rpx;
+			top: 144rpx;
 			left: 0;
 			z-index: 2;
 			background-color: #f5f5f8;
-			.select{
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}

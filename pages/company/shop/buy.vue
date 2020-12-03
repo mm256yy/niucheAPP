@@ -16,11 +16,13 @@
 		  <view slot="content-list">
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
-		    		<view class="list" @click="detail(item.askToShopId)">
+		    		<view class="list" @click="detail(item.comparyMainId)">
 		    			<view class="year">刷新时间：{{item.refreshtimeStr}}</view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    			<view class="clear"></view>
-		    			<u-image class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image>
+						<img style="width: 125rpx;height: 125rpx;border-radius: 50%;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 125rpx;height: 125rpx;border-radius: 50%;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt="">
+		    			<!-- <u-image class="left" width="125rpx" height="125rpx" :src="item.photoUrl"></u-image> -->
 		    			<view class="right">
 		    				<view class="name u-line-1">求购:{{item.intentioncarbrandnum}}辆{{item.teXtTile}}</view>
 		    				<view class="type">{{item.comparyname}}<text>{{item.area}}</text></view>
@@ -204,7 +206,7 @@
 				 }
 			},
 			detail(id) {
-				this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:id})
+				this.$u.route("/pages/mymessage/company/components/index/buyingDetail",{id:id,show:false})
 			}
 		}
 	}

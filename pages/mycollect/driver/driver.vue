@@ -44,7 +44,7 @@
 					    				  <u-tag :text="item.businesstype === 1?'网约车':'出租车'" type="info" class="tag-style" size="mini"/>
 					    				  <u-icon name="heart-fill" color="#FE9B1C" size="28" @click="collectOr(item,index)"></u-icon>
 					    			    </view>
-					    		   	<image :src="item.photourl"></image>
+					    		   	<image :src="item.photourl" mode="aspectFit"></image>
 					    		   </view>
 					    		</view>
 					    	</view>

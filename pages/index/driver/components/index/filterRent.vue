@@ -127,7 +127,7 @@
 		methods: {
 			reset() {
 				this.form={
-				  businesstype: 0,
+				  businesstype: '',
 				  carbrand: '',
 				  cartype: '',
 				  city: '杭州',
@@ -135,7 +135,7 @@
 				  endCarAge: '',
 				  startPriceid: '',
 				  endPriceid: '',
-				  km: 100,
+				  km: '',
 				  power: ''
 				};
 				this.brandList.map( item => {

@@ -15,7 +15,7 @@
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.titletext}}</view>
 				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
-				<view class="collect" v-if="!viewFlag&&token">
+				<view class="collect" v-if="!viewFlag&&token&&show">
 					<u-icon v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="40"></u-icon>
 					<u-icon v-show="detail.iscollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
 					<!-- <text>{{detail.collectnum}}</text> -->
@@ -33,7 +33,7 @@
 		<setting-parameter :detail="detail"></setting-parameter>
 		<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
 		<view style="width: 100%;height:154rpx"></view>
-		<view class="phone">
+		<view class="phone" v-show="!viewFlag&&show">
 			<view class="left" @click="other()">公司店铺</view>
 			<view style="height: 50rpx;width: 4rpx;background: #fff;"></view>
 			<view class="right" @click="dial()">拨打电话</view>
@@ -68,7 +68,7 @@
 				</swiper-item>
 			</swiper>
 		</view> -->
-		<phone-auth ref="phone" :phone="detail.phone"></phone-auth>
+		<phone-auth v-show="!viewFlag&&show" ref="phone" :phone="detail.phone"></phone-auth>
 	</view>
 </template>
 
@@ -106,7 +106,8 @@
 				swiperCurrent: 0,
 				detail:{},
 				tab: [],
-				viewFlag:false//发布页详情true,列表页详情false
+				viewFlag:false,//发布页详情true,列表页详情false
+				show:true
 			}
 		},
 		onLoad(option) {
@@ -117,6 +118,9 @@
 			}
 			if(flag){
 				this.viewFlag =true
+			}
+			if(option.show){
+				this.show = false
 			}
 		},
 		mounted() {

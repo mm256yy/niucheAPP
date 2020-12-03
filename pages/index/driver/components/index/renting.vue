@@ -29,7 +29,9 @@
 		    				<view class="distance">{{item.carkm}}万公里</view>
 		    				<view class="clear"></view>
 		    			</view>
-		    			<u-image class="left" width="306rpx" height="226rpx" :src="item.onephoto"></u-image>
+						<img style="width: 306rpx;height: 226rpx;" v-show="!item.onephoto" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 306rpx;height: 226px;" v-show="item.onephoto" class="left" :src="item.onephoto" alt="">
+		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.onephoto"></u-image> -->
 		    			<view class="clear"></view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    			<view class="box">
