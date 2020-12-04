@@ -412,7 +412,7 @@
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			position: fixed;
-			top: 220rpx;
+			top: 76rpx;
 			left: 0;
 			z-index: 1;
 			background-color: #f5f5f8;
@@ -449,7 +449,7 @@
 			justify-content: center;
 			align-items: center;
 			position: fixed;
-			top: 144rpx;
+			top: 6rpx;
 			left: 0;
 			z-index: 2;
 			background-color: #f5f5f8;

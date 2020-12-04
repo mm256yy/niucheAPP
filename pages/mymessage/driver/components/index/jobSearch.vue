@@ -18,7 +18,7 @@
 				<u-dropdown-item @change="changeType()" v-model="businessType" title="业务类型" :options="selectType"></u-dropdown-item>
 			</u-dropdown>
 		</view>
-		<view class="tagBox">
+		<view v-show="priceidkey||businesstypekey" class="tagBox">
 			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
 			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
 			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
@@ -407,7 +407,7 @@
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
 			position: fixed;
-			top: 220rpx;
+			top: 76rpx;
 			left: 0;
 			z-index: 1;
 			background-color: #f5f5f8;
@@ -440,7 +440,7 @@
 			justify-content: center;
 			align-items: center;
 			position: fixed;
-			top: 140rpx;
+			top: 6rpx;
 			left: 0;
 			z-index: 2;
 			background-color: #f5f5f8;
