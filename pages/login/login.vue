@@ -26,7 +26,9 @@
 					<u-checkbox-group :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" shape="circle">
 						<u-checkbox v-model="xytype" shape="circle"></u-checkbox>
 						<view class="u-line-2" style="font-size: 8pt;">
-							注册或登录后，您即已同意<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toXy">《用户协议》</text>内容
+							注册或登录后，您即已同意
+							<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toYs">《隐私政策》</text>
+							<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toXy">《用户协议》</text>内容
 						</view>
 					</u-checkbox-group>
 				</view>
@@ -65,11 +67,9 @@
 				<u-verification-code seconds="60" ref="uCode" unique-key="page-a" @change="codeChange"></u-verification-code>
 				<u-verification-code seconds="60" ref="dirverCodeChange" unique-key="page-b" :start-text='driverNumText' @change="dirverCodeChange"></u-verification-code>
 				<u-verification-code seconds="60" ref="companyNumChange" unique-key="page-b" :start-text='companyNumText' @change="companyNumChange"></u-verification-code>
-				<view style="padding-top: 20pt;">
-					<u-checkbox-group :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" shape="circle">
-						<u-checkbox v-model="xytype" shape="circle"></u-checkbox>
-						<view class="u-line-2" style="font-size: 8pt;">
-							注册或登录后，您即已同意<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toXy">《注册协议》</text>内容
+				<view style="padding-top: 20pt;" class="u-line-3">
+					<u-checkbox-group :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" shape="circle" >
+						<u-checkbox v-model="xytype" shape="circle"></u-checkbox><view class="u-line-2" style="font-size: 8pt;width: 86%;">注册或登录后，您即已同意<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toXy">《注册协议》</text>内容
 						</view>
 					</u-checkbox-group>
 				</view>
@@ -225,6 +225,9 @@
 			},
 			toXy(){
 				this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+			},
+			toYs(){
+				this.$u.route('/pages/driver/agreement/agreement')
 			},
 			login(ref){
 				this.$refs[ref].validate(valid=>{
