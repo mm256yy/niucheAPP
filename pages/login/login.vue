@@ -25,14 +25,14 @@
 				<view style="padding-top: 20pt;">
 					<u-checkbox-group :active-color="curThemeType ==='driver'?'#FF9F31':'#6DD99C'" shape="circle">
 						<u-checkbox v-model="xytype" shape="circle"></u-checkbox>
-						<view class="u-line-2" style="font-size: 8pt;">
-							注册或登录后，您即已同意
+						<view class="u-line-2" style="font-size: 8pt;width: 88%;margin-left: -7px;">
+							注册或登录后，即您已同意
 							<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toYs">《隐私政策》</text>
 							<text :class="curThemeType ==='driver'?'driLink':'comLink'" @click="toXy">《用户协议》</text>内容
 						</view>
 					</u-checkbox-group>
 				</view>
-				<view style="margin-top: 100pt;text-align: center;">
+				<view style="margin-top: 90pt;text-align: center;">
 					<u-button type="curThemeType ==='driver'?warning:success" shape='circle' class="btnFcd" @click="login('uForm')">登录</u-button>
 				</view>
 				<view style="font-size: 8pt;color: #7F7F7F;margin-top: 30pt;">
@@ -40,7 +40,7 @@
 					若您除了公事之外还有私事的使用需求，请更换手机号后再注册个人账号。
 				</view>
 				<view style="font-size: 8pt;color: #7F7F7F;margin-top: 10pt;">
-					2、注册或登录后，您即已同意《用户协议》内容。
+					2、注册或登录后，即您已同意《用户协议》内容。
 				</view>
 			</view>
 		</view>
