@@ -397,9 +397,13 @@ export default {
 			if(valid) {
 		        this.$refs.uForm2.validate(valid=>{
 		        	if(valid) {
-						let startKm = Number(this.form.firstkm);
-						let endkm = Number(this.form.endkm);
-						if (startKm > endkm){
+						let startKm = this.form.firstkm;
+						let endkm = this.form.endkm;
+						if(startKm === '' || endkm === ''){
+							this.$u.toast('行驶里程必填')
+							return
+						}
+						if (Number(startKm) > Number(endkm)){
 							this.$u.toast('行驶里程填写有误');
 							return
 						}
