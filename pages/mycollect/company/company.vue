@@ -328,12 +328,13 @@
 		margin-bottom: 5pt;
 	}
 	image {
-		width: 220rpx;
-		height: 220rpx;
+		width: 312rpx;
+		height: 231rpx;
 		border-radius: 10rpx;
+		margin-left: 20rpx;
 	}
 	.border-left{
-		padding-left: 30rpx;
+		padding-left: 80rpx;
 		display: inline-block;width:55% ;
 	}
 	.title{
