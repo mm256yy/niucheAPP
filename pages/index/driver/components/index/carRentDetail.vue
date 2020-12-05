@@ -76,7 +76,8 @@
 				</view>
 			</view>
 		</view> -->
-		<phone-auth ref="phone" :phone="detail.phone"></phone-auth>
+		<phone-auth :status="status" v-show="open" ref="phone"></phone-auth>
+		<phone-auth :status="status" v-show="openShow" ref="other"></phone-auth>
 	</view>
 </template>
 
@@ -97,7 +98,10 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				status: 2,
 				token:'',
+				open:false,
+				openShow:false,
 				driverDemandId: '',
 				list: [{
 					name: '租车价格'
@@ -109,7 +113,9 @@
 				current: 0,
 				swiperCurrent: 0,
 				detail: {},
-				tab: []
+				tab: [],
+				rentList:[{name: '0',text:'3000以内（含3000）' },{name: '1',text:'3000以上' }],
+				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }]
 			}
 		},
 		onLoad(option) {
@@ -197,9 +203,25 @@
 							
 			},
 			other() {
+				this.openShow = true;
+				this.open = false;
+				this.status = 3;
+				this.$refs.other.getStatus()
+			},
+			jumpOther(){
 				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
 			},
+			jumpPhone(){
+				if(this.detail.phone){
+					uni.makePhoneCall({ phoneNumber: this.detail.phone });
+				}else{
+					this.$u.toast('未获取到手机号');
+				}
+			},
 			dial() {
+				this.openShow = false;
+				this.open = true;
+				this.status = 1;
 				this.$refs.phone.getStatus()
 			}
 		}
@@ -342,6 +364,7 @@ page{
 			position: fixed;
 			bottom: 0;
 			left: 0;
+			z-index: 20;
 		}
 	}
 </style>

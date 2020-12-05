@@ -4,10 +4,10 @@
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper style="position: fixed;" height="88" ref="uTabs" activeColor="#ffffff" :list="list" inactive-color="#e5e5e5"
-			 bg-color="" :current="current" :is-scroll="false"
+			 bg-color="" :is-scroll="false"
 			 swiperWidth="750"></u-tabs-swiper>
 		</view>
-		<swiper class="swiper-box" :current="swiperCurrent">
+		<swiper class="swiper-box">
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;width: 100%;">
 					<job-search ref="search"></job-search>
@@ -27,7 +27,7 @@
 		data() {
 			return {
 				list: [{
-					name: '招募'
+					name: '招聘'
 				}],
 			}
 		},

@@ -68,7 +68,7 @@
 						<!-- <u-image width="100%" height="130rpx" :src="zpxxsrc"></u-image> -->
 					</u-col>
 					<u-col span="4" @click="toPub(1)">
-						<view class="font-14pt">司机招募</view>
+						<view class="font-14pt">司机招聘</view>
 						<view class="font-10pt">
 						<text style="width: 60pt;display: inline-block;">{{myPublishObj.zpxx}}</text>
 						<u-icon name="arrow-right" color="#7E7E7E"></u-icon>

@@ -68,7 +68,8 @@
 				</swiper-item>
 			</swiper>
 		</view> -->
-		<phone-auth v-show="!viewFlag&&show" ref="phone" :phone="detail.phone"></phone-auth>
+		<phone-auth :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
+		<phone-auth :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
 	</view>
 </template>
 
@@ -93,6 +94,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				status: 2,
 				token:'',
 				driverDemandId: '',
 				listTab: [{
@@ -107,7 +109,9 @@
 				detail:{},
 				tab: [],
 				viewFlag:false,//发布页详情true,列表页详情false
-				show:true
+				show:true,
+				open:false,
+				openShow:false
 			}
 		},
 		onLoad(option) {
@@ -208,12 +212,28 @@
 							
 			},
 			other() {
+				this.openShow = true;
+				this.open = false;
+				this.status = 3;
+				this.$refs.other.getStatus()
+			},
+			jumpOther(){
 				this.$u.route('/pages/mymessage/company/components/index/other',{
 					id:this.detail.comparyid,
 					title:this.detail.titletext
 					});
 			},
+			jumpPhone(){
+				if(this.detail.phone){
+					uni.makePhoneCall({ phoneNumber: this.detail.phone });
+				}else{
+					this.$u.toast('未获取到手机号');
+				}
+			},
 			dial() {
+				this.openShow = false;
+				this.open = true;
+				this.status = 1;
 				this.$refs.phone.getStatus()
 			}
 		}
@@ -347,6 +367,7 @@ page{
 			position: fixed;
 			bottom: 0;
 			left: 0;
+			z-index: 20;
 		}
 	}
 </style>
