@@ -1,8 +1,8 @@
 <template>
 	<view class="filter">
 	  <u-navbar back-text="返回" back-icon-size="0" title="筛选" :background="backgroundCom" 
-	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
-		   历史</view></u-navbar>
+	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><!-- <view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
+		   历史</view> --></u-navbar>
 	   <view class="view-content">
 		   <view class="name">{{addkey}}</view>
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
