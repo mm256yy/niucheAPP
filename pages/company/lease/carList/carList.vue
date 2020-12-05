@@ -22,8 +22,8 @@ import {list} from "@/utils/index.list.js";
 		data() {
 			return {
 				scrollTop: 0,
-				indexList: letterArr,
-				list: list,
+				indexList: [],
+				list: [],
 				source:'',
 				
 			}
@@ -33,7 +33,24 @@ import {list} from "@/utils/index.list.js";
 			this.source = index;
 		},
 		mounted() {
-
+           uni.request({
+           	url: 'http://image.neocab.cn/carmodel',//接口地址
+           	header: {
+           		  'content-type': 'application/x-www-form-urlencoded',  //自定义请求头信息
+           		},
+           	success: (res) => {
+				if(res.statusCode === 200){
+					this.list = res.data;
+					let arr = res.data.forEach(item=>{
+						return item.letter;
+					})
+					this.indexList = arr
+				} else {
+					this.list = list;
+					this.indexList = letterArr
+				}
+           	 }
+           });
 		},
 		methods:{
 			toNext(v){
