@@ -26,7 +26,7 @@
 		    				<view class="clear"></view>
 		    				<view class="name u-line-2">{{item.textTitle}}</view>
 		    				<view class="price">打包价<text>￥{{item.rentCarPrice}}</text></view>
-		    				<view v-for="(items, index) in item.systemok" :key="index" class="case">{{items}}</view>
+		    				<view v-show="items?items.length<4:items" v-for="(items, index) in item.carSystemTag" :key="index" class="case">{{items}}</view>
 		    			</view>
 		    			<view class="clear"></view>
 		    			<u-icon class="clock" name="clock" width="23" height="22"></u-icon>

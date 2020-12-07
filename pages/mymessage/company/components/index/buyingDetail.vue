@@ -44,7 +44,7 @@
 		 <view v-show="show" class="bottom" @click="dial()">
 		 	<view>拨打电话</view>
 		 </view>
-		 <phone-auth v-show="show"  ref="phone" :phone="detail.phone"></phone-auth>
+		 <phone-auth v-show="show" ref="phone" :phone="detail.phone" :status="status"></phone-auth>
 	</view>
 </template>
 
@@ -59,6 +59,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				status: 2,
 				token:'',
 				driverDemandId: '',
 				detail: {},
@@ -131,6 +132,7 @@
 				this.$u.route("/pages/mymessage/company/components/index/buyingRecommend")
 			},
 			dial() {
+				this.status = 1;
 				this.$refs.phone.getStatus()
 			}
 		}

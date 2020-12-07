@@ -23,7 +23,19 @@
 		props: {
 			status: {
 			    type: Number,
-			    default: '2'
+			    default: 2
+			},
+			phone: {
+			    type: String,
+			    default: ''
+			},
+			id: {
+			    type: String,
+			    default: ''
+			},
+			title: {
+			    type: String,
+			    default: ''
 			}
 		},
 		methods:{
@@ -57,11 +69,22 @@
 								this.showTips = false;
 								console.log(this.status)
 								if(this.status == 1){
-									this.$parent.$parent.jumpPhone();
+									if(this.phone){
+										uni.makePhoneCall({ phoneNumber: this.phone });
+									}else{
+										this.$u.toast('未获取到手机号');
+									}
 								}
 								if(this.status == 3){
-									console.log(this.$parent)
-									this.$parent.$parent.jumpOther();
+									this.$u.route('/pages/mymessage/company/components/index/other',{
+										id:this.id,
+										title:this.title
+										});
+								}
+								if(this.status == 4){
+									this.$u.route('/pages/index/driver/components/index/other',{
+										id:this.id,
+										});
 								}
 							} else if (flag === 3 ){
 								this.showMsg = '亲，您提交的认证信息,未通过,将跳转到我的页面'

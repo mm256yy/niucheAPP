@@ -68,8 +68,8 @@
 				</swiper-item>
 			</swiper>
 		</view> -->
-		<phone-auth :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
-		<phone-auth :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
+		<phone-auth :phone="detail.phone" :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
+		<phone-auth :id="detail.comparyid" :title="detail.titletext" :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
 	</view>
 </template>
 

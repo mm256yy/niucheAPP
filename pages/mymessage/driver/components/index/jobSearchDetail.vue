@@ -77,8 +77,8 @@
 				</view>
 			</view> -->
 		</view>
-		<phone-auth :status="status" v-show="open" ref="phone"></phone-auth>
-		<phone-auth :status="status" v-show="openShow" ref="other"></phone-auth>
+		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>
+		<phone-auth :id="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
 	</view>
 </template>
 
@@ -210,18 +210,8 @@
 			other() {
 				this.openShow = true;
 				this.open = false;
-				this.status = 3;
+				this.status = 4;
 				this.$refs.other.getStatus()
-			},
-			jumpOther(){
-				this.$u.route('/pages/index/driver/components/index/other',{id:this.detail.comparyid});
-			},
-			jumpPhone(){
-				if(this.detail.phone){
-					uni.makePhoneCall({ phoneNumber: this.detail.phone });
-				}else{
-					this.$u.toast('未获取到手机号');
-				}
 			},
 			dial() {
 				this.openShow = false;

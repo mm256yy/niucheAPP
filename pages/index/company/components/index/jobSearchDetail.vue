@@ -51,7 +51,7 @@
 		 <view class="bottom" @click="dial()">
 			 <view>拨打电话</view>
 		 </view>
-		 <phone-auth ref="phone" :phone="form.phone"></phone-auth>
+		 <phone-auth ref="phone" :phone="form.phone" :status="status"></phone-auth>
 	</view>
 </template>
 
@@ -66,6 +66,7 @@
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				status: 2,
 				token:'',
 				hailing:'网约车',
 				taxi:'出租车',
@@ -128,6 +129,7 @@
 				this.$u.route("/pages/index/company/components/index/jobSearchRecommend")
 			},
 			dial() {
+				this.status = 1;
 				this.$refs.phone.getStatus()
 			}
 		}
