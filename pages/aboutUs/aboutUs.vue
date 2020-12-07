@@ -10,7 +10,7 @@
 		 </view>
 		 <view class="company-version">
 			 <view class="login-out" v-show="curThemeType ==='company' && tokenFlag" @click="showLogut=true">退出</view>
-			 <view>当前版本 1.5.1.3 </view>
+			 <view>当前版本 1.5.1.5 </view>
 		 </view>
 		 <u-modal v-model="showLogut" title="提示" :show-cancel-button="true" confirm-text="是" cancel-text="否"
 		  @confirm="loginOut">
