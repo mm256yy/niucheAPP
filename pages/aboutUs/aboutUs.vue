@@ -9,6 +9,9 @@
 			<view class="company-phone">服务电话:0571-87815287</view>
 		 </view>
 		 <view class="company-version">
+			 <view style="padding: 5pt 0;">
+				 <text @click="toYs" style="color: #0873DE;">《隐私政策》</text>
+			 <text @click="toXy" style="color: #0873DE;padding-left: 8pt;">《用户协议》</text></view>
 			 <view class="login-out" v-show="curThemeType ==='company' && tokenFlag" @click="showLogut=true">退出</view>
 			 <view>当前版本 1.5.1.5 </view>
 		 </view>
@@ -40,6 +43,12 @@
 		methods: {
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+			},
+			toXy(){
+				this.$u.route('/pages/company/registrationAgreement/registrationAgreement')
+			},
+			toYs(){
+				this.$u.route('/pages/driver/agreement/agreement')
 			},
 			loginOut(){
 				this.$u.api.logout({}).then(res=>{

@@ -2,21 +2,23 @@
 	<view>
 		<Driver v-if='curThemeType ==="driver"' ref="driver"></Driver>
 		<Company ref="driver" v-else></Company>
+		<OneTips ref="onetips"></OneTips>
 	</view>
 </template>
 
 <script>
+import OneTips from '../../components/oneTips.vue'
 import Company from './company/company.vue'
 import Driver from './driver/driver.vue'
 import {dirverPages,companyPages} from '@/utils/tabbar.js' 
 export default {
 	components:{
-		Company,Driver
+		Company,Driver,OneTips
 	},
 	data() {
 		return {
 			upOption:{},
-			downOption:{}
+			downOption:{},
 			}
 	},
 	onShow() {
@@ -39,6 +41,12 @@ export default {
 		if(this.$refs.driver != undefined){
 			this.$refs.driver.getList()
 		}	
+	},
+	mounted() {
+		let flag = uni.getStorageSync('oneTipsFlag');
+		if(!flag){
+			this.$refs.onetips.show = true
+		}
 	},
 	methods:{
 		tipsConfirm(){
