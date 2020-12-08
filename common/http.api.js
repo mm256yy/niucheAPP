@@ -151,6 +151,9 @@ const install  = (Vue, vm) => {
 				const  MyIssueRefresh = (params = {}) => vm.$u.get('/system/usercomparybasictext/MyIssueRefresh', params);
 				//意见反馈
 				const  feedback = (params = {}) => vm.$u.post('/app/feedback', params);
+				//弹窗配置
+				const  popupConfig = (params = {}) => vm.$u.get('/popup/get', params);
+				
 
 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
