@@ -72,6 +72,9 @@
 						<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle">
 							<u-icon size="60" name="edit-pen-fill" color="#FF9400" slot="icon"></u-icon>
 						</u-cell-item>
+						<u-cell-item  title="邀请好友" :title-style="titleStyle" @click="toInvite">
+							<u-icon size="60" name="man-add-fill" color="#FF9400" slot="icon"></u-icon>
+						</u-cell-item>
 						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
 							<u-icon size="60" :name="wdpdSrc" slot="icon"></u-icon>
 						</u-cell-item>
@@ -194,6 +197,12 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.$u.route("/pages/driver/baseInfo/baseInfo")
+				}
+			},
+			toInvite(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.$u.route("/pages/driver/inviteFriends/inviteFriends")
 				}
 			},
 			toLicense(){

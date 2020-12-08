@@ -597,6 +597,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/driver/inviteFriends/inviteFriends",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
