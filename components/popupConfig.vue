@@ -18,6 +18,7 @@
 			};
 		},
 		mounted() {
+			this.show = false;
 			this.init()
 		},
 		methods:{
@@ -65,6 +66,8 @@
 								this.data = JSON.parse(item.result)
 							}
 						})
+					} else {
+						this.show = false
 					}
 					}else {
 						 this.$u.toast(res.msg);
