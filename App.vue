@@ -180,6 +180,7 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+			uni.removeStorageSync('popupFlag')
 		},
 	}
 </script>
