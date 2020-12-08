@@ -136,6 +136,18 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//站内信和消息列表
+		    "path" : "pages/index/company/components/index/message",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//站内信列表
+		    "path" : "pages/index/company/components/index/letterStation",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
 		,{//首页-租车需求详情
 		    "path" : "pages/index/company/components/index/carRentDetail",
 		    "style" : {

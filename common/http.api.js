@@ -153,6 +153,12 @@ const install  = (Vue, vm) => {
 				const  feedback = (params = {}) => vm.$u.post('/app/feedback', params);
 				//弹窗配置
 				const  popupConfig = (params = {}) => vm.$u.get('/popup/get', params);
+				//消息列表
+				const  listMessage = (params = {}) => vm.$u.post('/messagesend/pub/pubSendMessageReleaseTextAll', params);
+				//查看是否有未读通知项
+				const  haveIs = (params = {}) => vm.$u.post('/MessageReceptionController/pub/userSelectNoSeeMessageNum', params);
+				//查看站内信内容
+				const  viewMessage = (params = {}) => vm.$u.post('/MessageReceptionController/pub/userSelectNoSeeMessage', params);
 				
 
 
@@ -233,7 +239,10 @@ const install  = (Vue, vm) => {
 		detailOtherRenting,
 		detailOtherSearching,
 		getMessageCompany,
-		feedback
+		feedback,
+		listMessage,
+		haveIs,
+		viewMessage
 	 };
 }
 

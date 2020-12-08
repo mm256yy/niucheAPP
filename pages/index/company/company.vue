@@ -1,5 +1,7 @@
 <template>
-	<view :class="'company-content'"> 
+	<view :class="'company-content'">
+		<u-icon @click="message()" style="position: fixed;top: 50rpx;right: 40rpx;z-index: 100;" name="lock-fill" color="#fff" size="28"></u-icon>
+		<u-badge type="error" count="7"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
@@ -45,7 +47,35 @@
 				isChildUpdate2:false
 			}
 		},
+		mounted() {
+			const token = uni.getStorageSync('token');
+			if(token){
+				this.view()
+			}
+		},
 		methods: {
+			message(){
+				this.$u.route("/pages/index/company/components/index/message")
+			},
+			view(){
+				this.$u.api.haveIs().then(res=>{
+					if(res.code === 200){
+						 this.form = res.object
+						 this.xslc.forEach(item=>{
+							 if(item.name == this.form.km){
+								 this.form.kmStr = item.text;
+							 }
+						 })
+						 this.ageList.forEach(item=>{
+						    if(item.name == this.form.carAge){
+						    	this.form.carAgeStr = item.text;
+						    }
+						 })
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			getList() {
 				if(this.$refs.rent != undefined){
 					this.$refs.rent.search()
