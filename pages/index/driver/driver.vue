@@ -1,5 +1,7 @@
 <template>
 	<view :class="'driver-content'">
+		<u-icon @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="lock-fill" color="#fff" size="36"></u-icon>
+		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
@@ -28,10 +30,29 @@
 			return {
 				list: [{
 					name: '租车'
-				}]
+				}],
+				num: 0
+			}
+		},
+		mounted() {
+			const token = uni.getStorageSync('token');
+			if(token){
+				this.view()
 			}
 		},
 		methods: {
+			message(){
+				this.$u.route("/pages/index/company/components/index/message")
+			},
+			view(){
+				this.$u.api.haveIs().then(res=>{
+					if(res.code === 200){
+						 this.num = res.object;
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			getList() {
 				this.$refs.rent.search()
 				this.$refs.rent.page()

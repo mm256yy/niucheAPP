@@ -1,18 +1,10 @@
 <template>
 	<view class="message">
-		<u-navbar back-text="返回" back-icon-size="0" title="我的消息" :back-text-style="backTextStyle" title-width="300" height='44' title-color="#000000">
+		<u-navbar back-text="返回" back-icon-size="0" title="我的消息" title-width="300" height='44' title-color="#000000">
 		</u-navbar>
 		<view class="content">
 			<view @click="listMessage()" class="list">
-				<u-avatar style="width: 104rpx;height: 104rpx;" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" mode="circle" ></u-avatar>
-				<view class="box">
-					<view class="title">站内信息</view>
-					<view class="join">尊敬的用户，现在加入纽车网约车</view>
-				</view>
-				<view class="time">19:07</view>
-			</view>
-			<view class="list">
-				<u-avatar style="width: 104rpx;height: 104rpx;" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" mode="circle" ></u-avatar>
+				<img style="width: 104rpx;height: 104rpx;border-radius: 50%;" src="@/static/logoIcon.png" alt="">
 				<view class="box">
 					<view class="title">站内信息</view>
 					<view class="join">尊敬的用户，现在加入纽车网约车</view>
