@@ -1,6 +1,6 @@
 <template>
 	<view :class="'driver-content'">
-		<u-icon @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="lock-fill" color="#fff" size="36"></u-icon>
+		<u-icon v-show="token" @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="lock-fill" color="#fff" size="36"></u-icon>
 		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
@@ -31,12 +31,13 @@
 				list: [{
 					name: '招聘'
 				}],
-				num: 0
+				num: 0,
+				token:''
 			}
 		},
 		mounted() {
-			const token = uni.getStorageSync('token');
-			if(token){
+			this.token = uni.getStorageSync('token');
+			if(this.token){
 				this.view()
 			}
 		},
