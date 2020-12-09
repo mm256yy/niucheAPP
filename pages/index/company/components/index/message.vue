@@ -9,7 +9,7 @@
 					<view style="display:flex;">
 						<view class="title">站内信息</view>
 						<view class="time">{{time}}</view>
-					</view
+					</view>
 					<view class="join">尊敬的用户，现在加入纽车网约车</view>
 				</view>
 			</view>
@@ -42,7 +42,7 @@
 	  .content{
 		 .list{
 		 		  margin: 0 36rpx;
-				  padding: 36rpx 0;
+				  padding: 36rpx 0 0 0;
 		 		  font-family: PingFangSC-Regular, PingFang SC;
 		 		  display: flex;
 		 		  border-bottom: 1rpx solid #e0e0e0;
@@ -61,11 +61,11 @@
 		 		 		  		 color: #999999;
 		 						  margin-bottom: 40rpx;
 		 		 		  }
-		 		 }
-		 		 .time{
-		 		 			  font-size: 24rpx;
-		 		 			  font-weight: 400;
-		 		 			  color: #C7C7C7;
+						  .time{
+						  			  font-size: 24rpx;
+						  			  font-weight: 400;
+						  			  color: #C7C7C7;
+						  }
 		 		 } 
 		 } 
 	  }
