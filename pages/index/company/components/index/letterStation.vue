@@ -4,7 +4,6 @@
 		</u-navbar>
 		<scroll-view scroll-y style="height: 100%;width: 100%;">
 						 <load-refresh
-						   v-show="list.length"
 						   ref="loadRefresh"
 						   :pageNo='pageNum'
 						   :totalPageNo='Math.ceil(this.total/10)'
@@ -45,7 +44,8 @@
 				  pageNum: 1, 
 				  pageSize: 10
 				},
-				list: []
+				list: [],
+				pageNum: 1
 			}
 		},
 		mounted() {
@@ -67,7 +67,7 @@
 			getList(){
 				this.$u.api.viewMessage(this.pagination).then(res=>{
 					if(res.code === 200){
-						 this.list = res.object;
+						 this.list = res.rows;
 						 this.list.forEach(item=>{
 						 	item.begintime = format(item.begintime, 'yyyy-MM-dd HH:mm')
 						 })
@@ -100,6 +100,10 @@
 		background-color: #f5f5f5;
 	}
   .message{
+	  display: flex;
+	  flex-direction: column;
+	  height: calc(100vh - var(--window-top));
+	  width: 100%;
 	  .content{
 	  		  width: 100%;
 	  		  border-radius: 30rpx;
