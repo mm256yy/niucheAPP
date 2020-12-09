@@ -3,7 +3,7 @@
 		<u-navbar back-text="返回" back-icon-size="0" title="我的通知" title-width="300" height='44' title-color="#000000">
 		</u-navbar>
 		<view v-if="item.state==2" class="contentno" v-for="(item, index) in list" :key="index">
-			<view @click="listMessage()" class="list">
+			<view class="list">
 				<view style="width: 14rpx;height: 14rpx;border-radius: 50%;background-color: #ff5644;"></view>
 				<view class="title">{{item.title}}</view>
 				<view class="time">{{item.begintime}}</view>
@@ -11,7 +11,7 @@
 			<view class="text">{{item.content}}</view>
 		</view>
 		<view v-if="item.state==1" class="content" v-for="(item, index) in list" :key="index">
-			<view @click="listMessage()" class="list">
+			<view class="list">
 				<view class="title">{{item.title}}<text class="time">{{item.begintime}}</text></view>
 			</view>
 			<view class="text">{{item.content}}</view>
@@ -69,9 +69,6 @@
 						 this.$u.toast(res.msg);
 					}
 				})
-			},
-			listMessage(){
-				this.$u.route("/pages/index/company/components/index/letterStation")
 			}
 	    },
 	}
