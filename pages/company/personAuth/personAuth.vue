@@ -143,7 +143,7 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
-	onShow() {
+	  mounted() {
 			let today = uni.getStorageSync('today');
 			if(today){
 				this.today = today
@@ -152,6 +152,7 @@
 			}
 			this.initStorage()
 			this.getInfo()
+			console.log(1)
 		},
 		methods: {
 			initDate(){
@@ -174,9 +175,11 @@
 						this.form = this.companyThree;
 					}
 					if (this.shengfenzheng){
+						this.fileList = []
 						this.fileList.push(this.shengfenzheng[0])
 					}
 					if (this.peopleCard){
+						this.fileList1 = []
 						this.fileList1.push(this.peopleCard[0])
 					}
 			},
