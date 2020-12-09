@@ -1,6 +1,6 @@
 <template>
 	<view :class="'driver-content'">
-		<u-icon v-show="token" @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="lock-fill" color="#fff" size="36"></u-icon>
+		<u-icon v-show="token" @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="bell" color="#fff" size="36"></u-icon>
 		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
@@ -32,7 +32,8 @@
 					name: '招聘'
 				}],
 				num: 0,
-				token:''
+				token:'',
+				time:''
 			}
 		},
 		mounted() {
@@ -43,12 +44,13 @@
 		},
 		methods: {
 			message(){
-				this.$u.route("/pages/index/company/components/index/message")
+				this.$u.route("/pages/index/company/components/index/message",{time:this.time})
 			},
 			view(){
 				this.$u.api.haveIs().then(res=>{
 					if(res.code === 200){
-						 this.num = res.object;
+						 this.num = res.object.titlenum;
+						 this.time = res.object.recentlytime;
 					}else {
 						 this.$u.toast(res.msg);
 					}

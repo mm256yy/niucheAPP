@@ -1,6 +1,6 @@
 <template>
 	<view :class="'company-content'">
-		<u-icon v-show="token" @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="lock-fill" color="#fff" size="36"></u-icon>
+		<u-icon v-show="token" @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="bell" color="#fff" size="36"></u-icon>
 		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
@@ -46,7 +46,8 @@
 				isChildUpdate1:true,
 				isChildUpdate2:false,
 				num: 0,
-				token:''
+				token:'',
+				time:''
 			}
 		},
 		mounted() {
@@ -57,17 +58,46 @@
 		},
 		methods: {
 			message(){
-				this.$u.route("/pages/index/company/components/index/message")
+				this.$u.route("/pages/index/company/components/index/message",{time:this.time})
 			},
 			view(){
 				this.$u.api.haveIs().then(res=>{
 					if(res.code === 200){
-						 this.num = res.object;
+						 this.num = res.object.titlenum;
+						 this.time = this.format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
+			format(time, format) {
+			            var t = new Date(time);
+			            var tf = function(i) {
+			                return (i < 10 ? '0' : '') + i
+			            };
+			            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
+			                switch (a) {
+			                case 'yyyy':
+			                    return tf(t.getFullYear());
+			                    break;
+			                case 'MM':
+			                    return tf(t.getMonth() + 1);
+			                    break;
+			                case 'mm':
+			                    return tf(t.getMinutes());
+			                    break;
+			                case 'dd':
+			                    return tf(t.getDate());
+			                    break;
+			                case 'HH':
+			                    return tf(t.getHours());
+			                    break;
+			                case 'ss':
+			                    return tf(t.getSeconds());
+			                    break;
+			                }
+			            });
+			        },
 			getList() {
 				if(this.$refs.rent != undefined){
 					this.$refs.rent.search()
