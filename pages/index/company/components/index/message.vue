@@ -4,7 +4,8 @@
 		</u-navbar>
 		<view class="content">
 			<view @click="listMessage()" class="list">
-				<img style="width: 104rpx;height: 104rpx;border-radius: 50%;" src="@/static/logoIcon.png" alt="">
+				<u-image class="img" width="104rpx" height="104rpx" shape="circle" src="@/static/logoIcon.png"></u-image>
+				<!-- <img style="width: 104rpx;height: 104rpx;border-radius: 50%;" src="@/static/logoIcon.png" alt=""> -->
 				<view class="box">
 					<view style="display:flex;">
 						<view class="title">站内信息</view>

@@ -1,6 +1,6 @@
 <template>
 	<view :class="'driver-content'">
-		<u-icon v-show="token" @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="bell" color="#fff" size="36"></u-icon>
+		<u-icon class="bell" v-show="token" @click="message()" name="bell" color="#fff" size="36"></u-icon>
 		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
@@ -104,6 +104,13 @@ page{
 	.scroll-item{
 	background: #fff;margin: 20rpx;padding-top: 30rpx;
 	
+	}
+	.bell{
+		position: fixed;
+		top: var(--status-bar-height);
+		right: 40rpx;
+		z-index: 100;
+		margin-top: 54rpx;
 	}
 
 
