@@ -7,7 +7,7 @@
 			<view class="top-content-upload">
 				<view></view>
 				<u-upload :custom-btn="true" ref="uUpload" :action="action" 
-				@on-success='uploadChange' upload-text="" :limitType="['png','jpg',]"  :file-list="fileList" :max-size="4 * 1024 * 1024" 
+				@on-success='uploadChange' upload-text="" :limitType="['png','jpg',]" @on-remove="removeFile"  :file-list="fileList" :max-size="4 * 1024 * 1024" 
 				max-count="1" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -166,8 +166,16 @@
 			setStorage(data){
 					 uni.setStorageSync('companyFirst', data);
 			},
+			removeFile(){
+				this.fileList = [];
+				this.form.businesscard = ''
+			},
 			setForm(){
 				 let data = this.form;
+				 if(data.businesscard === ''){
+					 this.$u.toast('请上传营业执照图片')
+					 return
+				 }
 				 this.setStorage(data)
 				 this.$u.route("/pages/company/basicInfo/basicInfo")
 			},
