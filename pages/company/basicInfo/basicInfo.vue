@@ -97,7 +97,7 @@
 				this.comparyid = comparyid;
 			}
 		},
-	onShow() {
+	 mounted() {
 		this.initStorage()
 		this.getInfo()
 	},
