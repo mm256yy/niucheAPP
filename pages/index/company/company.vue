@@ -28,6 +28,7 @@
 <script>
 	import carRent from './components/index/carRent'
 	import jobSearch from './components/index/jobSearch'
+	import {format} from '@/common/rule.js'
 	export default {
 		components: {
 			carRent,
@@ -64,40 +65,12 @@
 				this.$u.api.haveIs().then(res=>{
 					if(res.code === 200){
 						 this.num = res.object.titlenum;
-						 this.time = this.format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
-			format(time, format) {
-			            var t = new Date(time);
-			            var tf = function(i) {
-			                return (i < 10 ? '0' : '') + i
-			            };
-			            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
-			                switch (a) {
-			                case 'yyyy':
-			                    return tf(t.getFullYear());
-			                    break;
-			                case 'MM':
-			                    return tf(t.getMonth() + 1);
-			                    break;
-			                case 'mm':
-			                    return tf(t.getMinutes());
-			                    break;
-			                case 'dd':
-			                    return tf(t.getDate());
-			                    break;
-			                case 'HH':
-			                    return tf(t.getHours());
-			                    break;
-			                case 'ss':
-			                    return tf(t.getSeconds());
-			                    break;
-			                }
-			            });
-			        },
 			getList() {
 				if(this.$refs.rent != undefined){
 					this.$refs.rent.search()

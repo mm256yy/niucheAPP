@@ -2,76 +2,95 @@
 	<view class="message">
 		<u-navbar back-text="返回" back-icon-size="0" title="我的通知" title-width="300" height='44' title-color="#000000">
 		</u-navbar>
-		<view v-if="item.state==2" class="contentno" v-for="(item, index) in list" :key="index">
-			<view @click="listMessage()" class="list">
-				<view style="width: 14rpx;height: 14rpx;border-radius: 50%;background-color: #ff5644;"></view>
-				<view class="title">{{item.title}}</view>
-				<view class="time">{{item.begintime}}</view>
-			</view>
-			<view class="text">{{item.content}}</view>
-		</view>
-		<view v-if="item.state==1" class="content" v-for="(item, index) in list" :key="index">
-			<view @click="listMessage()" class="list">
-				<view class="title">{{item.title}}<text class="time">{{item.begintime}}</text></view>
-			</view>
-			<view class="text">{{item.content}}</view>
-		</view>
+		<scroll-view scroll-y style="height: 100%;width: 100%;">
+						 <load-refresh
+						   ref="loadRefresh"
+						   :pageNo='pageNum'
+						   :totalPageNo='Math.ceil(this.total/10)'
+						   :isRefresh="true"
+						   refreshType="halfCircle"
+						   refreshTime="1000"
+						   color="#04C4C4"
+						   heightReduce="10"
+						   backgroundCover="#F3F5F5" 
+						   @refresh="refresh">
+						   <view slot="content-list">
+						     <view v-if="item.state==2" class="contentno" v-for="(item, index) in list" :key="index">
+						     	<view class="list">
+						     		<view style="width: 14rpx;height: 14rpx;border-radius: 50%;background-color: #ff5644;"></view>
+						     		<view class="title">{{item.title}}</view>
+						     		<view class="time">{{item.begintime}}</view>
+						     	</view>
+						     	<view class="text">{{item.content}}</view>
+						     </view>
+						     <view v-if="item.state==1" class="content" v-for="(item, index) in list" :key="index">
+						     	<view class="list">
+						     		<view class="title">{{item.title}}<text class="time">{{item.begintime}}</text></view>
+						     	</view>
+						     	<view class="text">{{item.content}}</view>
+						     </view>
+						   </view>
+						   </load-refresh>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
+	import {format} from '@/common/rule.js'
 	export default {
 		data() {
 			return {
-				list: []
+				pagination: {
+				  pageNum: 1, 
+				  pageSize: 10
+				},
+				list: [],
+				pageNum: 1
 			}
 		},
 		mounted() {
 			this.getList();
 		},
 		methods: {
-			format(time, format) {
-			            var t = new Date(time);
-			            var tf = function(i) {
-			                return (i < 10 ? '0' : '') + i
-			            };
-			            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
-			                switch (a) {
-			                case 'yyyy':
-			                    return tf(t.getFullYear());
-			                    break;
-			                case 'MM':
-			                    return tf(t.getMonth() + 1);
-			                    break;
-			                case 'mm':
-			                    return tf(t.getMinutes());
-			                    break;
-			                case 'dd':
-			                    return tf(t.getDate());
-			                    break;
-			                case 'HH':
-			                    return tf(t.getHours());
-			                    break;
-			                case 'ss':
-			                    return tf(t.getSeconds());
-			                    break;
-			                }
-			            });
-			        },
+			// 上划加载更多
+			      loadMore() {
+					  this.getPage()
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
+			// 下拉刷新数据列表
+			refresh() {
+				this.pageNum = 1;
+			    this.getList()
+			},
 			getList(){
-				this.$u.api.viewMessage().then(res=>{
+				this.$u.api.viewMessage(this.pagination).then(res=>{
 					if(res.code === 200){
-						 this.list = res.object;
+						 this.list = res.rows;
 						 this.list.forEach(item=>{
-						 	item.begintime = this.format(item.begintime, 'yyyy-MM-dd HH:mm')
+						 	item.begintime = format(item.begintime, 'yyyy-MM-dd HH:mm')
 						 })
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				})
 			},
-			listMessage(){
-				this.$u.route("/pages/index/company/components/index/letterStation")
+			getPage(){
+				this.pageNum = this.pageNum + 1;
+				this.$u.api.viewMessage({
+					pageNum: this.pageNum,
+					pageSize: 10
+				}).then(res=>{
+					if(res.code === 200){
+						 this.list = res.object;
+						 this.list.forEach(item=>{
+						 	item.begintime = format(item.begintime, 'yyyy-MM-dd HH:mm')
+						 })
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			}
 	    },
 	}
@@ -81,6 +100,10 @@
 		background-color: #f5f5f5;
 	}
   .message{
+	  display: flex;
+	  flex-direction: column;
+	  height: calc(100vh - var(--window-top));
+	  width: 100%;
 	  .content{
 	  		  width: 100%;
 	  		  border-radius: 30rpx;
