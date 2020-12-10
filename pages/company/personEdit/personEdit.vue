@@ -198,7 +198,7 @@
 								this.fileList = [{url:idcardphoto}]
 							}
 							if (comparypeoplephoto){
-								this.fileList = []
+								this.fileList1 = []
 								this.fileList1 = [{url:comparypeoplephoto}]
 							}
 							this.form.username = data.username;
