@@ -44,7 +44,11 @@
 			},
 			type:{
 				type:Number,
+			},
+			editId:{
+				 type: String,
 			}
+			
 		},
 		methods:{
 			tipsConfirm(){
@@ -73,9 +77,12 @@
 			},
 			toNext(){
 				let type = this.type;
-				if(type === 3 || type === 1){
+				if(type === 1){
 					 uni.setStorageSync('carPubType',type);
 					 this.$u.route('/pages/company/lease/lease',{editId:this.id})
+				}else if(type ===3){
+					  uni.setStorageSync('carPubType',type);
+					  this.$u.route('/pages/company/lease/lease',{editId:this.editId})
 				} else if(type ===4){
 					 uni.setStorageSync('carPubType',4);
 					  this.$u.route('/pages/company/demand/demand',{AskToShopId :this.id})

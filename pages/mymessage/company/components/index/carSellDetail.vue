@@ -43,7 +43,7 @@
 			<u-image class="img" width="96rpx" height="96rpx" src="@/static/chat-box.png"></u-image>
 			<view class="right">下单租车</view>
 		</view> -->
-		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :id="driverDemandId" :type="3"></PubBottom>
+		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :editId="driverDemandId" :id="detail.comparymainid" :type="3"></PubBottom>
 		<!-- <view class="wrap">
 			<view class="u-tabs-box">
 			 	<u-tabs-swiper ref="uTabs" bg-color="rgba(0,0,0,0.005)" font-size="28" :list="listTab" 
