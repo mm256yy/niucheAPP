@@ -40,9 +40,9 @@
 						<u-col span="6">
 							<view style="font-size: 12pt;">工作证明照片</view>
 						</u-col>
-						<u-col span="6">
+<!-- 						<u-col span="6">
 							<view style="font-size: 10pt;color: #0096FF;text-align: right;" @click="wenanTips = true">查看工作证明文案</view>
-						</u-col>
+						</u-col> -->
 					</u-row>
 			</view>
 			<view class="top-content-upload">
@@ -53,8 +53,9 @@
 					</view>
 				</u-upload>
 			</view>
-			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过8M</view>
-			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
+			<view class="top-content-uploadTips">1.工牌，名片或书面证明</view>
+			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">2.必须为jpg格式,单张不得超过8M</view>
+			
 		</view>
 		<u-verification-code seconds="60" ref="uCode" unique-key="page-a" @change="codeChange"></u-verification-code>
 		<u-modal v-model="showTips" @confirm="confirm" confirm-text="我知道了">
