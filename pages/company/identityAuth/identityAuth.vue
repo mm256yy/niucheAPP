@@ -6,7 +6,7 @@
 			<view class="top-content-base" style="font-size: 12pt;">营业执照照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" ref="uUpload" :action="action" 
+				<u-upload :custom-btn="true" ref="uUpload" :action="action" :before-upload="beforeUpload" @on-change ="hideLoadings"
 				@on-success='uploadChange' upload-text="" :limitType="['png','jpg',]" @on-remove="removeFile"  :file-list="fileList" :max-size="4 * 1024 * 1024" 
 				max-count="1" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
@@ -87,6 +87,7 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		onLoad(option) {
+			
 			let comparyid = option.id;
 			if(comparyid){
 				this.comparyid = comparyid;
@@ -198,8 +199,16 @@
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form.companyCreateTime = companyDate;
 			},
+			beforeUpload(index, list) {
+					uni.showLoading({
+						title: '识别中'  
+					});
+			 },
+			 hideLoadings(){
+				 uni.hideLoading();
+			 },
 			uploadChange(res,index,lists,name){
-				console.log(res)
+				uni.hideLoading();
 				if (res.code === 200){
 					let data = res.data;
 					uni.setStorageSync('xunfei',data)
