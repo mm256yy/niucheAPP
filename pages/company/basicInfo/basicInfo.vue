@@ -107,9 +107,19 @@
 				this.comparyLogo = uni.getStorageSync('comparyLogo');
 				if (this.companySecond){
 						this.form = this.companySecond;
+						if (this.form.mainBusiness){
+							this.checkboxList.forEach(item=>{
+								this.form.mainBusiness.forEach(info=>{
+									if(item.name === info){
+										item.checked = true
+									}
+								})
+							})
+						}
 				}
 				if (this.comparyLogo.length>0){
-					this.fileList.push(this.comparyLogo[0])
+					this.fileList = []
+					this.fileList = [{url:this.comparyLogo[0].url}]
 				}
 		},
 		setStorage(data){

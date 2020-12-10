@@ -606,6 +606,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/company/personEdit/personEdit",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",

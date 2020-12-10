@@ -99,7 +99,6 @@
 			} else{
 				this.initDate()
 			}
-			this.initStorage()
 			this.getInfo()
 		},
 		methods: {
@@ -145,28 +144,24 @@
 							};
 							 uni.setStorageSync('companySecond', obj);
 							 uni.setStorageSync('companyThree', objF);
-							let photo = data.photolist;
-							if(photo.comparyLogo){
-								let comparyLogo = [{url:photo.comparyLogo}]
-								 uni.setStorageSync('comparyLogo', comparyLogo);
-							}
-							if(photo.peopleCard){
-								let peopleCard = [{url:photo.peopleCard}]
-								 uni.setStorageSync('peopleCard', peopleCard);
-							}
-							if(photo.shengfenzheng){
-								let shengfenzheng = [{url:photo.shengfenzheng}]
-								 uni.setStorageSync('shengfenzheng', shengfenzheng);
-							}
-							if(photo.yingyezhizhao){
-								this.fileList.push({url:photo.yingyezhizhao})
-							}
+							 if(data.comparylogophoto){
+							 	let comparyLogo = [{url:data.comparylogophoto}]
+							 	 uni.setStorageSync('comparyLogo', comparyLogo);
+							 }
+							 if(data.comparypeoplephoto){
+							 	let peopleCard = [{url:data.comparypeoplephoto}]
+							 	 uni.setStorageSync('peopleCard', peopleCard);
+							 }
+							 if(data.idcardphoto){
+							 	let shengfenzheng = [{url:data.idcardphoto}]
+							 	 uni.setStorageSync('shengfenzheng', shengfenzheng);
+							 }
+							 if(data.businesscard){
+							 	this.fileList= [{url:data.businesscard}]
+							 }
 						  }
 						}).catch(res=>{this.$u.toast(res.msg)})
 				}
-			},
-			initStorage(){
-					this.today = uni.getStorageSync('today');
 			},
 			setStorage(data){
 					 uni.setStorageSync('companyFirst', data);
