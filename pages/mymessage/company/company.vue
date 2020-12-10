@@ -1,6 +1,6 @@
 <template>
 	<view :class="'company-content'">
-		<u-icon v-show="token" @click="message()" style="position: fixed;top: 44rpx;right: 40rpx;z-index: 100;" name="bell" color="#fff" size="36"></u-icon>
+		<u-icon class="bell" v-show="token" @click="message()" name="bell" color="#fff" size="36"></u-icon>
 		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
@@ -143,67 +143,29 @@ page{
 		}
 	}
 .wrap {
-	display: flex;
-	flex-direction: column;
-	height: calc(100vh - var(--window-top));
-	width: 100%;
-}
-.swiper-box {
-	flex: 1;
-	margin-top: 80rpx;
-}
-.swiper-item {
-	height: 100%;
-}
-.scroll-item{
-	background: #fff;margin: 20rpx;padding-top: 10rpx;
-	border-radius: 40rpx;
-	box-shadow: 0px 0px 18px 0px rgba(69, 183, 114, 0.24);
-    .time{
-		font-weight: bold;
-		text-align: right!important;
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - var(--window-top));
+		width: 100%;
 	}
-	image {
-		width: 200rpx;
-		height: 200rpx;
-		border-radius: 10rpx;
+	.swiper-box {
+		flex: 1;
+		margin-top: 80rpx;
 	}
-	.border-left{
-		border-left: 1px solid #7F7F7F;
-		padding-left: 30rpx!important;
+	.swiper-item {
+		height: 100%;
 	}
-	.title{
-		font-weight: bold;
-		font-size: 12pt;
+	.scroll-item{
+	background: #fff;margin: 20rpx;padding-top: 30rpx;
+	
 	}
-	.type{
-		padding-top: 10rpx;
+	.bell{
+		position: fixed;
+		top: var(--status-bar-height);
+		right: 40rpx;
+		z-index: 100;
+		margin-top: 54rpx;
 	}
-	.type-money{
-		color: #40B36C;
-	}
-	.bottom{
-		background-color: #CDE5E3;
-		padding: 5px!important;
-		border-bottom-right-radius: 40rpx;
-		border-bottom-left-radius: 40rpx;
-	}
-	.bottom-left{
-		color: #7F7F7F;
-		font-size: 10pt;
-		padding-left: 20rpx;
-		width: 35%;
-		display: inline-block;
-		
-	}
-	.bottom-right{
-		padding-left: 30rpx;
-		color: #7F7F7F;
-		font-size: 10pt;
-		width: 50%;
-		display: inline-block;
-	}
-}
 
 
 
