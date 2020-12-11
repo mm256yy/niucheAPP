@@ -191,7 +191,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .scroll-container {height: 100%;}
 page{
 	background-color:#f5f5f8 ;
