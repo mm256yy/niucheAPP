@@ -6,8 +6,8 @@
 			<view class="top-content-base" style="font-size: 12pt;">营业执照照片</view>
 			<view class="top-content-upload">
 				<view></view>
-				<u-upload :custom-btn="true" ref="uUpload" :action="action" 
-				@on-success='uploadChange' upload-text="" :limitType="['png','jpg',]"  :file-list="fileList" :max-size="4 * 1024 * 1024" 
+				<u-upload :custom-btn="true" ref="uUpload" :action="action" :before-upload="beforeUpload" @on-change ="hideLoadings"
+				@on-success='uploadChange' upload-text="" :limitType="['png','jpg',]" @on-remove="removeFile"  :file-list="fileList" :max-size="4 * 1024 * 1024" 
 				max-count="1" style="width: 100%;justify-content: center;" >
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -87,6 +87,7 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		onLoad(option) {
+			
 			let comparyid = option.id;
 			if(comparyid){
 				this.comparyid = comparyid;
@@ -99,7 +100,6 @@
 			} else{
 				this.initDate()
 			}
-			this.initStorage()
 			this.getInfo()
 		},
 		methods: {
@@ -145,34 +145,38 @@
 							};
 							 uni.setStorageSync('companySecond', obj);
 							 uni.setStorageSync('companyThree', objF);
-							let photo = data.photolist;
-							if(photo.comparyLogo){
-								let comparyLogo = [{url:photo.comparyLogo}]
-								 uni.setStorageSync('comparyLogo', comparyLogo);
-							}
-							if(photo.peopleCard){
-								let peopleCard = [{url:photo.peopleCard}]
-								 uni.setStorageSync('peopleCard', peopleCard);
-							}
-							if(photo.shengfenzheng){
-								let shengfenzheng = [{url:photo.shengfenzheng}]
-								 uni.setStorageSync('shengfenzheng', shengfenzheng);
-							}
-							if(photo.yingyezhizhao){
-								this.fileList.push({url:photo.yingyezhizhao})
-							}
+							 if(data.comparylogophoto){
+							 	let comparyLogo = [{url:data.comparylogophoto}]
+							 	 uni.setStorageSync('comparyLogo', comparyLogo);
+							 }
+							 if(data.comparypeoplephoto){
+							 	let peopleCard = [{url:data.comparypeoplephoto}]
+							 	 uni.setStorageSync('peopleCard', peopleCard);
+							 }
+							 if(data.idcardphoto){
+							 	let shengfenzheng = [{url:data.idcardphoto}]
+							 	 uni.setStorageSync('shengfenzheng', shengfenzheng);
+							 }
+							 if(data.businesscard){
+							 	this.fileList= [{url:data.businesscard}]
+							 }
 						  }
 						}).catch(res=>{this.$u.toast(res.msg)})
 				}
 			},
-			initStorage(){
-					this.today = uni.getStorageSync('today');
-			},
 			setStorage(data){
 					 uni.setStorageSync('companyFirst', data);
 			},
+			removeFile(){
+				this.fileList = [];
+				this.form.businesscard = ''
+			},
 			setForm(){
 				 let data = this.form;
+				 if(data.businesscard === ''){
+					 this.$u.toast('请上传营业执照图片')
+					 return
+				 }
 				 this.setStorage(data)
 				 this.$u.route("/pages/company/basicInfo/basicInfo")
 			},
@@ -195,8 +199,16 @@
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form.companyCreateTime = companyDate;
 			},
+			beforeUpload(index, list) {
+					uni.showLoading({
+						title: '识别中'  
+					});
+			 },
+			 hideLoadings(){
+				 uni.hideLoading();
+			 },
 			uploadChange(res,index,lists,name){
-				console.log(res)
+				uni.hideLoading();
 				if (res.code === 200){
 					let data = res.data;
 					uni.setStorageSync('xunfei',data)

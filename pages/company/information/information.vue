@@ -155,7 +155,7 @@
 				this.$u.route('/pages/company/identityAuth/identityAuth',{id:this.form.comparyid})
 			},
 			toPerson(){
-				this.$u.route('/pages/company/personAuth/personAuth',{id:this.form.comparyid})
+				this.$u.route('/pages/company/personEdit/personEdit',{id:this.form.comparyid})
 			},
 			toCenter(){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
