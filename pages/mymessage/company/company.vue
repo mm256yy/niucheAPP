@@ -161,10 +161,9 @@ page{
 	}
 	.bell{
 		position: fixed;
-		top: var(--status-bar-height);
+		top: calc(var(--status-bar-height) + 54rpx);
 		right: 40rpx;
 		z-index: 100;
-		margin-top: 54rpx;
 	}
 
 
