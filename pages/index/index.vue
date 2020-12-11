@@ -3,9 +3,12 @@
 		<Driver v-if='curThemeType ==="driver"' ref="driver"></Driver>
 		<Company ref="driver" v-else></Company>
 		<OneTips ref="onetips"></OneTips>
-		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075" :closeable='true'>
+		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075">
 			<view style="width: 580rpx;">
 				<u-image height="780rpx" mode="aspectFill" :src="data.photo" @click="toPage"></u-image>
+			</view>
+			<view class="close_btn" @click="show=false">
+				<u-icon label="" size="60" name="http://niuche-default.neocab.cn/guanbi_2%402x.png"></u-icon>
 			</view>
 		</u-popup>
 	</view>
@@ -138,5 +141,13 @@
 <style lang="scss">
 	page {
 		background-color: #F5F5F8;
+	}
+	.close_btn{
+		position: fixed;
+		bottom:  calc(var(--window-bottom,0) + 90rpx);
+		text-align: center;
+		left: 0;
+		right: 0;
+		
 	}
 </style>
