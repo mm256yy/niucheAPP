@@ -3,9 +3,9 @@
 		<Driver v-if='curThemeType ==="driver"' ref="driver"></Driver>
 		<Company ref="driver" v-else></Company>
 		<OneTips ref="onetips"></OneTips>
-		<u-popup v-model="show" mode="center" border-radius="14" :mask-close-able='false' z-index="10075" :closeable='true'>
+		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075" :closeable='true'>
 			<view style="width: 580rpx;">
-				<u-image height="780rpx" mode="widthFix" :src="data.photo"></u-image>
+				<u-image height="780rpx" mode="aspectFill" :src="data.photo" @click="toPage"></u-image>
 			</view>
 		</u-popup>
 	</view>
@@ -86,6 +86,13 @@
 					}
 				}
 			},
+			toPage(){
+				console.log(1)
+				let url = this.data.url;
+				if(url){
+					this.$u.route(url)
+				}
+			},
 			popupShow(type) {
 				this.$u.api.popupConfig({
 					function: 'popup',
@@ -105,7 +112,6 @@
 								param = "popup_visitorPhoto"
 							}
 							data.forEach(item => {
-								console.log(item)
 								if (item.param === "popup_isopen") {
 									if (item.result === 'open') {
 										this.show = true
