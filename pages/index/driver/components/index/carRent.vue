@@ -185,25 +185,14 @@
 			const token = uni.getStorageSync('token');
 			if(token) {
 				this.form.islogin = 1
-				this.view()
 			}else{
 				this.form.islogin = 0
 			}
 			this.search()
 		},
 		methods: {
-			view(){
-				this.$u.api.haveIs().then(res=>{
-					if(res.code === 200){
-						 this.num = res.object.titlenum;
-						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
 			page() {
-			    this.pageNum = 1;	
+			    this.pageNum = 1;
 			},
 			// 上划加载更多
 			      loadMore() {

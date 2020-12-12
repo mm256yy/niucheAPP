@@ -38,6 +38,15 @@
 			}
 		},
 		methods: {
+			view(){
+				this.$u.api.haveIs().then(res=>{
+					if(res.code === 200){
+						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			message(){
 				this.token = uni.getStorageSync('token');
 				if(this.token){
@@ -61,7 +70,7 @@
 				this.$refs.rent.page()
 				this.token = uni.getStorageSync('token');
 				if(this.token){
-					this.$refs.rent.view()
+					this.view()
 				}
 			},
 			// scroll-view到底部加载更多

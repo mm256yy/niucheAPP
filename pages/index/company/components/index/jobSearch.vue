@@ -84,19 +84,6 @@
 				show:false,
 				showType:false,
 				iconType: 'flower',
-				// list: [{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-				// 					},
-				// 					{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-				// 						title: '身无彩凤双飞翼，心有灵犀一点通'
-				// 					},
-				// 					{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-				// 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-				// 					}
-				// 				],
 				form: {
 				  driverAge: '',
 				  businessType: 0,
@@ -148,24 +135,10 @@
 		mounted() {
 			this.pageNum = 1;
 			this.search()
-			let token = uni.getStorageSync('token');
-			if(token){
-				this.view()
-			}
 		},
 		methods: {
-			view(){
-				this.$u.api.haveIs().then(res=>{
-					if(res.code === 200){
-						 this.num = res.object.titlenum;
-						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
 			page() {
-			    this.pageNum = 1;	
+			    this.pageNum = 1;
 			},
 			// 上划加载更多
 			      loadMore() {

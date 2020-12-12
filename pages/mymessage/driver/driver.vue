@@ -37,12 +37,6 @@
 				time:''
 			}
 		},
-		mounted() {
-			this.token = uni.getStorageSync('token');
-			if(this.token){
-				this.view()
-			}
-		},
 		methods: {
 			message(){
 				this.token = uni.getStorageSync('token');
@@ -65,7 +59,7 @@
 			getList() {
 				this.token = uni.getStorageSync('token');
 				if(this.token){
-					this.$refs.search.view()
+					this.view()
 				}
 				this.$refs.search.search()
 				this.$refs.search.page()

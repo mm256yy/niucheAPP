@@ -50,12 +50,6 @@
 				time:''
 			}
 		},
-		mounted() {
-			this.token = uni.getStorageSync('token');
-			if(this.token){
-				this.view()
-			}
-		},
 		methods: {
 			message(){
 				this.token = uni.getStorageSync('token');
@@ -81,24 +75,31 @@
 					this.$refs.carSell.search()
 					this.$refs.carSell.page()
 					if(this.token){
-						this.$refs.carSell.view()
+						this.view()
 					}
 				}
 				if(this.$refs.buying != undefined){
 					this.$refs.buying.search()
 					this.$refs.buying.page()
 					if(this.token){
-						this.$refs.buying.view()
+						this.view()
 					}
 				}
 			},
 			create(index){
+				this.token = uni.getStorageSync('token');
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
 				    this.isChildUpdate2 = false;
+					if(this.token){
+						this.view()
+					}
 				} else if(index == 1) {
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = true;
+					if(this.token){
+						this.view()
+					}
 				}
 			},
 			// tabs通知swiper切换
@@ -118,7 +119,6 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
-				this.create(current)
 			},
 			// scroll-view到底部加载更多
 			// onreachBottomCarSell() {

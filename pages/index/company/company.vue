@@ -1,6 +1,6 @@
 <template>
 	<view :class="'company-content'">
-		<u-icon class="bell" @click="message()" name="bell" color="#fff" size="36"></u-icon>
+		<u-icon :label="num" class="bell" @click="message()" name="bell" color="#fff" size="36"></u-icon>
 		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
@@ -52,6 +52,16 @@
 			}
 		},
 		methods: {
+			view(){
+				this.$u.api.haveIs().then(res=>{
+					if(res.code === 200){
+						 this.num = res.object.titlenum;
+						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			message(){
 				this.token = uni.getStorageSync('token');
 				if(this.token){
@@ -66,24 +76,31 @@
 					this.$refs.rent.search()
 					this.$refs.rent.page()
 					if(this.token){
-						this.$refs.rent.view()
+						this.view()
 					}
 				}
 				if(this.$refs.jobsearch != undefined){
 					this.$refs.jobsearch.search()
 					this.$refs.jobsearch.page()
 					if(this.token){
-						this.$refs.jobsearch.view()
+						this.view()
 					}
 				}
 			},
 			create(index){
+				this.token = uni.getStorageSync('token');
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
 				    this.isChildUpdate2 = false;
+					if(this.token){
+						this.view()
+					}
 				} else if(index == 1) {
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = true;
+					if(this.token){
+						this.view()
+					}
 				}
 			},
 			// tabs通知swiper切换
@@ -106,7 +123,6 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
-				this.create(current)
 			},
 			toView(){
 				console.log(11111111111111)

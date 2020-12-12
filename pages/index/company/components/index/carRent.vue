@@ -77,6 +77,7 @@
 
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+	import {format} from '@/common/rule.js'
 	export default {
 		components: {
 			loadRefresh
@@ -143,28 +144,15 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				pageNum: 1
+				pageNum: 1,
+				time:''
 			}
 		},
 		mounted() {
 			this.pageNum = 1;
 			this.search()
-			let token = uni.getStorageSync('token');
-			if(token){
-				this.view()
-			}
 		},
-		methods: {
-			view(){
-				this.$u.api.haveIs().then(res=>{
-					if(res.code === 200){
-						 this.num = res.object.titlenum;
-						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
+		methods:{ 
 			page() {
 			    this.pageNum = 1;	
 			},
