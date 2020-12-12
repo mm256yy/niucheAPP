@@ -1,6 +1,6 @@
 <template>
 	<view :class="'company-content'">
-		<u-icon class="bell" v-show="token" @click="message()" name="bell" color="#fff" size="36"></u-icon>
+		<u-icon class="bell" @click="message()" name="bell" color="#fff" size="36"></u-icon>
 		<u-badge v-show="num" type="error" :count="num"></u-badge>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
@@ -59,7 +59,11 @@
 		},
 		methods: {
 			message(){
-				this.$u.route("/pages/index/company/components/index/message",{time:this.time})
+				if(this.token){
+					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
+				}else{
+					this.$u.route('/pages/login/login');
+				}
 			},
 			view(){
 				this.$u.api.haveIs().then(res=>{
