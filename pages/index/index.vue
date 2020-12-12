@@ -8,7 +8,7 @@
 				<u-image height="780rpx" mode="aspectFill" :src="data.photo" @click="toPage"></u-image>
 			</view>
 			<view class="close_btn" @click="show=false">
-				<u-icon label="" size="60" name="http://niuche-default.neocab.cn/guanbi_2%402x.png"></u-icon>
+				<img src="http://niuche-default.neocab.cn/guanbi.png" alt="">
 			</view>
 		</u-popup>
 	</view>
