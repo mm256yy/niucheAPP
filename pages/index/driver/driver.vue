@@ -37,14 +37,9 @@
 				time:''
 			}
 		},
-		mounted() {
-			this.token = uni.getStorageSync('token');
-			if(this.token){
-				this.view()
-			}
-		},
 		methods: {
 			message(){
+				this.token = uni.getStorageSync('token');
 				if(this.token){
 					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
 				}else{
@@ -64,6 +59,10 @@
 			getList() {
 				this.$refs.rent.search()
 				this.$refs.rent.page()
+				this.token = uni.getStorageSync('token');
+				if(this.token){
+					this.$refs.rent.view()
+				}
 			},
 			// scroll-view到底部加载更多
 			// onreachBottomRent() {

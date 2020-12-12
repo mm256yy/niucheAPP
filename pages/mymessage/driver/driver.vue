@@ -45,6 +45,7 @@
 		},
 		methods: {
 			message(){
+				this.token = uni.getStorageSync('token');
 				if(this.token){
 					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
 				}else{
@@ -62,7 +63,10 @@
 				})
 			},
 			getList() {
-				console.log(1)
+				this.token = uni.getStorageSync('token');
+				if(this.token){
+					this.$refs.search.view()
+				}
 				this.$refs.search.search()
 				this.$refs.search.page()
 			},

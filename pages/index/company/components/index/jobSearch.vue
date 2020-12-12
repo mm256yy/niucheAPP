@@ -147,9 +147,23 @@
 		},
 		mounted() {
 			this.pageNum = 1;
-			this.search()	
+			this.search()
+			let token = uni.getStorageSync('token');
+			if(token){
+				this.view()
+			}
 		},
 		methods: {
+			view(){
+				this.$u.api.haveIs().then(res=>{
+					if(res.code === 200){
+						 this.num = res.object.titlenum;
+						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			page() {
 			    this.pageNum = 1;	
 			},

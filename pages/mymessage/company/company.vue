@@ -58,6 +58,7 @@
 		},
 		methods: {
 			message(){
+				this.token = uni.getStorageSync('token');
 				if(this.token){
 					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
 				}else{
@@ -75,13 +76,20 @@
 				})
 			},
 			getList() {
+				this.token = uni.getStorageSync('token');
 				if(this.$refs.carSell != undefined){
 					this.$refs.carSell.search()
 					this.$refs.carSell.page()
+					if(this.token){
+						this.$refs.carSell.view()
+					}
 				}
 				if(this.$refs.buying != undefined){
 					this.$refs.buying.search()
 					this.$refs.buying.page()
+					if(this.token){
+						this.$refs.buying.view()
+					}
 				}
 			},
 			create(index){

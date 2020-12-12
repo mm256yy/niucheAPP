@@ -51,38 +51,30 @@
 				time:''
 			}
 		},
-		mounted() {
-			this.token = uni.getStorageSync('token');
-			if(this.token){
-				this.view()
-			}
-		},
 		methods: {
 			message(){
+				this.token = uni.getStorageSync('token');
 				if(this.token){
 					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
 				}else{
 					this.$u.route('/pages/login/login');
 				}
 			},
-			view(){
-				this.$u.api.haveIs().then(res=>{
-					if(res.code === 200){
-						 this.num = res.object.titlenum;
-						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
-			},
 			getList() {
+				this.token = uni.getStorageSync('token');
 				if(this.$refs.rent != undefined){
 					this.$refs.rent.search()
 					this.$refs.rent.page()
+					if(this.token){
+						this.$refs.rent.view()
+					}
 				}
 				if(this.$refs.jobsearch != undefined){
 					this.$refs.jobsearch.search()
 					this.$refs.jobsearch.page()
+					if(this.token){
+						this.$refs.jobsearch.view()
+					}
 				}
 			},
 			create(index){
