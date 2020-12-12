@@ -1,17 +1,18 @@
 <template>
 	<view style="background-color: #fff;" class="carSell">
 		<view class="middle-content">
-			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:220rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="kmkey" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:100rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
+			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+				<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+			    background: #F8F9FB;border-radius: 4px;width: 190rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true"  v-model="driverAgeKey" type="select" /></u-form-item>
+				<u-form-item style="padding: 6rpx 18rpx;margin-left:56rpx;margin-top: -18rpx;float: left;
+			    background: #F8F9FB;border-radius: 4px;width: 190rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
+				<u-form-item style="padding: 6rpx 18rpx;margin-left:56rpx;margin-top: -18rpx;float: left;
+				background: #F8F9FB;border-radius: 4px;width: 158rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
-			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select> -->
+			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<view style="position: fixed;top: 100rpx;left: 0;" v-show="show">
+				<text style="width: 206rpx;height: 76rpx;border: 1px solid #D9DEDF;line-height: 76rpx;text-align: center;display: inline-block;color: #666;" v-for="(item, index) in select" :key="index">{{item.label}}</text>
+			</view>
 			<u-dropdown style="width: 50rpx;">
 				<u-dropdown-item @change="change()" v-model="form.km" title="行驶里程" :options="select"></u-dropdown-item>
 				<u-dropdown-item @change="changePrice()" v-model="form.packprice" title="打包价" :options="selectPrice"></u-dropdown-item>
@@ -46,8 +47,8 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.demandid)">
-						<img style="width: 312rpx;height: 231rpx;border-radius: 20rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 312rpx;height: 231rpx;border-radius: 20rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt="">
 		    			<!-- <u-image v-show="item.photoUrl" class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
 		    			<u-image v-show="!item.photoUrl" class="left" width="312rpx" height="231rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image> -->
@@ -383,7 +384,7 @@
 			top: 0;
 			left: 0;
 			z-index: 2;
-			background-color: #f5f5f8;
+			background-color: #fff;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}

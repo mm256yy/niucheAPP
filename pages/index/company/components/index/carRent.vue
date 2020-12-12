@@ -1,19 +1,24 @@
 <template>
 	<view class="carRent">
 		<view class="middle-content">
-			<!-- <u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:240rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true" v-model="driverAgeKey" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:240rpx;margin-left:60rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
+			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+				<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+                background: #F8F9FB;border-radius: 4px;width: 190rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true"  v-model="driverAgeKey" type="select" /></u-form-item>
+				<u-form-item style="padding: 6rpx 18rpx;margin-left:56rpx;margin-top: -18rpx;float: left;
+                background: #F8F9FB;border-radius: 4px;width: 190rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
+				<u-form-item style="padding: 6rpx 18rpx;margin-left:56rpx;margin-top: -18rpx;float: left;
+				background: #F8F9FB;border-radius: 4px;width: 158rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
 			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
-			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
-			<u-dropdown>
+			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<view style="position: fixed;top: 100rpx;left: 0;" v-show="show">
+				<text style="width: 206rpx;height: 76rpx;border: 1px solid #D9DEDF;line-height: 76rpx;text-align: center;display: inline-block;color: #666;" v-for="(item, index) in select" :key="index">{{item.label}}</text>
+			</view>
+			<!-- <u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select> -->
+			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select>
+			<!-- <u-dropdown>
 				<u-dropdown-item @change="change()" v-model="form.driverAge" title="选择驾龄" :options="select"></u-dropdown-item>
 				<u-dropdown-item @change="changeType()" v-model="businessType" title="业务类型" :options="selectType"></u-dropdown-item>
-			</u-dropdown>
+			</u-dropdown> -->
 		</view>
 		<view class="tagBox">
 			<view v-show="driverAgekey" class="selectTag">{{driverAgekey}}</view>
@@ -352,7 +357,7 @@
 			top: 0;
 			left: 0;
 			z-index: 2;
-			background-color: #f5f5f8;
+			background: #fff;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -362,8 +367,7 @@
 			height: 71rpx;
 			border-radius: 40rpx;
 			margin-left: 39rpx;
-			background-color: #CDE5E3;
-			margin-top: 30rpx;
+			margin-top: 46rpx;
 			float: left;
 		}
 		.icon {
