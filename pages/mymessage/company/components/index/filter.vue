@@ -170,6 +170,7 @@
 			},
 			powerGroupChange(e) {
 				this.form.power = e.join(',');
+				console.log(this.form.power)
 				this.powerkey = e.join('+');
 				this.add()
 				this.select()
