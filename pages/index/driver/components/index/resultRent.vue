@@ -10,7 +10,7 @@
 				   v-show="list.length"
 				   ref="loadRefresh"
 				   :pageNo='pageNum'
-				   :totalPageNo='Math.ceil(this.total/10)'
+				   :totalPageNo='total'
 				   :isRefresh="true"
 				   refreshType="halfCircle"
 				   refreshTime="1000"
@@ -182,7 +182,7 @@
 		      });
 		  		this.$u.api.homeRent(params).then(res=>{
 		  			if(res.code === 200){
-		  				 this.total= res.total;
+		  				 this.total = Math.ceil(res.total/10);
 						 let arr = res.rows
 						 arr.forEach(item=>{
 						 	this.list.push(item)
@@ -209,7 +209,7 @@
 		  		this.$u.api.homeRent(params).then(res=>{
 		  			if(res.code === 200){
 		  				 this.list = res.rows;
-		  				 this.total = res.total;
+		  				 this.total = Math.ceil(res.total/10);
 						 let len = this.list.length;
 						 if(len<this.total){
 						 	this.status = 'loadmore'
