@@ -1,9 +1,8 @@
-// import {baseUrl} from '@/utils/constant.js'
+import {baseUrl} from '@/utils/constant.js'
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	const config = {
-		// baseUrl: 'http://server.neocab.cn',
-		baseUrl:'http://app-server.neocab.cn', //正式
+		baseUrl:baseUrl, //正式
 		loadingText: '努力加载中~',
 		method: 'POST',
 		timeout:5000,
