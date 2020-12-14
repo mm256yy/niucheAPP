@@ -1,7 +1,7 @@
 <template>
 	<view :class="'company-content'">
-		<u-icon :label="num" class="bell" @click="message()" name="bell" color="#fff" size="36"></u-icon>
-		<u-badge v-show="num" type="error" :count="num"></u-badge>
+		<u-icon class="bell" @click="message()" name="bell" color="#fff" size="36"></u-icon>
+		<view @click="message()" v-show="num" class="badge">{{num}}</view>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
@@ -180,6 +180,25 @@ page{
 		position: fixed;
 		top: calc(var(--status-bar-height) + 54rpx);
 		right: 40rpx;
+		z-index: 100;
+	}
+	.badge{
+		position: fixed;
+		top: calc(var(--status-bar-height) + 34rpx);
+		right: 30rpx;
+		z-index: 100;
+	}
+	.badge{
+		width: 40rpx;
+		height: 40rpx;
+		line-height: 40rpx;
+		text-align: center;
+		color: #fff;
+		border-radius: 50%;
+		background-color: red;
+		position: fixed;
+		top: calc(var(--status-bar-height) + 24rpx);
+		right: 28rpx;
 		z-index: 100;
 	}
 
