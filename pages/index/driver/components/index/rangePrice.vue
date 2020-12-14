@@ -3,8 +3,8 @@
 		<view class="padding">
 			<v-tabs v-show="tab.length>1" v-model="firstCurrent" :scroll="true" lineHeight='0rpx' :pills="true" pillsColor="#FE9217" pillsBorderRadius="0rpx"
 			 inactive-color="#000000" activeColor="#ffffff" :tabs="tab" @change="change"></v-tabs>
-			 <view style="width: 300rpx;height: 60rpx;background-color: #FE9217;line-height: 60rpx;text-align: center;color: #fff;" v-show="tab.length==1" v-for="(item, index) in tab" key="-1">{{item}}</view>
-			 <view v-for="(item, index) in detail.carRentPriceCollection" :key="index" class="" v-show="firstCurrent === index">
+			 <view style="width: 300rpx;height: 60rpx;background-color: #FE9217;line-height: 60rpx;text-align: center;color: #fff;" v-show="tab.length==1" v-for="(item, index) in tab" :key="index">{{item}}</view>
+			 <view v-for="(item, index) in detail.carRentPriceCollection" :key="item.id" class="" v-show="firstCurrent === index">
 			    <view class="bg">
 			        <view class="year">车龄：≤{{detail.carage}}年</view>
 			    	<view class="distance">{{detail.carkm}}万公里</view>

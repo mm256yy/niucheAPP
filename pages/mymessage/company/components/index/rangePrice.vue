@@ -4,10 +4,10 @@
 			<v-tabs v-show="tab.length>1" v-model="firstCurrent" :scroll="false" @change="change" activeColor="#ffffff"
 			 lineHeight='0rpx' color="#000000" :pills="true" pillsColor="#40B36C" pillsBorderRadius="0rpx" 
 			  :tabs="tab"></v-tabs>
-			  <view style="width: 300rpx;height: 60rpx;background-color: #40B36C;line-height: 60rpx;text-align: center;color: #fff;" v-show="tab.length==1" v-for="(item, index) in tab" key="-1">{{item}}</view>
+			  <view style="width: 300rpx;height: 60rpx;background-color: #40B36C;line-height: 60rpx;text-align: center;color: #fff;" v-show="tab.length==1" v-for="(item, index) in tab" :key="index">{{item}}</view>
 	<!-- 		<v-tabs v-model="firstCurrent" :scroll="true" lineHeight='0rpx' color="#7f7f7f" :pills="true" 
 			pillsColor="#ffffff" pillsBorderRadius="0rpx" activeColor="#40B36C" :tabs="tab" @change="change"></v-tabs> -->
-			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
+			 <view v-for="(item, index) in detail.pricesectionlist" :key="item.id" class="" v-show="firstCurrent === index">
 				<view class="bg">
 					<view class="year">{{detail.carage}}</view>
 					<view class="distance">新车 <{{detail.carkm}}公里</view>
