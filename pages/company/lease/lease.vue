@@ -49,13 +49,13 @@
 			<view class="view-content" style="color: #f00;font-size: 8pt;">*上传的车辆证件须与认证主体名称一致，否则可能会造成审核失败。</view>
 			<view class="view-content">
 				<view class="label_title">业务类型</view>
-				<SearchTags :list="onLineList" :active="activeYw" :singleType="true" @onClick="textStyleChange"></SearchTags>
-<!-- 				<view>
-					<text :class='{checked_text:index===current,common_text:true}' v-for="(item,index) in onLineList" :key="item.id" 
-					@click="textStyleChange(index)">{{item.text}}</text>
-				</view> -->
+				<SearchTags :list="onLineList" :active="activeOnLine" :singleType="true" @onClick="onLineListChange"></SearchTags>
+				<u-cell-group :border="false" style="border-bottom: 1px solid #DEDEDE;">
+					<u-cell-item title="转卖车辆" value="请选择品牌型号" :title-style="titleStyle" @click="toCustomer"></u-cell-item>
+				</u-cell-group>
+				<view class="label_title">车辆类型</view>
+				<SearchTags :list="carTypeList" :active="activeCarType" :singleType="true" @onClick="carTypeListChange"></SearchTags>
 			</view>
-				
 		</view>
 		<Auth></Auth>
 	</view>
@@ -73,12 +73,17 @@
 	export default {
 		data() {
 			return {
+				titleStyle:publishObj.titleStyle,
 				backTextStyle:publishObj.backTextStyle,
 				action: action,
 				fileList: [],
 				fileList1: [],
 				onLineList:publishObj.onLineList,
-				activeYw:0,
+				activeOnLine:0,
+				carTypeList:publishObj.carType,
+				activeCarType:0,
+				powerList:publishObj.power,
+				activePower:0,
 				form: {
 					isOneclickAndAdd: 2,
 					carbrand: '',
@@ -145,10 +150,12 @@
 					this.title = '转卖发布'
 				}
 			},
-			textStyleChange(index){
-				this.activeYw = index;
+			onLineListChange(index){
+				this.activeOnLine = index;
 			},
-			
+			carTypeListChange(index){
+				this.activeCarType = index;
+			}
 
 		}
 	}
@@ -192,28 +199,7 @@
 		font-family: PingFangSC-Medium, PingFang SC;
 		font-weight: 500;
 	}
-	//按钮
-	.common_text{
-		width: 156rpx;
-		height: 72rpx;
-		display: inline-block;
-		text-align: center;
-		line-height: 72rpx;
-		margin: 10pt 8pt 8pt 0;
-		font-size: 28rpx;
-		border: 2rpx solid #d9dedf;
-	}
-	.defult_text{
-		color: #666;
-		border-color: #d9dedf;
-		background: #FFFFFF;
-	}
-	.checked_text{
-		color: #4ABA75;
-		border-color: #4ABA75;
-		background: #DDFFEA;
-		
-	}
+	
 	.input_select {
 		background: #FFFFFF;
 		border-radius: 40rpx;
