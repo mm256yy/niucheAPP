@@ -1,8 +1,6 @@
 <template>
 	<view class="">
-	<u-navbar back-text="" back-icon-size="0" title="" :background="backgroundCom" height='44' title-color="#FFFFFF"></u-navbar>
-	
-	<u-index-list :scrollTop="scrollTop" :index-list="indexList" offset-top='44'>
+	<u-index-list :scrollTop="scrollTop" :index-list="indexList" offset-top='0'>
 		<view v-for="(item, index) in list" :key="index">
 			<u-index-anchor :index="item.letter" />
 			<view class="list-cell u-border-bottom" v-for="(info, index) in item.data" :key="index" @click="toNext(info)">
@@ -41,8 +39,9 @@ import {list} from "@/utils/index.list.js";
            	success: (res) => {
 				if(res.statusCode === 200){
 					this.list = res.data;
-					let arr = res.data.forEach(item=>{
-						return item.letter;
+					let arr = [];
+					res.data.forEach(item=>{
+						arr.push(item.letter)
 					})
 					this.indexList = arr
 				} else {
