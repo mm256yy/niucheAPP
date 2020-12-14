@@ -183,22 +183,17 @@ page{
 		z-index: 100;
 	}
 	.badge{
-		position: fixed;
-		top: calc(var(--status-bar-height) + 34rpx);
-		right: 30rpx;
-		z-index: 100;
-	}
-	.badge{
-		width: 40rpx;
-		height: 40rpx;
-		line-height: 40rpx;
+		width: 30rpx;
+		height: 30rpx;
+		line-height: 28rpx;
 		text-align: center;
+		font-size: 20rpx;
 		color: #fff;
 		border-radius: 50%;
 		background-color: red;
 		position: fixed;
-		top: calc(var(--status-bar-height) + 24rpx);
-		right: 28rpx;
+		top: calc(var(--status-bar-height) + 34rpx);
+		right: 30rpx;
 		z-index: 100;
 	}
 
