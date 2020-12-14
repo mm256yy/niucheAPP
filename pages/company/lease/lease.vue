@@ -18,7 +18,7 @@
 							<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 						</view>
 					</u-upload>
-				</view>
+				</view> 
 				<view style="margin-top: 10pt;font-size: 10pt;padding-left: 5pt;">
 					<view>上传图片必须包含：</view>
 					<view>1、车外观左右前方45°照片；</view>
@@ -49,10 +49,11 @@
 			<view class="view-content" style="color: #f00;font-size: 8pt;">*上传的车辆证件须与认证主体名称一致，否则可能会造成审核失败。</view>
 			<view class="view-content">
 				<view class="label_title">业务类型</view>
-				<view>
+				<SearchTags :list="onLineList" :active="activeYw" :singleType="true" @onClick="textStyleChange"></SearchTags>
+<!-- 				<view>
 					<text :class='{checked_text:index===current,common_text:true}' v-for="(item,index) in onLineList" :key="item.id" 
 					@click="textStyleChange(index)">{{item.text}}</text>
-				</view>
+				</view> -->
 			</view>
 				
 		</view>
@@ -66,6 +67,7 @@
 		businessTypeRule
 	} from '@/common/rule.js'
 	import Auth from '@/components/auth.vue'
+	import SearchTags from '@/components/searchTags.vue'
 	import {action,publishObj} from '@/utils/constant.js'
     
 	export default {
@@ -76,7 +78,7 @@
 				fileList: [],
 				fileList1: [],
 				onLineList:publishObj.onLineList,
-				current:0,
+				activeYw:0,
 				form: {
 					isOneclickAndAdd: 2,
 					carbrand: '',
@@ -108,7 +110,7 @@
 			}
 		},
 		components: {
-			Auth
+			Auth,SearchTags
 		},
 		onLoad(option) {
 			let index = option.id;
@@ -144,8 +146,9 @@
 				}
 			},
 			textStyleChange(index){
-              this.current = index
+				this.activeYw = index;
 			},
+			
 
 		}
 	}
