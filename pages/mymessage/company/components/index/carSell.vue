@@ -1,23 +1,28 @@
 <template>
-	<view style="background-color: #fff;" class="carSell">
+	<view class="carSell">
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
-			    background: #F8F9FB;border-radius: 4px;width: 190rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="选择驾龄" @click="show = true"  v-model="driverAgeKey" type="select" /></u-form-item>
-				<u-form-item style="padding: 6rpx 18rpx;margin-left:56rpx;margin-top: -18rpx;float: left;
-			    background: #F8F9FB;border-radius: 4px;width: 190rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
-				<u-form-item style="padding: 6rpx 18rpx;margin-left:56rpx;margin-top: -18rpx;float: left;
-				background: #F8F9FB;border-radius: 4px;width: 158rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showType = true" v-model="businessTypeKey" type="select" /></u-form-item>
+				background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+				<view style="float: left;">杭州</view>
+				<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+				</u-form-item>
+				<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+			    background: #F8F9FB;border-radius: 4px;width: 128rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="车龄" @click="show = true"  v-model="packpricekey" type="select" /></u-form-item>
+				<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
+			    background: #F8F9FB;border-radius: 4px;width: 128rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="里程" @click="showType = true" v-model="kmkey" type="select" /></u-form-item>
+				<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
+				background: #F8F9FB;border-radius: 4px;width: 154rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showType = true" v-model="packpricekey" type="select" /></u-form-item>
 			</u-form>
 			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
-			<view style="position: fixed;top: 100rpx;left: 0;" v-show="show">
-				<text style="width: 206rpx;height: 76rpx;border: 1px solid #D9DEDF;line-height: 76rpx;text-align: center;display: inline-block;color: #666;" v-for="(item, index) in select" :key="index">{{item.label}}</text>
+			<view style="position: fixed;top: 100rpx;left:0;background-color: #fff;" v-show="show">
+				<text style="width: 206rpx;height: 76rpx;border: 1px solid #D9DEDF;line-height: 76rpx;text-align: center;display: inline-block;color: #666;margin-left: 32rpx;" v-for="(item, index) in select" :key="index">{{item.label}}</text>
 			</view>
-			<u-dropdown style="width: 50rpx;">
+			<!-- <u-dropdown style="width: 50rpx;">
 				<u-dropdown-item @change="change()" v-model="form.km" title="行驶里程" :options="select"></u-dropdown-item>
 				<u-dropdown-item @change="changePrice()" v-model="form.packprice" title="打包价" :options="selectPrice"></u-dropdown-item>
-			</u-dropdown>
-			<view @click="filter()" style="width: 100rpx;text-align: center;margin-right: 40rpx;">筛选</view>
+			</u-dropdown> -->
+			<view @click="filter()" style="width: 100rpx;text-align: center;margin-right: 40rpx;">更多</view>
 		</view>
 		<view class="tagBox">
 			<view v-show="kmkey" class="selectTag">{{kmkey}}</view>
@@ -57,6 +62,7 @@
 		    				<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 							<view class="tag">{{item.carAge}}/{{item.km}}</view>
 		    				<view class="price">{{item.packPrice}}元</view>
+							<view style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售200辆</view>
 		    			</view>
 		    			<view class="clear"></view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
@@ -394,7 +400,7 @@
 			height: 71rpx;
 			border-radius: 40rpx;
 			margin-left: 39rpx;
-			background-color: #CDE5E3;
+			background-color: #fff;
 			margin-top: 30rpx;
 			float: left;
 		}
@@ -418,6 +424,9 @@
 		}
 		.clear {
 			clear: both;
+		}
+		.last{
+			background-color: #fff;
 		}
 		.lists {
 			width: 702rpx;
@@ -466,6 +475,7 @@
 					font-weight: bold;
 					color: #FF5200;
 			        margin-top: 30rpx;
+					float: left;
 				}
 			}
 		}
