@@ -1,7 +1,7 @@
 <template>
 	<view :class="'driver-content'">
-		<u-icon class="bell" v-show="token" @click="message()" name="bell" color="#fff" size="36"></u-icon>
-		<u-badge v-show="num" type="error" :count="num"></u-badge>
+		<u-icon class="bell" @click="message()" name="bell" color="#fff" size="36"></u-icon>
+		<view @click="message()" v-show="num" class="badge">{{num}}</view>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
@@ -37,15 +37,24 @@
 				time:''
 			}
 		},
-		mounted() {
-			this.token = uni.getStorageSync('token');
-			if(this.token){
-				this.view()
-			}
-		},
 		methods: {
+			view(){
+				this.$u.api.haveIs().then(res=>{
+					if(res.code === 200){
+						this.num = res.object.titlenum;
+						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			message(){
-				this.$u.route("/pages/index/company/components/index/message",{time:this.time})
+				this.token = uni.getStorageSync('token');
+				if(this.token){
+					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
+				}else{
+					this.$u.route('/pages/login/login');
+				}
 			},
 			view(){
 				this.$u.api.haveIs().then(res=>{
@@ -60,6 +69,10 @@
 			getList() {
 				this.$refs.rent.search()
 				this.$refs.rent.page()
+				this.token = uni.getStorageSync('token');
+				if(this.token){
+					this.view()
+				}
 			},
 			// scroll-view到底部加载更多
 			// onreachBottomRent() {
@@ -107,10 +120,23 @@ page{
 	}
 	.bell{
 		position: fixed;
-		top: var(--status-bar-height);
+		top: calc(var(--status-bar-height) + 54rpx);
 		right: 40rpx;
 		z-index: 100;
-		margin-top: 54rpx;
+	}
+	.badge{
+		width: 30rpx;
+		height: 30rpx;
+		line-height: 28rpx;
+		text-align: center;
+		font-size: 20rpx;
+		color: #fff;
+		border-radius: 50%;
+		background-color: red;
+		position: fixed;
+		top: calc(var(--status-bar-height) + 34rpx);
+		right: 30rpx;
+		z-index: 100;
 	}
 
 

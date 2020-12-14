@@ -1,5 +1,6 @@
 
-let ipconfig = 'http://server.neocab.cn'
+let ipconfig = 'http://app-server.neocab.cn'
+// let ipconfig = 'http://server.neocab.cn'
 export const action =ipconfig+ "/sys/upload/uploadImage";
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';
@@ -10,6 +11,7 @@ export const publishObj = {
 	errorType:['message'],
 	// navbar返回按钮样式
 	backTextStyle:{'color':'#ffffff'},
+	titleStyle:{'color':'#111111','fontSize':'32rpx','fontWeight':500},
 	onLineList:[{id: '1',text: '网约车',checked:false},{id: '2',text: '出租车',checked:false}],
 	//车辆类型
 	carType:[{id: '1',text: '轿车',checked:false},{id: '2',text: 'SUV',checked:false},{id: '3',text: 'MPV',checked:false},{id: '4',text: '其他',checked:false}],

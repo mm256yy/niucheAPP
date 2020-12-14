@@ -6,7 +6,7 @@
 						 <load-refresh
 						   ref="loadRefresh"
 						   :pageNo='pageNum'
-						   :totalPageNo='Math.ceil(this.total/10)'
+						   :totalPageNo='total'
 						   :isRefresh="true"
 						   refreshType="halfCircle"
 						   refreshTime="1000"
@@ -45,7 +45,8 @@
 				  pageSize: 10
 				},
 				list: [],
-				pageNum: 1
+				pageNum: 1,
+				total:0
 			}
 		},
 		mounted() {
@@ -68,6 +69,7 @@
 				this.$u.api.viewMessage(this.pagination).then(res=>{
 					if(res.code === 200){
 						 this.list = res.rows;
+						 this.total = Math.ceil(res.total/10);
 						 this.list.forEach(item=>{
 						 	item.begintime = format(item.begintime, 'yyyy-MM-dd HH:mm')
 						 })
@@ -83,7 +85,11 @@
 					pageSize: 10
 				}).then(res=>{
 					if(res.code === 200){
-						 this.list = res.object;
+						this.total = Math.ceil(res.total/10);
+						let arr = res.rows
+						arr.forEach(item=>{
+							this.list.push(item)
+						})
 						 this.list.forEach(item=>{
 						 	item.begintime = format(item.begintime, 'yyyy-MM-dd HH:mm')
 						 })
