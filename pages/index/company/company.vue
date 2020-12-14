@@ -1,7 +1,7 @@
 <template>
 	<view :class="'company-content'">
-		<u-icon class="bell" v-show="token" @click="message()" name="bell" color="#fff" size="36"></u-icon>
-		<u-badge v-show="num" type="error" :count="num"></u-badge>
+		<u-icon class="bell" @click="message()" name="bell" color="#fff" size="36"></u-icon>
+		<view @click="message()" v-show="num" class="badge">{{num}}</view>
 		<view class="wrap">
 		<u-navbar height="10" back-icon-size="0" title="" :background="backgroundCom" title-color="#FFFFFF"></u-navbar>
 		<view style="">
@@ -51,16 +51,7 @@
 				time:''
 			}
 		},
-		mounted() {
-			this.token = uni.getStorageSync('token');
-			if(this.token){
-				this.view()
-			}
-		},
 		methods: {
-			message(){
-				this.$u.route("/pages/index/company/components/index/message",{time:this.time})
-			},
 			view(){
 				this.$u.api.haveIs().then(res=>{
 					if(res.code === 200){
@@ -71,23 +62,45 @@
 					}
 				})
 			},
+			message(){
+				this.token = uni.getStorageSync('token');
+				if(this.token){
+					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
+				}else{
+					this.$u.route('/pages/login/login');
+				}
+			},
 			getList() {
+				this.token = uni.getStorageSync('token');
 				if(this.$refs.rent != undefined){
 					this.$refs.rent.search()
 					this.$refs.rent.page()
+					if(this.token){
+						this.view()
+					}
 				}
 				if(this.$refs.jobsearch != undefined){
 					this.$refs.jobsearch.search()
 					this.$refs.jobsearch.page()
+					if(this.token){
+						this.view()
+					}
 				}
 			},
 			create(index){
+				this.token = uni.getStorageSync('token');
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
 				    this.isChildUpdate2 = false;
+					if(this.token){
+						this.view()
+					}
 				} else if(index == 1) {
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = true;
+					if(this.token){
+						this.view()
+					}
 				}
 			},
 			// tabs通知swiper切换
@@ -110,7 +123,6 @@
 				this.$refs.uTabs.setFinishCurrent(current);
 				this.swiperCurrent = current;
 				this.current = current;
-				this.create(current)
 			},
 			toView(){
 				console.log(11111111111111)
@@ -167,10 +179,23 @@ page{
 	}
 	.bell{
 		position: fixed;
-		top: var(--status-bar-height);
+		top: calc(var(--status-bar-height) + 54rpx);
 		right: 40rpx;
 		z-index: 100;
-		margin-top: 54rpx;
+	}
+	.badge{
+		width: 30rpx;
+		height: 30rpx;
+		line-height: 28rpx;
+		text-align: center;
+		font-size: 20rpx;
+		color: #fff;
+		border-radius: 50%;
+		background-color: red;
+		position: fixed;
+		top: calc(var(--status-bar-height) + 34rpx);
+		right: 30rpx;
+		z-index: 100;
 	}
 
 

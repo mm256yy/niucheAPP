@@ -29,7 +29,7 @@
 		  style="margin-top: 80rpx;"
 		  v-show="list.length"
 		  :pageNo='pageNum'
-		  :totalPageNo='Math.ceil(this.total/10)'
+		  :totalPageNo='total'
 		  ref="loadRefresh"
 		  :isRefresh="true"
 		  refreshType="halfCircle"
@@ -84,19 +84,6 @@
 				show:false,
 				showType:false,
 				iconType: 'flower',
-				// list: [{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-				// 					},
-				// 					{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-				// 						title: '身无彩凤双飞翼，心有灵犀一点通'
-				// 					},
-				// 					{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-				// 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-				// 					}
-				// 				],
 				form: {
 				  driverAge: '',
 				  businessType: 0,
@@ -147,11 +134,11 @@
 		},
 		mounted() {
 			this.pageNum = 1;
-			this.search()	
+			this.search()
 		},
 		methods: {
 			page() {
-			    this.pageNum = 1;	
+			    this.pageNum = 1;
 			},
 			// 上划加载更多
 			      loadMore() {
@@ -196,7 +183,7 @@
 		        });
 		    		this.$u.api.askWork(params).then(res=>{
 		    			if(res.code === 200){
-		    				 this.total= res.total;
+		    				 this.total = Math.ceil(res.total/10);
 							 let arr = res.rows
 							 arr.forEach(item=>{
 							 	this.list.push(item)
@@ -238,7 +225,7 @@
 		    		this.$u.api.askWork(params).then(res=>{
 		    			if(res.code === 200){
 		    				 this.list = res.rows;
-		    				 this.total= res.total;
+		    				 this.total = Math.ceil(res.total/10);
 							 let len = this.list.length;
 							 if(len<this.total){
 							 	this.status = 'loadmore'
