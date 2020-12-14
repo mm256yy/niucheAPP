@@ -14,7 +14,12 @@
 			<view style="padding: 40rpx;">
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name">{{detail.titletext}}</view>
-				<view class="price"><text>￥{{detail.packprice}}</text>打包价</view>
+				<view class="price"><text>￥{{detail.packprice}}</text>/月起售</view>
+				<view style="position: relative;">
+					<u-image class="bgType" width="116rpx" height="48rpx" src="@/static/type.png"></u-image>
+					<view class="type">网约车</view>
+				</view>
+				<view class="startNum">10辆起售</view>
 				<view class="collect" v-if="!viewFlag&&token&&show">
 					<u-icon v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="40"></u-icon>
 					<u-icon v-show="detail.iscollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
@@ -274,7 +279,7 @@ page{
 		height: 100%;
 	}
 	.detail {
-		background-color: #F5F5F8;
+		// background-color: #F5F5F8;
 		.wraps{
 			width: 100%;
 			height: 503rpx;
@@ -299,20 +304,20 @@ page{
 			margin-top: 61rpx;
 		}
 		.name {
-			font-size: 28rpx;
+			font-size: 42rpx;
 			font-weight: 900;
+			color: #111;
 			margin-top: 20rpx;
 			margin-bottom: 20rpx;
 		}
 		.price {
-			font-size: 20rpx;
+			font-size: 28rpx;
+			font-weight: 900;
+			color: #FE5B00;
 			float: left;
 		}
 		.price text {
-			font-size: 40rpx;
-			font-weight: 900;
-			color: #40B36C;
-			margin-right: 12rpx;
+			font-size: 42rpx;
 		}
 		.collect {
 			float: right;
@@ -368,6 +373,32 @@ page{
 			bottom: 0;
 			left: 0;
 			z-index: 20;
+		}
+		.bgType{
+			position: absolute;
+			top: 0;
+			left: 320rpx;
+		}
+		.type{
+			font-size: 28rpx;
+			font-weight: 500;
+			color: #FFFFFF;
+			position: absolute;
+			top: 4rpx;
+			left: 336rpx;
+		}
+		.startNum{
+			width: 150rpx;
+			height: 48rpx;
+			line-height: 48rpx;
+			text-align: center;
+			background: #F2F2F2;
+			border-radius: 8rpx;
+			font-size: 26rpx;
+			font-weight: 400;
+			color: #646364;
+			float: left;
+			margin-left: 210rpx;
 		}
 	}
 </style>

@@ -65,6 +65,11 @@
 							<view style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售200辆</view>
 		    			</view>
 		    			<view class="clear"></view>
+						<view class="flex">
+							<view class="company">取发布企业全称</view>
+							<view class="area">省-市</view>
+							<view class="clear"></view>
+						</view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
@@ -452,7 +457,7 @@
 					float: left;
 				}
 				.right {
-					width: 360rpx;
+					width: 380rpx;
 					padding-left: 34rpx;
 				}
 				.name {
@@ -476,6 +481,23 @@
 					color: #FF5200;
 			        margin-top: 30rpx;
 					float: left;
+				}
+			}
+			.flex{
+				padding-top: 22rpx;
+				padding-bottom: 34rpx;
+                border-bottom: 2rpx solid #dedede;
+				.company{
+					font-size: 28rpx;
+					font-weight: 400;
+					color: #343434;
+					float: left;
+				}
+				.area{
+					font-size: 26rpx;
+					font-weight: 400;
+					color: #666666;
+					float: right;
 				}
 			}
 		}
