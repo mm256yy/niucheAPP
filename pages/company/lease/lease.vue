@@ -55,7 +55,16 @@
 				</u-cell-group>
 				<view class="label_title">车辆类型</view>
 				<SearchTags :list="carTypeList" :active="activeCarType" :singleType="true" @onClick="carTypeListChange"></SearchTags>
+				<view class="label_title">动力类型</view>
+				<SearchTags :list="powerList" :active="activePower" :singleType="true" @onClick="powerChange"></SearchTags>
+				<u-form-item label="出租数量" prop="registeredPrice" style="border-bottom: 1px solid #ccc;">
+					<u-input v-model="form.registeredPrice" :clearable="false" :border="false" maxlength="10"/>
+				<text class="middle-content-label">辆</text></u-form-item>
+				<view class="label_title">综合上牌时间</view>
+				<u-input v-model="form.companyCreateTime" :border="true" :disabled="true" @click="show = true" placeholder="" style="width:40%"/>
+				<u-input v-model="form.companyCreateTime" :border="true" :disabled="true" @click="show = true" placeholder="" style="width:40%"/>
 			</view>
+			<u-picker v-model="show" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
 		</view>
 		<Auth></Auth>
 	</view>
@@ -155,6 +164,10 @@
 			},
 			carTypeListChange(index){
 				this.activeCarType = index;
+			},
+			powerChange(index){
+				this.activePower = index;
+
 			}
 
 		}
@@ -194,6 +207,7 @@
 		border-bottom-width: 0;
 	}
     .label_title{
+		padding-top: 20rpx;
 		color:#111111 ;
 		font-size: 32rpx;
 		font-family: PingFangSC-Medium, PingFang SC;
