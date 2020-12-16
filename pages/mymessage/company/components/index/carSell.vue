@@ -462,10 +462,9 @@
 				}
 				.name {
 					font-size: 30rpx;
-					line-height: 48rpx;
+					line-height: 40rpx;
 					font-weight: 900;
 					color: #333;
-					margin-top: 6rpx;
 				}
 				.tag {
 					font-size: 26rpx;
@@ -479,7 +478,7 @@
 					font-family: SourceHanSansCN-Bold, SourceHanSansCN;
 					font-weight: bold;
 					color: #FF5200;
-			        margin-top: 30rpx;
+			        margin-top: 10rpx;
 					float: left;
 				}
 			}
