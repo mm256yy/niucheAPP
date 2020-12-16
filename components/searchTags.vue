@@ -70,7 +70,7 @@
 		border-color: #4ABA75;
 		background: #DDFFEA;
 	}
-}	
+}
 .driver-content{
 	.checked_text {
 		color: #FF9B0F;

@@ -1,92 +1,97 @@
 <template>
 	<view class="detail">
-<!-- 		<u-navbar z-index="4000" back-text="返回" back-icon-size="0" :title="detail.carmodeltag" :background="background" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
+		<!-- <u-navbar z-index="4000" back-text="返回" back-icon-size="0" :title="detail.carmodeltag" :background="background" :back-text-style="backTextStyle" height='44' title-color="#FFFFFF">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<u-icon name="zhuanfa" color="#ffffff" size="40"></u-icon>
 				</view>
 			</view>
 		 </u-navbar> -->
-		 <!-- <view style="width: 100%;height: ;"></view> -->
-		 <view class="">
-			 <view class="wraps img">
-			 	<u-swiper height="494" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper>
-			 </view>
-			<view style="padding: 30rpx 40rpx;background: #fff;border-radius: 30rpx 30rpx 0px 0px;width: 100%;">
-				<!-- <view class="tag">付费标签</view> -->
-				<view class="name">{{detail.titletext}}<view class="collect" v-if="!viewFlag&&token&&show">
-					<u-icon v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="40"></u-icon>
-					<u-icon v-show="detail.iscollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
-					<!-- <text>{{detail.collectnum}}</text> -->
-				</view></view>
-				<view class="clear"></view>
-				<view v-for="(item, index) in detail.pricesectionlist" :key="item.id" class="" v-show="firstCurrent === index">
-					<view class="price"><text>￥{{item.packprice}}</text>/月起售</view>
-					<view style="position: relative;">
-						<u-image class="bgType" width="116rpx" height="48rpx" src="@/static/type.png"></u-image>
-						<view class="type">网约车</view>
-					</view>
-					<view class="startNum">{{item.lowprice}}辆起售</view>
-					<view class="clear"></view>
-				</view>
-				<view>
-					<view style="margin-top: 20rpx;">
-						<text style="width: 156rpx;height: 60rpx;line-height: 54rpx;text-align: center;
-						border-radius: 8rpx;display: inline-block;margin-right: 12rpx;" :class="{active:index===firstCurrent,inactive:index!=firstCurrent}" v-for="(item,index) in tab" :key="index" @click="change(index)">{{item}}</text>
-					</view>
-				</view>
-				<view class="clear"></view>
-				<view class="box">
-					<view>{{detail.systemtag}}</view>
-				</view>
-				<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 20rpx;">在售200辆/杭州</view>
-				<view class="clear"></view>
+		 <view style="width: 100%;height: 176rpx;top: 0;left: 0;background: #000;position: fixed;z-index: 20;display: flex;justify-content: center;align-items: center;font-weight: 900;">
+			 <u-image style="position: absolute;bottom: 50rpx;left: 50rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
+			 <view style="margin-bottom: -60rpx;font-size: 36rpx;">{{detail.carmodeltag}}</view>
+		 </view>
+		 <view class="wraps img">
+		 	<u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper>
+		 </view>
+		 <view style="position: absolute;top: 556rpx;left: 0;margin-bottom: 140rpx;background: #f5f5f5;border-radius: 36rpx 36rpx 0px 0px;">
+		 	<view class="">
+		 		<view style="padding: 30rpx 40rpx;background: #fff;border-radius: 36rpx 36rpx 0px 0px;width: 100%;">
+		 			<!-- <view class="tag">付费标签</view> -->
+		 			<view class="name">{{detail.titletext}}<view class="collect" v-if="!viewFlag&&token&&show">
+		 				<u-icon v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="40"></u-icon>
+		 				<u-icon v-show="detail.iscollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
+		 				<!-- <text>{{detail.collectnum}}</text> -->
+		 			</view></view>
+		 			<view class="clear"></view>
+		 			<view v-for="(item, index) in detail.pricesectionlist" :key="item.id" class="" v-show="firstCurrent === index">
+		 				<view class="price"><text>￥{{item.packprice}}</text>/月起售</view>
+		 				<view style="position: relative;">
+		 					<u-image class="bgType" width="116rpx" height="48rpx" src="@/static/type.png"></u-image>
+		 					<view class="type">网约车</view>
+		 				</view>
+		 				<view class="startNum">{{item.lowprice}}辆起售</view>
+		 				<view class="clear"></view>
+		 			</view>
+		 			<view>
+		 				<view style="margin-top: 20rpx;">
+		 					<text style="width: 156rpx;height: 60rpx;line-height: 54rpx;text-align: center;
+		 					border-radius: 8rpx;display: inline-block;margin-right: 12rpx;" :class="{active:index===firstCurrent,inactive:index!=firstCurrent}" v-for="(item,index) in tab" :key="index" @click="change(index)">{{item}}</text>
+		 				</view>
+		 			</view>
+		 			<view class="clear"></view>
+		 			<view class="box">
+		 				<view>{{detail.systemtag}}</view>
+		 			</view>
+		 			<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 23rpx;margin-left: 20rpx;">在售200辆/杭州</view>
+		 			<view class="clear"></view>
+		 	 	</view>
 		 	</view>
-		</view>
-		<view style="background: #fff;padding: 36rpx 30rpx;margin-top: 20rpx;">
-			<view style="float: left;font-size: 36rpx;font-weight: 900;color: #333;">车辆基本信息</view>
-			<u-image style="float: right;margin-left: 10rpx;margin-top: 10rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
-			<view style="float: right;font-size: 26rpx;color: #999;">参数配置</view>
-			<view class="clear"></view>
-			<view>
-				<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
-					<view style="float: left;">综合上牌时间</view>
-					<view style="float: right;color: #353B3D;">2020.10-2020.12</view>
-					<view class="clear"></view>
-				</view>
-				<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
-					<view style="float: left;">综合行驶里程</view>
-					<view style="float: right;color: #353B3D;">10-20万公里</view>
-					<view class="clear"></view>
-				</view>
-			</view>
-			<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 32rpx;">
-				<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-车况描述-</view>
-				<view style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案
-				文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案
-				文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案</view>
-			</view>
-			<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 38rpx;">
-				<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-购车流程-</view>
-				<view style="width: 652rpx;border-radius: 4rpx;background: #fff;font-size: 26rpx;color: #333;margin-top: 28rpx;height: 274rpx;padding: 68rpx 32rpx;">
-					<view style="display: flex;justify-content: space-between;align-items: center;">
-						<u-image width="92rpx" height="92rpx" src="@/static/selectOnline.png"></u-image>
-						<u-image width="32rpx" height="28rpx" src="@/static/step.png"></u-image>
-						<u-image width="92rpx" height="92rpx" src="@/static/chatOnline.png"></u-image>
-						<u-image width="32rpx" height="28rpx" src="@/static/step.png"></u-image>
-						<u-image width="92rpx" height="92rpx" src="@/static/viewOffline.png"></u-image>
-						<u-image width="32rpx" height="28rpx" src="@/static/step.png"></u-image>
-						<u-image width="92rpx" height="92rpx" src="@/static/signOffline.png"></u-image>
-					</view>
-					<view style="display: flex;justify-content: space-between;">
-						<view style="margin-top: 18rpx;">线上选车</view>
-						<view style="margin-top: 18rpx;">线上约谈</view>
-						<view style="margin-top: 18rpx;">线下看车</view>
-						<view style="margin-top: 18rpx;">线下签约</view>
-					</view>
-				</view>
-			</view>
-		</view>
+		 	<view style="background: #fff;padding: 36rpx 30rpx;margin-top: 20rpx;">
+		 		<view style="float: left;font-size: 36rpx;font-weight: 900;color: #333;">车辆基本信息</view>
+		 		<u-image style="float: right;margin-left: 10rpx;margin-top: 5rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
+		 		<view style="float: right;font-size: 26rpx;color: #999;">参数配置</view>
+		 		<view class="clear"></view>
+		 		<view>
+		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
+		 				<view style="float: left;">综合上牌时间</view>
+		 				<view style="float: right;color: #353B3D;">2020.10-2020.12</view>
+		 				<view class="clear"></view>
+		 			</view>
+		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
+		 				<view style="float: left;">综合行驶里程</view>
+		 				<view style="float: right;color: #353B3D;">10-20万公里</view>
+		 				<view class="clear"></view>
+		 			</view>
+		 		</view>
+		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 32rpx;">
+		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-车况描述-</view>
+		 			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案
+		 			文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案
+		 			文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案</view>
+		 		</view>
+		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 38rpx;">
+		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-购车流程-</view>
+		 			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;font-size: 26rpx;color: #333;margin-top: 28rpx;height: 274rpx;padding: 68rpx 32rpx;">
+		 				<view style="display: flex;justify-content: space-between;align-items: center;">
+		 					<u-image width="92rpx" height="92rpx" src="@/static/selectOnline.png"></u-image>
+		 					<u-image width="32rpx" height="28rpx" src="@/static/step.png"></u-image>
+		 					<u-image width="92rpx" height="92rpx" src="@/static/chatOnline.png"></u-image>
+		 					<u-image width="32rpx" height="28rpx" src="@/static/step.png"></u-image>
+		 					<u-image width="92rpx" height="92rpx" src="@/static/viewOffline.png"></u-image>
+		 					<u-image width="32rpx" height="28rpx" src="@/static/step.png"></u-image>
+		 					<u-image width="92rpx" height="92rpx" src="@/static/signOffline.png"></u-image>
+		 				</view>
+		 				<view style="display: flex;justify-content: space-between;">
+		 					<view style="margin-top: 18rpx;">线上选车</view>
+		 					<view style="margin-top: 18rpx;">线上约谈</view>
+		 					<view style="margin-top: 18rpx;">线下看车</view>
+		 					<view style="margin-top: 18rpx;">线下签约</view>
+		 				</view>
+		 			</view>
+		 		</view>
+		 	</view>
+		 </view>
 		<view style="width: 100%;height:140rpx"></view>
 		<view class="phone" style="width: 100%;height: 140rpx;display: flex;justify-content: space-around;align-items: center;background: #fff;" v-show="!viewFlag&&show">
 			<view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
@@ -146,7 +151,7 @@
 				openShow:false,
 				firstCurrent:0,
 				background: {
-					'backgroundColor': 'transparent'
+					'background-image': 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))'
 				}
 			}
 		},
@@ -318,7 +323,6 @@ page{
 		.wraps{
 			width: 100%;
 			height: 494rpx;
-			// margin-top: -calc(var(--status-bar-height) + 88rpx);
 		}
 		color: #7f7f7f;
 		.clear {
