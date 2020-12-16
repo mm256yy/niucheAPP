@@ -1,5 +1,5 @@
 {
-    "name" : "纽车",
+    "name" : "纽车测试版",
     "appid" : "__UNI__A80C5DE",
     "description" : "",
     "versionName" : "1.5.1.6",
@@ -71,7 +71,7 @@
             "sdkConfigs" : {
                 "share" : {
                     "weixin" : {
-                        "appid" : "wxd2d9bd0447e9c1f4",
+                        "appid" : "wx8d77c902ca377599",
                         "UniversalLinks" : ""
                     }
                 },
