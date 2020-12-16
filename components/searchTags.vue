@@ -52,10 +52,11 @@
 		height: 72rpx;
 		display: inline-block;
 		text-align: center;
-		line-height: 72rpx;
+		line-height: 68rpx;
 		margin: 10pt 8pt 0 0;
 		font-size: 28rpx;
 		border: 2rpx solid #d9dedf;
+		border-radius: 8rpx;
 	}
 
 	.defult_text {

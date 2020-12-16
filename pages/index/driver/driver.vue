@@ -125,9 +125,9 @@ page{
 		z-index: 100;
 	}
 	.badge{
-		width: 30rpx;
-		height: 30rpx;
-		line-height: 28rpx;
+		width: 27rpx;
+		height: 27rpx;
+		line-height: 24rpx;
 		text-align: center;
 		font-size: 20rpx;
 		color: #fff;

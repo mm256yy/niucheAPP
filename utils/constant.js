@@ -16,7 +16,7 @@ export const publishObj = {
 	//车辆类型
 	carType:[{id: '1',text: '轿车',checked:false},{id: '2',text: 'SUV',checked:false},{id: '3',text: 'MPV',checked:false},{id: '4',text: '其他',checked:false}],
 	//动力类型
-	power:[{id: '1',text: '纯电动',checked:false},{id: '2',text: '插电混动',checked:false},{id: '3',text: '燃油车(含油电混动)',checked:false}],
+	power:[{id: '1',text: '纯电动',checked:false},{id: '2',text: '插电混动',checked:false},{id: '3',text: '燃油车',checked:false}],
 	//日期
 	params: {year: true,month: true,day: false,hour: false,minute: false,second: false},
 	//租赁周期

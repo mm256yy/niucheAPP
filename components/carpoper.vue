@@ -1,22 +1,6 @@
 <template>
 	<view class="">
-<!-- 	<u-index-list :scrollTop="scrollTop" :index-list="indexList" offset-top='0'>
-		<view v-for="(item, index) in list" :key="index">
-			<u-index-anchor :index="item.letter" />
-			<view class="list-cell u-border-bottom" v-for="(info, index) in item.data" :key="index" @click="toNext(info)">
-				<text>{{info.text}}</text>
-			</view>
-		</view>
-	</u-index-list> -->
-	<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation  :style="{height:winHeight + 'px'}">
-	    <view v-for="(item,index) in list" :key="index" :id="item.letter == '#' ? 'indexed-list-YZ' :'indexed-list-' + item.letter">
-	        <view class="letter-title" v-if="item.data&&item.data.length" id="item.letter">{{item.letter}}</view>
-	        <view> .......</view>
-	    </view>
-	</scroll-view>
-	<view class="right-menu">
-	    <view v-for="(i,index) in item.letter" :key="index" @click="jumper(i,index)" :class="jumperIndex == i?'letter-item active':'letter-item'">{{i}}</view>
-	</view>
+	
 	</view>
 </template>
 
@@ -31,8 +15,12 @@ import {list} from "@/utils/index.list.js";
 				scrollTop: 0,
 				indexList: [],
 				list: [],
+				source:'',
 				
 			}
+		},
+		onLoad() {
+
 		},
 		mounted() {
            uni.request({
@@ -57,7 +45,6 @@ import {list} from "@/utils/index.list.js";
 		},
 		methods:{
 			toNext(v){
-				debugger
 				if (this.source === '1') {
 					 this.$u.route('/pages/company/lease/lease',v)
 				} else if(this.source === '2'){
@@ -67,7 +54,6 @@ import {list} from "@/utils/index.list.js";
 				}
 			},	
 			onPageScroll(e) {
-				console.log(e)
 				this.scrollTop = e.scrollTop;
 			},
 		}
