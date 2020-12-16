@@ -1,5 +1,5 @@
 <template>
-	<view style="padding: 0 20pt;">
+	<view>
 		<u-navbar back-text="返回" back-icon-size="0" title="邀请好友" height='44' title-color="#333333">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
@@ -7,22 +7,30 @@
 				</view>
 			</view>
 		</u-navbar>
-		<view class="flex_view">
+		<view class="flex_view" style="margin-top: -50px;">
 			<view class="bgImg-common oneImg">
 				<view class="bgImg-common yqhy" @click="inviteFriends">立即邀请好友助力</view>
 			</view>
-			<view style="position: relative;" class="bgImg-common wdjl">
-				<text style="position: absolute;top: 100pt;left: 81pt;z-index: 8;">20</text>
-				<text style="position: absolute;top: 100pt;right: 51pt;z-index: 8;">20</text>
-			</view>
-			<view class="bgImg-common hdsm">
-				
-			</view>
-			<view class="bgImg-common jlmx">
-				
-			</view>
-			<view class="bgImg-common jlsm">
-				
+			<view style="padding: 0 10pt;">
+				<view style="position: relative;" class="bgImg-common wdjl">
+					<view style="position: absolute;top: 108pt;left: 70pt;z-index: 8;font-size: 12px;">
+						<view style="color: #FF2B49;">{{zccg}}人</view>
+						<view style="color: #666666;">注册成功</view>
+					</view>
+					<view style="position: absolute;top: 108pt;right: 26pt;z-index: 8;font-size: 12px;">
+						<view style="color: #FF2B49;">{{rzcg}}人</view>
+						<view style="color: #666666;">认证成功</view>
+					</view>
+				</view>
+				<view class="bgImg-common hdsm">
+					
+				</view>
+				<view class="bgImg-common jlmx">
+					
+				</view>
+				<view class="bgImg-common jlsm">
+					
+				</view>
 			</view>
 		</view>
 		<u-popup v-model="show" mode="right" border-radius="14" length="70%">
@@ -57,7 +65,9 @@
 		data() {
 			return {
                show:false,
-			   shareId:''
+			   shareId:'',
+			   zccg:0,
+			   rzcg:0
 			}
 		},
 		onLoad(option) {
@@ -65,7 +75,7 @@
 			if(shareId){
 			 this.shareId = shareId;
 			} else{
-				this.initId()
+				// this.initId()
 			} 
 		},
 		methods: {
@@ -106,11 +116,12 @@
 </script>
 
 <style lang="scss">
-	page {
-		background-image: url(../../../static/beijing.png);
+	.flex_view {
+		background-image: url(../../../static/beijing@3x.png);
 		background-position: center;
 		background-repeat: no-repeat;
-		// background-size: contain;
+		// background-size: cover;
+		background-size: 100%;
 	}
 </style>
 <style lang="scss" scoped>
@@ -130,40 +141,36 @@
 		display: flex;
 	}
 	.oneImg {
-		background-image: url(../../../static/toutu@2x.png);
-		min-height: 420pt;
-		height: 100%;
+		background-image: url(../../../static/toutu@3x.png);
+		min-height: 618pt;
 		position: relative;
+		// background-size: cover;
 	}
 	.yqhy {
-		background-image: url(../../../static/yuanjiaojuxing@2x.png);
-		min-height: 70pt;
-		width: 160pt;
+		background-image: url(../../../static/yuanjiaojuxing@3x.png);
+		min-height: 13%;
+		width: 70%;
 		position: absolute;
-		top: 225pt;
-		left: 39pt;
+		top: 56%;
+		left: 16%;
 		text-align: center;
-		line-height: 60pt;
+		line-height: 95px;
 		color: #FFFFFF;
 	}
     .wdjl{
 		background-image: url(../../../static/wodejianglijindu@3x.png);
-		min-height: 200pt;
+		min-height: 210pt;
 	}
 	.hdsm{
 		background-image: url(../../../static/huodongzhuoming@3x.png);
-		min-height: 290pt;
+		min-height: 280pt;
 	}
 	.jlmx{
 		background-image: url(../../../static/jianglimingxi@3x.png);
-		min-height: 240pt;
+		min-height: 270pt;
 	}
 	.jlsm{
 		background-image: url(../../../static/jianglishuoming@3x.png);
-		min-height: 300pt;
-	}
-	.flex_view {
-		// min-height: 40vh;
-
+		min-height: 260pt;
 	}
 </style>
