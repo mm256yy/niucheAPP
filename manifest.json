@@ -1,5 +1,5 @@
 {
-    "name" : "纽车测试版",
+    "name" : "纽车",
     "appid" : "__UNI__A80C5DE",
     "description" : "",
     "versionName" : "1.5.1.6",
@@ -76,7 +76,12 @@
                     }
                 },
                 "push" : {},
-                "ad" : {}
+                "ad" : {},
+                "payment" : {
+                    "alipay" : {
+                        "__platform__" : [ "ios", "android" ]
+                    }
+                }
             },
             "icons" : {
                 "android" : {
