@@ -51,7 +51,7 @@
 				<view class="label_title">业务类型</view>
 				<SearchTags :list="publishObj.onLineList" :active="activeOnLine" :singleType="true" @onClick="onLineListChange"></SearchTags>
 				<u-cell-group :border="false" style="border-bottom: 1px solid #DEDEDE;">
-					<u-cell-item title="转卖车辆" value="请选择品牌型号" :title-style="publishObj.titleStyle" @click="toCustomer"></u-cell-item>
+					<u-cell-item title="转卖车辆" value="请选择品牌型号" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
 				</u-cell-group>
 				<view class="label_title">车辆类型</view>
 				<SearchTags :list="publishObj.carType" :active="activeCarType" :singleType="true" @onClick="carTypeListChange"></SearchTags>
@@ -186,7 +186,7 @@
 				activeOnLine: 0,
 				activeCarType: 0,
 				activePower: 0,
-				showCar:true,
+				showCar:false,
 				form: {
 					isOneclickAndAdd: 2, //一键导入1  修改3  新增2
 					carbrand: '',//品牌
