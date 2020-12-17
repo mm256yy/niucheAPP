@@ -75,7 +75,7 @@
 			if(shareId){
 			 this.shareId = shareId;
 			} else{
-				// this.initId()
+				this.initId()
 			} 
 		},
 		methods: {
