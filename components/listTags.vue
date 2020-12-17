@@ -27,7 +27,6 @@
 			onClick(index, $event) {
 				if (index !== this.active) {
 					this.$emit('onClick', index);
-					this.$emit('hide', index);
 				}
 			}
 		},
@@ -59,6 +58,7 @@
 	left: 0;
 	z-index: 20;
 	background-color: #fff;
+	padding-bottom: 40rpx;
 	.checked_text {
 		color: #4ABA75;
 		border-color: #4ABA75;
@@ -72,6 +72,7 @@
 	left: 0;
 	z-index: 20;
 	background-color: #fff;
+	padding-bottom: 40rpx;
 	.checked_text {
 		color: #FF9B0F;
 		border-color: #FF9B0F;

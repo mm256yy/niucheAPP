@@ -1,8 +1,10 @@
 <template>
 	<view class="carSell">
-		<list-tags v-show="showKm" :list="selectKm" :active="current" @onClick="getDataKm" @hide="textKm"></list-tags>
-		<list-tags v-show="showPrice" :list="selectPrice" :active="current" @onClick="getDataPrice" @hide="textPrice"></list-tags>
-		<list-tags v-show="showAge" :list="selectAge" :active="current" @onClick="getDataAge" @hide="textAge"></list-tags>
+		<u-mask z-index="2" :show="show" @click="hideMask">
+		</u-mask>
+		<list-tags v-show="showKm" :list="selectKm" :active="current" @onClick="getDataKm"></list-tags>
+		<list-tags v-show="showPrice" :list="selectPrice" :active="current" @onClick="getDataPrice"></list-tags>
+		<list-tags v-show="showAge" :list="selectAge" :active="current" @onClick="getDataAge"></list-tags>
 		<view class="middle-content">
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 				<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
@@ -132,7 +134,6 @@
 				  businessType:0,
 				  carbrand:'',
 				  cartype:'',
-				  km: 100,
 				  power:'',
 				  packprice:'',
 				  startCarAge:'',
@@ -181,7 +182,7 @@
 					},
 					{
 						label: '不限',
-						value: '9'
+						value: '0'
 					}
 				],
 				selectPrice: [
@@ -238,7 +239,8 @@
 				},
 				styleActive:{
 					color:'#40B26D'
-				}
+				},
+				show: false
 			}
 		},
 		mounted() {
@@ -246,42 +248,76 @@
 			this.search()
 		},
 		methods: {
+			hideMask(){
+				this.show = false;
+				this.showPrice = false;
+				this.showKm = false;
+				this.showAge = false;
+			},
 			toggleKm(){
 				this.showKm = !this.showKm;
 				this.showPrice = false;
 				this.showAge = false;
+				this.show = true;
 			},
 			togglePrice(){
 				this.showPrice = !this.showPrice;
 				this.showKm = false;
 				this.showAge = false;
+				this.show = true;
 			},
 			toggleAge(){
 				this.showAge = !this.showAge;
 				this.showPrice = false;
 				this.showKm = false;
+				this.show = true;
 			},
 			getDataKm(index) {
 				this.current = index;
 				this.kmkey = this.selectKm[index].label;
+				this.form.km = this.selectKm[index].value;
+				this.showKm = false;
+				this.show = false;
+				this.search()
 			},
 			getDataPrice(index) {
 				this.current = index;
 				this.packpricekey = this.selectPrice[index].label;
-			},
-			textAge() {
-				this.showAge = false;
-			},
-			textKm() {
-				this.showKm = false;
-			},
-			textPrice() {
-				console.log(8)
+				this.form.packprice = this.selectPrice[index].value;
 				this.showPrice = false;
+				this.show = false;
+				this.search()
 			},
 			getDataAge(index) {
 				this.current = index;
 				this.agekey = this.selectAge[index].label;
+				this.form.age = this.selectAge[index].value;
+				if(this.form.age == '0') {
+					this.form.startCarAge = '0';
+				    this.form.endCarAge = '1';
+					this.caragekey = '1年内';
+				}
+				if(this.form.age == '1') {
+					this.form.startCarAge = '1';
+				    this.form.endCarAge = '3';
+					this.caragekey = '1年-3年';
+				}
+				if(this.form.age == '2') {
+					this.form.startCarAge = '3';
+				    this.form.endCarAge = '5';
+					this.caragekey = '3年-5年';
+				}
+				if(this.carage == '3') {
+					this.form.startCarAge = '5';
+				    this.form.endCarAge = '';
+				}
+				if(this.form.age == '4') {
+					this.form.startCarAge = '';
+				    this.form.endCarAge = '';
+				}
+				this.showAge = false;
+				this.show = false;
+				this.search()
 			},
 			page() {
 			    this.pageNum = 1;
@@ -351,6 +387,7 @@
 			//     })
 			// },
 		    getList(){
+				this.form.km=this.kmkey==''?'0':this.form.km;
 				this.pageNum = this.pageNum + 1;
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pageNum,
@@ -377,6 +414,7 @@
 		    		})
 		    },
 		    search(){
+				this.form.km=this.kmkey==''?'0':this.form.km;
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
 		    		pageSize: 10,
@@ -475,7 +513,7 @@
 			position: fixed;
 			top: 0;
 			left: 0;
-			z-index: 2;
+			z-index: 10;
 			background-color: #fff;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
@@ -597,5 +635,16 @@
 		    border-color: #777 transparent transparent transparent;
 			margin-top: 8rpx;
 		}
+		.warp {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+			}
+			.rect {
+				width: 120px;
+				height: 120px;
+				background-color: #fff;
+			}
 	}
 </style>

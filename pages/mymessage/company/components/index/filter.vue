@@ -1,17 +1,18 @@
 <template>
 	<view class="filter">
-	  <u-navbar back-text="返回" back-icon-size="0" title="筛选" :background="backgroundCom" 
+	  <u-navbar back-text="返回" back-icon-size="0" title="更多筛选" :background="backgroundCom" 
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><!-- <view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
 		   历史</view> --></u-navbar>
 	   <view class="view-content">
 		   <view class="name">{{addkey}}</view>
 	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
-	   	  	<u-form-item label="业务类型(必选)" label-position="top">
-				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
+	   	  	<u-form-item label="业务类型" label-position="top">
+				<search-tags :list="publishObj.onLineList" :active="currentType" :singleType="true" @onClick="getDataType"></search-tags>
+				<!-- <u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
 					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
 			<u-form-item label="品牌" label-position="top">
@@ -25,36 +26,23 @@
 				<u-col span="8"><u-input v-model="value" maxlength="30" :border="true" placeholder="请输入车辆品牌"/></u-col>
 				<u-col span="3"><u-button type="success" shape='circle' class="btn-agree" @click="addBrand">添加</u-button></u-col>
 			</u-row>
-			<u-form-item label="车型" label-position="top">
-				<u-checkbox-group active-color="#6DD99C" @change="modelGroupChange" shape="circle">
+			<u-form-item label="车辆类型(多选)" label-position="top">
+				<search-tags :list="publishObj.carType" :active="currentCar" :singleType="true" @onClick="getDataCar"></search-tags>
+				<!-- <u-checkbox-group active-color="#6DD99C" @change="modelGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
-				</u-checkbox-group>
+				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="动力" label-position="top">
-				<u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
+			<u-form-item label="动力(多选)" label-position="top">
+				<search-tags :list="publishObj.power" :active="currentPower" :singleType="true" @onClick="getDataPower"></search-tags>
+				<!-- <u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
-				</u-checkbox-group>
+				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="打包价" label-position="top">
-				<u-radio-group @change="radioGroupChangePrice" v-model="form.packprice"  :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in priceList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="车龄" label-position="top">
-				<u-radio-group @change="radioGroupChangeAge" v-model="carage"  :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="行驶里程" label-position="top">
-				<u-radio-group @change="radioGroupChangeKm" v-model="form.km"  :active-color="'#6DD99C'" style="text-align: right;">
-				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-		  </u-form>	
+		  </u-form>
 	   </view>
 		<view class="bottom">
 			<view class="btn" @click="reset()">重置</view>
@@ -64,12 +52,21 @@
 </template>
 
 <script>
+	import searchTags from '@/components/searchTags.vue'
+	import {
+		action,
+		publishObj
+	} from '@/utils/constant.js'
 	export default {
+		components: {
+			searchTags
+		},
 		data() {
 			return {
 				backTextStyle:{
 					'color':'#ffffff'
 				},
+				publishObj: publishObj,
 				form:{
 					businessType:0,
 					carbrand:'',
@@ -85,18 +82,6 @@
 				total: '',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
 						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}],
-				modelList:[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}],
-				powerList:[{name:'纯电动',checked: false},{name:'插电混动',checked:false},{name:'燃油车(含油电混动)',checked: false}],
-				priceList:[{name: '4',text:'不限' },{name: '1',text:'3万以内' },{name: '2',text:'3万-5万' },{name: '3',text:'5万以上' }],
-				ageList:[{name: '4',text:'不限' },{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
-				objType:{
-					wycList:[{name: '',text:'不限' },{name: '1',text:'0-2万公里' },{name: '2',text:'2-5万公里'},{name: '3',text:'5-10万公里' },{name: '4',text:'10-20万公里' },
-					     {name: '5',text:'20-30万公里' },{name: '6',text:'30万公里以上'},],
-					      czcList:[{name: '',text:'不限' },{name: '1',text:'0-2万公里' },{name: '2',text:'2-5万公里' },
-					      {name: '3',text:'5-10万公里' },{name: '4',text:'10-20万公里' },{name: '5',text:'20-30万公里' },
-					      {name: '6',text:'30-50万公里' },{name: '7',text:'50-70万公里' },{name: '8',text:'70万公里以上'}],
-				},
-				radioType:'wycList',
 				addkey: '不限',
 				businessTypekey: '不限',
 				carbrandkey: '',
@@ -108,7 +93,10 @@
 				caragekey: '',
 				kmkey: {
 					text:''
-				}
+				},
+				currentType:-1,
+				currentCar:-1,
+				currentPower:-1
 			}
 		},
 		// computed:{
@@ -121,12 +109,27 @@
 			this.select()
 		},
 		methods: {
+			getDataType(index) {
+				this.currentType = index;
+				this.form.businessType =  publishObj.onLineList[index].id;
+				this.select()
+			},
+			getDataCar(index) {
+				this.currentCar = index;
+				this.form.cartype =  publishObj.carType[index].id;
+				this.select()
+			},
+			getDataPower(index) {
+				this.currentPower = index;
+				this.form.power =  publishObj.power[index].id;
+				this.select()
+			},
 			reset() {
 				this.form={
 					businessType:0,
 					carbrand:'',
 					cartype:'',
-					km: 100,
+					km: '',
 					power:'',
 					packprice:'',
 					startCarAge:'',
