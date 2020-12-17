@@ -160,10 +160,11 @@ const install  = (Vue, vm) => {
 				//查看站内信内容
 				const  viewMessage = (params = {}) => vm.$u.post('/MessageReceptionController/pub/userSelectNoSeeMessage', params);
 				
-
-
+				//分享数据 认证
+               const  statistics =(params = {}) => vm.$u.post('/share/data/statistics?shareId='+params.shareId, params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		statistics,
 		popupConfig,
 		MyIssueRefresh,
 		getStatus,

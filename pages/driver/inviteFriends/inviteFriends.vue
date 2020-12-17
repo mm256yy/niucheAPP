@@ -14,11 +14,11 @@
 			<view style="padding: 0 10pt;">
 				<view style="position: relative;" class="bgImg-common wdjl">
 					<view style="position: absolute;top: 108pt;left: 70pt;z-index: 8;font-size: 12px;">
-						<view style="color: #FF2B49;">{{zccg}}人</view>
+						<view style="color: #FF2B49;">{{registerCount}}人</view>
 						<view style="color: #666666;">注册成功</view>
 					</view>
 					<view style="position: absolute;top: 108pt;right: 26pt;z-index: 8;font-size: 12px;">
-						<view style="color: #FF2B49;">{{rzcg}}人</view>
+						<view style="color: #FF2B49;">{{authCount}}人</view>
 						<view style="color: #666666;">认证成功</view>
 					</view>
 				</view>
@@ -66,8 +66,8 @@
 			return {
                show:false,
 			   shareId:'',
-			   zccg:0,
-			   rzcg:0
+			   registerCount:0,
+			   authCount:0
 			}
 		},
 		onLoad(option) {
@@ -77,6 +77,9 @@
 			} else{
 				this.initId()
 			} 
+		},
+		mounted() {
+			this.getNumber()
 		},
 		methods: {
 			inviteFriends() {
@@ -95,6 +98,17 @@
 						console.log("fail:" + JSON.stringify(err));
 					}
 				});
+			},
+			getNumber(){
+				this.$u.api.statistics({shareId:this.shareId}).then(res => {
+					if(res.code === 200){
+						let data = res.object;
+						this.authCount = data.authCount
+						this.registerCount = data.registerCount;
+					 } else{
+						this.$u.toast(res.msg) 
+					 }
+				}).catch(res=>{this.$u.toast(res.msg)})
 			},
 			initId(){
 				this.$u.api.listUserMessage().then(res=>{
