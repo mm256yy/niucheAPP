@@ -186,7 +186,7 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.$u.route("/pages/driver/taxiCar/taxiCar")
-				}
+				} 
 			},
 			tipsCancel(){
 				let token = uni.getStorageSync('token')
@@ -198,6 +198,8 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.$u.route("/pages/driver/baseInfo/baseInfo")
+				}else{
+					this.toLogin()
 				}
 			},
 			toInvite(){
@@ -208,6 +210,8 @@
 					} else{
 						this.$u.toast('请先进行认证')
 					}
+				}else{
+					this.toLogin()
 				}
 			},
 			toLicense(){
@@ -219,6 +223,8 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.$u.route("/pages/driver/myPub/myPub",{index:index})
+				}else{
+					this.toLogin()
 				}
 			},
 			toCard(){
