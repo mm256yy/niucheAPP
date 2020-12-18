@@ -13,11 +13,11 @@
 			</view>
 			<view style="padding: 0 10pt;">
 				<view style="position: relative;" class="bgImg-common wdjl">
-					<view style="position: absolute;top: 108pt;left: 70pt;z-index: 8;font-size: 12px;">
+					<view style="position: absolute;top: 51%;left: 28%;z-index: 8;font-size: 12px;">
 						<view style="color: #FF2B49;">{{registerCount}}人</view>
 						<view style="color: #666666;">注册成功</view>
 					</view>
-					<view style="position: absolute;top: 108pt;right: 26pt;z-index: 8;font-size: 12px;">
+					<view style="position: absolute;top: 51%;right: 10%;z-index: 8;font-size: 12px;">
 						<view style="color: #FF2B49;">{{authCount}}人</view>
 						<view style="color: #666666;">认证成功</view>
 					</view>
@@ -78,7 +78,7 @@
 				this.initId()
 			} 
 		},
-		mounted() {
+		onShow() {
 			this.getNumber()
 		},
 		methods: {
