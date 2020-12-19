@@ -5,3 +5,5 @@ export const action =ipconfig+ "/sys/upload/uploadImage";
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';
 export const baseUrl = ipconfig;
+// export const shareUrl ="http://dev-share.neocab.cn?shareId="
+export const shareUrl ="http://dev-share.neocab.cn?shareId="

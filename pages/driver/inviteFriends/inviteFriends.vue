@@ -61,6 +61,7 @@
 	</view>
 </template>
 <script>
+	import {shareUrl} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
@@ -87,7 +88,7 @@
 					provider: "weixin",
 					scene: "WXSceneSession",
 					type: 0,
-					href: "http://dev-share.neocab.cn?shareId="+this.shareId,
+					href: shareUrl+this.shareId,
 					title: "看车租车上纽车APP",
 					summary: "限时推广拉新，享更多福利，点击即可领取！",                         
 					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
