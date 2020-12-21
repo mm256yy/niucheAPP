@@ -77,6 +77,7 @@
 					if(this.token){
 						this.view()
 					}
+					this.$refs.carSell.transform()
 				}
 				if(this.$refs.buying != undefined){
 					this.$refs.buying.search()

@@ -2,14 +2,14 @@
 
 <template>
 	<view :class="curThemeType ==='driver'?'driver-content':'company-content'">
-	        <u-navbar :is-back="false" title="我的" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" height='44' title-color="#FFFFFF">
+	        <!-- <u-navbar :is-back="false" title="我的" :background="curThemeType ==='driver'?backgroundDri:backgroundCom" height='44' title-color="#FFFFFF">
 				<view class="navbar-right" slot="right">
 					<view class="message-box right-item">
 						<text v-show = "curThemeType !=='driver'" @click="toAboutUs">关于</text>
 						<u-icon v-show = "curThemeType ==='driver'" name="info-circle" size="38" @click="toAboutUs"></u-icon>
 					</view>
 				</view>
-			</u-navbar>
+			</u-navbar> -->
 			<MyDriver ref="searchDri" :authFlag="authFlag" :tokenFlag='tokenFlag' v-if='curThemeType ==="driver"'></MyDriver>
 			<MyCompany ref="searchCom" :authFlag="authFlag" :tokenFlag='tokenFlag' v-else></MyCompany>
              <u-modal v-model="showTips" @confirm="tipsConfirm" title="提示" @cancel="setNum" :show-cancel-button="true" cancel-text="否"  confirm-text="是">

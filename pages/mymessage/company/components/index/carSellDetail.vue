@@ -26,8 +26,7 @@
 		 			<view class="clear"></view>
 		 			<view v-for="(item, index) in detail.pricesectionlist" :key="item.id" class="" v-show="firstCurrent === index">
 		 				<view class="price"><text>￥{{item.packprice}}</text>/月起售</view>
-		 				<view style="position: relative;">
-		 					<u-image class="bgType" width="116rpx" height="48rpx" src="@/static/type.png"></u-image>
+		 				<view>
 		 					<view class="type">网约车</view>
 		 				</view>
 		 				<view class="startNum">{{item.lowprice}}辆起售</view>
@@ -49,26 +48,24 @@
 		 	</view>
 		 	<view style="background: #fff;padding: 36rpx 30rpx;margin-top: 20rpx;">
 		 		<view style="float: left;font-size: 36rpx;font-weight: 900;color: #333;">车辆基本信息</view>
-		 		<u-image style="float: right;margin-left: 10rpx;margin-top: 5rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
-		 		<view style="float: right;font-size: 26rpx;color: #999;">参数配置</view>
+		 		<u-image @click="setting" style="float: right;margin-left: 10rpx;margin-top: 5rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
+		 		<view @click="setting(detail.carModelId)" style="float: right;font-size: 26rpx;color: #999;">参数配置</view>
 		 		<view class="clear"></view>
 		 		<view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		 				<view style="float: left;">综合上牌时间</view>
-		 				<view style="float: right;color: #353B3D;">2020.10-2020.12</view>
+		 				<view style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
 		 				<view class="clear"></view>
 		 			</view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		 				<view style="float: left;">综合行驶里程</view>
-		 				<view style="float: right;color: #353B3D;">10-20万公里</view>
+		 				<view style="float: right;color: #353B3D;">{{detail.carkm}}</view>
 		 				<view class="clear"></view>
 		 			</view>
 		 		</view>
 		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 32rpx;">
 		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-车况描述-</view>
-		 			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案
-		 			文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案
-		 			文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案</view>
+		 			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">{{detail.cardescribe}}</view>
 		 		</view>
 		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 38rpx;">
 		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-购车流程-</view>
@@ -113,7 +110,6 @@
 <script>
 	import rangePrice from './rangePrice'
 	import rentcarIssue from './rentcarIssue'
-	import settingParameter from './settingParameter'
 	import carInstall from './carInstall'
 	import PubBottom from '@/components/pubBottom.vue'
 	import phoneAuth from '@/components/phoneAuth.vue'
@@ -121,7 +117,6 @@
 		components: {
 		    rangePrice,
 			rentcarIssue,
-			settingParameter,
 			carInstall,
 			PubBottom,
 			phoneAuth
@@ -151,7 +146,7 @@
 				openShow:false,
 				firstCurrent:0,
 				background: {
-					'background-image': 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))'
+					'background-image': 'background: linear-gradient(270deg,rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);'
 				}
 			}
 		},
@@ -173,6 +168,9 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			setting(id) {
+				this.$u.route("/pages/mymessage/company/components/index/setting",{id:id})
+			},
 			change(index) {
 				this.firstCurrent = index;
 			},
@@ -411,12 +409,19 @@ page{
 			left: 296rpx;
 		}
 		.type{
+			width: 116rpx;
+			height: 48rpx;
+			line-height: 48rpx;
+			text-align: center;
+			background-image: url(@/static/type.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+			// background-position: 50% 50%;
 			font-size: 28rpx;
 			font-weight: 500;
 			color: #FFFFFF;
-			position: absolute;
-			top: 4rpx;
-			left: 310rpx;
+			float: left;
+			margin-left: 20rpx;
 		}
 		.startNum{
 			width: 150rpx;
@@ -429,7 +434,7 @@ page{
 			font-weight: 400;
 			color: #646364;
 			float: left;
-			margin-left: 180rpx;
+			margin-left: 38rpx;
 		}
 		.inactive{
 			border: 1rpx solid #D9DEDF;

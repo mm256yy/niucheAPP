@@ -65,6 +65,8 @@ const install  = (Vue, vm) => {
 	 const  sellCar = (params = {}) => vm.$u.get('/system/usermain/UsermainSellCar', params);
 	 //公司卖车详情
 	 const  detailSellCar = (params = {}) => vm.$u.get('/system/usermain/ComparySellCarTextByid', params);
+	 //卖车详情-参数配置
+	 const  setting = (params = {}) => vm.$u.get('/system/usermain/carModelIdGetCarDetailtedParamter', params);
 	 //公司其他信息页面查看公司信息
 	 const  messageCompany = (params = {}) => vm.$u.get('/system/usermain/ComparySellThenComparyText', params);
 	 //公司该店其他信息-在售
@@ -159,6 +161,8 @@ const install  = (Vue, vm) => {
 				const  haveIs = (params = {}) => vm.$u.post('/MessageReceptionController/pub/userSelectNoSeeMessageNum', params);
 				//查看站内信内容
 				const  viewMessage = (params = {}) => vm.$u.post('/MessageReceptionController/pub/userSelectNoSeeMessage', params);
+				//根据首字母查询品牌
+				const  brandList = (params = {}) => vm.$u.get('/system/usermain/carSelectCarBrandByInitialOrBrandName', params);
 				
 
 
@@ -243,7 +247,9 @@ const install  = (Vue, vm) => {
 		feedback,
 		listMessage,
 		haveIs,
-		viewMessage
+		viewMessage,
+		setting,
+		brandList
 	 };
 }
 
