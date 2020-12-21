@@ -63,13 +63,13 @@
 				<view class="label_title">综合上牌时间</view>
 				<u-row style="padding-top: 16rpx;">
 					<u-col span="4">
-						<u-input v-model="form.firsttime" :border="true" :disabled="true" @click="timeShow = true" placeholder="" />
+						<u-input v-model="form.firsttime" :border="true" :disabled="true" @click="showTimePicker('firsttime')" placeholder="" />
 					</u-col>
 					<u-col span="4" style="padding: 0 40rpx;">
 						<view style="border-bottom: 1px solid #D9DEDF;"></view>
 					</u-col>
 					<u-col span="4">
-						<u-input v-model="form.endTime" :border="true" :disabled="true" @click="timeShow = true" placeholder="" />
+						<u-input v-model="form.endtime" :border="true" :disabled="true" @click="showTimePicker('endtime')" placeholder="" />
 					</u-col>
 					<u-col span="12" style="padding-top: 16rpx;">
 						<view class="line">该批次车辆上牌时间跨度</view>
@@ -78,13 +78,13 @@
 				<view class="label_title">综合行驶里程</view>
 				<u-row style="padding-top: 16rpx;">
 					<u-col span="4">
-						<u-input v-model="form.firstkm" :border="true" :disabled="true" @click="timeShow = true" placeholder="" />
+						<u-input v-model="form.firstkm" :border="true" placeholder="" />
 					</u-col>
 					<u-col span="4" style="padding: 0 40rpx;">
 						<view style="border-bottom: 1px solid #D9DEDF;"></view>
 					</u-col>
 					<u-col span="4">
-						<u-input v-model="form.endkm" :border="true" :disabled="true" @click="timeShow = true" placeholder="" />
+						<u-input v-model="form.endkm" :border="true" placeholder="" />
 					</u-col>
 					<u-col span="12" style="padding-top: 16rpx;">
 						<view class="line">请填该批次车辆公里数最少和公里数最多的一辆</view>
@@ -92,7 +92,7 @@
 				</u-row>
 				<view class="label_title">车辆况描述</view>
 				<view>
-					<u-input type="textarea" v-model="form.desc" :border="true" placeholder="" />
+					<u-input type="textarea" v-model="form.cardescribe" :border="true" placeholder="" />
 				</view>
 				<view class="zlcontent" v-if="carPubType === 1">
 					<view  style="margin: 10pt 0;">
@@ -155,11 +155,13 @@
 				</view>
 			</view>
 			<u-picker v-model="timeShow" mode="time" :end-year="today.year" :params="publishObj.params" @confirm="dataChange"></u-picker>
+			<view style="text-align: center; padding: 26pt 20pt;">
+				<u-button type="success" shape='circle' class="btn-agree" @click="toNext">提交审核</u-button>
+			</view>
 		</view>
 		<u-popup v-model="showCar" mode="right" length="80%">
 			<CarList></CarList>
 		</u-popup>
-		
 		<Auth></Auth>
 	</view>
 </template>
@@ -196,10 +198,11 @@
 					power: '',//动力
 					onlineistaxi: '',//业务类型
 					firsttime: '',//上牌
-					endTime:'',
+					endtime:'',
 					firstkm: '',//公里
 					endkm: '',
 					carnbumber: '',//出售数量
+					cardescribe:'',//描述
 					displacement: '',
 					specification: '',
 					trunk: '',
@@ -222,16 +225,16 @@
 				priceIndex: 0,
 				timeShow: false,
 				carPubType: 1,
+				timeName:'',
 				today: {},
 				editId: '',
-				title: '租赁发布(1/3)'
+				title: ''
 			}
 		},
 		components: {
 			Auth,
 			SearchTags,
 			CarList,
-			
 		},
 		onLoad(option) {
 			let index = option.id;
@@ -266,15 +269,31 @@
 					this.title = '转卖发布'
 				}
 			},
-			onLineListChange(index) {
-				this.activeOnLine = index;
+			onLineListChange(obj) {
+				this.activeOnLine = obj.index;
+				this.form.onlineistaxi =obj.text;
 			},
-			carTypeListChange(index) {
-				this.activeCarType = index;
+			carTypeListChange(obj) {
+				this.activeCarType = obj.index;
+				this.form.cartype = obj.text;
 			},
-			powerChange(index) {
-				this.activePower = index;
+			powerChange(obj) {
+				this.activePower = obj.index;
+				this.form.power = obj.text
 
+			},
+			showTimePicker(name){
+				this.timeName = name;
+				this.timeShow = true;
+			},
+			dataChange(obj){
+				if(obj.year == this.today.year){
+					if (obj.month > this.today.month || obj.day > this.today.day){
+						return false
+					}
+				}
+				let companyDate = obj.year+"-"+obj.month;
+				this.form[this.timeName] = companyDate;
 			},
 			delList(index) {
 				if (this.form.rentCarPrice.length === 1) {

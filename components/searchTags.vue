@@ -1,6 +1,6 @@
 <template>
 	<view v-if="singleType" :class="curThemeType ==='driver'?'driver-content':'company-content'">
-		<text :class='{checked_text:index===active,common_text:true}' v-for="(item,index) in list" :key="item.id" @click="onClick(index, $event)">{{item.text}}</text>
+		<text :class='{checked_text:index===active,common_text:true}' v-for="(item,index) in list" :key="item.id" @click="onClick(index, item.text)">{{item.text}}</text>
 	</view>
 	<view v-else :class="curThemeType ==='driver'?'driver-content':'company-content'">
 		<text :class="['common_text',item.checked ? 'checked_text':'defult_text']" v-for="(item,index) in list" :key="item.id"
@@ -33,9 +33,9 @@
 			};
 		},
 		methods: {
-			onClick(index, $event) {
+			onClick(index, item) {
 				if (index !== this.active) {
-					this.$emit('onClick', index);
+					this.$emit('onClick', {index:index,text:item});
 				}
 			},
 			onClickAll(item) {
