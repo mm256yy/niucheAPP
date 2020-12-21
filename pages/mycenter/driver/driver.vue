@@ -4,7 +4,10 @@
 			<view style="padding: 15pt;">
 				<view class="avater">
 					<u-row style="margin-top: 10pt;background-color: #FFFFFF;padding: 6pt 0;">
-						<u-col span="3">
+						<u-col span="3" v-show="!tokenFlag">
+							<u-avatar src="../../static/driverSrc.png" mode="circle" size="large" ></u-avatar>
+						</u-col>
+						<u-col span="3" v-show="tokenFlag" >
 							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
 						</u-col>
 						<u-col span="8" v-show="!tokenFlag">

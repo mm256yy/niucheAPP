@@ -4,7 +4,10 @@
 			<view>
 				<view class="imgUrl">
 					<u-row style="padding:10pt 10pt 15pt; ">
-						<u-col span="3">
+						<u-col span="3" v-if="!tokenFlag">
+							<u-avatar src="../../static/touxx.png" mode="circle" size="large" ></u-avatar>
+						</u-col>
+						<u-col span="3" v-else>
 							<u-avatar :src="comnpanySrc" mode="circle" size="large" ></u-avatar>
 						</u-col>
 						<u-col span="8" v-if="!tokenFlag">
