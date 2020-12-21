@@ -83,6 +83,7 @@
 				
 			<view class="colorF">
 				<u-cell-group>
+					<u-cell-item  title="发布需求" :title-style="titleStyle" @click="toPublishPage"></u-cell-item>
 					<u-cell-item  title="客服" value="0571-87815287" :title-style="titleStyle" @click="toCustomer"></u-cell-item>
 					<u-cell-item  title="用户帮助" :title-style="titleStyle" @click="tohelps"></u-cell-item>
 					<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle"></u-cell-item>
@@ -212,7 +213,20 @@
 						index: index
 					});
 				}
-			}
+			},
+			toPublishPage(){
+				let token = uni.getStorageSync('token');
+				   if (token){
+					   let role = uni.getStorageSync('role');
+						   uni.navigateTo({
+							   url: '/pages/company/release/release'
+						   });
+				   } else {
+						uni.showToast({
+							title:"请先登录，认证" 
+						  })
+				   }
+			},
 		}
 	}
 </script>

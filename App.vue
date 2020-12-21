@@ -9,7 +9,7 @@
 			//检测升级
 			this.checkUpdate()
 			//中间图标点击
-			this.midButtonTap()
+			// this.midButtonTap()
 
 		},
 		onShow() {
@@ -143,7 +143,7 @@
 						  uni.navigateTo({
 							  url: '/pages/company/release/release'
 						  });
-					   } else{
+					   } else{ 
 						   uni.navigateTo({
 							   url: '/pages/driver/release/release'
 						   });

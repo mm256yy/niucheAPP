@@ -6,10 +6,11 @@ export const dirverPages = [{
   index: 1,
   iconPath: "static/tabbar/message.png",
   selectedIconPath: '/static/tabbar/message-select-d.png',
-  text:'招聘'
+  text:'租车'
 },{
   index: 2,
-  selectedIconPath: '/static/tabbar/collect-select-d.png'
+  selectedIconPath: '/static/tabbar/collect-select-d.png',
+  text:'招聘'
 },{
   index: 3,
   selectedIconPath: '/static/tabbar/mycenter-select-d.png'
@@ -25,7 +26,8 @@ export const companyPages =[{
   text:'买车'
 },{
   index: 2,
-  selectedIconPath: '/static/tabbar/collect-select.png'
+  selectedIconPath: '/static/tabbar/collect-select.png',
+  text:'收藏'
 },{
   index: 3,
   selectedIconPath: '/static/tabbar/mycenter-select.png'

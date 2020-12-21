@@ -46,10 +46,10 @@
 					  </u-row>
 					</view>
 				</view>
-				
-				<view class="my_title">
-					我的发布
-				</view>
+				<u-row class="my_title">
+					<u-col span="4">我的发布</u-col>
+					<u-col span="8" style="text-align: right;color: rgb(252, 187, 48);font-size: 14px;" @click="toPublishPage">发布需求</u-col>
+				</u-row>
 				<view class="bgf">
 					<u-cell-group >
 						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.carNum == 0?'未发布':'已发布'">
@@ -57,6 +57,9 @@
 						</u-cell-item>
 						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.jobNum == 0?'未发布':'已发布'">
 							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="收藏" :title-style="titleStyle">
+							<u-icon size="60" :name="scSrc" slot="icon"></u-icon>
 						</u-cell-item>
 					</u-cell-group>
 				</view>
@@ -248,6 +251,19 @@
 					  }
 				  }
 			   }
+			},
+			toPublishPage(){
+				let token = uni.getStorageSync('token');
+				   if (token){
+					   let role = uni.getStorageSync('role');
+						   uni.navigateTo({
+							   url: '/pages/driver/release/release'
+						   });
+				   } else {
+						uni.showToast({
+							title:"请先登录，认证" 
+						  })
+				   }
 			},
 		}
 	}
