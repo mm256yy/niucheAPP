@@ -121,7 +121,7 @@
 							</u-form>
 						</view>
 					</view>
-					<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
+					<!-- <u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet> -->
 					<view @click="addPriceObj" style="padding: 10pt 0;">
 						<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加价格</text>
 					</view>
@@ -160,7 +160,7 @@
 			</view>
 		</view>
 		<u-popup v-model="showCar" mode="right" length="80%">
-			<CarList></CarList>
+			<CarList :max='3' @onClick="carChange" ></CarList>
 		</u-popup>
 		<Auth></Auth>
 	</view>
@@ -251,6 +251,9 @@
 				this.today = today
 			}
 		},
+		mounted() {
+			// this.getSelect()
+		},
 		methods: {
 			uploadChange(data, index, lists, name) {
 				this.form[name].push(data.object);
@@ -295,6 +298,12 @@
 				let companyDate = obj.year+"-"+obj.month;
 				this.form[this.timeName] = companyDate;
 			},
+			carChange(obj){
+				if(obj.type === 3){
+					this.showCar = false
+				}
+				console.log(obj)
+			},
 			delList(index) {
 				if (this.form.rentCarPrice.length === 1) {
 					this.$u.toast('请至少填写一个价格')
@@ -323,11 +332,11 @@
 						}) 
 			},
 			delList(index){
-					  if(this.form.sellCarPrice.length ===1){
-						  this.$u.toast('请至少填写一个价格')
-						  return
-					  }
-					 this.form.sellCarPrice.splice(index,1)
+				if(this.form.sellCarPrice.length ===1){
+					  this.$u.toast('请至少填写一个价格')
+					  return
+				}
+				this.form.sellCarPrice.splice(index,1)
 			},
 
 		}

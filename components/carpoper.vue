@@ -4,7 +4,7 @@
 			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
 				<view v-for="(item,index) in list" :key="index" :id="item.letter == '#' ? 'indexed-list-YZ' :'indexed-list-' + item.letter">
 					<view class="letter-title"> {{item.letter}}</view>
-					<view v-for="info in item.data" class="letter-text" @click="showStep(info.id)">
+					<view v-for="info in item.data" class="letter-text" @click="showStep(info)">
 						{{info.text}}
 					</view>
 				</view>
@@ -14,7 +14,10 @@
 			</view>
 		</view>
 		<view v-show="step === 2">
-			
+			<view class="letter-text" v-for="item in carmodelList" :key="item.carseriesid" @click="showStepNext(item)">{{item.carseriesname}}</view>
+		</view>
+		<view v-show="step === 3">
+			<view class="letter-text" v-for="item in carxinghaoList" :key="item.carseriesid" @click="hidePoper(item)">{{item.carseriesname}}</view>
 		</view>
 	</view>
 </template>
@@ -35,33 +38,51 @@
 				scrollTop: 0,
 				indexList: [],
 				list: [],
-				step:1
+				step:1,
+				carmodelList:[],
+				carxinghaoList:[],
+				form:{
+					carbrand:'',
+					carmodel:'',
+					carxinghao:'',
+					type:1
+				}
 			}
 		},
 		mounted() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.winHeight = winHeight;
-			uni.request({
-				url: 'http://niuche-default.neocab.cn/carmodel', //接口地址
-				header: {
-					'content-type': 'application/x-www-form-urlencoded', //自定义请求头信息
-				},
-				success: (res) => {
-					if (res.statusCode === 200) {
-						this.list = res.data;
-						let arr = [];
-						res.data.forEach(item => {
-							arr.push(item.letter)
-						})
-						this.indexList = arr
-					} else {
-						this.list = list;
-						this.indexList = letterArr
-					}
-				}
-			});
+			this.getSelect()
 		},
 		methods: {
+			getSelect(){
+				uni.request({
+					url: 'http://niuche-default.neocab.cn/carmodel', //接口地址
+					header: {
+						'content-type': 'application/x-www-form-urlencoded', //自定义请求头信息
+					},
+					success: (res) => {
+						if (res.statusCode === 200) {
+							this.list = res.data;
+							let arr = [];
+							res.data.forEach(item => {
+								arr.push(item.letter)
+							})
+							this.indexList = arr
+						} else {
+							this.list = list;
+							this.indexList = letterArr
+						}
+					}
+				});
+				// this.$u.api.getCarBrand({}).then(res=>{
+				// 	if(res.code === 200){
+			 //           console.log(res)
+				// 	}else {
+				// 		 this.$u.toast(res.message);
+				// 	}
+				// })
+			},
 			jumper(event, i) {
 				this.jumperIndex = event;
 				let len = this.list[i].data.length;
@@ -73,25 +94,43 @@
 					this.scrollViewId = 'indexed-list-' + event;
 				}
 			},
-			showStep(id){
-				this.$u.api.getCarSystem({carbrandid:id}).then(res=>{
+			showStep(obj){
+				this.$u.api.getCarSystem({carbrandid:obj.id}).then(res=>{
 					if(res.code === 200){
-						console.log(res)
-				       // this.selectObj.carmodel = res.object;
+						 let data = res.object;
+						 this.carmodelList = data;
+						 this.form.carbrand = obj.text;
+						 this.form.carmodel = '',
+						 this.form.carxinghao = '',
+						 this.form.type = 1
+						 this.$emit("onClick",this.form)
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				}).catch(res=>{console.log(res)})
 				this.step = 2
 			},
-			showStepNext(id){
-				this.$u.api.getCarModel({carseriesid:id}).then(res=>{
+			showStepNext(obj){
+				this.$u.api.getCarModel({carseriesid:obj.carseriesid}).then(res=>{
 					if(res.code === 200){
-					   // this.selectObj.carxinghao = res.object;
+					  let data = res.object;
+					  this.carxinghaoList = data;
+					  this.form.carmodel = obj.carseriesname;
+					  this.form.carxinghao = '',
+					  this.form.type = 2
+					  this.$emit("onClick",this.form)
 					}else {
 						 this.$u.toast(res.msg);
 					}
-				})	
+				})
+					this.step = 3
+			},
+			hidePoper(obj){
+				console.log(obj)
+				this.form.carxinghao = obj.carseriesname;
+				this.form.type = 3
+				let data = Object.assign(this.form,obj)
+				 this.$emit("onClick",data)
 			},
 			toNext(v) {
 				if (this.source === '1') {
@@ -113,12 +152,14 @@
 <style lang="scss" scoped>
 	.letter-title {
 		padding: 5px 10px;
-		background: #ccc;
+		background: #f5f5f5;
+		color: #333333;
 	}
 
 	.letter-text {
-		padding: 10px;
-		border-bottom: 1px solid #ccc;
+		padding: 15px;
+		color: #333333;
+		border-bottom: 1px solid #E0E0E0;
 	}
 
 	.right-menu {
@@ -132,6 +173,6 @@
 	}
 
 	.active {
-		color: #f00;
+		color: #4ABA75;
 	}
 </style>
