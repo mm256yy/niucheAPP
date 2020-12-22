@@ -58,7 +58,7 @@
 						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.jobNum == 0?'未发布':'已发布'">
 							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
 						</u-cell-item>
-						<u-cell-item title="收藏" :title-style="titleStyle">
+						<u-cell-item title="收藏" :title-style="titleStyle" @click="toCollect()">
 							<u-icon size="60" :name="scSrc" slot="icon"></u-icon>
 						</u-cell-item>
 					</u-cell-group>
@@ -213,6 +213,18 @@
 				if (token){
 					if(this.driverPub.driverState === 2){
 						this.$u.route("/pages/driver/inviteFriends/inviteFriends",{shareId:this.driverPub.shareId})
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
+			toCollect(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.driverPub.driverState === 2){
+						this.$u.route("/pages/mycollect/mycollect")
 					} else{
 						this.$u.toast('请先进行认证')
 					}
