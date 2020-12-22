@@ -254,14 +254,14 @@
 										// if(res.userstate === '0'){
 										// 	this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										// } else {
-											this.$u.route({url:'/pages/index/index',type:'switchTab'})
+											this.$u.route({url:'/pages/init/init',type:'switchTab'})
 										// }
 									} else {
 										 uni.setStorageSync('curThemeType', 'company');
 										// if(res.userstate ==='0'){
 										// 	this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 										// } else {
-											this.$u.route({url:'/pages/index/index',type:'switchTab'})
+											this.$u.route({url:'/pages/init/init',type:'switchTab'})
 										// }
 									}
 								}else {

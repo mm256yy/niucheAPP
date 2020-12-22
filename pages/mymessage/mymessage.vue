@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<Driver v-if='curThemeType ==="driver"' ref="collectRef"></Driver>
+		<Driver v-if='curThemeType ==="driver"' ref="driver"></Driver>
 		<CollectCompany ref="collectRef" v-else></CollectCompany>
 	</view>
 </template>
@@ -32,6 +32,9 @@ export default {
 			})
 		}
 		if(token){
+			if(this.$refs.driver !=undefined){
+				this.$refs.driver.getList()
+			}
 			if(this.$refs.collectRef !=undefined){
 				this.$refs.collectRef.init()
 			}
