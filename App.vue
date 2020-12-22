@@ -2,6 +2,7 @@
 <script>
 	import Vue from 'vue'
 	import {dirverPages,companyPages} from '@/utils/tabbar.js'
+	import {updateUrl} from '@/utils/constant.js'
 	export default {
 		onLaunch: function() {
 			//初始化
@@ -54,7 +55,7 @@
 				//#ifdef APP-PLUS
 				plus.runtime.getProperty(plus.runtime.appid, (wgtinfo) => {
 					uni.request({
-					    url: 'http://app-server.neocab.cn/app/getUrl?version='+wgtinfo.versionCode, 
+					    url: updateUrl+wgtinfo.versionCode, 
 						method:'POST',
 					    data: {version: wgtinfo.versionCode},  
 					    success: (res) => {
