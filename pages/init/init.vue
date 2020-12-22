@@ -1,9 +1,8 @@
 <template>
 	<view>
 		<view v-if='curThemeType ==="driver"'>
-			
+	        <DriverIndex v-if='curThemeType ==="driver"'></DriverIndex>
 		</view>
-		<!-- <Driver v-if='curThemeType ==="driver"' ref="driver"></Driver> -->
 		<Company ref="driver" v-else></Company>
 		<OneTips ref="onetips"></OneTips>
 		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075">
@@ -20,7 +19,7 @@
 <script>
 	import OneTips from '../../components/oneTips.vue'
 	import Company from '../index/company/company.vue'
-	// import Driver from './driver/driver.vue'
+	import DriverIndex from './driverIndex.vue'
 	import {
 		dirverPages,
 		companyPages
@@ -28,6 +27,7 @@
 	export default {
 		components: {
 			Company,
+			DriverIndex,
 			OneTips
 		},
 		data() {
@@ -40,7 +40,7 @@
 		},
 		onShow() {
 			let type = uni.getStorageSync('curThemeType');
-			this.init()
+			// this.init()
 			if (type === 'company') {
 				companyPages.forEach(item => {
 					uni.setTabBarItem(item)
@@ -91,7 +91,6 @@
 				}
 			},
 			toPage(){
-				console.log(1)
 				let url = this.data.url;
 				if(url){
 					this.$u.route(url)
@@ -141,7 +140,7 @@
 </script>
 <style lang="scss">
 	page {
-		background-color: #F5F5F8;
+		// background-color: #F5F5F8;
 	}
 	.close_btn{
 		position: fixed;

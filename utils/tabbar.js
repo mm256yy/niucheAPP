@@ -1,7 +1,7 @@
 //司机tabbar
 export const dirverPages = [{
   index: 0,
-  selectedIconPath: '/static/tabbar/index-select-d.png'
+  selectedIconPath: '/static/tabbar/midbutton.png',
 },{
   index: 1,
   iconPath: "static/tabbar/message.png",
