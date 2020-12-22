@@ -380,11 +380,6 @@ export default {
 		})	
 	},
 	dataChange(obj){
-		if(obj.year == this.today.year){
-			if (obj.month > this.today.month || obj.day > this.today.day){
-				return false
-			}
-		}
 		let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 		this.form.firsttime = companyDate;
 	},
