@@ -25,14 +25,14 @@
 					uni.setTabBarItem(item)
 				})
 				uni.setTabBarStyle({
-				  selectedColor: '#41B36D',
+				  selectedColor: '#46B773',
 				})
 			} else {
 				dirverPages.forEach(item=>{
 					uni.setTabBarItem(item)
 				})
 				uni.setTabBarStyle({
-				  selectedColor: '#FE9217',
+				  selectedColor: '#FF9E00',
 				})
 			}
 			if(this.$refs.driver != undefined){

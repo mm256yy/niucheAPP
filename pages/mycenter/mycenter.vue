@@ -48,7 +48,7 @@
 					uni.setTabBarItem(item)
 				})
 				uni.setTabBarStyle({
-				  selectedColor: '#41B36D',
+				  selectedColor: '#46B773',
 				})
 				if (token){
 					if (this.$refs.searchCom){
@@ -71,7 +71,7 @@
 					uni.setTabBarItem(item)
 				})
 				uni.setTabBarStyle({
-				  selectedColor: '#FE9217',
+				  selectedColor: '#FF9E00',
 				})
 				if (token){
 					if (this.$refs.searchDri){
