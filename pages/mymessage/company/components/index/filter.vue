@@ -5,11 +5,18 @@
 	   <view class="view-content">
 		   <view class="name">{{addkey}}</view>
 		   <view style="width: 100%;height: 20rpx;background: #f5f5f5;"></view>
-	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
+		   <view style="position: absolute;top: 400rpx;left: 0;z-index: 100;width: 100%;">
+			   <view v-for="(item, index) in list" :key="index" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
+			   border-bottom: 2rpx solid rgba(0,0,0,0.03);">
+			   			   <view style="font-size: 32rpx;color: #333;">{{item.brandname}}</view>
+			   			   <view style="width: 48rpx;height: 48rpx;border-radius: 50%;background: #4aba75;line-height: 48rpx;
+			   			   text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandname)">十</view>
+			   </view>
+		   </view>
+	   	  <u-form style="position: relative;" :model="form" ref="uForm" label-width="280" :border-bottom="false">
 			  <u-form-item label="品牌选择" label-position="top">
 				  <u-row style="border-bottom: 2rpx solid rgba(0,0,0,0.06);padding-bottom: 10rpx;width: 680rpx;">
 				  	<u-col span="8"><u-input @input="keyup" v-model="value" maxlength="30" :border="false" placeholder="请选择品牌型号"/></u-col>
-				  	<u-col span="4"><u-button type="success" shape='circle' class="btn-agree" @click="addBrand">添加</u-button></u-col>
 				  </u-row>
 			  	<!-- <u-checkbox-group active-color="#6DD99C" @change="brandGroupChange" shape="circle">
 			  		<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
@@ -85,7 +92,7 @@
 				total: '',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
 						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}],
-				addkey: '不限',
+				addkey: '',
 				businessTypekey: '不限',
 				carbrandkey: '',
 				cartypekey: '',
@@ -97,7 +104,7 @@
 				kmkey: {
 					text:''
 				},
-				currentType:2,
+				currentType:-1,
 				currentCar:-1,
 				currentPower:-1,
 				arrCar:[],
@@ -105,7 +112,7 @@
 				cartype:[],
 				power:[],
 				businessType: '',
-				filterData:[]
+				list:[]
 			}
 		},
 		// computed:{
@@ -119,16 +126,24 @@
 		},
 		methods: {
 			keyup() {
-				this.$u.api.brandList({initialOrBrandName: this.value}).then(res=>{
-					if(res.code === 200){
-						 
-					}else {
-						 this.$u.toast(res.msg);
-					}
-				})
+				if(this.value != ''){
+					this.$u.api.brandList({initialOrBrandName: this.value}).then(res=>{
+						if(res.code === 200){
+							this.list = res.object; 
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
+			get(text) {
+				this.addkey = this.addkey==''?text:(this.addkey+','+text);
+				this.list=[];
+				this.value='';
 			},
 			transform() {
 				const businessType = uni.getStorageSync('businessType');
+				this.businessType = uni.getStorageSync('businessType');
 				if(uni.getStorageSync('cartype')){
 					var cartype = uni.getStorageSync('cartype').split(',');
 				}
@@ -136,15 +151,17 @@
 					var power = uni.getStorageSync('power').split(',');
 				}
 				if(businessType){
+					this.addkey = this.addkey==''?businessType:(this.addkey+','+businessType);
 					this.publishObj.onLineList.forEach(item=>{
 					   if(item.text == businessType){
 						this.currentType = parseInt(item.id)-1
 						this.form.businessType = parseInt(item.id)
 					   }
-					})
+					}) 
 				}
-				if(cartype){
-					this.form.cartype = cartype;
+				if(cartype.length){
+					this.form.cartype = cartype.join(',');
+					this.addkey = this.addkey==''?this.form.cartype:(this.addkey+','+this.form.cartype);
 					cartype.map(item=>{
 					   this.publishObj.carType.forEach(items=>{
 					      if(items.text == item){
@@ -154,8 +171,9 @@
 					   })
 					})
 				}
-				if(power){
-					this.form.power = power;
+				if(power.length){
+					this.form.power = power.join(',');
+					this.addkey = this.addkey==''?this.form.power:(this.addkey+','+this.form.power);
 					power.map(item=>{
 					   this.publishObj.power.forEach(items=>{
 					      if(items.text == item){
@@ -167,10 +185,10 @@
 				}
 				this.select()
 			},
-			getDataType(index) {
-				this.currentType = index;
-				this.form.businessType =  this.publishObj.onLineList[index].id;
-				this.businessType =  this.publishObj.onLineList[index].text;
+			getDataType(obj) {
+				this.currentType = obj.index;
+				this.form.businessType = obj.index + 1;
+				this.businessType =  obj.text;
 				this.select()
 				this.add()
 			},
@@ -317,8 +335,6 @@
 				}
 			},
 			select(){
-				this.filterData = [];
-		
 				// if (this.form.mainBusiness === ''){
 				// 	this.$u.toast('请选择业务类型');
 				// 	return

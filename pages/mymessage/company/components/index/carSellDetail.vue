@@ -147,7 +147,10 @@
 				firstCurrent:0,
 				background: {
 					'background-image': 'background: linear-gradient(270deg,rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);'
-				}
+				},
+				kmOption:[{text: '小于2万公里',value: '2'},{text: '大于2小于等于5万公里',value: '5'},{text: '大于5小于等于10万公里',value: '10'},
+						{text: '大于10小于等于20',value: '20'},{name: '大于20小于等于30万公里',value: '30'},{text: '大于30小于等于50万公里',value: '50'},
+						{text: '大于50小于等于70万公里',value: '70'},{text: '大于70万公里',value: '>70'}],
 			}
 		},
 		onLoad(option) {
@@ -212,6 +215,11 @@
 					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
+							 this.kmOption.forEach(item=>{
+							    if(item.value == this.detail.carkm){
+							    	this.detail.carkm = item.text;
+							    }
+							 })
 							 this.detail.systemtag = this.detail.systemtag.join('/')
 							 var text = '';
 							 if(this.detail.pricesectionlist) {
