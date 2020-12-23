@@ -30,7 +30,7 @@
 		<view class="djhc">
 			<view class="djhc_title">低价好车</view>
 			<view class="djhc_link">
-				<text>平台精选好车，价位质不低</text>
+				<text>平台精选好车，价低质不低</text>
 				<text>></text>
 			</view>
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
@@ -47,19 +47,25 @@
 			</scroll-view>
 		</view>
 		<view class="xcfl">
-			<view style="font-size:20px;padding: 15px;">新春福利</view>
-			<view style="font-size:14px;padding: 0 15px;display: flex;justify-content: space-between;">
+			<view class="xcfl_title">新春福利</view>
+			<view class="xcfl_link">
 				<text>送油 送保养 送免租</text>
 				<text>></text>
 			</view>
 			<swiper :current="swiperCurrent">
 				<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
-					{{item.title}}
-					<div>1</div>
-					<div>2</div>
-					<div>3</div>
+					<view style="display: flex;justify-content: space-around;">
+						<view v-for="i in 3">
+							<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="160rpx"></u-image>
+							<view>长安-马自达</view>
+							<view>公司简称</view>
+						</view>
+					</view>
 				</swiper-item>
 			</swiper>
+		</view>
+		<view class="yzsj" style="height: 500px;">
+
 		</view>
 	</view>
 </template>
@@ -166,22 +172,40 @@
 			display: flex;
 			justify-content: space-between;
 		}
-		.djhc_model{
+
+		.djhc_model {
 			color: #333;
 			padding: 4pt 0;
 		}
-		.djhc_power{
+
+		.djhc_power {
 			color: #6D6D6D;
 			padding: 4pt 0;
 		}
-		.djhc_money{
+
+		.djhc_money {
 			color: #FF5A00;
 			padding: 4pt 0;
 		}
 	}
-    .bg_fff{
+
+	.xcfl {
+		.xcfl_title {
+			font-size: 20px;
+			padding: 15px;
+		}
+		.xcfl_link {
+			font-size: 14px;
+			padding: 0 15px 20px;
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+
+	.bg_fff {
 		background-color: #FFFFFF;
 	}
+
 	.scroll-view_H {
 		white-space: nowrap;
 		width: 100%;
