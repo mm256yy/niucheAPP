@@ -19,17 +19,9 @@
 						</view>
 					</u-upload>
 				</view>
-				<view style="margin-top: 10pt;font-size: 10pt;padding-left: 5pt;">
-					<view>上传图片必须包含：</view>
-					<view>1、车外观左右前方45°照片；</view>
-					<view>2、车外观正前正后方照片;</view>
-					<view>3、车外观两侧照片；</view>
-					<view>4、车外观右后方或左后方45°照片；</view>
-					<view>5、车辆内部中控仪表盘照片；</view>
-					<view>6、车辆内部前后排图片；</view>
-					<view>7、车辆后备箱照片；</view>
-					<view>8、该批次车辆集体照片；</view>
-					<view style="color: #f00;padding-top: 5pt;font-size: 8pt;">*必须为jpg格式，最多18张</view>
+				<view style="margin-top: 10pt;font-size: 10pt;padding-left: 5pt;color: #666666;">
+				上传照片必须包含：1.车外观左右前方45度的照片；2.车外观正前正后方照片；3.车外观两侧照片；4.车外观两侧照片；5.车辆内部中控仪表盘照片；6.车辆内部前后排图
+				片；7.车辆后备箱照片；8.该批次车辆集体照片  <text style="color: #FF9D00;padding-top: 5pt;font-size: 8pt;">*必须为jpg格式，最多18张</text>
 				</view>
 			</view>
 			<view class="view-content">
@@ -42,16 +34,15 @@
 						</view>
 					</u-upload>
 				</view>
-				<view style="margin-top: 5pt;font-size: 10pt;padding-left: 5pt;">
+				<view style="margin-top: 5pt;font-size: 10pt;padding-left: 5pt;color: #666666;">
 					<view>请上传该批次车辆《行驶证》或《运输证》，建议每辆车上传一份！</view>
 				</view>
 			</view>
-			<view class="view-content" style="color: #f00;font-size: 8pt;">*上传的车辆证件须与认证主体名称一致，否则可能会造成审核失败。</view>
 			<view class="view-content">
 				<view class="label_title">业务类型</view>
 				<SearchTags :list="publishObj.onLineList" :active="activeOnLine" :singleType="true" @onClick="onLineListChange"></SearchTags>
 				<u-cell-group :border="false" style="border-bottom: 1px solid #DEDEDE;">
-					<u-cell-item title="转卖车辆" value="请选择品牌型号" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
+					<u-cell-item title="转卖车辆" :value="selectCarInfo" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
 				</u-cell-group>
 				<view class="label_title">车辆类型</view>
 				<SearchTags :list="publishObj.carType" :active="activeCarType" :singleType="true" @onClick="carTypeListChange"></SearchTags>
@@ -91,7 +82,7 @@
 					</u-col>
 				</u-row>
 				<view class="label_title">车辆况描述</view>
-				<view>
+				<view style="padding-top: 16rpx;">
 					<u-input type="textarea" v-model="form.cardescribe" :border="true" placeholder="" />
 				</view>
 				<view class="zlcontent" v-if="carPubType === 1">
@@ -103,7 +94,7 @@
 					</view>
 					<view class="zlcontent-mid price-list" v-for="(item,index) in form.rentCarPrice" :key='index'>
 						<view style="font-size: 12pt;color: #000000;padding-bottom: 5pt;">
-							<text>{{index+1}} </text>
+							<text>租金{{index+1}} </text>
 							<view style="display: inline-block;width: 80%;text-align: right;" v-show="index >0">
 								<u-icon name="trash" color="#6DD99B" size="40" @click="delList(index)"></u-icon>
 							</view>
@@ -122,8 +113,9 @@
 						</view>
 					</view>
 					<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
-					<view @click="addPriceObj" style="padding: 10pt 0;">
-						<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加价格</text>
+					<view @click="addPriceObj" style="padding: 10pt 0;text-align: center;">
+						<u-icon name="plus-circle-fill" color="#6DD99B" size="60"></u-icon>
+						<view style="display: inline-block;vertical-align: middle;height: 30px;">添加价格</view>
 					</view>
 				</view>
 				<view class="zlcontent" v-else>
@@ -131,7 +123,7 @@
 					  <view style="font-size: 12pt;color: #000000;padding-bottom: 10pt;">
 						   <text>价格{{index+1}} </text>
 						   <view style="display: inline-block;width: 80%;text-align: right;" v-show="index>0">
-								<u-icon name="trash" color="#6DD99B" size="40" @click="delList(index)"></u-icon>
+								<u-icon name="trash" color="#6DD99B" size="40" @click="delPriceList(index)"></u-icon>
 						   </view>
 					    </view>
 					   <view>
@@ -149,18 +141,19 @@
 						</u-form>	
 					   </view>
 				   </view>
-				   <view @click="addPriceObj" style="padding: 10pt 0;">
-				   	<u-icon name="plus-circle-fill" color="#6DD99B" size="40"></u-icon><text style="vertical-align: top;">添加价格</text>
+				   <view @click="addPrice" style="padding: 10pt 0;text-align: center;">
+				   <u-icon name="plus-circle-fill" color="#6DD99B" size="60"></u-icon>
+				   <view style="display: inline-block;vertical-align: middle;height: 30px;">添加价格</view>
 				   </view>
 				</view>
 			</view>
 			<u-picker v-model="timeShow" mode="time" :end-year="today.year" :params="publishObj.params" @confirm="dataChange"></u-picker>
 			<view style="text-align: center; padding: 26pt 20pt;">
-				<u-button type="success" shape='circle' class="btn-agree" @click="toNext">提交审核</u-button>
+				<u-button type="success" shape='circle' class="btn-agree" @click="submitForm">提交审核</u-button>
 			</view>
 		</view>
 		<u-popup v-model="showCar" mode="right" length="80%">
-			<CarList></CarList>
+			<CarList :max='3' @onClick="carChange" ></CarList>
 		</u-popup>
 		<Auth></Auth>
 	</view>
@@ -194,9 +187,9 @@
 					carbrand: '',//品牌
 					carmodel: '',//车系
 					carxinghao: '',//型号
-					cartype: '',//车辆类型
-					power: '',//动力
-					onlineistaxi: '',//业务类型
+					cartype: '轿车',//车辆类型
+					power: '纯电动',//动力
+					onlineistaxi: 1,//业务类型
 					firsttime: '',//上牌
 					endtime:'',
 					firstkm: '',//公里
@@ -228,7 +221,10 @@
 				timeName:'',
 				today: {},
 				editId: '',
-				title: ''
+				title: '',
+				selectCarInfo:'请选择车辆',
+				list:publishObj.leasePeriod,
+				show:false
 			}
 		},
 		components: {
@@ -251,6 +247,9 @@
 				this.today = today
 			}
 		},
+		mounted() {
+			// this.getSelect()
+		},
 		methods: {
 			uploadChange(data, index, lists, name) {
 				this.form[name].push(data.object);
@@ -271,7 +270,7 @@
 			},
 			onLineListChange(obj) {
 				this.activeOnLine = obj.index;
-				this.form.onlineistaxi =obj.text;
+				this.form.onlineistaxi =obj.id;
 			},
 			carTypeListChange(obj) {
 				this.activeCarType = obj.index;
@@ -295,6 +294,22 @@
 				let companyDate = obj.year+"-"+obj.month;
 				this.form[this.timeName] = companyDate;
 			},
+			carChange(obj){
+				if(obj.type === 1){
+					this.selectCarInfo = obj.carbrand;
+					this.form.carbrand = obj.text;
+					this.form.carmodel = '';
+					this.form.carxinghao = '';
+				} else if(obj.type ===2){
+					this.selectCarInfo = obj.carbrand+'/'+obj.carmodel;
+					this.form.carbrand = obj.text;
+					this.form.carmodel = obj.carmodel;
+					this.form.carxinghao = '';
+				}else{
+					this.showCar = false;
+					this.form =Object.assign(this.form,obj)
+				}
+			},
 			delList(index) {
 				if (this.form.rentCarPrice.length === 1) {
 					this.$u.toast('请至少填写一个价格')
@@ -317,19 +332,46 @@
 					Rentprice: ''
 				})
 			},
-			addPriceObj(){
-					this.form.sellCarPrice.push({
-							shoplow:'',shophigh:'',packprice:''
-						}) 
+			addPrice(){
+				this.form.sellCarPrice.push({
+						shoplow:'',shophigh:'',packprice:''
+					}) 
 			},
-			delList(index){
-					  if(this.form.sellCarPrice.length ===1){
-						  this.$u.toast('请至少填写一个价格')
-						  return
-					  }
-					 this.form.sellCarPrice.splice(index,1)
+			delPriceList(index){
+				if(this.form.sellCarPrice.length ===1){
+					  this.$u.toast('请至少填写一个价格')
+					  return
+				}
+				this.form.sellCarPrice.splice(index,1)
 			},
-
+	        submitForm(){
+					let data = this.form;
+					let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
+					this.$u.api.getSystemTag(obj).then(res=>{
+						if(res.code === 200){
+							this.form.SystemTag = res.systemTagVo;
+							let obj = this.form;
+							if(this.carPubType === 1) {
+								obj.businesstype = 3;
+								obj.mainbusinesstype = 1;
+							} else {
+								obj.businesstype = 1;
+								obj.mainbusinesstype = 3;
+							}
+							this.$u.api.saveMainBusiness(obj).then(res=>{
+								if(res.code === 200){
+									 uni.reLaunch({
+									     url: '/pages/company/myPublish/myPublish?index=0'
+									 });
+								}else {
+									 this.$u.toast(res.msg);
+								}
+							})
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			},
 		}
 	}
 </script>
