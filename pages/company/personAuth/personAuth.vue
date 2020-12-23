@@ -179,6 +179,7 @@
 					 uni.setStorageSync('companySecond', data);
 			},
 			dataChange(obj){
+				let birthday = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form.birthday = birthday;
 			},
 			// 获取验证码
