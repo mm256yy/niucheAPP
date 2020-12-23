@@ -1,5 +1,6 @@
 
 <script>
+	
 	import Vue from 'vue'
 	import {dirverPages,companyPages} from '@/utils/tabbar.js'
 	import {updateUrl} from '@/utils/constant.js'
@@ -154,7 +155,12 @@
 </script>
 
 <style lang="scss">
+	
 	@import "uview-ui/index.scss";
+	@font-face{
+		font-family:"siyuan";
+		src: url('~@/static/SourceHanSansCN-Medium.ttf');
+	}
 	// .uni-page-head{
 	// 	background: linear-gradient(55deg, $bg-grad-FE, $bg-grad-FCD);
 	// }
