@@ -34,7 +34,7 @@
 				<text>></text>
 			</view>
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
-				<view class="scroll-view-item_H" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in tuBiaoList" :key="item.url">
+				<view class="scroll-view-item_H" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in 9" :key="item.url">
 					<view>
 						<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="120rpx"></u-image>
 					</view>
@@ -52,20 +52,37 @@
 				<text>送油 送保养 送免租</text>
 				<text>></text>
 			</view>
-			<swiper :current="swiperCurrent">
+			<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#FF5A00" style="height: 180px;">
 				<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
-					<view style="display: flex;justify-content: space-around;">
-						<view v-for="i in 3">
+					<view style="display: flex;justify-content: space-around;padding: 0 10px;">
+						<view v-for="i in 3" style="width: 31%;">
 							<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="160rpx"></u-image>
-							<view>长安-马自达</view>
-							<view>公司简称</view>
+							<view class="bg_fff">
+								<view class="djhc_model">长安-马自达</view>
+								<view class="djhc_power">燃料/车龄</view>
+							</view>
 						</view>
 					</view>
 				</swiper-item>
 			</swiper>
 		</view>
-		<view class="yzsj" style="height: 500px;">
-
+		<view class="xcfl" style="padding-bottom: 40pt;">
+			<view class="xcfl_title">优质商家推荐</view>
+			<view class="xcfl_link">
+				<text>好商家，租车安心首选</text>
+			</view>
+			<view style="padding:10px 15px;" v-for="i in 6">
+				<u-row>
+					<u-col span="4">
+						<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="180rpx"></u-image>
+					</u-col>
+					<u-col span="8">
+						<view  style="color: #000000;font-size: 12pt;">企业名称</view>
+						<view style="text-align: right;padding: 8px 0;">></view>
+						<view style="color: #6D6D6D;">1111111111111</view>
+					</u-col>
+				</u-row>
+			</view>
 		</view>
 	</view>
 </template>
@@ -173,15 +190,7 @@
 			justify-content: space-between;
 		}
 
-		.djhc_model {
-			color: #333;
-			padding: 4pt 0;
-		}
-
-		.djhc_power {
-			color: #6D6D6D;
-			padding: 4pt 0;
-		}
+		
 
 		.djhc_money {
 			color: #FF5A00;
@@ -190,20 +199,33 @@
 	}
 
 	.xcfl {
+		background: #F8F8F8;
 		.xcfl_title {
 			font-size: 20px;
 			padding: 15px;
+			color: #000000;
 		}
 		.xcfl_link {
 			font-size: 14px;
 			padding: 0 15px 20px;
 			display: flex;
+			color: #6D6D6D;
 			justify-content: space-between;
 		}
 	}
 
 	.bg_fff {
 		background-color: #FFFFFF;
+		text-align: center;
+		.djhc_model {
+			color: #333;
+			padding: 4pt 0;
+		}
+		
+		.djhc_power {
+			color: #6D6D6D;
+			padding: 4pt 0;
+		}
 	}
 
 	.scroll-view_H {
