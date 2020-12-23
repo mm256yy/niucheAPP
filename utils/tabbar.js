@@ -4,11 +4,11 @@ export const dirverPages = [{
   selectedIconPath: '/static/tabbar/index-select-d.png',
 },{
   index: 1,
-  iconPath: "static/tabbar/message.png",
   selectedIconPath: '/static/tabbar/message-select-d.png',
   text:'租车'
 },{
   index: 2,
+  iconPath: "static/tabbar/collect.png",
   selectedIconPath: '/static/tabbar/collect-select-d.png',
   text:'招聘'
 },{
@@ -21,12 +21,12 @@ export const companyPages =[{
   selectedIconPath: '/static/tabbar/index-select.png'
 },{
   index: 1,
-  iconPath: "static/tabbar/car.png",
   selectedIconPath: '/static/tabbar/message-select.png',
   text:'买车'
 },{
   index: 2,
-  selectedIconPath: '/static/tabbar/collect-select.png',
+   iconPath: "static/tabbar/comCollect.png",
+  selectedIconPath: '/static/tabbar/comCollect_selected.png',
   text:'收藏'
 },{
   index: 3,

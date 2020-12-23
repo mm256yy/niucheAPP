@@ -624,6 +624,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/init/affordableCar",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/init/newYearWelfare",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",

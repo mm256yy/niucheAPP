@@ -1,26 +1,29 @@
 <template>
 	<view>
 		<view class="wrap">
-			<u-swiper :list="list" height="500" mode="none"></u-swiper>
-			<text style="position: absolute;top: 20px;left: 1%;color: #fff;font-size: 16px;">杭州</text>
-			<text style="position: absolute;top: 20px;right: 1%;">
-				<u-icon name="bell" color="#ffffff" size="60"></u-icon>
+			<u-swiper :list="list" height="500" mode="round"></u-swiper>
+			<text style="position: absolute;top: 40px;left: 2%;color: #fff;font-size: 14px;">杭州</text>
+			<text style="position: absolute;top: 40px;right: 2%;">
+				<u-icon name="bell" color="#ffffff" size="40"></u-icon>
 			</text>
 		</view>
 		<view class="bg_btn">
-			<view style="width: 124pt;">
-				<u-image src="../../static/cheliangzulin@3x.png" height="180rpx" border-radius="8"></u-image>
+			<view style="width: 164px;" @click="toPage(1)">
+				<u-image src="../../static/cheliangzulin@3x.png" height="140rpx" border-radius="8"></u-image>
 			</view>
-			<view style="width: 124pt;">
-				<u-image src="../../static/sijizhaopin@3x.png" height="180rpx" border-radius="8"></u-image>
+			<view style="width: 164px;" @click="toPage(2)">
+				<u-image src="../../static/sijizhaopin@3x.png" height="140rpx" border-radius="8"></u-image>
 			</view>
 		</view>
 		<view class="kszc">
 			<view style="font-size: 20px;color: #333333;padding: 10pt 0;">快速找车</view>
-			<view v-for="(item,index) in tuBiaoList" :key="index" style="display: inline-block;width: 20%;">
-				<u-image :src="item.url" height="120rpx"></u-image>
-				<view style="color: #333333;height: 30pt;line-height: 30pt;font-size:12px;text-align: center;">{{item.text}}</view>
+			<view style="display: flex;justify-content: space-around;">
+				<view v-for="(item,index) in tuBiaoList" :key="index" style="width: 17%;">
+					<u-image :src="item.url" height="110rpx"></u-image>
+					<view style="color: #333333;height: 30pt;line-height: 30pt;font-size:10px;text-align: center;">{{item.text}}</view>
+				</view>
 			</view>
+
 			<view style="margin-top: 10pt;">
 				<view class="money_tag" v-for="(info,index) in moneyList" :key="index">
 					{{info}}
@@ -29,9 +32,9 @@
 		</view>
 		<view class="djhc">
 			<view class="djhc_title">低价好车</view>
-			<view class="djhc_link">
+			<view class="djhc_link" @click="toChild(1)">
 				<text>平台精选好车，价低质不低</text>
-				<text>></text>
+				<text><u-icon name="arrow-right" color="#FF5A00" size="38"></u-icon></text>
 			</view>
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
 				<view class="scroll-view-item_H" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in 9" :key="item.url">
@@ -48,11 +51,12 @@
 		</view>
 		<view class="xcfl">
 			<view class="xcfl_title">新春福利</view>
-			<view class="xcfl_link">
+			<view class="xcfl_link" @click="toChild(2)">
 				<text>送油 送保养 送免租</text>
-				<text>></text>
+				<text><u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon></text>
 			</view>
-			<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#FF5A00" style="height: 180px;">
+			<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#FF5A00"
+			 style="height: 180px;">
 				<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 					<view style="display: flex;justify-content: space-around;padding: 0 10px;">
 						<view v-for="i in 3" style="width: 31%;">
@@ -77,8 +81,8 @@
 						<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="180rpx"></u-image>
 					</u-col>
 					<u-col span="8">
-						<view  style="color: #000000;font-size: 12pt;">企业名称</view>
-						<view style="text-align: right;padding: 8px 0;">></view>
+						<view style="color: #000000;font-size: 12pt;">企业名称</view>
+						<view style="text-align: right;padding: 8px 0;"><u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon></view>
 						<view style="color: #6D6D6D;">1111111111111</view>
 					</u-col>
 				</u-row>
@@ -124,12 +128,38 @@
 			}
 		},
 		methods: {
-
+			toPage(type) {
+				if (type === 1) {
+					this.$u.route({
+						url: '/pages/index/index',
+						type: 'switchTab'
+					})
+				} else {
+					this.$u.route({
+						url: '/pages/mymessage/mymessage',
+						type: 'switchTab'
+					})
+				}
+			},
+			toChild(type) {
+				if (type === 1) {
+					this.$u.route({
+						url: '/pages/init/affordableCar',
+					})
+				} else {
+					this.$u.route({
+						url: '/pages/init/newYearWelfare',
+					})
+				}
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	.wrap /deep/ .u-swiper-indicator{
+		bottom: 60px!important;
+	}
 	.wrap_text_left {
 		position: absolute;
 		top: 20px;
@@ -190,7 +220,7 @@
 			justify-content: space-between;
 		}
 
-		
+
 
 		.djhc_money {
 			color: #FF5A00;
@@ -200,11 +230,13 @@
 
 	.xcfl {
 		background: #F8F8F8;
+
 		.xcfl_title {
 			font-size: 20px;
 			padding: 15px;
 			color: #000000;
 		}
+
 		.xcfl_link {
 			font-size: 14px;
 			padding: 0 15px 20px;
@@ -217,11 +249,12 @@
 	.bg_fff {
 		background-color: #FFFFFF;
 		text-align: center;
+
 		.djhc_model {
 			color: #333;
 			padding: 4pt 0;
 		}
-		
+
 		.djhc_power {
 			color: #6D6D6D;
 			padding: 4pt 0;
