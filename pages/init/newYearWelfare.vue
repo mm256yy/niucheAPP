@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#333333" title="低价好车" :background="background" title-color="#333333"></u-navbar>
+		<u-navbar back-icon-color="#333333" title="新春福利" :background="background" title-color="#333333"></u-navbar>
 		<view>
 			<view class="content">
 				<scroll-view scroll-y style="height: 100%;width: 100%;">
@@ -8,8 +8,8 @@
 					 heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
 					 @refresh="refresh">
 						<view slot="content-list">
-							<u-image src="../../static/xcfl.png" height="60vh" border-radius="0" width="100%"></u-image>
-							<view @click="toView(item)" v-for="(item,index) in 10" :key="index" class="list">
+							<u-image src="../../static/xcfl.png" height="60vh" mode="scaleToFill" border-radius="0" width="100%"></u-image>
+							<view @click="toView(item.id)" v-for="(item,index) in 10" :key="index" class="list">
 								<view class="list_head">
 									<text>公司全称</text><text>省市</text>
 								</view>
@@ -18,8 +18,8 @@
 									 height="20vh" width="100%"></u-image>
 								</view>
 								<view>
-									<view><text>首月免租</text></view>
-									<view style="padding: 10px 0;color: #303030;font-weight: bold;">【网约车】品牌+车系+年款型号</view>
+									<view style="padding: 5px 0;"><text class="list_tag">首月免租</text><text class="list_tag">首月免租</text></view>
+									<view style="padding: 5px 0;color: #303030;font-weight: bold;">【网约车】品牌+车系+年款型号</view>
 									<view style="padding: 0 5px 5px;color: #FF5A00;">2000以内/月</view>
 								</view>
 							</view>
@@ -79,6 +79,9 @@
 			},
 			refresh() {
 				this.getList(1)
+			},
+			toView(id){
+				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:id})
 			}
 		}
 	}
@@ -96,5 +99,13 @@
 		justify-content: space-between;
 		padding-bottom: 8pt;
 		color: #474747;
+	}
+	.list_tag{
+		display: inline-block;
+		padding: 2px 4px;
+		font-size: 12px;
+		margin-right: 5px;
+		background: linear-gradient(270deg, #FFC400 0%, #FFB200 54%, #FF9900 100%);
+		color: #FFFFFF;
 	}
 </style>

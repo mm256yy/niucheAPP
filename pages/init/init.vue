@@ -1,8 +1,6 @@
 <template>
 	<view>
-		<view v-if='curThemeType ==="driver"'>
-	        <DriverIndex v-if='curThemeType ==="driver"'></DriverIndex>
-		</view>
+	    <DriverIndex ref="driver" v-if='curThemeType ==="driver"'></DriverIndex>
 		<Company ref="driver" v-else></Company>
 		<OneTips ref="onetips"></OneTips>
 		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075">

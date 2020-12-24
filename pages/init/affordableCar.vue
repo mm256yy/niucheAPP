@@ -7,20 +7,21 @@
 					<load-refresh ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000" color="#04C4C4"
 					 heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
 					 @refresh="refresh">
-						<view slot="content-list">
+						<view slot="content-list" >
 							<u-image src="../../static/djhc.png" height="60vh" border-radius="0" width="100%"></u-image>
-							<view @click="toView(item)" v-for="(item,index) in 10" :key="index" class="list">
-								<view class="list_head">
-									<text>公司全称</text><text>省市</text>
+							<view @click="toView(item.comparymainid)" v-for="(item,index) in list" :key="index" class="list">
+								<view class="list_head u-line-2">
+									<text>{{item.comparyname}}</text><text>{{item.area}}</text>
 								</view>
 								<view>
-									<u-image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F10947089586%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611305581&t=56dd45b3a8b5f22628db05254b46c42f"
-									 height="20vh" width="100%"></u-image>
+									<u-image :src="item.photourl" height="20vh" width="100%"></u-image>
 								</view>
 								<view>
-									<view style="padding-top: 14px;color: #303030;font-weight: bold;">【网约车】品牌+车系+年款型号</view>
-									<view style="padding: 10px 5px;color: #666666;">车类型·变速箱·燃料·车龄</view>
-									<view style="padding: 0 5px 5px;color: #FF5A00;">2000以内/月</view>
+									<view style="padding-top: 14px;color: #303030;font-weight: bold;">
+										【{{item.businesstype === 1 ?'网约车':'出租车'}}】{{item.carname}} {{item.carxinghao}}
+									</view>
+									<view style="padding: 10px 5px;color: #666666;" class="u-line-2">{{item.cartype}}·{{item.power}}·{{item.carage}}</view>
+									<view style="padding: 0 5px 5px;color: #FF5A00;">{{item.lowprice}}元/月</view>
 								</view>
 							</view>
 						</view>
@@ -40,13 +41,13 @@
 		data() {
 			return {
 				backgroundCover: "linear-gradient(25deg, #FE5A00 0%, #FF7C00 84%, #FF2B00 100%)",
-				list: [1, 2, 3],
+				list: [],
 				pageNum: 1,
 				total: 0,
 			}
 		},
         mounted() {
-        	// this.getList(1)
+        	this.getList(1)
         },
 		methods: {
 			loadMoreList() {
@@ -54,16 +55,16 @@
 				this.getList(pageNo)
 			},
 			getList(pageNum) {
-				console.log(pageNum)
-				this.$u.api.DriverMyCollectionRent({
+				this.$u.api.driverSideHomePage({
 					pageNum: pageNum,
-					pageSize: 10
+					pageSize: 20
 				}).then(res => {
 					if (res.code === 200) {
+						this.total = 10
 						this.total = Math.ceil(res.total / 10);
-						let arr = res.rows
+						let arr = res.object
 						if (pageNum === 1) {
-							this.list = res.rows
+							this.list = res.object
 						} else {
 							arr.forEach(item => {
 								this.list.push(item)
@@ -78,6 +79,9 @@
 			},
 			refresh() {
 				this.getList(1)
+			},
+			toView(id){
+				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:id})
 			}
 		}
 	}
