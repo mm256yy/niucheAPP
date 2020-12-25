@@ -14,14 +14,15 @@
 									<text>{{item.comparyname}}</text><text>{{item.area}}</text>
 								</view>
 								<view>
-									<u-image :src="item.photourl" height="20vh" width="100%"></u-image>
+									<u-image :src="item.photourl" height="20vh" width="100%" border-radius="8"></u-image>
 								</view>
 								<view>
-									<view style="padding-top: 14px;color: #303030;font-weight: bold;">
-										【{{item.businesstype === 1 ?'网约车':'出租车'}}】{{item.carname}} {{item.carxinghao}}
+									<view style="padding-top: 14px;color: #303030;font-weight: bold;font-size: 12pt;">
+【{{item.businesstype === 1 ?'网约车':'出租车'}}】{{item.carname}} {{item.carxinghao}}
 									</view>
-									<view style="padding: 10px 5px;color: #666666;" class="u-line-2">{{item.cartype}}·{{item.power}}·{{item.carage}}</view>
-									<view style="padding: 0 5px 5px;color: #FF5A00;">{{item.lowprice}}元/月</view>
+									<view style="padding: 10px 5px;color: #666666;" class="u-line-2">
+									{{item.cartype}}·{{item.power}}·{{item.carage}}</view>
+									<view style="padding: 0 5px 5px;color:#FF5A00;font-size: 12pt;">{{item.lowprice}}元/月</view>
 								</view>
 							</view>
 						</view>

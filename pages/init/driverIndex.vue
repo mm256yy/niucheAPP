@@ -2,13 +2,15 @@
 	<view>
 		<view class="wrap">
 			<u-swiper :list="list" height="500" mode="round" @click="toSwiperPage"></u-swiper>
-			<text style="position: absolute;top: 40px;left: 2%;color: #fff;font-size: 14px;">杭州</text>
-			<text style="position: absolute;top: 40px;right: 2%;" @click="message">
+			<view style="position: absolute;top: 40px;left: 2%;color: #fff;font-size: 12pt;">
+				杭州 <u-icon name="arrow-down-fill" color="#ffffff" size="26" style="margin-left: 4px;"></u-icon>
+				</view>
+			<view style="position: absolute;top: 40px;right: 2%;" @click="message">
 				<view style="position: relative;">
-					<u-icon name="bell" color="#ffffff" size="40"></u-icon>
+					<u-icon name="bell" color="#ffffff" size="42"></u-icon>
 					<u-badge size="mini" type="error" :count="num" :offset="[-10,-14]"></u-badge>
 				</view>
-			</text>
+			</view>
 		</view>
 		<view class="bg_btn">
 			<view style="width: 164px;" @click="toPage(1)">
@@ -19,7 +21,7 @@
 			</view>
 		</view>
 		<view class="kszc">
-			<view style="font-size: 20px;color: #333333;padding: 10pt 0;">快速找车</view>
+			<view style="font-size: 20px;color: #333333;padding: 10px 0;">快速找车</view>
 			<view style="display: flex;justify-content: space-around;">
 				<view v-for="(item,index) in tuBiaoList" :key="index" style="width: 17%;" @click="toIndexCar(item.text)">
 					<u-image :src="item.url" height="110rpx"></u-image>
@@ -37,17 +39,17 @@
 			<view class="djhc_title">低价好车</view>
 			<view class="djhc_link" @click="toChild(1)">
 				<text>平台精选好车，价低质不低</text>
-				<text>
+				<view>
 					<u-icon name="arrow-right" color="#FF5A00" size="38"></u-icon>
-				</text>
+				</view>
 			</view>
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
 				<view class="scroll-view-item_H" @click="toView(item.comparymainid)" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in lowPriceList"
 				 :key="item.comparymainid">
 					<view>
-						<u-image :src="item.photourl" height="130rpx"></u-image>
+						<u-image :src="item.photourl" height="166rpx" border-radius="8"></u-image>
 					</view>
-					<view class="bg_fff" style="padding: 5px 5px 0;">
+					<view class="bg_fff" style="padding: 4px 4px 0;">
 						<view class="djhc_model u-line-1">{{item.carname}}</view>
 						<view class="djhc_power u-line-1">{{item.power}}/{{item.carage}}</view>
 						<view class="djhc_money">{{item.lowprice}}元/月</view>
@@ -59,9 +61,9 @@
 			<view class="xcfl_title">新春福利</view>
 			<view class="xcfl_link" @click="toChild(2)">
 				<text>送油 送保养 送免租</text>
-				<text>
+				<view>
 					<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
-				</text>
+				</view>
 			</view>
 			<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#FF5A00"
 			 style="height: 180px;">
@@ -69,9 +71,9 @@
 					<view style="display: flex;justify-content: space-around;padding: 0 10px;">
 						<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info.comparymainid)"
 						 style="width: 31%;position: relative;">
-							<u-image :src="info.photoUrl" height="160rpx"></u-image>
+							<u-image :src="info.photoUrl" height="168rpx" border-radius="8"></u-image>
 							<view class="swiper_price">¥{{info.packPrice}}/月</view>
-							<view class="bg_fff" style="padding: 5px 5px 0;">
+							<view class="bg_fff" style="padding:12px 4px 6px;">
 								<view class="djhc_model u-line-1">{{info.carBrand}} {{info.carText}}</view>
 								<view class="djhc_power u-line-1">{{info.companyNickName || info.companyName}}</view>
 							</view>
@@ -88,7 +90,7 @@
 			<view style="padding:10px 15px;" v-for="i in 6">
 				<u-row>
 					<u-col span="4">
-						<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="180rpx"></u-image>
+						<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="180rpx" border-radius="8"></u-image>
 					</u-col>
 					<u-col span="8">
 						<view style="color: #000000;font-size: 12pt;">企业名称</view>
@@ -176,7 +178,7 @@
 			}
 		},
 		mounted() {
-			// this.getList()
+			this.getList()
 		},
 		methods: {
 			toIndexId(id) {
@@ -229,7 +231,9 @@
 			getWelfareList() {
 				this.$u.api.getYearWelfare({
 					pageNum: 1,
-					pageSize: 9
+					pageSize: 9,
+					orderByColumn:"newyear.sort",
+					isAsc:"desc"
 				}).then(res => {
 					if (res.code === 200) {
 						let data = res.rows;
@@ -340,7 +344,7 @@
 			color: #333333;
 			height: 30pt;
 			line-height: 30pt;
-			font-size: 10px;
+			font-size: 12px;
 			text-align: center;
 		}
 	}
@@ -384,7 +388,8 @@
 
 		.djhc_money {
 			color: #FF5A00;
-			padding: 4pt 0;
+			font-size: 14px;
+			padding: 4px 0;
 		}
 	}
 
@@ -412,12 +417,12 @@
 
 		.djhc_model {
 			color: #333;
-			padding: 4pt 0;
+			padding: 2px 0;
 		}
 
 		.djhc_power {
 			color: #6D6D6D;
-			padding: 4pt 0;
+			padding: 2px 0;
 		}
 	}
 

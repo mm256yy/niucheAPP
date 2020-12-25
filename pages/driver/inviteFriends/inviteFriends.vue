@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回" back-icon-size="0" title="邀请好友" height='44' title-color="#333333">
+		<u-navbar back-text="返回" back-icon-size="0" :background="background" title="邀请好友" height='44' title-color="#333333">
 			<view class="navbar-right" slot="right">
 				<view class="message-box right-item">
 					<text @click="showTips">规则</text>
@@ -65,6 +65,9 @@
 	export default {
 		data() {
 			return {
+				background: {
+					'background-image': 'linear-gradient(to bottom, #000000 34%,#ffffff 0%)'
+				},
                show:false,
 			   shareId:'',
 			   registerCount:0,
