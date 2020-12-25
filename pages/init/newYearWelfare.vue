@@ -17,7 +17,7 @@
 									<u-image :src="item.photoUrl" height="20vh" width="100%" border-radius="8"></u-image>
 								</view>
 								<view>
-									<view style="padding: 5px 0;">
+									<view style="padding: 10px 0 5px;">
 										<text class="list_tag" v-for="(tag,i) in item.tagList" :key="i">{{tag.tabValue}}</text>
 									</view>
 									<view style="padding: 5px 0;color: #303030;font-weight: bold;font-size: 12pt;">

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#333333" title="低价好车" title-color="#333333"></u-navbar>
+		<u-navbar back-icon-color="#333333" :background="background" title="低价好车" title-color="#333333"></u-navbar>
 		<view>
 			<view class="content">
 				<scroll-view scroll-y style="height: 100%;width: 100%;">
@@ -41,6 +41,9 @@
 		},
 		data() {
 			return {
+				background: {
+					'background-image': 'linear-gradient(to bottom, #000000 34%,#ffffff 0%)'
+				},
 				backgroundCover: "linear-gradient(25deg, #FE5A00 0%, #FF7C00 84%, #FF2B00 100%)",
 				list: [],
 				pageNum: 1,
@@ -58,7 +61,7 @@
 			getList(pageNum) {
 				this.$u.api.driverSideHomePage({
 					pageNum: pageNum,
-					pageSize: 20
+					pageSize: 10
 				}).then(res => {
 					if (res.code === 200) {
 						this.total = 10
