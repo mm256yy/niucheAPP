@@ -1,16 +1,19 @@
 <template>
 	<view>
-		<view class="wrap">
-			<u-swiper :list="list" height="500" mode="round" @click="toSwiperPage"></u-swiper>
-			<view style="position: absolute;top: 40px;left: 2%;color: #fff;font-size: 12pt;">
-				杭州 <u-icon name="arrow-down-fill" color="#ffffff" size="26" style="margin-left: 4px;"></u-icon>
-				</view>
-			<view style="position: absolute;top: 40px;right: 2%;" @click="message">
-				<view style="position: relative;">
-					<u-icon name="bell" color="#ffffff" size="42"></u-icon>
+		<u-navbar :is-back="false" back-icon-color="#333333" title="" :background="background" title-color="#333333">
+			<view class="navbar-left">
+				<text>杭州</text> <u-icon name="arrow-down-fill" color="#333333" size="26" style="margin-left: 4px;"></u-icon>
+		    </view>		
+			<view class="navbar-right" slot="right">
+				<view class="message-box right-item"  @click="message">
+					<u-icon name="bell" color="#333333" size="38"></u-icon>
 					<u-badge size="mini" type="error" :count="num" :offset="[-10,-14]"></u-badge>
 				</view>
 			</view>
+		</u-navbar>
+			<scroll-view scroll-y style="height: 100%;width: 100%;">
+		<view class="wrap">
+			<u-swiper :list="list" height="500" mode="round" @click="toSwiperPage"></u-swiper>
 		</view>
 		<view class="bg_btn">
 			<view style="width: 164px;" @click="toPage(1)">
@@ -46,7 +49,7 @@
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
 				<view class="scroll-view-item_H" @click="toView(item.comparymainid)" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in lowPriceList"
 				 :key="item.comparymainid">
-					<view>
+					<view style="background: #FFFFFF;">
 						<u-image :src="item.photourl" height="166rpx" border-radius="8"></u-image>
 					</view>
 					<view class="bg_fff" style="padding: 4px 4px 0;">
@@ -70,7 +73,7 @@
 				<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 					<view style="display: flex;justify-content: space-around;padding: 0 10px;">
 						<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info.comparymainid)"
-						 style="width: 31%;position: relative;">
+						 style="width: 31%;position: relative;background-color: #FFFFFF;">
 							<u-image :src="info.photoUrl" height="168rpx" border-radius="8"></u-image>
 							<view class="swiper_price">¥{{info.packPrice}}/月</view>
 							<view class="bg_fff" style="padding:12px 4px 6px;">
@@ -89,8 +92,10 @@
 			</view>
 			<view style="padding:10px 15px;" v-for="i in 6">
 				<u-row>
-					<u-col span="4">
-						<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="180rpx" border-radius="8"></u-image>
+					<u-col span="4" >
+						<view style="background: #FFFFFF;">
+							<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="180rpx" border-radius="8"></u-image>
+						</view>
 					</u-col>
 					<u-col span="8">
 						<view style="color: #000000;font-size: 12pt;">企业名称</view>
@@ -102,6 +107,7 @@
 				</u-row>
 			</view>
 		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -112,6 +118,9 @@
 	export default {
 		data() {
 			return {
+				background: {
+					'background-image': 'linear-gradient(to bottom, #000000 36%,#ffffff 0%)'
+				},
 				list: [{
 					image: '../../static/banner_1@3x.png'
 				}, {
@@ -312,6 +321,19 @@
 </script>
 
 <style lang="scss" scoped>
+	.navbar-left{
+		margin-left: 24rpx;
+	}
+	.navbar-right {
+		margin-right: 24rpx;
+		display: flex;
+	}
+	.right-item {
+		margin: 0 12rpx;
+		position: relative;
+		// color: #ffffff;
+		display: flex;
+	}
 	.wrap /deep/ .u-swiper-indicator {
 		bottom: 60px !important;
 	}

@@ -13,7 +13,7 @@
 								<view class="list_head">
 									<text>{{item.companyName}}</text><text>{{item.comparyarea}}</text>
 								</view>
-								<view>
+								<view style="background: #FFFFFF;">
 									<u-image :src="item.photoUrl" height="20vh" width="100%" border-radius="8"></u-image>
 								</view>
 								<view>
@@ -43,7 +43,7 @@
 		data() {
 			return {
 				background: {
-					'background-image': 'linear-gradient(to bottom, #000000 34%,#ffffff 0%)'
+					'background-image': 'linear-gradient(to bottom, #000000 36%,#ffffff 0%)'
 				},
 				backgroundCover: "linear-gradient(153deg, #DB001D 0%, #FA3401 100%)",
 				list: [],
