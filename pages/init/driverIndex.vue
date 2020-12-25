@@ -224,7 +224,7 @@
 					}
 				})
 				this.getWelfareList()
-				// this.getMessageNum()
+				this.getMessageNum()
 			},
 			getWelfareList() {
 				this.$u.api.getYearWelfare({
@@ -243,14 +243,17 @@
 				})
 			},
 			getMessageNum() {
-				this.$u.api.haveIs().then(res => {
-					if (res.code === 200) {
-						this.num = res.object.titlenum;
-						this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
+				let token = uni.getStorageSync('token');
+				if(token){
+					this.$u.api.haveIs().then(res => {
+						if (res.code === 200) {
+							this.num = res.object.titlenum;
+							this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+						} else {
+							this.$u.toast(res.msg);
+						}
+					})
+				}
 			},
 			toSwiperPage(index) {
 				if (index === 0) {
