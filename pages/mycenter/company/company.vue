@@ -28,7 +28,7 @@
 			<view class="bgf" style="margin: 15pt 0;">
 				<u-row style="padding: 8pt;border-bottom: 1rpx solid #dedede;">
 					<u-col span="4">我的发布</u-col>
-					<u-col span="8" style="text-align: right;color: #7E7E7E;" @click="toShopPage">店铺首页>></u-col>
+					<u-col span="8" style="text-align: right;color: #7E7E7E;" @click=" toPublishPage">发布需求 >></u-col>
 				</u-row>
 				<u-row style="padding:8pt 5pt">
 					
@@ -83,7 +83,7 @@
 				
 			<view class="colorF">
 				<u-cell-group>
-					<u-cell-item  title="发布需求" :title-style="titleStyle" @click="toPublishPage"></u-cell-item>
+					<u-cell-item  title="我的店铺" :title-style="titleStyle" @click="toShopPage"></u-cell-item>
 					<u-cell-item  title="客服" value="0571-87815287" :title-style="titleStyle" @click="toCustomer"></u-cell-item>
 					<u-cell-item  title="用户帮助" :title-style="titleStyle" @click="tohelps"></u-cell-item>
 					<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle"></u-cell-item>
@@ -205,6 +205,10 @@
 			toShopPage(){
 				if (this.token){
 					 this.$u.route('/pages/company/shop/shop');
+				} else{
+					uni.showToast({
+						title:"请先登录，认证" 
+					  })
 				}
 			},
 			toPub(index){
@@ -212,6 +216,10 @@
 					this.$u.route('/pages/company/myPublish/myPublish', {
 						index: index
 					});
+				} else{
+					uni.showToast({
+						title:"请先登录，认证" 
+					  })
 				}
 			},
 			toPublishPage(){

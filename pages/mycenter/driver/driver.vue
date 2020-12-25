@@ -302,7 +302,7 @@
 	}
 	.my_title{
 		color: #000000;
-		font-size: 18pt;
+		font-size: 14pt;
 		padding-left: 3pt;
 		margin: 19pt 0 12pt;
 	}
