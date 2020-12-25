@@ -62,9 +62,9 @@
 					if (res.code === 200) {
 						this.total = 10
 						this.total = Math.ceil(res.total / 10);
-						let arr = res.object
+						let arr = res.rows
 						if (pageNum === 1) {
-							this.list = res.object
+							this.list = res.rows
 						} else {
 							arr.forEach(item => {
 								this.list.push(item)

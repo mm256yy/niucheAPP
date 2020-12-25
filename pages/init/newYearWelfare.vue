@@ -9,18 +9,21 @@
 					 @refresh="refresh">
 						<view slot="content-list">
 							<u-image src="../../static/xcfl.png" height="60vh" mode="scaleToFill" border-radius="0" width="100%"></u-image>
-							<view @click="toView(item.id)" v-for="(item,index) in 10" :key="index" class="list">
+							<view @click="toView(item)" v-for="(item,index) in list" :key="index" class="list">
 								<view class="list_head">
-									<text>公司全称</text><text>省市</text>
+									<text>{{item.companyName}}</text><text>{{item.comparyarea}}</text>
 								</view>
 								<view>
-									<u-image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F10947089586%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611305581&t=56dd45b3a8b5f22628db05254b46c42f"
-									 height="20vh" width="100%"></u-image>
+									<u-image :src="item.photoUrl" height="20vh" width="100%"></u-image>
 								</view>
 								<view>
-									<view style="padding: 5px 0;"><text class="list_tag">首月免租</text><text class="list_tag">首月免租</text></view>
-									<view style="padding: 5px 0;color: #303030;font-weight: bold;">【网约车】品牌+车系+年款型号</view>
-									<view style="padding: 0 5px 5px;color: #FF5A00;">2000以内/月</view>
+									<view style="padding: 5px 0;">
+										<text class="list_tag" v-for="(tag,i) in item.tagList" :key="i">{{tag.tabValue}}</text>
+									</view>
+									<view style="padding: 5px 0;color: #303030;font-weight: bold;">
+										【{{item.businesstype === 1 ?'网约车':'出租车'}}】{{item.carBrand}} {{item.carText}}
+									</view>
+									<view style="padding: 0 5px 5px;color: #FF5A00;">{{item.packPrice}}元/月</view>
 								</view>
 							</view>
 						</view>
@@ -41,13 +44,13 @@
 			return {
 				background:{'background-image': 'linear-gradient(to bottom, #000000 0%,#ffffff 32%)'},
 				backgroundCover: "linear-gradient(153deg, #DB001D 0%, #FA3401 100%)",
-				list: [1, 2, 3],
+				list: [],
 				pageNum: 1,
 				total: 0,
 			}
 		},
         mounted() {
-        	// this.getList(1)
+        	this.getList(1)
         },
 		methods: {
 			loadMoreList() {
@@ -55,8 +58,7 @@
 				this.getList(pageNo)
 			},
 			getList(pageNum) {
-				console.log(pageNum)
-				this.$u.api.DriverMyCollectionRent({
+				this.$u.api.getYearWelfare({
 					pageNum: pageNum,
 					pageSize: 10
 				}).then(res => {
@@ -64,14 +66,27 @@
 						this.total = Math.ceil(res.total / 10);
 						let arr = res.rows
 						if (pageNum === 1) {
-							this.list = res.rows
+							arr.forEach(item => {
+								let tags= item.params;
+								if(tags.length>0){
+									item.tagList = eval(tags)
+								}
+								
+							})
+							this.list = arr
+							
 						} else {
 							arr.forEach(item => {
+								let tags= item.params;
+								if(tags.length>0){
+									item.tagList = eval(tags)
+								}
 								this.list.push(item)
 							})
 							this.$refs.loadRefresh.loadOver()
 							this.pageNum = pageNum
 						}
+						console.log(arr)
 					} else {
 						this.$u.toast(res.msg);
 					}
@@ -80,8 +95,8 @@
 			refresh() {
 				this.getList(1)
 			},
-			toView(id){
-				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:id})
+			toView(item){
+				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:item.comparymainid,tags:item.params})
 			}
 		}
 	}

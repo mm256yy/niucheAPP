@@ -5,8 +5,8 @@
 			<text style="position: absolute;top: 40px;left: 2%;color: #fff;font-size: 14px;">杭州</text>
 			<text style="position: absolute;top: 40px;right: 2%;" @click="message">
 				<view style="position: relative;">
-				  <u-icon name="bell" color="#ffffff" size="40"></u-icon>
-				  <u-badge size="mini" type="error" :count="num" :offset="[-10,-14]"></u-badge>
+					<u-icon name="bell" color="#ffffff" size="40"></u-icon>
+					<u-badge size="mini" type="error" :count="num" :offset="[-10,-14]"></u-badge>
 				</view>
 			</text>
 		</view>
@@ -37,14 +37,17 @@
 			<view class="djhc_title">低价好车</view>
 			<view class="djhc_link" @click="toChild(1)">
 				<text>平台精选好车，价低质不低</text>
-				<text><u-icon name="arrow-right" color="#FF5A00" size="38"></u-icon></text>
+				<text>
+					<u-icon name="arrow-right" color="#FF5A00" size="38"></u-icon>
+				</text>
 			</view>
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
-				<view class="scroll-view-item_H" @click="toView(item.comparymainid)" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in lowPriceList" :key="item.comparymainid">
+				<view class="scroll-view-item_H" @click="toView(item.comparymainid)" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in lowPriceList"
+				 :key="item.comparymainid">
 					<view>
-						<u-image :src="item.photourl" height="120rpx"></u-image>
+						<u-image :src="item.photourl" height="130rpx"></u-image>
 					</view>
-					<view class="bg_fff">
+					<view class="bg_fff" style="padding: 5px 5px 0;">
 						<view class="djhc_model u-line-1">{{item.carname}}</view>
 						<view class="djhc_power u-line-1">{{item.power}}/{{item.carage}}</view>
 						<view class="djhc_money">{{item.lowprice}}元/月</view>
@@ -56,18 +59,21 @@
 			<view class="xcfl_title">新春福利</view>
 			<view class="xcfl_link" @click="toChild(2)">
 				<text>送油 送保养 送免租</text>
-				<text><u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon></text>
+				<text>
+					<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
+				</text>
 			</view>
 			<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#FF5A00"
 			 style="height: 180px;">
 				<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 					<view style="display: flex;justify-content: space-around;padding: 0 10px;">
-						<view v-for="i in 3" style="width: 31%;position: relative;">
-							<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="160rpx"></u-image>
-							<view class="swiper_price">¥1500/月</view>
-							<view class="bg_fff" style="padding-top: 5px;">
-								<view class="djhc_model">长安-马自达</view>
-								<view class="djhc_power">燃料/车龄</view>
+						<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info.comparymainid)"
+						 style="width: 31%;position: relative;">
+							<u-image :src="info.photoUrl" height="160rpx"></u-image>
+							<view class="swiper_price">¥{{info.packPrice}}/月</view>
+							<view class="bg_fff" style="padding: 5px 5px 0;">
+								<view class="djhc_model u-line-1">{{info.carBrand}} {{info.carText}}</view>
+								<view class="djhc_power u-line-1">{{info.companyNickName || info.companyName}}</view>
 							</view>
 						</view>
 					</view>
@@ -86,7 +92,9 @@
 					</u-col>
 					<u-col span="8">
 						<view style="color: #000000;font-size: 12pt;">企业名称</view>
-						<view style="text-align: right;padding: 8px 0;"><u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon></view>
+						<view style="text-align: right;padding: 8px 0;">
+							<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
+						</view>
 						<view style="color: #6D6D6D;">1111111111111</view>
 					</u-col>
 				</u-row>
@@ -96,7 +104,9 @@
 </template>
 
 <script>
-	import {format} from '@/common/rule.js'
+	import {
+		format
+	} from '@/common/rule.js'
 	export default {
 		data() {
 			return {
@@ -128,107 +138,136 @@
 						text: '东风'
 					}
 				],
-				moneyList: [{text:'2千/月',id:2},{text:'2-3千/月',id:3},{text:'3-4千/月',id:4},{text:'4千以上/月',id:5}],
-				searchForm:{
-				  businesstype: '',
-				  carbrand: '',
-				  cartype: '',
-				  city: '杭州',
-				  startCarAge: '',
-				  endCarAge: '',
-				  startPriceid: '',
-				  endPriceid: '',
-				  pageNum: 1,
-				  pageSize: 10,
-				  km: '',
-				  power: '',
-				  islogin: ''
+				moneyList: [{
+					text: '2千/月',
+					id: 2
+				}, {
+					text: '2-3千/月',
+					id: 3
+				}, {
+					text: '3-4千/月',
+					id: 4
+				}, {
+					text: '4千以上/月',
+					id: 5
+				}],
+				searchForm: {
+					businesstype: '',
+					carbrand: '',
+					cartype: '',
+					city: '杭州',
+					startCarAge: '',
+					endCarAge: '',
+					startPriceid: '',
+					endPriceid: '',
+					pageNum: 1,
+					pageSize: 10,
+					km: '',
+					power: '',
+					islogin: ''
 				},
 				title: '不限',
-				lowPriceList:[],
+				lowPriceList: [],
+				welfareList: [],
 				swiperCurrent: 0,
-				num:0,
-				time:'',
+				num: 0,
+				time: '',
+				swiperList:[]
 			}
 		},
 		mounted() {
 			// this.getList()
 		},
 		methods: {
-			toIndexId(id){
-				if(id === 2) {
+			toIndexId(id) {
+				if (id === 2) {
 					this.searchForm.startPriceid = '0';
 					this.searchForm.endPriceid = '2000';
 					this.title = '不限/2000以内';
 				}
-				if(id === 3) {
+				if (id === 3) {
 					this.searchForm.startPriceid = '2000';
 					this.searchForm.endPriceid = '3000';
 					this.title = '不限/2000-3000';
 				}
-				if(id === 4) {
+				if (id === 4) {
 					this.searchForm.startPriceid = '3000';
 					this.searchForm.endPriceid = '4000';
 					this.title = '不限/3000-4000';
 				}
-				if(id === 5) {
+				if (id === 5) {
 					this.searchForm.startPriceid = '4000';
 					this.searchForm.endPriceid = '-1';
 					this.title = '不限/4000以上';
 				}
-				this.$u.route('/pages/index/driver/components/index/resultRent',{form:JSON.stringify(this.searchForm),title:this.title});
+				this.$u.route('/pages/index/driver/components/index/resultRent', {
+					form: JSON.stringify(this.searchForm),
+					title: this.title
+				});
 			},
-			toIndexCar(text){
-				this.title = '不限/'+text;
+			toIndexCar(text) {
+				this.title = '不限/' + text;
 				this.searchForm.carbrand = text;
-				this.$u.route('/pages/index/driver/components/index/resultRent',{form:JSON.stringify(this.searchForm),title:this.title});
+				this.$u.route('/pages/index/driver/components/index/resultRent', {
+					form: JSON.stringify(this.searchForm),
+					title: this.title
+				});
 			},
-			getList(){
-				this.getWelfareList()
-				this.$u.api.driverSideHomePage({pageSize:9}).then(res=>{
-					if(res.code === 200){
-						this.lowPriceList = res.object
+			getList() {
+				this.$u.api.driverSideHomePage({
+					pageSize: 9
+				}).then(res => {
+					if (res.code === 200) {
+						this.lowPriceList = res.rows
 					} else {
-						 this.$u.toast(res.msg);
+						this.$u.toast(res.msg);
 					}
 				})
 				this.getWelfareList()
-				this.getMessageNum()
+				// this.getMessageNum()
 			},
-			getWelfareList(){
-				this.$u.api.getYearWelfare({pageNum:1,pageSize:9}).then(res=>{
-					if(res.code === 200){
-						// this.lowPriceList = res.object
+			getWelfareList() {
+				this.$u.api.getYearWelfare({
+					pageNum: 1,
+					pageSize: 9
+				}).then(res => {
+					if (res.code === 200) {
+						let data = res.rows;
+						let arr0 = data.splice(0,3)
+						let arr1 = data.splice(3,6)
+						let arr2 = data.splice(6,9)
+						this.welfareList = [arr0,arr1,arr2]
 					} else {
-						 this.$u.toast(res.msg);
+						this.$u.toast(res.msg);
 					}
 				})
-				
 			},
-			getMessageNum(){
-				this.$u.api.haveIs().then(res=>{
-					if(res.code === 200){
+			getMessageNum() {
+				this.$u.api.haveIs().then(res => {
+					if (res.code === 200) {
 						this.num = res.object.titlenum;
-						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
-					}else {
-						 this.$u.toast(res.msg);
+						this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+					} else {
+						this.$u.toast(res.msg);
 					}
 				})
 			},
-			toSwiperPage(index){
-				if(index ===0 ){
+			toSwiperPage(index) {
+				if (index === 0) {
 					this.toChild(1)
-				} else if(index === 1 ){
+				} else if (index === 1) {
 					this.toChild(2)
-				}else {
+				} else {
 					this.$u.route('/pages/driver/inviteFriends/inviteFriends')
 				}
 			},
-			message(){
+			message() {
 				let token = uni.getStorageSync('token');
-				if(token){
-					this.$u.route("/pages/index/company/components/index/message",{time:this.time})
-				}else{
+				if (token) {
+					this.$u.route("/pages/index/company/components/index/message", {
+						time: this.time
+					})
+				} else {
 					this.$u.route('/pages/login/login');
 				}
 			},
@@ -256,17 +295,20 @@
 					})
 				}
 			},
-			toView(id){
-				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:id})
+			toView(id) {
+				this.$u.route('/pages/index/driver/components/index/carRentDetail', {
+					id: id
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.wrap /deep/ .u-swiper-indicator{
-		bottom: 60px!important;
+	.wrap /deep/ .u-swiper-indicator {
+		bottom: 60px !important;
 	}
+
 	.wrap_text_left {
 		position: absolute;
 		top: 20px;
@@ -290,8 +332,13 @@
 
 	.kszc {
 		padding: 15px;
-		.kszc_title{
-			color: #333333;height: 30pt;line-height: 30pt;font-size:10px;text-align: center;
+
+		.kszc_title {
+			color: #333333;
+			height: 30pt;
+			line-height: 30pt;
+			font-size: 10px;
+			text-align: center;
 		}
 	}
 
@@ -370,7 +417,8 @@
 			padding: 4pt 0;
 		}
 	}
-	.swiper_price{
+
+	.swiper_price {
 		position: absolute;
 		top: 72px;
 		left: 17%;
@@ -380,6 +428,7 @@
 		background: linear-gradient(270deg, #FF342D 0%, #FF4600 44%, #FF5A00 100%);
 		border-radius: 4px 0px 4px 0px;
 	}
+
 	.scroll-view_H {
 		white-space: nowrap;
 		width: 100%;
