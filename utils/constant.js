@@ -9,3 +9,4 @@ export const baseUrl = ipconfig;
 export const shareUrl ="http://dev-share.neocab.cn?shareId="
 // export const shareUrl ="http://share.neocab.cn?shareId=" //分享
 export const updateUrl =ipconfig+"/app/getUrl?version=" 
+export const version = '1.5.1.9'
