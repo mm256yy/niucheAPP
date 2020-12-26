@@ -47,9 +47,9 @@
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.companyMainId)">
 						<img style="width: 264rpx;height: 199rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 264rpx;height: 199rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt="">
-		    			<!-- <u-image v-show="item.photoUrl" class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
-		    			<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
+						<!-- <img style="width: 264rpx;height: 199rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt=""> -->
+		    			 <u-image v-show="item.photoUrl" class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
+		    			<!--<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    				<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
 		    				<view class="right">
 		    					<!-- <view class="tag">付费标签</view> -->

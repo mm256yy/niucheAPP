@@ -164,10 +164,19 @@ const install  = (Vue, vm) => {
 				//根据首字母查询品牌
 				const  brandList = (params = {}) => vm.$u.get('/system/usermain/carSelectCarBrandByInitialOrBrandName', params);
 				
-
-
+				//分享数据 认证
+               const  statistics =(params = {}) => vm.$u.get('/share/data/statistics', params);
+			   //低价好车
+			    const  driverSideHomePage =(params = {}) => vm.$u.get('/user/lowPrice/driverSideHomePage', params);
+				//新春福利
+				const  getYearWelfare =(params = {}) => vm.$u.get('/app/newYear/list', params);
+				
+			  
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getYearWelfare,
+		driverSideHomePage,
+		statistics,
 		popupConfig,
 		MyIssueRefresh,
 		getStatus,
