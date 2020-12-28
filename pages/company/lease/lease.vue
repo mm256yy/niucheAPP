@@ -42,7 +42,7 @@
 				<view class="label_title">业务类型</view>
 				<SearchTags :list="publishObj.onLineList" :active="activeOnLine" :singleType="true" @onClick="onLineListChange"></SearchTags>
 				<u-cell-group :border="false" style="border-bottom: 1px solid #DEDEDE;">
-					<u-cell-item title="转卖车辆" :value="selectCarInfo" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
+					<u-cell-item :title="carPubType === 1?'出租车辆':'转卖车辆'" :value="selectCarInfo" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
 				</u-cell-group>
 				<view class="label_title">车辆类型</view>
 				<SearchTags :list="publishObj.carType" :active="activeCarType" :singleType="true" @onClick="carTypeListChange"></SearchTags>
@@ -285,11 +285,6 @@
 				this.timeShow = true;
 			},
 			dataChange(obj){
-				if(obj.year == this.today.year){
-					if (obj.month > this.today.month || obj.day > this.today.day){
-						return false
-					}
-				}
 				let companyDate = obj.year+"-"+obj.month;
 				this.form[this.timeName] = companyDate;
 			},
@@ -325,7 +320,6 @@
 				this.show = true;
 			},
 			addPriceObj() {
-				console.log(this.form.rentCarPrice)
 				this.form.rentCarPrice.push({
 					RentTime: '',
 					Rentprice: ''
@@ -344,6 +338,10 @@
 				this.form.sellCarPrice.splice(index,1)
 			},
 	        submitForm(){
+				    let flag = this.verifyForm();
+					if (!flag){
+						return false
+					}
 					let data = this.form;
 					let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
 					this.$u.api.getSystemTag(obj).then(res=>{
@@ -371,6 +369,74 @@
 						}
 					})
 			},
+			verifyForm(){
+				let type = this.carPubType;
+				if ( this.form.onephoto.length ===0 || this.form.oneneishiphoto.length === 0){
+					this.$u.toast('请上传图片');
+					return false
+				} 
+				if(this.form.carbrand === ''){
+					this.$u.toast('请选择车辆品牌');
+					return false
+				}
+				if(this.form.carnbumber === ''){
+					let title = type === 1?'出租数量':'出售数量'
+					this.$u.toast('请填写'+title);
+					return false
+				}
+				if(this.form.firsttime === '' || this.form.endtime === ""){
+					this.$u.toast('请填写综合上牌时间');
+					return false
+				}
+				if(this.form.firstkm === '' || this.form.endkm === ""){
+					this.$u.toast('请填写综合行驶里程');
+					return false
+				}
+				if(this.form.cardescribe === ''){
+					this.$u.toast('请填写车辆况描述');
+					return false
+				}
+				if (type === 1) {
+					if (this.form.yamoney === ''){
+						 this.$u.toast('请填写押金');
+						 return false
+					}
+					let obj = this.form.rentCarPrice[0];
+					if (obj.RentTime === '' || obj.Rentprice === ''){
+						 this.$u.toast('请至少填写一个价格');
+						 return false
+					}
+					let priceList = this.form.rentCarPrice;
+					let flag = true;
+					priceList.forEach((item,index)=>{
+						 if(item.RentTime === '' || item.Rentprice === ''){
+							 this.$u.toast('第'+(index+1)+'条价数据为空或不完整,请删除后提交审核')
+							 flag = false
+						 }
+					})
+					if(!flag){
+						return false
+					}
+				} else {
+					let obj = this.form.sellCarPrice[0];
+					if (obj.shoplow === '' || obj.shophigh === '' || obj.packprice === '') {
+						this.$u.toast('请填写完整');
+						return
+					}
+					let priceList = this.form.sellCarPrice;
+					 let flag = true;
+					 priceList.forEach((item,index)=>{
+						 if(item.shoplow === '' || item.shophigh === '' || item.packprice === ''){
+							 this.$u.toast('第'+(index+1)+'条价格数据为空或不完整,请删除后提交审核')
+							 flag = false
+						 }
+					 })
+					 if(!flag){
+					 	return false
+					 }
+				} 
+				return true
+			}
 		}
 	}
 </script>
