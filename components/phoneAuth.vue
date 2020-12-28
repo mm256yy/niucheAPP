@@ -125,7 +125,7 @@
 				}
 			},
 			toIndex(){
-			   this.$u.route({url:'/pages/index/index',type:'switchTab'})	
+			   this.$u.route({url:'/pages/init/init',type:'switchTab'})	
 			}
 		}
 	}
