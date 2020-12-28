@@ -49,6 +49,7 @@
 				}
 			}
 		},
+		props:['max'],
 		mounted() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.winHeight = winHeight;

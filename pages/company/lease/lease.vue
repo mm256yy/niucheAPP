@@ -41,16 +41,16 @@
 			<view class="view-content">
 				<view class="label_title">业务类型</view>
 				<SearchTags :list="publishObj.onLineList" :active="activeOnLine" :singleType="true" @onClick="onLineListChange"></SearchTags>
-				<u-cell-group :border="false" style="border-bottom: 1px solid #DEDEDE;">
-					<u-cell-item :title="carPubType === 1?'出租车辆':'转卖车辆'" :value="selectCarInfo" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
+				<u-cell-group :border="false" class="cell_group">
+					<u-cell-item  :title="carPubType === 1?'出租车辆':'转卖车辆'" :value="selectCarInfo" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
 				</u-cell-group>
 				<view class="label_title">车辆类型</view>
 				<SearchTags :list="publishObj.carType" :active="activeCarType" :singleType="true" @onClick="carTypeListChange"></SearchTags>
 				<view class="label_title">动力类型</view>
 				<SearchTags :list="publishObj.power" :active="activePower" :singleType="true" @onClick="powerChange"></SearchTags>
-				<u-form-item :label="carPubType === 1?'出租数量':'出售数量'" label-width="180rpx" style="border-bottom: 1px solid #ccc;">
+				<u-form-item :label-style="publishObj.titleStyle" :label="carPubType === 1?'出租数量':'出售数量'" label-width="180rpx" style="border-bottom: 1px solid #ccc;">
 					<u-input v-model="form.carnbumber" :clearable="false" :border="false" maxlength="10" />
-					<text class="middle-content-label">辆</text></u-form-item>
+					<text class="middle-content-label" style="font-size: 32rpx;">辆</text></u-form-item>
 				<view class="label_title">综合上牌时间</view>
 				<u-row style="padding-top: 16rpx;">
 					<u-col span="4">
@@ -480,7 +480,12 @@
 	/deep/ .u-border-bottom:after {
 		border-bottom-width: 0;
 	}
-
+    .cell_group{
+		border-bottom: 1px solid #DEDEDE;
+		/deep/ .u-cell{
+			padding: 13px 0px
+		}
+	}
 	.label_title {
 		padding-top: 20rpx;
 		color: #111111;
