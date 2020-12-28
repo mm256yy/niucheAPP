@@ -30,8 +30,8 @@
 					<view @click="filter()" style="width: 100rpx;text-align: center;float: left;">更多</view>
 				</u-form>
 			</view>
-			<view class="wrap">
-				<v-tabs :scroll="true" lineHeight='0rpx' color="#777" activeColor="#777" :tabs="filterData"></v-tabs>
+			<view class="wrap" v-show="filterData.length">
+				<v-tabs style="font-weight: 900;" :scroll="true" lineHeight='0rpx' color="#777" activeColor="#777" :tabs="filterData"></v-tabs>
 			</view>
 			<view style="display: flex;margin-left: 38rpx;">
 				<view v-for="(item, index) in filterData" :key="index" style="padding: 10rpx 18rpx;border-radius: 8rpx;background: #f8f9fb;margin-right:24rpx;">{{item}}</view>
@@ -259,16 +259,22 @@
 		},
 		methods: {
 			transform(){
+				var cartype = [];
+				var power = [];
+				var businessType = '';
 				this.filterData = [];
-				const businessType = uni.getStorageSync('businessType');
+				if(uni.getStorageSync('businessType')){
+					businessType = uni.getStorageSync('businessType');
+					this.filterData.push(businessType);
+				}
 				if(uni.getStorageSync('cartype')){
-					var cartype = uni.getStorageSync('cartype').split(',');
+					cartype = uni.getStorageSync('cartype').split(',');
+					this.filterData = this.filterData.concat(cartype);
 				}
 				if(uni.getStorageSync('power')){
-					var power = uni.getStorageSync('power').split(',');
+					power = uni.getStorageSync('power').split(',');
+					this.filterData = this.filterData.concat(power);
 				}
-				this.filterData.push(businessType);
-				this.filterData = this.filterData.concat(cartype,power);
 			},
 			hideMask(){
 				this.show = false;
