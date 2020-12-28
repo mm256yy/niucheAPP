@@ -233,7 +233,6 @@
 			CarList,
 		},
 		onLoad(option) {
-			let index = option.id;
 			let editId = option.editId;
 			this.editId = editId
 		},
