@@ -13,7 +13,7 @@
 				 <text @click="toYs" style="color: #0873DE;">《隐私政策》</text>
 			 <text @click="toXy" style="color: #0873DE;padding-left: 8pt;">《用户协议》</text></view>
 			 <view class="login-out" v-show="curThemeType ==='company' && tokenFlag" @click="showLogut=true">退出</view>
-			 <view>当前版本 1.5.1.6</view>
+			 <view>当前版本 {{version}}</view>
 		 </view>
 		 <u-modal v-model="showLogut" title="提示" :show-cancel-button="true" confirm-text="是" cancel-text="否"
 		  @confirm="loginOut">
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+	import {version} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {

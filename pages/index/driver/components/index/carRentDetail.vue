@@ -11,6 +11,12 @@
 			 <view class="wraps img">
 			 	<u-swiper height="503" bg-color="#CDE5E3" mode="dot" :list="detail.photourl"></u-swiper>
 			 </view>
+			 <view style="position: relative;" v-if="tagList.length>0">
+				 <u-image src="@/static/zucheyouhui@2x.png" height="116rpx" border-radius="8"></u-image>
+				 <view style="position: absolute;top: 2px;left: 34%;color: #fff;" class="u-line-2">
+					 <text v-for="(tag,index) in tagList" :key="index" style="font-size: 14px;display: inline-block;padding-right: 5px;">{{tag.tabValue}}</text>
+				 </view>
+			 </view>
 			<view style="padding:40rpx">
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name u-line-2">
@@ -115,11 +121,16 @@
 				detail: {},
 				tab: [],
 				rentList:[{name: '0',text:'3000以内（含3000）' },{name: '1',text:'3000以上' }],
-				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }]
+				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
+				tagList:[]
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
+			let tags = option.tags;
+			if(tags){
+				this.tagList = eval(tags)
+			}
 			if(id){
 			 this.driverDemandId = id;
 			}

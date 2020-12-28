@@ -3,8 +3,17 @@
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	{
+		//首页
+		"path": "pages/init/init",
+		"style": {
+			"navigationStyle": "custom" ,
+			"navigationBarTitleText": " ",
+			"enablePullDownRefresh":false
+		}
+	},
 		{
-			//首页
+			//
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom" ,
@@ -627,6 +636,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/init/affordableCar",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/init/newYearWelfare",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
@@ -636,36 +663,29 @@
 	"tabBar": {
 		"height":60,
 	    "color": "#000000",
-	    "selectedColor": "#41B36D",
+	    "selectedColor": "#41B36D", 
 	    "borderStyle": "black",
 	    "backgroundColor": "#ffffff",
 	    "list": [{
-	        "pagePath": "pages/index/index",
+	        "pagePath": "pages/init/init",
 	        "iconPath": "static/tabbar/index.png",
 	        "selectedIconPath": "static/tabbar/index-select.png",
 	        "text": "首页"
 	    }, {
-	        "pagePath": "pages/mymessage/mymessage",
+	        "pagePath": "pages/index/index",
 	        "iconPath": "static/tabbar/message.png",
 	        "selectedIconPath": "static/tabbar/message-select.png",
-	        "text": "买车"
+	        "text": "租车"
 	    }, {
-	        "pagePath": "pages/mycollect/mycollect",
+	        "pagePath": "pages/mymessage/mymessage",
 	        "iconPath": "static/tabbar/collect.png",
 	        "selectedIconPath": "static/tabbar/collect-select.png",
-	        "text": "收藏"
+	        "text": "招聘"
 	    }, {
 	        "pagePath": "pages/mycenter/mycenter",
 	        "iconPath": "static/tabbar/mycenter.png",
 	        "selectedIconPath": "static/tabbar/mycenter-select.png",
 	        "text": "我的"
-	    }],
-		"midButton": {
-			"width": "66px",
-			"height": "55px",
-			"iconPath": "static/tabbar/Z.png",
-			"iconWidth": "50px"
-					// "backgroundImage":"static/center-selected.png"
-			}
+	    }]
 	}
 }

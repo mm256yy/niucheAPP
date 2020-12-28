@@ -1,7 +1,9 @@
 
 <script>
+	
 	import Vue from 'vue'
 	import {dirverPages,companyPages} from '@/utils/tabbar.js'
+	import {updateUrl} from '@/utils/constant.js'
 	export default {
 		onLaunch: function() {
 			//初始化
@@ -9,7 +11,7 @@
 			//检测升级
 			this.checkUpdate()
 			//中间图标点击
-			this.midButtonTap()
+			// this.midButtonTap()
 
 		},
 		onShow() {
@@ -42,39 +44,6 @@
 						self.appUpgrade(e.platform)
 					}
 				})
-				// #ifdef APP-PLUS
-				 plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) { 
-				    uni.request({  
-				        url: 'http://app-server.neocab.cn/app/getUrl?version='+widgetInfo.versionCode, 
-						method:'POST',
-				        data: {  
-				            version: widgetInfo.versionCode,  
-				        },  
-				        success: (res) => {
-							if(res.data.code === 200){
-							let data = res.data.object;
-							if(data.checkState === 1 ){
-								  uni.downloadFile({  
-									url: data.url,  
-									success: (downloadResult) => {  
-										if (downloadResult.statusCode === 200) {  
-											plus.runtime.install(downloadResult.tempFilePath, {  
-												force: false  
-											}, function() {  
-												console.log('install success...');  
-												plus.runtime.restart();  
-											}, function(e) {  
-												console.error('install fail...');  
-											});  
-										}  
-									}  
-								});  
-							} 
-						} 
-				     },//success
-					})
-				});  
-				// #endif
 			},
 			/**
 			 * app整包更新检测
@@ -87,7 +56,7 @@
 				//#ifdef APP-PLUS
 				plus.runtime.getProperty(plus.runtime.appid, (wgtinfo) => {
 					uni.request({
-					    url: 'http://app-server.neocab.cn/app/getUrl?version='+wgtinfo.versionCode, 
+					    url: updateUrl+wgtinfo.versionCode, 
 						method:'POST',
 					    data: {version: wgtinfo.versionCode},  
 					    success: (res) => {
@@ -143,7 +112,7 @@
 						  uni.navigateTo({
 							  url: '/pages/company/release/release'
 						  });
-					   } else{
+					   } else{ 
 						   uni.navigateTo({
 							   url: '/pages/driver/release/release'
 						   });
@@ -165,14 +134,14 @@
 			  		uni.setTabBarItem(item)
 			  	})
 			  	uni.setTabBarStyle({
-			  	  selectedColor: '#41B36D',
+			  	  selectedColor: '#46B773',
 			  	})
 			  } else {
 			  	dirverPages.forEach(item=>{
 			  		uni.setTabBarItem(item)
 			  	})
 			  	uni.setTabBarStyle({
-			  	  selectedColor: '#FE9217',
+			  	  selectedColor: '#FF9E00',
 			  	})
 			  }
 		  },	
@@ -186,7 +155,12 @@
 </script>
 
 <style lang="scss">
+	
 	@import "uview-ui/index.scss";
+	@font-face{
+		font-family:"siyuan";
+		src: url('~@/static/SourceHanSansCN-Medium.ttf');
+	}
 	// .uni-page-head{
 	// 	background: linear-gradient(55deg, $bg-grad-FE, $bg-grad-FCD);
 	// }

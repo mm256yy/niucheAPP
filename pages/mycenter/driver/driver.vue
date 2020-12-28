@@ -4,7 +4,10 @@
 			<view style="padding: 15pt;">
 				<view class="avater">
 					<u-row style="margin-top: 10pt;background-color: #FFFFFF;padding: 6pt 0;">
-						<u-col span="3">
+						<u-col span="3" v-show="!tokenFlag">
+							<u-avatar src="../../static/driverSrc.png" mode="circle" size="large" ></u-avatar>
+						</u-col>
+						<u-col span="3" v-show="tokenFlag" >
 							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
 						</u-col>
 						<u-col span="8" v-show="!tokenFlag">
@@ -43,10 +46,10 @@
 					  </u-row>
 					</view>
 				</view>
-				
-				<view class="my_title">
-					我的发布
-				</view>
+				<u-row class="my_title">
+					<u-col span="4">我的发布</u-col>
+					<u-col span="8" style="text-align: right;color: rgb(252, 187, 48);font-size: 14px;" @click="toPublishPage">发布需求</u-col>
+				</u-row>
 				<view class="bgf">
 					<u-cell-group >
 						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.carNum == 0?'未发布':'已发布'">
@@ -54,6 +57,9 @@
 						</u-cell-item>
 						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.jobNum == 0?'未发布':'已发布'">
 							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="收藏" :title-style="titleStyle" @click="toCollect()">
+							<u-icon size="60" :name="scSrc" slot="icon"></u-icon>
 						</u-cell-item>
 					</u-cell-group>
 				</view>
@@ -72,9 +78,9 @@
 						<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle">
 							<u-icon size="60" name="edit-pen-fill" color="#FF9400" slot="icon"></u-icon>
 						</u-cell-item>
-<!-- 						<u-cell-item  title="邀请好友" :title-style="titleStyle" @click="toInvite">
+						<u-cell-item  title="邀请好友" :title-style="titleStyle" @click="toInvite">
 							<u-icon size="60" name="man-add-fill" color="#FF9400" slot="icon"></u-icon>
-						</u-cell-item> -->
+						</u-cell-item>
 						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
 							<u-icon size="60" :name="wdpdSrc" slot="icon"></u-icon>
 						</u-cell-item>
@@ -125,7 +131,8 @@
 					postState:9,
 					jobNum:0,
 					carNum:0,
-					certificationType:""
+					certificationType:"",
+					shareId:''
 				},
 				token:''
 			}
@@ -185,7 +192,7 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.$u.route("/pages/driver/taxiCar/taxiCar")
-				}
+				} 
 			},
 			tipsCancel(){
 				let token = uni.getStorageSync('token')
@@ -197,12 +204,32 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.$u.route("/pages/driver/baseInfo/baseInfo")
+				}else{
+					this.toLogin()
 				}
 			},
 			toInvite(){
 				let token = uni.getStorageSync('token')
 				if (token){
-					this.$u.route("/pages/driver/inviteFriends/inviteFriends")
+					if(this.driverPub.driverState === 2){
+						this.$u.route("/pages/driver/inviteFriends/inviteFriends",{shareId:this.driverPub.shareId})
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
+			toCollect(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.driverPub.driverState === 2){
+						this.$u.route("/pages/mycollect/mycollect")
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
 				}
 			},
 			toLicense(){
@@ -214,6 +241,8 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.$u.route("/pages/driver/myPub/myPub",{index:index})
+				}else{
+					this.toLogin()
 				}
 			},
 			toCard(){
@@ -234,6 +263,19 @@
 					  }
 				  }
 			   }
+			},
+			toPublishPage(){
+				let token = uni.getStorageSync('token');
+				   if (token){
+					   let role = uni.getStorageSync('role');
+						   uni.navigateTo({
+							   url: '/pages/driver/release/release'
+						   });
+				   } else {
+						uni.showToast({
+							title:"请先登录，认证" 
+						  })
+				   }
 			},
 		}
 	}
@@ -260,7 +302,7 @@
 	}
 	.my_title{
 		color: #000000;
-		font-size: 18pt;
+		font-size: 14pt;
 		padding-left: 3pt;
 		margin: 19pt 0 12pt;
 	}
