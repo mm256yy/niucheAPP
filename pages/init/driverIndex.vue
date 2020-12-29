@@ -83,7 +83,7 @@
 							 style="" class="swiper_xcfl">
 								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
 								<view class="swiper_price">¥{{info.packPrice}}/月</view>
-								<view class="bg_fff" style="padding:12px 4px 6px;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);">
+								<view class="bg_fff" style="padding:12px 4px 6px;">
 									<view class="djhc_model u-line-1">{{info.carBrand}} {{info.carText}}</view>
 									<view class="djhc_power u-line-1">{{info.companyNickName || info.companyName}}</view>
 								</view>
@@ -609,6 +609,7 @@
 	.bg_fff {
 		background-color: #FFFFFF;
 		text-align: center;
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
 		border-bottom-right-radius: 4px;
 		    border-bottom-left-radius: 4px;
 

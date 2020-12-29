@@ -16,7 +16,7 @@
 				 <view style="position: absolute;top: 5px;left: 33%;color: #fff;" class="u-line-2">
 						 <view v-for="(tag,index) in tagList" :key="index" style="font-size: 14px;display: inline-block;">
 							 {{tag.tabValue}} 
-							 <text style="display: inline-block;padding:2px 5px;font-size: 14px;" v-show="index<tagList.length-1">●</text>
+							 <text style="display: inline-block;padding:2px 5px;font-size: 14px;" v-show="index<tagList.length-1">•</text>
 						 </view>
 				 </view>
 			 </view>
