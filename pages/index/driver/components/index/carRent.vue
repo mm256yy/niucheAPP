@@ -1,23 +1,27 @@
 <template>
 	<view class="carRent">
+		<u-mask z-index="2" :show="showMask" @click="hideMask">
+		</u-mask>
+		<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
+		<list-tags v-show="showType" :list="selectType" :active="currentType" @onClick="getDataType"></list-tags>
 		<view class="middle-content">
-			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="priceid" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:170rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businesstype" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter()" type="text" :disabled="true" /></u-form-item>
-				<view class="clear"></view>
+			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+				<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+				background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+				<view style="float: left;">杭州</view>
+				<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+				</u-form-item>
+				<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+			    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
+				<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
+				<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
+				<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+			    background: #F8F9FB;border-radius: 4px;width: 180rpx;" label="">
+				<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
+				<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
+				</u-form-item>
+				<view @click="filter()" style="width: 100rpx;text-align: center;float: right;">更多</view>
 			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
-			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
-			<u-dropdown style="width: 50rpx;">
-				<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
-				<u-dropdown-item @change="changeType()" v-model="businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
-			</u-dropdown>
-			<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
 		</view>
 		<view v-show="priceidkey||businesstypekey" class="tagBox">
 			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
@@ -91,12 +95,15 @@
 
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+	import listTags from '@/components/listTags.vue'
 	export default {
 		components: {
-			loadRefresh
+			loadRefresh,
+			listTags
 		},
 		data() {
 			return {
+				showMask:false,
 				show:false,
 				showType:false,
 				iconType: 'flower',
@@ -178,7 +185,15 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				pageNum: 1
+				pageNum: 1,
+				current:-1,
+				currentType:-1,
+				style:{
+					color:'#000'
+				},
+				styleActive:{
+					color:'#FF9500'
+				}
 			}
 		},
 		mounted() {
@@ -191,6 +206,57 @@
 			this.search()
 		},
 		methods: {
+			hideMask(){
+				this.showMask = false;
+				this.show = false;
+				this.showType = false;
+			},
+			toggle(){
+				this.show = !this.show;
+				this.showType = false;
+				this.showMask = !this.showMask;
+			},
+			toggleType(){
+				this.showType = !this.showType;
+				this.show = false;
+				this.showMask = !this.showMask;
+			},
+			getData(index) {
+				this.current = index;
+				this.priceid = this.select[index].value;
+				this.priceidkey = this.select[index].label;
+				if(this.priceid == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				if(this.priceid == 2) {
+					this.form.startPriceid = '0';
+					this.form.endPriceid = '2000';
+				}
+				if(this.priceid == 3) {
+					this.form.startPriceid = '2000';
+					this.form.endPriceid = '3000';
+				}
+				if(this.priceid == 4) {
+					this.form.startPriceid = '3000';
+					this.form.endPriceid = '4000';
+				}
+				if(this.priceid == 5) {
+					this.form.startPriceid = '4000';
+					this.form.endPriceid = '-1';
+				}
+				this.show = false;
+				this.showMask = false;
+				this.search()
+			},
+			getDataType(index) {
+				this.currentType = index;
+				this.businesstypekey = this.selectType[index].label;
+				this.businesstype = this.selectType[index].value;
+				this.showType = false;
+				this.showMask = false;
+				this.search()
+			},
 			page() {
 			    this.pageNum = 1;
 			},
@@ -408,6 +474,7 @@
 
 <style lang="scss" scoped>
 	.carRent {
+		background: #fff;
 		.tagBox{
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
@@ -440,6 +507,22 @@
 		.last .lists:last-child {
 			margin-bottom: 10rpx;
 		}
+		.triangleActive{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: transparent transparent #FF9500 transparent;
+			margin-top: -8rpx;
+		}
+		.triangle{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: #777 transparent transparent transparent;
+			margin-top: 8rpx;
+		}
 		.wrap {
 			padding: 40rpx;
 		}
@@ -452,7 +535,7 @@
 			top: 6rpx;
 			left: 0;
 			z-index: 2;
-			background-color: #f5f5f8;
+			background-color: #fff;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -461,7 +544,6 @@
 			width: 686rpx;
 			height: 71rpx;
 			border-radius: 40rpx;
-			border: 1rpx solid rgba(0,0,0,0.1);
 			margin-left: 39rpx;
 			margin-top: 30rpx;
 			float: left;
@@ -486,6 +568,9 @@
 		}
 		.clear {
 			clear: both;
+		}
+		.last{
+			background-color: #fff;
 		}
 		.lists {
 			width: 679rpx;

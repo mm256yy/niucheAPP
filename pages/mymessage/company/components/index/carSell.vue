@@ -2,9 +2,9 @@
 	<view class="carSell">
 		<u-mask z-index="2" :show="show" @click="hideMask">
 		</u-mask>
-		<list-tags v-show="showKm" :list="selectKm" :active="current" @onClick="getDataKm"></list-tags>
-		<list-tags v-show="showPrice" :list="selectPrice" :active="current" @onClick="getDataPrice"></list-tags>
-		<list-tags v-show="showAge" :list="selectAge" :active="current" @onClick="getDataAge"></list-tags>
+		<list-tags v-show="showKm" :list="selectKm" :active="currentKm" @onClick="getDataKm"></list-tags>
+		<list-tags v-show="showPrice" :list="selectPrice" :active="currentPrice" @onClick="getDataPrice"></list-tags>
+		<list-tags v-show="showAge" :list="selectAge" :active="currentAge" @onClick="getDataAge"></list-tags>
 		<view class="middle-content">
 			<view style="width: 100%;height: 100rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
@@ -20,7 +20,7 @@
 					<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
 				    background: #F8F9FB;border-radius: 4px;width: 128rpx;" label="">
 					<u-input :custom-style="style" v-show="!showKm" disabled placeholder-style="color:#000;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="!showKm" class='triangle'></text>
-					<u-input :custom-style="styleActive" style="color: #40B26D;" v-show="showKm" disabled placeholder-style="color:#40B26D;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="showKm" class='triangleActive'></text>
+					<u-input :custom-style="styleActive" v-show="showKm" disabled placeholder-style="color:#40B26D;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="showKm" class='triangleActive'></text>
 					</u-form-item>
 					<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
 					background: #F8F9FB;border-radius: 4px;width: 154rpx;" label="">
@@ -30,12 +30,15 @@
 					<view @click="filter()" style="width: 100rpx;text-align: center;float: left;">更多</view>
 				</u-form>
 			</view>
-			<view class="wrap" v-show="filterData.length">
-				<v-tabs style="font-weight: 900;" :scroll="true" lineHeight='0rpx' color="#777" activeColor="#777" :tabs="filterData"></v-tabs>
+			<view style="margin-top: 42rpx;display: flex;">
+				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
+					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
+				</scroll-view>
+				<view style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
-			<view style="display: flex;margin-left: 38rpx;">
+			<!-- <view style="display: flex;margin-left: 38rpx;">
 				<view v-for="(item, index) in filterData" :key="index" style="padding: 10rpx 18rpx;border-radius: 8rpx;background: #f8f9fb;margin-right:24rpx;">{{item}}</view>
-			</view>
+			</view> -->
 			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
 			<!-- <view style="position: fixed;top: 100rpx;left:0;background-color: #fff;" v-show="show">
 				<text style="width: 206rpx;height: 76rpx;border: 1px solid #D9DEDF;line-height: 76rpx;text-align: center;display: inline-block;color: #666;margin-left: 32rpx;" v-for="(item, index) in select" :key="index">{{item.label}}</text>
@@ -241,7 +244,9 @@
 					nomore: '我也是有底线的'
 				},
 				pageNum: 1,
-				current:-1,
+				currentKm:-1,
+				currentAge:-1,
+				currentPrice:-1,
 				style:{
 					color:'#000'
 				},
@@ -249,7 +254,8 @@
 					color:'#40B26D'
 				},
 				show: false,
-				filterData:[]
+				filterData:[],
+				image: '#333'
 			}
 		},
 		mounted() {
@@ -258,6 +264,9 @@
 			this.transform()
 		},
 		methods: {
+			close(index){
+				this.filterData.splice(index, 1);
+			},
 			transform(){
 				var cartype = [];
 				var power = [];
@@ -286,22 +295,22 @@
 				this.showKm = !this.showKm;
 				this.showPrice = false;
 				this.showAge = false;
-				this.show = true;
+				this.show = !this.show;
 			},
 			togglePrice(){
 				this.showPrice = !this.showPrice;
 				this.showKm = false;
 				this.showAge = false;
-				this.show = true;
+				this.show = !this.show;
 			},
 			toggleAge(){
 				this.showAge = !this.showAge;
 				this.showPrice = false;
 				this.showKm = false;
-				this.show = true;
+				this.show = !this.show;
 			},
 			getDataKm(index) {
-				this.current = index;
+				this.currentKm = index;
 				this.kmkey = this.selectKm[index].label;
 				this.form.km = this.selectKm[index].value;
 				this.showKm = false;
@@ -309,7 +318,7 @@
 				this.search()
 			},
 			getDataPrice(index) {
-				this.current = index;
+				this.currentPrice = index;
 				this.packpricekey = this.selectPrice[index].label;
 				this.form.packprice = this.selectPrice[index].value;
 				this.showPrice = false;
@@ -317,7 +326,7 @@
 				this.search()
 			},
 			getDataAge(index) {
-				this.current = index;
+				this.currentAge = index;
 				this.agekey = this.selectAge[index].label;
 				this.form.age = this.selectAge[index].value;
 				if(this.form.age == '0') {
@@ -675,6 +684,22 @@
 				width: 120px;
 				height: 120px;
 				background-color: #fff;
+			}
+			.scroll-view_H {
+				white-space: nowrap;
+				width: 100%;
+			}
+			.scroll-view-item_H {
+				display: inline-block;
+				width: 140rpx;
+				height: 56rpx;
+				margin-right: 28rpx;
+				line-height: 56rpx;
+				text-align: center;
+				background-image: url(@/static/shut.png);
+				background-repeat: no-repeat;
+				height: 100%;
+				background-size: cover;
 			}
 	}
 </style>
