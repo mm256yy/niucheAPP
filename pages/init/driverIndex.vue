@@ -75,15 +75,15 @@
 						<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
 					</view>
 				</view>
-				<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#FF5A00"
+				<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#f5f5f5" indicator-active-color="#FF5A00"
 				 style="height: 180px;">
 					<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 						<view style="display: flex;justify-content: space-around;padding: 0 10px;">
 							<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info.comparymainid)"
-							 style="width: 31%;position: relative;background-color: #FFFFFF;">
-								<u-image :src="info.photoUrl" height="168rpx" border-radius="8"></u-image>
+							 style="" class="swiper_xcfl">
+								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
 								<view class="swiper_price">¥{{info.packPrice}}/月</view>
-								<view class="bg_fff" style="padding:12px 4px 6px;">
+								<view class="bg_fff" style="padding:12px 4px 6px;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);">
 									<view class="djhc_model u-line-1">{{info.carBrand}} {{info.carText}}</view>
 									<view class="djhc_power u-line-1">{{info.companyNickName || info.companyName}}</view>
 								</view>
@@ -103,8 +103,9 @@
 							<view style="background: #FFFFFF;">
 								<u-image :src="item.companyLogoPhoto" height="180rpx" border-radius="8"></u-image>
 							</view>
+							
 						</u-col>
-						<u-col span="8">
+						<u-col span="8" @click="toShopPage(item.userMainId)">
 							<view style="color: #000000;font-size: 12pt;">{{item.companyName}}</view>
 							<view style="text-align: right;padding: 8px 0;">
 								<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
@@ -425,7 +426,10 @@
 		align-items: center;
 		margin-top: -40px;
 	}
-
+    .swiper_xcfl{
+		width: 31%;position: relative;background-color: #FFFFFF;
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	}
 	.kszc {
 		padding: 15px;
 
@@ -459,6 +463,8 @@
 	.djhc {
 		background-image: url('../../static/dijiahaoche@2x.png');
 		background-size: 100%;
+		background-size: cover;
+		height: 268px;
 
 		.djhc_title {
 			color: #FF5A00;
@@ -469,7 +475,7 @@
 		.djhc_link {
 			color: #FF5A00;
 			font-size: 14px;
-			padding: 0 15px 15px;
+			padding: 0 10px 10px;
 			display: flex;
 			justify-content: space-between;
 		}
@@ -482,9 +488,14 @@
 			padding: 4px 0;
 		}
 	}
-
+    .border_radius{
+		border-top-left-radius: 4px;
+		    border-top-right-radius: 4px;
+		    border-bottom-right-radius: 0px;
+		    border-bottom-left-radius: 4px;
+	}
 	.xcfl {
-		background: #F8F8F8;
+		background: #FFFFFF;
 
 		.xcfl_title {
 			font-size: 20px;
@@ -494,7 +505,7 @@
 
 		.xcfl_link {
 			font-size: 14px;
-			padding: 0 15px 20px;
+			padding: 0 10px 20px;
 			display: flex;
 			color: #6D6D6D;
 			justify-content: space-between;
