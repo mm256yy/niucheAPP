@@ -75,15 +75,15 @@
 						<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
 					</view>
 				</view>
-				<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#FF5A00"
+				<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#f5f5f5" indicator-active-color="#FF5A00"
 				 style="height: 180px;">
 					<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 						<view style="display: flex;justify-content: space-around;padding: 0 10px;">
-							<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info.comparymainid)"
-							 style="width: 31%;position: relative;background-color: #FFFFFF;">
-								<u-image :src="info.photoUrl" height="168rpx" border-radius="8"></u-image>
+							<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info)"
+							 style="" class="swiper_xcfl">
+								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
 								<view class="swiper_price">¥{{info.packPrice}}/月</view>
-								<view class="bg_fff" style="padding:12px 4px 6px;">
+								<view class="bg_fff" style="padding:12px 4px 6px;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);">
 									<view class="djhc_model u-line-1">{{info.carBrand}} {{info.carText}}</view>
 									<view class="djhc_power u-line-1">{{info.companyNickName || info.companyName}}</view>
 								</view>
@@ -97,24 +97,26 @@
 				<view class="xcfl_link">
 					<text>好商家，租车安心首选</text>
 				</view>
-				<view style="padding:10px 15px;" v-for="i in 6">
-					<u-row>
-						<u-col span="4">
+				<view style="padding:10px 15px;" v-for="(item,index) in companyList" >
+					<u-row >
+						<u-col span="4" @click="toShopPage(item.userMainId)">
 							<view style="background: #FFFFFF;">
-								<u-image src="http://pic1.jisuapi.cn/car/static/images/logo/300/6839.jpg" height="180rpx" border-radius="8"></u-image>
+								<u-image :src="item.companyLogoPhoto" height="180rpx" border-radius="8"></u-image>
 							</view>
+							
 						</u-col>
-						<u-col span="8">
-							<view style="color: #000000;font-size: 12pt;">企业名称</view>
+						<u-col span="8" @click="toShopPage(item.userMainId)">
+							<view style="color: #000000;font-size: 12pt;">{{item.companyName}}</view>
 							<view style="text-align: right;padding: 8px 0;">
 								<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
 							</view>
-							<view style="color: #6D6D6D;">1111111111111</view>
+							<view class="u-line-1" style="color: #6D6D6D;">{{item.companyIntro}}</view>
 						</u-col>
 					</u-row>
 				</view>
 			</view>
 		</scroll-view>
+		<phone-auth :id="comparyid" :status="4" v-show="openShow" ref="other"></phone-auth>
 	</view>
 </template>
 
@@ -122,9 +124,15 @@
 	import {
 		format
 	} from '@/common/rule.js'
+	import phoneAuth from '@/components/phoneAuth.vue'
 	export default {
+		components: {
+			phoneAuth
+		  },
 		data() {
 			return {
+				comparyid:'',
+				openShow:false,
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 36%,#ffffff 0%)'
 				},
@@ -191,7 +199,41 @@
 				num: 0,
 				time: '',
 				swiperList: [],
-				navBarShow: false
+				navBarShow: false,
+				companyList: [
+    {
+         "userMainId": "86890184045629440",
+         "createTime": "26/11/2020 11:01:59",
+         "companyName": "杭州俊程汽车服务有限公司",
+         "companyAbbreviation": "",
+         "companyLogoPhoto": "http://niuche-default.neocab.cn/86888148520538112",
+         "companyIntro": "公司主要片"
+       },
+       // {
+       //   "userMainId": "89487811903885312",
+       //   "createTime": "3/12/2020 13:54:29",
+       //   "companyName": "杭州御匾会汽车服务有限公司",
+       //   "companyAbbreviation": "杭州御匾会汽车服务有限公司",
+       //   "companyLogoPhoto": "http://niuche-default.neocab.cn/89478461370011648",
+       //   "companyIntro": "公司于2015年03月03日成立。法定代表人张伟，公司经营范围包括：普通货运，汽车道路救援服务，汽车租赁、咨询服务，汽车代驾，汽车事务代理，二手车经营；停车软件开发；汽车销售；停车服务；房屋租赁；其他无需报经审批的一切合法项目。"
+       // },
+       // {
+       //   "userMainId": "89872153863917568",
+       //   "createTime": "4/12/2020 16:30:41",
+       //   "companyName": "浙江妙达新能源科技有限公司",
+       //   "companyAbbreviation": "妙达",
+       //   "companyLogoPhoto": "http://niuche-default.neocab.cn/89869389708529664",
+       //   "companyIntro": "专业从事网约车租金，网约车销售，公司自建网约车出行平台，网约车售后维修厂，全方面服务每一个驾驶员。"
+       // },
+       // {
+       //   "userMainId": "90870526117023744",
+       //   "createTime": "7/12/2020 10:32:31",
+       //   "companyName": "浙江车壹网络科技有限公司",
+       //   "companyAbbreviation": "车壹资本",
+       //   "companyLogoPhoto": "http://niuche-default.neocab.cn/90869528115941376",
+       //   "companyIntro": "车壹融资租赁（天津）有限公司（以下简称车壹融资），创立于2016年5月，注册资本人民币30000万元，总部位于浙江省杭州市，是一家为汽车全产业链提供服务的综合性汽车服务平台，业务范围涵盖汽车贸易、汽车金融服务、汽车租赁服务、汽车后市场服务和车联网服务等。\n车壹融资旗下现已在“限牌”热门地区设立宁波车壹、绍兴车壹、南京车壹、成都车壹等分支机构，并在浙江省内拥有覆盖全省的多家经营性汽车租赁公司。\n车壹融资以互联网思维和平台化运作来经营汽车（融资）租赁业务，打破了汽车租赁行业的重资产模式，运用全新的模式打造了一个整合司机、资本、车辆的平台。结合银行、投资机构、汽车厂商、4S店、网络叫车平台等，为用户"
+       // }
+  ],
 			}
 		},
 		mounted() {
@@ -254,6 +296,11 @@
 				})
 				this.getWelfareList()
 				this.getMessageNum()
+			},
+			toShopPage(id){
+				this.comparyid = id;
+				this.openShow = true;
+				this.$refs.other.getStatus()
 			},
 			getWelfareList() {
 				this.$u.api.getYearWelfare({
@@ -329,9 +376,10 @@
 					})
 				}
 			},
-			toView(id) {
+			toView(item) {
 				this.$u.route('/pages/index/driver/components/index/carRentDetail', {
-					id: id
+					id: item.comparymainid,
+					tags: item.params
 				})
 			}
 		}
@@ -379,7 +427,10 @@
 		align-items: center;
 		margin-top: -40px;
 	}
-
+    .swiper_xcfl{
+		width: 31%;position: relative;background-color: #FFFFFF;
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	}
 	.kszc {
 		padding: 15px;
 
@@ -413,6 +464,8 @@
 	.djhc {
 		background-image: url('../../static/dijiahaoche@2x.png');
 		background-size: 100%;
+		background-size: cover;
+		height: 268px;
 
 		.djhc_title {
 			color: #FF5A00;
@@ -423,7 +476,7 @@
 		.djhc_link {
 			color: #FF5A00;
 			font-size: 14px;
-			padding: 0 15px 15px;
+			padding: 0 10px 10px;
 			display: flex;
 			justify-content: space-between;
 		}
@@ -436,9 +489,14 @@
 			padding: 4px 0;
 		}
 	}
-
+    .border_radius{
+		border-top-left-radius: 4px;
+		    border-top-right-radius: 4px;
+		    border-bottom-right-radius: 0px;
+		    border-bottom-left-radius: 4px;
+	}
 	.xcfl {
-		background: #F8F8F8;
+		background: #FFFFFF;
 
 		.xcfl_title {
 			font-size: 20px;
@@ -448,7 +506,7 @@
 
 		.xcfl_link {
 			font-size: 14px;
-			padding: 0 15px 20px;
+			padding: 0 10px 20px;
 			display: flex;
 			color: #6D6D6D;
 			justify-content: space-between;
