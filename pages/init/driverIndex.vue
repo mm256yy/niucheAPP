@@ -39,7 +39,7 @@
 					</view>
 				</view>
 
-				<view style="margin-top: 10pt;">
+				<view style="margin-top: 10px;">
 					<view class="money_tag" v-for="(info,index) in moneyList" :key="index" @click="toIndexId(info.id)">
 						{{info.text}}
 					</view>
@@ -50,7 +50,7 @@
 				<view class="djhc_link" @click="toChild(1)">
 					<text>平台精选好车，价低质不低</text>
 					<view>
-						<u-icon name="arrow-right" color="#FF5A00" size="38"></u-icon>
+						<u-icon name="arrow-right" color="#FF5A00" size="32"></u-icon>
 					</view>
 				</view>
 				<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
@@ -72,7 +72,7 @@
 				<view class="xcfl_link" @click="toChild(2)">
 					<text>送油 送保养 送免租</text>
 					<view>
-						<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
+						<u-icon name="arrow-right" color="#6D6D6D" size="32"></u-icon>
 					</view>
 				</view>
 				<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#f5f5f5" indicator-active-color="#FF5A00"
@@ -97,7 +97,7 @@
 				<view class="xcfl_link">
 					<text>好商家，租车安心首选</text>
 				</view>
-				<view style="padding:10px 15px;" v-for="(item,index) in companyList" >
+				<view style="padding:10px 0px;margin:0 15px;border-bottom: 0.5px solid #E0E0E0;" v-for="(item,index) in companyList" >
 					<u-row >
 						<u-col span="4" @click="toShopPage(item.userMainId)">
 							<view style="background: #FFFFFF;">
@@ -107,10 +107,10 @@
 						</u-col>
 						<u-col span="8" @click="toShopPage(item.userMainId)">
 							<view style="color: #000000;font-size: 12pt;">{{item.companyName}}</view>
-							<view style="text-align: right;padding: 8px 0;">
+<!-- 							<view style="text-align: right;padding: 8px 0;">
 								<u-icon name="arrow-right" color="#6D6D6D" size="38"></u-icon>
-							</view>
-							<view class="u-line-1" style="color: #6D6D6D;">{{item.companyIntro}}</view>
+							</view> -->
+							<view class="u-line-2" style="color: #6D6D6D;padding-top: 5px;">{{item.companyIntro}}</view>
 						</u-col>
 					</u-row>
 				</view>
@@ -529,8 +529,8 @@
 
 		.kszc_title {
 			color: #333333;
-			height: 30pt;
-			line-height: 30pt;
+			height: 22pt;
+			line-height: 22pt;
 			font-size: 12px;
 			text-align: center;
 		}
@@ -563,13 +563,13 @@
 		.djhc_title {
 			color: #FF5A00;
 			font-size: 20px;
-			padding: 10px;
+			padding: 6px 15px;
 		}
 
 		.djhc_link {
 			color: #FF5A00;
 			font-size: 14px;
-			padding: 0 10px 10px;
+			padding: 0 15px 6px;
 			display: flex;
 			justify-content: space-between;
 		}
@@ -593,13 +593,13 @@
 
 		.xcfl_title {
 			font-size: 20px;
-			padding: 10px;
+			padding: 6px 15px;
 			color: #000000;
 		}
 
 		.xcfl_link {
 			font-size: 14px;
-			padding: 0 10px 20px;
+			padding: 0 15px 6px;
 			display: flex;
 			color: #6D6D6D;
 			justify-content: space-between;
@@ -609,6 +609,8 @@
 	.bg_fff {
 		background-color: #FFFFFF;
 		text-align: center;
+		border-bottom-right-radius: 4px;
+		    border-bottom-left-radius: 4px;
 
 		.djhc_model {
 			color: #333;

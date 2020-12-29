@@ -13,8 +13,11 @@
 			 </view>
 			 <view style="position: relative;" v-if="tagList.length>0">
 				 <u-image src="@/static/zucheyouhui@2x.png" height="116rpx" border-radius="8"></u-image>
-				 <view style="position: absolute;top: 2px;left: 34%;color: #fff;" class="u-line-2">
-					 <text v-for="(tag,index) in tagList" :key="index" style="font-size: 14px;display: inline-block;padding-right: 5px;">{{tag.tabValue}}</text>
+				 <view style="position: absolute;top: 5px;left: 33%;color: #fff;" class="u-line-2">
+						 <view v-for="(tag,index) in tagList" :key="index" style="font-size: 14px;display: inline-block;">
+							 {{tag.tabValue}} 
+							 <text style="display: inline-block;padding:2px 5px;font-size: 14px;" v-show="index<tagList.length-1">●</text>
+						 </view>
 				 </view>
 			 </view>
 			<view style="padding:40rpx">
