@@ -1,7 +1,7 @@
 <template>
 	<view :class="'driver-content'"> 
 		<view class="wrap">
-		<u-navbar  back-icon-size="0" title="收藏" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
+		<u-navbar  back-icon-size="0" :back-text-style="backTextStyle" back-text="返回" title="收藏" :background="backgroundDri" title-color="#FFFFFF"></u-navbar>
 		<view style="">
 			<u-tabs-swiper style="position: fixed;" ref="uTabs" activeColor="#ffffff" :list="tablist" inactive-color="#e5e5e5"
 			 bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
@@ -133,6 +133,7 @@
 		},
 		data() {
 			return {
+				backTextStyle:{'color':'#ffffff'},
 				tablist: [{
 					name: '租车'
 				}, {

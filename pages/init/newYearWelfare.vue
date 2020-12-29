@@ -127,7 +127,8 @@
 		display: inline-block;
 		padding: 2px 4px;
 		font-size: 12px;
-		margin-right: 5px;
+		margin-right: 6px;
+		margin-bottom: 6px;
 		background: linear-gradient(270deg, #FFC400 0%, #FFB200 54%, #FF9900 100%);
 		color: #FFFFFF;
 	}
