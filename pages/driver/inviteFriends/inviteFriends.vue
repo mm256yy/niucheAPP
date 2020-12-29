@@ -7,7 +7,7 @@
 				</view>
 			</view>
 		</u-navbar>
-		<view class="flex_view" style="margin-top: -50px;">
+		<view class="flex_view">
 			<view class="bgImg-common oneImg">
 			<!-- <u-image src="../../../static/toutu@3x.png" height="180rpx" border-radius="8"></u-image> -->
 				<view class="bgImg-common yqhy" @click="inviteFriends">立即邀请好友助力</view>
@@ -161,7 +161,7 @@
 	}
 	.oneImg {
 		background-image: url(../../../static/toutu@3x.png);
-		min-height: 557px;
+		min-height: 618px;
 		position: relative;
 		// background-size: cover;
 	}
@@ -170,10 +170,10 @@
 		min-height: 13%;
 		width: 66%;
 		position: absolute;
-		top: 54%;
+		top: 53%;
 		left: 19%;
 		text-align: center;
-		line-height: 95px;
+		line-height: 94px;
 		color: #FFFFFF;
 	}
     .wdjl{

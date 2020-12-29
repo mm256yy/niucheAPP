@@ -42,7 +42,7 @@
 		data() {
 			return {
 				background: {
-					'background-image': 'linear-gradient(to bottom, #000000 36%,#ffffff 0%)'
+					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				backgroundCover: "linear-gradient(25deg, #FE5A00 0%, #FF7C00 84%, #FF2B00 100%)",
 				list: [],

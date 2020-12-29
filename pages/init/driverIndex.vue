@@ -134,7 +134,7 @@
 				comparyid:'',
 				openShow:false,
 				background: {
-					'background-image': 'linear-gradient(to bottom, #000000 36%,#ffffff 0%)'
+					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				list: [{
 					image: '../../static/banner_1@3x.png'

@@ -27,8 +27,8 @@
 				</view>
 			<view class="bgf" style="margin: 15pt 0;">
 				<u-row style="padding: 8pt;border-bottom: 1rpx solid #dedede;">
-					<u-col span="4">我的发布</u-col>
-					<u-col span="8" style="text-align: right;color: #7E7E7E;" @click=" toPublishPage">发布需求 >></u-col>
+					<u-col span="4" style="font-size: 18px;">我的发布</u-col>
+					<u-col span="8" style="text-align: right;color: #7E7E7E;font-size: 16px;" @click=" toPublishPage">发布需求 >></u-col>
 				</u-row>
 				<u-row style="padding:8pt 5pt">
 					
