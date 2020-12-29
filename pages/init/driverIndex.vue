@@ -286,6 +286,7 @@
 			},
 			getList() {
 				this.$u.api.driverSideHomePage({
+					pageNum:1,
 					pageSize: 9
 				}).then(res => {
 					if (res.code === 200) {
