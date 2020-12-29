@@ -1,12 +1,7 @@
 <template>
 	<view class="wrap">
-		<u-navbar back-icon-size="0" :title="title" :background="backgroundCom" :back-text-style="publishObj.backTextStyle"
+		<u-navbar back-icon-size="0" :title="title" back-text="返回" :background="backgroundCom" :back-text-style="publishObj.backTextStyle"
 		 height='44' title-color="#FFFFFF">
-			<view class="navbar-right">
-				<view class="message-box right-item">
-					<text @click="toCenter">返回</text>
-				</view>
-			</view>
 		</u-navbar>
 		<view class="zlcontent">
 			<view class="view-content">
@@ -20,8 +15,8 @@
 					</u-upload>
 				</view>
 				<view style="margin-top: 10pt;font-size: 10pt;padding-left: 5pt;color: #666666;">
-				上传照片必须包含：1.车外观左右前方45度的照片；2.车外观正前正后方照片；3.车外观两侧照片；4.车外观两侧照片；5.车辆内部中控仪表盘照片；6.车辆内部前后排图
-				片；7.车辆后备箱照片；8.该批次车辆集体照片  <text style="color: #FF9D00;padding-top: 5pt;font-size: 8pt;">*必须为jpg格式，最多18张</text>
+					上传照片必须包含：1.车外观左右前方45度的照片；2.车外观正前正后方照片；3.车外观两侧照片；4.车外观两侧照片；5.车辆内部中控仪表盘照片；6.车辆内部前后排图
+					片；7.车辆后备箱照片；8.该批次车辆集体照片 <text style="color: #FF9D00;padding-top: 5pt;font-size: 8pt;">*必须为jpg格式，最多18张</text>
 				</view>
 			</view>
 			<view class="view-content">
@@ -41,20 +36,23 @@
 			<view class="view-content">
 				<view class="label_title">业务类型</view>
 				<SearchTags :list="publishObj.onLineList" :active="activeOnLine" :singleType="true" @onClick="onLineListChange"></SearchTags>
-				<u-cell-group :border="false" style="border-bottom: 1px solid #DEDEDE;">
-					<u-cell-item title="转卖车辆" :value="selectCarInfo" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
+				<u-cell-group :border="false" class="cell_group">
+					<u-cell-item :title="carPubType === 1?'出租车辆':'转卖车辆'" :value="selectCarInfo" :title-style="publishObj.titleStyle"
+					 @click="showCar = true"></u-cell-item>
 				</u-cell-group>
 				<view class="label_title">车辆类型</view>
 				<SearchTags :list="publishObj.carType" :active="activeCarType" :singleType="true" @onClick="carTypeListChange"></SearchTags>
 				<view class="label_title">动力类型</view>
 				<SearchTags :list="publishObj.power" :active="activePower" :singleType="true" @onClick="powerChange"></SearchTags>
-				<u-form-item :label="carPubType === 1?'出租数量':'出售数量'" label-width="180rpx" style="border-bottom: 1px solid #ccc;">
+				<u-form-item :label-style="publishObj.titleStyle" :label="carPubType === 1?'出租数量':'出售数量'" label-width="180rpx"
+				 style="border-bottom: 1px solid #ccc;">
 					<u-input v-model="form.carnbumber" :clearable="false" :border="false" maxlength="10" />
-					<text class="middle-content-label">辆</text></u-form-item>
+					<text class="middle-content-label" style="font-size: 32rpx;">辆</text></u-form-item>
 				<view class="label_title">综合上牌时间</view>
 				<u-row style="padding-top: 16rpx;">
 					<u-col span="4">
-						<u-input v-model="form.firsttime" :border="true" :disabled="true" @click="showTimePicker('firsttime')" placeholder="" />
+						<u-input v-model="form.firsttime" :border="true" :disabled="true" @click="showTimePicker('firsttime')"
+						 placeholder="" />
 					</u-col>
 					<u-col span="4" style="padding: 0 40rpx;">
 						<view style="border-bottom: 1px solid #D9DEDF;"></view>
@@ -86,9 +84,9 @@
 					<u-input type="textarea" v-model="form.cardescribe" :border="true" placeholder="" />
 				</view>
 				<view class="zlcontent" v-if="carPubType === 1">
-					<view  style="margin: 10pt 0;">
+					<view style="margin: 10pt 0;">
 						<u-form-item label="押金">
-							<u-input v-model="form.yamoney" :clearable="false" class="input-radius" :border="true" placeholder="请输入" /><text
+							<u-input v-model="form.caryaprice" :clearable="false" class="input-radius" :border="true" placeholder="请输入" /><text
 							 style="position: absolute;right: 10px;">元</text>
 						</u-form-item>
 					</view>
@@ -119,32 +117,32 @@
 					</view>
 				</view>
 				<view class="zlcontent" v-else>
-				   <view class="zlcontent-mid price-list" v-for="(item,index) in form.sellCarPrice" :key='index'>
-					  <view style="font-size: 12pt;color: #000000;padding-bottom: 10pt;">
-						   <text>价格{{index+1}} </text>
-						   <view style="display: inline-block;width: 80%;text-align: right;" v-show="index>0">
+					<view class="zlcontent-mid price-list" v-for="(item,index) in form.sellCarPrice" :key='index'>
+						<view style="font-size: 12pt;color: #000000;padding-bottom: 10pt;">
+							<text>价格{{index+1}} </text>
+							<view style="display: inline-block;width: 80%;text-align: right;" v-show="index>0">
 								<u-icon name="trash" color="#6DD99B" size="40" @click="delPriceList(index)"></u-icon>
-						   </view>
-					    </view>
-					   <view>
-						<u-form :model="item" label-width="130">
-						 <u-form-item label="起售量">
-							  <u-input v-model="item.shoplow" type="number" :clearable="false" :border="true" placeholder="请输入"/>
-							  <text style="padding: 0 10pt;">至</text>
-							  <u-input v-model="item.shophigh" type="number" :clearable="false" :border="true" placeholder="请输入"/>
-							  <text style="padding-left: 15pt;">台</text>
-						 </u-form-item>
-						 <u-form-item label="价格">
-						 	 <u-input v-model="item.packprice" type="number" :clearable="false" :border="true" placeholder="请输入"/>
-							 <text style="position: absolute;right: 10px;">元/台</text>
-						 </u-form-item>
-						</u-form>	
-					   </view>
-				   </view>
-				   <view @click="addPrice" style="padding: 10pt 0;text-align: center;">
-				   <u-icon name="plus-circle-fill" color="#6DD99B" size="60"></u-icon>
-				   <view style="display: inline-block;vertical-align: middle;height: 30px;">添加价格</view>
-				   </view>
+							</view>
+						</view>
+						<view>
+							<u-form :model="item" label-width="130">
+								<u-form-item label="起售量">
+									<u-input v-model="item.shoplow" type="number" :clearable="false" :border="true" placeholder="请输入" />
+									<text style="padding: 0 10pt;">至</text>
+									<u-input v-model="item.shophigh" type="number" :clearable="false" :border="true" placeholder="请输入" />
+									<text style="padding-left: 15pt;">台</text>
+								</u-form-item>
+								<u-form-item label="价格">
+									<u-input v-model="item.packprice" type="number" :clearable="false" :border="true" placeholder="请输入" />
+									<text style="position: absolute;right: 10px;">元/台</text>
+								</u-form-item>
+							</u-form>
+						</view>
+					</view>
+					<view @click="addPrice" style="padding: 10pt 0;text-align: center;">
+						<u-icon name="plus-circle-fill" color="#6DD99B" size="60"></u-icon>
+						<view style="display: inline-block;vertical-align: middle;height: 30px;">添加价格</view>
+					</view>
 				</view>
 			</view>
 			<u-picker v-model="timeShow" mode="time" :end-year="today.year" :params="publishObj.params" @confirm="dataChange"></u-picker>
@@ -153,7 +151,7 @@
 			</view>
 		</view>
 		<u-popup v-model="showCar" mode="right" length="80%">
-			<CarList :max='3' @onClick="carChange" ></CarList>
+			<CarList :max='3' @onClick="carChange"></CarList>
 		</u-popup>
 		<Auth></Auth>
 	</view>
@@ -181,21 +179,21 @@
 				activeOnLine: 0,
 				activeCarType: 0,
 				activePower: 0,
-				showCar:false,
+				showCar: false,
 				form: {
 					isOneclickAndAdd: 2, //一键导入1  修改3  新增2
-					carbrand: '',//品牌
-					carmodel: '',//车系
-					carxinghao: '',//型号
-					cartype: '轿车',//车辆类型
-					power: '纯电动',//动力
-					onlineistaxi: 1,//业务类型
-					firsttime: '',//上牌
-					endtime:'',
-					firstkm: '',//公里
+					carbrand: '', //品牌
+					carmodel: '', //车系
+					carxinghao: '', //型号
+					cartype: '轿车', //车辆类型
+					power: '纯电动', //动力
+					onlineistaxi: 1, //业务类型
+					firsttime: '', //上牌
+					endtime: '',
+					firstkm: '', //公里
 					endkm: '',
-					carnbumber: '',//出售数量
-					cardescribe:'',//描述
+					carnbumber: '', //出售数量
+					cardescribe: '', //描述
 					displacement: '',
 					specification: '',
 					trunk: '',
@@ -205,26 +203,27 @@
 					SystemTag: [],
 					onephoto: [],
 					oneneishiphoto: [],
-					yamoney: '',
+					caryaprice: '',
 					rentCarPrice: [{
 						RentTime: '',
 						Rentprice: ''
 					}],
-					sellCarPrice:[{
-							shoplow:'',shophigh:'',packprice:''
-						}
-					],
+					sellCarPrice: [{
+						shoplow: '',
+						shophigh: '',
+						packprice: ''
+					}],
 				},
 				priceIndex: 0,
 				timeShow: false,
 				carPubType: 1,
-				timeName:'',
+				timeName: '',
 				today: {},
 				editId: '',
 				title: '',
-				selectCarInfo:'请选择车辆',
-				list:publishObj.leasePeriod,
-				show:false
+				selectCarInfo: '请选择车辆',
+				list: publishObj.leasePeriod,
+				show: false
 			}
 		},
 		components: {
@@ -233,11 +232,12 @@
 			CarList,
 		},
 		onLoad(option) {
-			let index = option.id;
 			let editId = option.editId;
-			this.editId = editId
+			if (editId) {
+				this.editId = editId
+			}
 		},
-		onShow() {
+		mounted() {
 			this.initStorage()
 			if (this.editId) {
 				this.editInit()
@@ -247,17 +247,71 @@
 				this.today = today
 			}
 		},
-		mounted() {
-			// this.getSelect()
-		},
 		methods: {
+			editInit() {
+				this.$u.api.ComparyRentCarEchoText({
+					IsRentAndSell: this.carPubType,
+					cartagid: this.editId
+				}).then(res => {
+					if (res.code === 200) {
+						this.form.isOneclickAndAdd = 3;
+						this.editSetStorage(res.object)
+					} else {
+						this.$u.toast(res.message);
+					}
+				})
+			},
+			editSetStorage(data) {
+				this.form = data;
+				this.form.id = data.tagid;
+				this.form.comparyid = data.comparyinviteid;
+				this.form.cartagistag = data.tagistagid;
+				this.selectCarInfo = data.carbrand+data.carmodel+data.carxinghao || '';
+				if(data.onlineistaxi){
+					this.activeOnLine = Number(data.onlineistaxi)-1;
+				}
+				publishObj.carType.forEach((item,index)=>{
+					if(item.text === data.cartype){
+						this.activeCarType = index
+					}
+				})
+				publishObj.power.forEach((item,index)=>{
+					if(item.text === data.power){
+						this.activePower = index
+					}
+				})
+				data.onephoto.forEach(item=>{
+					this.fileList.push({url:item})
+				})
+				data.oneneishiphoto.forEach(item=>{
+					this.fileList1.push({url:item})
+				})
+				if (this.carPubType === 1) {
+					let arr = [];
+					data.rentAndSellPriceList.forEach(item => {
+						arr.push({RentTime: item.rentCarTime,Rentprice: item.rentCarPrice})
+					})
+					if (arr.length > 0) {
+						this.form.rentCarPrice = arr;
+					}
+				 } else {
+					let sellCarPrice=[{shoplow: '',shophigh: '',packprice: ''}]
+					let arr = [];
+					data.rentAndSellPriceList.forEach(item => {
+						arr.push({shoplow: item.sellCarLowPrice,shophigh: item.sellCarHighPrice,packprice: item.sellCarPackPrice})
+					})
+					if (arr.length > 0) {
+						this.form.sellCarPrice = arr
+				}
+			   }
+			   
+			},
 			uploadChange(data, index, lists, name) {
 				this.form[name].push(data.object);
 				this.$u.toast(data.msg);
 			},
 			removeOne(index, lists, name) {
 				this.form[name].splice(index, 1);
-				console.log(this.form[name])
 			},
 			initStorage() {
 				this.today = uni.getStorageSync('today');
@@ -270,7 +324,7 @@
 			},
 			onLineListChange(obj) {
 				this.activeOnLine = obj.index;
-				this.form.onlineistaxi =obj.id;
+				this.form.onlineistaxi = obj.id;
 			},
 			carTypeListChange(obj) {
 				this.activeCarType = obj.index;
@@ -281,33 +335,28 @@
 				this.form.power = obj.text
 
 			},
-			showTimePicker(name){
+			showTimePicker(name) {
 				this.timeName = name;
 				this.timeShow = true;
 			},
-			dataChange(obj){
-				if(obj.year == this.today.year){
-					if (obj.month > this.today.month || obj.day > this.today.day){
-						return false
-					}
-				}
-				let companyDate = obj.year+"-"+obj.month;
+			dataChange(obj) {
+				let companyDate = obj.year + "-" + obj.month;
 				this.form[this.timeName] = companyDate;
 			},
-			carChange(obj){
-				if(obj.type === 1){
+			carChange(obj) {
+				if (obj.type === 1) {
 					this.selectCarInfo = obj.carbrand;
 					this.form.carbrand = obj.text;
 					this.form.carmodel = '';
 					this.form.carxinghao = '';
-				} else if(obj.type ===2){
-					this.selectCarInfo = obj.carbrand+'/'+obj.carmodel;
+				} else if (obj.type === 2) {
+					this.selectCarInfo = obj.carbrand + '/' + obj.carmodel;
 					this.form.carbrand = obj.text;
 					this.form.carmodel = obj.carmodel;
 					this.form.carxinghao = '';
-				}else{
+				} else {
 					this.showCar = false;
-					this.form =Object.assign(this.form,obj)
+					this.form = Object.assign(this.form, obj)
 				}
 			},
 			delList(index) {
@@ -326,52 +375,131 @@
 				this.show = true;
 			},
 			addPriceObj() {
-				console.log(this.form.rentCarPrice)
 				this.form.rentCarPrice.push({
 					RentTime: '',
 					Rentprice: ''
 				})
 			},
-			addPrice(){
+			addPrice() {
 				this.form.sellCarPrice.push({
-						shoplow:'',shophigh:'',packprice:''
-					}) 
+					shoplow: '',
+					shophigh: '',
+					packprice: ''
+				})
 			},
-			delPriceList(index){
-				if(this.form.sellCarPrice.length ===1){
-					  this.$u.toast('请至少填写一个价格')
-					  return
+			delPriceList(index) {
+				if (this.form.sellCarPrice.length === 1) {
+					this.$u.toast('请至少填写一个价格')
+					return
 				}
-				this.form.sellCarPrice.splice(index,1)
+				this.form.sellCarPrice.splice(index, 1)
 			},
-	        submitForm(){
-					let data = this.form;
-					let obj = {	cartype:data.cartype,power:data.power,firsttime:data.firsttime,firstkm:data.firstkm,endkm:data.endkm};
-					this.$u.api.getSystemTag(obj).then(res=>{
-						if(res.code === 200){
-							this.form.SystemTag = res.systemTagVo;
-							let obj = this.form;
-							if(this.carPubType === 1) {
-								obj.businesstype = 3;
-								obj.mainbusinesstype = 1;
+			submitForm() {
+				let flag = this.verifyForm();
+				if (!flag) {
+					return false
+				}
+				let data = this.form;
+				let obj = {
+					cartype: data.cartype,
+					power: data.power,
+					firsttime: data.firsttime,
+					firstkm: data.firstkm,
+					endkm: data.endkm
+				};
+				this.$u.api.getSystemTag(obj).then(res => {
+					if (res.code === 200) {
+						this.form.SystemTag = res.systemTagVo;
+						let obj = this.form;
+						if (this.carPubType === 1) {
+							obj.businesstype = 3;
+							obj.mainbusinesstype = 1;
+						} else {
+							obj.businesstype = 1;
+							obj.mainbusinesstype = 3;
+						}
+						this.$u.api.saveMainBusiness(obj).then(res => {
+							if (res.code === 200) {
+								uni.reLaunch({
+									url: '/pages/company/myPublish/myPublish?index=0'
+								});
 							} else {
-								obj.businesstype = 1;
-								obj.mainbusinesstype = 3;
+								this.$u.toast(res.msg);
 							}
-							this.$u.api.saveMainBusiness(obj).then(res=>{
-								if(res.code === 200){
-									 uni.reLaunch({
-									     url: '/pages/company/myPublish/myPublish?index=0'
-									 });
-								}else {
-									 this.$u.toast(res.msg);
-								}
-							})
-						}else {
-							 this.$u.toast(res.msg);
+						})
+					} else {
+						this.$u.toast(res.msg);
+					}
+				})
+			},
+			verifyForm() {
+				let type = this.carPubType;
+				if (this.form.onephoto.length === 0 || this.form.oneneishiphoto.length === 0) {
+					this.$u.toast('请上传图片');
+					return false
+				}
+				if (this.form.carbrand === '') {
+					this.$u.toast('请选择车辆品牌');
+					return false
+				}
+				if (this.form.carnbumber === '') {
+					let title = type === 1 ? '出租数量' : '出售数量'
+					this.$u.toast('请填写' + title);
+					return false
+				}
+				if (this.form.firsttime === '' || this.form.endtime === "") {
+					this.$u.toast('请填写综合上牌时间');
+					return false
+				}
+				if (this.form.firstkm === '' || this.form.endkm === "") {
+					this.$u.toast('请填写综合行驶里程');
+					return false
+				}
+				if (this.form.cardescribe === '') {
+					this.$u.toast('请填写车辆况描述');
+					return false
+				}
+				if (type === 1) {
+					if (this.form.caryaprice === '') {
+						this.$u.toast('请填写押金');
+						return false
+					}
+					let obj = this.form.rentCarPrice[0];
+					if (obj.RentTime === '' || obj.Rentprice === '') {
+						this.$u.toast('请至少填写一个价格');
+						return false
+					}
+					let priceList = this.form.rentCarPrice;
+					let flag = true;
+					priceList.forEach((item, index) => {
+						if (item.RentTime === '' || item.Rentprice === '') {
+							this.$u.toast('第' + (index + 1) + '条价数据为空或不完整,请删除后提交审核')
+							flag = false
 						}
 					})
-			},
+					if (!flag) {
+						return false
+					}
+				} else {
+					let obj = this.form.sellCarPrice[0];
+					if (obj.shoplow === '' || obj.shophigh === '' || obj.packprice === '') {
+						this.$u.toast('请填写完整');
+						return
+					}
+					let priceList = this.form.sellCarPrice;
+					let flag = true;
+					priceList.forEach((item, index) => {
+						if (item.shoplow === '' || item.shophigh === '' || item.packprice === '') {
+							this.$u.toast('第' + (index + 1) + '条价格数据为空或不完整,请删除后提交审核')
+							flag = false
+						}
+					})
+					if (!flag) {
+						return false
+					}
+				}
+				return true
+			}
 		}
 	}
 </script>
@@ -407,13 +535,21 @@
 	}
 
 	.zlcontent-mid {
-	    padding: 5pt 10pt 0;
-	    margin-top: 10pt;
-	    border: 1px solid #ccc;
+		padding: 5pt 10pt 0;
+		margin-top: 10pt;
+		border: 1px solid #ccc;
 	}
 
 	/deep/ .u-border-bottom:after {
 		border-bottom-width: 0;
+	}
+
+	.cell_group {
+		border-bottom: 1px solid #DEDEDE;
+
+		/deep/ .u-cell {
+			padding: 13px 0px
+		}
 	}
 
 	.label_title {
