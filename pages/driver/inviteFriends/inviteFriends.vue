@@ -9,6 +9,7 @@
 		</u-navbar>
 		<view class="flex_view" style="margin-top: -50px;">
 			<view class="bgImg-common oneImg">
+			<!-- <u-image src="../../../static/toutu@3x.png" height="180rpx" border-radius="8"></u-image> -->
 				<view class="bgImg-common yqhy" @click="inviteFriends">立即邀请好友助力</view>
 			</view>
 			<view style="padding: 0 10pt;">
@@ -160,17 +161,17 @@
 	}
 	.oneImg {
 		background-image: url(../../../static/toutu@3x.png);
-		min-height: 618pt;
+		min-height: 557px;
 		position: relative;
 		// background-size: cover;
 	}
 	.yqhy {
 		background-image: url(../../../static/yuanjiaojuxing@3x.png);
 		min-height: 13%;
-		width: 70%;
+		width: 66%;
 		position: absolute;
-		top: 56%;
-		left: 16%;
+		top: 54%;
+		left: 19%;
 		text-align: center;
 		line-height: 95px;
 		color: #FFFFFF;
