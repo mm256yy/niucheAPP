@@ -79,7 +79,7 @@
 				 style="height: 180px;">
 					<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 						<view style="display: flex;justify-content: space-around;padding: 0 10px;">
-							<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info.comparymainid)"
+							<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info)"
 							 style="" class="swiper_xcfl">
 								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
 								<view class="swiper_price">¥{{info.packPrice}}/月</view>
@@ -376,9 +376,10 @@
 					})
 				}
 			},
-			toView(id) {
+			toView(item) {
 				this.$u.route('/pages/index/driver/components/index/carRentDetail', {
-					id: id
+					id: item.comparymainid,
+					tags: item.params
 				})
 			}
 		}
