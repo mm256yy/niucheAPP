@@ -124,7 +124,9 @@
 						 this.$u.toast(res.msg);
 					}
 				})
+				if(this.max === 3) {
 					this.step = 3
+				}
 			},
 			hidePoper(obj){
 				console.log(obj)
@@ -132,15 +134,6 @@
 				this.form.type = 3
 				let data = Object.assign(this.form,obj)
 				 this.$emit("onClick",data)
-			},
-			toNext(v) {
-				if (this.source === '1') {
-					this.$u.route('/pages/company/lease/lease', v)
-				} else if (this.source === '2') {
-					this.$u.route('/pages/company/recruit/recruit', v)
-				} else if (this.source === '3') {
-					this.$u.route('/pages/company/myPublish/recruitEdit/other', v)
-				}
 			},
 			onPageScroll(e) {
 				this.scrollTop = e.scrollTop;

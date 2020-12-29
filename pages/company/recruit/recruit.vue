@@ -2,15 +2,19 @@
 	<view>
 		<u-navbar back-text="返回" back-icon-size="0" title="招募发布" :background="backgroundCom" :back-text-style="backTextStyle"
 		 height='44' title-color="#FFFFFF"></u-navbar>
+		 <view style="padding: 0 10pt;">
+		 	 <text style="font-size:10pt;">* 请注意本页内容都是必填项！未填写不能提交审核</text>
+		 </view>
 		<view class="view-content">
 			<view class="">
 				<u-form :model="form" ref="uForm" :error-type="errorType" label-width="160" :border-bottom="false">
-					<u-form-item :label-style="publishObj.titleStyle" label="招聘标题" label-width="180rpx" style="border-bottom: 1px solid #DEDEDE;">
+					<u-form-item :label-style="publishObj.titleStyle" prop="title" label="招聘标题" label-width="180rpx"class="cell_group">
 						<u-input v-model="form.title" :clearable="false" placeholder="请输入标题" :border="false" maxlength="10" />
 						<!-- <text class="middle-content-label" style="font-size: 32rpx;">辆</text> -->
 					</u-form-item>
 					<view style="padding: 8px 0;color: #666666;">例：高薪急聘网约车司机福利超多</view>
-					<u-form-item :label-style="publishObj.titleStyle" label="岗位名称" label-width="180rpx" style="border-bottom: 1px solid #DEDEDE;">
+					<u-form-item :label-style="publishObj.titleStyle" label="岗位名称" label-width="180rpx" prop="workname" 
+					class="cell_group">
 						<u-input v-model="form.workname" :disabled="true" placeholder="请选择岗位名称" :border="false" @click="show = true"
 						 maxlength="10" />
 						<u-icon name="arrow-right" color="#333333" size="28"></u-icon>
@@ -27,22 +31,22 @@
 							<u-input v-model="form.highmonthprice" maxlength="7" :border="true" placeholder="请输入最高值" />
 						</u-col>
 					</u-row>
-					<u-form-item :label-style="publishObj.titleStyle" label="招聘人数" prop="peoplenumber" label-width="180rpx" style="border-bottom: 1px solid #DEDEDE;">
+					<u-form-item :label-style="publishObj.titleStyle" label="招聘人数" prop="peoplenumber" label-width="180rpx" 
+					class="cell_group">
 						<u-input v-model="form.peoplenumber" maxlength="7" placeholder="请输入招聘人数" :border="false" />
 						<text>人</text>
 					</u-form-item>
-					<view class="label_title">车辆况描述</view>
-					<view style="padding-top: 16rpx;">
+					<u-form-item label="车辆况描述" prop="worktext" label-position="top">
 						<u-input v-model="form.worktext" class="input_textarea" type="textarea" maxlength="1000" :border="true"
 						 placeholder="请输入(字数1000字以内) " />
-					</view>
+					</u-form-item>
 					<u-cell-group :border="false" class="cell_group">
 						<u-cell-item title="工作车辆" :value="selectCarInfo" :title-style="publishObj.titleStyle" @click="showCar = true"></u-cell-item>
 					</u-cell-group>
 				</u-form>
 			</view>
 		</view>
-		<view class="view-content">
+		<view class="view-content" style="margin-top: 20px;">
 			<view class="top-content-upload">
 				<u-upload :custom-btn="true" :action="action" max-count="1" ref="upload" @on-success='uploadChange' index="onephoto"
 				 upload-text="" @on-remove="removeOne" :file-list="fileList" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
@@ -60,7 +64,6 @@
 				<u-button type="success" class="btn-agree" style="width: 100%;" @click="toSubmit">提交审核</u-button>
 			</view>
 		</view>
-		<u-select v-model="showSelect" :list="carmodel" label-name='carseriesname' value-name='carseriesid' @confirm="actionCallback"></u-select>
 		<u-action-sheet :list="list" v-model="show" @click="actionSheetCallback"></u-action-sheet>
 		<u-modal v-model="showTips" @confirm="tipsConfirm" confirm-text="我知道了">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
@@ -92,13 +95,14 @@
 		data() {
 			return {
 				publishObj: publishObj,
-				selectCarInfo:'',
+				selectCarInfo:'',//工作车辆title
 				showCar:false,
 				showSelect: false,
 				backTextStyle: {
 					'color': '#ffffff'
 				},
 				form: {
+					title:'',
 					carbrand: '',
 					carmodel: '',
 					workname: '',
@@ -111,12 +115,10 @@
 				action: action,
 				fileList: [],
 				rules: {
-					carmodel: requiredRule,
-					carbrand: requiredRule,
-					workname: requiredRule,
+					title: requiredRule,
+					peoplenumber: requiredRule,
 					worktext: requiredRule,
 				},
-				carmodel: [],
 				list: [{
 					value: '1',
 					text: '网约车司机'
@@ -125,28 +127,21 @@
 					text: '出租车司机'
 				}],
 				show: false,
-				errorType: [
-					'message'
-				],
+				errorType: ['message'],
 				showTips: false,
 				editId: '',
-				carPubPosition: {}
 			}
 		},
 		onReady() {
-			// this.$refs.uForm.setRules(this.rules);
+			this.$refs.uForm.setRules(this.rules);
 		},
 		onLoad(option) {
-			let index = option.id;
-			if (index) {
-				this.initStorage()
-				this.form.carbrand = option.text;
-				this.getSelectFirst(index)
-			}
 			let editId = option.editId;
-			this.editId = editId
+			if (editId) {
+			  this.editId = editId
+			}
 		},
-		onShow() {
+		mounted() {
 			if (this.editId) {
 				this.editInit()
 			}
@@ -164,33 +159,6 @@
 					this.showCar = false;
 				}
 			},
-			initStorage() {
-				this.carPubPosition = uni.getStorageSync('carPubPosition');
-				this.editId = uni.getStorageSync('inviteid');
-				this.form = this.carPubPosition;
-				if (this.carPubPosition.fivephoto) {
-					this.fileList = [];
-					this.fileList.push({
-						url: this.form.fivephoto
-					})
-				}
-			},
-			setStorage(data) {
-				uni.setStorageSync('carPubPosition', data);
-			},
-			getSelectFirst(id) {
-				this.$u.api.getCarSystem({
-					carbrandid: id
-				}).then(res => {
-					if (res.code === 200) {
-						this.carmodel = res.object;
-					} else {
-						this.$u.toast(res.msg);
-					}
-				}).catch(res => {
-					this.$u.toast(res.msg)
-				})
-			},
 			editInit() {
 				let id = this.editId;
 				if (id) {
@@ -199,7 +167,6 @@
 					}).then(res => {
 						if (res.code === 200) {
 							let data = res.object;
-							uni.setStorageSync('inviteid', id)
 							this.form = data;
 							if (data.fivephoto) {
 								this.fileList = [];
@@ -207,16 +174,15 @@
 									url: this.form.fivephoto
 								})
 							}
-							this.setStorage(data)
 						} else {
 							this.$u.toast(res.msg);
 						}
 					}).catch(res => {
 						this.$u.toast(res.msg)
 					})
-
 				}
 			},
+			
 			actionCallback(index) {
 				let val = index[0].label;
 				this.form.carmodel = val;
@@ -228,22 +194,6 @@
 			removeOne(index, lists, name) {
 				this.fileList.splice(index, 1)
 				this.form.fivephoto = '';
-			},
-			toCarList() {
-				this.form.carmodel = ''
-				this.setStorage(this.form)
-				this.$u.route('/pages/company/lease/carList/carList', {
-					source: 2
-				})
-
-			},
-			setInfo() {
-				let pubUpload = this.carPubUpload;
-				let carPubPosition = this.carPubPosition;;
-			},
-			actionSheetCallback(index) {
-				let value = this.list[index].text;
-				this.form.workname = value
 			},
 			saveForm() {
 				let obj = this.form;
@@ -270,8 +220,6 @@
 				})
 			},
 			clearStorage() {
-				uni.removeStorageSync('inviteid');
-				uni.removeStorageSync('carPubPosition');
 				this.form = {
 					carbrand: '',
 					carmodel: '',
@@ -290,9 +238,17 @@
 					index: 1
 				});
 			},
+			actionSheetCallback(index) {
+				let value = this.list[index].text;
+				this.form.workname = value
+			},
 			toSubmit() {
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
+						if (this.form.workname === '') {
+							this.$u.toast('请选择岗位名称')
+							return
+						}
 						if (this.form.lowmonthprice === '') {
 							this.$u.toast('请填写月薪最低值')
 							return
@@ -307,15 +263,15 @@
 							this.$u.toast('月薪填写有误');
 							return
 						}
-						if (this.form.peoplenumber === '') {
-							this.$u.toast('请填写招聘人数')
+						if (this.form.carmodel === '' || this.form.carbrand) {
+							this.$u.toast('请选择工作车辆')
 							return
 						}
 						if (this.form.fivephoto === '') {
 							this.$u.toast('请上传图片')
 							return
 						}
-						let id = uni.getStorageSync('inviteid')
+						let id = this.editId;
 						if (id) {
 							this.saveFormEdit()
 						} else {
@@ -340,7 +296,7 @@
 	/deep/ .u-border-bottom:after {
 		border-bottom-width: 0;
 	}
-
+    
 	.label_title {
 		padding-top: 20rpx;
 		color: #111111;
@@ -358,7 +314,7 @@
 	}
 
 	.view-content {
-		margin-top: 20pt;
+		// margin-top: 20pt;
 		padding: 0 10pt;
 	}
 
