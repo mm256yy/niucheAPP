@@ -2,19 +2,18 @@
 	<view>
 		<u-navbar back-text="返回" back-icon-size="0" title="招募发布" :background="backgroundCom" :back-text-style="backTextStyle"
 		 height='44' title-color="#FFFFFF"></u-navbar>
-		 <view style="padding: 0 10pt;">
-		 	 <text style="font-size:10pt;">* 请注意本页内容都是必填项！未填写不能提交审核</text>
-		 </view>
+		<view style="padding: 0 10pt;">
+			<text style="font-size:10pt;">* 请注意本页内容都是必填项！未填写不能提交审核</text>
+		</view>
 		<view class="view-content">
 			<view class="">
 				<u-form :model="form" ref="uForm" :error-type="errorType" label-width="160" :border-bottom="false">
-					<u-form-item :label-style="publishObj.titleStyle" prop="title" label="招聘标题" label-width="180rpx"class="cell_group">
+					<u-form-item :label-style="publishObj.titleStyle" prop="title" label="招聘标题" label-width="180rpx" class="cell_group">
 						<u-input v-model="form.title" :clearable="false" placeholder="请输入标题" :border="false" maxlength="10" />
 						<!-- <text class="middle-content-label" style="font-size: 32rpx;">辆</text> -->
 					</u-form-item>
 					<view style="padding: 8px 0;color: #666666;">例：高薪急聘网约车司机福利超多</view>
-					<u-form-item :label-style="publishObj.titleStyle" label="岗位名称" label-width="180rpx" prop="workname" 
-					class="cell_group">
+					<u-form-item :label-style="publishObj.titleStyle" label="岗位名称" label-width="180rpx" prop="workname" class="cell_group">
 						<u-input v-model="form.workname" :disabled="true" placeholder="请选择岗位名称" :border="false" @click="show = true"
 						 maxlength="10" />
 						<u-icon name="arrow-right" color="#333333" size="28"></u-icon>
@@ -31,8 +30,7 @@
 							<u-input v-model="form.highmonthprice" maxlength="7" :border="true" placeholder="请输入最高值" />
 						</u-col>
 					</u-row>
-					<u-form-item :label-style="publishObj.titleStyle" label="招聘人数" prop="peoplenumber" label-width="180rpx" 
-					class="cell_group">
+					<u-form-item :label-style="publishObj.titleStyle" label="招聘人数" prop="peoplenumber" label-width="180rpx" class="cell_group">
 						<u-input v-model="form.peoplenumber" maxlength="7" placeholder="请输入招聘人数" :border="false" />
 						<text>人</text>
 					</u-form-item>
@@ -71,7 +69,7 @@
 			</view>
 		</u-modal>
 		<u-popup v-model="showCar" mode="right" length="80%">
-			<CarList :max='2' @onClick="carChange" ></CarList>
+			<CarList :max='2' @onClick="carChange"></CarList>
 		</u-popup>
 		<auth></auth>
 	</view>
@@ -95,14 +93,14 @@
 		data() {
 			return {
 				publishObj: publishObj,
-				selectCarInfo:'',//工作车辆title
-				showCar:false,
+				selectCarInfo: '', //工作车辆title
+				showCar: false,
 				showSelect: false,
 				backTextStyle: {
 					'color': '#ffffff'
 				},
 				form: {
-					title:'',
+					title: '',
 					carbrand: '',
 					carmodel: '',
 					workname: '',
@@ -114,11 +112,7 @@
 				},
 				action: action,
 				fileList: [],
-				rules: {
-					title: requiredRule,
-					peoplenumber: requiredRule,
-					worktext: requiredRule,
-				},
+
 				list: [{
 					value: '1',
 					text: '网约车司机'
@@ -132,13 +126,10 @@
 				editId: '',
 			}
 		},
-		onReady() {
-			this.$refs.uForm.setRules(this.rules);
-		},
 		onLoad(option) {
 			let editId = option.editId;
 			if (editId) {
-			  this.editId = editId
+				this.editId = editId
 			}
 		},
 		mounted() {
@@ -147,13 +138,13 @@
 			}
 		},
 		methods: {
-			carChange(obj){
-				if(obj.type === 1){
+			carChange(obj) {
+				if (obj.type === 1) {
 					this.selectCarInfo = obj.carbrand;
 					this.form.carbrand = obj.text;
 					this.form.carmodel = '';
-				} else{
-					this.selectCarInfo = obj.carbrand+'/'+obj.carmodel;
+				} else {
+					this.selectCarInfo = obj.carbrand + '/' + obj.carmodel;
 					this.form.carbrand = obj.text;
 					this.form.carmodel = obj.carmodel;
 					this.showCar = false;
@@ -167,6 +158,7 @@
 					}).then(res => {
 						if (res.code === 200) {
 							let data = res.object;
+							this.selectCarInfo = data.carbrand + "/" + data.carmodel;
 							this.form = data;
 							if (data.fivephoto) {
 								this.fileList = [];
@@ -182,7 +174,7 @@
 					})
 				}
 			},
-			
+
 			actionCallback(index) {
 				let val = index[0].label;
 				this.form.carmodel = val;
@@ -221,6 +213,7 @@
 			},
 			clearStorage() {
 				this.form = {
+					title: '',
 					carbrand: '',
 					carmodel: '',
 					workname: '',
@@ -243,42 +236,51 @@
 				this.form.workname = value
 			},
 			toSubmit() {
-				this.$refs.uForm.validate(valid => {
-					if (valid) {
-						if (this.form.workname === '') {
-							this.$u.toast('请选择岗位名称')
-							return
-						}
-						if (this.form.lowmonthprice === '') {
-							this.$u.toast('请填写月薪最低值')
-							return
-						}
-						if (this.form.highmonthprice === '') {
-							this.$u.toast('请填写月薪最高值')
-							return
-						}
-						let startPrice = Number(this.form.lowmonthprice);
-						let endPrice = Number(this.form.highmonthprice);
-						if (startPrice > endPrice) {
-							this.$u.toast('月薪填写有误');
-							return
-						}
-						if (this.form.carmodel === '' || this.form.carbrand) {
-							this.$u.toast('请选择工作车辆')
-							return
-						}
-						if (this.form.fivephoto === '') {
-							this.$u.toast('请上传图片')
-							return
-						}
-						let id = this.editId;
-						if (id) {
-							this.saveFormEdit()
-						} else {
-							this.saveForm()
-						}
-					}
-				})
+				if (this.form.title === '') {
+					this.$u.toast('请输入招聘标题')
+					return
+				}
+				if (this.form.workname === '') {
+					this.$u.toast('请选择岗位名称')
+					return
+				}
+				if (this.form.lowmonthprice === '') {
+					this.$u.toast('请填写月薪最低值')
+					return
+				}
+				if (this.form.highmonthprice === '') {
+					this.$u.toast('请填写月薪最高值')
+					return
+				}
+				let startPrice = Number(this.form.lowmonthprice);
+				let endPrice = Number(this.form.highmonthprice);
+				if (startPrice > endPrice) {
+					this.$u.toast('月薪填写有误');
+					return
+				}
+				if (this.form.peoplenumber === '') {
+					this.$u.toast('请填写招聘人数')
+					return
+				}
+				if (this.form.worktext === '') {
+					this.$u.toast('请填写车辆描述')
+					return
+				}
+				if (this.form.carmodel === '' || this.form.carbrand === "") {
+					this.$u.toast('请选择工作车辆')
+					return
+				}
+				if (this.form.fivephoto === '') {
+					this.$u.toast('请上传图片')
+					return
+				}
+				let id = this.editId;
+				if (id) {
+					this.saveFormEdit()
+				} else {
+					this.saveForm()
+				}
+
 			},
 		}
 	}
@@ -296,7 +298,7 @@
 	/deep/ .u-border-bottom:after {
 		border-bottom-width: 0;
 	}
-    
+
 	.label_title {
 		padding-top: 20rpx;
 		color: #111111;
