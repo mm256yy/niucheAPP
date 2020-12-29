@@ -54,7 +54,7 @@
 					</view>
 				</view>
 				<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
-					<view class="scroll-view-item_H" @click="toView(item.comparymainid)" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in lowPriceList"
+					<view class="scroll-view-item_H" @click="toView(item)" :style="{marginLeft:index==0?'10px':0}" v-for="(item, index) in lowPriceList"
 					 :key="item.comparymainid">
 						<view style="background: #FFFFFF;">
 							<u-image :src="item.photourl" height="166rpx" border-radius="8"></u-image>
