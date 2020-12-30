@@ -63,7 +63,11 @@
 				this.$u.api.haveIs().then(res=>{
 					if(res.code === 200){
 						 this.num = res.object.titlenum;
-						 this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm');
+						 if(res.object.recentlytime){
+						 	this.time = format(res.object.recentlytime, 'yyyy-MM-dd HH:mm'); 
+						 }else{
+						 	this.time="";
+						 }
 					}else {
 						 this.$u.toast(res.msg);
 					}

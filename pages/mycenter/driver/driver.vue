@@ -48,7 +48,7 @@
 				</view>
 				<u-row class="my_title">
 					<u-col span="4">我的发布</u-col>
-					<u-col span="8" style="text-align: right;color: rgb(252, 187, 48);font-size: 14px;" @click="toPublishPage">发布需求</u-col>
+					<u-col span="8" style="text-align: right;color: rgb(252, 187, 48);font-size: 16px;" @click="toPublishPage">发布需求</u-col>
 				</u-row>
 				<view class="bgf">
 					<u-cell-group >

@@ -70,6 +70,7 @@
 					this.$u.route('/pages/driver/drivingLicense/drivingLicense')
 				}
 			},
+			//初始化弹窗
 			init() {
 				let token = uni.getStorageSync('token');
 				let curThemeType = uni.getStorageSync('curThemeType');
