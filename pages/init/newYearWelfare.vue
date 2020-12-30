@@ -43,7 +43,7 @@
 		data() {
 			return {
 				background: {
-					'background-image': 'linear-gradient(to bottom, #000000 36%,#ffffff 0%)'
+					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				backgroundCover: "linear-gradient(153deg, #DB001D 0%, #FA3401 100%)",
 				list: [],
@@ -127,7 +127,8 @@
 		display: inline-block;
 		padding: 2px 4px;
 		font-size: 12px;
-		margin-right: 5px;
+		margin-right: 6px;
+		margin-bottom: 6px;
 		background: linear-gradient(270deg, #FFC400 0%, #FFB200 54%, #FF9900 100%);
 		color: #FFFFFF;
 	}

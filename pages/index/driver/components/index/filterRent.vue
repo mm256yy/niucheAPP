@@ -330,28 +330,28 @@
 			},
 			radioGroupChangeAge(e){
 				if(this.carage == '1') {
-					this.form.startPriceid = '';
-					this.form.endPriceid = '';
+					this.form.startCarAge = '';
+					this.form.endCarAge = '';
 					this.caragekey = '不限';
 				}
 				if(this.carage == '2') {
-					this.form.startPriceid = '';
-					this.form.endPriceid = '1';
+					this.form.startCarAge = '';
+					this.form.endCarAge = '1';
 					this.caragekey = '1年内';
 				}
 				if(this.carage == '3') {
-					this.form.startPriceid = '1';
-					this.form.endPriceid = '3';
+					this.form.startCarAge = '1';
+					this.form.endCarAge = '3';
 					this.caragekey = '1年-3年';
 				}
 				if(this.carage == '4') {
-					this.form.startPriceid = '3';
-					this.form.endPriceid = '5';
+					this.form.startCarAge = '3';
+					this.form.endCarAge = '5';
 					this.caragekey = '3年-5年';
 				}
 				if(this.carage == '5') {
-					this.form.startPriceid = '5';
-					this.form.endPriceid = '';
+					this.form.startCarAge = '5';
+					this.form.endCarAge = '';
 					this.caragekey = '5年以上';
 				}
 				this.add()

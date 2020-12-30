@@ -2,18 +2,16 @@
 	<view> 
 		<CollectDriver ref="collectRef" v-if='curThemeType ==="driver"'></CollectDriver>
 		<CollectCompany ref="collectRef" v-else></CollectCompany>
-		<Auth></Auth>
 	</view>
 </template>
 
 <script>
 import 	CollectCompany from './company/company.vue'
 import 	CollectDriver from './driver/driver.vue'
-import Auth from '../../components/auth.vue'
 import {dirverPages,companyPages} from '@/utils/tabbar.js'
 export default {
 	components:{
-		CollectCompany,CollectDriver,Auth
+		CollectCompany,CollectDriver
 	},
 	onShow() {
 		let type = uni.getStorageSync('curThemeType');
