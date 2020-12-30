@@ -292,22 +292,22 @@
 				this.showAge = false;
 			},
 			toggleKm(){
+				this.show = !this.showKm;
 				this.showKm = !this.showKm;
 				this.showPrice = false;
 				this.showAge = false;
-				this.show = !this.show;
 			},
 			togglePrice(){
+				this.show = !this.showPrice;
 				this.showPrice = !this.showPrice;
 				this.showKm = false;
 				this.showAge = false;
-				this.show = !this.show;
 			},
 			toggleAge(){
+				this.show = !this.showAge;
 				this.showAge = !this.showAge;
 				this.showPrice = false;
 				this.showKm = false;
-				this.show = !this.show;
 			},
 			getDataKm(index) {
 				this.currentKm = index;

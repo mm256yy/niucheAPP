@@ -64,7 +64,6 @@
 <script>
 	import searchTags from '@/components/searchTags.vue'
 	import {
-		action,
 		publishObj
 	} from '@/utils/constant.js'
 	export default {
