@@ -6,7 +6,7 @@
 	   <view class="view-content">
 	   		   <view class="name">{{addkey}}</view>
 	   		   <view style="width: 100%;height: 20rpx;background: #f5f5f5;"></view>
-	   		   <view style="position: absolute;top: 400rpx;left: 0;z-index: 100;width: 100%;">
+	   		   <view style="position: absolute;top: 462rpx;left: 0;z-index: 100;width: 100%;">
 	   			   <view v-for="(item, index) in list" :key="index" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
 	   			   border-bottom: 2rpx solid rgba(0,0,0,0.03);">
 	   			   			   <view style="font-size: 32rpx;color: #333;">{{item.brandname}}</view>
@@ -50,8 +50,17 @@
 	   					</u-checkbox>
 	   				</u-checkbox-group> -->
 	   			</u-form-item>
+				<u-form-item label="车龄选择" label-position="top">
+					<search-tags :list="publishObj.ageList" :active="currentAge" :singleType="true" @onClick="getDataAge"></search-tags>
+					<!-- <u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
+						<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
+							{{ item.name }}
+						</u-checkbox>
+					</u-checkbox-group> -->
+				</u-form-item>
 	   		  </u-form>
 	   </view>
+	   <view style="width: 100%;height: 140rpx;"></view>
 		<view class="bottom">
 			<view class="reset">
 				<u-icon name="reload" color="#5D6671" size="28"></u-icon>
@@ -118,7 +127,12 @@
 				caragekey: '',
 				kmkey: {
 					text:''
-				}
+				},
+				list: [],
+				currentType: -1,
+				currentCar: -1,
+				currentPower: -1,
+				currentAge: -1
 			}
 		},
 		mounted() {
@@ -131,6 +145,80 @@
 			this.select()
 		},
 		methods: {
+			getDataType(obj) {
+				this.currentType = obj.index;
+				this.form.businessType = obj.index + 1;
+				this.businessType =  obj.text;
+				this.select()
+				this.add()
+			},
+			getDataCar(item) {
+				this.arrCar.push(item);
+				this.cartype = [];
+				this.arrCar.map(item=>{
+				   if(item.checked == true){
+				   	this.cartype.push(item.text);
+				   }
+				})
+				let cartype = new Set(this.cartype);
+				this.cartype = Array.from(cartype);
+				this.form.cartype = this.cartype.join(',');
+				this.select()
+				this.add()
+			},
+			getDataPower(item) {
+				this.arrPower.push(item);
+				this.power = [];
+				this.arrPower.map(item=>{
+				   if(item.checked == true){
+				   	this.power.push(item.text);
+				   }
+				})
+				let power = new Set(this.power);
+				this.power = Array.from(power);
+				this.form.power = this.power.join(',');
+				this.select()
+				this.add()
+			},
+			add() {
+				this.addkey = this.businessType +(this.form.cartype?',':'') + this.form.cartype
+				+ (this.form.power?',':'') + this.form.power
+			},
+			reset() {
+				this.currentType = -1;
+				console.log(this.publishObj.onLineList)
+				this.publishObj.carType.map( item => {
+				  item.checked=false;
+				});
+				this.publishObj.power.map( item => {
+				  item.checked=false;
+				});
+				this.carage='';
+				this.addkey = '不限';
+				this.businessTypekey='不限';
+				this.carbrandkey='';
+				this.cartypekey='';
+				this.powerkey='';
+				this.packpricekey={
+					text:''
+				};
+				this.caragekey='';
+				this.kmkey={
+					text:''
+				};
+				this.select()
+			},
+			keyup() {
+				if(this.value != ''){
+					this.$u.api.brandList({initialOrBrandName: this.value}).then(res=>{
+						if(res.code === 200){
+							this.list = res.object; 
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
 			reset() {
 				this.form={
 				  businesstype: '',

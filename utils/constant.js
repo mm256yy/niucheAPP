@@ -24,7 +24,7 @@ export const publishObj = {
 	params: {year: true,month: true,day: false,hour: false,minute: false,second: false},
 	//租赁周期
 	leasePeriod: [{id: '1',text: '1个月',checked:false},{id: '2',text: '3个月',checked:false}, {id: '3',text: '6个月',checked:false}, {id: '4',text: '12个月',checked:false}],
-	
+	ageList:[{id: '1',text: '不限',checked:false },{id: '2',text:'1年内',checked:false },{id: '3',text:'1年-3年',checked:false },{id: '4',text:'3年-5年',checked:false },{id: '5',text:'5年以上',checked:false }]
 	
 	
 }
