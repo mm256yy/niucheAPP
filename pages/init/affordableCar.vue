@@ -7,7 +7,7 @@
 					<load-refresh ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000" color="#04C4C4"
 					 heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
 					 @refresh="refresh">
-						<view slot="content-list" >
+						<view slot="content-list">
 							<u-image src="../../static/djhc.png" height="60vh" border-radius="0" width="100%"></u-image>
 							<view @click="toView(item.comparymainid)" v-for="(item,index) in list" :key="index" class="list">
 								<view class="list_head u-line-2">

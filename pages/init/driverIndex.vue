@@ -93,15 +93,15 @@
 				</swiper>
 			</view>
 			<view class="xcfl" style="padding-bottom: 40pt;">
-				<view class="xcfl_title">优质商家推荐</view>
+				<view class="xcfl_title">优质租赁公司推荐</view>
 				<view class="xcfl_link">
-					<text>好商家，租车安心首选</text>
+					<text>好租赁公司，租车安心首选</text>
 				</view>
 				<view style="padding:10px 0px;margin:0 15px;border-bottom: 0.5px solid #E0E0E0;" v-for="(item,index) in companyList" >
 					<u-row >
 						<u-col span="4" @click="toShopPage(item.userMainId)">
 							<view style="background: #FFFFFF;">
-								<u-image :src="item.companyLogoPhoto" height="180rpx" border-radius="8"></u-image>
+								<u-image :src="item.companyLogoPhoto" height="180rpx" mode="scaleToFill" border-radius="8"></u-image>
 							</view>
 							
 						</u-col>
@@ -267,14 +267,6 @@
         "companyIntro": "杭州蓝鲸智享汽车有限公司是T3出行旗下合资企业，专注于在出行领域提供专业化的网约车运力运营服务。公司秉承“服务第一，诚信至上”的管理理念，致力于为广大司机提供专业、优质的服务方案。\n作为杭州第一家T3出行落地运营服务商，蓝鲸智享团队凭借着在共享出行、车联网大数据、金融风控、汽车租赁等方面的积累和经验，打造了一支集司服运营、汽车租赁、维修保养、云计算、大数据风控等领域人才的专业团队，建立规范化的制度和完善的服务体系，为司机提供专业、系统的培训、具有竞争力的薪酬福利和个人职业发展规划。\n目前，蓝鲸智享在职司机700+，公司注重员工关怀和团队建设，定期组织团建文化活动、节日福利等，培养出一批优秀、专"
       },
       {
-        "userMainId": "92300933601562624",
-        "createTime": "11/12/2020 09:26:25",
-        "companyName": "杭州高佳汽车租赁有限公司",
-        "companyAbbreviation": "高佳汽车租赁",
-        "companyLogoPhoto": "http://niuche-default.neocab.cn/92299898816434176",
-        "companyIntro": "我公司为杭州滴滴长期车辆供应伙伴，名下有200多台网约车可供司机选择。"
-      },
-      {
         "userMainId": "94490448659353600",
         "createTime": "17/12/2020 09:40:02",
         "companyName": "杭州广途商务服务有限公司",
@@ -365,6 +357,7 @@
 					title: this.title
 				});
 			},
+			//低价好车
 			getList() {
 				this.$u.api.driverSideHomePage({
 					pageNum:1,
@@ -385,6 +378,7 @@
 				this.openShow = true;
 				this.$refs.other.getStatus()
 			},
+			//获取优质租赁公司
 			getYzsjList(){
 				uni.request({
 					url: 'http://image.neocab.cn/yzsj',//接口地址
@@ -395,6 +389,7 @@
 					 }
 				});
 			},
+			//新春福利list
 			getWelfareList() {
 				this.$u.api.getYearWelfare({
 					pageNum: 1,
@@ -413,6 +408,7 @@
 					}
 				})
 			},
+			//站内信条数
 			getMessageNum() {
 				let token = uni.getStorageSync('token');
 				if (token) {

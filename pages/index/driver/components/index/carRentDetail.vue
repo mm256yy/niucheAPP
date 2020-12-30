@@ -11,16 +11,20 @@
 			 <view class="wraps img">
 			 	<u-swiper height="503" bg-color="#CDE5E3" mode="dot" :list="detail.photourl"></u-swiper>
 			 </view>
+<!-- 			 <view style="padding: 5px 10px;">
+			 	<text class="list_tag" v-for="(tag,i) in tagList" :key="i">{{tag.tabValue}}</text>
+			 </view> -->
 			 <view style="position: relative;" v-if="tagList.length>0">
-				 <u-image src="@/static/zucheyouhui@2x.png" height="116rpx" border-radius="8"></u-image>
-				 <view style="position: absolute;top: 5px;left: 33%;color: #fff;" class="u-line-2">
-						 <view v-for="(tag,index) in tagList" :key="index" style="font-size: 14px;display: inline-block;">
+				 <u-image src="@/static/dipian@2x.png" height="140rpx" border-radius="8"></u-image>
+				 <view style="position: absolute;top: 5px;left: 10px;color: #fff;" class="u-line-2">
+					 	<text class="list_tag" v-for="(tag,i) in tagList" :key="i">{{tag.tabValue}}</text>
+	<!-- 					 <view v-for="(tag,index) in tagList" :key="index" style="font-size: 14px;display: inline-block;">
 							 {{tag.tabValue}} 
 							 <text style="display: inline-block;padding:2px 5px;font-size: 14px;" v-show="index<tagList.length-1">•</text>
-						 </view>
+						 </view> -->
 				 </view>
 			 </view>
-			<view style="padding:40rpx">
+			<view style="padding: 4px 40rpx">
 				<!-- <view class="tag">付费标签</view> -->
 				<view class="name u-line-2">
 				  <text v-show="detail.businesstypetag == 1">[网约车]</text>
@@ -241,6 +245,15 @@ page{
 }
 	/deep/ .u-border-bottom:after{
 		border-bottom-width:0;
+	}
+	.list_tag {
+		display: inline-block;
+		padding: 2px 4px;
+		font-size: 12px;
+		margin-right: 6px;
+		margin-bottom: 6px;
+		background: linear-gradient(270deg, #FFC400 0%, #FFB200 54%, #FF9900 100%);
+		color: #FFFFFF;
 	}
 	.navbar-right {
 		margin-right: 24rpx;
