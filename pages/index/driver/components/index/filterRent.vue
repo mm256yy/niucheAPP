@@ -1,73 +1,79 @@
 <template>
 	<view class="filter">
-	  <u-navbar back-text="返回" back-icon-size="0" title="更多筛选条件" :background="backgroundDri" 
+	  <u-navbar back-text="返回" back-icon-size="0" title="更多筛选" :background="backgroundDri" 
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><!-- <view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
 		   历史</view> --></u-navbar>
 	   <view class="view-content">
-		   <view class="name">{{addkey}}</view>
-	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
-	   	  	<u-form-item label="业务类型(必选)" label-position="top">
-				<u-radio-group v-model="form.businesstype" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio name="" style="margin-left: 10pt;">不限 </u-radio>
-					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
-					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
-				</u-radio-group>
-				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
+	   		   <view class="name">{{addkey}}</view>
+	   		   <view style="width: 100%;height: 20rpx;background: #f5f5f5;"></view>
+	   		   <view style="position: absolute;top: 400rpx;left: 0;z-index: 100;width: 100%;">
+	   			   <view v-for="(item, index) in list" :key="index" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
+	   			   border-bottom: 2rpx solid rgba(0,0,0,0.03);">
+	   			   			   <view style="font-size: 32rpx;color: #333;">{{item.brandname}}</view>
+	   			   			   <view style="width: 48rpx;height: 48rpx;border-radius: 50%;background: #4aba75;line-height: 48rpx;
+	   			   			   text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandname)">十</view>
+	   			   </view>
+	   		   </view>
+	   	  <u-form style="position: relative;" :model="form" ref="uForm" label-width="280" :border-bottom="false">
+	   			  <u-form-item label="品牌选择" label-position="top">
+	   				  <u-row style="border-bottom: 2rpx solid rgba(0,0,0,0.06);padding-bottom: 10rpx;width: 680rpx;">
+	   				  	<u-col span="8"><u-input @input="keyup" v-model="value" maxlength="30" :border="false" placeholder="请选择品牌型号"/></u-col>
+	   				  </u-row>
+	   			  	<!-- <u-checkbox-group active-color="#6DD99C" @change="brandGroupChange" shape="circle">
+	   			  		<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
+	   			  			{{ item.name }}
+	   			  		</u-checkbox>
+	   			  	</u-checkbox-group> -->
+	   			  </u-form-item>
+	   	  	<u-form-item label="业务类型" label-position="top">
+	   				<search-tags :list="publishObj.onLineList" :active="currentType" :singleType="true" @onClick="getDataType"></search-tags>
+	   				<!-- <u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
+	   					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
+	   					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
+	   					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
+	   				</u-radio-group> -->
+	   				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
-			<u-form-item label="工作城市(必选)"><u-input :disabled="true" v-model="form.city" /></u-form-item>
-			<u-form-item label="意向品牌(多选)" label-position="top">
-				<u-checkbox-group active-color="#FFA032" @change="brandGroupChange" shape="circle">
-					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
-						{{ item.name }}
-					</u-checkbox>
-				</u-checkbox-group>
-			</u-form-item>
-			<u-row>
-				<u-col span="8"><u-input v-model="value" maxlength="30" :border="true" placeholder="请输入车辆品牌"/></u-col>
-				<u-col span="3"><u-button type="success" shape='circle' class="btn-agree" @click="addBrand">添加</u-button></u-col>
-			</u-row>
-			<u-form-item label="车型(多选)" label-position="top">
-				<u-checkbox-group active-color="#FFA032" @change="modelGroupChange" shape="circle">
-					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
-						{{ item.name }}
-					</u-checkbox>
-				</u-checkbox-group>
-			</u-form-item>
-			<u-form-item label="动力(多选)" label-position="top">
-				<u-checkbox-group active-color="#FFA032" @change="powerGroupChange" shape="circle">
-					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
-						{{ item.name }}
-					</u-checkbox>
-				</u-checkbox-group>
-			</u-form-item>
-			<u-form-item label="月租" label-position="top">
-				<u-radio-group @change="radioGroupChangeRent" v-model="priceid"  :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="车龄" label-position="top">
-				<u-radio-group @change="radioGroupChangeAge" v-model="carage" :active-color="'#FFA032'" style="text-align: right;">
-					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="行驶里程" label-position="top">
-				<u-radio-group @change="radioGroupChangeKm" v-model="form.km" :active-color="'#FFA032'" style="text-align: right;">
-				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-		  </u-form>	
+	   			<u-form-item label="车辆类型(多选)" label-position="top">
+	   				<search-tags :list="publishObj.carType" :active="currentCar" :singleType="false" @onClick="getDataCar"></search-tags>
+	   				<!-- <u-checkbox-group active-color="#6DD99C" @change="modelGroupChange" shape="circle">
+	   					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
+	   						{{ item.name }}
+	   					</u-checkbox>
+	   				</u-checkbox-group> -->
+	   			</u-form-item>
+	   			<u-form-item label="动力(多选)" label-position="top">
+	   				<search-tags :list="publishObj.power" :active="currentPower" :singleType="false" @onClick="getDataPower"></search-tags>
+	   				<!-- <u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
+	   					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
+	   						{{ item.name }}
+	   					</u-checkbox>
+	   				</u-checkbox-group> -->
+	   			</u-form-item>
+	   		  </u-form>
 	   </view>
 		<view class="bottom">
-			<view class="btn" @click="reset()">重置</view>
-			<view class="total" @click="result()">当前选择条件的检索结果，共{{total}}条>></view>
+			<view class="reset">
+				<u-icon name="reload" color="#5D6671" size="28"></u-icon>
+				<view class="btn" @click="reset()">重置</view>
+			</view>
+			<view class="total" @click="result()">查看{{total}}条车源></view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import searchTags from '@/components/searchTags.vue'
+	import {
+		publishObj
+	} from '@/utils/constant.js'
 	export default {
+		components: {
+			searchTags
+		},
 		data() {
 			return {
+				publishObj: publishObj,
 				backTextStyle:{
 					'color':'#ffffff'
 				},
@@ -335,19 +341,44 @@ page{
 		 color: #fff;
 		 float: right;
 	 }
+	 .bottom{
+	 		 width: 100%;
+	 		 height: 140rpx;
+	 		 background: #FFFFFF;
+	 		 box-shadow: 0rpx 2rpx 0rpx 0rpx #DEDEDE;
+	 		 border-top: 2rpx solid rgba(0,0,0,0.06);
+	 		 padding: 0 34rpx;
+	 		 position: fixed;
+	 		 bottom: 0;
+	 		 left: 0;
+	 		 display: flex;
+	 		 justify-content: space-between;
+	 		 align-items: center;
+	 		 .reset{
+	 			display: flex;
+	 			justify-content: center;
+	 			align-items: center; 
+	 			width: 232rpx;
+	 			height: 88rpx;
+	 			line-height: 88rpx;
+	 			text-align: center;
+	 			background: #FFF;
+	 			border-radius: 8rpx;
+	 			border: 2rpx solid #D9DEDF;
+	 		 }
+	 }
 	 .bottom .btn {
-		 width: 200rpx;
-		 height: 80rpx;
-		 line-height: 80rpx;
-		 text-align: center;
-		 color: #fff;
-		 background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
-		 float: left;
+	 		 color: #252825;
+	 		 margin-left: 20rpx;
 	 }
 	 .total {
-		 line-height: 80rpx;
-		 margin-left: 20rpx;
-		 float: left;
+	 		 width: 428rpx;
+	 		 height: 88rpx;
+	 		 line-height: 88rpx;
+	 		 text-align: center;
+	 		 background: linear-gradient(270deg, #63D094 0%, #53C27F 58%, #3CAE69 100%);
+	 		 border-radius: 4px;
+	 		 color: #fff;
 	 }
  }
 </style>

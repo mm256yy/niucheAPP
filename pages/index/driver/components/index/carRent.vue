@@ -212,14 +212,14 @@
 				this.showType = false;
 			},
 			toggle(){
+				this.showMask = !this.show;
 				this.show = !this.show;
 				this.showType = false;
-				this.showMask = !this.showMask;
 			},
 			toggleType(){
+				this.showMask = !this.showType;
 				this.showType = !this.showType;
 				this.show = false;
-				this.showMask = !this.showMask;
 			},
 			getData(index) {
 				this.current = index;
