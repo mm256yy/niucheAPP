@@ -122,14 +122,16 @@
 			</swiper-item>
 		</swiper>
 	</view>
+	<Auth></Auth>
 	</view>
 </template>
 
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+		import Auth from '@/components/auth.vue'
 	export default {
 		components: {
-			loadRefresh
+			loadRefresh,Auth
 		},
 		data() {
 			return {
