@@ -33,6 +33,7 @@
 				driverSrc: '../../static/driverSrc.png',
 				showLogut:false,
 				tokenFlag:false,
+				version:version || '1.5.1.9'
 			}
 		},
 		mounted() {

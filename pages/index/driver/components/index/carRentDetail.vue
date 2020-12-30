@@ -249,7 +249,7 @@ page{
 	.list_tag {
 		display: inline-block;
 		padding: 2px 4px;
-		font-size: 12px;
+		font-size: 14px;
 		margin-right: 6px;
 		margin-bottom: 6px;
 		background: linear-gradient(270deg, #FFC400 0%, #FFB200 54%, #FF9900 100%);
