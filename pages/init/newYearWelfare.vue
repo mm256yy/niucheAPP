@@ -11,7 +11,7 @@
 							<u-image src="../../static/xcfl.png" height="66vh" border-radius="0" width="100%"></u-image>
 							<view @click="toView(item)" v-for="(item,index) in list" :key="index" class="list">
 								<view class="list_head">
-									<text>{{item.companyName}}</text><text>{{item.comparyarea}}</text>
+									<text>{{item.companyName}}</text>
 								</view>
 								<view style="background: #FFFFFF;">
 									<u-image :src="item.photoUrl" height="20vh" width="100%" border-radius="8"></u-image>
@@ -21,7 +21,8 @@
 										<text class="list_tag" v-for="(tag,i) in item.tagList" :key="i">{{tag.tabValue}}</text>
 									</view>
 									<view style="padding: 5px 0;color: #303030;font-weight: bold;font-size: 12pt;">
-										【{{item.businesstype === 1 ?'网约车':'出租车'}}】{{item.carBrand}} {{item.carText}}
+										<text style="display: inline-block;margin-left: -6px;">【{{item.businesstype === 1 ?'网约车':'出租车'}}】</text>
+										{{item.carBrand}} {{item.carText}}
 									</view>
 									<view style="padding: 0 5px 5px;color: #FF5A00;font-size: 12pt;">{{item.packPrice}}元/月</view>
 								</view>

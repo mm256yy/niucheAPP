@@ -11,14 +11,15 @@
 							<u-image src="../../static/djhc.png" height="60vh" border-radius="0" width="100%"></u-image>
 							<view @click="toView(item.comparymainid)" v-for="(item,index) in list" :key="index" class="list">
 								<view class="list_head u-line-2">
-									<text>{{item.comparyname}}</text><text>{{item.area}}</text>
+									<text>{{item.comparyname}}</text>
 								</view>
 								<view>
 									<u-image :src="item.photourl" height="20vh" width="100%" border-radius="8"></u-image>
 								</view>
 								<view>
 									<view style="padding-top: 14px;color: #303030;font-weight: bold;font-size: 12pt;">
-【{{item.businesstype === 1 ?'网约车':'出租车'}}】{{item.carname}} {{item.carxinghao}}
+										<text style="display: inline-block;margin-left: -6px;">【{{item.businesstype === 1 ?'网约车':'出租车'}}】</text>
+										{{item.carname}} {{item.carxinghao}}
 									</view>
 									<view style="padding: 10px 5px;color: #666666;" class="u-line-2">
 									{{item.cartype}}·{{item.power}}·{{item.carage}}</view>
