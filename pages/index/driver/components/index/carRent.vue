@@ -5,23 +5,31 @@
 		<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
 		<list-tags v-show="showType" :list="selectType" :active="currentType" @onClick="getDataType"></list-tags>
 		<view class="middle-content">
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
-				background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
-				<view style="float: left;">杭州</view>
-				<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
-				</u-form-item>
-				<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
-			    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
-				<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
-				<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
-				<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
-			    background: #F8F9FB;border-radius: 4px;width: 180rpx;" label="">
-				<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
-				<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
-				</u-form-item>
-				<view @click="filter()" style="width: 100rpx;text-align: center;float: right;">更多</view>
-			</u-form>
+			<view style="width: 100%;height: 100rpx;">
+				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+					<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+					background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+					<view style="float: left;">杭州</view>
+					<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+					</u-form-item>
+					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
+					<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
+					<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
+					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 180rpx;" label="">
+					<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
+					<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
+					</u-form-item>
+					<view @click="filter()" style="width: 100rpx;text-align: center;float: right;">更多</view>
+				</u-form>
+			</view>
+			<view style="margin-top: 42rpx;display: flex;">
+				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
+					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
+				</scroll-view>
+				<view style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+			</view>
 		</view>
 		<view v-show="priceidkey||businesstypekey" class="tagBox">
 			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
@@ -193,7 +201,8 @@
 				},
 				styleActive:{
 					color:'#FF9500'
-				}
+				},
+				filterData:[]
 			}
 		},
 		mounted() {
@@ -204,8 +213,40 @@
 				this.form.islogin = 0
 			}
 			this.search()
+			this.transform()
 		},
 		methods: {
+			close(index){
+				this.filterData.splice(index, 1);
+			},
+			transform(){
+				var cartype = [];
+				var power = [];
+				var businessType = '';
+				var caragekey = '';
+				var kmkey = '';
+				this.filterData = [];
+				if(uni.getStorageSync('businesstype')){
+					businessType = uni.getStorageSync('businesstype');
+					this.filterData.push(businessType);
+				}
+				if(uni.getStorageSync('cartypeDriver')){
+					cartype = uni.getStorageSync('cartypeDriver').split(',');
+					this.filterData = this.filterData.concat(cartype);
+				}
+				if(uni.getStorageSync('powerDriver')){
+					power = uni.getStorageSync('powerDriver').split(',');
+					this.filterData = this.filterData.concat(power);
+				}
+				if(uni.getStorageSync('caragekey')){
+					caragekey = uni.getStorageSync('caragekey');
+					this.filterData.push(caragekey);
+				}
+				if(uni.getStorageSync('kmkey')){
+					kmkey = uni.getStorageSync('kmkey');
+					this.filterData.push(kmkey);
+				}
+			},
 			hideMask(){
 				this.showMask = false;
 				this.show = false;
@@ -528,14 +569,12 @@
 		}
 		.middle-content{
 			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			position: fixed;
-			top: 6rpx;
+			top: 0;
 			left: 0;
-			z-index: 2;
+			z-index: 10;
 			background-color: #fff;
+			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -544,8 +583,8 @@
 			width: 686rpx;
 			height: 71rpx;
 			border-radius: 40rpx;
-			margin-left: 39rpx;
-			margin-top: 30rpx;
+			background-color: #fff;
+			margin-top: 48rpx;
 			float: left;
 		}
 		.icon {
@@ -660,6 +699,22 @@
 					}
 				}
 			}
+		}
+		.scroll-view_H {
+			white-space: nowrap;
+			width: 100%;
+		}
+		.scroll-view-item_H {
+			display: inline-block;
+			width: 140rpx;
+			height: 56rpx;
+			margin-right: 28rpx;
+			line-height: 56rpx;
+			text-align: center;
+			background-image: url(@/static/shut.png);
+			background-repeat: no-repeat;
+			height: 100%;
+			background-size: cover;
 		}
 	}
 </style>

@@ -4,20 +4,18 @@
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 	   <view class="view-content">
 	   	  <u-form :error-type="errorType" :model="form" ref="uForm" label-width="320" :border-bottom="false">
-			  <u-form-item label="是否公开我的租车需求?(必选)" label-position="top">
-			  	<u-radio-group v-model="form.isOpen" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
-			  		<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
-			  		<u-radio name="0" style="margin-left: 10pt;">不公开 </u-radio>
-			  	</u-radio-group>
-			  </u-form-item>
+			  <u-form-item label="租车城市(必选)">
+				  <search-tags :list="publishObj.cityList" :active="currentCity" :singleType="true" @onClick="getDataType"></search-tags>
+				  <!-- <u-input :disabled="true" v-model="form.workCity" /> -->
+				  </u-form-item>
 	   	  	<u-form-item label="业务类型(必选)">
-				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
+				<search-tags :list="publishObj.onLineList" :active="currentType" :singleType="true" @onClick="getDataType"></search-tags>
+				<!-- <u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
-			<u-form-item label="工作城市(必选)"><u-input :disabled="true" v-model="form.workCity" /></u-form-item>
 			<u-form-item label="意向品牌(多选)" label-position="top" prop="carCard">
 				<u-checkbox-group active-color="#FFA032" @change="brandGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
@@ -30,33 +28,44 @@
 				<u-col span="3"><u-button type="success" shape='circle' class="btn-agree" @click="addBrand">添加</u-button></u-col>
 			</u-row>
 			<u-form-item label="车型(多选)" label-position="top" prop="carmodel">
-				<u-checkbox-group active-color="#FFA032" @change="modelGroupChange" shape="circle">
+				<search-tags :list="publishObj.carType" :active="currentModel" :singleType="false" @onClick="getDataModel"></search-tags>
+				<!-- <u-checkbox-group active-color="#FFA032" @change="modelGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
-				</u-checkbox-group>
+				</u-checkbox-group> -->
 			</u-form-item>
 			<u-form-item label="动力(多选)" label-position="top" prop="power">
-				<u-checkbox-group active-color="#FFA032" @change="powerGroupChange" shape="circle">
+				<search-tags :list="publishObj.power" :active="currentPower" :singleType="false" @onClick="getDataPower"></search-tags>
+				<!-- <u-checkbox-group active-color="#FFA032" @change="powerGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
-				</u-checkbox-group>
+				</u-checkbox-group> -->
 			</u-form-item>
 			<u-form-item label="月租" label-position="top" prop="monthzu">
-				<u-radio-group v-model="form.monthzu"  :active-color="'#FFA032'" style="text-align: right;">
+				<search-tags :list="publishObj.rentList" :active="currentRent" :singleType="false" @onClick="getDataRent"></search-tags>
+				<!-- <u-radio-group v-model="form.monthzu"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 			</u-form-item>
 			<u-form-item label="车龄" label-position="top" prop="carage">
-				<u-radio-group v-model="form.carage"  :active-color="'#FFA032'" style="text-align: right;">
+				<search-tags :list="publishObj.ageList" :active="currentAge" :singleType="false" @onClick="getDataAge"></search-tags>
+				<!-- <u-radio-group v-model="form.carage"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 			</u-form-item>
 			<u-form-item label="行驶里程" label-position="top" prop="km">
 				<u-radio-group v-model="form.km"  :active-color="'#FFA032'" style="text-align: right;">
 				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
 				</u-radio-group>
+			</u-form-item>
+			<u-form-item label="是否公开我的租车需求?(必选)" label-position="top">
+				<search-tags :list="publishObj.publicList" :active="currentPublic" :singleType="true" @onClick="getDataType"></search-tags>
+				<!-- <u-radio-group v-model="form.isOpen" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
+					<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
+					<u-radio name="0" style="margin-left: 10pt;">不公开 </u-radio>
+				</u-radio-group> -->
 			</u-form-item>
 		  </u-form>	
 	   </view>
@@ -68,19 +77,28 @@
 		        信息发布成功
 			</view>
 		</u-modal>
-		<auth></auth>
+		<!-- <auth></auth> -->
 	</view>
 </template>
 
 <script>
 	import auth from '@/components/auth.vue'
 	import {requiredRule} from '@/common/rule.js'
+	import searchTags from '@/components/searchTags.vue'
+	import {
+		publishObj
+	} from '@/utils/constant.js'
 	export default {
 		components:{
-			auth
+			auth,
+			searchTags
 		},
 		data() {
 			return {
+				currentType: 0,
+				currentPublic: 0,
+				currentCity: 0,
+				publishObj: publishObj,
 				backTextStyle:{
 					'color':'#ffffff'
 				},

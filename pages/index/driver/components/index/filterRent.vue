@@ -14,7 +14,7 @@
 	   			   			   text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandname)">十</view>
 	   			   </view>
 	   		   </view>
-	   	  <u-form style="position: relative;" :model="form" ref="uForm" label-width="280" :border-bottom="false">
+	   	  <u-form style="position: relative;margin-left: 28rpx;" :model="form" ref="uForm" label-width="280" :border-bottom="false">
 	   			  <u-form-item label="品牌选择" label-position="top">
 	   				  <u-row style="border-bottom: 2rpx solid rgba(0,0,0,0.06);padding-bottom: 10rpx;width: 680rpx;">
 	   				  	<u-col span="8"><u-input @input="keyup" v-model="value" maxlength="30" :border="false" placeholder="请选择品牌型号"/></u-col>
@@ -58,6 +58,14 @@
 						</u-checkbox>
 					</u-checkbox-group> -->
 				</u-form-item>
+				<u-form-item label="行驶里程" label-position="top">
+					<search-tags :list="objType[radioType]" :active="currentKm" :singleType="true" @onClick="getDataKm"></search-tags>
+					<!-- <u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
+						<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
+							{{ item.name }}
+						</u-checkbox>
+					</u-checkbox-group> -->
+				</u-form-item>
 	   		  </u-form>
 	   </view>
 	   <view style="width: 100%;height: 140rpx;"></view>
@@ -82,6 +90,7 @@
 		},
 		data() {
 			return {
+				addkey: '',
 				publishObj: publishObj,
 				backTextStyle:{
 					'color':'#ffffff'
@@ -111,44 +120,179 @@
 				rentList:[{name: '1',text:'不限' },{name: '2',text:'2000以内' },{name: '3',text:'2000-3000' },{name: '4',text:'3000-4000' },{name: '5',text:'4000以上' }],
 				ageList:[{name: '1',text:'不限' },{name: '2',text:'1年内' },{name: '3',text:'1年-3年' },{name: '4',text:'3年-5年' },{name: '5',text:'5年以上' }],
 				objType:{
-					wycList:[{name: '',text:'不限' },{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里'},{name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },
-					     {name: '4',text:'20-30万公里' },{name: '5',text:'30万公里以上'},],
-					      czcList:[{name: '',text:'不限' },{name: '0',text:'0-2万公里' },{name: '1',text:'2-5万公里' },
-					      {name: '2',text:'5-10万公里' },{name: '3',text:'10-20万公里' },{name: '4',text:'20-30万公里' },
-					      {name: '5',text:'30-50万公里' },{name: '6',text:'50-70万公里' },{name: '7',text:'70万公里以上'}],
+					wycList:[{id: '',text:'不限',checked:false },{id: '0',text:'0-2万公里',checked:false },{id: '1',text:'2-5万公里',checked:false},{id: '2',text:'5-10万公里',checked:false },{id: '3',text:'10-20万公里',checked:false },
+					     {id: '4',text:'20-30万公里',checked:false },{id: '5',text:'30万公里以上',checked:false},],
+					      czcList:[{id: '',text:'不限',checked:false },{id: '0',text:'0-2万公里',checked:false },{id: '1',text:'2-5万公里',checked:false },
+					      {id: '2',text:'5-10万公里',checked:false },{id: '3',text:'10-20万公里',checked:false },{id: '4',text:'20-30万公里',checked:false },
+					      {id: '5',text:'30-50万公里',checked:false },{id: '6',text:'50-70万公里',checked:false },{id: '7',text:'70万公里以上',checked:false}],
 				},
 				radioType:'wycList',
-				addkey: '不限',
-				businesstypekey: '不限',
+				addkey: '',
+				businesstype: '',
 				carbrandkey: '',
 				cartypekey: '',
 				powerkey: '',
 				priceidkey: '',
 				caragekey: '',
-				kmkey: {
-					text:''
-				},
+				kmkey: '',
 				list: [],
 				currentType: -1,
 				currentCar: -1,
 				currentPower: -1,
-				currentAge: -1
+				currentAge: -1,
+				currentKm: -1,
+				arrCar:[],
+				arrPower:[],
+				cartype:[]
 			}
 		},
 		mounted() {
-			const token = uni.getStorageSync('token');
-			if(token) {
-				this.form.islogin = 1
-			}else{
-				this.form.islogin = 0
-			}
-			this.select()
+			this.transform()
 		},
 		methods: {
+			transform() {
+				const businessType = uni.getStorageSync('businesstype');
+				this.businesstype = uni.getStorageSync('businesstype');
+				const caragekey = uni.getStorageSync('caragekey');
+				this.caragekey = uni.getStorageSync('caragekey');
+				const kmkey = uni.getStorageSync('kmkey');
+				this.kmkey = uni.getStorageSync('kmkey');
+				if(uni.getStorageSync('cartypeDriver')){
+					var cartype = uni.getStorageSync('cartypeDriver').split(',');
+				}
+				if(uni.getStorageSync('powerDriver')){
+					var power = uni.getStorageSync('powerDriver').split(',');
+				}
+				if(businessType){
+					this.addkey = this.addkey==''?businessType:(this.addkey+','+businessType);
+					this.publishObj.onLineList.forEach(item=>{
+					   if(item.text == businessType){
+						this.currentType = parseInt(item.id)-1
+						this.form.businesstype = parseInt(item.id)
+					   }
+					}) 
+				}
+				if(cartype.length){
+					this.form.cartype = cartype.join(',');
+					this.addkey = this.addkey==''?this.form.cartype:(this.addkey+','+this.form.cartype);
+					cartype.map(item=>{
+					   this.publishObj.carType.forEach(items=>{
+					      if(items.text == item){
+					   	    items.checked = true;
+							this.arrCar.push(items)
+					      }
+					   })
+					})
+				}
+				if(power.length){
+					this.form.power = power.join(',');
+					this.addkey = this.addkey==''?this.form.power:(this.addkey+','+this.form.power);
+					power.map(item=>{
+					   this.publishObj.power.forEach(items=>{
+					      if(items.text == item){
+					   	    items.checked = true;
+							this.arrPower.push(items)
+					      }
+					   })
+					})
+				}
+				if(caragekey){
+					this.addkey = this.addkey==''?caragekey:(this.addkey+','+caragekey);
+					this.publishObj.ageList.forEach(item=>{
+					   if(item.text == caragekey){
+						this.currentAge = parseInt(item.id)-1
+						this.carage = parseInt(item.id)
+						if(this.carage == '1') {
+							this.form.startCarAge = '';
+							this.form.endCarAge = '';
+						}
+						if(this.carage == '2') {
+							this.form.startCarAge = '';
+							this.form.endCarAge = '1';
+						}
+						if(this.carage == '3') {
+							this.form.startCarAge = '1';
+							this.form.endCarAge = '3';
+						}
+						if(this.carage == '4') {
+							this.form.startCarAge = '3';
+							this.form.endCarAge = '5';
+						}
+						if(this.carage == '5') {
+							this.form.startCarAge = '5';
+							this.form.endCarAge = '';
+						}
+					   }
+					}) 
+				}
+				if(kmkey){
+					this.addkey = this.addkey==''?kmkey:(this.addkey+','+kmkey);
+					this.objType[this.radioType].forEach(item=>{
+					   if(item.text == kmkey){
+						this.currentKm = item.id == ''?0:parseInt(item.id)+1
+						this.form.km = parseInt(item.id)
+					   }
+					}) 
+				}
+				const token = uni.getStorageSync('token');
+				if(token) {
+					this.form.islogin = 1
+				}else{
+					this.form.islogin = 0
+				}
+				this.select()
+			},
 			getDataType(obj) {
 				this.currentType = obj.index;
 				this.form.businessType = obj.index + 1;
 				this.businessType =  obj.text;
+				this.select()
+				this.add()
+			},
+			get(text) {
+				this.addkey = this.addkey==''?text:(this.addkey+','+text);
+				this.list=[];
+				this.value='';
+			},
+			getDataType(obj) {
+				this.currentType = obj.index;
+				this.form.businesstype = obj.index + 1;
+				this.businesstype =  obj.text;
+				this.select()
+				this.add()
+			},
+			getDataAge(obj) {
+				this.currentAge = obj.index;
+				this.carage = obj.index + 1;
+				this.caragekey =  obj.text;
+				if(this.carage == '1') {
+					this.form.startCarAge = '';
+					this.form.endCarAge = '';
+				}
+				if(this.carage == '2') {
+					this.form.startCarAge = '';
+					this.form.endCarAge = '1';
+				}
+				if(this.carage == '3') {
+					this.form.startCarAge = '1';
+					this.form.endCarAge = '3';
+				}
+				if(this.carage == '4') {
+					this.form.startCarAge = '3';
+					this.form.endCarAge = '5';
+				}
+				if(this.carage == '5') {
+					this.form.startCarAge = '5';
+					this.form.endCarAge = '';
+				}
+				this.select()
+				this.add()
+			},
+			getDataKm(obj) {
+				this.currentKm = obj.index;
+				const index = obj.index-1;
+				this.form.km = index==-1?'':index;
+				this.kmkey =  obj.text;
 				this.select()
 				this.add()
 			},
@@ -181,8 +325,9 @@
 				this.add()
 			},
 			add() {
-				this.addkey = this.businessType +(this.form.cartype?',':'') + this.form.cartype
-				+ (this.form.power?',':'') + this.form.power
+				this.addkey = this.businesstype +(this.businesstype?',':'') + this.form.cartype
+				+ (this.form.cartype?',':'') + this.form.power + (this.form.power?',':'') + this.caragekey
+				+ (this.caragekey?',':'') + this.kmkey
 			},
 			reset() {
 				this.currentType = -1;
@@ -218,54 +363,6 @@
 						}
 					})
 				}
-			},
-			reset() {
-				this.form={
-				  businesstype: '',
-				  carbrand: '',
-				  cartype: '',
-				  city: '杭州',
-				  startCarAge: '',
-				  endCarAge: '',
-				  startPriceid: '',
-				  endPriceid: '',
-				  km: '',
-				  power: ''
-				};
-				this.brandList.map( item => {
-				  item.checked=false;
-				});
-				this.modelList.map( item => {
-				  item.checked=false;
-				});
-				this.powerList.map( item => {
-				  item.checked=false;
-				});
-				this.carage='';
-				this.priceid='';
-				this.addkey = '不限';
-				this.businesstypekey='不限';
-				this.carbrandkey='';
-				this.cartypekey='';
-				this.powerkey='';
-				this.priceidkey='';
-				this.caragekey='';
-				this.kmkey={
-					text:''
-				};
-				const token = uni.getStorageSync('token');
-				if(token) {
-					this.form.islogin = 1
-				}else{
-					this.form.islogin = 0
-				}
-				this.select()
-			},
-			add() {
-				this.addkey = this.businesstypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
-				(this.cartypekey?'/':'')+this.cartypekey + (this.powerkey?'/':'')+this.powerkey +
-				(this.priceidkey?'/':'')+this.priceidkey + (this.caragekey?'/':'') + this.caragekey +
-				(this.kmkey.text?'/':'')+this.kmkey.text;
 			},
 			brandGroupChange(e) {
 				this.form.carbrand = e.join(',');
@@ -394,7 +491,22 @@
 				this.$u.route('/pages/index/driver/components/index/historyRent');
 			},
 			result() {
-				this.$u.route('/pages/index/driver/components/index/resultRent',{form:JSON.stringify(this.form),title:this.addkey});
+				if(this.form.cartype){
+					uni.setStorageSync('cartypeDriver', this.form.cartype);
+				}
+				if(this.form.power){
+					uni.setStorageSync('powerDriver', this.form.power);
+				}
+				if(this.businesstype){
+					uni.setStorageSync('businesstype', this.businesstype);
+				}
+				if(this.caragekey){
+					uni.setStorageSync('caragekey', this.caragekey);
+				}
+				if(this.kmkey){
+					uni.setStorageSync('kmkey', this.kmkey);
+				}
+				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 			}
 		}
 	}
@@ -411,11 +523,8 @@ page{
 }
 
 .view-content{
-	margin-top: 20pt;padding: 0 10pt;
 	.name {
 		padding: 39rpx;
-		width: 670rpx;
-		// height: 148rpx;
 		font-size: 28rpx;
 		background: #fff;
 	}
@@ -424,6 +533,7 @@ page{
 	background: linear-gradient(115deg, $bg-grad-FE, $bg-grad-FCD);
  }
  .filter {
+	 background: #fff;
 	 .u-slot-content {
 		 width: 100rpx;
 		 color: #fff;
@@ -464,7 +574,7 @@ page{
 	 		 height: 88rpx;
 	 		 line-height: 88rpx;
 	 		 text-align: center;
-	 		 background: linear-gradient(270deg, #63D094 0%, #53C27F 58%, #3CAE69 100%);
+	 		 background: linear-gradient(270deg, #FFC600 0%, #FFAB00 58%, #FF9300 100%);
 	 		 border-radius: 4px;
 	 		 color: #fff;
 	 }

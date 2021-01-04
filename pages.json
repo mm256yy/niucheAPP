@@ -261,6 +261,12 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//首页-租车需求详情-参数配置
+		    "path" : "pages/index/driver/components/index/setting",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
 		,{//首页-招聘需求详情-司机
 		    "path" : "pages/mymessage/driver/components/index/jobSearchDetail",
 		    "style" : {
