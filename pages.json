@@ -642,6 +642,51 @@
             }
             
         }
+        ,{//我的现金账户
+            "path" : "pages/driver/cashAccount/cashAccount",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//账单明细
+            "path" : "pages/driver/cashAccount/billDetails",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//提现申请
+            "path" : "pages/driver/cashAccount/cashWithdrawal",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//跑单明细
+            "path" : "pages/driver/cashAccount/runningSingle",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//账单详情
+            "path" : "pages/driver/cashAccount/billDetailView",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
