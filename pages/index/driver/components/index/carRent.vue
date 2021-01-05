@@ -28,16 +28,9 @@
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
 					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
-				<view style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+				<view v-show="filterData" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
 		</view>
-		<view v-show="priceidkey||businesstypekey" class="tagBox">
-			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
-			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
-			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
-			<view class="clear"></view>
-		</view>
-		<view v-show="priceidkey||businesstypekey" style="width: 100%;height: 50rpx;"></view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -64,26 +57,22 @@
 		    				  <text v-show="item.businesstypetag == 1">[网约车]</text>
 		    				  <text v-show="item.businesstypetag == 2">[出租车]</text>
 		    				{{item.texttitle}}</view>
-		    				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-		    				<view class="year">车龄≤{{item.carAge}}年
+		    				<view class="year">车龄≤{{item.carAge}}年/{{item.km}}万公里
 		    				</view>
-		    				<view class="clear"></view>
-		    				<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-		    				<view class="distance">{{item.km}}万公里</view>
-		    				<view class="clear"></view>
+							<view class="price"><text>{{item.rentprice}}元</text></view>
+							<view class="numRenting">在租200辆</view>
 		    			</view>
-						<img style="width: 306rpx;height: 226rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 306rpx;height: 226rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
+						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
 		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 		    			<view class="clear"></view>
+						<view class="flex">
+							<view class="company">{{item.comparyname}}</view>
+							<view class="area">{{item.comparyarea}}</view>
+							<view class="clear"></view>
+						</view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-		    			<view class="box">
-		    				<view><text>￥{{item.rentprice}}</text>元/月起租</view>
-		    				<view>
-		    					<view v-show="items?items.length<6:items" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
-		    				</view>
-		    			</view>
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
 		    		<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
@@ -642,15 +631,54 @@
 					padding: 0 30rpx;
 					background: #fff;
 					float: left;
+					.price{
+						float: left;
+					}
+					.price text{
+						font-size: 36rpx;
+						font-weight: 900;
+						color: #FF5200;
+					}
+					.numRenting{
+						width: 136rpx;
+						height: 48rpx;
+						text-align: center;
+						line-height: 42rpx;
+						border-radius: 8rpx;
+						border: 2rpx solid #FF9B0D;
+						font-size: 24rpx;
+						color: #FF9B0D;
+						float: left;
+						margin-left: 34rpx;
+					}
+				}
+				.flex{
+					padding-top: 22rpx;
+					padding-bottom: 34rpx;
+				    border-bottom: 2rpx solid #dedede;
+					.company{
+						font-size: 28rpx;
+						font-weight: 400;
+						color: #343434;
+						float: left;
+					}
+					.area{
+						font-size: 26rpx;
+						font-weight: 400;
+						color: #666666;
+						float: right;
+					}
 				}
 				.name {
 					font-weight: 900;
 					font-size: 34rpx;
 					margin-top: 14rpx;
 				}
-				.clock,.year {
-					float: left;
-					margin-top: 6rpx;
+				.year {
+					font-size: 26rpx;
+					color: #777;
+					margin-top: 24rpx;
+					margin-bottom: 20rpx;
 				}
 				.clock {
 					margin-top: 18rpx;

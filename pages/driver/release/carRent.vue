@@ -178,24 +178,38 @@
 			get(brandid,text) {
 				this.brandShow = false;
 				this.value='';
-				if(!this.brandList.length){
+				var show = false;
+				if(this.brandList.length == 0){
 					this.brandList.push({
 						id: brandid,text:text,checked:true
 					});
 				}else{
 					this.brandList.map(item=>{
 					   if(item.text == text){
-					   	
-					   }else{
-						   this.brandList.push({
-						   	id: brandid,text:text,checked:true
-						   });
+					   	 show = true;
 					   }
 					})
+					if(!show){
+						 this.brandList.push({
+						 	id: brandid,text:text,checked:true
+						 });
+					}
 				}
-				let carCard = new Set(this.brandList);
-				this.brandList = Array.from(carCard);
-				this.form.carCard = this.brandList.join(',');
+				var brand = [];
+				this.brandList.map(item=>{
+				   if(item.text == true){
+				   	brand.push(item.text);
+				   }
+				})
+				this.brandList.map(item=>{
+				   if(item.checked == true){
+				   	brand.push(item.text);
+				   }
+				})
+				if(brand.length == 1){
+					this.form.carCard = brand[0];
+				}
+				this.form.carCard = brand.join(',');
 				this.brandList.map(item=>{
 				   this.arrBrand.push(item);
 				})

@@ -171,7 +171,7 @@
 			release(){
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
-						if(this.currentSalary == -1||this.currentHour == -1||!this.form.worktime
+						if(this.currentSalary == -1||this.currentHour == -1
 						||!this.form.taxiExperience||!this.form.workexperience){
 							this.$u.toast('请填写');
 							return;

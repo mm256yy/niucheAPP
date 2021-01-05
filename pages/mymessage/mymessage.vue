@@ -52,6 +52,6 @@ export default {
 
 <style lang="scss">
 page {
-	background-color: #F5F5F8;
+	background-color: #fff;
 }
 </style>

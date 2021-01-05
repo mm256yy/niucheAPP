@@ -1,30 +1,32 @@
 <template>
 	<view class="jobSearch">
 		<view class="middle-content">
-			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:280rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="月薪区间" @click="show = true" v-model="priceid" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:220rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businessType" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
-				<view class="clear"></view>
-			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
-			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
-			<u-dropdown style="width: 50rpx;">
-				<u-dropdown-item @change="change()" v-model="priceid" title="月薪区间" :options="select"></u-dropdown-item>
-				<u-dropdown-item @change="changeType()" v-model="businessType" title="业务类型" :options="selectType"></u-dropdown-item>
-			</u-dropdown>
+			<u-mask z-index="2" :show="showMask" @click="hideMask">
+			</u-mask>
+			<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
+			<list-tags v-show="showType" :list="selectType" :active="currentType" @onClick="getDataType"></list-tags>
+			<view class="middle-content">
+				<view style="width: 100%;height: 100rpx;">
+					<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+						<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+						background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+						<view style="float: left;">杭州</view>
+						<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+						</u-form-item>
+						<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+					    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
+						<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
+						<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
+						<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+					    background: #F8F9FB;border-radius: 4px;width: 180rpx;" label="">
+						<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
+						<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
+						</u-form-item>
+						<view @click="filter()" style="width: 100rpx;text-align: center;float: right;">更多</view>
+					</u-form>
+				</view>
+			</view>
 		</view>
-		<view v-show="priceidkey||businesstypekey" class="tagBox">
-			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
-			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
-			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
-			<view class="clear"></view>
-		</view>
-		<view v-show="priceidkey||businesstypekey" style="width: 100%;height: 50rpx;"></view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -46,30 +48,25 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.companyMainId)">
-						<img style="width: 264rpx;height: 199rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
 						<!-- <img style="width: 264rpx;height: 199rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt=""> -->
-		    			 <u-image v-show="item.photoUrl" class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image>
+		    			 <u-image v-show="item.photoUrl" class="left" width="288rpx" height="196rpx" :src="item.photoUrl"></u-image>
 		    			<!--<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    				<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
 		    				<view class="right">
 		    					<!-- <view class="tag">付费标签</view> -->
-		    					<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
-		    					<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
 		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
-		    					<view class="clear"></view>
 		    					<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
-		    					<!-- <u-icon class="car" name="car" width="22" height="22"></u-icon> -->
-		    					<u-image class="car" width="22rpx" height="22rpx" src="@/static/pinpai.png"></u-image>
-		    					<view class="distance u-line-1">{{item.intentionBrand}}</view>
-		    					<view class="clear"></view>
+								<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
+								<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
+								<view class="price"><text>{{item.pay}}元</text></view>
 		    				</view>
 		    				<view class="clear"></view>
-		    				<view class="box">
-		    					<view><text>￥{{item.pay}}</text>月薪</view>
-		    					<!-- <view class="case">自动挡</view>
-		    					<view class="case">SUV</view>
-		    					<view class="case">纯电动</view> -->
-		    				</view>
+							<view class="flex">
+								<view class="company">{{item.comparyname}}</view>
+								<view class="area">{{item.comparyarea}}</view>
+								<view class="clear"></view>
+							</view>
 		    		</view>
 		    		<!-- <u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
 		    		<!-- <u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
@@ -89,15 +86,26 @@
 
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+	import listTags from '@/components/listTags.vue'
 	export default {
 		components: {
-			loadRefresh
+			loadRefresh,
+			listTags
 		},
 		data() {
 			return {
+				showMask:false,
 				show:false,
 				showType:false,
 				iconType: 'flower',
+				current:-1,
+				currentType:-1,
+				style:{
+					color:'#000'
+				},
+				styleActive:{
+					color:'#40B26D'
+				},
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -182,6 +190,56 @@
 			this.search()
 		},
 		methods: {
+			hideMask(){
+				this.showMask = false;
+				this.show = false;
+				this.showType = false;
+			},
+			toggle(){
+				this.showMask = !this.show;
+				this.show = !this.show;
+				this.showType = false;
+			},
+			toggleType(){
+				this.showMask = !this.showType;
+				this.showType = !this.showType;
+				this.show = false;
+			},
+			getData(index) {
+				this.current = index;
+				this.priceid = this.select[index].value;
+				this.priceidkey = this.select[index].label;
+				if(this.priceid == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '6000';
+				}
+				if(this.priceid == 2) {
+					this.form.startPriceid = '6000';
+					this.form.endPriceid = '8000';
+				}
+				if(this.priceid == 3) {
+					this.form.startPriceid = '8000';
+					this.form.endPriceid = '10000';
+				}
+				if(this.priceid == 4) {
+					this.form.startPriceid = '10000';
+					this.form.endPriceid = '';
+				}
+				if(this.priceid == 5) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				this.show = false;
+				this.showMask = false;
+				this.search()
+			},
+			getDataType(index) {
+				this.currentType = index;
+				this.businessType = this.selectType[index].value;
+				this.showType = false;
+				this.showMask = false;
+				this.search()
+			},
 			page() {
 			    this.pageNum = 1;	
 			},
@@ -431,19 +489,36 @@
 			justify-content: center;
 			align-items: center;
 		}
+		.last .lists:last-child {
+			margin-bottom: 10rpx;
+		}
+		.triangleActive{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: transparent transparent #FF9500 transparent;
+			margin-top: -8rpx;
+		}
+		.triangle{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: #777 transparent transparent transparent;
+			margin-top: 8rpx;
+		}
 		.wrap {
 			padding: 40rpx;
 		}
 		.middle-content{
 			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			position: fixed;
-			top: 6rpx;
+			top: 0;
 			left: 0;
-			z-index: 2;
-			background-color: #f5f5f8;
+			z-index: 10;
+			background-color: #fff;
+			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -452,9 +527,8 @@
 			width: 686rpx;
 			height: 71rpx;
 			border-radius: 40rpx;
-			border: 1rpx solid rgba(0,0,0,0.1);
-			margin-left: 39rpx;
-			margin-top: 30rpx;
+			background-color: #fff;
+			margin-top: 48rpx;
 			float: left;
 		}
 		.icon {
@@ -502,15 +576,40 @@
 					margin-top: 20rpx;
 				}
 				.right{
-					width: 396rpx;
+					width: 360rpx;
 					height: 226rpx;
 					background: #fff;
 					float: left;
 					padding-left: 30rpx;
+					.price{
+						margin-top: 28rpx;
+					}
+					.price text{
+						font-size: 36rpx;
+						font-weight: 900;
+						color: #FF5200;
+					}
 				}
+				.flex{
+						padding-top: 22rpx;
+						padding-bottom: 34rpx;
+				        border-bottom: 2rpx solid #dedede;
+						.company{
+							font-size: 28rpx;
+							font-weight: 400;
+							color: #343434;
+							float: left;
+						}
+						.area{
+							font-size: 26rpx;
+							font-weight: 400;
+							color: #666666;
+							float: right;
+						}
+					}
 				.name {
-					font-weight: 900;
 					font-size: 34rpx;
+					color: #333;
 					margin-top: 20rpx;
 				}
 				.car {
@@ -539,13 +638,15 @@
 					margin-top: 20rpx;
 				}
 				.type {
-					padding: 4rpx;
-					background: rgba(0,0,0,0.1);
-					font-size: 20rpx;
-					float: right;
-					margin-left: 33rpx;
+					width: 100rpx;
+					height: 44rpx;
+					text-align: center;
+					line-height: 36rpx;
+					border-radius: 8rpx 0 8rpx 0;
+					border: 1rpx solid #FF9500;
+					font-size: 24rpx;
+					color: #FF9500;
 					margin-top: 20rpx;
-					margin-right: 30rpx;
 				}
 				.box {
 					width: 679rpx;
@@ -560,11 +661,6 @@
 					view {
 						font-size: 20rpx;
 						float: left;
-					}
-					view text {
-						font-size: 36rpx;
-						font-weight: 900;
-						margin-right: 19rpx;
 					}
 					.case {
 						padding: 6rpx 14rpx;
