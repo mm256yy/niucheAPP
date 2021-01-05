@@ -165,7 +165,7 @@
 						let data = res.object;
 						this.form =data;
 						this.form.sex = data.sex.toString();
-						console.log(this.form)
+						this.form.type = 2;
 						this.fileList= [{url:data.driverPhoto}]
 						if (data.certificationstate === 3){
 							this.type = true;

@@ -173,6 +173,7 @@
 						let data = res.object;
 						this.form =data;
 						this.form.sex = data.sex.toString();
+						this.form.type = 0;
 						this.fileList= [{url:data.driverPhoto}]
 						if (data.state === 3){
 							this.type = true;
