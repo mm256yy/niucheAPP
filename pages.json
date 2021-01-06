@@ -642,7 +642,7 @@
             }
             
         }
-        ,{//我的现金账户
+        ,{//我的账户
             "path" : "pages/driver/cashAccount/cashAccount",
             "style" :                                                                                    
             {
@@ -651,7 +651,7 @@
             }
             
         }
-        ,{//账单明细
+        ,{//账单
             "path" : "pages/driver/cashAccount/billDetails",
             "style" :                                                                                    
             {
