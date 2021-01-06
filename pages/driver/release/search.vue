@@ -65,7 +65,7 @@
 				<u-input type="textarea" maxlength="50" style="width: 607rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;text-indent: 31rpx;" placeholder="退伍军人英语口语交际能力" v-model="form.myok" />
 			</u-form-item>
 			<u-form-item label="是否公开?(必选)" label-position="top">
-				<search-tags :list="publishObj.publicList" :active="currentPublic" :singleType="true" @onClick="getDataPublic"></search-tags>
+				<search-tags :list="publishObj.publiclist" :active="currentPublic" :singleType="true" @onClick="getDataPublic"></search-tags>
 				<!-- <u-radio-group v-model="form.isOpen" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
 					<u-radio name="0" style="margin-left: 10pt;">不公开 </u-radio>

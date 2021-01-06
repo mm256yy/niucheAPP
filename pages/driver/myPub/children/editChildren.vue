@@ -173,15 +173,15 @@
 				this.$u.api.getUserWanted({driverDemandId:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						  let data = res.object;
-						  this.form = data;
+						  // this.form = data;
 						 if (data.carModel){
 							this.form.carmodel = data.carModel;
 							let carModel = data.carModel.split(',');
-							this.arrModel = carModel;
 							carModel.forEach(obj=>{
 								 this.publishObj.carType.forEach(item=>{
 									 if(item.text === obj){
 										item.checked = true;
+										this.arrModel.push(item);
 									 }
 								 })
 							})
@@ -201,11 +201,18 @@
 							 this.brandShow = false;
 							 this.form.carCard = data.carCard;
 							 let carCardList = data.carCard.split(',');
-							 this.arrBrand = carCardList;
 							 carCardList.forEach(item=>{
 								 this.brandList.push({
-								 	text:item,checked:true
+								 	text:item,checked:false
 								 });
+							})
+							carCardList.forEach(obj=>{
+								 this.brandList.forEach(item=>{
+								 	 if(item.text === obj){
+								 	 	item.checked = true;
+								 	 	this.arrBrand.push(item);
+								 	 }
+								 })
 							})
 						 }
 						 if (data.power){
@@ -237,7 +244,7 @@
 					})
 				}
 			},
-			get(brandid,text) {
+			get(text) {
 				this.brandShow = false;
 				this.value='';
 				var show = false;
@@ -259,11 +266,6 @@
 				}
 				var brand = [];
 				this.brandList.map(item=>{
-				   if(item.text == true){
-				   	brand.push(item.text);
-				   }
-				})
-				this.brandList.map(item=>{
 				   if(item.checked == true){
 				   	brand.push(item.text);
 				   }
@@ -278,8 +280,6 @@
 			},
 			getDataBrand(item) {
 				this.arrBrand.push(item);
-				let arrBrand = new Set(this.arrBrand);
-				this.arrBrand = Array.from(arrBrand);
 				this.carCard = [];
 				this.arrBrand.map(item=>{
 				   if(item.checked == true){
@@ -364,7 +364,7 @@
 							this.$u.toast('请填写');
 							return;
 						}
-						this.$u.api.releaseRent(this.form).then(res=>{
+						this.$u.api.updateUserWanted(this.form).then(res=>{
 							if(res.code === 200){
 								this.showTips = true;
 								this.form = {

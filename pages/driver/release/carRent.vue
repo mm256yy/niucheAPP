@@ -76,7 +76,7 @@
 				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
 				</u-radio-group> -->
 			</u-form-item>
-			<u-form-item label="是否公开我的租车需求?(必选)" label-position="top">
+			<u-form-item label="是否公开?(必选)" label-position="top">
 				<search-tags :list="publishObj.publiclist" :active="currentPublic" :singleType="true" @onClick="getDataPublic"></search-tags>
 				<!-- <u-radio-group v-model="form.isOpen" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
@@ -175,7 +175,7 @@
 					})
 				}
 			},
-			get(brandid,text) {
+			get(text) {
 				this.brandShow = false;
 				this.value='';
 				var show = false;
@@ -216,8 +216,6 @@
 			},
 			getDataBrand(item) {
 				this.arrBrand.push(item);
-				let arrBrand = new Set(this.arrBrand);
-				this.arrBrand = Array.from(arrBrand);
 				this.carCard = [];
 				this.arrBrand.map(item=>{
 				   if(item.checked == true){
