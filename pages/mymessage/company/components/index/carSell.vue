@@ -36,12 +36,6 @@
 				</scroll-view>
 				<view style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
-			<view style="margin-top: 42rpx;display: flex;">
-				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
-					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
-				</scroll-view>
-				<view style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
-			</view>
 			<!-- <view style="display: flex;margin-left: 38rpx;">
 				<view v-for="(item, index) in filterData" :key="index" style="padding: 10rpx 18rpx;border-radius: 8rpx;background: #f8f9fb;margin-right:24rpx;">{{item}}</view>
 			</view> -->

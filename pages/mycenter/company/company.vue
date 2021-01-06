@@ -5,7 +5,10 @@
 				<view class="imgUrl">
 					<view class="about" @click="toAboutUs">关于</view>
 					<u-row style="padding:48pt 21pt 5pt; ">
-						<u-col span="3">
+						<u-col span="3" v-show="!tokenFlag">
+							<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
+						</u-col>
+						<u-col span="3" v-show="tokenFlag">
 							<u-avatar :src="comnpanySrc" mode="circle" size="120" ></u-avatar>
 						</u-col>
 						<u-col span="8" v-if="!tokenFlag">
@@ -45,7 +48,7 @@
 				</view>
 				<view @click="toPub(2)" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/rentIcon.png"></u-image>
+						<u-image width="48" height="48" src="@/static/selling.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">车辆转卖</view>
 					</view>
 					<view style="display: flex;">
@@ -55,7 +58,7 @@
 				</view>
 				<view @click="toPub(3)" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/rentIcon.png"></u-image>
+						<u-image width="48" height="48" src="@/static/buy.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">求购信息</view>
 					</view>
 					<view style="display: flex;">
@@ -65,11 +68,21 @@
 				</view>
 				<view @click="toPub(1)" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 0 0 20rpx 20rpx;">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/rentIcon.png"></u-image>
+						<u-image width="48" height="48" src="@/static/search.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">招聘信息</view>
 					</view>
 					<view style="display: flex;">
 						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{myPublishObj.zpxx}}</view>
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
+				</view>
+				<view @click="toShopPage" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 0 0 20rpx 20rpx;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/shopCom.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">我的店铺</view>
+					</view>
+					<view style="display: flex;">
+						<view v-show="!token" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>
@@ -78,7 +91,7 @@
 				</view>
 				<view @click="toCustomer" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx 20rpx 0 0;">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/rentIcon.png"></u-image>
+						<u-image width="48" height="48" src="@/static/earCom.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">客户服务</view>
 					</view>
 					<view style="display: flex;">
@@ -88,7 +101,7 @@
 				</view>
 				<view @click="tohelps" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/rentIcon.png"></u-image>
+						<u-image width="48" height="48" src="@/static/helpCom.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">使用帮助</view>
 					</view>
 					<view style="display: flex;">
@@ -98,7 +111,7 @@
 				</view>
 				<view @click="toFeedback" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/rentIcon.png"></u-image>
+						<u-image width="48" height="48" src="@/static/feedCom.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">意见反馈</view>
 					</view>
 					<view style="display: flex;">
@@ -106,15 +119,25 @@
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>
-				<view @click="toShopPage" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 0 0 20rpx 20rpx;">
+				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view style="font-size: 36rpx;color: #333;font-weight: 900;">其他</view>
+					<!-- <view @click="toShopPage" style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
+						<u-image style="margin-right: 60rpx;" width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view> -->
+				</view>
+				<view @click="toCollect()" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/rentIcon.png"></u-image>
-						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">店铺首页</view>
+						<u-image width="48" height="48" src="@/static/collectCom.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">收藏</view>
 					</view>
 					<view style="display: flex;">
-						<!-- <view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{myPublishObj.clzm}}</view> -->
+						<view v-show="!token" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
+				</view>
+				<view style="width: 100%;height: 40rpx;"></view>
+				<view class="publish" @click="toPublishPage">
 				</view>
 			</view>
 		</view>
@@ -231,6 +254,8 @@
 			toShopPage(){
 				if (this.token){
 					 this.$u.route('/pages/company/shop/shop');
+				}else{
+					this.toLogin()
 				}
 			},
 			toPub(index){
@@ -239,7 +264,32 @@
 						index: index
 					});
 				}
-			}
+			},
+			toPublishPage(){
+				let token = uni.getStorageSync('token');
+				   if (token){
+					   let role = uni.getStorageSync('role');
+						   uni.navigateTo({
+							   url: '/pages/company/release/release'
+						   });
+				   } else {
+						uni.showToast({
+							title:"请先登录，认证" 
+						  })
+				   }
+			},
+			toCollect(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route("/pages/mycollect/mycollect")
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
 		}
 	}
 </script>
@@ -277,5 +327,16 @@
 		font-size: 32rpx;
 		margin-right: 28rpx;
 		color: #fff;
+	}
+	.publish{
+		width: 148rpx;
+		height: 192rpx;
+		background-image: url(@/static/publishCom.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		border-radius: 56rpx;
+		position: fixed;
+		bottom: 200rpx;
+		left: 304rpx;
 	}
 </style>

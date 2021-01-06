@@ -16,8 +16,8 @@ export const publishObj = {
 	backTextStyle:{'color':'#ffffff'},
 	titleStyle:{'color':'#111111','fontSize':'32rpx','fontWeight':500},
 	cityList:[{id: '0',text: '杭州',checked:false}],
-	publicList:[{id: '1',text: '公开',checked:false},{id: '0',text: '不公开',checked:false}],
-	publiclist:[{id: '0',text: '不公开',checked:false},{id: '1',text: '不公开',checked:false}],
+	// publicList:[{id: '1',text: '公开',checked:false},{id: '0',text: '不公开',checked:false}],
+	publiclist:[{id: '0',text: '不公开',checked:false},{id: '1',text: '公开',checked:false}],
 	onLineList:[{id: '1',text: '网约车',checked:false},{id: '2',text: '出租车',checked:false}],
 	//车辆类型
 	carType:[{id: '1',text: '轿车',checked:false},{id: '2',text: 'SUV',checked:false},{id: '3',text: 'MPV',checked:false},{id: '4',text: '其他',checked:false}],

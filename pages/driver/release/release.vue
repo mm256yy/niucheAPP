@@ -12,7 +12,7 @@
 				<text class="text">求职</text>
 			</view>
 		</view>
-		<!-- <auth></auth> -->
+		<auth></auth>
 	</view>
 </template>
 

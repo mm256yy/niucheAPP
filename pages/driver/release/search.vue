@@ -81,7 +81,7 @@
 		        信息发布成功
 			</view>
 		</u-modal>
-		<!-- <auth></auth> -->
+		<auth></auth>
 	</view>
 </template>
 
