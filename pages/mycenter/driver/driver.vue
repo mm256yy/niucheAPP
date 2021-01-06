@@ -181,9 +181,10 @@
 				this.$u.route('/pages/driver/helps/helps')
 			},
 			toCustomer(){
-				uni.makePhoneCall({
-				    phoneNumber: '0571-87815287' 
-				});
+				this.$u.route('/pages/driver/cashAccount/cashAccount')
+				// uni.makePhoneCall({
+				//     phoneNumber: '0571-87815287' 
+				// });
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');
