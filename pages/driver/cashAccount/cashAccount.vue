@@ -86,7 +86,7 @@
 		border-bottom-width: 0;
 	}
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 	.navbar-right {
 		margin-right: 24rpx;
 		display: flex;
