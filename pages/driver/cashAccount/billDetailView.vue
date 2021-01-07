@@ -3,7 +3,7 @@
 		<u-navbar back-icon-color="#111111" title="账单详情" :background="background" title-color="#111111"></u-navbar>
 		<view class="view_content">
 			<view class="content_head">
-				<view class="head_title">{{form.source  | soureText}}</view>
+				<view class="head_title">{{form.source | soureText}}</view>
 				<view class="head_money">{{form.money}}</view>
 			</view>
 			<view class="content_info" v-if="flag">
@@ -46,19 +46,23 @@
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5" v-if="flag"></u-gap>
 		<view class="view_content" style="padding-bottom: 12px;" v-if="flag">
-			<view  style="padding: 10px 0;">车辆租赁合同照片</view>
+			<view style="padding: 10px 0;">车辆租赁合同照片</view>
 			<u-row :gutter="20">
-				<u-col span="6"><u-image width="100%" height="200rpx" :src="item" v-for="(item,index) in form.vehicleLeaseContract" :key="index"></u-image></u-col>
+				<u-col span="6">
+					<u-image width="100%" height="200rpx" :src="item" v-for="(item,index) in form.vehicleLeaseContract" :key="index"></u-image>
+				</u-col>
 			</u-row>
-			<view  style="padding: 10px 0;">网约车平台跑单流水截图</view>
+			<view style="padding: 10px 0;">网约车平台跑单流水截图</view>
 			<u-row :gutter="20">
-				<u-col span="6"><u-image width="100%" height="200rpx" :src="item" v-for="(item,index) in form.runSingerWater" :key="index"></u-image></u-col>
-			</u-row>	
-		</view>	
+				<u-col span="6">
+					<u-image width="100%" height="200rpx" :src="item" v-for="(item,index) in form.runSingerWater" :key="index"></u-image>
+				</u-col>
+			</u-row>
+		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="bottom_help" @click="callPhone">
 			<text>遇到问题？</text>
-			<u-icon name="arrow-right" color="#333333" ></u-icon>
+			<u-icon name="arrow-right" color="#333333"></u-icon>
 		</view>
 	</view>
 </template>
@@ -70,85 +74,108 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				flag:false,
-				form:{}
+				flag: false,
+				form: {},
+				id:''
 			}
+		},
+		onLoad(option) {
+			this.id = option.id;
 		},
 		filters: {
-		  audState: function (value) {
-		    if (value === 'BE_BEING') {
-				return '提现中'
-			} else if (value === 'BE_FINISHED'){
-				return '已到账'
-			} else if (value === 'BE_FAILED'){
-				return '提现失败'
-			} else if (value === 'AUDIT_FAILED'){
-				return '审核失败'
-			}else {
-				return ''
+			audState: function(value) {
+				if (value === 'BE_BEING') {
+					return '提现中'
+				} else if (value === 'BE_FINISHED') {
+					return '已到账'
+				} else if (value === 'BE_FAILED') {
+					return '提现失败'
+				} else if (value === 'AUDIT_FAILED') {
+					return '审核失败'
+				} else {
+					return ''
+				}
+			},
+			soureText: function(value) {
+				if (value === 'SOURCE_REGISTER_AUTH') {
+					return '注册-认证有礼'
+				} else if (value === 'SOURCE_INVITE') {
+					return '推广拉新'
+				} else if (value === 'SOURCE_WITHDRAW') {
+					return '提现'
+				} else if (value === 'SOURCE_REFUND') {
+					return '提现退款'
+				} else {
+					return ''
+				}
 			}
-		  },
-		  soureText: function (value) {
-		    if (value === 'SOURCE_REGISTER_AUTH') {
-		  				return '注册-认证有礼'
-		  			} else if (value === 'SOURCE_INVITE'){
-		  				return '推广拉新'
-		  			} else if (value === 'SOURCE_WITHDRAW'){
-		  				return '提现'
-		  			} else if (value === 'SOURCE_REFUND'){
-		  				return '提现退款'
-		  			}else {
-		  				return ''
-		  			}
-		  }
+		},
+		mounted() {
+			this.getDetails()
 		},
 		methods: {
-			callPhone(){
+			callPhone() {
 				uni.makePhoneCall({
-					phoneNumber: '0571-87815287' 
+					phoneNumber: '0571-87815287'
 				});
 			},
+			getDetails(){
+				this.$u.api.deleteUserJobWanted({driverDemandId:this.id}).then(res=>{
+						if(res.code === 200){
+							this.form = res.object
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
- .view_content{
-	 padding: 0 20px;
-	 .content_head{
-		display: flex;
-		 justify-content: center;
-		 align-items: center;
-		 flex-direction: column;
-		 min-height: 150px;
-		 border-bottom: 1px solid #E0E0E0;
-		 color: #333333; 
-		 .head_title{
-			font-size: 14px;
-			color: #333333; 
-		 }
-		 .head_money{
-			font-size: 26px;
-			 padding: 10px 0 20px;
-		 }
-	 }
-	 .content_info{
-		 padding: 20px 0;
-		 .info_item{
-			padding: 4px 0; 
-			.info_title{
-				 color:#939393 ;
-				 font-size: 14px;
-			}
-		 }
+	.view_content {
+		padding: 0 20px;
 
-	 }
- }
- .bottom_help{
-	 color: #111111;
-	 display: flex;
-	 justify-content: space-between;
-	 padding: 10px 20px;
-	 border-bottom:1px solid #DEDEDE ;
- }
+		.content_head {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			min-height: 150px;
+			border-bottom: 1px solid #E0E0E0;
+			color: #333333;
+
+			.head_title {
+				font-size: 14px;
+				color: #333333;
+			}
+
+			.head_money {
+				font-size: 26px;
+				padding: 10px 0 20px;
+			}
+		}
+
+		.content_info {
+			padding: 20px 0;
+
+			.info_item {
+				padding: 4px 0;
+
+				.info_title {
+					color: #939393;
+					font-size: 14px;
+				}
+			}
+
+		}
+	}
+
+	.bottom_help {
+		color: #111111;
+		display: flex;
+		justify-content: space-between;
+		padding: 10px 20px;
+		border-bottom: 1px solid #DEDEDE;
+	}
 </style>
