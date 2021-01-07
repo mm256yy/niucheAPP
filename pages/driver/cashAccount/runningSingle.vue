@@ -5,14 +5,14 @@
 			<view class="view-content">
 				<view style="padding-bottom: 10pt;">1.上传车辆租赁合同(照片)</view>
 				<view class="top-content-upload">
-					<u-upload :custom-btn="true" :action="action" ref="upload" @on-success='uploadChange' index="onephoto" upload-text=""
+					<u-upload :custom-btn="true" :action="action" ref="upload" @on-success='uploadChange' index="vehicleLeaseContract" upload-text=""
 					 @on-remove="removeOne" :file-list="fileList" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 						</view>
 					</u-upload>
 				</view>
-				<view style="margin-top: 10pt;font-size: 10pt;padding-left: 5pt;color: #666666;">
+				<view style="margin-top: 12px;font-size: 12px;color: #666666;">
 					上传图片必须包含：1、合同全部内容页；2、合同内容清晰可见；
 				</view>
 			</view>
@@ -20,14 +20,14 @@
 			<view class="view-content">
 				<view style="padding-bottom: 10pt;">2.上传上月跑单流水(截图）</view>
 				<view class="top-content-upload">
-					<u-upload :custom-btn="true" :action="action" ref='upload1' @on-success='uploadChange' index="oneneishiphoto"
+					<u-upload :custom-btn="true" :action="action" ref='upload1' @on-success='uploadChange' index="runSingerWater"
 					 upload-text="" @on-remove="removeOne" :file-list="fileList1" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 						</view>
 					</u-upload>
 				</view>
-				<view style="margin-top: 5pt;font-size: 10pt;padding-left: 5pt;color: #666666;">
+				<view style="margin-top: 5pt;font-size: 10pt;color: #666666;">
 					<view>请上传网约车平台上一月份跑单记录！</view>
 				</view>
 			</view>
@@ -72,14 +72,32 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
+				phone:'',
 				action: action,
 				fileList: [],
 				fileList1: [],
-				form: {},
+				form: {
+					money:'',
+					rent:'',
+					billingAccount:'',
+					vehicleLeaseContract:[],
+					runSingerWater:[
+						
+						
+					]
+				},
 				showCode: false,
 				sendFlag:false,
 				showTips:false,
 			}
+		},
+		onLoad(option) {
+			this.form.money = option.money;
+			this.form.rent = option.rent;
+			this.form.money = option.money;
+		},
+		onShow() {
+			this.phone = uni.getStorageSync('phone')
 		},
 		methods: {
 			// uni.showLoading({
@@ -96,7 +114,8 @@
 			getCode() {
 				if (this.$refs.uCode.canGetCode) {
 					this.$u.api.getIdentifyCode({
-						codeType: 'verificationCode'
+						phone:this.phone,
+						codeType: 'billingCode'
 					}).then(res => {
 						if (res.code === 200) {
 							this.$refs.uCode.start();
@@ -105,6 +124,9 @@
 						}
 					})
 				} 
+			},
+			applyAccount(){
+				
 			},
 			startCode(){
 				this.sendFlag = false
@@ -124,8 +146,8 @@
 </script>
 <style lang="scss" scoped>
 	.view-content {
-		margin-top: 20pt;
-		padding: 0 10pt;
+		margin: 0 20px;
+		padding: 15px 0;
 	}
 
 	.top-content-upload {

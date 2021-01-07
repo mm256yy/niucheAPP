@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="账单明细" :background="background" title-color="#111111">
+		<u-navbar back-icon-color="#111111" title="账单" :background="background" title-color="#111111">
 			<view class="navbar-right" slot="right">
 				<view class="right-item" @click="showSelect">
 					<text>{{selectText}}</text>
@@ -16,12 +16,13 @@
 				<load-refresh ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000" color="#04C4C4"
 				 heightReduce="10" :pageNo="pageNum" :totalPageNo="totalPageNo" @loadMore="loadMoreList"
 				 @refresh="refresh">
-					<view class="list_item" v-for="i in 5" @click="toView(1)">
+					<view class="list_item" v-for="(item,index) in list" :key="index" @click="toView(item.billingDetailsid)">
 						<view class="item">
-							<text class="item_title">新用户奖励金</text>
-							<text class="item_money" :style="{color:i/2 >1?'#FFA000':'#333333'}">+¥200</text>
+							<text class="item_title">{{item.source | soureText}}</text>
+							<text class="item_money" :style="{color:item.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
+								 {{item.incomingAndOutgoingState === 'ADD'?'+':'-'}}{{item.money}}</text>
 						</view>
-						<view class="item_time">2020年09月28日 11:15:33</view>
+						<view class="item_time">{{item.endDisposeTime}}</view>
 					</view>
 				</load-refresh>
 			</scroll-view>
@@ -41,20 +42,37 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				selectText: '全部',
+				selectValue:'',
 				popData: [{
 					title: '全部',
-					value: 0
+					value: '’'
 				}, {
 					title: '收入',
-					value: 1
+					value: 'ADD'
 				}, {
 					title: '支出',
-					value: 2
+					value: 'SUB'
 				}],
+				list:[],
 				selectFlag: false,
 				pageNum:1,
-				totalPageNo:11
+				totalPageNo:10
 			}
+		},
+		filters: {
+		  soureText: function (value) {
+		    if (value === 'SOURCE_REGISTER_AUTH') {
+				return '注册-认证有礼'
+			} else if (value === 'SOURCE_INVITE'){
+				return '推广拉新'
+			} else if (value === 'SOURCE_WITHDRAW'){
+				return '提现'
+			} else if (value === 'SOURCE_REFUND'){
+				return '提现退款'
+			}else {
+				return ''
+			}
+		  }
 		},
 		methods: {
 			showSelect() {
@@ -62,6 +80,7 @@
 			},
 			tapPopup(option) {
 				this.selectText = option.title;
+				this.selectValue = option.value;
 				console.log(option.value)
 			},
 			getList(pageNum) {

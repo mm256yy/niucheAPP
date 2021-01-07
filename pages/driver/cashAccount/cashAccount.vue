@@ -43,9 +43,7 @@
 			};
 		},
 		onShow() {
-			// if(this.$refs.auth){
-			// 	 this.$refs.auth.getStatus()
-			// }
+
 		},
 		methods: {
 			billDetails() {
@@ -66,8 +64,6 @@
 				}
 			},
 			applyAccount() {
-                
-				
 				this.$u.route('/pages/driver/cashAccount/cashWithdrawal')
 			}
 		}

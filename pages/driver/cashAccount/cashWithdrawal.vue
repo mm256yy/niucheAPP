@@ -5,13 +5,13 @@
 			<view class="content_title">车辆月租金</view>
 			<view class="content_input">
 				<u-image src="@/static/￥@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
-				<u-input v-model="form.mobile" @input="money=form.mobile" type="number" maxlength="6" :border="false" placeholder="请输入当前车辆月租金" style="padding-left: 20px;" />
+				<u-input v-model="form.rent" @input="rentMoney" type="number" maxlength="6" :border="false" placeholder="请输入当前车辆月租金" style="padding-left: 20px;" />
 			</view>
 			<view class="content_tips">*请输入与您租赁合同内一致的租金金额，否则会提现失败</view>
 			<view class="content_title">提现金额</view>
 			<view class="content_input">
 				<u-image src="@/static/￥@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
-				<u-input v-model="form.mobile" @input="" :border="false" type="number" maxlength="5" placeholder="请输入提现金额" style="padding-left: 20px;" />
+				<u-input v-model="form.money" @input="moneyInput" :border="false" type="number" maxlength="5" placeholder="请输入提现金额" style="padding-left: 20px;" />
 			</view>
 			<view style="font-size: 12px;color:#C7C7C7 ;padding-top: 5px;">当前可提现金额<text>{{money}}</text>元</view>
 			<view class="content_tips" v-show="moneyTips">*当前超过可提现金额</view>
@@ -27,7 +27,7 @@
 			</view>
 			<view class="content_input" style="align-items: baseline;padding: 10px 0;">
 				<view style="color: #111111;font-weight: bold;">支付宝账号</view>
-				<u-input v-model="form.mobile" :border="false" placeholder="请输入您的支付宝账户号" style="padding-left: 20px;" />
+				<u-input v-model="form.billingAccount" maxlength="100" :border="false" placeholder="请输入您的支付宝账户号" style="padding-left: 20px;" />
 			</view>
 			<view class="content_tips">
 				*为保障您的合法权益，提现须上传车辆租赁合同和网约车平
@@ -41,7 +41,7 @@
 		<u-modal v-model="showTips" :show-confirm-button="false" title="支付宝账户确认">
 			<view class="slot_content">
 				<view class="slot_tips">
-					您的支付宝帐户为<text style="display: inline-block;font-weight: bold;color: #333;">{{tipsText}}</text>，
+					您的支付宝帐户为<text style="display: inline-block;font-weight: bold;color: #333;">{{form.billingAccount}}</text>，
 					请您认真核对，如因错误造成的损失平台不承担，点击“确认”表示您已知晓相关责任！
 				</view>
 				<view style="display: flex;justify-content: space-around;padding: 10px 0 0;">
@@ -64,7 +64,9 @@
 				moneyTips: false,
 				showTips:false,
 				form: {
-					mobile: ''
+					rent:'',
+					money: '',
+					billingAccount:''
 				}
 				//提现
 			}
@@ -75,14 +77,39 @@
 					phoneNumber: '0571-87815287' 
 				});
 			},
+			rentMoney(v){
+				let digFlag = this.$u.test.digits(v);
+				if(v>0){
+					this.money = Math.floor(v*0.1)
+				}
+			},
+			moneyInput(val){
+				let digFlag = this.$u.test.digits(val);
+				if(digFlag && val>0 && val<=this.money){
+					 this.moneyTips = false;
+				} else{
+					this.moneyTips = true;
+				}
+			},
 			toNext(){
-				
-				
-				
+				let rent = this.form.rent;
+				if (rent === '' || rent == 0){
+					this.$u.toast('车辆月租金输入不合法')
+					return false
+				}
+				if(this.moneyTips){
+					this.$u.toast('提现金额大于可提现金额')
+					return false
+				}
+				if(this.form.billingAccount === ''){
+					this.$u.toast('请填写支付宝账号')
+					return false
+				}
 				this.showTips = true;
 			},
 			toNextRoute(){
-				this.$u.route('/pages/driver/cashAccount/runningSingle',{params:this.form})
+				this.showTips = false;
+				this.$u.route('/pages/driver/cashAccount/runningSingle',{rent:this.form.rent,money:this.form.money,billingAccount:this.form.billingAccount})
 			}
 		}
 	}
