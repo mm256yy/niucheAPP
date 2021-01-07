@@ -38,6 +38,18 @@
 			<u-button type="warning" shape='circle' class="btn_orange" @click="toNext">上传凭证</u-button>
 		</view>
 		<view style="color:#C7C7C7 ;text-align: center;padding: 10px 0;" @click="callPhone">遇到问题？</view>
+		<u-modal v-model="showTips" :show-confirm-button="false" title="支付宝账户确认">
+			<view class="slot_content">
+				<view class="slot_tips">
+					您的支付宝帐户为<text style="display: inline-block;font-weight: bold;color: #333;">{{tipsText}}</text>，
+					请您认真核对，如因错误造成的损失平台不承担，点击“确认”表示您已知晓相关责任！
+				</view>
+				<view style="display: flex;justify-content: space-around;padding: 10px 0 0;">
+					<view @click="showTips=false" class="slot_btn" style="background: #F2F2F2;color: #5F5E5F;">修改</view>
+					<view class="slot_btn" @click="toNextRoute" style="background: linear-gradient(270deg, #FFC200 0%, #FFB900 41%, #FF9A00 100%);color: #FFFFFF;">确认</view>
+				</view>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -50,6 +62,7 @@
 				},
 				money: 0,
 				moneyTips: false,
+				showTips:false,
 				form: {
 					mobile: ''
 				}
@@ -64,6 +77,12 @@
 			},
 			toNext(){
 				
+				
+				
+				this.showTips = true;
+			},
+			toNextRoute(){
+				this.$u.route('/pages/driver/cashAccount/runningSingle',{params:this.form})
 			}
 		}
 	}
@@ -93,5 +112,19 @@
 	.btn_orange {
 		background: linear-gradient(270deg, #FFC700 0%, #FF9000 100%);
 		border-radius: 6px;
+	}
+	.slot_content {
+		padding: 15px 0;
+		.slot_tips {
+			color: #939393;
+			font-size: 14px;
+			padding: 0 20px 15px;
+			border-bottom: 1rpx solid #E0E0E0;
+		}
+
+	}
+	.slot_btn{
+		width: 100px;padding: 8px;text-align: center;font-size: 14px;
+		border-radius: 4px;
 	}
 </style>

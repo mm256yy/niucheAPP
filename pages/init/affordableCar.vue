@@ -65,7 +65,6 @@
 					pageSize: 10
 				}).then(res => {
 					if (res.code === 200) {
-						this.total = 10
 						this.total = Math.ceil(res.total / 10);
 						let arr = res.rows
 						if (pageNum === 1) {
