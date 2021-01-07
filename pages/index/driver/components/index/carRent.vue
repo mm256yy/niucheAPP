@@ -9,7 +9,7 @@
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 					<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
 					background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
-					<view style="float: left;">杭州</view>
+					<view style="float: left;margin-right: 42rpx;">杭州</view>
 					<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
 					</u-form-item>
 					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
@@ -28,7 +28,7 @@
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
 					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
-				<view v-show="filterData" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+				<view v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
 		</view>
 		<!-- <view class="wrap">
@@ -93,6 +93,9 @@
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	import listTags from '@/components/listTags.vue'
+	import {
+		publishObj
+	} from '@/utils/constant.js'
 	export default {
 		components: {
 			loadRefresh,
@@ -104,6 +107,7 @@
 				show:false,
 				showType:false,
 				iconType: 'flower',
+				publishObj:publishObj,
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -191,7 +195,15 @@
 				styleActive:{
 					color:'#FF9500'
 				},
-				filterData:[]
+				filterData:[],
+				objType:{
+					wycList:[{id: '',text:'不限',checked:false },{id: '0',text:'0-2万公里',checked:false },{id: '1',text:'2-5万公里',checked:false},{id: '2',text:'5-10万公里',checked:false },{id: '3',text:'10-20万公里',checked:false },
+					     {id: '4',text:'20-30万公里',checked:false },{id: '5',text:'30万公里以上',checked:false},],
+					      czcList:[{id: '',text:'不限',checked:false },{id: '0',text:'0-2万公里',checked:false },{id: '1',text:'2-5万公里',checked:false },
+					      {id: '2',text:'5-10万公里',checked:false },{id: '3',text:'10-20万公里',checked:false },{id: '4',text:'20-30万公里',checked:false },
+					      {id: '5',text:'30-50万公里',checked:false },{id: '6',text:'50-70万公里',checked:false },{id: '7',text:'70万公里以上',checked:false}],
+				},
+				radioType:'wycList'
 			}
 		},
 		mounted() {
@@ -201,7 +213,6 @@
 			}else{
 				this.form.islogin = 0
 			}
-			this.search()
 			this.transform()
 		},
 		methods: {
@@ -209,6 +220,7 @@
 				this.filterData.splice(index, 1);
 			},
 			transform(){
+				var carbrand = [];
 				var cartype = [];
 				var power = [];
 				var businessType = '';
@@ -218,23 +230,66 @@
 				if(uni.getStorageSync('businesstype')){
 					businessType = uni.getStorageSync('businesstype');
 					this.filterData.push(businessType);
+					this.publishObj.onLineList.map(item=>{
+					   if(item.text == businessType){
+					   	this.form.businesstype = item.id;
+					   }
+					})
+				}
+				if(uni.getStorageSync('carbrandDriver')){
+					carbrand = uni.getStorageSync('carbrandDriver').split(',');
+					this.filterData = this.filterData.concat(carbrand);
+					this.form.carbrand = uni.getStorageSync('carbrandDriver');
 				}
 				if(uni.getStorageSync('cartypeDriver')){
 					cartype = uni.getStorageSync('cartypeDriver').split(',');
 					this.filterData = this.filterData.concat(cartype);
+					this.form.cartype = uni.getStorageSync('cartypeDriver');
 				}
 				if(uni.getStorageSync('powerDriver')){
 					power = uni.getStorageSync('powerDriver').split(',');
 					this.filterData = this.filterData.concat(power);
+					this.form.power = uni.getStorageSync('powerDriver');
 				}
 				if(uni.getStorageSync('caragekey')){
 					caragekey = uni.getStorageSync('caragekey');
 					this.filterData.push(caragekey);
+					this.publishObj.ageList.map(item=>{
+					   if(item.text == caragekey){
+						const carage = parseInt(item.id);
+					   	if(carage == '1') {
+					   		this.form.startCarAge = '';
+					   		this.form.endCarAge = '';
+					   	}
+					   	if(carage == '2') {
+					   		this.form.startCarAge = '';
+					   		this.form.endCarAge = '1';
+					   	}
+					   	if(carage == '3') {
+					   		this.form.startCarAge = '1';
+					   		this.form.endCarAge = '3';
+					   	}
+					   	if(carage == '4') {
+					   		this.form.startCarAge = '3';
+					   		this.form.endCarAge = '5';
+					   	}
+					   	if(carage == '5') {
+					   		this.form.startCarAge = '5';
+					   		this.form.endCarAge = '';
+					   	}
+					   }
+					})
 				}
 				if(uni.getStorageSync('kmkey')){
 					kmkey = uni.getStorageSync('kmkey');
 					this.filterData.push(kmkey);
+					this.objType[this.radioType].forEach(item=>{
+					   if(item.text == kmkey){
+						this.form.km = parseInt(item.id)
+					   }
+					})
 				}
+				this.search()
 			},
 			hideMask(){
 				this.showMask = false;
@@ -282,7 +337,7 @@
 			getDataType(index) {
 				this.currentType = index;
 				this.businesstypekey = this.selectType[index].label;
-				this.businesstype = this.selectType[index].value;
+				this.form.businesstype = this.selectType[index].value;
 				this.showType = false;
 				this.showMask = false;
 				this.search()
@@ -388,7 +443,6 @@
 			// },
 		    getList(){
 				this.pageNum = this.pageNum + 1;
-				this.form.businesstype=this.businesstype==100?'':this.businesstype;
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pageNum,
 		        	pageSize: 10,
@@ -415,7 +469,6 @@
 		    		})
 		    },
 		    search(){
-				this.form.businesstype=this.businesstype==100?'':this.businesstype;
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
 		    		pageSize: 10,
@@ -483,14 +536,19 @@
 				this.$u.route("/pages/index/driver/components/index/filterRent")
 			},
 			clear(){
-				this.priceidkey='';
-				this.businesstypekey='',
-				this.priceid='';
-				this.businesstype=100;
-				this.form.startPriceid='';
-				this.form.endPriceid='';
-				this.form.businesstype='';
-				const token = uni.getStorageSync('token');
+				uni.removeStorageSync('cartypeDriver');
+				uni.removeStorageSync('powerDriver');
+				uni.removeStorageSync('businesstype');
+				uni.removeStorageSync('caragekey');
+				uni.removeStorageSync('kmkey');
+				this.filterData = [];
+				this.form.businesstype = 0;
+				this.form.power = '';
+				this.form.cartype = '';
+				this.form.carbrand = '';
+				this.form.startCarAge = '';
+				this.form.endCarAge = '';
+				this.form.km = '';
 				if(token) {
 					this.form.islogin = 1
 				}else{

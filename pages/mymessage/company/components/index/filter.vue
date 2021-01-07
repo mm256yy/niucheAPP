@@ -52,9 +52,9 @@
 		  </u-form>
 	   </view>
 		<view class="bottom">
-			<view class="reset">
+			<view class="reset" @click="reset()">
 				<u-icon name="reload" color="#5D6671" size="28"></u-icon>
-				<view class="btn" @click="reset()">重置</view>
+				<view class="btn">重置</view>
 			</view>
 			<view class="total" @click="result()">查看{{total}}条车源></view>
 		</view>
@@ -80,7 +80,7 @@
 					businessType:0,
 					carbrand:'',
 					cartype:'',
-					km: 100,
+					km: 0,
 					power:'',
 					packprice:'',
 					startCarAge:'',
@@ -111,7 +111,8 @@
 				cartype:[],
 				power:[],
 				businessType: '',
-				list:[]
+				list:[],
+				arr:[]
 			}
 		},
 		// computed:{
@@ -139,10 +140,16 @@
 				this.addkey = this.addkey==''?text:(this.addkey+','+text);
 				this.list=[];
 				this.value='';
+				this.arr.push(text);
+				this.form.carbrand = this.arr.join(',');
+				this.select()
 			},
 			transform() {
 				const businessType = uni.getStorageSync('businessType');
 				this.businessType = uni.getStorageSync('businessType');
+				if(uni.getStorageSync('carbrand')){
+					var carbrand = uni.getStorageSync('carbrand').split(',');
+				}
 				if(uni.getStorageSync('cartype')){
 					var cartype = uni.getStorageSync('cartype').split(',');
 				}
@@ -158,7 +165,11 @@
 					   }
 					}) 
 				}
-				if(cartype.length){
+				if(carbrand){
+					this.form.carbrand = carbrand.join(',');
+					this.addkey = this.addkey==''?this.form.carbrand:(this.addkey+','+this.form.carbrand);
+				}
+				if(cartype){
 					this.form.cartype = cartype.join(',');
 					this.addkey = this.addkey==''?this.form.cartype:(this.addkey+','+this.form.cartype);
 					cartype.map(item=>{
@@ -170,7 +181,7 @@
 					   })
 					})
 				}
-				if(power.length){
+				if(power){
 					this.form.power = power.join(',');
 					this.addkey = this.addkey==''?this.form.power:(this.addkey+','+this.form.power);
 					power.map(item=>{
@@ -224,27 +235,27 @@
 				+ (this.form.power?',':'') + this.form.power
 			},
 			reset() {
+				debugger
 				this.currentType = -1;
-				console.log(this.publishObj.onLineList)
+				this.form.businessType = 0;
+				this.businessType = '';
+				this.arrPower = [];
+				this.form.power = '';
+				this.arrCar = [];
+				this.form.cartype = '';
+				this.addkey = '';
+				this.list=[];
+				this.value='';
 				this.publishObj.carType.map( item => {
 				  item.checked=false;
 				});
 				this.publishObj.power.map( item => {
 				  item.checked=false;
 				});
-				this.carage='';
-				this.addkey = '不限';
-				this.businessTypekey='不限';
-				this.carbrandkey='';
-				this.cartypekey='';
-				this.powerkey='';
-				this.packpricekey={
-					text:''
-				};
-				this.caragekey='';
-				this.kmkey={
-					text:''
-				};
+				uni.removeStorageSync('cartype');
+				uni.removeStorageSync('power');
+				uni.removeStorageSync('businessType');
+				uni.removeStorageSync('carbrand');
 				this.select()
 			},
 			brandGroupChange(e) {
@@ -364,7 +375,10 @@
 				if(this.form.businessType){
 					uni.setStorageSync('businessType', this.businessType);
 				}
-				this.$u.route({url:'/pages/mymessage/mymessage',type:'switchTab'});
+				if(this.form.carbrand){
+					uni.setStorageSync('carbrand', this.form.carbrand);
+				}
+				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 			}
 		}
 	}

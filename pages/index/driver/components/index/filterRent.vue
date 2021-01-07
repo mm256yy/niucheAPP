@@ -143,7 +143,8 @@
 				currentKm: -1,
 				arrCar:[],
 				arrPower:[],
-				cartype:[]
+				cartype:[],
+				arr:[]
 			}
 		},
 		mounted() {
@@ -157,6 +158,9 @@
 				this.caragekey = uni.getStorageSync('caragekey');
 				const kmkey = uni.getStorageSync('kmkey');
 				this.kmkey = uni.getStorageSync('kmkey');
+				if(uni.getStorageSync('carbrandDriver')){
+					var carbrand = uni.getStorageSync('carbrandDriver').split(',');
+				}
 				if(uni.getStorageSync('cartypeDriver')){
 					var cartype = uni.getStorageSync('cartypeDriver').split(',');
 				}
@@ -172,7 +176,11 @@
 					   }
 					}) 
 				}
-				if(cartype.length){
+				if(carbrand){
+					this.form.carbrand = carbrand.join(',');
+					this.addkey = this.addkey==''?this.form.carbrand:(this.addkey+','+this.form.carbrand);
+				}
+				if(cartype){
 					this.form.cartype = cartype.join(',');
 					this.addkey = this.addkey==''?this.form.cartype:(this.addkey+','+this.form.cartype);
 					cartype.map(item=>{
@@ -184,7 +192,7 @@
 					   })
 					})
 				}
-				if(power.length){
+				if(power){
 					this.form.power = power.join(',');
 					this.addkey = this.addkey==''?this.form.power:(this.addkey+','+this.form.power);
 					power.map(item=>{
@@ -242,17 +250,13 @@
 				}
 				this.select()
 			},
-			getDataType(obj) {
-				this.currentType = obj.index;
-				this.form.businessType = obj.index + 1;
-				this.businessType =  obj.text;
-				this.select()
-				this.add()
-			},
 			get(text) {
 				this.addkey = this.addkey==''?text:(this.addkey+','+text);
 				this.list=[];
 				this.value='';
+				this.arr.push(text);
+				this.form.carbrand = this.arr.join(',');
+				this.select()
 			},
 			getDataType(obj) {
 				this.currentType = obj.index;
@@ -330,27 +334,37 @@
 				+ (this.caragekey?',':'') + this.kmkey
 			},
 			reset() {
+				uni.removeStorageSync('cartypeDriver');
+				uni.removeStorageSync('powerDriver');
+				uni.removeStorageSync('businesstype');
+				uni.removeStorageSync('caragekey');
+				uni.removeStorageSync('kmkey');
+				uni.removeStorageSync('carbrandDriver');
 				this.currentType = -1;
-				console.log(this.publishObj.onLineList)
+				this.currentAge = -1;
+				this.currentKm = -1;
+				this.form.businesstype = 0;
+				this.form.power = '';
+				this.form.cartype = '';
+				this.form.carbrand = '';
+				this.form.startCarAge = '';
+				this.form.endCarAge = '';
+				this.form.km = '';
+				this.businessType = '';
+				this.form.cartype = '';
+				this.arrPower = [];
+				this.form.power = '';
+				this.arrCar = [];
+				this.form.cartype = '';
+				this.addkey = '';
+				this.list=[];
+				this.value='';
 				this.publishObj.carType.map( item => {
 				  item.checked=false;
 				});
 				this.publishObj.power.map( item => {
 				  item.checked=false;
 				});
-				this.carage='';
-				this.addkey = '不限';
-				this.businessTypekey='不限';
-				this.carbrandkey='';
-				this.cartypekey='';
-				this.powerkey='';
-				this.packpricekey={
-					text:''
-				};
-				this.caragekey='';
-				this.kmkey={
-					text:''
-				};
 				this.select()
 			},
 			keyup() {
@@ -505,6 +519,9 @@
 				}
 				if(this.kmkey){
 					uni.setStorageSync('kmkey', this.kmkey);
+				}
+				if(this.form.carbrand){
+					uni.setStorageSync('carbrandDriver', this.form.carbrand);
 				}
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 			}

@@ -7,9 +7,9 @@
 				</view>
 			</view>
 		 </u-navbar> -->
-		 <view style="width: 100%;height: 176rpx;top: 0;left: 0;background: #000;position: fixed;z-index: 20;display: flex;justify-content: center;align-items: center;font-weight: 900;">
-			 <u-image style="position: absolute;bottom: 50rpx;left: 50rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
-			 <view style="margin-bottom: -60rpx;font-size: 36rpx;">{{detail.carmodeltag}}</view>
+		 <view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;display: flex;justify-content: center;align-items: center;font-weight: 900;">
+			 <u-image style="position: absolute;top: 0;left: 0" width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
+			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;">{{detail.carmodeltag}}</view>
 		 </view>
 		 <view class="wraps img">
 		 	<u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper>
