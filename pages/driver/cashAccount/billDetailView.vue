@@ -4,13 +4,14 @@
 		<view class="view_content">
 			<view class="content_head">
 				<view class="head_title">{{form.source | soureText}}</view>
-				<view class="head_money">{{form.money}}</view>
+				<view class="head_money" :style="{color:form.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
+				{{form.incomingAndOutgoingState === 'ADD'?'+':'-'}}¥{{form.money}}</view>
 			</view>
 			<view class="content_info" v-if="flag">
 				<view class="info_item">
 					<text class="info_title">当前状态：</text>
 					<text>{{form.auditState | audState}}</text>
-					<view style="color: #FE3B31;font-size: 12px;">原因：{{form.failCause}}</view>
+					<view style="color: #FE3B31;font-size: 12px;" v-show="form.auditState == 'BE_FAILED' || form.auditState == 'AUDIT_FAILED'">原因：{{form.failCause}}</view>
 				</view>
 				<view class="info_item">
 					<text class="info_title">提现时间：</text>
@@ -40,7 +41,7 @@
 				</view>
 				<view class="info_item">
 					<text class="info_title">入账时间：</text>
-					<text>{{item.endDisposeTime}}</text>
+					<text>{{form.endDisposeTime}}</text>
 				</view>
 			</view>
 		</view>
@@ -120,9 +121,14 @@
 				});
 			},
 			getDetails(){
-				this.$u.api.deleteUserJobWanted({driverDemandId:this.id}).then(res=>{
+				this.$u.api.getMyBillDetails({billingDetailsid:this.id}).then(res=>{
 						if(res.code === 200){
 							this.form = res.object
+							if (res.object.incomingAndOutgoingState === 'ADD'){
+								this.flag = true
+							} else{
+								this.flag = true
+							}
 						}else {
 							 this.$u.toast(res.msg);
 						}

@@ -13,17 +13,17 @@
 		</view>
 		<view class="list_content">
 			<scroll-view scroll-y style="height: 100%;width: 100%;">
-				<load-refresh ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000" color="#04C4C4"
-				 heightReduce="10" :pageNo="pageNum" :totalPageNo="totalPageNo" @loadMore="loadMoreList"
-				 @refresh="refresh">
-					<view class="list_item" v-for="(item,index) in list" :key="index" @click="toView(item.billingDetailsid)">
-						<view class="item">
-							<text class="item_title">{{item.source | soureText}}</text>
-							<text class="item_money" :style="{color:item.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
-								 {{item.incomingAndOutgoingState === 'ADD'?'+':'-'}}{{item.money}}</text>
-						</view>
-						<view class="item_time">{{item.endDisposeTime}}</view>
+				<load-refresh ref="Refresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000"
+					 heightReduce="10" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
+					 @refresh="refresh">
+				<view slot="content-list" class="list_item" v-for="(item,index) in list" :key="index" @click="toView(item.billingDetailsid)">
+					<view class="item">
+						<text class="item_title">{{item.source | soureText}}</text>
+						<text class="item_money" :style="{color:item.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
+							{{item.incomingAndOutgoingState === 'ADD'?'+':'-'}}{{item.money}}</text>
 					</view>
+					<view class="item_time">{{item.endDisposeTime}}</view>
+				</view>
 				</load-refresh>
 			</scroll-view>
 		</view>
@@ -31,9 +31,11 @@
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	import chunLeiPopups from "@/components/chunLei-popups/chunLei-popups.vue";
 	export default {
 		components: {
+			loadRefresh,
 			chunLeiPopups
 		},
 		data() {
@@ -42,7 +44,7 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				selectText: '全部',
-				selectValue:'',
+				selectValue: '',
 				popData: [{
 					title: '全部',
 					value: '’'
@@ -53,26 +55,26 @@
 					title: '支出',
 					value: 'SUB'
 				}],
-				list:[],
+				list: [],
 				selectFlag: false,
-				pageNum:1,
-				totalPageNo:10
+				pageNum: 1,
+				total: 0
 			}
 		},
 		filters: {
-		  soureText: function (value) {
-		    if (value === 'SOURCE_REGISTER_AUTH') {
-				return '注册-认证有礼'
-			} else if (value === 'SOURCE_INVITE'){
-				return '推广拉新'
-			} else if (value === 'SOURCE_WITHDRAW'){
-				return '提现'
-			} else if (value === 'SOURCE_REFUND'){
-				return '提现退款'
-			}else {
-				return ''
+			soureText: function(value) {
+				if (value === 'SOURCE_REGISTER_AUTH') {
+					return '注册-认证有礼'
+				} else if (value === 'SOURCE_INVITE') {
+					return '推广拉新'
+				} else if (value === 'SOURCE_WITHDRAW') {
+					return '提现'
+				} else if (value === 'SOURCE_REFUND') {
+					return '提现退款'
+				} else {
+					return ''
+				}
 			}
-		  }
 		},
 		mounted() {
 			this.getList(1)
@@ -90,20 +92,21 @@
 				this.$u.api.getBillDetails({
 					pageNum: pageNum,
 					pageSize: 10,
-					type:this.selectValue
+					type: this.selectValue
 				}).then(res => {
 					if (res.code === 200) {
-						this.totalPageNo = Math.ceil(res.total / 10);
+						this.total = Math.ceil(res.total / 10);
 						let arr = res.rows
 						if (pageNum === 1) {
-							this.list = res.rows
+							this.list = arr
 						} else {
 							arr.forEach(item => {
 								this.list.push(item)
 							})
-							this.$refs.loadRefresh.loadOver()
+							this.$refs.Refresh.loadOver()
 							this.pageNum = pageNum
 						}
+						console.log(this.list)
 					} else {
 						this.$u.toast(res.msg);
 					}
@@ -116,8 +119,10 @@
 			refresh() {
 				this.getList(1)
 			},
-			toView(id){
-				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:id})
+			toView(id) {
+				this.$u.route('/pages/driver/cashAccount/billDetailView', {
+					id: id
+				})
 			}
 		}
 	}
