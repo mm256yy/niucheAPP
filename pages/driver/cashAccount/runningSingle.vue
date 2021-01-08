@@ -148,14 +148,15 @@
 				this.$u.api.saveCashAccount(this.form).then(res => {
 					if (res.code === 200) {
 						this.$u.toast(res.msg)
-						this.toRoute()
+						this.showCode = false;
+						this.showTips = true;
 					} else {
 						this.$u.toast(res.msg);
 					}
 				})
 			},
 			toRoute(){
-				this.showTips = false;
+				this.showTips = false
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			}
 		}
