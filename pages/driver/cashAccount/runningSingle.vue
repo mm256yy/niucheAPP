@@ -157,7 +157,7 @@
 			},
 			toRoute(){
 				this.showTips = false
-				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+				this.$u.route({url:'/pages/mycenter/mycenter',type:'reLaunch'})
 			}
 		}
 	}

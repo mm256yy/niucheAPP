@@ -49,14 +49,14 @@
 		<view class="view_content" style="padding-bottom: 12px;" v-if="flag">
 			<view style="padding: 10px 0;">车辆租赁合同照片</view>
 			<u-row :gutter="20">
-				<u-col span="6">
-					<u-image width="100%" height="200rpx" :src="item" v-for="(item,index) in form.vehicleLeaseContract" :key="index"></u-image>
+				<u-col span="6" v-for="(item,index) in form.vehicleLeaseContract" :key="index" style="margin-bottom: 5px;">
+					<u-image width="100%" height="200rpx" :src="item" @click="open(index)"></u-image>
 				</u-col>
 			</u-row>
 			<view style="padding: 10px 0;">网约车平台跑单流水截图</view>
 			<u-row :gutter="20">
-				<u-col span="6">
-					<u-image width="100%" height="200rpx" :src="item" v-for="(item,index) in form.runSingerWater" :key="index"></u-image>
+				<u-col span="6" v-for="(item,index) in form.runSingerWater" :key="index" style="margin-bottom: 5px;">
+					<u-image width="100%" height="200rpx" :src="item" @click="open(index+form.vehicleLeaseContract.length)"></u-image>
 				</u-col>
 			</u-row>
 		</view>
@@ -65,11 +65,15 @@
 			<text>遇到问题？</text>
 			<u-icon name="arrow-right" color="#333333"></u-icon>
 		</view>
+		<u-gap height="40" bg-color="#FFFFFF"></u-gap>
+		 <previewImage ref="previewImage" :saveBtn="false" :imgs="imgs"></previewImage>
 	</view>
 </template>
 
 <script>
+	 import previewImage from '@/components/kxj-previewImage/kxj-previewImage.vue';
 	export default {
+		 components: { previewImage}, //注册插件
 		data() {
 			return {
 				background: {
@@ -77,6 +81,7 @@
 				},
 				flag: false,
 				form: {},
+				imgs:[],
 				id:''
 			}
 		},
@@ -120,10 +125,14 @@
 					phoneNumber: '0571-87815287'
 				});
 			},
+			open(e){
+				this.$refs.previewImage.open(e)
+			},
 			getDetails(){
 				this.$u.api.getMyBillDetails({billingDetailsid:this.id}).then(res=>{
 						if(res.code === 200){
 							this.form = res.object
+							this.imgs = res.object.vehicleLeaseContract.concat(res.object.runSingerWater)
 							if (res.object.incomingAndOutgoingState === 'ADD'){
 								this.flag = true
 							} else{
