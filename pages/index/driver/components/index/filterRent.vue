@@ -343,7 +343,7 @@
 				this.currentType = -1;
 				this.currentAge = -1;
 				this.currentKm = -1;
-				this.form.businesstype = 0;
+				this.form.businesstype = '';
 				this.form.power = '';
 				this.form.cartype = '';
 				this.form.carbrand = '';
