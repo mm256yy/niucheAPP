@@ -39,31 +39,50 @@
 			return {
 				totalAssets: 0,
 				showTips: false,
-				tipsText: '您无余额可提现！'
+				tipsText: '您无余额可提现！',
+				flag:false,//是否可提现
 			};
 		},
+		onLoad(option) {
+			let money = option.money;
+			if(money){
+				this.totalAssets = option.money;
+			}
+		},
 		onShow() {
-
+            this.getAccount()
 		},
 		methods: {
 			billDetails() {
 				this.$u.route('/pages/driver/cashAccount/billDetails')
 			},
 			getAccount() {
-				let token = uni.getStorageSync('token');
-				if (token) {
-					this.$u.api.haveIs().then(res => {
+				if (this.totalAssets>0) {
+					this.$u.api.getCashFlag().then(res => {
 						if (res.code === 200) {
-							this.num = res.object.titlenum;
+							if(res.object === 1){
+								this.flag = true;
+							} else {
+								this.flag = false;
+							}
 						} else {
 							this.$u.toast(res.msg);
 						}
 					})
-				} else {
-					this.$u.route('/pages/login/login');
-				}
+				} 
 			},
 			applyAccount() {
+				if(this.totalAssets === 0){
+					this.tipsText = '您无余额可提现！'
+					this.showTips = true;
+					return false
+				}
+				if(!this.flag){
+					this.tipsText = '对不起，每月只能1次申请提现！'
+					this.showTips = true;
+					return false
+				}
+				this.showTips = false;
 				this.$u.route('/pages/driver/cashAccount/cashWithdrawal')
 			}
 		}

@@ -74,6 +74,9 @@
 			}
 		  }
 		},
+		mounted() {
+			this.getList(1)
+		},
 		methods: {
 			showSelect() {
 				this.selectFlag = true;
@@ -81,15 +84,16 @@
 			tapPopup(option) {
 				this.selectText = option.title;
 				this.selectValue = option.value;
-				console.log(option.value)
+				this.getList(1)
 			},
 			getList(pageNum) {
-				this.$u.api.driverSideHomePage({
+				this.$u.api.getBillDetails({
 					pageNum: pageNum,
-					pageSize: 10
+					pageSize: 10,
+					type:this.selectValue
 				}).then(res => {
 					if (res.code === 200) {
-						this.total = Math.ceil(res.total / 10);
+						this.totalPageNo = Math.ceil(res.total / 10);
 						let arr = res.rows
 						if (pageNum === 1) {
 							this.list = res.rows

@@ -167,13 +167,13 @@ const install  = (Vue, vm) => {
 				//新春福利
 				const  getYearWelfare =(params = {}) => vm.$u.get('/app/newYear/list', params);
 				//是否可提现
-				const  getCashFlag =(params = {}) => vm.$u.get('/app/newYear/list', params);
+				const  getCashFlag =(params = {}) => vm.$u.get('/BillingdetailsController/checkWithdraw', params);
 				//提现保存
-				const  saveCashAccount =(params = {}) => vm.$u.get('/BillingdetailsController/addBillingdetails', params);
+				const  saveCashAccount =(params = {}) => vm.$u.post('/BillingdetailsController/addBillingdetails', params);
 				//我的账单列表
-				const  getBillDetails =(params = {}) => vm.$u.get('/app/newYear/list', params);
+				const  getBillDetails =(params = {}) => vm.$u.get('/BillingdetailsController/listBillingDetails', params);
 				//我的账单详情
-				const  getMyBillDetails =(params = {}) => vm.$u.get('/app/newYear/list', params);
+				const  getMyBillDetails =(params = {}) => vm.$u.get('/BillingdetailsController/theBillingDetails', params);
 			  
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {

@@ -77,14 +77,13 @@
 				fileList: [],
 				fileList1: [],
 				form: {
-					money:'',
-					rent:'',
+					code:'',
+					money:0,
+					rent:0,
 					billingAccount:'',
 					vehicleLeaseContract:[],
-					runSingerWater:[
-						
-						
-					]
+					runSingerWater:[],
+					telephone:''
 				},
 				showCode: false,
 				sendFlag:false,
@@ -92,18 +91,16 @@
 			}
 		},
 		onLoad(option) {
-			this.form.money = option.money;
-			this.form.rent = option.rent;
-			this.form.money = option.money;
+			this.form.money = Number(option.money);
+			this.form.rent = Number(option.rent);
+			this.form.billingAccount = option.billingAccount;
 		},
 		onShow() {
-			this.phone = uni.getStorageSync('phone')
+			let telephone = uni.getStorageSync('telephone');
+			this.phone = telephone;
+			this.form.telephone = telephone;
 		},
 		methods: {
-			// uni.showLoading({
-			// 	title: '正在获取验证码'
-			// })
-			// 	uni.hideLoading();
 			uploadChange(data, index, lists, name) {
 				this.form[name].push(data.object);
 				this.$u.toast(data.msg);
@@ -126,7 +123,16 @@
 				} 
 			},
 			applyAccount(){
-				
+				if(this.form.vehicleLeaseContract.length<1){
+					this.$u.toast('请上传车辆租赁合同')
+					return
+				}
+				if(this.form.runSingerWater.length<1){
+					this.$u.toast('请上传上月跑单流水')
+					return
+				}
+				this.getCode();
+				this.showCode = true;
 			},
 			startCode(){
 				this.sendFlag = false
@@ -135,7 +141,18 @@
 				this.sendFlag = true
 			},
 			finishInput(value) {
-				console.log(value)
+				this.form.code = value;
+				this.submitForm()
+			},
+			submitForm(){
+				this.$u.api.saveCashAccount(this.form).then(res => {
+					if (res.code === 200) {
+						this.$u.toast(res.msg)
+						this.toRoute()
+					} else {
+						this.$u.toast(res.msg);
+					}
+				})
 			},
 			toRoute(){
 				this.showTips = false;
