@@ -154,7 +154,10 @@
 		},
 		mounted() {
 			this.token = uni.getStorageSync('token')
-			this.getUser()  
+			this.getUser()
+		},
+		onShow() {
+			console.log(this.driverPub.shareId, '6666666');
 		},
 		props:["authFlag","tokenFlag"],
 		methods: {
@@ -173,6 +176,7 @@
 					}
 				})
 			  }
+			  console.log(this.driverPub.shareId, '6666666')
 			},
 			toFeedback(){
 				this.$u.route('/pages/mycenter/driver/feedback');

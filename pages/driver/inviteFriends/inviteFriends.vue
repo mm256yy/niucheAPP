@@ -82,6 +82,7 @@
 			} else{
 				this.initId()
 			} 
+			console.log(this.shareId, '77777777')
 		},
 		onShow() {
 			this.getNumber()
@@ -103,6 +104,7 @@
 						console.log("fail:" + JSON.stringify(err));
 					}
 				});
+				console.log(this.shareId, '77777777')
 			},
 			getNumber(){
 				this.$u.api.statistics({shareId:this.shareId}).then(res => {

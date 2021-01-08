@@ -614,6 +614,21 @@
                 "enablePullDownRefresh": false
             }
             
+        },{ // 司机服务页面
+            "path" : "pages/driver/driverService/driverService",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        },{ // 司机服务内页
+            "path" : "pages/driver/driverService/serviceText",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            } 
         }
         ,{
             "path" : "pages/company/personEdit/personEdit",
