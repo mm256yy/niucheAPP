@@ -127,7 +127,7 @@
 							if (res.object.incomingAndOutgoingState === 'ADD'){
 								this.flag = true
 							} else{
-								this.flag = true
+								this.flag = false
 							}
 						}else {
 							 this.$u.toast(res.msg);
