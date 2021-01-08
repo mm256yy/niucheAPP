@@ -1,110 +1,162 @@
 <template>
 	<view>
-		<view class="content">
-			<view style="padding: 15pt;">
-				<view class="avater">
-					<u-row style="margin-top: 10pt;background-color: #FFFFFF;padding: 6pt 0;">
-						<u-col span="3" v-show="!tokenFlag">
-							<u-avatar src="../../static/driverSrc.png" mode="circle" size="large" ></u-avatar>
-						</u-col>
-						<u-col span="3" v-show="tokenFlag" >
-							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
-						</u-col>
-						<u-col span="8" v-show="!tokenFlag">
-							<view style="font-size: 14pt;">欢迎来到纽车科技</view>
-							<text class="btn-mini bg" @click="toLogin">登录/注册</text>
-						</u-col>
-						<u-col span="8" v-show="tokenFlag" >
-							<view @click="toMyInfo">
-							<view style="font-size: 14pt;">{{driverPub.name}}</view>
-							<text style="font-size: 12pt;">{{driverPub.telephone}}</text>
+		<view class="top">
+			<view>
+				<view class="topBox">
+					<view class="imgUrl">
+						<view class="about" @click="toAboutUs">关于</view>
+						<u-row style="padding:48pt 21pt 5pt; ">
+							<u-col span="3" v-show="!tokenFlag">
+								<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
+							</u-col>
+							<u-col span="3" v-show="tokenFlag" >
+								<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
+							</u-col>
+							<u-col span="8" v-if="!tokenFlag">
+								<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
+								  <view>登录注册</view>
+								  <u-image width="32" height="48" src="@/static/right.png"></u-image>
+								</view>
+							</u-col>
+							<u-col span="8" v-show="tokenFlag" >
+								<view @click="toMyInfo">
+								<view style="font-size: 36rpx;">{{driverPub.name}}</view>
+								<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>
+								</view>
+							</u-col>
+							<u-col span="1" @click="toMyInfo" v-show="tokenFlag">
+								<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
+							</u-col>	
+						</u-row>
+						<view style="margin-left: 36rpx;margin-top: -10rpx;" class="case">
+							<view class="box">
+								<view class="name">驾照认证</view>
+								<view class="visible" @click="toLicense">{{driverPub.driverState | stateV}}</view>
 							</view>
-						</u-col>
-						<u-col span="1" @click="toMyInfo" v-show="tokenFlag">
-							<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
-						</u-col>
-					</u-row>
-					<view class="bg" style="padding: 4pt 0;" >
-					 <u-row>
-						<u-col span="2">
-							<u-icon size="100" :name="jzrzSrc"></u-icon>
-						</u-col>
-						<u-col span="3">
-								<text class="colorF">驾照认证</text>
-								<view class="colorF" @click="toLicense">{{driverPub.driverState | stateV}}</view>
-						</u-col>
-						<u-col span="1">
-							<view class="colorF" style="text-align: center;">|</view>
-						</u-col>
-						<u-col span="2">
-							<u-icon size="100" :name="zyzgSrc"></u-icon>
-						</u-col>
-						<u-col span="4">
-							<text class="colorF">职业资格认证</text>
-							<view class="colorF" @click="toCard">{{driverPub.postState | stateV}}</view>
-						</u-col>
-					  </u-row>
+							<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
+						</view>
+						<view style="margin-left: 20rpx;margin-right: 36rpx;margin-top: -10rpx;" class="case">
+							<view class="box">
+								<view style="width: 200rpx;" class="name" @click="toCard">执业资格认证</view>
+								<view class="visible">{{driverPub.postState | stateV}}</view>
+							</view>
+							<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
+						</view>
+				</view>
+				</view>
+				<view class="room"></view>
+				<view v-show="tokenFlag" @click="account" class="account">余额：￥{{driverPub.account}}</view>
+				<view v-show="!tokenFlag" @click="account" class="account">余额：￥0</view>
+				<view @click="toInvite" class="invite">邀请好友</view>
+				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
+					<!-- <view @click="toShopPage" style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
+						<u-image style="margin-right: 60rpx;" width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view> -->
+				</view>
+				<view @click="toMyPub(0)" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx 20rpx 0 0;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/demandRenting.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">租车需求</view>
+					</view>
+					<view style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view>
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>
-				<u-row class="my_title">
-					<u-col span="4">我的发布</u-col>
-					<u-col span="8" style="text-align: right;color: rgb(252, 187, 48);font-size: 16px;" @click="toPublishPage">发布需求</u-col>
-				</u-row>
-				<view class="bgf">
-					<u-cell-group >
-						<u-cell-item title="租车需求" @click="toMyPub(0)" :title-style="titleStyle" :value="driverPub.carNum == 0?'未发布':'已发布'">
-							<u-icon size="60" :name="zcxuSrc" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item title="求职需求" @click="toMyPub(1)" :title-style="titleStyle" :value="driverPub.jobNum == 0?'未发布':'已发布'">
-							<u-icon size="60" :name="qzxuSrc" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item title="收藏" :title-style="titleStyle" @click="toCollect()">
-							<u-icon size="60" :name="scSrc" slot="icon"></u-icon>
-						</u-cell-item>
-					</u-cell-group>
+				<view @click="toMyPub(1)" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 0 0 20rpx 20rpx;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/demandSearch.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">求职需求</view>
+					</view>
+					<view style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view>
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
 				</view>
-				<view class="my_title">
-					其他
+				<!-- <view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的业务</view>
 				</view>
-				<view class="colorF">
-					<u-cell-group>
-						
-					   <u-cell-item  title="客服" value="0571-87815287" @click="toCustomer" :title-style="titleStyle">
-							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item  title="用户帮助" :title-style="titleStyle" @click="tohelps">
-							<u-icon size="60" name="question-circle-fill" color="#FF9400" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item  title="意见反馈" @click="toFeedback" :title-style="titleStyle">
-							<u-icon size="60" name="edit-pen-fill" color="#FF9400" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item  title="邀请好友" :title-style="titleStyle" @click="toInvite">
-							<u-icon size="60" name="man-add-fill" color="#FF9400" slot="icon"></u-icon>
-						</u-cell-item>
-						<!-- <u-cell-item title="我的拼单" :title-style="titleStyle">
-							<u-icon size="60" :name="wdpdSrc" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item title="收藏" :title-style="titleStyle">
-							<u-icon size="60" :name="scSrc" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item title="消息" :title-style="titleStyle">
-							<u-icon size="60" :name="xxSrc" slot="icon"></u-icon>
-						</u-cell-item>
-						<u-cell-item title="通讯录" :title-style="titleStyle">
-							<u-icon size="60" :name="txlSrc" slot="icon"></u-icon>
-						</u-cell-item> -->
-					</u-cell-group>
+				<view @click="toMyPub(0)" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx 20rpx 0 0;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/order.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">我的订单</view>
+					</view>
+					<view style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view>
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
+				</view>
+				<view @click="toMyPub(1)" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 0 0 20rpx 20rpx;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/together.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">我参加的拼租</view>
+					</view>
+					<view style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view>
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
+				</view> -->
+				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view style="font-size: 36rpx;color: #333;font-weight: 900;">用户中心</view>
+					<!-- <view @click="toShopPage" style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
+						<u-image style="margin-right: 60rpx;" width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view> -->
+				</view>
+				<view @click="toCustomer" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx 20rpx 0 0;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/ear.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">客户服务</view>
+					</view>
+					<view style="display: flex;">
+						<!-- <view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view> -->
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
+				</view>
+				<view @click="tohelps" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/help.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">使用帮助</view>
+					</view>
+					<view style="display: flex;">
+						<!-- <view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view> -->
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
+				</view>
+				<view @click="toFeedback" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 0 0 20rpx 20rpx;">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/feedback.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">意见反馈</view>
+					</view>
+					<view style="display: flex;">
+						<!-- <view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view> -->
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
+				</view>
+				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view style="font-size: 36rpx;color: #333;font-weight: 900;">其他</view>
+					<!-- <view @click="toShopPage" style="display: flex;">
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
+						<u-image style="margin-right: 60rpx;" width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view> -->
+				</view>
+				<view @click="toCollect()" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx">
+					<view style="display: flex;">
+						<u-image width="48" height="48" src="@/static/favorites.png"></u-image>
+						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">收藏</view>
+					</view>
+					<view style="display: flex;">
+						<view v-if="!tokenFlag" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
+						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+					</view>
+				</view>
+				<view style="width: 100%;height: 280rpx;"></view>
+				<view class="publish" @click="toPublishPage">
 				</view>
 			</view>
 		</view>
-		<u-modal v-model="showTips" :show-cancel-button="true" :mask-close-able="true" confirm-text="出租车驾驶证" cancel-text="网约车驾驶证"
-		 @confirm="tipsConfirm" @cancel="tipsCancel" >
-			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
-		        <view class="">
-		        	请选择要上传的职业资格证件!
-		        </view>
-			</view>
-		</u-modal>
 	</view>
 </template>
 
@@ -158,6 +210,12 @@
 		},
 		props:["authFlag","tokenFlag"],
 		methods: {
+			toAboutUs(){
+				this.$u.route('/pages/aboutUs/aboutUs');
+			},
+			toCustomer(){
+				this.$u.route('/pages/mycenter/company/service');
+			},
 			getUser(){
 			this.token = uni.getStorageSync('token')
               if (this.token){
@@ -179,12 +237,6 @@
 			},
 			tohelps(){
 				this.$u.route('/pages/driver/helps/helps')
-			},
-			toCustomer(){
-				this.$u.route('/pages/driver/cashAccount/cashAccount')
-				// uni.makePhoneCall({
-				//     phoneNumber: '0571-87815287' 
-				// });
 			},
 			toLogin(){
 				 this.$u.route('/pages/login/login');
@@ -246,6 +298,18 @@
 					this.toLogin()
 				}
 			},
+			account(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.driverPub.driverState === 2){
+						this.$u.route("/pages/driver/cashAccount/cashAccount")
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
 			toCard(){
 				let token = uni.getStorageSync('token')
 				if (token){
@@ -283,17 +347,25 @@
 </script>
 
 <style lang="scss" scoped>
-.driver-content{
+.company-content{
 	.bg{
-		background: linear-gradient(55deg, $bg-grad-FE, $bg-grad-FCD),
-	 }
+		background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC),
+	}
 }
-	.btn-mini{
-		display: inline-block;
-		color: #fff;
-		padding: 3pt 5pt;
-		border-radius: 6px;
-		margin-top: 2pt;
+    .topBox{
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 200;
+	}
+	.imgUrl{
+		width: 100%;
+		height: calc(var(--status-bar-height) + 290rpx);
+		background: linear-gradient(270deg, #FFC700 0%, #FF9000 100%);
+	}
+	.room{
+		width: 100%;
+		height: calc(var(--status-bar-height) + 290rpx);
 	}
 	.colorF{
 		color: $common-FFF;
@@ -301,10 +373,83 @@
 	/deep/ .bgf{
 		background: $common-FFF;
 	}
-	.my_title{
-		color: #000000;
-		font-size: 14pt;
-		padding-left: 3pt;
-		margin: 19pt 0 12pt;
+	.font-10pt{
+		font-size: 10pt;
+	}
+	.font-14pt{
+		font-weight: bold;
+		font-size: 12pt;
+	}
+	.top{
+		// height: calc(var(--status-bar-height) + 260rpx);
+		// background: linear-gradient(270deg, #64D095 0%, #51C07C 47%, #3AAD68 100%);
+	}
+	.about{
+		float: right;
+		margin-top: calc(var(--status-bar-height) + 20rpx);
+		font-size: 32rpx;
+		margin-right: 28rpx;
+		color: #fff;
+	}
+	.case{
+		width: 328rpx;
+		height: 120rpx;
+		padding: 20rpx 24rpx;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		display: flex;
+		float: left;
+		margin-top: -60rpx;
+	}
+	.box{
+		width: 120rpx;
+		margin-right: 104rpx;
+		.name{
+			font-size: 30rpx;
+			font-weight: 900;
+			color: #333333;
+		}
+		.visible{
+			font-size: 24rpx;
+			color: #666666;
+			margin-top: 12rpx;
+		}
+	}
+	.account{
+		width: 682rpx;
+		height: 120rpx;
+		background-image: url(@/static/account.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		margin-top: 110rpx;
+		margin-left: 36rpx;
+		font-size: 32rpx;
+		color: #FFB100;
+		padding-left: 410rpx;
+		padding-top: 36rpx;
+	}
+	.invite{
+		width: 678rpx;
+		height: 128rpx;
+		background-image: url(@/static/inviteBg.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		margin-top: 50rpx;
+		margin-left: 36rpx;
+		font-size: 32rpx;
+		color: #AE5F04;
+		padding-left: 102rpx;
+		padding-top: 40rpx;
+	}
+	.publish{
+		width: 148rpx;
+		height: 192rpx;
+		background-image: url(@/static/publish.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		border-radius: 56rpx;
+		position: fixed;
+		bottom: 50rpx;
+		left: 304rpx;
 	}
 </style>
