@@ -1,6 +1,6 @@
 const target = {
 // 　　　　 "target" : "http://161.189.168.218:9007",//
-		 "target" : "http://192.168.3.45:9007", //本地
+		 "target" : "http://192.168.3.41:9007", //本地
 　　　　 "changeOrigin" : true, 
 　　　　  "secure" : false 
 　}
@@ -15,7 +15,9 @@ module.exports = {
 				   "/captchaImage" : target,
 			       "/system" : target,
 				    "/sys" : target,
-					"/app":target
+					"/app":target,
+					"/BillingdetailsController":target,
+					
 			　　　　}
 			　　}
 		}
