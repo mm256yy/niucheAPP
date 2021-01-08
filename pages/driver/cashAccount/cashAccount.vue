@@ -9,7 +9,7 @@
 		</u-navbar>
 		<view class="my_account">
 			<view>总资产(元）</view>
-			<view style="font-size: 30px;padding: 10px 0;">15888888</view>
+			<view style="font-size: 30px;padding: 10px 0;">{{totalAssets}}</view>
 			<u-image src="@/static/cheliangzulin@3x.png" height="190rpx" border-radius="0"></u-image>
 		</view>
 		<view style="padding: 15px 25px 0;text-align: center;">
