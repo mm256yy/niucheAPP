@@ -302,7 +302,7 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					if(this.driverPub.driverState === 2){
-						this.$u.route("/pages/driver/cashAccount/cashAccount")
+						this.$u.route("/pages/driver/cashAccount/cashAccount",{money:this.driverPub.account})
 					} else{
 						this.$u.toast('请先进行认证')
 					}
