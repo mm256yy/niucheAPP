@@ -11,7 +11,7 @@
 			<view class="content_title">提现金额</view>
 			<view class="content_input">
 				<u-image src="@/static/￥@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
-				<u-input v-model="form.money" @input="moneyInput" :border="false" type="number" maxlength="5" placeholder="请输入提现金额" style="padding-left: 20px;" />
+				<u-input v-model="form.money" @input="moneyInput" :border="false" type="number" maxlength="7" placeholder="请输入提现金额" style="padding-left: 20px;" />
 			</view>
 			<view style="font-size: 12px;color:#C7C7C7 ;padding-top: 5px;">当前可提现金额<text>{{money}}</text>元</view>
 			<view class="content_tips" v-show="moneyTips">*当前超过可提现金额</view>
@@ -61,6 +61,7 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				money: 0,
+				totalMoney:0,//账户金额
 				moneyTips: false,
 				showTips:false,
 				form: {
@@ -71,21 +72,52 @@
 				//提现
 			}
 		},
+		onLoad(option) {
+			let money = option.money;
+			if (money){
+				this.totalMoney = money
+			} else{
+				this.initMoney()
+			}
+		},
 		methods: {
 			callPhone(){
 				uni.makePhoneCall({
 					phoneNumber: '0571-87815287' 
 				});
 			},
+			initMoney(){
+				this.$u.api.listUserMessage().then(res=>{
+					if(res.code === 200){
+						let data = res.object;
+						if (data.account){
+							 this.totalMoney = data.account; 
+						} else{
+							this.totalMoney = 0
+						}
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 			rentMoney(v){
-				let digFlag = this.$u.test.digits(v);
-				if(v>0){
-					this.money = Math.floor(v*0.1)
+				let amountFlag = this.$u.test.amount(v);
+				if(amountFlag){
+                     let keMoney =  Math.floor(v*0.1);
+					 if (keMoney <this.totalMoney){
+						 this.money = keMoney;
+					 } else {
+						 this.money = Math.floor(this.totalMoney*0.1);
+					 }
+				} else{
+					this.money = 0
+					this.$u.toast('车辆月租金输入有误,请重新输入')
+					this.form.rent = ''
 				}
 			},
 			moneyInput(val){
-				let digFlag = this.$u.test.digits(val);
-				if(digFlag && val>0 && val<=this.money){
+				let amountFlag = this.$u.test.amount(val);
+				if(amountFlag && val<=this.money){
 					 this.moneyTips = false;
 				} else{
 					this.moneyTips = true;

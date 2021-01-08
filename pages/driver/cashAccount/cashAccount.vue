@@ -47,6 +47,8 @@
 			let money = option.money;
 			if(money){
 				this.totalAssets = option.money;
+			} else{
+				this.initMoney()
 			}
 		},
 		onShow() {
@@ -55,6 +57,20 @@
 		methods: {
 			billDetails() {
 				this.$u.route('/pages/driver/cashAccount/billDetails')
+			},
+			initMoney(){
+				this.$u.api.listUserMessage().then(res=>{
+					if(res.code === 200){
+						let data = res.object;
+						if (data.account){
+							 this.totalAssets = data.account; 
+						} else{
+							this.totalAssets = 0
+						}
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			getAccount() {
 				if (this.totalAssets>0) {
@@ -83,7 +99,7 @@
 					return false
 				}
 				this.showTips = false;
-				this.$u.route('/pages/driver/cashAccount/cashWithdrawal')
+				this.$u.route('/pages/driver/cashAccount/cashWithdrawal',{money:this.totalAssets})
 			}
 		}
 	}

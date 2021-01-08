@@ -50,7 +50,7 @@
 		</u-modal>
 		<u-modal v-model="showTips" :show-confirm-button="false" title="">
 			<view class="slot_content">
-				<view class="slot_tips">
+				<view class="slot_tips" style="padding: 0 15px 20px;">
 					您的提现申请已经提交审核，预计2个工作日内提现成功！
 				</view>
 				<view style="padding: 15px 20px 0;text-align: center;">
