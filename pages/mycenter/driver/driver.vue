@@ -2,48 +2,51 @@
 	<view>
 		<view class="top">
 			<view>
-				<view class="imgUrl">
-					<view class="about" @click="toAboutUs">关于</view>
-					<u-row style="padding:48pt 21pt 5pt; ">
-						<u-col span="3" v-show="!tokenFlag">
-							<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
-						</u-col>
-						<u-col span="3" v-show="tokenFlag" >
-							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
-						</u-col>
-						<u-col span="8" v-if="!tokenFlag">
-							<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
-							  <view>登录注册</view>
-							  <u-image width="32" height="48" src="@/static/right.png"></u-image>
+				<view class="topBox">
+					<view class="imgUrl">
+						<view class="about" @click="toAboutUs">关于</view>
+						<u-row style="padding:48pt 21pt 5pt; ">
+							<u-col span="3" v-show="!tokenFlag">
+								<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
+							</u-col>
+							<u-col span="3" v-show="tokenFlag" >
+								<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
+							</u-col>
+							<u-col span="8" v-if="!tokenFlag">
+								<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
+								  <view>登录注册</view>
+								  <u-image width="32" height="48" src="@/static/right.png"></u-image>
+								</view>
+							</u-col>
+							<u-col span="8" v-show="tokenFlag" >
+								<view @click="toMyInfo">
+								<view style="font-size: 36rpx;">{{driverPub.name}}</view>
+								<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>
+								</view>
+							</u-col>
+							<u-col span="1" @click="toMyInfo" v-show="tokenFlag">
+								<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
+							</u-col>	
+						</u-row>
+						<view style="margin-left: 36rpx;margin-top: -10rpx;" class="case">
+							<view class="box">
+								<view class="name">驾照认证</view>
+								<view class="visible" @click="toLicense">{{driverPub.driverState | stateV}}</view>
 							</view>
-						</u-col>
-						<u-col span="8" v-show="tokenFlag" >
-							<view @click="toMyInfo">
-							<view style="font-size: 14pt;">{{driverPub.name}}</view>
-							<text style="font-size: 12pt;">{{driverPub.telephone}}</text>
+							<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
+						</view>
+						<view style="margin-left: 20rpx;margin-right: 36rpx;margin-top: -10rpx;" class="case">
+							<view class="box">
+								<view style="width: 200rpx;" class="name" @click="toCard">执业资格认证</view>
+								<view class="visible">{{driverPub.postState | stateV}}</view>
 							</view>
-						</u-col>
-						<u-col span="1" @click="toMyInfo" v-show="tokenFlag">
-							<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
-						</u-col>	
-					</u-row>
-					<view style="margin-left: 36rpx;" class="case">
-						<view class="box">
-							<view class="name">驾照认证</view>
-							<view class="visible" @click="toLicense">{{driverPub.driverState | stateV}}</view>
+							<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
 						</view>
-						<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
-					</view>
-					<view style="margin-left: 20rpx;margin-right: 36rpx;" class="case">
-						<view class="box">
-							<view style="width: 200rpx;" class="name" @click="toCard">执业资格认证</view>
-							<view class="visible">{{driverPub.postState | stateV}}</view>
-						</view>
-						<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
-					</view>
 				</view>
-				<view v-show="token" @click="account" class="account">余额：￥3000</view>
-				<view v-show="!token" @click="account" class="account">余额：￥0</view>
+				</view>
+				<view class="room"></view>
+				<view v-show="tokenFlag" @click="account" class="account">余额：￥{{driverPub.account}}</view>
+				<view v-show="!tokenFlag" @click="account" class="account">余额：￥0</view>
 				<view @click="toInvite" class="invite">邀请好友</view>
 				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
@@ -145,11 +148,11 @@
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">收藏</view>
 					</view>
 					<view style="display: flex;">
-						<!-- <view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view> -->
+						<view v-if="!tokenFlag" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>
-				<view style="width: 100%;height: 40rpx;"></view>
+				<view style="width: 100%;height: 280rpx;"></view>
 				<view class="publish" @click="toPublishPage">
 				</view>
 			</view>
@@ -207,6 +210,9 @@
 		},
 		props:["authFlag","tokenFlag"],
 		methods: {
+			toAboutUs(){
+				this.$u.route('/pages/aboutUs/aboutUs');
+			},
 			toCustomer(){
 				this.$u.route('/pages/mycenter/company/service');
 			},
@@ -346,9 +352,20 @@
 		background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC),
 	}
 }
+    .topBox{
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 200;
+	}
 	.imgUrl{
-		 height: calc(var(--status-bar-height) + 260rpx);
-		 background: linear-gradient(270deg, #FFC700 0%, #FF9000 100%);
+		width: 100%;
+		height: calc(var(--status-bar-height) + 290rpx);
+		background: linear-gradient(270deg, #FFC700 0%, #FF9000 100%);
+	}
+	.room{
+		width: 100%;
+		height: calc(var(--status-bar-height) + 290rpx);
 	}
 	.colorF{
 		color: $common-FFF;
@@ -409,7 +426,7 @@
 		font-size: 32rpx;
 		color: #FFB100;
 		padding-left: 410rpx;
-		padding-top: 40rpx;
+		padding-top: 36rpx;
 	}
 	.invite{
 		width: 678rpx;
@@ -417,7 +434,7 @@
 		background-image: url(@/static/inviteBg.png);
 		background-repeat: no-repeat;
 		background-size: cover;
-		margin-top: 36rpx;
+		margin-top: 50rpx;
 		margin-left: 36rpx;
 		font-size: 32rpx;
 		color: #AE5F04;
@@ -432,7 +449,7 @@
 		background-size: cover;
 		border-radius: 56rpx;
 		position: fixed;
-		bottom: 200rpx;
+		bottom: 50rpx;
 		left: 304rpx;
 	}
 </style>

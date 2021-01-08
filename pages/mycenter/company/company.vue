@@ -4,7 +4,7 @@
 			<view>
 				<view class="imgUrl">
 					<view class="about" @click="toAboutUs">关于</view>
-					<u-row style="padding:48pt 21pt 5pt; ">
+					<u-row style="padding:48pt 36rpx 5pt; ">
 						<u-col span="3" v-show="!tokenFlag">
 							<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
 						</u-col>
@@ -14,21 +14,22 @@
 						<u-col span="8" v-if="!tokenFlag">
 							<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
 							  <view>登录注册</view>
-							  <u-image width="32" height="48" src="@/static/right.png"></u-image>
+							  <!-- <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image> -->
 							</view>
 						</u-col>
 						<u-col span="8" v-else @click="toAuth">
-							<view @click="toAuth" style="color: #fff;font-size: 14pt;">{{companyName}}</view>
-							<view class="colorF">{{companyStatus | state}}</view>
-							<view class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
+							<view @click="toAuth" style="color: #fff;font-size: 36rpx;">{{companyName}}</view>
+							<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
+							<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
 						</u-col>
-						<u-col span="1" v-if="tokenFlag">
+						<!-- <u-col span="1" v-if="tokenFlag">
 							<u-icon name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>
-						</u-col>
+						</u-col> -->
 						
 						
 					</u-row>
 				</view>
+				<view class="room"></view>
 				<view style="width: 100%;padding: 60rpx 20rpx 18rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
@@ -82,7 +83,7 @@
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">我的店铺</view>
 					</view>
 					<view style="display: flex;">
-						<view v-show="!token" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
+						<view v-show="!tokenFlag" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>
@@ -132,11 +133,11 @@
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">收藏</view>
 					</view>
 					<view style="display: flex;">
-						<view v-show="!token" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
+						<view v-if="!tokenFlag" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>
-				<view style="width: 100%;height: 40rpx;"></view>
+				<view style="width: 100%;height: 280rpx;"></view>
 				<view class="publish" @click="toPublishPage">
 				</view>
 			</view>
@@ -301,8 +302,17 @@
 	}
 }
 	.imgUrl{
-		 height: calc(var(--status-bar-height) + 260rpx);
-		 background: linear-gradient(270deg, #64D095 0%, #51C07C 47%, #3AAD68 100%);
+		width: 100%;
+		height: calc(var(--status-bar-height) + 290rpx);
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 200;
+		background: linear-gradient(270deg, #64D095 0%, #51C07C 47%, #3AAD68 100%);
+	}
+	.room{
+		width: 100%;
+		height: calc(var(--status-bar-height) + 290rpx);
 	}
 	.colorF{
 		color: $common-FFF;
@@ -336,7 +346,7 @@
 		background-size: cover;
 		border-radius: 56rpx;
 		position: fixed;
-		bottom: 200rpx;
+		bottom: 50rpx;
 		left: 304rpx;
 	}
 </style>
