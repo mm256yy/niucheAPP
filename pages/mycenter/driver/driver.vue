@@ -47,7 +47,7 @@
 				<view class="room"></view>
 				<u-image width="682" height="120" src="@/static/account.png" @click="account" class="account"></u-image>
 				<text v-show="tokenFlag" @click="account" class="text">余额：￥{{driverPub.account}}</text>
-				<text v-show="!tokenFlag" @click="account" class="text">余额：￥000000000000</text>
+				<text v-show="!tokenFlag" @click="account" class="text">余额：￥0</text>
 				<view @click="toInvite" class="invite">邀请好友</view>
 				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
