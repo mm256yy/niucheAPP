@@ -65,7 +65,8 @@
 		 		</view>
 		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 32rpx;">
 		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-车况描述-</view>
-		 			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">{{detail.cardescribe}}</view>
+		 			<view v-show="detail.cardescribe" style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">{{detail.cardescribe}}</view>
+					<view v-show="!detail.cardescribe" style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">未描述</view>
 		 		</view>
 		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 38rpx;">
 		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-购车流程-</view>
