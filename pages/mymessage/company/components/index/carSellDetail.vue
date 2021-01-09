@@ -54,7 +54,8 @@
 		 		<view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		 				<view style="float: left;">综合上牌时间</view>
-		 				<view style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
+		 				<view v-show="detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}至{{detail.registrationtimeend}}</view>
+						<view v-show="!detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
 		 				<view class="clear"></view>
 		 			</view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
