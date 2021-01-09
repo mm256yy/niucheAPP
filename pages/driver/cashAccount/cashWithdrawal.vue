@@ -14,7 +14,7 @@
 				<u-input v-model="form.money" @input="moneyInput" :border="false" type="number" maxlength="7" placeholder="请输入提现金额" style="padding-left: 20px;" />
 			</view>
 			<view style="font-size: 12px;color:#C7C7C7 ;padding-top: 5px;">当前可提现金额<text>{{money}}</text>元</view>
-			<view class="content_tips" v-show="moneyTips">*当前超过可提现金额</view>
+			<view class="content_tips" v-show="moneyTips">*{{moneyTipsText}}</view>
 			<u-gap height="50" bg-color="#FFFFFF"></u-gap>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
@@ -68,7 +68,8 @@
 					rent:'',
 					money: '',
 					billingAccount:''
-				}
+				},
+				moneyTipsText:'当前超过可提现金额'
 				//提现
 			}
 		},
@@ -117,10 +118,16 @@
 			},
 			moneyInput(val){
 				let amountFlag = this.$u.test.amount(val);
-				if(amountFlag && val<=this.money){
-					 this.moneyTips = false;
-				} else{
+				if (!amountFlag){
+					this.moneyTipsText='提现金额输入有误'
 					this.moneyTips = true;
+				} else{
+					if(val<=this.money){
+						 this.moneyTips = false;
+					} else{
+						this.moneyTipsText='当前超过可提现金额'
+						this.moneyTips = true;
+					}
 				}
 			},
 			toNext(){
@@ -130,7 +137,7 @@
 					return false
 				}
 				if(this.moneyTips){
-					this.$u.toast('提现金额大于可提现金额')
+					this.$u.toast(this.moneyTipsText)
 					return false
 				}
 				if(this.form.billingAccount === ''){
