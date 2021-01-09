@@ -303,7 +303,7 @@
 }
 	.imgUrl{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 290rpx);
+		height: calc(var(--status-bar-height) + 304rpx);
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -312,7 +312,7 @@
 	}
 	.room{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 290rpx);
+		height: calc(var(--status-bar-height) + 304rpx);
 	}
 	.colorF{
 		color: $common-FFF;
