@@ -5,7 +5,7 @@
 				<view class="topBox">
 					<view class="imgUrl">
 						<view class="about" @click="toAboutUs">关于</view>
-						<u-row style="padding:48pt 21pt 5pt; ">
+						<u-row style="padding:48pt 36rpx 5pt; ">
 							<u-col span="3" v-show="!tokenFlag">
 								<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
 							</u-col>
@@ -15,27 +15,27 @@
 							<u-col span="8" v-if="!tokenFlag">
 								<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
 								  <view>登录注册</view>
-								  <u-image width="32" height="48" src="@/static/right.png"></u-image>
+								  <!-- <u-image width="32" height="48" src="@/static/right.png"></u-image> -->
 								</view>
 							</u-col>
 							<u-col span="8" v-show="tokenFlag" >
 								<view @click="toMyInfo">
-								<view style="font-size: 36rpx;">{{driverPub.name}}</view>
+								<view style="color: #fff;font-size: 36rpx;">{{driverPub.name}}</view>
 								<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>
 								</view>
 							</u-col>
-							<u-col span="1" @click="toMyInfo" v-show="tokenFlag">
+							<!-- <u-col span="1" @click="toMyInfo" v-show="tokenFlag">
 								<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
-							</u-col>	
+							</u-col> -->	
 						</u-row>
-						<view style="margin-left: 36rpx;margin-top: -10rpx;" class="case">
+						<view style="margin-left: 36rpx;margin-top: 4rpx;" class="case">
 							<view class="box">
 								<view class="name">驾照认证</view>
 								<view class="visible" @click="toLicense">{{driverPub.driverState | stateV}}</view>
 							</view>
 							<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
 						</view>
-						<view style="margin-left: 20rpx;margin-right: 36rpx;margin-top: -10rpx;" class="case">
+						<view style="margin-left: 20rpx;margin-right: 36rpx;margin-top: 4rpx;" class="case">
 							<view class="box">
 								<view style="width: 200rpx;" class="name" @click="toCard">执业资格认证</view>
 								<view class="visible">{{driverPub.postState | stateV}}</view>
@@ -45,8 +45,9 @@
 				</view>
 				</view>
 				<view class="room"></view>
-				<view v-show="tokenFlag" @click="account" class="account">余额：￥{{driverPub.account}}</view>
-				<view v-show="!tokenFlag" @click="account" class="account">余额：￥0</view>
+				<u-image width="682" height="120" src="@/static/account.png" @click="account" class="account"></u-image>
+				<text v-show="tokenFlag" @click="account" class="text">余额：￥{{driverPub.account}}</text>
+				<text v-show="!tokenFlag" @click="account" class="text">余额：￥000000000000</text>
 				<view @click="toInvite" class="invite">邀请好友</view>
 				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
@@ -360,12 +361,12 @@
 	}
 	.imgUrl{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 290rpx);
+		height: calc(var(--status-bar-height) + 304rpx);
 		background: linear-gradient(270deg, #FFC700 0%, #FF9000 100%);
 	}
 	.room{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 290rpx);
+		height: calc(var(--status-bar-height) + 304rpx);
 	}
 	.colorF{
 		color: $common-FFF;
@@ -416,17 +417,19 @@
 		}
 	}
 	.account{
-		width: 682rpx;
-		height: 120rpx;
-		background-image: url(@/static/account.png);
-		background-repeat: no-repeat;
-		background-size: cover;
 		margin-top: 110rpx;
 		margin-left: 36rpx;
+		position: absolute;
+		z-index: 100;
+	}
+	.text{
 		font-size: 32rpx;
 		color: #FFB100;
-		padding-left: 410rpx;
-		padding-top: 36rpx;
+		position: relative;
+		top: 146rpx;
+		right: 100rpx;
+		z-index: 200;
+		float: right;
 	}
 	.invite{
 		width: 678rpx;
@@ -434,7 +437,7 @@
 		background-image: url(@/static/inviteBg.png);
 		background-repeat: no-repeat;
 		background-size: cover;
-		margin-top: 50rpx;
+		margin-top: 280rpx;
 		margin-left: 36rpx;
 		font-size: 32rpx;
 		color: #AE5F04;
