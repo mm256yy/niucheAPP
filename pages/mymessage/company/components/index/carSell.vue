@@ -347,15 +347,35 @@
 					this.filterData = this.filterData.concat(carbrand);
 					this.form.carbrand = uni.getStorageSync('carbrand');
 				}
+				this.publishObj.carType.map(items=>{
+				   items.checked = false
+				})
 				if(uni.getStorageSync('cartype')){
 					cartype = uni.getStorageSync('cartype').split(',');
 					this.filterData = this.filterData.concat(cartype);
 					this.form.cartype = uni.getStorageSync('cartype');
+					cartype.map(item=>{
+						this.publishObj.carType.map(items=>{
+						   if(item == items.text){
+						   	 items.checked = true
+						   }
+						})
+					})
 				}
+				this.publishObj.power.map(items=>{
+				   items.checked = false
+				})
 				if(uni.getStorageSync('power')){
 					power = uni.getStorageSync('power').split(',');
 					this.filterData = this.filterData.concat(power);
 					this.form.power = uni.getStorageSync('power');
+					power.map(item=>{
+						this.publishObj.power.map(items=>{
+						   if(item == items.text){
+						   	 items.checked = true
+						   }
+						})
+					})
 				}
 				this.search()
 			},

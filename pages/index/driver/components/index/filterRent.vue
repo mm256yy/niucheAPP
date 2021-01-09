@@ -161,10 +161,16 @@
 				if(uni.getStorageSync('carbrandDriver')){
 					var carbrand = uni.getStorageSync('carbrandDriver').split(',');
 				}
+				this.publishObj.cartype.map(items=>{
+				   items.checked = false
+				})
 				if(uni.getStorageSync('cartypeDriver')){
 					var cartype = uni.getStorageSync('cartypeDriver').split(',');
 				}
-				if(uni.getStorageSync('powerDriver')){
+				this.publishObj.cartype.map(items=>{
+				   items.checked = false
+				})
+				if(uni.getStorageSync('power')){
 					var power = uni.getStorageSync('powerDriver').split(',');
 				}
 				if(businessType){
