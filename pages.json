@@ -694,7 +694,7 @@
 		// // "navigationBarBackgroundColor": "#FE9217",
 	},
 	"tabBar": {
-		"height":60,
+		"height":"60",
 	    "color": "#000000",
 	    "selectedColor": "#41B36D", 
 	    "borderStyle": "black",

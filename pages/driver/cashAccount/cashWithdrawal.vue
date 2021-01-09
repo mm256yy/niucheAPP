@@ -5,7 +5,7 @@
 			<view class="content_title">车辆月租金</view>
 			<view class="content_input">
 				<u-image src="@/static/￥@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
-				<u-input v-model="form.rent" @input="rentMoney" type="number" maxlength="6" :border="false" placeholder="请输入当前车辆月租金" style="padding-left: 20px;" />
+				<u-input v-model="form.rent" @input="rentMoney" type="number" maxlength="7" :border="false" placeholder="请输入当前车辆月租金" style="padding-left: 20px;" />
 			</view>
 			<view class="content_tips">*请输入与您租赁合同内一致的租金金额，否则会提现失败</view>
 			<view class="content_title">提现金额</view>
@@ -103,11 +103,11 @@
 			rentMoney(v){
 				let amountFlag = this.$u.test.amount(v);
 				if(amountFlag){
-                     let keMoney =  Math.floor(v*0.1);
+                     let keMoney = Math.floor(v*10)/100;
 					 if (keMoney <this.totalMoney){
 						 this.money = keMoney;
 					 } else {
-						 this.money = Math.floor(this.totalMoney*0.1);
+						 this.money = Math.floor(this.totalMoney*10)/100;
 					 }
 				} else{
 					this.money = 0

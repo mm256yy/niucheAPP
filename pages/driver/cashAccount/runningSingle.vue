@@ -91,8 +91,8 @@
 			}
 		},
 		onLoad(option) {
-			this.form.money = Number(option.money);
-			this.form.rent = Number(option.rent);
+			this.form.money = option.money;
+			this.form.rent = option.rent;
 			this.form.billingAccount = option.billingAccount;
 		},
 		onShow() {
