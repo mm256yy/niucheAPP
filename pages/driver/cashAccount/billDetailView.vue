@@ -95,7 +95,7 @@
 				} else if (value === 'BE_FINISHED') {
 					return '已到账'
 				} else if (value === 'BE_FAILED') {
-					return '提现失败'
+					return '到账失败'
 				} else if (value === 'AUDIT_FAILED') {
 					return '审核失败'
 				} else {
