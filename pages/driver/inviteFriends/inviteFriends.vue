@@ -1,36 +1,49 @@
 <template>
 	<view>
-		<u-navbar back-text="返回" back-icon-size="0" :background="background" title="邀请好友" height='44' title-color="#333333">
-			<view class="navbar-right" slot="right">
-				<view class="message-box right-item">
-					<text @click="showTips">规则</text>
+		<u-navbar back-text="返回" back-icon-size="0" :background="background" title="邀请好友" height='44' title-color="#333333"></u-navbar>
+		<view class="view_content" style="position: relative;">
+			<view style="position: absolute;
+    right: 0;
+    width: 20px;
+    top: 150px;
+	
+    background: linear-gradient(91deg, #FFD328 0%, #FFBC3F 99%);
+    border-radius: 3px 0px 0px 3px;
+    color: #9E6138;
+    text-align: center;">规则</view>
+			<view class="flex_view">
+
+				<view class="" style="position: relative;">
+					<view class="yqhy" @click="inviteFriends">立即邀请好友助力</view>
 				</view>
-			</view>
-		</u-navbar>
-		<view class="flex_view">
-			<view class="bgImg-common oneImg">
-			<!-- <u-image src="../../../static/toutu@3x.png" height="180rpx" border-radius="8"></u-image> -->
-				<view class="bgImg-common yqhy" @click="inviteFriends">立即邀请好友助力</view>
-			</view>
-			<view style="padding: 0 10pt;">
-				<view style="position: relative;" class="bgImg-common wdjl">
-					<view style="position: absolute;top: 51%;left: 28%;z-index: 8;font-size: 12px;">
-						<view style="color: #FF2B49;">{{registerCount}}人</view>
-						<view style="color: #666666;">注册成功</view>
+				<view style="padding: 0 10pt;margin: 210px 0 20px;">
+					<view class="" style="background: #FFFFFF;padding: 10px;border-radius: 10px;">
+						<view class="wdsy" style="display: flex;justify-content: space-between;background: #FFF7F2;padding: 15px;color: #FF652B;">
+							<view>我的收益0元</view>
+							<view>去提现</view>
+						</view>
 					</view>
-					<view style="position: absolute;top: 51%;right: 10%;z-index: 8;font-size: 12px;">
-						<view style="color: #FF2B49;">{{authCount}}人</view>
-						<view style="color: #666666;">认证成功</view>
+					<view style="position: relative;" class="bgImg-common wdjl">
+						<view style="position: absolute;top: 51%;left: 28%;z-index: 8;font-size: 12px;">
+							<view style="color: #FF652B;">驾照认证</view>
+							<view style="color: #FF2B49;"><text>{{registerCount}}</text><text>人</text></view>
+						</view>
+						<view style="position: absolute;top: 51%;right: 10%;z-index: 8;font-size: 12px;">
+							<view style="color: #FF652B;">执业认证</view>
+							<view style="color: #FF2B49;"><text>{{authCount}}</text><text>人</text></view>
+						</view>
 					</view>
-				</view>
-				<view class="bgImg-common hdsm">
-					
-				</view>
-				<view class="bgImg-common jlmx">
-					
-				</view>
-				<view class="bgImg-common jlsm">
-					
+					<view class="">
+						<u-image src="@/static/ruhezhaunqushangjin@3x.png" width="100%" height="470px"></u-image>
+
+					</view>
+					<view style="margin-top: 22px;">
+						<u-image src="@/static/ruhezhaunqushangjin2@3x.png" width="100%" height="470px"></u-image>
+					</view>
+					<view style="margin-top: 22px;">
+						<u-image src="@/static/jianglimingxi@3x.png" width="100%" height="687px"></u-image>
+					</view>
+
 				</view>
 			</view>
 		</view>
@@ -62,39 +75,41 @@
 	</view>
 </template>
 <script>
-	import {shareUrl} from '@/utils/constant.js'
+	import {
+		shareUrl
+	} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 34%,#ffffff 0%)'
 				},
-               show:false,
-			   shareId:'',
-			   registerCount:0,
-			   authCount:0
+				show: false,
+				shareId: '',
+				registerCount: 0,
+				authCount: 0
 			}
 		},
 		onLoad(option) {
-			let shareId  = option.shareId;
-			if(shareId){
-			 this.shareId = shareId;
-			} else{
+			let shareId = option.shareId;
+			if (shareId) {
+				this.shareId = shareId;
+			} else {
 				this.initId()
-			} 
+			}
 		},
 		onShow() {
 			this.getNumber()
 		},
 		methods: {
 			inviteFriends() {
-				 uni.share({ 
+				uni.share({
 					provider: "weixin",
 					scene: "WXSceneSession",
 					type: 0,
-					href: shareUrl+this.shareId,
+					href: shareUrl + this.shareId,
 					title: "看车租车上纽车APP",
-					summary: "限时推广拉新，享更多福利，点击即可领取！",                         
+					summary: "限时推广拉新，享更多福利，点击即可领取！",
 					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
@@ -104,30 +119,34 @@
 					}
 				});
 			},
-			getNumber(){
-				this.$u.api.statistics({shareId:this.shareId}).then(res => {
-					if(res.code === 200){
+			getNumber() {
+				this.$u.api.statistics({
+					shareId: this.shareId
+				}).then(res => {
+					if (res.code === 200) {
 						let data = res.object;
 						this.authCount = data.authCount
 						this.registerCount = data.registerCount;
-					 } else{
-						this.$u.toast(res.msg) 
-					 }
-				}).catch(res=>{this.$u.toast(res.msg)})
+					} else {
+						this.$u.toast(res.msg)
+					}
+				}).catch(res => {
+					this.$u.toast(res.msg)
+				})
 			},
-			initId(){
-				this.$u.api.listUserMessage().then(res=>{
-					if(res.code === 200){
+			initId() {
+				this.$u.api.listUserMessage().then(res => {
+					if (res.code === 200) {
 						let data = res.object;
-						if (data.shareId){
-							 this.shareId = data.shareId; 
+						if (data.shareId) {
+							this.shareId = data.shareId;
 						}
-					}else {
-						 this.$u.toast(res.msg);
+					} else {
+						this.$u.toast(res.msg);
 					}
 				})
 			},
-			showTips(){
+			showTips() {
 				this.show = true
 			}
 		}
@@ -135,61 +154,40 @@
 </script>
 
 <style lang="scss">
-	.flex_view {
-		background-image: url(../../../static/beijing@3x.png);
-		background-position: center;
+	page {
+		background-image: url(../../../static/c@3x.png);
 		background-repeat: no-repeat;
-		// background-size: cover;
 		background-size: 100%;
 	}
 </style>
 <style lang="scss" scoped>
-	.navbar-right {
-		margin-right: 24rpx;
-		display: flex;
-	}
-    .bgImg-common{
+	.bgImg-common {
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: 100%;
 	}
-	.right-item {
-		margin: 0 12rpx;
-		position: relative;
-		color: #555555;
-		display: flex;
-	}
-	.oneImg {
-		background-image: url(../../../static/toutu@3x.png);
-		min-height: 618px;
-		position: relative;
-		// background-size: cover;
-	}
-	.yqhy {
-		background-image: url(../../../static/yuanjiaojuxing@3x.png);
-		min-height: 13%;
-		width: 66%;
+
+	.flex_view {
 		position: absolute;
-		top: 53%;
-		left: 19%;
+		top: 400px;
+		width: 100%;
+	}
+
+	.yqhy {
+		background: linear-gradient(0deg, #FFCC33 0%, #FFCC33 100%);
+		box-shadow: -1px 3px 0px 0px #FF6633;
+		border-radius: 20px;
+		width: 68%;
+		position: absolute;
+		top: 60px;
+		left: 18.5%;
 		text-align: center;
-		line-height: 94px;
-		color: #FFFFFF;
+		line-height: 50px;
+		color: #FB0F37;
 	}
-    .wdjl{
-		background-image: url(../../../static/wodejianglijindu@3x.png);
+
+	.wdjl {
+		background-image: url(../../../static/wodechengguo@3x.png);
 		min-height: 210pt;
-	}
-	.hdsm{
-		background-image: url(../../../static/huodongzhuoming@3x.png);
-		min-height: 280pt;
-	}
-	.jlmx{
-		background-image: url(../../../static/jianglimingxi@3x.png);
-		min-height: 270pt;
-	}
-	.jlsm{
-		background-image: url(../../../static/jianglishuoming@3x.png);
-		min-height: 260pt;
 	}
 </style>
