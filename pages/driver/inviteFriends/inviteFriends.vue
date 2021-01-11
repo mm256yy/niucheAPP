@@ -3,34 +3,40 @@
 		<u-navbar back-text="返回" back-icon-size="0" :background="background" title="邀请好友" height='44' title-color="#333333"></u-navbar>
 		<view class="view_content" style="position: relative;">
 			<view style="position: absolute;
-    right: 0;
-    width: 20px;
-    top: 150px;
-	
-    background: linear-gradient(91deg, #FFD328 0%, #FFBC3F 99%);
-    border-radius: 3px 0px 0px 3px;
-    color: #9E6138;
-    text-align: center;">规则</view>
+				right: 0;
+				width: 30px;
+				top: 150px;
+				background: linear-gradient(91deg, #FFD328 0%, #FFBC3F 99%);
+				border-radius: 6px 0px 0px 6px;
+				color: #9E6138;
+				text-align: center;"
+			 @click="showTips()">
+				<view style="display: flex;flex-direction: column;">
+					<text>规</text>
+					<text>则</text>
+				</view>
+			</view>
 			<view class="flex_view">
 
 				<view class="" style="position: relative;">
 					<view class="yqhy" @click="inviteFriends">立即邀请好友助力</view>
 				</view>
 				<view style="padding: 0 10pt;margin: 210px 0 20px;">
-					<view class="" style="background: #FFFFFF;padding: 10px;border-radius: 10px;">
-						<view class="wdsy" style="display: flex;justify-content: space-between;background: #FFF7F2;padding: 15px;color: #FF652B;">
-							<view>我的收益0元</view>
-							<view>去提现</view>
+					<view class="" style="background: #FFFFFF;padding: 15px;border-radius: 10px;">
+						<view @click="toCashAccount()" class="wdsy" style="display: flex;justify-content: space-between;background: #FFF7F2;padding: 15px;color: #FF652B;border-radius: 6px;">
+							<view>我的收益<text style="color: #FF2B49;font-size: 16px;">0</text>元</view>
+							<view>去提现<u-icon name="arrow-right"></u-icon>
+							</view>
 						</view>
 					</view>
 					<view style="position: relative;" class="bgImg-common wdjl">
-						<view style="position: absolute;top: 51%;left: 28%;z-index: 8;font-size: 12px;">
+						<view style="position: absolute;top: 51%;left: 28%;z-index: 8;">
 							<view style="color: #FF652B;">驾照认证</view>
-							<view style="color: #FF2B49;"><text>{{registerCount}}</text><text>人</text></view>
+							<view><text style="font-size: 16px;color: #FF3333;">{{registerCount}}</text><text style="color: #FF2B49;">人</text></view>
 						</view>
-						<view style="position: absolute;top: 51%;right: 10%;z-index: 8;font-size: 12px;">
+						<view style="position: absolute;top: 51%;right: 10%;z-index: 8;">
 							<view style="color: #FF652B;">执业认证</view>
-							<view style="color: #FF2B49;"><text>{{authCount}}</text><text>人</text></view>
+							<view style="font-size: 16px;color: #FF3333;"><text>{{authCount}}</text><text style="color: #FF2B49;">人</text></view>
 						</view>
 					</view>
 					<view class="">
@@ -72,13 +78,18 @@
 				</view>
 			</view>
 		</u-popup>
+		<Auth></Auth>
 	</view>
 </template>
 <script>
+	import Auth from '@/components/auth.vue'
 	import {
 		shareUrl
 	} from '@/utils/constant.js'
 	export default {
+		components:{
+			Auth
+		},
 		data() {
 			return {
 				background: {
@@ -102,6 +113,18 @@
 			this.getNumber()
 		},
 		methods: {
+			toCashAccount(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.driverPub.driverState === 2){
+						this.$u.route("/pages/driver/cashAccount/cashAccount",{money:this.driverPub.account})
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
 			inviteFriends() {
 				uni.share({
 					provider: "weixin",
