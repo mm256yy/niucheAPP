@@ -193,8 +193,20 @@ const install = (Vue, vm) => {
 		const driverOrder = (params = {}) => vm.$u.get('/driverserver/orderToShare/queryList', params);
 		// 司机服务 大神分享
 		const driverShare = (params = {}) => vm.$u.get('/driverserver/leaderShare/queryList', params);
+		// 行业动态 内容页
+		const contentDynamic = (params = {}) => vm.$u.get('/driverserver/industydynamics/query', params);
+		// 活动大全 内容页
+		const contentActivities = (params = {}) => vm.$u.get('/driverserver/activityttf/query', params);
+		// 接单分享 内容页
+		const contentOrder = (params = {}) => vm.$u.get('/driverserver/orderToShare/query', params);
+		// 大神分享 内容页
+		const contentShare = (params = {}) => vm.$u.get('/driverserver/leaderShare/query', params);
 			// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 			vm.$u.api = {
+				contentShare, // 大神分享 内页
+				contentOrder, // 接单分享 内页
+				contentActivities, // 活动大全 内页
+				contentDynamic, // 行业动态 内页
 				driverShare, // 大神分享
 				driverOrder, // 接单分享
 				driverActivities, // 活动大全

@@ -3,8 +3,10 @@ import App from './App'
 // import store from './store/store.js'
 import themeMixin from './utils/mixin.js'
 Vue.config.productionTip = false
+// import list from './components/service' // 要注册组件名
 // Vue.prototype.$store = store
 App.mpType = 'app'
+// Vue.component("list",list) // 全局注册
 // 引入全局uView
 import uView from 'uview-ui'
 Vue.use(uView);

@@ -486,7 +486,10 @@
 			
 			// 司机服务
 			taPage(sum){
-				this.$u.route('/pages/driver/driverService/driverService',{index:sum})
+				// this.$u.route('/pages/driver/driverService/driverService',{index:sum})
+				uni.navigateTo({
+					url: '/pages/driver/driverService/driverService?index=' + sum
+				})
 			},
 			
 			//站内信条数
