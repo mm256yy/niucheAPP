@@ -24,7 +24,7 @@
 				<view style="padding: 0 10pt;margin: 210px 0 20px;">
 					<view class="" style="background: #FFFFFF;padding: 15px;border-radius: 10px;">
 						<view @click="toCashAccount()" class="wdsy" style="display: flex;justify-content: space-between;background: #FFF7F2;padding: 15px;color: #FF652B;border-radius: 6px;">
-							<view>我的收益<text style="color: #FF2B49;font-size: 16px;">0</text>元</view>
+							<view>我的收益<text style="color: #FF2B49;font-size: 16px;">{{myAccount}}</text>元</view>
 							<view>去提现<u-icon name="arrow-right"></u-icon>
 							</view>
 						</view>
@@ -98,7 +98,8 @@
 				show: false,
 				shareId: '',
 				registerCount: 0,
-				authCount: 0
+				authCount: 0,
+				myAccount:0
 			}
 		},
 		onLoad(option) {
@@ -116,11 +117,7 @@
 			toCashAccount(){
 				let token = uni.getStorageSync('token')
 				if (token){
-					if(this.driverPub.driverState === 2){
-						this.$u.route("/pages/driver/cashAccount/cashAccount",{money:this.driverPub.account})
-					} else{
-						this.$u.toast('请先进行认证')
-					}
+					this.$u.route("/pages/driver/cashAccount/cashAccount",{money:this.myAccount})
 				}else{
 					this.toLogin()
 				}
@@ -148,8 +145,9 @@
 				}).then(res => {
 					if (res.code === 200) {
 						let data = res.object;
-						this.authCount = data.authCount
-						this.registerCount = data.registerCount;
+						this.authCount = data.certAuthNum
+						this.registerCount = data.driverAuthNum;
+						this.myAccount = data.account;
 					} else {
 						this.$u.toast(res.msg)
 					}

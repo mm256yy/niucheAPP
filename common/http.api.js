@@ -161,7 +161,7 @@ const install  = (Vue, vm) => {
 				const  viewMessage = (params = {}) => vm.$u.post('/MessageReceptionController/pub/userSelectNoSeeMessage', params);
 				
 				//分享数据 认证
-               const  statistics =(params = {}) => vm.$u.get('/share/data/statistics', params);
+               const  statistics =(params = {}) => vm.$u.post('/BillingdetailsController/getShareResult', params);
 			   //低价好车
 			    const  driverSideHomePage =(params = {}) => vm.$u.get('/user/lowPrice/driverSideHomePage', params);
 				//新春福利
