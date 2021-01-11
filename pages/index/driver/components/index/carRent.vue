@@ -28,7 +28,7 @@
 			</view>
 			<view style="margin-top: 30rpx;display: flex;padding-bottom: 20rpx;border-bottom: 1rpx solid rgba(0,0,0,0.05);padding-left: 34rpx;">
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
-					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
+					<view @click="close(index,item)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
 				<view @click="clear" v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
@@ -218,11 +218,78 @@
 			this.transform()
 		},
 		methods: {
-			close(index){
+			close(index,text){
+				var carbrand = [];
+				var cartype = [];
+				var power = [];
 				this.filterData.splice(index, 1);
+				this.publishObj.onLineList.map(item=>{
+				   if(item.text == text){
+				   	this.form.businesstype = '';
+					uni.removeStorageSync('businesstype');
+				   }
+				})
+				this.publishObj.ageList.map(item=>{
+				   if(item.text == text){
+				   	this.form.startCarAge = '';
+					this.form.endCarAge = '';
+					uni.removeStorageSync('caragekey');
+				   }
+				})
+				this.objType[this.radioType].map(item=>{
+				   if(item.text == text){
+				   	this.form.km = '';
+					uni.removeStorageSync('kmkey');
+				   }
+				})
+				if(uni.getStorageSync('carbrand')){
+					carbrand = uni.getStorageSync('carbrand').split(',');
+					carbrand.map((item,index)=>{
+					   if(item == text){
+					   	carbrand.splice(index, 1);
+						if(carbrand.length){
+							uni.setStorageSync('carbrand', carbrand.join(','));
+							this.form.carbrand = uni.getStorageSync('carbrand');
+						}else{
+							uni.removeStorageSync('carbrand');
+							this.form.carbrand = '';
+						}
+					   }
+					})
+				}
+				if(uni.getStorageSync('cartypeDriver')){
+					cartype = uni.getStorageSync('cartypeDriver').split(',');
+					cartype.map((item,index)=>{
+					   if(item == text){
+					   	cartype.splice(index, 1);
+						if(cartype.length){
+							uni.setStorageSync('cartypeDriver', cartype.join(','));
+							this.form.cartype = uni.getStorageSync('cartypeDriver');
+						}else{
+							uni.removeStorageSync('cartypeDriver');
+							this.form.cartype = '';
+						}
+					   }
+					})
+				}
+				if(uni.getStorageSync('powerDriver')){
+					power = uni.getStorageSync('powerDriver').split(',');
+					power.map((item,index)=>{
+					   if(item == text){
+					   	power.splice(index, 1);
+						if(power.length){
+							uni.setStorageSync('powerDriver', power.join(','));
+							this.form.power = uni.getStorageSync('powerDriver');
+						}else{
+							uni.removeStorageSync('power');
+							this.form.power = '';
+						}
+					   }
+					})
+				}
+				this.search()
 			},
 			transform(){
-				debugger
 				var carbrand = [];
 				var cartype = [];
 				var power = [];
