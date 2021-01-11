@@ -4,13 +4,13 @@
 		<view class="content_view">
 			<view class="content_title">车辆月租金</view>
 			<view class="content_input">
-				<u-image src="@/static/￥@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
+				<u-image src="@/static/money@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
 				<u-input v-model="form.rent" @input="rentMoney" type="number" maxlength="7" :border="false" placeholder="请输入当前车辆月租金" style="padding-left: 20px;" />
 			</view>
 			<view class="content_tips">*请输入与您租赁合同内一致的租金金额，否则会提现失败</view>
 			<view class="content_title">提现金额</view>
 			<view class="content_input">
-				<u-image src="@/static/￥@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
+				<u-image src="@/static/money@3x.png" height="50rpx" width="44rpx" border-radius="8"></u-image>
 				<u-input v-model="form.money" @input="moneyInput" :border="false" type="number" maxlength="7" placeholder="请输入提现金额" style="padding-left: 20px;" />
 			</view>
 			<view style="font-size: 12px;color:#C7C7C7 ;padding-top: 5px;">当前可提现金额<text>{{money}}</text>元</view>
