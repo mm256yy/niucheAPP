@@ -202,12 +202,16 @@
 
 <style lang="scss">
 	page {
-		background-image: url(../../../static/c.png);
-		background-repeat: no-repeat;
-		background-size: cover;
+		background-color: #fe012f;
 	}
 </style>
 <style lang="scss" scoped>
+	.view_content{
+		background-image: url(../../../static/c@2x.png);
+		background-repeat: no-repeat;
+		background-size: 100%;
+		height: 585px;
+	}
 	.bgImg-common {
 		background-position: center;
 		background-repeat: no-repeat;
@@ -216,7 +220,7 @@
 
 	.flex_view {
 		position: absolute;
-		top: 55vh;
+		top: 400px;
 		width: 100%;
 	}
 
