@@ -346,7 +346,7 @@
 		background-size: cover;
 		border-radius: 56rpx;
 		position: fixed;
-		bottom: 50rpx;
+		bottom: 20rpx;
 		left: 304rpx;
 	}
 </style>

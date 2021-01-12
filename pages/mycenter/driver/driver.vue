@@ -2,8 +2,7 @@
 	<view>
 		<view class="top">
 			<view>
-				<view class="topBox">
-					<view class="imgUrl">
+				<view class="imgUrl">
 						<view class="about" @click="toAboutUs">关于</view>
 						<u-row style="padding:48pt 36rpx 5pt; ">
 							<u-col span="3" v-show="!tokenFlag">
@@ -28,21 +27,20 @@
 								<u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon>
 							</u-col> -->	
 						</u-row>
-						<view style="margin-left: 36rpx;margin-top: 4rpx;" class="case">
+						<view class="case">
 							<view class="box">
 								<view class="name">驾照认证</view>
 								<view class="visible" @click="toLicense">{{driverPub.driverState | stateV}}</view>
 							</view>
 							<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
 						</view>
-						<view style="margin-left: 20rpx;margin-right: 36rpx;margin-top: 4rpx;" class="case">
+						<view class="cases">
 							<view class="box">
 								<view style="width: 200rpx;" class="name" @click="toCard">执业资格认证</view>
 								<view class="visible">{{driverPub.postState | stateV}}</view>
 							</view>
 							<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
 						</view>
-				</view>
 				</view>
 				<view class="room"></view>
 				<u-image width="682" height="120" src="@/static/account.png" @click="account" class="account"></u-image>
@@ -353,15 +351,13 @@
 		background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC),
 	}
 }
-    .topBox{
+	.imgUrl{
+		width: 100%;
+		height: calc(var(--status-bar-height) + 304rpx);
 		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 200;
-	}
-	.imgUrl{
-		width: 100%;
-		height: calc(var(--status-bar-height) + 304rpx);
 		background: linear-gradient(270deg, #FFC700 0%, #FF9000 100%);
 	}
 	.room{
@@ -399,8 +395,20 @@
 		background: #FFFFFF;
 		border-radius: 8rpx;
 		display: flex;
-		float: left;
-		margin-top: -60rpx;
+		position: fixed;
+		top: calc(var(--status-bar-height) + 244rpx);
+		left: 36rpx;
+	}
+	.cases{
+		width: 328rpx;
+		height: 120rpx;
+		padding: 20rpx 24rpx;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		display: flex;
+		position: fixed;
+		top: calc(var(--status-bar-height) + 244rpx);
+		right: 36rpx;
 	}
 	.box{
 		width: 120rpx;
@@ -428,7 +436,7 @@
 		position: relative;
 		top: 146rpx;
 		right: 100rpx;
-		z-index: 200;
+		z-index: 100;
 		float: right;
 	}
 	.invite{
@@ -452,7 +460,7 @@
 		background-size: cover;
 		border-radius: 56rpx;
 		position: fixed;
-		bottom: 50rpx;
+		bottom: 20rpx;
 		left: 304rpx;
 	}
 </style>
