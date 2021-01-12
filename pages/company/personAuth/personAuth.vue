@@ -107,7 +107,7 @@
 					username: requiredRule,
 					birthday: requiredRule,
 					sex: requiredRule,
-					telephone:phoneRule,
+					telephone:requiredRule,
 					idcardid:IDNumberRule,
 				},
 				show: false,
