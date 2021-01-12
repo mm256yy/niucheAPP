@@ -4,7 +4,7 @@
 			<view>
 				<view class="imgUrl">
 					<view class="about" @click="toAboutUs">关于</view>
-					<u-row style="padding:48pt 36rpx 5pt; ">
+					<u-row style="padding:180rpx 36rpx 5pt; ">
 						<u-col span="3" v-show="!tokenFlag">
 							<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
 						</u-col>
@@ -14,7 +14,7 @@
 						<u-col span="8" v-if="!tokenFlag">
 							<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
 							  <view>登录注册</view>
-							  <!-- <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image> -->
+							  <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image>
 							</view>
 						</u-col>
 						<u-col span="8" v-else @click="toAuth">
@@ -22,9 +22,9 @@
 							<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
 							<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
 						</u-col>
-						<!-- <u-col span="1" v-if="tokenFlag">
-							<u-icon name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>
-						</u-col> -->
+						<u-col span="1" v-if="tokenFlag">
+							<u-icon style="margin-top: 14rpx;" name="arrow-right" color="#fff" size="30" @click="toAuth"></u-icon>
+						</u-col>
 						
 						
 					</u-row>
