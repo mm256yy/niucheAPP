@@ -224,8 +224,18 @@
 						}else {
 							let phone = uni.getStorageSync('telephone')
 							this.companyName = phone
+							this.myPublishObj ={
+								zcxx:'不可见',clzm:'不可见',qgxx:'不可见',zpxx:'不可见'
+							};
+							this.otherObj ={
+								sc:'不可见',xx:'不可见',qz:'不可见'
+							};
+							this.companyStatus='';
+							this.reson='';
+							this.comnpanySrc='../../static/notLogin.png';
 							// uni.setStorageSync('isauthencation',0)
 							 // this.$u.toast(res.message);
+							 console.log(this.authFlag)
 						}
 					})
 				}
