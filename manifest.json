@@ -2,8 +2,8 @@
     "name" : "纽车",
     "appid" : "__UNI__A80C5DE",
     "description" : "",
-    "versionName" : "1.5.1.101",
-    "versionCode" : 111,
+    "versionName" : "1.5.2.0",
+    "versionCode" : 112,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -23,7 +23,8 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Share" : {}
+            "Share" : {},
+            "UIWebview" : {}
         },
         /* 应用发布信息 */
         "distribute" : {

@@ -85,11 +85,29 @@
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
 			<u-button type="warning" shape='circle' class="btn-orange"  @click="toNext">提交</u-button>
 		</view>
-		<u-modal v-model="showTips" @confirm="confirm" confirm-text="我知道了">
+		<u-modal v-model="showTips" :show-confirm-button="false" title="认证提示">
+			<view class="slot_content">
+				<view class="slot_tips">
+					非常好，您的驾驶证认证已提交审核，建议继续职业资格认证：
+					<view style="padding: 5px 0;">
+						<u-radio-group v-model="nextFlag" active-color="#FF9F31">
+							<u-radio name="1" style="margin:5px 5px 5px;">网约车驾驶员证</u-radio>
+							<u-radio name="2" style="margin:5px 5px 5px;">出租车驾驶员证</u-radio>
+						</u-radio-group>
+					</view>
+				</view>
+
+				<view style="display: flex;justify-content: space-around;padding: 10px 0 0;">
+					<view @click="confirm" class="slot_btn" style="background: #F2F2F2;color: #5F5E5F;">暂不认证</view>
+					<view class="slot_btn" @click="toNextRoute" style="background: linear-gradient(270deg, #FFC200 0%, #FFB900 41%, #FF9A00 100%);color: #FFFFFF;">继续认证</view>
+				</view>
+			</view>
+		</u-modal>
+<!-- 		<u-modal v-model="showTips" @confirm="confirm" confirm-text="我知道了">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 				您的信息已提交审核
 			</view>
-		</u-modal>
+		</u-modal> -->
 	</view>
 </template>
 
@@ -142,7 +160,8 @@
 				errorType:[
 					'message'
 				],
-				today:{}
+				today:{},
+				nextFlag:1,
 			}
 		},
 		onReady() {
@@ -198,6 +217,7 @@
 				this.show = true;
 			},
 			confirm(){
+				this.showTips = false;
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			edit(){
@@ -243,6 +263,15 @@
 				}else {
 					this.$u.toast(res.msg)
 				}
+			},
+			toNextRoute(){
+				this.showTips = false;
+				 if (this.nextFlag == 1) {
+					this.$u.route("/pages/driver/onlineCar/onlineCar")
+				 } else {
+					 this.$u.route("/pages/driver/taxiCar/taxiCar")
+				 }
+				console.log(this.nextFlag)
 			}
 		}
 	}
@@ -307,7 +336,20 @@
 		  text-align: right;
 	  }
 	}
-
+	.slot_content {
+		padding: 15px 0;
+		.slot_tips {
+			color: #939393;
+			font-size: 14px;
+			padding: 0 20px 15px;
+			border-bottom: 1rpx solid #E0E0E0;
+		}
+	
+	}
+	.slot_btn{
+		width: 100px;padding: 8px;text-align: center;font-size: 14px;
+		border-radius: 4px;
+	}
 	 .btn-orange{
 		background: linear-gradient(55deg, $bg-grad-FE, $bg-grad-FCD);
 	 }
