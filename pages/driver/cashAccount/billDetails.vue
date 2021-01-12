@@ -9,7 +9,7 @@
 			</view>
 		</u-navbar>
 		<view>
-			<chunLei-popups v-model="selectFlag" :popData="popData" @tapPopup="tapPopup" :x="345" :y="60" placement="top-end"></chunLei-popups>
+			<chunLei-popups v-model="selectFlag" :popData="popData" @tapPopup="tapPopup" :x="345" :y="70" placement="top-end"></chunLei-popups>
 		</view>
 		<view class="list_content">
 			<scroll-view scroll-y style="height: 100%;width: 100%;">
