@@ -202,7 +202,7 @@
 
 <style lang="scss">
 	page {
-		background-image: url(../../../static/c@3x.png);
+		background-image: url(../../../static/c.png);
 		background-repeat: no-repeat;
 		background-size: 100%;
 	}
