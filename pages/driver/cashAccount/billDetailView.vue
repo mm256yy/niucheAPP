@@ -66,7 +66,7 @@
 			<u-icon name="arrow-right" color="#333333"></u-icon>
 		</view>
 		<u-gap height="40" bg-color="#FFFFFF"></u-gap>
-		 <previewImage ref="previewImage" :saveBtn="false" :imgs="imgs"></previewImage>
+		 <previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="imgs"></previewImage>
 	</view>
 </template>
 

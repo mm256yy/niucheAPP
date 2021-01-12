@@ -226,7 +226,7 @@
 		border-radius: 20px;
 		width: 68%;
 		position: absolute;
-		top: 60px;
+		top: 15px;
 		left: 18.5%;
 		text-align: center;
 		line-height: 50px;
