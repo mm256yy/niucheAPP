@@ -26,9 +26,7 @@
 				</u-form-item>
 				<u-form-item label="出生日期" prop="birthday"><u-input v-model="form.birthday" :border="true" :disabled="true" @click="show = true" placeholder=""/><u-icon style=";position: absolute;right: 10rpx;" name="calendar" color="#6DD99B" size="40"></u-icon></u-form-item>
 				<u-form-item label="身份证号" prop="idcardid"><u-input maxlength="18" v-model="form.idcardid" :border="true"/></u-form-item>
-				<u-form-item label="手机号码" prop="telephone"><u-input type="number" maxlength="11" v-model="form.telephone" :border="true"/></u-form-item>
-				<u-form-item label="输入验证码" prop="identifyCode"><u-input v-model="form.identifyCode" type="number" maxlength="4" :border="true" />
-				<u-button type="success" size="mini " shape='circle' @click="getCode" style="position: absolute;right: 10rpx;">{{codeTips}}</u-button>
+				<u-form-item label="联系电话" prop="telephone"><u-input type="number" maxlength="20" v-model="form.telephone" :border="true"/></u-form-item>
 				</u-form-item>
 			</u-form>
 			<u-picker v-model="show" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
@@ -91,7 +89,6 @@
 					sex: '',
 					telephone:'',
 					idcardid:'',
-					identifyCode:'',
 					comparypeoplephoto:''
 				},
 				rules:{
@@ -100,7 +97,6 @@
 					sex: requiredRule,
 					telephone:phoneRule,
 					idcardid:IDNumberRule,
-					identifyCode:requiredRule	
 				},
 				show: false,
 				params: {
