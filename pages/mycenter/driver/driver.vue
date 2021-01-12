@@ -28,16 +28,16 @@
 								<!-- <u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon> -->
 							</u-col>	
 						</u-row>
-						<view class="case">
+						<view class="case" @click="toLicense">
 							<view class="box">
 								<view class="name">驾照认证</view>
-								<view class="visible" @click="toLicense">{{driverPub.driverState | stateV}}</view>
+								<view class="visible">{{driverPub.driverState | stateV}}</view>
 							</view>
 							<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
 						</view>
-						<view class="cases">
+						<view class="cases" @click="toCard">
 							<view class="box">
-								<view style="width: 200rpx;" class="name" @click="toCard">执业资格认证</view>
+								<view style="width: 200rpx;" class="name">执业资格认证</view>
 								<view class="visible">{{driverPub.postState | stateV}}</view>
 							</view>
 							<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
