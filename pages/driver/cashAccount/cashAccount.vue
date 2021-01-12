@@ -79,9 +79,11 @@
 				if (this.totalAssets>0) {
 					this.$u.api.getCashFlag().then(res => {
 						if (res.code === 200) {
-							if(res.object === 1){
+							let data = res.object
+							if(data.state === 1){
 								this.flag = true;
 							} else {
+								this.tipsText = data.text
 								this.flag = false;
 							}
 						} else {
@@ -97,7 +99,6 @@
 					return false
 				}
 				if(!this.flag){
-					this.tipsText = '对不起，每月只能1次申请提现！'
 					this.showTips = true;
 					return false
 				}

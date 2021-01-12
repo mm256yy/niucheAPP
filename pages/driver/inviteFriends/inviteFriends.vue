@@ -204,7 +204,7 @@
 	page {
 		background-image: url(../../../static/c.png);
 		background-repeat: no-repeat;
-		background-size: 100%;
+		background-size: cover;
 	}
 </style>
 <style lang="scss" scoped>
@@ -216,7 +216,7 @@
 
 	.flex_view {
 		position: absolute;
-		top: 400px;
+		top: 55vh;
 		width: 100%;
 	}
 
@@ -226,7 +226,7 @@
 		border-radius: 20px;
 		width: 68%;
 		position: absolute;
-		top: 15px;
+		top: 5vh;
 		left: 18.5%;
 		text-align: center;
 		line-height: 50px;
