@@ -231,6 +231,12 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//客服
+				    "path" : "pages/mycenter/company/service",
+				    "style" : {
+						"navigationStyle": "custom" 
+					}
+				}
 		,{//首页-购车需求详情
 		    "path" : "pages/mymessage/company/components/index/buyingDetail",
 		    "style" : {
