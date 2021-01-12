@@ -156,8 +156,8 @@
 					scene: "WXSceneSession",
 					type: 0,
 					href: shareUrl + this.shareId,
-					title: "看车租车上纽车APP",
-					summary: "限时推广拉新，享更多福利，点击即可领取！",
+					title: "赚租金上纽车APP",
+					summary: "注册认证就送100元，成为纽车推广人，赚租金，上不封顶！",
 					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));

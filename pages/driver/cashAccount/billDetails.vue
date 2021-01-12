@@ -47,7 +47,7 @@
 				selectValue: '',
 				popData: [{
 					title: '全部',
-					value: '’'
+					value: ''
 				}, {
 					title: '收入',
 					value: 'ADD'
