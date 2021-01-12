@@ -134,9 +134,9 @@
 							this.form = res.object
 							this.imgs = res.object.vehicleLeaseContract.concat(res.object.runSingerWater)
 							if (res.object.incomingAndOutgoingState === 'ADD'){
-								this.flag = true
-							} else{
 								this.flag = false
+							} else{
+								this.flag = true
 							}
 						}else {
 							 this.$u.toast(res.msg);
