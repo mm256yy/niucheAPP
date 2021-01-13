@@ -5,7 +5,7 @@
 			<view class="content_head">
 				<view class="head_title">{{form.source | soureText}}</view>
 				<view class="head_money" :style="{color:form.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
-				{{form.incomingAndOutgoingState === 'ADD'?'+':'-'}}¥{{form.money}}</view>
+				{{form.incomingAndOutgoingState === 'ADD'?'+':'-'}}{{form.money}}</view>
 			</view>
 			<view class="content_info" v-if="flag">
 				<view class="info_item">
@@ -33,7 +33,7 @@
 			<view class="content_info" v-else>
 				<view class="info_item">
 					<text class="info_title">当前状态：</text>
-					<text>{{form.auditState | audState}}</text>
+					<text>入账中</text>
 				</view>
 				<view class="info_item">
 					<text class="info_title">交易单号：</text>
