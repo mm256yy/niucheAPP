@@ -156,8 +156,8 @@
 					scene: "WXSceneSession",
 					type: 0,
 					href: shareUrl + this.shareId,
-					title: "看车租车上纽车APP",
-					summary: "限时推广拉新，享更多福利，点击即可领取！",
+					title: "赚租金上纽车APP",
+					summary: "注册认证就送100元，成为纽车推广人，赚租金，上不封顶！",
 					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
@@ -202,12 +202,16 @@
 
 <style lang="scss">
 	page {
-		background-image: url(../../../static/c@3x.png);
-		background-repeat: no-repeat;
-		background-size: 100%;
+		background-color: #fe012f;
 	}
 </style>
 <style lang="scss" scoped>
+	.view_content{
+		background-image: url(../../../static/c@2x.png);
+		background-repeat: no-repeat;
+		background-size: 100%;
+		height: 585px;
+	}
 	.bgImg-common {
 		background-position: center;
 		background-repeat: no-repeat;
@@ -226,7 +230,7 @@
 		border-radius: 20px;
 		width: 68%;
 		position: absolute;
-		top: 15px;
+		top: 5vh;
 		left: 18.5%;
 		text-align: center;
 		line-height: 50px;

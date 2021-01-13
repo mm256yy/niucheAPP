@@ -2,17 +2,9 @@
 	<view>
 		<u-popup v-model="showShare" mode="bottom">
 			<u-row justify="around" style="padding: 30rpx 0;">
-				<u-col span="4" style="text-align: center;" @click="shared('WXSenceTimeline')">
-					<view><u-icon :name="pengyouquan" size="60"></u-icon></view>
-					<view>朋友圈</view>
-				</u-col>
-				<u-col span="4" style="text-align: center;" @click="shared('WXSceneSession')">
-					<view><u-icon :name="weixin" size="60"></u-icon></view>
-					<view>微信好友</view>
-				</u-col>
-				<u-col span="4" style="text-align: center;" @click="copyd">
-					<view><u-icon :name="fuzhi" size="60"></u-icon></view>
-					<view>复制链接</view>
+				<u-col span="4" style="text-align: center;" @click="shared(item.method)" v-for="(item,index) in shareObject" :key="index">
+					<view><u-icon :name="item.icon" size="60"></u-icon></view>
+					<view>{{item.text}}</view>
 				</u-col>
 			</u-row>
 			<!-- <view style="text-align: center;padding: 10rpx 0;">取消</view> -->
@@ -24,9 +16,13 @@
 	export default {
 		data() {
 			return {
-				pengyouquan:'../../static/pengyouquan.png',
-				weixin:'../../static/weixin.png',
-				fuzhi:'../../static/fuzhi.png',
+				 shareObject:[{
+					 method:'WXSceneSession',icon:'@/static/weixin.png',text:'微信好友'
+				 },{
+					 method:'WXSenceTimeline',icon:'@/static/pengyouquan.png',text:'微信朋友圈'
+				 },{
+					 method:'qq',icon:'@/static/fuzhi.png',text:'QQ'
+				 }],
 				showShare:true
 			}
 		},
@@ -34,7 +30,17 @@
 		  href: {
 		    type: String,
 		    required: true,
-		  }
+		  },
+		  title:{
+			  type:String,
+			  required: true,
+		  },
+		  summary:{
+			  type:String,
+			  required: true,
+		  },
+		  
+		  
 		},
 		methods: {
 			shared(scene){

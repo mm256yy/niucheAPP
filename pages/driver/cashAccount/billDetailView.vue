@@ -5,7 +5,7 @@
 			<view class="content_head">
 				<view class="head_title">{{form.source | soureText}}</view>
 				<view class="head_money" :style="{color:form.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
-				{{form.incomingAndOutgoingState === 'ADD'?'+':'-'}}¥{{form.money}}</view>
+				{{form.incomingAndOutgoingState === 'ADD'?'+':'-'}}{{form.money}}</view>
 			</view>
 			<view class="content_info" v-if="flag">
 				<view class="info_item">
@@ -25,7 +25,7 @@
 					<text class="info_title">入账账号：</text>
 					<text>{{form.billingAccount}}</text>
 				</view>
-				<view class="info_item">
+				<view class="info_item" v-if="form.audState === 'BE_FINISHED'">
 					<text class="info_title">到账时间：</text>
 					<text>{{form.endDisposeTime}}</text>
 				</view>
@@ -33,7 +33,7 @@
 			<view class="content_info" v-else>
 				<view class="info_item">
 					<text class="info_title">当前状态：</text>
-					<text>{{form.auditState | audState}}</text>
+					<text>已入帐</text>
 				</view>
 				<view class="info_item">
 					<text class="info_title">交易单号：</text>
@@ -98,7 +98,9 @@
 					return '到账失败'
 				} else if (value === 'AUDIT_FAILED') {
 					return '审核失败'
-				} else {
+				}  else if (value === 'BE_AUDITED') {
+					return '审核成功'
+				}else {
 					return ''
 				}
 			},
@@ -134,9 +136,9 @@
 							this.form = res.object
 							this.imgs = res.object.vehicleLeaseContract.concat(res.object.runSingerWater)
 							if (res.object.incomingAndOutgoingState === 'ADD'){
-								this.flag = true
-							} else{
 								this.flag = false
+							} else{
+								this.flag = true
 							}
 						}else {
 							 this.$u.toast(res.msg);
