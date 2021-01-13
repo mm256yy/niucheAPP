@@ -328,6 +328,9 @@
 				   if(this.driverPub.postState === 0 || this.driverPub.postState === 9){
 					     this.showTips = true
 				     } else {
+						 if(this.driverPub.certificationType === 0){
+						 	this.showTips = true
+						 }
 					  if(this.driverPub.certificationType === 1){
 						this.$u.route("/pages/driver/onlineCar/onlineCar")
 					  }
