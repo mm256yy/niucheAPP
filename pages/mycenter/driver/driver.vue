@@ -157,6 +157,14 @@
 				</view>
 			</view>
 		</view>
+		<u-modal v-model="showTips" :show-cancel-button="true" :mask-close-able="true" confirm-text="出租车驾驶证" cancel-text="网约车驾驶证"
+		 @confirm="tipsConfirm" @cancel="tipsCancel" >
+			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		        <view class="">
+		        	请选择要上传的职业资格证件!
+		        </view>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
