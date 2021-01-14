@@ -11,7 +11,7 @@
 				<view class="info_item">
 					<text class="info_title">当前状态：</text>
 					<text>{{form.auditState | audState}}</text>
-					<view style="color: #FE3B31;font-size: 12px;" v-show="form.auditState == 'BE_FAILED' || form.auditState == 'AUDIT_FAILED'">原因：{{form.failCause}}</view>
+					<view style="color: #FE3B31;font-size: 16px;" v-show="form.auditState == 'BE_FAILED' || form.auditState == 'AUDIT_FAILED'">原因：{{form.failCause}}</view>
 				</view>
 				<view class="info_item">
 					<text class="info_title">提现时间：</text>
@@ -48,13 +48,13 @@
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5" v-if="flag"></u-gap>
 		<view class="view_content" style="padding-bottom: 12px;" v-if="flag">
-			<view style="padding: 10px 0;">车辆租赁合同照片</view>
+			<view style="padding: 10px 0;font-size: 16px;">车辆租赁合同照片</view>
 			<u-row :gutter="20">
 				<u-col span="6" v-for="(item,index) in form.vehicleLeaseContract" :key="index" style="margin-bottom: 5px;">
 					<u-image width="100%" height="200rpx" :src="item" @click="open(index)"></u-image>
 				</u-col>
 			</u-row>
-			<view style="padding: 10px 0;">网约车平台跑单流水截图</view>
+			<view style="padding: 10px 0;font-size: 16px;">网约车平台跑单流水截图</view>
 			<u-row :gutter="20">
 				<u-col span="6" v-for="(item,index) in form.runSingerWater" :key="index" style="margin-bottom: 5px;">
 					<u-image width="100%" height="200rpx" :src="item" @click="open(index+form.vehicleLeaseContract.length)"></u-image>
@@ -171,12 +171,12 @@
 			color: #333333;
 
 			.head_title {
-				font-size: 14px;
+				font-size: 16px;
 				color: #333333;
 			}
 
 			.head_money {
-				font-size: 26px;
+				font-size: 30px;
 				padding: 10px 0 20px;
 			}
 		}
@@ -186,10 +186,10 @@
 
 			.info_item {
 				padding: 4px 0;
-
+                font-size: 16px;
 				.info_title {
 					color: #939393;
-					font-size: 14px;
+					font-size: 16px;
 				}
 			}
 
@@ -200,7 +200,8 @@
 		color: #111111;
 		display: flex;
 		justify-content: space-between;
-		padding: 10px 20px;
+		padding: 10px 0;
+		margin: 0 20px;
 		border-bottom: 1px solid #DEDEDE;
 	}
 </style>
