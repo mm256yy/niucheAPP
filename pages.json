@@ -658,15 +658,6 @@
             }
             
         }
-        ,{
-            "path" : "pages/driver/taxiCar/sdds/sdds",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
