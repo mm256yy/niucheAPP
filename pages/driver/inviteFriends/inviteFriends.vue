@@ -101,18 +101,13 @@
 				</view>
 			</view>
 		</u-popup>
-		<Auth></Auth>
 	</view>
 </template>
 <script>
-	import Auth from '@/components/auth.vue'
 	import {
 		shareUrl
 	} from '@/utils/constant.js'
 	export default {
-		components:{
-			Auth
-		},
 		data() {
 			return {
 				background: {
@@ -133,11 +128,17 @@
 			if (shareId) {
 				this.shareId = shareId;
 			} else {
-				this.initId()
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.initId()
+				}
 			}
 		},
 		onShow() {
-			this.getNumber()
+			let token = uni.getStorageSync('token')
+			if (token){
+				this.getNumber()
+			}
 		},
 		methods: {
 			toCashAccount(){
