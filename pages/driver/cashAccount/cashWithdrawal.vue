@@ -108,7 +108,7 @@
 					 if (keMoney <this.totalMoney){
 						 this.money = keMoney;
 					 } else {
-						 this.money = Math.floor(this.totalMoney*10)/100;
+						 this.money = Math.floor(this.totalMoney*100)/100;
 					 }
 				} else{
 					this.money = 0
