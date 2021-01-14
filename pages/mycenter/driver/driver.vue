@@ -162,7 +162,7 @@
 		 @confirm="tipsConfirm" @cancel="tipsCancel" >
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 		        <view class="">
-		        	请选择要上传的职业资格证件!
+		        	请选择要上传的执业资格证件!
 		        </view>
 			</view>
 		</u-modal>
