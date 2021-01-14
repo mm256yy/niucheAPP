@@ -101,18 +101,13 @@
 				</view>
 			</view>
 		</u-popup>
-		<Auth></Auth>
 	</view>
 </template>
 <script>
-	import Auth from '@/components/auth.vue'
 	import {
 		shareUrl
 	} from '@/utils/constant.js'
 	export default {
-		components:{
-			Auth
-		},
 		data() {
 			return {
 				background: {
