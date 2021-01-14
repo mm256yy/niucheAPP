@@ -2,7 +2,7 @@
 	<view>
 		<u-navbar back-text="返回" back-icon-size="0" :background="background" title="邀请好友" height='44' title-color="#333333"></u-navbar>
 		<view class="" style="position: relative;">
-			<u-image height="580px" mode="aspectFill" src="@/static/c@2x.png" @click="toPage"></u-image>
+			<u-image height="580px" mode="scaleToFill" src="@/static/c@3x.png" @click="toPage"></u-image>
 			<view style="position: absolute;
 				right: 0;
 				width: 30px;
@@ -17,9 +17,9 @@
 					<text>则</text>
 				</view>
 			</view>
-				<view class="yqhy" @click="inviteFriends">立即邀请好友助力</view>
+				<view class="yqhy"><view  @click="inviteFriends">立即邀请好友助力</view></view>
 			<view class="flex_view">
-				<view style="padding: 0 10pt;margin: 210px 0 20px;">
+				<view style="padding: 0 10pt;margin: 20px 0 20px;">
 					<view class="" style="background: #FFFFFF;padding: 15px;border-radius: 10px;">
 						<view @click="toCashAccount()" class="wdsy" style="display: flex;justify-content: space-between;background: #FFF7F2;padding: 15px;color: #FF652B;border-radius: 6px;">
 							<view>我的收益<text style="color: #FF2B49;font-size: 16px;">{{obj.inviteAccount}}</text>元</view>
@@ -217,8 +217,8 @@
 	}
 
 	.flex_view {
-		position: absolute;
-		top: 68%;
+		// position: absolute;
+		// top: 68%;
 		width: 100%;
 	}
 
@@ -228,7 +228,7 @@
 		border-radius: 20px;
 		width: 68%;
 		position: absolute;
-		top: 77%;
+		top: 446px;
 		left: 18.5%;
 		text-align: center;
 		line-height: 50px;
