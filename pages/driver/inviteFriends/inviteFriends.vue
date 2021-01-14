@@ -133,11 +133,17 @@
 			if (shareId) {
 				this.shareId = shareId;
 			} else {
-				this.initId()
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.initId()
+				}
 			}
 		},
 		onShow() {
-			this.getNumber()
+			let token = uni.getStorageSync('token')
+			if (token){
+				this.getNumber()
+			}
 		},
 		methods: {
 			toCashAccount(){

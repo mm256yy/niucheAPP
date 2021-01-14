@@ -273,13 +273,9 @@
 			toInvite(){
 				let token = uni.getStorageSync('token')
 				if (token){
-					if(this.driverPub.driverState === 2){
-						this.$u.route("/pages/driver/inviteFriends/inviteFriends",{shareId:this.driverPub.shareId})
-					} else{
-						this.$u.toast('请先进行认证')
-					}
+					this.$u.route("/pages/driver/inviteFriends/inviteFriends",{shareId:this.driverPub.shareId})
 				}else{
-					this.toLogin()
+					this.$u.route("/pages/driver/inviteFriends/inviteFriends")
 				}
 			},
 			toCollect(){
