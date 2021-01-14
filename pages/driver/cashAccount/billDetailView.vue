@@ -25,7 +25,8 @@
 					<text class="info_title">入账账号：</text>
 					<text>{{form.billingAccount}}</text>
 				</view>
-				<view class="info_item" v-if="form.audState === 'BE_FINISHED'">
+				
+				<view class="info_item" v-if="form.auditState == 'BE_FINISHED'">
 					<text class="info_title">到账时间：</text>
 					<text>{{form.endDisposeTime}}</text>
 				</view>
@@ -90,7 +91,7 @@
 		},
 		filters: {
 			audState: function(value) {
-				if (value === 'BE_BEING') {
+				if (value === 'BE_BEING' || value === 'BE_AUDITED') {
 					return '提现中'
 				} else if (value === 'BE_FINISHED') {
 					return '已到账'
@@ -98,9 +99,7 @@
 					return '到账失败'
 				} else if (value === 'AUDIT_FAILED') {
 					return '审核失败'
-				}  else if (value === 'BE_AUDITED') {
-					return '审核成功'
-				}else {
+				}  else {
 					return ''
 				}
 			},
@@ -134,6 +133,7 @@
 				this.$u.api.getMyBillDetails({billingDetailsid:this.id}).then(res=>{
 						if(res.code === 200){
 							this.form = res.object
+							console.log(this.form)
 							this.imgs = res.object.vehicleLeaseContract.concat(res.object.runSingerWater)
 							if (res.object.incomingAndOutgoingState === 'ADD'){
 								this.flag = false

@@ -30,17 +30,24 @@
 		  href: {
 		    type: String,
 		    required: true,
+			default: () => {
+				return [];
+			}
 		  },
 		  title:{
 			  type:String,
 			  required: true,
+			  default: () => {
+			  	return [];
+			  }
 		  },
 		  summary:{
 			  type:String,
 			  required: true,
+			  default: () => {
+			  	return [];
+			  }
 		  },
-		  
-		  
 		},
 		methods: {
 			shared(scene){
@@ -50,7 +57,7 @@
 				    scene: scene,
 				    type: 0,
 				    href: href,
-				    title: "纽车分享",
+				    title: this.title,
 				    // summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
 				    imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
 				    success: function (res) {

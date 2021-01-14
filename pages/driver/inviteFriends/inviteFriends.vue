@@ -17,7 +17,6 @@
 				</view>
 			</view>
 			<view class="flex_view">
-
 				<view class="" style="position: relative;">
 					<view class="yqhy" @click="inviteFriends">立即邀请好友助力</view>
 				</view>
@@ -32,11 +31,11 @@
 					<view style="position: relative;" class="bgImg-common wdjl">
 						<view style="position: absolute;top: 51%;left: 28%;z-index: 8;">
 							<view style="color: #FF652B;">驾照认证</view>
-							<view><text style="font-size: 16px;color: #FF3333;">{{obj.driverAuthNum}}</text><text style="color: #FF2B49;">人</text></view>
+							<view><text style="font-size: 18px;color: #FF3333;">{{obj.driverAuthNum}}</text><text style="color: #333333;font-size: 14px;">人</text></view>
 						</view>
 						<view style="position: absolute;top: 51%;right: 10%;z-index: 8;">
 							<view style="color: #FF652B;">执业认证</view>
-							<view style="font-size: 16px;color: #FF3333;"><text>{{obj.certAuthNum}}</text><text style="color: #FF2B49;">人</text></view>
+							<view style="font-size: 18px;color: #FF3333;"><text>{{obj.certAuthNum}}</text><text style="color: #333333;font-size: 14px;">人</text></view>
 						</view>
 					</view>
 					<view class="">
@@ -210,7 +209,7 @@
 		background-image: url(../../../static/c@2x.png);
 		background-repeat: no-repeat;
 		background-size: 100%;
-		height: 585px;
+		height: 605px;
 	}
 	.bgImg-common {
 		background-position: center;

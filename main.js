@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 // import store from './store/store.js'
 import themeMixin from './utils/mixin.js'
+import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 Vue.config.productionTip = false
 // Vue.prototype.$store = store
 App.mpType = 'app'
@@ -9,9 +10,12 @@ App.mpType = 'app'
 import uView from 'uview-ui'
 Vue.use(uView);
 Vue.use(themeMixin)
+Vue.component('mescroll-body', MescrollBody)
 const app = new Vue({
     ...App
 })
+
+
 import httpInterceptor from '@/common/http.interceptor.js'
 Vue.use(httpInterceptor, app)
 

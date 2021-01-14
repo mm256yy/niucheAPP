@@ -12,11 +12,12 @@
 			<chunLei-popups v-model="selectFlag" :popData="popData" @tapPopup="tapPopup" :x="345" :y="70" placement="top-end"></chunLei-popups>
 		</view>
 		<view class="list_content">
-			<scroll-view scroll-y style="height: 100%;width: 100%;">
-				<load-refresh ref="Refresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000"
-					 heightReduce="10" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
-					 @refresh="refresh">
-				<view slot="content-list" class="list_item" v-for="(item,index) in list" :key="index" @click="toView(item.billingDetailsid)">
+			<!-- <scroll-view scroll-y style="height: 100%;width: 100%;"> -->
+<!-- 				<load-refresh ref="Refresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000"
+					 heightReduce="60" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
+					 @refresh="refresh"> -->
+			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.billingDetailsid)">
 					<view class="item">
 						<text class="item_title">{{item.source | soureText}}</text>
 						<text class="item_money" :style="{color:item.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
@@ -24,20 +25,20 @@
 					</view>
 					<view class="item_time">{{item.endDisposeTime}}</view>
 				</view>
-				</load-refresh>
-			</scroll-view>
+			</mescroll-body>
+			<!-- </scroll-view> -->
 		</view>
 	</view>
 </template>
 
 <script>
-	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	import chunLeiPopups from "@/components/chunLei-popups/chunLei-popups.vue";
+	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default {
 		components: {
-			loadRefresh,
 			chunLeiPopups
 		},
+		mixins: [MescrollMixin],
 		data() {
 			return {
 				background: {
@@ -55,9 +56,18 @@
 					title: '支出',
 					value: 'SUB'
 				}],
-				list: [],
+				dataList: [],
+				page: {
+					num:1,
+					size: 10 // 每页数据的数量,默认10
+				},
+				downOption: {
+					auto: false //是否在初始化后,自动执行downCallback; 默认true
+				},
+				up:{
+					textNoMore:'--没有更多了--'
+				},
 				selectFlag: false,
-				pageNum: 1,
 				total: 0
 			}
 		},
@@ -77,7 +87,7 @@
 			}
 		},
 		mounted() {
-			this.getList(1)
+			// this.downCallback()
 		},
 		methods: {
 			showSelect() {
@@ -86,38 +96,31 @@
 			tapPopup(option) {
 				this.selectText = option.title;
 				this.selectValue = option.value;
-				this.getList(1)
+				this.page.num = 1;
+				this.dataList = []
+				this.upCallback()
 			},
-			getList(pageNum) {
+			/*下拉刷新的回调 */
+			downCallback() {
+				this.page.num = 1;
+				this.dataList = []
+				this.upCallback()
+			},
+			upCallback() {
 				this.$u.api.getBillDetails({
-					pageNum: pageNum,
-					pageSize: 10,
+					pageNum: this.page.num,
+					pageSize: this.page.size,
 					type: this.selectValue
 				}).then(res => {
 					if (res.code === 200) {
-						this.total = Math.ceil(res.total / 10);
-						let arr = res.rows
-						if (pageNum === 1) {
-							this.list = arr
-						} else {
-							arr.forEach(item => {
-								this.list.push(item)
-							})
-							this.$refs.Refresh.loadOver()
-							this.pageNum = pageNum
-						}
-						console.log(this.list)
+						this.total = res.total;
+						this.mescroll.endByPage(res.rows.length, res.total);
+						this.page.num = this.page.num+1
+						this.dataList=this.dataList.concat(res.rows);
 					} else {
 						this.$u.toast(res.msg);
 					}
 				})
-			},
-			loadMoreList() {
-				let pageNo = this.pageNum + 1
-				this.getList(pageNo)
-			},
-			refresh() {
-				this.getList(1)
 			},
 			toView(id) {
 				this.$u.route('/pages/driver/cashAccount/billDetailView', {
