@@ -145,7 +145,7 @@
 				</view>
 				<view @click="toCollect()" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx">
 					<view style="display: flex;">
-						<u-image width="48" height="48" src="@/static/favorites.png"></u-image>
+						<u-image width="48" height="48" src="@/static/collect.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">收藏</view>
 					</view>
 					<view style="display: flex;">
