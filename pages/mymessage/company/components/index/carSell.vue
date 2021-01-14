@@ -1,29 +1,61 @@
 <template>
 	<view class="carSell">
+		<u-mask z-index="2" :show="show" @click="hideMask">
+		</u-mask>
+		<list-tags v-show="showKm" :list="selectKm" :active="currentKm" @onClick="getDataKm"></list-tags>
+		<list-tags v-show="showPrice" :list="selectPrice" :active="currentPrice" @onClick="getDataPrice"></list-tags>
+		<list-tags v-show="showAge" :list="selectAge" :active="currentAge" @onClick="getDataAge"></list-tags>
 		<view class="middle-content">
-			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:220rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="kmkey" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:150rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="打包价" @click="showPrice = true" v-model="packpricekey" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:100rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter" type="text" :disabled="true" /></u-form-item>
-			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
-			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select> -->
-			<u-dropdown style="width: 50rpx;">
+			<view style="width: 100%;height: 100rpx;">
+				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
+					background: #F8F9FB;border-radius: 4px;width: 108rpx;display: flex;" label="">
+					<view>杭州</view>
+					<u-image style="margin-top: -50rpx;margin-left: 2rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+					</u-form-item>
+					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 112rpx;margin-left: 24rpx;" label="">
+					<u-input :custom-style="style" v-show="!showAge" disabled placeholder-style="color:#000;" placeholder="车龄" @click="toggleAge()"  v-model="agekey" /><text v-show="!showAge" class='triangle'></text>
+					<u-input :custom-style="styleActive" v-show="showAge" disabled placeholder-style="color:#40B26D;" placeholder="车龄" @click="toggleAge()"  v-model="agekey" /><text v-show="showAge" class='triangleActive'></text></u-form-item>
+					<u-form-item style="padding: 0 16rpx;margin-left:24rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 112rpx;" label="">
+					<u-input :custom-style="style" v-show="!showKm" disabled placeholder-style="color:#000;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="!showKm" class='triangle'></text>
+					<u-input :custom-style="styleActive" v-show="showKm" disabled placeholder-style="color:#40B26D;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="showKm" class='triangleActive'></text>
+					</u-form-item>
+					<u-form-item style="padding: 0 16rpx;margin-left:24rpx;margin-top: -18rpx;float: left;
+					background: #F8F9FB;border-radius: 4px;width: 146rpx;" label="">
+					<u-input :custom-style="style" v-show="!showPrice" disabled placeholder-style="color:#000;" placeholder="打包价" @click="togglePrice()" v-model="packpricekey" /><text v-show="!showPrice" class='triangle'></text>
+					<u-input :custom-style="styleActive" v-show="showPrice" disabled placeholder-style="color:#40B26D;" placeholder="打包价" @click="togglePrice()" v-model="packpricekey" /><text v-show="showPrice" class='triangleActive'></text>
+					</u-form-item>
+					<u-image style="margin-left: 2rpx;float: right;margin-top: 4rpx;" width="32rpx" height="34rpx" src="@/static/filter.png"></u-image>
+					<view @click="filter()" style="
+					float: right;margin-right: 2rpx;">更多</view>
+				</u-form>
+			</view>
+			<view style="margin-top: 42rpx;display: flex;">
+				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
+					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
+				</scroll-view>
+				<view @click="clear" v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+			</view>
+			<!-- <view style="display: flex;margin-left: 38rpx;">
+				<view v-for="(item, index) in filterData" :key="index" style="padding: 10rpx 18rpx;border-radius: 8rpx;background: #f8f9fb;margin-right:24rpx;">{{item}}</view>
+			</view> -->
+			<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+			<!-- <view style="position: fixed;top: 100rpx;left:0;background-color: #fff;" v-show="show">
+				<text style="width: 206rpx;height: 76rpx;border: 1px solid #D9DEDF;line-height: 76rpx;text-align: center;display: inline-block;color: #666;margin-left: 32rpx;" v-for="(item, index) in select" :key="index">{{item.label}}</text>
+			</view> -->
+			<!-- <u-dropdown style="width: 50rpx;">
 				<u-dropdown-item @change="change()" v-model="form.km" title="行驶里程" :options="select"></u-dropdown-item>
 				<u-dropdown-item @change="changePrice()" v-model="form.packprice" title="打包价" :options="selectPrice"></u-dropdown-item>
-			</u-dropdown>
-			<view @click="filter()" style="width: 100rpx;text-align: center;margin-right: 40rpx;">筛选</view>
+			</u-dropdown> -->
 		</view>
-		<view class="tagBox">
+		<!-- <view class="tagBox">
 			<view v-show="kmkey" class="selectTag">{{kmkey}}</view>
 			<view v-show="packpricekey" class="selectTag">{{packpricekey}}</view>
 			<view v-show="kmkey||packpricekey" class="clearNull" @click="clear()">清空</view>
 			<view class="clear"></view>
-		</view>
+		</view> -->
 		<view v-show="kmkey||packpricekey" style="width: 100%;height: 50rpx;"></view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
@@ -46,25 +78,24 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.demandid)">
-						<img style="width: 312rpx;height: 231rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 312rpx;height: 231rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt="">
 		    			<!-- <u-image v-show="item.photoUrl" class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image>
 		    			<u-image v-show="!item.photoUrl" class="left" width="312rpx" height="231rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image> -->
 		    			<view class="right">
-		    				<view v-show="item.businesstype == 1" class="city">网约车</view>
-		    				<view v-show="item.businesstype == 2" class="city">出租车</view>
 		    				<view class="clear"></view>
 		    				<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
-		    				<view class="price">打包价<text>￥{{item.packPrice}}</text></view>
-		    				<view v-show="items" v-for="(items, index) in item.carSystemTag.slice(0,2)" :key="index" class="case">{{items}}</view>
+							<view class="tag">{{item.carAge}}/{{item.km}}</view>
+		    				<view class="price">{{item.packPrice}}元</view>
+							<view style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
 		    			</view>
 		    			<view class="clear"></view>
-		    			<u-icon class="clock" name="clock" width="27rpx" height="26rpx"></u-icon>
-		    			<view class="year">{{item.carAge}}</view>
-		    			<u-image class="img" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-		    			<view class="year">{{item.km}}</view>
-		    			<view class="clear"></view>
+						<view class="flex">
+							<view class="company">{{item.comparyname}}</view>
+							<view class="area">{{item.comparyarea}}</view>
+							<view class="clear"></view>
+						</view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
@@ -85,15 +116,22 @@
 
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+	import listTags from '@/components/listTags.vue'
+	import {
+		publishObj
+	} from '@/utils/constant.js'
 	export default {
 		components: {
-			loadRefresh
+			loadRefresh,
+			listTags
 		},
 		data() {
 			return {
-				show:false,
+				showKm:false,
 				showPrice:false,
+				showAge:false,
 				iconType: 'flower',
+				publishObj:publishObj,
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -113,12 +151,12 @@
 				  businessType:0,
 				  carbrand:'',
 				  cartype:'',
-				  km: 100,
 				  power:'',
 				  packprice:'',
 				  startCarAge:'',
 				  endCarAge:''
 				},
+				agekey:'',
 				kmkey: '',
 				packpricekey: '',
 				pagination: {
@@ -126,7 +164,7 @@
 				  pageSize: 10
 				},
 				total: 0,
-				select: [
+				selectKm: [
 					{
 						label: '0-2万公里',
 						value: '1'
@@ -161,7 +199,7 @@
 					},
 					{
 						label: '不限',
-						value: '9'
+						value: '0'
 					}
 				],
 				selectPrice: [
@@ -182,6 +220,28 @@
 						value: '4'
 					}
 				],
+				selectAge: [
+					{
+						label: '1年内',
+						value: '0'
+					},
+					{
+						label: '1年-3年',
+						value: '1'
+					},
+					{
+						label: '3年-5年',
+						value: '2'
+					},
+					{
+						label: '5年以上',
+						value: '3'
+					},
+					{
+						label: '不限',
+						value: '4'
+					}
+				],
 				list: [],
 				status: 'loadmore',
 				loadText: {
@@ -189,14 +249,131 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				pageNum: 1
+				pageNum: 1,
+				currentKm:-1,
+				currentAge:-1,
+				currentPrice:-1,
+				style:{
+					color:'#000'
+				},
+				styleActive:{
+					color:'#40B26D'
+				},
+				show: false,
+				filterData:[],
+				image: '#333'
 			}
 		},
 		mounted() {
 			this.pageNum = 1;
-			this.search()
+			this.transform()
 		},
 		methods: {
+			close(index){
+				this.filterData.splice(index, 1);
+			},
+			transform(){
+				var cartype = [];
+				var power = [];
+				var businessType = '';
+				this.filterData = [];
+				if(uni.getStorageSync('businessType')){
+					businessType = uni.getStorageSync('businessType');
+					this.filterData.push(businessType);
+					this.publishObj.onLineList.map(item=>{
+					   if(item.text == businessType){
+					   	this.form.businessType = item.id;
+					   }
+					})
+				}
+				if(uni.getStorageSync('carbrand')){
+					carbrand = uni.getStorageSync('carbrand').split(',');
+					this.filterData = this.filterData.concat(carbrand);
+					this.form.carbrand = uni.getStorageSync('carbrand');
+				}
+				if(uni.getStorageSync('cartype')){
+					cartype = uni.getStorageSync('cartype').split(',');
+					this.filterData = this.filterData.concat(cartype);
+					this.form.cartype = uni.getStorageSync('cartype');
+				}
+				if(uni.getStorageSync('power')){
+					power = uni.getStorageSync('power').split(',');
+					this.filterData = this.filterData.concat(power);
+					this.form.power = uni.getStorageSync('power');
+				}
+				this.search()
+			},
+			hideMask(){
+				this.show = false;
+				this.showPrice = false;
+				this.showKm = false;
+				this.showAge = false;
+			},
+			toggleKm(){
+				this.show = !this.showKm;
+				this.showKm = !this.showKm;
+				this.showPrice = false;
+				this.showAge = false;
+			},
+			togglePrice(){
+				this.show = !this.showPrice;
+				this.showPrice = !this.showPrice;
+				this.showKm = false;
+				this.showAge = false;
+			},
+			toggleAge(){
+				this.show = !this.showAge;
+				this.showAge = !this.showAge;
+				this.showPrice = false;
+				this.showKm = false;
+			},
+			getDataKm(index) {
+				this.currentKm = index;
+				this.kmkey = this.selectKm[index].label;
+				this.form.km = this.selectKm[index].value;
+				this.showKm = false;
+				this.show = false;
+				this.search()
+			},
+			getDataPrice(index) {
+				this.currentPrice = index;
+				this.packpricekey = this.selectPrice[index].label;
+				this.form.packprice = this.selectPrice[index].value;
+				this.showPrice = false;
+				this.show = false;
+				this.search()
+			},
+			getDataAge(index) {
+				this.currentAge = index;
+				this.agekey = this.selectAge[index].label;
+				this.form.age = this.selectAge[index].value;
+				if(this.form.age == '0') {
+					this.form.startCarAge = '0';
+				    this.form.endCarAge = '1';
+					this.caragekey = '1年内';
+				}
+				if(this.form.age == '1') {
+					this.form.startCarAge = '1';
+				    this.form.endCarAge = '3';
+					this.caragekey = '1年-3年';
+				}
+				if(this.form.age == '2') {
+					this.form.startCarAge = '3';
+				    this.form.endCarAge = '5';
+					this.caragekey = '3年-5年';
+				}
+				if(this.carage == '3') {
+					this.form.startCarAge = '5';
+				    this.form.endCarAge = '';
+				}
+				if(this.form.age == '4') {
+					this.form.startCarAge = '';
+				    this.form.endCarAge = '';
+				}
+				this.showAge = false;
+				this.show = false;
+				this.search()
+			},
 			page() {
 			    this.pageNum = 1;
 			},
@@ -221,7 +398,7 @@
 				this.add()
 			},
 			add(){
-				this.select.forEach(item=>{
+				this.selectKm.forEach(item=>{
 					if(item.value === this.form.km){
 					    this.kmkey = item.label;
 					}
@@ -333,14 +510,22 @@
 			detail(id) {
 				this.$u.route("/pages/mymessage/company/components/index/carSellDetail",{id:id})
 			},
-			filter() {
-				this.$u.route("/pages/mymessage/company/components/index/filter")
+			filter(){
+				uni.navigateTo({
+					url:'/pages/mymessage/company/components/index/filter'  //跳转到B页面
+				})
 			},
+			// filter() {
+			// 	this.$u.route("/pages/mymessage/company/components/index/filter")
+			// },
 			clear(){
-				this.kmkey='';
-				this.packpricekey='',
-				this.form.km='';
-				this.form.packprice='';
+				uni.removeStorageSync('cartype');
+				uni.removeStorageSync('power');
+				uni.removeStorageSync('businessType');
+				this.filterData = [];
+				this.form.businessType = 0;
+				this.form.power = '';
+				this.form.cartype = '';
 				this.search()
 			}
 		}
@@ -383,14 +568,12 @@
 		}
 		.middle-content{
 			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			position: fixed;
 			top: 0;
 			left: 0;
-			z-index: 2;
-			background-color: #f5f5f8;
+			z-index: 10;
+			background-color: #fff;
+			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -399,9 +582,8 @@
 			width: 686rpx;
 			height: 71rpx;
 			border-radius: 40rpx;
-			margin-left: 39rpx;
-			background-color: #CDE5E3;
-			margin-top: 30rpx;
+			background-color: #fff;
+			margin-top: 48rpx;
 			float: left;
 		}
 		.icon {
@@ -425,6 +607,9 @@
 		.clear {
 			clear: both;
 		}
+		.last{
+			background-color: #fff;
+		}
 		.lists {
 			width: 702rpx;
 			// height: 308rpx;
@@ -442,68 +627,100 @@
 				padding: 18rpx 15rpx;
 				margin-left: 24rpx;
 				font-size: 20rpx;
-				background-image: url(@/static/bgcarsell.png);
+				// background-image: url(@/static/bgcarsell.png);
 				background-repeat: no-repeat;
 				background-size: cover;
 				.left, .right {
 					float: left;
 				}
 				.right {
-					width: 360rpx;
+					width: 380rpx;
 					padding-left: 34rpx;
 				}
-				.city {
-					padding: 4rpx 14rpx;
-					font-size: 24rpx;
-					border-radius: 22rpx;
-					border: 1rpx solid rgba(0,0,0,0.3);
-					margin-top: 16rpx;
-					margin-right: 16rpx;
-					float: right;
-				}
 				.name {
-					font-size: 28rpx;
-					line-height: 34rpx;
+					font-size: 30rpx;
+					line-height: 40rpx;
 					font-weight: 900;
-					margin-top: 6rpx;
+					color: #333;
+				}
+				.tag {
+					font-size: 26rpx;
+					font-weight: 400;
+					color: #777777;
+					line-height: 36rpx;
+					margin-top: 8rpx;
 				}
 				.price{
-					font-size: 24rpx;
-				}
-				.price text {
-					font-size: 36rpx;
-					font-weight: 900;
-					color: #40B36C;
-					margin-left: 8rpx;
-				}
-				.case {
-					padding: 6rpx 14rpx;
-					border-radius: 30rpx;
-					background: #40B36C;
-					color: #fff;
-					float: left;
-					margin-right: 10rpx;
-					margin-top: 6rpx;
-					font-size: 24rpx;
-				}
-				.clock {
-					margin-left: 30rpx;
-					margin-top: 21rpx;
-					margin-right: 4rpx;
+					font-size: 18px;
+					font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+					font-weight: bold;
+					color: #FF5200;
+			        margin-top: 26rpx;
 					float: left;
 				}
-				.img {
+			}
+			.flex{
+				padding-top: 22rpx;
+				padding-bottom: 34rpx;
+                border-bottom: 2rpx solid #dedede;
+				.company{
+					font-size: 28rpx;
+					font-weight: 400;
+					color: #343434;
 					float: left;
-					margin-top: 19rpx;
-					margin-right: 4rpx;
 				}
-				.year {
-					margin-top: 14rpx;
-					margin-right: 50rpx;
-					float: left;
-					font-size: 24rpx;
+				.area{
+					font-size: 26rpx;
+					font-weight: 400;
+					color: #666666;
+					float: right;
 				}
 			}
 		}
+		.triangleActive{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: transparent transparent #40B26D transparent;
+			margin-top: -8rpx;
+			margin-left: 4rpx;
+		}
+		.triangle{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: #777 transparent transparent transparent;
+			margin-top: 8rpx;
+			margin-left: 4rpx;
+		}
+		.warp {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+			}
+			.rect {
+				width: 120px;
+				height: 120px;
+				background-color: #fff;
+			}
+			.scroll-view_H {
+				white-space: nowrap;
+				width: 100%;
+			}
+			.scroll-view-item_H {
+				display: inline-block;
+				width: 140rpx;
+				height: 56rpx;
+				margin-right: 28rpx;
+				line-height: 56rpx;
+				text-align: center;
+				background-image: url(@/static/shut.png);
+				background-repeat: no-repeat;
+				height: 100%;
+				background-size: cover;
+			}
 	}
 </style>

@@ -172,6 +172,7 @@ page{
 	.swiper-box {
 		flex: 1;
 		margin-top: 80rpx;
+		background: #fff;
 	}
 	.swiper-item {
 		height: 100%;

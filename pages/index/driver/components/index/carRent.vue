@@ -1,31 +1,36 @@
 <template>
 	<view class="carRent">
+		<u-mask z-index="2" :show="showMask" @click="hideMask">
+		</u-mask>
+		<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
+		<list-tags v-show="showType" :list="selectType" :active="currentType" @onClick="getDataType"></list-tags>
 		<view class="middle-content">
-			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
-				<u-form-item style="width:180rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="租金" @click="show = true" v-model="priceid" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:170rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="业务类型" @click="showType = true" v-model="businesstype" type="select" /></u-form-item>
-				<view class="line"></view>
-				<u-form-item style="width:60rpx;margin-left:40rpx;margin-top: -20rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="筛选" @click="filter()" type="text" :disabled="true" /></u-form-item>
-				<view class="clear"></view>
-			</u-form>
-			<view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view>
-			<view class="clear"></view>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<u-select v-model="showType" mode="single-column" :list="selectType" @confirm="confirmType"></u-select> -->
-			<u-dropdown style="width: 50rpx;">
-				<u-dropdown-item @change="change()" v-model="priceid" title="租金" :options="select"></u-dropdown-item>
-				<u-dropdown-item @change="changeType()" v-model="businesstype" title="业务类型" :options="selectType"></u-dropdown-item>
-			</u-dropdown>
-			<view @click="filter()" style="width: 240rpx;text-align: center;">筛选</view>
+			<view style="width: 100%;height: 100rpx;">
+				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+					<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+					background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+					<view style="float: left;margin-right: 42rpx;">杭州</view>
+					<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+					</u-form-item>
+					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
+					<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
+					<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
+					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 180rpx;" label="">
+					<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
+					<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
+					</u-form-item>
+					<view @click="filter()" style="width: 100rpx;text-align: center;float: right;">更多</view>
+				</u-form>
+			</view>
+			<view style="margin-top: 42rpx;display: flex;">
+				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
+					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
+				</scroll-view>
+				<view v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+			</view>
 		</view>
-		<view v-show="priceidkey||businesstypekey" class="tagBox">
-			<view v-show="priceidkey" class="selectTag">{{priceidkey}}</view>
-			<view v-show="businesstypekey" class="selectTag">{{businesstypekey}}</view>
-			<view v-show="priceidkey||businesstypekey" class="clearNull" @click="clear()">清空</view>
-			<view class="clear"></view>
-		</view>
-		<view v-show="priceidkey||businesstypekey" style="width: 100%;height: 50rpx;"></view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -52,26 +57,22 @@
 		    				  <text v-show="item.businesstypetag == 1">[网约车]</text>
 		    				  <text v-show="item.businesstypetag == 2">[出租车]</text>
 		    				{{item.texttitle}}</view>
-		    				<u-icon class="clock" name="clock" width="23" height="22"></u-icon>
-		    				<view class="year">车龄≤{{item.carAge}}年
+		    				<view class="year">车龄≤{{item.carAge}}年/{{item.km}}万公里
 		    				</view>
-		    				<view class="clear"></view>
-		    				<u-image class="car" width="22rpx" height="22rpx" src="@/static/distance.png"></u-image>
-		    				<view class="distance">{{item.km}}万公里</view>
-		    				<view class="clear"></view>
+							<view class="price"><text>{{item.rentprice}}元</text></view>
+							<view class="numRenting">在租200辆</view>
 		    			</view>
-						<img style="width: 306rpx;height: 226rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 306rpx;height: 226rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
+						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
 		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 		    			<view class="clear"></view>
+						<view class="flex">
+							<view class="company">{{item.comparyname}}</view>
+							<view class="area">{{item.comparyarea}}</view>
+							<view class="clear"></view>
+						</view>
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
-		    			<view class="box">
-		    				<view><text>￥{{item.rentprice}}</text>元/月起租</view>
-		    				<view>
-		    					<view v-show="items?items.length<6:items" v-for="(items, index) in item.systemtag" :key="index" class="case">{{items}}</view>
-		    				</view>
-		    			</view>
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
 		    		<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
@@ -91,15 +92,22 @@
 
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+	import listTags from '@/components/listTags.vue'
+	import {
+		publishObj
+	} from '@/utils/constant.js'
 	export default {
 		components: {
-			loadRefresh
+			loadRefresh,
+			listTags
 		},
 		data() {
 			return {
+				showMask:false,
 				show:false,
 				showType:false,
 				iconType: 'flower',
+				publishObj:publishObj,
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -178,7 +186,24 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				pageNum: 1
+				pageNum: 1,
+				current:-1,
+				currentType:-1,
+				style:{
+					color:'#000'
+				},
+				styleActive:{
+					color:'#FF9500'
+				},
+				filterData:[],
+				objType:{
+					wycList:[{id: '',text:'不限',checked:false },{id: '0',text:'0-2万公里',checked:false },{id: '1',text:'2-5万公里',checked:false},{id: '2',text:'5-10万公里',checked:false },{id: '3',text:'10-20万公里',checked:false },
+					     {id: '4',text:'20-30万公里',checked:false },{id: '5',text:'30万公里以上',checked:false},],
+					      czcList:[{id: '',text:'不限',checked:false },{id: '0',text:'0-2万公里',checked:false },{id: '1',text:'2-5万公里',checked:false },
+					      {id: '2',text:'5-10万公里',checked:false },{id: '3',text:'10-20万公里',checked:false },{id: '4',text:'20-30万公里',checked:false },
+					      {id: '5',text:'30-50万公里',checked:false },{id: '6',text:'50-70万公里',checked:false },{id: '7',text:'70万公里以上',checked:false}],
+				},
+				radioType:'wycList'
 			}
 		},
 		mounted() {
@@ -188,9 +213,135 @@
 			}else{
 				this.form.islogin = 0
 			}
-			this.search()
+			this.transform()
 		},
 		methods: {
+			close(index){
+				this.filterData.splice(index, 1);
+			},
+			transform(){
+				var carbrand = [];
+				var cartype = [];
+				var power = [];
+				var businessType = '';
+				var caragekey = '';
+				var kmkey = '';
+				this.filterData = [];
+				if(uni.getStorageSync('businesstype')){
+					businessType = uni.getStorageSync('businesstype');
+					this.filterData.push(businessType);
+					this.publishObj.onLineList.map(item=>{
+					   if(item.text == businessType){
+					   	this.form.businesstype = item.id;
+					   }
+					})
+				}
+				if(uni.getStorageSync('carbrandDriver')){
+					carbrand = uni.getStorageSync('carbrandDriver').split(',');
+					this.filterData = this.filterData.concat(carbrand);
+					this.form.carbrand = uni.getStorageSync('carbrandDriver');
+				}
+				if(uni.getStorageSync('cartypeDriver')){
+					cartype = uni.getStorageSync('cartypeDriver').split(',');
+					this.filterData = this.filterData.concat(cartype);
+					this.form.cartype = uni.getStorageSync('cartypeDriver');
+				}
+				if(uni.getStorageSync('powerDriver')){
+					power = uni.getStorageSync('powerDriver').split(',');
+					this.filterData = this.filterData.concat(power);
+					this.form.power = uni.getStorageSync('powerDriver');
+				}
+				if(uni.getStorageSync('caragekey')){
+					caragekey = uni.getStorageSync('caragekey');
+					this.filterData.push(caragekey);
+					this.publishObj.ageList.map(item=>{
+					   if(item.text == caragekey){
+						const carage = parseInt(item.id);
+					   	if(carage == '1') {
+					   		this.form.startCarAge = '';
+					   		this.form.endCarAge = '';
+					   	}
+					   	if(carage == '2') {
+					   		this.form.startCarAge = '';
+					   		this.form.endCarAge = '1';
+					   	}
+					   	if(carage == '3') {
+					   		this.form.startCarAge = '1';
+					   		this.form.endCarAge = '3';
+					   	}
+					   	if(carage == '4') {
+					   		this.form.startCarAge = '3';
+					   		this.form.endCarAge = '5';
+					   	}
+					   	if(carage == '5') {
+					   		this.form.startCarAge = '5';
+					   		this.form.endCarAge = '';
+					   	}
+					   }
+					})
+				}
+				if(uni.getStorageSync('kmkey')){
+					kmkey = uni.getStorageSync('kmkey');
+					this.filterData.push(kmkey);
+					this.objType[this.radioType].forEach(item=>{
+					   if(item.text == kmkey){
+						this.form.km = parseInt(item.id)
+					   }
+					})
+				}
+				this.search()
+			},
+			hideMask(){
+				this.showMask = false;
+				this.show = false;
+				this.showType = false;
+			},
+			toggle(){
+				this.showMask = !this.show;
+				this.show = !this.show;
+				this.showType = false;
+			},
+			toggleType(){
+				this.showMask = !this.showType;
+				this.showType = !this.showType;
+				this.show = false;
+			},
+			getData(index) {
+				this.current = index;
+				this.priceid = this.select[index].value;
+				this.priceidkey = this.select[index].label;
+				if(this.priceid == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				if(this.priceid == 2) {
+					this.form.startPriceid = '0';
+					this.form.endPriceid = '2000';
+				}
+				if(this.priceid == 3) {
+					this.form.startPriceid = '2000';
+					this.form.endPriceid = '3000';
+				}
+				if(this.priceid == 4) {
+					this.form.startPriceid = '3000';
+					this.form.endPriceid = '4000';
+				}
+				if(this.priceid == 5) {
+					this.form.startPriceid = '4000';
+					this.form.endPriceid = '-1';
+				}
+				this.show = false;
+				this.showMask = false;
+				this.search()
+			},
+			getDataType(index) {
+				this.currentType = index;
+				this.businesstypekey = this.selectType[index].label;
+				this.form.businesstype = this.selectType[index].value;
+				this.showType = false;
+				this.showMask = false;
+				this.search()
+			},
 			page() {
 			    this.pageNum = 1;
 			},
@@ -292,7 +443,6 @@
 			// },
 		    getList(){
 				this.pageNum = this.pageNum + 1;
-				this.form.businesstype=this.businesstype==100?'':this.businesstype;
 		        const params = Object.assign(this.form, {
 		        	pageNum: this.pageNum,
 		        	pageSize: 10,
@@ -319,7 +469,6 @@
 		    		})
 		    },
 		    search(){
-				this.form.businesstype=this.businesstype==100?'':this.businesstype;
 		        const params = Object.assign(this.form, {
 		    		pageNum: 1,
 		    		pageSize: 10,
@@ -387,14 +536,19 @@
 				this.$u.route("/pages/index/driver/components/index/filterRent")
 			},
 			clear(){
-				this.priceidkey='';
-				this.businesstypekey='',
-				this.priceid='';
-				this.businesstype=100;
-				this.form.startPriceid='';
-				this.form.endPriceid='';
-				this.form.businesstype='';
-				const token = uni.getStorageSync('token');
+				uni.removeStorageSync('cartypeDriver');
+				uni.removeStorageSync('powerDriver');
+				uni.removeStorageSync('businesstype');
+				uni.removeStorageSync('caragekey');
+				uni.removeStorageSync('kmkey');
+				this.filterData = [];
+				this.form.businesstype = 0;
+				this.form.power = '';
+				this.form.cartype = '';
+				this.form.carbrand = '';
+				this.form.startCarAge = '';
+				this.form.endCarAge = '';
+				this.form.km = '';
 				if(token) {
 					this.form.islogin = 1
 				}else{
@@ -408,6 +562,7 @@
 
 <style lang="scss" scoped>
 	.carRent {
+		background: #fff;
 		.tagBox{
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
@@ -440,19 +595,33 @@
 		.last .lists:last-child {
 			margin-bottom: 10rpx;
 		}
+		.triangleActive{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: transparent transparent #FF9500 transparent;
+			margin-top: -8rpx;
+		}
+		.triangle{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: #777 transparent transparent transparent;
+			margin-top: 8rpx;
+		}
 		.wrap {
 			padding: 40rpx;
 		}
 		.middle-content{
 			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			position: fixed;
-			top: 6rpx;
+			top: 0;
 			left: 0;
-			z-index: 2;
-			background-color: #f5f5f8;
+			z-index: 10;
+			background-color: #fff;
+			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -461,9 +630,8 @@
 			width: 686rpx;
 			height: 71rpx;
 			border-radius: 40rpx;
-			border: 1rpx solid rgba(0,0,0,0.1);
-			margin-left: 39rpx;
-			margin-top: 30rpx;
+			background-color: #fff;
+			margin-top: 48rpx;
 			float: left;
 		}
 		.icon {
@@ -486,6 +654,9 @@
 		}
 		.clear {
 			clear: both;
+		}
+		.last{
+			background-color: #fff;
 		}
 		.lists {
 			width: 679rpx;
@@ -518,15 +689,54 @@
 					padding: 0 30rpx;
 					background: #fff;
 					float: left;
+					.price{
+						float: left;
+					}
+					.price text{
+						font-size: 36rpx;
+						font-weight: 900;
+						color: #FF5200;
+					}
+					.numRenting{
+						width: 136rpx;
+						height: 48rpx;
+						text-align: center;
+						line-height: 42rpx;
+						border-radius: 8rpx;
+						border: 2rpx solid #FF9B0D;
+						font-size: 24rpx;
+						color: #FF9B0D;
+						float: left;
+						margin-left: 34rpx;
+					}
+				}
+				.flex{
+					padding-top: 22rpx;
+					padding-bottom: 34rpx;
+				    border-bottom: 2rpx solid #dedede;
+					.company{
+						font-size: 28rpx;
+						font-weight: 400;
+						color: #343434;
+						float: left;
+					}
+					.area{
+						font-size: 26rpx;
+						font-weight: 400;
+						color: #666666;
+						float: right;
+					}
 				}
 				.name {
 					font-weight: 900;
 					font-size: 34rpx;
 					margin-top: 14rpx;
 				}
-				.clock,.year {
-					float: left;
-					margin-top: 6rpx;
+				.year {
+					font-size: 26rpx;
+					color: #777;
+					margin-top: 24rpx;
+					margin-bottom: 20rpx;
 				}
 				.clock {
 					margin-top: 18rpx;
@@ -575,6 +785,22 @@
 					}
 				}
 			}
+		}
+		.scroll-view_H {
+			white-space: nowrap;
+			width: 100%;
+		}
+		.scroll-view-item_H {
+			display: inline-block;
+			width: 140rpx;
+			height: 56rpx;
+			margin-right: 28rpx;
+			line-height: 56rpx;
+			text-align: center;
+			background-image: url(@/static/shut.png);
+			background-repeat: no-repeat;
+			height: 100%;
+			background-size: cover;
 		}
 	}
 </style>

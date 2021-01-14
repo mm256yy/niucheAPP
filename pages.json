@@ -218,6 +218,18 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//卖车详情页-参数配置
+		    "path" : "pages/mymessage/company/components/index/setting",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//客服
+		    "path" : "pages/mycenter/company/service",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
 		,{//首页-卖车-其他信息
 		    "path" : "pages/mymessage/company/components/index/other",
 		    "style" : {
@@ -245,6 +257,12 @@
 		}
 		,{//首页-租车需求详情-司机
 		    "path" : "pages/index/driver/components/index/carRentDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//首页-租车需求详情-参数配置
+		    "path" : "pages/index/driver/components/index/setting",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}

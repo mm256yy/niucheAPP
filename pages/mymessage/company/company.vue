@@ -81,6 +81,7 @@
 					if(this.token){
 						this.view()
 					}
+					this.$refs.carSell.transform()
 				}
 				if(this.$refs.buying != undefined){
 					this.$refs.buying.search()
@@ -163,10 +164,12 @@ page{
 		flex-direction: column;
 		height: calc(100vh - var(--window-top));
 		width: 100%;
+		scroll:true;
 	}
 	.swiper-box {
 		flex: 1;
 		margin-top: 80rpx;
+		background-color: #fff;
 	}
 	.swiper-item {
 		height: 100%;

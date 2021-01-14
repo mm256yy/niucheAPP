@@ -1,6 +1,45 @@
 <template>
 	<view class="buying">
 		<view class="middle-content">
+			<u-mask z-index="2" :show="show" @click="hideMask">
+			</u-mask>
+			<list-tags v-show="showKm" :list="selectKm" :active="current" @onClick="getDataKm"></list-tags>
+			<list-tags v-show="showPrice" :list="selectPrice" :active="current" @onClick="getDataPrice"></list-tags>
+			<list-tags v-show="showAge" :list="selectAge" :active="current" @onClick="getDataAge"></list-tags>
+			<view class="middle-content">
+				<view style="width: 100%;height: 100rpx;">
+					<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+						<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+						background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+						<view style="float: left;">杭州</view>
+						<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+						</u-form-item>
+						<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
+					    background: #F8F9FB;border-radius: 4px;width: 128rpx;" label="">
+						<u-input :custom-style="style" v-show="!showAge" disabled placeholder-style="color:#000;" placeholder="车龄" @click="toggleAge()"  v-model="agekey" /><text v-show="!showAge" class='triangle'></text>
+						<u-input :custom-style="styleActive" v-show="showAge" disabled placeholder-style="color:#40B26D;" placeholder="车龄" @click="toggleAge()"  v-model="agekey" /><text v-show="showAge" class='triangleActive'></text></u-form-item>
+						<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
+					    background: #F8F9FB;border-radius: 4px;width: 128rpx;" label="">
+						<u-input :custom-style="style" v-show="!showKm" disabled placeholder-style="color:#000;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="!showKm" class='triangle'></text>
+						<u-input :custom-style="styleActive" style="color: #40B26D;" v-show="showKm" disabled placeholder-style="color:#40B26D;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="showKm" class='triangleActive'></text>
+						</u-form-item>
+						<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
+						background: #F8F9FB;border-radius: 4px;width: 154rpx;" label="">
+						<u-input :custom-style="style" v-show="!showPrice" disabled placeholder-style="color:#000;" placeholder="打包价" @click="togglePrice()" v-model="packpricekey" /><text v-show="!showPrice" class='triangle'></text>
+						<u-input :custom-style="styleActive" v-show="showPrice" disabled placeholder-style="color:#40B26D;" placeholder="打包价" @click="togglePrice()" v-model="packpricekey" /><text v-show="showPrice" class='triangleActive'></text>
+						</u-form-item>
+						<view @click="filter()" style="width: 100rpx;text-align: center;float: left;">更多</view>
+					</u-form>
+				</view>
+				<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
+				<!-- <view style="position: fixed;top: 100rpx;left:0;background-color: #fff;" v-show="show">
+					<text style="width: 206rpx;height: 76rpx;border: 1px solid #D9DEDF;line-height: 76rpx;text-align: center;display: inline-block;color: #666;margin-left: 32rpx;" v-for="(item, index) in select" :key="index">{{item.label}}</text>
+				</view> -->
+				<!-- <u-dropdown style="width: 50rpx;">
+					<u-dropdown-item @change="change()" v-model="form.km" title="行驶里程" :options="select"></u-dropdown-item>
+					<u-dropdown-item @change="changePrice()" v-model="form.packprice" title="打包价" :options="selectPrice"></u-dropdown-item>
+				</u-dropdown> -->
+			</view>
 			<!-- <u-form :model="form" ref="uForm" :border-bottom="false">
 				<u-form-item style="width:280rpx;margin-left:40rpx;margin-top: -18rpx;float: left;" label=""><u-input placeholder-style="color:#000;" placeholder="行驶里程" @click="show = true" v-model="kmkey" type="select" /></u-form-item>
 				<view class="line"></view>
@@ -10,18 +49,18 @@
 			<view class="clear"></view>
 			<u-select value-name='id' v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-select value-name='value' v-model="showPrice" mode="single-column" :list="selectPrice" @confirm="confirmPrice"></u-select> -->
-			<u-dropdown style="width: 50rpx;">
+			<!-- <u-dropdown style="width: 50rpx;">
 				<u-dropdown-item @change="change()" v-model="form.km" title="行驶里程" :options="select"></u-dropdown-item>
 				<u-dropdown-item @change="changePrice()" v-model="form.packprice" title="打包价" :options="selectPrice"></u-dropdown-item>
-			</u-dropdown>
+			</u-dropdown> -->
 		</view>
-		<view class="tagBox">
+		<!-- <view class="tagBox">
 			<view v-show="kmkey" class="selectTag">{{kmkey}}</view>
 			<view v-show="packpricekey" class="selectTag">{{packpricekey}}</view>
 			<view v-show="kmkey||packpricekey" class="clearNull" @click="clear()">清空</view>
 			<view class="clear"></view>
 		</view>
-		<view v-show="kmkey||packpricekey" style="width: 100%;height: 50rpx;"></view>
+		<view v-show="kmkey||packpricekey" style="width: 100%;height: 50rpx;"></view> -->
 		<!-- <view class="wrap">
 			<u-swiper width="672" height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -77,14 +116,17 @@
 
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+	import listTags from '@/components/listTags.vue'
 	export default {
 		components: {
-			loadRefresh
+			loadRefresh,
+			listTags
 		},
 		data() {
 			return {
-				show:false,
+				showKm:false,
 				showPrice:false,
+				showAge:false,
 				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
@@ -110,7 +152,63 @@
 				  pageSize: 10
 				},
 				total: 0,
-				select: [
+				// select: [
+				// 	{
+				// 		label: '0-2万公里',
+				// 		value: '1'
+				// 	},
+				// 	{
+				// 		label: '2-5万公里',
+				// 		value: '2'
+				// 	},
+				// 	{
+				// 		label: '5-10万公里',
+				// 		value: '3'
+				// 	},
+				// 	{
+				// 		label: '10-20万公里',
+				// 		value: '4'
+				// 	},
+				// 	{
+				// 		label: '20-30万公里',
+				// 		value: '5'
+				// 	},
+				// 	{
+				// 		label: '30-50万公里',
+				// 		value: '6'
+				// 	},
+				// 	{
+				// 		label: '50-70万公里',
+				// 		value: '7'
+				// 	},
+				// 	{
+				// 		label: '70万公里以上',
+				// 		value: '8'
+				// 	},
+				// 	{
+				// 		label: '不限',
+				// 		value: '9'
+				// 	}
+				// ],
+				// selectPrice: [
+				// 	{
+				// 		label: '3万以内',
+				// 		value: '1'
+				// 	},
+				// 	{
+				// 		label: '3万-5万',
+				// 		value: '2'
+				// 	},
+				// 	{
+				// 		label: '5万以上',
+				// 		value: '3'
+				// 	},
+				// 	{
+				// 		label: '不限',
+				// 		value: '4'
+				// 	}
+				// ],
+				selectKm: [
 					{
 						label: '0-2万公里',
 						value: '1'
@@ -145,7 +243,7 @@
 					},
 					{
 						label: '不限',
-						value: '9'
+						value: '0'
 					}
 				],
 				selectPrice: [
@@ -166,6 +264,28 @@
 						value: '4'
 					}
 				],
+				selectAge: [
+					{
+						label: '1年内',
+						value: '0'
+					},
+					{
+						label: '1年-3年',
+						value: '1'
+					},
+					{
+						label: '3年-5年',
+						value: '2'
+					},
+					{
+						label: '5年以上',
+						value: '3'
+					},
+					{
+						label: '不限',
+						value: '4'
+					}
+				],
 				list: [],
 				status: 'loadmore',
 				loadText: {
@@ -173,7 +293,15 @@
 					loading: '努力加载中',
 					nomore: '我也是有底线的'
 				},
-				pageNum: 1
+				pageNum: 1,
+				current:-1,
+				style:{
+					color:'#000'
+				},
+				styleActive:{
+					color:'#40B26D'
+				},
+				show: false
 			}
 		},
 		mounted() {
@@ -181,6 +309,77 @@
 			this.search()
 		},
 		methods: {
+			hideMask(){
+				this.show = false;
+				this.showPrice = false;
+				this.showKm = false;
+				this.showAge = false;
+			},
+			toggleKm(){
+				this.showKm = !this.showKm;
+				this.showPrice = false;
+				this.showAge = false;
+				this.show = true;
+			},
+			togglePrice(){
+				this.showPrice = !this.showPrice;
+				this.showKm = false;
+				this.showAge = false;
+				this.show = true;
+			},
+			toggleAge(){
+				this.showAge = !this.showAge;
+				this.showPrice = false;
+				this.showKm = false;
+				this.show = true;
+			},
+			getDataKm(index) {
+				this.current = index;
+				this.kmkey = this.selectKm[index].label;
+				this.form.km = this.selectKm[index].value;
+				this.showKm = false;
+				this.show = false;
+				this.search()
+			},
+			getDataPrice(index) {
+				this.current = index;
+				this.packpricekey = this.selectPrice[index].label;
+				this.form.packprice = this.selectPrice[index].value;
+				this.showPrice = false;
+				this.show = false;
+				this.search()
+			},
+			getDataAge(index) {
+				this.current = index;
+				this.agekey = this.selectAge[index].label;
+				this.form.age = this.selectAge[index].value;
+				if(this.form.age == '0') {
+					this.form.startCarAge = '0';
+				    this.form.endCarAge = '1';
+					this.caragekey = '1年内';
+				}
+				if(this.form.age == '1') {
+					this.form.startCarAge = '1';
+				    this.form.endCarAge = '3';
+					this.caragekey = '1年-3年';
+				}
+				if(this.form.age == '2') {
+					this.form.startCarAge = '3';
+				    this.form.endCarAge = '5';
+					this.caragekey = '3年-5年';
+				}
+				if(this.carage == '3') {
+					this.form.startCarAge = '5';
+				    this.form.endCarAge = '';
+				}
+				if(this.form.age == '4') {
+					this.form.startCarAge = '';
+				    this.form.endCarAge = '';
+				}
+				this.showAge = false;
+				this.show = false;
+				this.search()
+			},
 			page() {
 			    this.pageNum = 1;
 			},
@@ -389,17 +588,16 @@
 		}
 		.wrap {
 			padding: 40rpx;
+			background-color: #fff;
 		}
 		.middle-content{
 			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			position: fixed;
 			top: 0;
 			left: 0;
-			z-index: 2;
-			background-color: #f5f5f8;
+			z-index: 10;
+			background-color: #fff;
+		    padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -408,9 +606,8 @@
 			width: 686rpx;
 			height: 71rpx;
 			border-radius: 40rpx;
-			margin-left: 39rpx;
-			background-color: #CDE5E3;
-			margin-top: 30rpx;
+			// background-color: #CDE5E3;
+			margin-top: 48rpx;
 			float: left;
 		}
 		.icon {
@@ -507,6 +704,22 @@
 					font-size: 24rpx;
 				}
 			}
+		}
+		.triangleActive{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: transparent transparent #40B26D transparent;
+			margin-top: -8rpx;
+		}
+		.triangle{
+			display: inline-block;
+		    width: 0;
+		    height: 0;
+		    border: 10rpx solid;
+		    border-color: #777 transparent transparent transparent;
+			margin-top: 8rpx;
 		}
 	}
 </style>

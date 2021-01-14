@@ -1,80 +1,86 @@
 <template>
 	<view class="filter">
-	  <u-navbar back-text="返回" back-icon-size="0" title="筛选" :background="backgroundCom" 
-	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"><!-- <view @click="history()" style="color: #fff;margin-right: 20rpx;font-size: 30rpx;" slot="right">
-		   历史</view> --></u-navbar>
+	  <u-navbar back-text="返回" back-icon-size="0" title="更多筛选" 
+	   :back-text-style="backTextStyle" height='44' title-color="#111"></u-navbar>
 	   <view class="view-content">
 		   <view class="name">{{addkey}}</view>
-	   	  <u-form :model="form" ref="uForm" label-width="280" :border-bottom="false">
-	   	  	<u-form-item label="业务类型(必选)" label-position="top">
-				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
+		   <view style="width: 100%;height: 20rpx;background: #f5f5f5;"></view>
+		   <view style="position: absolute;top: 400rpx;left: 0;z-index: 100;width: 100%;">
+			   <view v-for="(item, index) in list" :key="index" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
+			   border-bottom: 2rpx solid rgba(0,0,0,0.03);">
+			   			   <view style="font-size: 32rpx;color: #333;">{{item.brandname}}</view>
+			   			   <view style="width: 48rpx;height: 48rpx;border-radius: 50%;background: #4aba75;line-height: 48rpx;
+			   			   text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandname)">十</view>
+			   </view>
+		   </view>
+	   	  <u-form style="position: relative;" :model="form" ref="uForm" label-width="280" :border-bottom="false">
+			  <u-form-item label="品牌选择" label-position="top">
+				  <u-row style="border-bottom: 2rpx solid rgba(0,0,0,0.06);padding-bottom: 10rpx;width: 680rpx;">
+				  	<u-col span="8"><u-input @input="keyup" v-model="value" maxlength="30" :border="false" placeholder="请选择品牌型号"/></u-col>
+				  </u-row>
+			  	<!-- <u-checkbox-group active-color="#6DD99C" @change="brandGroupChange" shape="circle">
+			  		<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
+			  			{{ item.name }}
+			  		</u-checkbox>
+			  	</u-checkbox-group> -->
+			  </u-form-item>
+	   	  	<u-form-item label="业务类型" label-position="top">
+				<search-tags :list="publishObj.onLineList" :active="currentType" :singleType="true" @onClick="getDataType"></search-tags>
+				<!-- <u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
 					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
 					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
-				</u-radio-group>
+				</u-radio-group> -->
 				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
-			<u-form-item label="品牌" label-position="top">
-				<u-checkbox-group active-color="#6DD99C" @change="brandGroupChange" shape="circle">
-					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
-						{{ item.name }}
-					</u-checkbox>
-				</u-checkbox-group>
-			</u-form-item>
-			<u-row>
-				<u-col span="8"><u-input v-model="value" maxlength="30" :border="true" placeholder="请输入车辆品牌"/></u-col>
-				<u-col span="3"><u-button type="success" shape='circle' class="btn-agree" @click="addBrand">添加</u-button></u-col>
-			</u-row>
-			<u-form-item label="车型" label-position="top">
-				<u-checkbox-group active-color="#6DD99C" @change="modelGroupChange" shape="circle">
+			<u-form-item label="车辆类型(多选)" label-position="top">
+				<search-tags :list="publishObj.carType" :active="currentCar" :singleType="false" @onClick="getDataCar"></search-tags>
+				<!-- <u-checkbox-group active-color="#6DD99C" @change="modelGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
-				</u-checkbox-group>
+				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="动力" label-position="top">
-				<u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
+			<u-form-item label="动力(多选)" label-position="top">
+				<search-tags :list="publishObj.power" :active="currentPower" :singleType="false" @onClick="getDataPower"></search-tags>
+				<!-- <u-checkbox-group active-color="#6DD99C" @change="powerGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
 						{{ item.name }}
 					</u-checkbox>
-				</u-checkbox-group>
+				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="打包价" label-position="top">
-				<u-radio-group @change="radioGroupChangePrice" v-model="form.packprice"  :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in priceList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="车龄" label-position="top">
-				<u-radio-group @change="radioGroupChangeAge" v-model="carage"  :active-color="'#6DD99C'" style="text-align: right;">
-					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="行驶里程" label-position="top">
-				<u-radio-group @change="radioGroupChangeKm" v-model="form.km"  :active-color="'#6DD99C'" style="text-align: right;">
-				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
-				</u-radio-group>
-			</u-form-item>
-		  </u-form>	
+		  </u-form>
 	   </view>
 		<view class="bottom">
-			<view class="btn" @click="reset()">重置</view>
-			<view class="total" @click="result()">当前选择条件的检索结果，共{{total}}条>></view>
+			<view class="reset" @click="reset()">
+				<u-icon name="reload" color="#5D6671" size="28"></u-icon>
+				<view class="btn">重置</view>
+			</view>
+			<view class="total" @click="result()">查看{{total}}条车源></view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import searchTags from '@/components/searchTags.vue'
+	import {
+		publishObj
+	} from '@/utils/constant.js'
 	export default {
+		components: {
+			searchTags
+		},
 		data() {
 			return {
 				backTextStyle:{
-					'color':'#ffffff'
+					'color':'#333'
 				},
+				publishObj: publishObj,
 				form:{
 					businessType:0,
 					carbrand:'',
 					cartype:'',
-					km: 100,
+					km: 0,
 					power:'',
 					packprice:'',
 					startCarAge:'',
@@ -85,19 +91,7 @@
 				total: '',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
 						{name: '日产',checked: false},{name: '大众',checked: false},{name: '吉利',checked: false}],
-				modelList:[{name:'轿车',checked: false},{name:'SUV',checked:false},{name:'MPV',checked: false},{name:'其他',checked: false}],
-				powerList:[{name:'纯电动',checked: false},{name:'插电混动',checked:false},{name:'燃油车(含油电混动)',checked: false}],
-				priceList:[{name: '4',text:'不限' },{name: '1',text:'3万以内' },{name: '2',text:'3万-5万' },{name: '3',text:'5万以上' }],
-				ageList:[{name: '4',text:'不限' },{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
-				objType:{
-					wycList:[{name: '',text:'不限' },{name: '1',text:'0-2万公里' },{name: '2',text:'2-5万公里'},{name: '3',text:'5-10万公里' },{name: '4',text:'10-20万公里' },
-					     {name: '5',text:'20-30万公里' },{name: '6',text:'30万公里以上'},],
-					      czcList:[{name: '',text:'不限' },{name: '1',text:'0-2万公里' },{name: '2',text:'2-5万公里' },
-					      {name: '3',text:'5-10万公里' },{name: '4',text:'10-20万公里' },{name: '5',text:'20-30万公里' },
-					      {name: '6',text:'30-50万公里' },{name: '7',text:'50-70万公里' },{name: '8',text:'70万公里以上'}],
-				},
-				radioType:'wycList',
-				addkey: '不限',
+				addkey: '',
 				businessTypekey: '不限',
 				carbrandkey: '',
 				cartypekey: '',
@@ -108,7 +102,17 @@
 				caragekey: '',
 				kmkey: {
 					text:''
-				}
+				},
+				currentType:-1,
+				currentCar:-1,
+				currentPower:-1,
+				arrCar:[],
+				arrPower:[],
+				cartype:[],
+				power:[],
+				businessType: '',
+				list:[],
+				arr:[]
 			}
 		},
 		// computed:{
@@ -118,49 +122,141 @@
 		// 	this.form.userid = this.telephone;
 		// },
 		mounted() {
-			this.select()
+			this.transform()
 		},
 		methods: {
-			reset() {
-				this.form={
-					businessType:0,
-					carbrand:'',
-					cartype:'',
-					km: 100,
-					power:'',
-					packprice:'',
-					startCarAge:'',
-					endCarAge:''
-				};
-				this.brandList.map( item => {
-				  item.checked=false;
-				});
-				this.modelList.map( item => {
-				  item.checked=false;
-				});
-				this.powerList.map( item => {
-				  item.checked=false;
-				});
-				this.carage='';
-				this.addkey = '不限';
-				this.businessTypekey='不限';
-				this.carbrandkey='';
-				this.cartypekey='';
-				this.powerkey='';
-				this.packpricekey={
-					text:''
-				};
-				this.caragekey='';
-				this.kmkey={
-					text:''
-				};
+			keyup() {
+				if(this.value != ''){
+					this.$u.api.brandList({initialOrBrandName: this.value}).then(res=>{
+						if(res.code === 200){
+							this.list = res.object; 
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
+			get(text) {
+				this.addkey = this.addkey==''?text:(this.addkey+','+text);
+				this.list=[];
+				this.value='';
+				this.arr.push(text);
+				this.form.carbrand = this.arr.join(',');
 				this.select()
 			},
+			transform() {
+				const businessType = uni.getStorageSync('businessType');
+				this.businessType = uni.getStorageSync('businessType');
+				if(uni.getStorageSync('carbrand')){
+					var carbrand = uni.getStorageSync('carbrand').split(',');
+				}
+				if(uni.getStorageSync('cartype')){
+					var cartype = uni.getStorageSync('cartype').split(',');
+				}
+				if(uni.getStorageSync('power')){
+					var power = uni.getStorageSync('power').split(',');
+				}
+				if(businessType){
+					this.addkey = this.addkey==''?businessType:(this.addkey+','+businessType);
+					this.publishObj.onLineList.forEach(item=>{
+					   if(item.text == businessType){
+						this.currentType = parseInt(item.id)-1
+						this.form.businessType = parseInt(item.id)
+					   }
+					}) 
+				}
+				if(carbrand){
+					this.form.carbrand = carbrand.join(',');
+					this.addkey = this.addkey==''?this.form.carbrand:(this.addkey+','+this.form.carbrand);
+				}
+				if(cartype){
+					this.form.cartype = cartype.join(',');
+					this.addkey = this.addkey==''?this.form.cartype:(this.addkey+','+this.form.cartype);
+					cartype.map(item=>{
+					   this.publishObj.carType.forEach(items=>{
+					      if(items.text == item){
+					   	    items.checked = true;
+							this.arrCar.push(items)
+					      }
+					   })
+					})
+				}
+				if(power){
+					this.form.power = power.join(',');
+					this.addkey = this.addkey==''?this.form.power:(this.addkey+','+this.form.power);
+					power.map(item=>{
+					   this.publishObj.power.forEach(items=>{
+					      if(items.text == item){
+					   	    items.checked = true;
+							this.arrPower.push(items)
+					      }
+					   })
+					})
+				}
+				this.select()
+			},
+			getDataType(obj) {
+				this.currentType = obj.index;
+				this.form.businessType = obj.index + 1;
+				this.businessType =  obj.text;
+				this.select()
+				this.add()
+			},
+			getDataCar(item) {
+				this.arrCar.push(item);
+				this.cartype = [];
+				this.arrCar.map(item=>{
+				   if(item.checked == true){
+				   	this.cartype.push(item.text);
+				   }
+				})
+				let cartype = new Set(this.cartype);
+				this.cartype = Array.from(cartype);
+				this.form.cartype = this.cartype.join(',');
+				this.select()
+				this.add()
+			},
+			getDataPower(item) {
+				this.arrPower.push(item);
+				this.power = [];
+				this.arrPower.map(item=>{
+				   if(item.checked == true){
+				   	this.power.push(item.text);
+				   }
+				})
+				let power = new Set(this.power);
+				this.power = Array.from(power);
+				this.form.power = this.power.join(',');
+				this.select()
+				this.add()
+			},
 			add() {
-				this.addkey = this.businessTypekey + (this.carbrandkey?'/':'')+this.carbrandkey + 
-				(this.cartypekey?'/':'')+this.cartypekey + (this.powerkey?'/':'')+this.powerkey +
-				(this.packpricekey.text?'/':'')+this.packpricekey.text + (this.caragekey?'/':'') + this.caragekey +
-				(this.kmkey.text?'/':'')+this.kmkey.text;
+				this.addkey = this.businessType +(this.form.cartype?',':'') + this.form.cartype
+				+ (this.form.power?',':'') + this.form.power
+			},
+			reset() {
+				debugger
+				this.currentType = -1;
+				this.form.businessType = 0;
+				this.businessType = '';
+				this.arrPower = [];
+				this.form.power = '';
+				this.arrCar = [];
+				this.form.cartype = '';
+				this.addkey = '';
+				this.list=[];
+				this.value='';
+				this.publishObj.carType.map( item => {
+				  item.checked=false;
+				});
+				this.publishObj.power.map( item => {
+				  item.checked=false;
+				});
+				uni.removeStorageSync('cartype');
+				uni.removeStorageSync('power');
+				uni.removeStorageSync('businessType');
+				uni.removeStorageSync('carbrand');
+				this.select()
 			},
 			brandGroupChange(e) {
 				this.form.carbrand = e.join(',');
@@ -170,6 +266,7 @@
 			},
 			powerGroupChange(e) {
 				this.form.power = e.join(',');
+				console.log(this.form.power)
 				this.powerkey = e.join('+');
 				this.add()
 				this.select()
@@ -269,7 +366,19 @@
 				this.$u.route('/pages/mymessage/company/components/index/history');
 			},
 			result() {
-				this.$u.route('/pages/mymessage/company/components/index/result',{form:JSON.stringify(this.form),title:this.addkey});
+				if(this.form.cartype){
+					uni.setStorageSync('cartype', this.form.cartype);
+				}
+				if(this.form.power){
+					uni.setStorageSync('power', this.form.power);
+				}
+				if(this.form.businessType){
+					uni.setStorageSync('businessType', this.businessType);
+				}
+				if(this.form.carbrand){
+					uni.setStorageSync('carbrand', this.form.carbrand);
+				}
+				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 			}
 		}
 	}
@@ -278,7 +387,7 @@
 <style lang="scss">
 .scroll-container {height: 100%;}
 page{
-	background-color:#f5f5f8 ;
+	// background-color:#f5f5f5;
 	height: 100%;
 }
 /deep/ .u-border-bottom:after{
@@ -286,17 +395,26 @@ page{
 }
 
 .view-content{
-	margin-top: 20pt;padding: 0 10pt;
+	width: 100%;
+	border-top: 2rpx solid rgba(0,0,0,0.06);
+	// background: #fff;
 	.name {
-		padding: 39rpx;
-		width: 670rpx;
+		padding: 34rpx;
 		// height: 148rpx;
 		font-size: 28rpx;
-		background: #fff;
 	}
 }
+.u-form-item{
+	margin-left: 34rpx;
+}
  .btn-agree{
-	background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC);
+	width: 170rpx;
+	height: 76rpx;
+	line-height: 76rpx;
+	text-align: center;
+	background: #4ABA75;
+	border-radius: 38rpx;
+	font-size: 28rpx;
  }
  .filter {
 	 .u-slot-content {
@@ -304,19 +422,44 @@ page{
 		 color: #fff;
 		 float: right;
 	 }
+	 .bottom{
+		 width: 100%;
+		 height: 140rpx;
+		 background: #FFFFFF;
+		 box-shadow: 0rpx 2rpx 0rpx 0rpx #DEDEDE;
+		 border-top: 2rpx solid rgba(0,0,0,0.06);
+		 padding: 0 34rpx;
+		 position: fixed;
+		 bottom: 0;
+		 left: 0;
+		 display: flex;
+		 justify-content: space-between;
+		 align-items: center;
+		 .reset{
+			display: flex;
+			justify-content: center;
+			align-items: center; 
+			width: 232rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background: #FFF;
+			border-radius: 8rpx;
+			border: 2rpx solid #D9DEDF;
+		 }
+	 }
 	 .bottom .btn {
-		 width: 200rpx;
-		 height: 80rpx;
-		 line-height: 80rpx;
-		 text-align: center;
-		 color: #fff;
-		 background: linear-gradient(115deg,#6DD99C, #37AB63);
-		 float: left;
+		 color: #252825;
+		 margin-left: 20rpx;
 	 }
 	 .total {
-		 line-height: 80rpx;
-		 margin-left: 20rpx;
-		 float: left;
+		 width: 428rpx;
+		 height: 88rpx;
+		 line-height: 88rpx;
+		 text-align: center;
+		 background: linear-gradient(270deg, #63D094 0%, #53C27F 58%, #3CAE69 100%);
+		 border-radius: 4px;
+		 color: #fff;
 	 }
  }
 </style>

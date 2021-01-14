@@ -1,3 +1,4 @@
+// import {baseUrl} from '@/utils/constant.js'
 import {baseUrl} from '@/utils/constant.js'
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明

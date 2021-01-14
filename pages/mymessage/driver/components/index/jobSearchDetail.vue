@@ -51,14 +51,12 @@
 			</view>
 			<swiper class="swiper-box" :current="swiperCurrentBottom" @transition="transitionBottom" @animationfinish="animationfinishBottom">
 			 	<swiper-item class="swiper-item">
-			 		<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
-			 			<job-detail :detail="detail"></job-detail>
-			 		</scroll-view>
+			 		<job-detail :detail="detail"></job-detail>
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="onreachBottom">
+					<view scroll-y style="width: 100%;" @scrolltolower="onreachBottom">
 						<company-detail :detail="detail"></company-detail>
-					</scroll-view>
+					</view>
 				</swiper-item>
 			</swiper>
 			<view style="padding: 40rpx;">公司地址：{{detail.city}}</view>
