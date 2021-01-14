@@ -57,11 +57,6 @@
 					<u-icon class="iconAbs" v-show='type' name="calendar" color="#FFA032" size="40"></u-icon>
 					<view class="type-right" v-show='!type'>{{form.beginTime}}</view>
 				</u-form-item>
-				<u-form-item label="有效截止时间" prop="endTime">
-					<u-input v-model="form.endTime" :border="true" v-show='type' class="input-radius" :disabled="true" @click="showEnd=true" placeholder=""/>
-					<u-icon class="iconAbs" v-show='type' name="calendar" color="#FFA032" size="40"></u-icon>
-					<view class="type-right" v-show='!type'>{{form.endTime}}</view>
-				</u-form-item>
 				<u-form-item label="准驾车型" :label-position="type?'top':''" prop="vehicleAge">
 					<u-radio-group v-model="form.vehicleAge" :active-color="'#FFA032'" style="text-align: right;" v-if="type">
 						<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in List" :key="index">{{item.text}}</u-radio>
@@ -73,7 +68,6 @@
 				*以上项目都是必填项，未完成不能提交！ 
 			</view>
 			<u-picker v-model="show" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
-			<u-picker v-model="showEnd" mode="time" :start-year="today.year" :params="params" @confirm="dataChangeEnd"></u-picker>
 		</view>
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
 			<u-button type="warning" shape='circle' class="btn-orange" @click="toNext">提交</u-button>
@@ -107,7 +101,6 @@
 					licenseNumber:'',
 					issueDate:'',
 					beginTime:'',
-					endTime:'',
 					vehicleAge:'',
 					driverPhoto:''
 				},
@@ -117,7 +110,6 @@
 					licenseNumber:requiredRule,
 					issueDate:requiredRule,
 					beginTime:requiredRule,
-					endTime:requiredRule,
 					vehicleAge:requiredRule,
                 },
 				pickerName:'',
@@ -212,10 +204,6 @@
 			dataChange(obj){
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form[this.pickerName] = companyDate;
-			},
-			dataChangeEnd(obj){
-				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
-				this.form.endTime = companyDate;
 			},
 			uploadChange(res,index,lists,name){
 				this.form.driverPhoto = res.object
