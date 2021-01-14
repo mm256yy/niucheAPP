@@ -4,8 +4,10 @@ import App from './App'
 import themeMixin from './utils/mixin.js'
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 Vue.config.productionTip = false
+
 // Vue.prototype.$store = store
 App.mpType = 'app'
+// Vue.component("list",list) // 全局注册
 // 引入全局uView
 import uView from 'uview-ui'
 Vue.use(uView);

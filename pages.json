@@ -638,13 +638,14 @@
             {
                 "navigationStyle": "custom",
                 "enablePullDownRefresh": false
+				// "enablePullDownRefresh": true
             }
             
         },{ // 司机服务内页
             "path" : "pages/driver/driverService/serviceText",
             "style" :                                                                                    
             {
-                "navigationStyle": "custom",
+				"navigationStyle": "custom",
                 "enablePullDownRefresh": false
             } 
         }

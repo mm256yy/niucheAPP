@@ -92,16 +92,16 @@
 					</swiper-item>
 				</swiper>
 			</view>
-			
+
 			<!-- 司机服务 -->
 			<view class="xcfl">
-			    <view class="xcfl_title">司机服务</view>
-					<view class="xcfl_link" @click="taPage(1)">
-						<text>用车 跑单 技巧 活动</text>
-						<view>
-							<u-icon name="arrow-right" color="#6D6D6D" size="32"></u-icon>
-						</view>
+				<view class="xcfl_title">司机服务</view>
+				<view class="xcfl_link" @click="taPage(1)">
+					<text>用车 跑单 技巧 活动</text>
+					<view>
+						<u-icon name="arrow-right" color="#6D6D6D" size="32"></u-icon>
 					</view>
+				</view>
 				<view class="driverTexts">
 					<view class="" @click="taPage(1)">
 						<image style="width: 107px; height: 106px;" src="../../static/siji_1.png"></image>
@@ -119,7 +119,7 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<view class="xcfl" style="padding-bottom: 40pt;">
 				<view class="xcfl_title">优质租赁公司</view>
 				<view class="xcfl_link">
@@ -431,7 +431,7 @@
 					title: this.title
 				});
 			},
-			
+
 			//低价好车
 			getList() {
 				this.$u.api.driverSideHomePage({
@@ -483,12 +483,15 @@
 					}
 				})
 			},
-			
+
 			// 司机服务
-			taPage(sum){
-				this.$u.route('/pages/driver/driverService/driverService',{index:sum})
+			taPage(sum) {
+				// this.$u.route('/pages/driver/driverService/driverService',{index:sum})
+				uni.navigateTo({
+					url: '/pages/driver/driverService/driverService?index=' + sum
+				})
 			},
-			
+
 			//站内信条数
 			getMessageNum() {
 				let token = uni.getStorageSync('token');
@@ -674,18 +677,19 @@
 		border-bottom-right-radius: 0px;
 		border-bottom-left-radius: 4px;
 	}
-	
+
 	// 司机服务
-		.driverTexts {
-			padding: 12rpx 30rpx;
+	.driverTexts {
+		padding: 12rpx 30rpx;
+		display: flex;
+		justify-content: space-between;
+
+		.driverTexts_1 {
 			display: flex;
+			flex-direction: column;
 			justify-content: space-between;
-			.driverTexts_1 {
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-			}
 		}
+	}
 
 	.xcfl {
 		background: #FFFFFF;
