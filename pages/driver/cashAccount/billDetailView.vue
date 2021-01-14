@@ -132,10 +132,18 @@
 			getDetails(){
 				this.$u.api.getMyBillDetails({billingDetailsid:this.id}).then(res=>{
 						if(res.code === 200){
-							this.form = res.object
-							console.log(this.form)
-							this.imgs = res.object.vehicleLeaseContract.concat(res.object.runSingerWater)
-							if (res.object.incomingAndOutgoingState === 'ADD'){
+							let data = res.object;
+							if (data.vehicleLeaseContract !=null){
+								data.vehicleLeaseContract = data.vehicleLeaseContract.split(',')
+							}
+							if (data.runSingerWater !=null){
+								data.runSingerWater = data.runSingerWater.split(',')
+							}
+							this.form = data
+							if (data.vehicleLeaseContract !=null && data.runSingerWater !=null){
+								this.imgs = data.vehicleLeaseContract.concat(data.runSingerWater)
+							}
+							if (data.incomingAndOutgoingState === 'ADD'){
 								this.flag = false
 							} else{
 								this.flag = true

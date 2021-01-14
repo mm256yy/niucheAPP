@@ -145,6 +145,8 @@
 				this.submitForm()
 			},
 			submitForm(){
+				this.form.vehicleLeaseContract = this.form.vehicleLeaseContract.join(',')
+				this.form.runSingerWater = this.form.runSingerWater.join(',')
 				this.$u.api.saveCashAccount(this.form).then(res => {
 					if (res.code === 200) {
 						this.$u.toast(res.msg)
