@@ -6,7 +6,7 @@
 				<view style="padding-bottom: 10pt;">1.上传车辆租赁合同(照片)</view>
 				<view class="top-content-upload">
 					<u-upload :custom-btn="true" :action="action" ref="upload" @on-success='uploadChange' index="vehicleLeaseContract" upload-text=""
-					 @on-remove="removeOne" :file-list="fileList" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
+					 @on-remove="removeOne" :file-list="fileList" :max-size="8 * 1024 * 1024" style="width: 100%;justify-content: center;">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 						</view>
@@ -21,7 +21,7 @@
 				<view style="padding-bottom: 10pt;">2.上传上月跑单流水和次月租金缴纳账单(截图）</view>
 				<view class="top-content-upload">
 					<u-upload :custom-btn="true" :action="action" ref='upload1' @on-success='uploadChange' index="runSingerWater"
-					 upload-text="" @on-remove="removeOne" :file-list="fileList1" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
+					 upload-text="" @on-remove="removeOne" :file-list="fileList1" :max-size="8 * 1024 * 1024" style="width: 100%;justify-content: center;">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
 						</view>
