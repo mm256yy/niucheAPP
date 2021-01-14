@@ -4,7 +4,7 @@
 			<view>
 				<view class="imgUrl">
 						<view class="about" @click="toAboutUs">关于</view>
-						<u-row style="padding:48pt 36rpx 5pt; ">
+						<u-row style="padding:48pt 36rpx 5pt;display: flex;justify-content: center;align-items: center; ">
 							<u-col span="3" v-show="!tokenFlag">
 								<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
 							</u-col>
@@ -18,14 +18,15 @@
 								</view>
 							</u-col>
 							<u-col span="8" v-show="tokenFlag" >
-								<view style="margin-top: -40rpx;" @click="toMyInfo">
-								<view style="color: #fff;font-size: 36rpx;">{{driverPub.name}}</view>
-								<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>
+								<view style="height: 120rpx;display: flex;align-items: center;" @click="toMyInfo">
+									<view style="height: 96rpx;display: flex;flex-direction: column;justify-content: center;">
+										<view style="color: #fff;font-size: 36rpx;">{{driverPub.name}}</view>
+										<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>
+									</view>
+									<view style="height: 96rpx;display: flex;align-items: center;margin-left: auto;">
+										<u-image @click="toMyInfo" v-show="tokenFlag" width="32" height="48" src="@/static/right.png"></u-image>
+									</view>
 								</view>
-							</u-col>
-							<u-col span="1" @click="toMyInfo" v-show="tokenFlag">
-								<u-image style="margin-top: 18rpx;" width="32" height="48" src="@/static/right.png"></u-image>
-								<!-- <u-icon name="arrow-right" color="#fcbb30" size="30"></u-icon> -->
 							</u-col>	
 						</u-row>
 						<view class="case" @click="toLicense">
