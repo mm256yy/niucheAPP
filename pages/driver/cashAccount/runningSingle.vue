@@ -18,7 +18,7 @@
 			</view>
 			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 			<view class="view-content">
-				<view style="padding-bottom: 10pt;">2.上传上月跑单流水(截图）</view>
+				<view style="padding-bottom: 10pt;">2.上传上月跑单流水和次月租金缴纳账单(截图）</view>
 				<view class="top-content-upload">
 					<u-upload :custom-btn="true" :action="action" ref='upload1' @on-success='uploadChange' index="runSingerWater"
 					 upload-text="" @on-remove="removeOne" :file-list="fileList1" :max-size="4 * 1024 * 1024" style="width: 100%;justify-content: center;">
