@@ -38,7 +38,7 @@
 						</view>
 						<view class="cases" @click="toCard">
 							<view class="box">
-								<view style="width: 200rpx;" class="name">执业资格认证</view>
+								<view style="width: 200rpx;" class="name">从业资格认证</view>
 								<view class="visible">{{driverPub.postState | stateV}}</view>
 							</view>
 							<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
@@ -162,7 +162,7 @@
 		 @confirm="tipsConfirm" @cancel="tipsCancel" >
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
 		        <view class="">
-		        	请选择要上传的执业资格证件!
+		        	请选择要上传的从业资格证件!
 		        </view>
 			</view>
 		</u-modal>

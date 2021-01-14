@@ -33,7 +33,7 @@
 							<view><text style="font-size: 18px;color: #FF3333;">{{obj.driverAuthNum}}</text><text style="color: #333333;font-size: 14px;">人</text></view>
 						</view>
 						<view style="position: absolute;top: 51%;right: 10%;z-index: 8;">
-							<view style="color: #FF652B;">执业认证</view>
+							<view style="color: #FF652B;">从业认证</view>
 							<view style="font-size: 18px;color: #FF3333;"><text>{{obj.certAuthNum}}</text><text style="color: #333333;font-size: 14px;">人</text></view>
 						</view>
 					</view>
@@ -56,7 +56,7 @@
 				<view style="padding-bottom: 20px;">
 					<view style="color: #000000;">推荐规则:</view>
 					<view>1.完成驾驶证认证成功即可获取推荐资格。</view>
-					<view>2.账号注册成功，代表建立链接关系，驾驶证认证成功，即可获得推广奖励，完成执业资格认证则完成全部奖励</view>
+					<view>2.账号注册成功，代表建立链接关系，驾驶证认证成功，即可获得推广奖励，完成从业资格认证则完成全部奖励</view>
 					<view>3.推广奖励不设上限</view>
                 </view>
 				<view style="padding-bottom: 20px;">
@@ -69,7 +69,7 @@
 				<view style="padding-bottom: 20px;">
 					<view style="color: #000000;">奖励使用规则:</view>
 					<view>1.推广奖励仅限于租赁车辆使用。</view>
-					<view>2.推广奖励使用需完成驾驶证和执业资格认证成功。</view>
+					<view>2.推广奖励使用需完成驾驶证和从业资格认证成功。</view>
 					<view>3.租赁月租金和推广奖励兑换比例为：租赁月租金10:推广奖励1兑换</view>
 					<view>4.租赁公司签订租赁合同，通过后台上传合同信息至纽车平台</view>
 					<view>5.每月需要上传凭证，需保证信息的真实性，包含网约车平台注册资料、月度跑单流水、次月租金缴纳账单、等辅助信息。</view>

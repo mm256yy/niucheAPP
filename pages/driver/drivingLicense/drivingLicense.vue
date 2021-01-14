@@ -88,7 +88,7 @@
 		<u-modal v-model="showTips" :show-confirm-button="false" title="认证提示">
 			<view class="slot_content">
 				<view class="slot_tips">
-					非常好，您的驾驶证认证已提交审核，建议继续执业资格认证：
+					非常好，您的驾驶证认证已提交审核，建议继续从业资格认证：
 					<view style="padding: 5px 0;">
 						<u-radio-group v-model="nextFlag" active-color="#FF9F31">
 							<u-radio name="1" style="margin:5px 5px 5px;">网约车驾驶员证</u-radio>
