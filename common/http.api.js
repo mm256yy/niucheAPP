@@ -98,24 +98,27 @@ const install  = (Vue, vm) => {
 	  //修改租车/求职公开状态
 	  const  updateUserWantedState = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserWantedState?driverDemandId='+params.driverDemandId+'&isOpen='+params.isOpen, {});
 
-	  //我的发布 租车列表
-	  const  listUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserWanted', params);
-	  //我的发布 求职列表
-	  const  listUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserJobWanted', params);
-	  //修改司机求租内容
-	  const  updateUserWanted = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserWanted?driverDemandId='+params.driverDemandId, params);
-	  //修改司机求职内容
-	  const  updateUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserJobWanted?driverDemandId='+params.driverDemandId,params);
-	  //查询司机求租详情
-	  const  getUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserWanted', params);
-	  //查询司机求职详情
-	  const  getUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserJobWanted', params);
-	  //删除租车或求职
-	  const  deleteUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/deleteUserJobWanted?driverDemandId='+params.driverDemandId, {});
-	  //个人中心首页
-	   const  addUserMessageInfo = (params = {}) => vm.$u.post('/user/drivingLicense/addUserMessageInfo', params);
-	   //公司发布 我的租车  
-		const  ComparyMyRentCarList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyRentCarList', params);
+		//我的发布 租车列表
+		const listUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserWanted', params);
+		//我的发布 求职列表
+		const listUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/listUserJobWanted', params);
+		//修改司机求租内容
+		const updateUserWanted = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserWanted?driverDemandId=' + params
+			.driverDemandId, params);
+		//修改司机求职内容
+		const updateUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/updateUserJobWanted?driverDemandId=' +
+			params.driverDemandId, params);
+		//查询司机求租详情
+		const getUserWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserWanted', params);
+		//查询司机求职详情
+		const getUserJobWanted = (params = {}) => vm.$u.get('/user/drivingLicense/getUserJobWanted', params);
+		//删除租车或求职
+		const deleteUserJobWanted = (params = {}) => vm.$u.post('/user/drivingLicense/deleteUserJobWanted?driverDemandId=' +
+			params.driverDemandId, {});
+		//个人中心首页
+		const addUserMessageInfo = (params = {}) => vm.$u.post('/user/drivingLicense/addUserMessageInfo', params);
+		//公司发布 我的租车  
+		const ComparyMyRentCarList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyRentCarList', params);
 		//公司发布 我的招聘
 		 const  ComparyMyInviteList = (params = {}) => vm.$u.get('/system/usercomparybasictext/ComparyMyInviteList', params);
 		 //公司发布 我的卖车
@@ -273,6 +276,112 @@ const install  = (Vue, vm) => {
 	 };
 }
 
-export default {
-	install  
-}
+		//分享数据 认证
+		const statistics = (params = {}) => vm.$u.get('/share/data/statistics', params);
+		//低价好车
+		const driverSideHomePage = (params = {}) => vm.$u.get('/user/lowPrice/driverSideHomePage', params);
+		//新春福利
+		const getYearWelfare = (params = {}) => vm.$u.get('/app/newYear/list', params);
+		// 司机服务 行业动态
+		const driverDynamic = (params = {}) => vm.$u.get('/driverserver/industydynamics/queryList', params);
+		// 司机服务 活动大全
+		const driverActivities = (params = {}) => vm.$u.get('/driverserver/activityttf/queryList', params);
+		// 司机服务 接单分享
+		const driverOrder = (params = {}) => vm.$u.get('/driverserver/orderToShare/queryList', params);
+		// 司机服务 大神分享
+		const driverShare = (params = {}) => vm.$u.get('/driverserver/leaderShare/queryList', params);
+			// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
+			vm.$u.api = {
+				driverShare, // 大神分享
+				driverOrder, // 接单分享
+				driverActivities, // 活动大全
+				driverDynamic, // 行业动态
+				getYearWelfare,
+				driverSideHomePage,
+				statistics,
+				popupConfig,
+				MyIssueRefresh,
+				getStatus,
+				ComparyInviteUpdate,
+				ComparyAskToShopUpdate,
+				ComparyInviteEchoText,
+				ComparyMySellCarForOne,
+				MyIssueHighLowLimit,
+				MyIssueDelete,
+				ComparyMyAskToShopForOne,
+				ComparyAskToShopEchoText,
+				ComparyRentCarEchoText,
+				logout,
+				ComparyMyInviteForOne,
+				MyCollectionSell,
+				DriverMyCollectionRent,
+				ComparyMyAskToShopList,
+				ComparyMySellCarList,
+				ComparyMyInviteList,
+				ComparyMyRentCarList,
+				addUserMessageInfo,
+				deleteUserJobWanted,
+				getUserJobWanted,
+				getUserWanted,
+				updateUserJobWanted,
+				updateUserWanted,
+				listUserJobWanted,
+				listUserWanted,
+				updateUserWantedState,
+				refreshUserJobWanted,
+				listUserMessage,
+				listUserMessageInfo,
+				addDrivingLicense,
+				listDrivingLicense,
+				saveCompanyInvite,
+				getCarLogo,
+				saveShoping,
+				getMyCar,
+				getQuestion,
+				saveAnswer,
+				saveMainBusiness,
+				getSystemTag,
+				getCarSystem,
+				getCarModel,
+				getCarBrand,
+				saveAuthAll,
+				getCompanyAll,
+				editCompanyPerson,
+				getCompanyPerson,
+				getPubSendMsg,
+				saveAuth,
+				editCompany,
+				getUserInfo,
+				getCompanyInfo,
+				GetUUID,
+				getTelephone,
+				getIdentifyCode,
+				loginSubmit,
+				buying,
+				askWork,
+				sellCar,
+				homeRent,
+				homeSearch,
+				collect,
+				releaseRent,
+				releaseSearch,
+				detailBuying,
+				detailSellCar,
+				detailRent,
+				detailSearch,
+				messageCompany,
+				detailOtherSelling,
+				detailOtherBuy,
+				detailOtherRenting,
+				detailOtherSearching,
+				getMessageCompany,
+				feedback,
+				listMessage,
+				haveIs,
+				viewMessage
+			};
+		}
+
+		export default {
+			install
+		}

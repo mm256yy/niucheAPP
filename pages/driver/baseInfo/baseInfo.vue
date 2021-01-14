@@ -60,7 +60,7 @@
 </template>
 
 <script>
-	import {requiredRule} from '@/common/rule.js'
+	import {requiredRule} from '../../../common/rule.js'
 	import {action} from '@/utils/constant.js'
 	export default {
 		data() {
