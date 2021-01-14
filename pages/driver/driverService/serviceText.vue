@@ -1,23 +1,10 @@
 <template>
 	<view class="">
-		<view class="">
-			<!-- <u-navbar @click="returns" back-icon-color="#333333" title-size="36" :title="content.title" title-width="200rpx" :background="background"
-			 title-color="#333333">
-				<view class="navber" slot="right" @click="share(content.titlePhoto)">
-					<u-icon name="zhuanfa" color="#333333" size="44"></u-icon>
-				</view>
-			</u-navbar> -->
-			<view class="driver_nei">
-				<view style="line-height: 140rpx;">
-					<sundeheng-custom bgColor="bg-white" :isBack="true" @rightcli='rightcli'>
-						<block slot="content" style="margin-top: 1140rpx;"> {{content.title}} </block>
-						<block slot="right">
-							<u-icon name="zhuanfa" color="#333333" size="40"></u-icon>
-						</block>
-					</sundeheng-custom>
-				</view>
+		<u-navbar back-icon-color="#333333" title-size="36" :title="title"  :background="background" title-color="#333333">
+			<view class="navber" slot="right" @click="share()">
+				<u-icon name="zhuanfa" color="#333333" size="44"></u-icon>
 			</view>
-		</view>
+		</u-navbar>
 		<view class="">
 			<view style="padding: 28rpx;">
 				<image style=" width:100%;height:100%;background-size:100% 100%;" :src="content.titlePhoto"></image>
@@ -29,7 +16,6 @@
 
 <script>
 	export default {
-		comments: {},
 		data() {
 			return {
 				background: {
@@ -37,31 +23,21 @@
 				},
 				id: '',
 				value: '',
-				content: '',
+				title:'2',
+				content: {
+				},
 				index: ''
 			}
 		},
 		onLoad(option) {
 			this.id = option.id;
 			this.index = option.index
+		},
+		onShow() {
 			this.driverContent()
 		},
-		watch: {
-			'config': {
-				handler(newVal, oldVal) {
-					this.init()
-				},
-				deep: true
-			}
-		},
 		methods: {
-			returns() {
-				console.log("888888	")
-				uni.reLaunch({
-					url: '/pages/driver/driverService/driverService'
-				});
-			},
-			share(url) { // 分享的
+			share() { // 分享的
 				console.log('分享了')
 				uni.share({
 					provider: "weixin",
@@ -86,6 +62,7 @@
 					}).then(res => {
 						if (res.code === 200) {
 							this.content = res.object
+							this.title = res.object.title;
 							console.log(this.content, '111')
 						} else {
 							this.$u.toast(res.msg);
@@ -97,6 +74,7 @@
 					}).then(res => {
 						if (res.code === 200) {
 							this.content = res.object
+							this.title = res.object.title;
 						} else {
 							this.$u.toast(res.msg);
 						}
@@ -107,6 +85,7 @@
 					}).then(res => {
 						if (res.code === 200) {
 							this.content = res.object
+							this.title = res.object.title;
 						} else {
 							this.$u.toast(res.msg);
 						}
@@ -117,28 +96,12 @@
 					}).then(res => {
 						if (res.code === 200) {
 							this.content = res.object
+							this.title = res.object.title;
 						} else {
 							this.$u.toast(res.msg);
 						}
 					})
 				}
-			},
-			inviteFriends() {
-				uni.share({
-					provider: "weixin",
-					scene: "WXSceneSession",
-					type: 0,
-					href: shareUrl + this.id,
-					title: "看车租车上纽车APP",
-					summary: "限时推广拉新，享更多福利，点击即可领取！",
-					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
-					success: function(res) {
-						console.log("success:" + JSON.stringify(res));
-					},
-					fail: function(err) {
-						console.log("fail:" + JSON.stringify(err));
-					}
-				});
 			},
 		}
 	}
