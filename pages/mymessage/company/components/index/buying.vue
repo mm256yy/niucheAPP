@@ -6,29 +6,24 @@
 			<list-tags v-show="showKm" :list="selectKm" :active="current" @onClick="getDataKm"></list-tags>
 			<list-tags v-show="showPrice" :list="selectPrice" :active="current" @onClick="getDataPrice"></list-tags>
 			<list-tags v-show="showAge" :list="selectAge" :active="current" @onClick="getDataAge"></list-tags>
-			<view class="middle-content">
+			<view class="middle-content active">
 				<view style="width: 100%;height: 100rpx;">
 					<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-						<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
-						background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+						<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
+					background: #F8F9FB;border-radius: 4px;width: 124rpx;display: flex;" label="">
 						<view style="float: left;">杭州</view>
 						<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
 						</u-form-item>
-						<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
-					    background: #F8F9FB;border-radius: 4px;width: 128rpx;" label="">
-						<u-input :custom-style="style" v-show="!showAge" disabled placeholder-style="color:#000;" placeholder="车龄" @click="toggleAge()"  v-model="agekey" /><text v-show="!showAge" class='triangle'></text>
-						<u-input :custom-style="styleActive" v-show="showAge" disabled placeholder-style="color:#40B26D;" placeholder="车龄" @click="toggleAge()"  v-model="agekey" /><text v-show="showAge" class='triangleActive'></text></u-form-item>
-						<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
-					    background: #F8F9FB;border-radius: 4px;width: 128rpx;" label="">
+						<u-form-item style="padding: 0 16rpx;margin-left:24rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 112rpx;" label="">
 						<u-input :custom-style="style" v-show="!showKm" disabled placeholder-style="color:#000;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="!showKm" class='triangle'></text>
 						<u-input :custom-style="styleActive" style="color: #40B26D;" v-show="showKm" disabled placeholder-style="color:#40B26D;" placeholder="里程" @click="toggleKm()" v-model="kmkey" /><text v-show="showKm" class='triangleActive'></text>
 						</u-form-item>
-						<u-form-item style="padding: 6rpx 18rpx;margin-left:20rpx;margin-top: -18rpx;float: left;
-						background: #F8F9FB;border-radius: 4px;width: 154rpx;" label="">
+						<u-form-item style="padding: 0 16rpx;margin-left:24rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 150rpx;" label="">
 						<u-input :custom-style="style" v-show="!showPrice" disabled placeholder-style="color:#000;" placeholder="打包价" @click="togglePrice()" v-model="packpricekey" /><text v-show="!showPrice" class='triangle'></text>
 						<u-input :custom-style="styleActive" v-show="showPrice" disabled placeholder-style="color:#40B26D;" placeholder="打包价" @click="togglePrice()" v-model="packpricekey" /><text v-show="showPrice" class='triangleActive'></text>
 						</u-form-item>
-						<view @click="filter()" style="width: 100rpx;text-align: center;float: left;">更多</view>
 					</u-form>
 				</view>
 				<!-- <view class="icon"><u-icon @click="search()" name="search" color="#fff"></u-icon></view> -->
@@ -579,6 +574,9 @@
 			.clearNull{
 				float: right;
 			}
+		}
+		.active{
+			border-bottom: 1rpx solid rgba(0,0,0,0.08);
 		}
 		.null{
 			height: calc(73vh - var(--window-top));

@@ -60,8 +60,9 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
+		<view v-show="!filterData.length" style="height: 132rpx;"></view>
+		<view v-show="filterData.length" style="height: 226rpx;"></view>
 		<load-refresh
-		  style="margin-top: 132rpx;"
 		  v-show="list.length"
 		  ref="loadRefresh"
 		  :pageNo='pageNum'
@@ -84,9 +85,10 @@
 		    			<u-image v-show="!item.photoUrl" class="left" width="312rpx" height="231rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="312rpx" height="231rpx" :src="item.photoUrl"></u-image> -->
 		    			<view class="right">
-		    				<view class="clear"></view>
-		    				<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
-							<view class="tag">{{item.carAge}}/{{item.km}}</view>
+							<view style="height: 116rpx;">
+								<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
+								<view class="tag">{{item.carAge}}/{{item.km}}</view>
+							</view>
 		    				<view class="price">{{item.packPrice}}元</view>
 							<view style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
 		    			</view>
@@ -735,7 +737,7 @@
 					font-family: SourceHanSansCN-Bold, SourceHanSansCN;
 					font-weight: bold;
 					color: #FF5200;
-			        margin-top: 26rpx;
+			        margin-top: 20rpx;
 					float: left;
 				}
 			}

@@ -152,8 +152,8 @@
 		},
 		methods: {
 			transform() {
-				const businessType = uni.getStorageSync('businesstype');
-				this.businesstype = uni.getStorageSync('businesstype');
+				// const businessType = uni.getStorageSync('businesstype');
+				// this.businesstype = uni.getStorageSync('businesstype');
 				const caragekey = uni.getStorageSync('caragekey');
 				this.caragekey = uni.getStorageSync('caragekey');
 				const kmkey = uni.getStorageSync('kmkey');
@@ -173,15 +173,15 @@
 				if(uni.getStorageSync('powerDriver')){
 					var power = uni.getStorageSync('powerDriver').split(',');
 				}
-				if(businessType){
-					this.addkey = this.addkey==''?businessType:(this.addkey+','+businessType);
-					this.publishObj.onLineList.forEach(item=>{
-					   if(item.text == businessType){
-						this.currentType = parseInt(item.id)-1
-						this.form.businesstype = parseInt(item.id)
-					   }
-					}) 
-				}
+				// if(businessType){
+				// 	this.addkey = this.addkey==''?businessType:(this.addkey+','+businessType);
+				// 	this.publishObj.onLineList.forEach(item=>{
+				// 	   if(item.text == businessType){
+				// 		this.currentType = parseInt(item.id)-1
+				// 		this.form.businesstype = parseInt(item.id)
+				// 	   }
+				// 	}) 
+				// }
 				if(carbrand){
 					this.form.carbrand = carbrand.join(',');
 					this.addkey = this.addkey==''?this.form.carbrand:(this.addkey+','+this.form.carbrand);
@@ -264,13 +264,13 @@
 				this.form.carbrand = this.arr.join(',');
 				this.select()
 			},
-			getDataType(obj) {
-				this.currentType = obj.index;
-				this.form.businesstype = obj.index + 1;
-				this.businesstype =  obj.text;
-				this.select()
-				this.add()
-			},
+			// getDataType(obj) {
+			// 	this.currentType = obj.index;
+			// 	this.form.businesstype = obj.index + 1;
+			// 	this.businesstype =  obj.text;
+			// 	this.select()
+			// 	this.add()
+			// },
 			getDataAge(obj) {
 				this.currentAge = obj.index;
 				this.carage = obj.index + 1;
@@ -335,28 +335,28 @@
 				this.add()
 			},
 			add() {
-				this.addkey = this.businesstype +(this.businesstype?',':'') + this.form.cartype
+				this.addkey = this.form.cartype
 				+ (this.form.cartype?',':'') + this.form.power + (this.form.power?',':'') + this.caragekey
 				+ (this.caragekey?',':'') + this.kmkey
 			},
 			reset() {
 				uni.removeStorageSync('cartypeDriver');
 				uni.removeStorageSync('powerDriver');
-				uni.removeStorageSync('businesstype');
+				// uni.removeStorageSync('businesstype');
 				uni.removeStorageSync('caragekey');
 				uni.removeStorageSync('kmkey');
 				uni.removeStorageSync('carbrandDriver');
 				this.currentType = -1;
 				this.currentAge = -1;
 				this.currentKm = -1;
-				this.form.businesstype = '';
+				// this.form.businesstype = '';
 				this.form.power = '';
 				this.form.cartype = '';
 				this.form.carbrand = '';
 				this.form.startCarAge = '';
 				this.form.endCarAge = '';
 				this.form.km = '';
-				this.businessType = '';
+				// this.businessType = '';
 				this.form.cartype = '';
 				this.arrPower = [];
 				this.form.power = '';
@@ -517,9 +517,9 @@
 				if(this.form.power){
 					uni.setStorageSync('powerDriver', this.form.power);
 				}
-				if(this.businesstype){
-					uni.setStorageSync('businesstype', this.businesstype);
-				}
+				// if(this.businesstype){
+				// 	uni.setStorageSync('businesstype', this.businesstype);
+				// }
 				if(this.caragekey){
 					uni.setStorageSync('caragekey', this.caragekey);
 				}

@@ -8,15 +8,15 @@
 			<view style="width: 100%;height: 100rpx;padding-left: 34rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
-					background: #F8F9FB;border-radius: 4px;width: 124rpx;display: flex;"" label="">
+					background: #F8F9FB;border-radius: 4px;width: 124rpx;display: flex;" label="">
 					<view style="float: left;">杭州</view>
 					<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
 					</u-form-item>
 					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
-				    background: #F8F9FB;border-radius: 4px;width: 112rpx;margin-left: 24rpx;" label="">
+				    background: #F8F9FB;border-radius: 4px;width: 202rpx;margin-left: 21rpx;" label="">
 					<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
 					<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
-					<u-form-item style="padding: 0 16rpx;margin-left:24rpx;margin-top: -18rpx;float: left;
+					<u-form-item style="padding: 0 16rpx;margin-left:21rpx;margin-top: -18rpx;float: left;
 				    background: #F8F9FB;border-radius: 4px;width: 182rpx;" label="">
 					<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
 					<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
@@ -36,8 +36,9 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
+		<view v-show="!filterData.length" style="height: 132rpx;"></view>
+		<view v-show="filterData.length" style="height: 226rpx;"></view>
 		<load-refresh
-		style="margin-top: 132rpx;"
 		  v-show="list.length"
 		  ref="loadRefresh"
 		  :pageNo='pageNum'
@@ -223,12 +224,6 @@
 				var cartype = [];
 				var power = [];
 				this.filterData.splice(index, 1);
-				this.publishObj.onLineList.map(item=>{
-				   if(item.text == text){
-				   	this.form.businesstype = '';
-					uni.removeStorageSync('businesstype');
-				   }
-				})
 				this.publishObj.ageList.map(item=>{
 				   if(item.text == text){
 				   	this.form.startCarAge = '';
@@ -293,19 +288,9 @@
 				var carbrand = [];
 				var cartype = [];
 				var power = [];
-				var businessType = '';
 				var caragekey = '';
 				var kmkey = '';
 				this.filterData = [];
-				if(uni.getStorageSync('businesstype')){
-					businessType = uni.getStorageSync('businesstype');
-					this.filterData.push(businessType);
-					this.publishObj.onLineList.map(item=>{
-					   if(item.text == businessType){
-					   	this.form.businesstype = item.id;
-					   }
-					})
-				}
 				if(uni.getStorageSync('carbrandDriver')){
 					carbrand = uni.getStorageSync('carbrandDriver').split(',');
 					this.filterData = this.filterData.concat(carbrand);
@@ -608,11 +593,9 @@
 			clear(){
 				uni.removeStorageSync('cartypeDriver');
 				uni.removeStorageSync('powerDriver');
-				uni.removeStorageSync('businesstype');
 				uni.removeStorageSync('caragekey');
 				uni.removeStorageSync('kmkey');
 				this.filterData = [];
-				this.form.businesstype = '';
 				this.form.power = '';
 				this.form.cartype = '';
 				this.form.carbrand = '';
@@ -801,6 +784,7 @@
 					}
 				}
 				.name {
+					height: 88rpx;
 					font-weight: 900;
 					font-size: 34rpx;
 					margin-top: 14rpx;

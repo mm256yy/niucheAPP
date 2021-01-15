@@ -5,26 +5,23 @@
 			</u-mask>
 			<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
 			<list-tags v-show="showType" :list="selectType" :active="currentType" @onClick="getDataType"></list-tags>
-			<view class="middle-content">
+			<view class="middle-content active">
 				<view style="width: 100%;height: 100rpx;">
 					<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-						<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
-						background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
+						<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
+					background: #F8F9FB;border-radius: 4px;width: 124rpx;display: flex;" label="">
 						<view style="float: left;">杭州</view>
 						<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
 						</u-form-item>
-						<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
-					    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
+						<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 202rpx;margin-left: 21rpx;" label="">
 						<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
 						<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
-						<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
-					    background: #F8F9FB;border-radius: 4px;width: 180rpx;" label="">
+						<u-form-item style="padding: 0 16rpx;margin-left:21rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 182rpx;" label="">
 						<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
 						<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
 						</u-form-item>
-						<u-image style="margin-left: 2rpx;float: right;margin-top: 4rpx;" width="32rpx" height="34rpx" src="@/static/filter.png"></u-image>
-						<view @click="filter()" style="
-						float: right;margin-right: 2rpx;">更多</view>
 					</u-form>
 				</view>
 			</view>
@@ -485,6 +482,9 @@
 				float: right;
 			}
 		}
+		.active{
+			border-bottom: 1rpx solid rgba(0,0,0,0.08);
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;
@@ -571,7 +571,7 @@
 				font-size: 20rpx;
 				margin-left: 36rpx;
 				background: #fff;
-				padding: 44rpx 0;
+				padding: 42rpx 0;
 				border-bottom: 1rpx solid rgba(0,0,0,0.05);
 				.left {
 					float: left;
@@ -611,6 +611,7 @@
 						}
 					}
 				.name {
+					height: 66rpx;
 					font-size: 34rpx;
 					color: #333;
 					margin-top: 20rpx;
