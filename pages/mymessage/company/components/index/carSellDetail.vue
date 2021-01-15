@@ -54,7 +54,8 @@
 		 		<view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		 				<view style="float: left;">综合上牌时间</view>
-		 				<view style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
+		 				<view v-show="detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}至{{detail.registrationtimeend}}</view>
+						<view v-show="!detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
 		 				<view class="clear"></view>
 		 			</view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
@@ -65,7 +66,8 @@
 		 		</view>
 		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 32rpx;">
 		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-车况描述-</view>
-		 			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">{{detail.cardescribe}}</view>
+		 			<view v-show="detail.cardescribe" style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">{{detail.cardescribe}}</view>
+					<view v-show="!detail.cardescribe" style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">未描述</view>
 		 		</view>
 		 		<view style="width: 684rpx;background: #ddffea;border-radius: 4rpx;padding: 16rpx;margin-top: 38rpx;">
 		 			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #4aba75;">-购车流程-</view>

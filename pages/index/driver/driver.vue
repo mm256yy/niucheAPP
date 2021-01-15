@@ -73,6 +73,7 @@
 			getList() {
 				this.$refs.rent.search()
 				this.$refs.rent.page()
+				this.$refs.rent.transform()
 				this.token = uni.getStorageSync('token');
 				if(this.token){
 					this.view()

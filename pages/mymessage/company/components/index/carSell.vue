@@ -6,7 +6,7 @@
 		<list-tags v-show="showPrice" :list="selectPrice" :active="currentPrice" @onClick="getDataPrice"></list-tags>
 		<list-tags v-show="showAge" :list="selectAge" :active="currentAge" @onClick="getDataAge"></list-tags>
 		<view class="middle-content">
-			<view style="width: 100%;height: 100rpx;">
+			<view style="height: 100rpx;padding-left: 34rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
 					background: #F8F9FB;border-radius: 4px;width: 108rpx;display: flex;" label="">
@@ -32,9 +32,9 @@
 					float: right;margin-right: 2rpx;">更多</view>
 				</u-form>
 			</view>
-			<view style="margin-top: 42rpx;display: flex;">
+			<view style="margin-top: 30rpx;display: flex;padding-bottom: 20rpx;border-bottom: 1rpx solid rgba(0,0,0,0.05);padding-left: 34rpx;">
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
-					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
+					<view @click="close(index,item)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
 				<view @click="clear" v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
@@ -91,11 +91,11 @@
 							<view style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
 		    			</view>
 		    			<view class="clear"></view>
-						<view class="flex">
+						<!-- <view class="flex">
 							<view class="company">{{item.comparyname}}</view>
 							<view class="area">{{item.comparyarea}}</view>
 							<view class="clear"></view>
-						</view>
+						</view> -->
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
@@ -269,10 +269,66 @@
 			this.transform()
 		},
 		methods: {
-			close(index){
+			close(index,text){
+				var carbrand = [];
+				var cartype = [];
+				var power = [];
 				this.filterData.splice(index, 1);
+				this.publishObj.onLineList.map(item=>{
+				   if(item.text == text){
+				   	this.form.businessType = 0;
+					uni.removeStorageSync('businessType');
+				   }
+				})
+				if(uni.getStorageSync('carbrand')){
+					carbrand = uni.getStorageSync('carbrand').split(',');
+					carbrand.map((item,index)=>{
+					   if(item == text){
+					   	carbrand.splice(index, 1);
+						if(carbrand.length){
+							uni.setStorageSync('carbrand', carbrand.join(','));
+							this.form.carbrand = uni.getStorageSync('carbrand');
+						}else{
+							uni.removeStorageSync('carbrand');
+							this.form.carbrand = '';
+						}
+					   }
+					})
+				}
+				if(uni.getStorageSync('cartype')){
+					cartype = uni.getStorageSync('cartype').split(',');
+					cartype.map((item,index)=>{
+					   if(item == text){
+					   	cartype.splice(index, 1);
+						if(cartype.length){
+							uni.setStorageSync('cartype', cartype.join(','));
+							this.form.cartype = uni.getStorageSync('cartype');
+						}else{
+							uni.removeStorageSync('cartype');
+							this.form.cartype = '';
+						}
+					   }
+					})
+				}
+				if(uni.getStorageSync('power')){
+					power = uni.getStorageSync('power').split(',');
+					power.map((item,index)=>{
+					   if(item == text){
+					   	power.splice(index, 1);
+						if(power.length){
+							uni.setStorageSync('power', power.join(','));
+							this.form.power = uni.getStorageSync('power');
+						}else{
+							uni.removeStorageSync('power');
+							this.form.power = '';
+						}
+					   }
+					})
+				}
+				this.search()
 			},
 			transform(){
+				var carbrand = [];
 				var cartype = [];
 				var power = [];
 				var businessType = '';
@@ -291,15 +347,35 @@
 					this.filterData = this.filterData.concat(carbrand);
 					this.form.carbrand = uni.getStorageSync('carbrand');
 				}
+				this.publishObj.carType.map(items=>{
+				   items.checked = false
+				})
 				if(uni.getStorageSync('cartype')){
 					cartype = uni.getStorageSync('cartype').split(',');
 					this.filterData = this.filterData.concat(cartype);
 					this.form.cartype = uni.getStorageSync('cartype');
+					cartype.map(item=>{
+						this.publishObj.carType.map(items=>{
+						   if(item == items.text){
+						   	 items.checked = true
+						   }
+						})
+					})
 				}
+				this.publishObj.power.map(items=>{
+				   items.checked = false
+				})
 				if(uni.getStorageSync('power')){
 					power = uni.getStorageSync('power').split(',');
 					this.filterData = this.filterData.concat(power);
 					this.form.power = uni.getStorageSync('power');
+					power.map(item=>{
+						this.publishObj.power.map(items=>{
+						   if(item == items.text){
+						   	 items.checked = true
+						   }
+						})
+					})
 				}
 				this.search()
 			},
@@ -573,7 +649,6 @@
 			left: 0;
 			z-index: 10;
 			background-color: #fff;
-			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
@@ -624,12 +699,13 @@
 			.list {
 				width: 702rpx;
 				// height: 308rpx;
-				padding: 18rpx 15rpx;
+				padding: 44rpx 15rpx;
 				margin-left: 24rpx;
 				font-size: 20rpx;
 				// background-image: url(@/static/bgcarsell.png);
 				background-repeat: no-repeat;
 				background-size: cover;
+				border-bottom: 1rpx solid rgba(0,0,0,0.05);
 				.left, .right {
 					float: left;
 				}

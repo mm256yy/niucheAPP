@@ -22,7 +22,9 @@
 						<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
 						<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
 						</u-form-item>
-						<view @click="filter()" style="width: 100rpx;text-align: center;float: right;">更多</view>
+						<u-image style="margin-left: 2rpx;float: right;margin-top: 4rpx;" width="32rpx" height="34rpx" src="@/static/filter.png"></u-image>
+						<view @click="filter()" style="
+						float: right;margin-right: 2rpx;">更多</view>
 					</u-form>
 				</view>
 			</view>
@@ -62,11 +64,11 @@
 								<view class="price"><text>{{item.pay}}元</text></view>
 		    				</view>
 		    				<view class="clear"></view>
-							<view class="flex">
+							<!-- <view class="flex">
 								<view class="company">{{item.comparyname}}</view>
 								<view class="area">{{item.comparyarea}}</view>
 								<view class="clear"></view>
-							</view>
+							</view> -->
 		    		</view>
 		    		<!-- <u-icon v-show="item.isCollection === 1" @click="cancel(item,item.companyMainId)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
 		    		<!-- <u-icon v-show="item.isCollection === 2" @click="favorites(item,item.companyMainId)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
@@ -568,8 +570,9 @@
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				margin-bottom: 20rpx;
 				background: #fff;
+				padding: 44rpx 0;
+				border-bottom: 1rpx solid rgba(0,0,0,0.05);
 				.left {
 					float: left;
 					margin-left: 19rpx;

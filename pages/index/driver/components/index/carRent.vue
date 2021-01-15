@@ -5,12 +5,12 @@
 		<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
 		<list-tags v-show="showType" :list="selectType" :active="currentType" @onClick="getDataType"></list-tags>
 		<view class="middle-content">
-			<view style="width: 100%;height: 100rpx;">
+			<view style="height: 100rpx;padding-left: 34rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-					<u-form-item style="padding: 6rpx 18rpx;margin-top: -18rpx;float: left;
-					background: #F8F9FB;border-radius: 4px;width: 130rpx;" label="">
-					<view style="float: left;margin-right: 42rpx;">杭州</view>
-					<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
+					background: #F8F9FB;border-radius: 4px;width: 108rpx;display: flex;" label="">
+					<view>杭州</view>
+					<u-image style="margin-top: -50rpx;margin-left: 2rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
 					</u-form-item>
 					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
 				    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
@@ -21,14 +21,16 @@
 					<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
 					<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
 					</u-form-item>
-					<view @click="filter()" style="width: 100rpx;text-align: center;float: right;">更多</view>
+					<u-image style="margin-left: 2rpx;float: right;margin-top: 4rpx;" width="32rpx" height="34rpx" src="@/static/filter.png"></u-image>
+					<view @click="filter()" style="
+					float: right;margin-right: 2rpx;">更多</view>
 				</u-form>
 			</view>
-			<view style="margin-top: 42rpx;display: flex;">
+			<view style="margin-top: 30rpx;display: flex;padding-bottom: 20rpx;border-bottom: 1rpx solid rgba(0,0,0,0.05);padding-left: 34rpx;">
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
-					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
+					<view @click="close(index,item)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
-				<view v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+				<view @click="clear" v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
 		</view>
 		<!-- <view class="wrap">
@@ -60,7 +62,7 @@
 		    				<view class="year">车龄≤{{item.carAge}}年/{{item.km}}万公里
 		    				</view>
 							<view class="price"><text>{{item.rentprice}}元</text></view>
-							<view class="numRenting">在租200辆</view>
+							<view v-show="item.carRentNum" class="numRenting">在租{{item.carRentNum}}辆</view>
 		    			</view>
 						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
 						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
@@ -216,8 +218,76 @@
 			this.transform()
 		},
 		methods: {
-			close(index){
+			close(index,text){
+				var carbrand = [];
+				var cartype = [];
+				var power = [];
 				this.filterData.splice(index, 1);
+				this.publishObj.onLineList.map(item=>{
+				   if(item.text == text){
+				   	this.form.businesstype = '';
+					uni.removeStorageSync('businesstype');
+				   }
+				})
+				this.publishObj.ageList.map(item=>{
+				   if(item.text == text){
+				   	this.form.startCarAge = '';
+					this.form.endCarAge = '';
+					uni.removeStorageSync('caragekey');
+				   }
+				})
+				this.objType[this.radioType].map(item=>{
+				   if(item.text == text){
+				   	this.form.km = '';
+					uni.removeStorageSync('kmkey');
+				   }
+				})
+				if(uni.getStorageSync('carbrand')){
+					carbrand = uni.getStorageSync('carbrand').split(',');
+					carbrand.map((item,index)=>{
+					   if(item == text){
+					   	carbrand.splice(index, 1);
+						if(carbrand.length){
+							uni.setStorageSync('carbrand', carbrand.join(','));
+							this.form.carbrand = uni.getStorageSync('carbrand');
+						}else{
+							uni.removeStorageSync('carbrand');
+							this.form.carbrand = '';
+						}
+					   }
+					})
+				}
+				if(uni.getStorageSync('cartypeDriver')){
+					cartype = uni.getStorageSync('cartypeDriver').split(',');
+					cartype.map((item,index)=>{
+					   if(item == text){
+					   	cartype.splice(index, 1);
+						if(cartype.length){
+							uni.setStorageSync('cartypeDriver', cartype.join(','));
+							this.form.cartype = uni.getStorageSync('cartypeDriver');
+						}else{
+							uni.removeStorageSync('cartypeDriver');
+							this.form.cartype = '';
+						}
+					   }
+					})
+				}
+				if(uni.getStorageSync('powerDriver')){
+					power = uni.getStorageSync('powerDriver').split(',');
+					power.map((item,index)=>{
+					   if(item == text){
+					   	power.splice(index, 1);
+						if(power.length){
+							uni.setStorageSync('powerDriver', power.join(','));
+							this.form.power = uni.getStorageSync('powerDriver');
+						}else{
+							uni.removeStorageSync('power');
+							this.form.power = '';
+						}
+					   }
+					})
+				}
+				this.search()
 			},
 			transform(){
 				var carbrand = [];
@@ -536,13 +606,15 @@
 				this.$u.route("/pages/index/driver/components/index/filterRent")
 			},
 			clear(){
+				const token = uni.getStorageSync('token');
+				uni.removeStorageSync('carbrandDriver');
 				uni.removeStorageSync('cartypeDriver');
 				uni.removeStorageSync('powerDriver');
 				uni.removeStorageSync('businesstype');
 				uni.removeStorageSync('caragekey');
 				uni.removeStorageSync('kmkey');
 				this.filterData = [];
-				this.form.businesstype = 0;
+				this.form.businesstype = '';
 				this.form.power = '';
 				this.form.cartype = '';
 				this.form.carbrand = '';
@@ -621,7 +693,6 @@
 			left: 0;
 			z-index: 10;
 			background-color: #fff;
-			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}

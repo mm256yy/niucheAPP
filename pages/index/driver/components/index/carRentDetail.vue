@@ -1,8 +1,8 @@
 <template>
 	<view class="detail">
-		<view style="width: 100%;height: 176rpx;top: 0;left: 0;background: #000;position: fixed;z-index: 20;display: flex;justify-content: center;align-items: center;font-weight: 900;">
-			<u-image style="position: absolute;bottom: 50rpx;left: 50rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
-			<view style="margin-bottom: -60rpx;font-size: 36rpx;">租车详情</view>
+		<view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;display: flex;justify-content: center;align-items: center;font-weight: 900;">
+			<u-image style="position: absolute;top: 0;left: 0" width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
+			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;">租车详情</view>
 		</view>
 		<view class="wraps img">
 			<u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper>
@@ -42,12 +42,13 @@
 		  	<view style="background: #fff;padding: 36rpx 30rpx;margin-top: 20rpx;">
 		  		<view style="float: left;font-size: 36rpx;font-weight: 900;color: #333;">车辆基本信息</view>
 		  		<u-image @click="setting" style="float: right;margin-left: 10rpx;margin-top: 5rpx;" width="20rpx" height="26rpx" src="@/static/more.png"></u-image>
-		  		<view @click="setting(detail.comparymainid)" style="float: right;font-size: 26rpx;color: #999;">参数配置</view>
+		  		<view @click="setting(detail.carModelId)" style="float: right;font-size: 26rpx;color: #999;">参数配置</view>
 		  		<view class="clear"></view>
 		  		<view>
 		  			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		  				<view style="float: left;">综合上牌时间</view>
-		  				<view style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
+						<view v-show="detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}至{{detail.registrationtimeend}}</view>
+						<view v-show="!detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
 		  				<view class="clear"></view>
 		  			</view>
 		  			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
@@ -154,7 +155,7 @@
 		},
 		methods: {
 			setting(id) {
-				this.$u.route("/pages/index/driver/components/index/setting",{id:id})
+				this.$u.route("/pages/mymessage/company/components/index/setting",{id:id})
 			},
 			change(index) {
 				this.firstCurrent = index;
