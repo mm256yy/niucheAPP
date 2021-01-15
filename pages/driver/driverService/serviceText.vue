@@ -129,12 +129,12 @@
 	}
 	.box_1 {
 		font-size: 32rpx;
-		padding: 28rpx;
+		padding: 20rpx 28rpx;
 	}
 	.box_1 /deep/ img {
 		display: block;
 		max-width: 100%;
 		border-radius: 12rpx;
-		margin-top: 20rpx;
+		margin: 20rpx 0;
 	}
 </style>
