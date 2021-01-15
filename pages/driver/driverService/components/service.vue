@@ -222,7 +222,7 @@
 			justify-content: space-between;
 
 			.activity_text {
-				font-size: 32rpx;
+				font-size: 36rpx;
 				margin: 0 auto;
 				overflow: hidden;
 				text-overflow: ellipsis;

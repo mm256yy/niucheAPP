@@ -6,15 +6,16 @@
 			</view>
 		</u-navbar>
 		<view class="">
-			<view style="padding: 28rpx;">
+			<!-- <view style="padding: 28rpx;">
 				<image style=" width:100%;height:100%;background-size:100% 100%;" :src="content.titlePhoto"></image>
-			</view>
+			</view> -->
 			<view class="box_1" v-html="content.text"></view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {shareArticleUrl} from "@/utils/constant.js"
 	export default {
 		data() {
 			return {
@@ -43,7 +44,7 @@
 					provider: "weixin",
 					scene: "WXSceneSession",
 					type: 0,
-					href: shareUrl + this.id,
+					href: shareArticleUrl + this.id,
 					title: "看车租车上纽车APP",
 					summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
 					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
@@ -63,7 +64,6 @@
 						if (res.code === 200) {
 							this.content = res.object
 							this.title = res.object.title;
-							console.log(this.content, '111')
 						} else {
 							this.$u.toast(res.msg);
 						}
@@ -127,6 +127,6 @@
 	// }
 	.box_1 {
 		font-size: 32rpx;
-		padding: 0rpx 22rpx 0rpx 30rpx;
+		padding: 28rpx 20rpx 28rpx 32rpx;
 	}
 </style>
