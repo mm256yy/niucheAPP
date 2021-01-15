@@ -63,8 +63,7 @@
 					<view class="contentImg">
 						<view class="" v-for="(items, indexs) in item.imgs" :key="indexs">
 							<view class="" @click="showImage(indexs,item.imgs)">
-								<!-- <previewImage ref="previewImage" :imgs="items"></previewImage> -->
-								<image :src="items" style="width: 220rpx; height: 220rpx;"></image>
+								<image :src="items" style="width: 220rpx; height: 220rpx; border-radius: 8rpx;"></image>
 							</view>
 						</view>
 					</view>
@@ -222,8 +221,8 @@
 			justify-content: space-between;
 
 			.activity_text {
-				font-size: 32rpx;
-				margin: 0 auto;
+				font-size: 36rpx;
+				// margin: 0 auto;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
@@ -232,6 +231,8 @@
 
 			.activity_img {
 				height: 314rpx;
+				border-radius: 8rpx;
+				overflow: hidden;
 			}
 
 			.source_text {
@@ -292,12 +293,11 @@
 				display: flex;
 				justify-content: space-between;
 				flex-wrap: wrap;
-
 				.content_img {
 					width: 220rpx;
 					height: 220rpx;
 					margin-top: 16rpx;
-					background-color: #303133;
+					// background-color: #303133;
 				}
 			}
 		}

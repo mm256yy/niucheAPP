@@ -2,12 +2,14 @@
 
 // let ipconfig = 'http://app-server.neocab.cn'//正式
 let ipconfig = 'http://server.neocab.cn'
+let shareIp = 'http://dev-share.neocab.cn' //分享测试
+// let shareIp = 'http://share.neocab.cn'
 export const action =ipconfig+ "/sys/upload/uploadImage";
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';
 export const baseUrl = ipconfig;
-export const shareUrl ="http://dev-share.neocab.cn?shareId=" //分享测试
-// export const shareUrl ="http://share.neocab.cn?shareId=" //分享
+export const shareUrl =shareIp+"?shareId=" //邀请好友
+export const shareArticleUrl = shareIp+"/driverServer/?id="//文章
 export const updateUrl =ipconfig+"/app/getUrl?version=" 
 export const version = '1.5.2.0'
 export const publishObj = {

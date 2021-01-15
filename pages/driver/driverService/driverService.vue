@@ -60,11 +60,12 @@
 				backgroundCover: '#FFFFFF',
 				pageNum: 1,
 				total: 0,
+				interface: '' ,// 接口的
+				obj:[{api:'driverDynamic',list:''}]
 			}
 		},
 		onLoad(option) {
 			this.index = parseInt(option.index);
-			console.log(this.index, '----------');
 			this.getList(1);
 		},
 		methods: {
@@ -76,7 +77,6 @@
 			},
 			// 上拉刷新
 			xiaLa() {
-				console.log('上拉刷新了', '--------')
 				this.pageNum = 1
 				this.getList(this.pageNum)
 			},
@@ -88,7 +88,6 @@
 					// uni.stopPullDownRefresh();
 					that.getList(pageNo)
 				}, 700);
-				console.log('下拉加载了')
 			},
 			tapSwitch(e) {
 				this.index = e
