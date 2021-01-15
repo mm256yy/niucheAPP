@@ -5,7 +5,7 @@
 		<view class="" v-if="index == 1">
 			<view class="driverBox_1" v-for="(item, index) in driveList" :key="index" @click="toInvite(item.uuid, item.title)">
 				<view class="img_1">
-					<image :src="item.titlePhoto" mode="" style="width: 212rpx; height: 160rpx;"></image>
+					<image :src="item.titlePhoto" mode="" style="max-width: 100%;max-height: 100%;"></image>
 				</view>
 				<view class="driverText">
 					<view class="driverText_1">{{item.title}}</view>
@@ -63,7 +63,7 @@
 					<view class="contentImg">
 						<view class="" v-for="(items, indexs) in item.imgs" :key="indexs">
 							<view class="" @click="showImage(indexs,item.imgs)">
-								<image :src="items" style="width: 220rpx; height: 220rpx; border-radius: 8rpx;"></image>
+								<image :src="items" style="width: 220rpx;height: 220rpx;border-radius: 8rpx;"></image>
 							</view>
 						</view>
 					</view>
@@ -184,6 +184,8 @@
 			.img_1 {
 				width: 212rpx;
 				height: 160rpx;
+				border-radius: 8rpx;
+				overflow: hidden;
 			}
 
 			.driverText {
@@ -293,12 +295,12 @@
 				display: flex;
 				justify-content: space-between;
 				flex-wrap: wrap;
-				.content_img {
-					width: 220rpx;
-					height: 220rpx;
-					margin-top: 16rpx;
-					// background-color: #303133;
-				}
+				// .content_img {
+				// 	width: 220rpx;
+				// 	height: 220rpx;
+				// 	margin-top: 16rpx;
+				// 	// background-color: #303133;
+				// }
 			}
 		}
 	}

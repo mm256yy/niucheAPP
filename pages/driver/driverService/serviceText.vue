@@ -23,7 +23,6 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				id: '',
-				value: '',
 				title:'2',
 				content: {
 				},
@@ -40,14 +39,21 @@
 		methods: {
 			share() { // 分享的
 				console.log('分享了')
+				if (!this.title) {
+					this.tiele = "我正在使用纽车App 赶紧跟我一起来领红包"
+				}
+				let titlePhoto = this.content.titlePhoto
+				if (!tielephoto) {
+					titlePhoto = "http://niuche-default.neocab.cn/256_256.png"
+				}
 				uni.share({
 					provider: "weixin",
 					scene: "WXSceneSession",
 					type: 0,
 					href: shareArticleUrl + this.id,
 					title: "看车租车上纽车APP",
-					summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
+					summary: this.title,
+					imageUrl: titlePhoto,
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
 					},
@@ -121,12 +127,14 @@
 		font-size: 40rpx;
 		height: 88rpx;
 	}
-
-	// .driver_nei >>> .cu-bar {
-	// 	background-color: #000000;
-	// }
 	.box_1 {
 		font-size: 32rpx;
-		padding: 28rpx 20rpx 28rpx 32rpx;
+		padding: 28rpx;
+	}
+	.box_1 /deep/ img {
+		display: block;
+		max-width: 100%;
+		border-radius: 12rpx;
+		margin-top: 20rpx;
 	}
 </style>
