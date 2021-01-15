@@ -25,15 +25,15 @@
 	   			  		</u-checkbox>
 	   			  	</u-checkbox-group> -->
 	   			  </u-form-item>
-	   	  	<u-form-item label="业务类型" label-position="top">
+	   	  	<!-- <u-form-item label="业务类型" label-position="top">
 	   				<search-tags :list="publishObj.onLineList" :active="currentType" :singleType="true" @onClick="getDataType"></search-tags>
-	   				<!-- <u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
+	   				<u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#6DD99C'" style="text-align: right;">
 	   					<u-radio name="0" style="margin-left: 10pt;">不限 </u-radio>
 	   					<u-radio name="1" style="margin-left: 10pt;">网约车 </u-radio>
 	   					<u-radio name="2" style="margin-left: 10pt;">出租车 </u-radio>
-	   				</u-radio-group> -->
-	   				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
-	   	  	</u-form-item>
+	   				</u-radio-group>
+	   				<text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text>
+	   	  	</u-form-item> -->
 	   			<u-form-item label="车辆类型(多选)" label-position="top">
 	   				<search-tags :list="publishObj.carType" :active="currentCar" :singleType="false" @onClick="getDataCar"></search-tags>
 	   				<!-- <u-checkbox-group active-color="#6DD99C" @change="modelGroupChange" shape="circle">

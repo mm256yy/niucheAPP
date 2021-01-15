@@ -695,7 +695,6 @@
 			left: 0;
 			z-index: 10;
 			background-color: #fff;
-			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}
