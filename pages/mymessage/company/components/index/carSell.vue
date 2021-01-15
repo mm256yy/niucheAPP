@@ -5,7 +5,7 @@
 		<list-tags v-show="showKm" :list="selectKm" :active="currentKm" @onClick="getDataKm"></list-tags>
 		<list-tags v-show="showPrice" :list="selectPrice" :active="currentPrice" @onClick="getDataPrice"></list-tags>
 		<list-tags v-show="showAge" :list="selectAge" :active="currentAge" @onClick="getDataAge"></list-tags>
-		<view class="middle-content">
+		<view :class="['middle-content',!filterData.length?'active':'']">
 			<view style="width: 100%;height: 100rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
@@ -32,11 +32,11 @@
 					float: right;margin-right: 2rpx;">更多</view>
 				</u-form>
 			</view>
-			<view style="margin-top: 42rpx;display: flex;">
+			<view v-show="filterData.length" :class="filterData.length?'active':''" style="margin-top: 42rpx;display: flex;padding-bottom: 26rpx;">
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
 					<view @click="close(index)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
-				<view @click="clear" v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+				<view @click="clear" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
 			<!-- <view style="display: flex;margin-left: 38rpx;">
 				<view v-for="(item, index) in filterData" :key="index" style="padding: 10rpx 18rpx;border-radius: 8rpx;background: #f8f9fb;margin-right:24rpx;">{{item}}</view>
@@ -61,7 +61,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
-		  style="margin-top: 80rpx;"
+		  style="margin-top: 132rpx;"
 		  v-show="list.length"
 		  ref="loadRefresh"
 		  :pageNo='pageNum'
@@ -91,11 +91,11 @@
 							<view style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
 		    			</view>
 		    			<view class="clear"></view>
-						<view class="flex">
+						<!-- <view class="flex">
 							<view class="company">{{item.comparyname}}</view>
 							<view class="area">{{item.comparyarea}}</view>
 							<view class="clear"></view>
-						</view>
+						</view> -->
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollection === 1" @click="cancel(item,item.demandid)" class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
@@ -557,6 +557,9 @@
 				float: right;
 			}
 		}
+		.active{
+			border-bottom: 1rpx solid rgba(0,0,0,0.08);
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;
@@ -624,7 +627,8 @@
 			.list {
 				width: 702rpx;
 				// height: 308rpx;
-				padding: 18rpx 15rpx;
+				padding: 44rpx 0;
+				border-bottom: 1rpx solid rgba(0,0,0,0.08);
 				margin-left: 24rpx;
 				font-size: 20rpx;
 				// background-image: url(@/static/bgcarsell.png);
