@@ -150,9 +150,15 @@
 				if(uni.getStorageSync('carbrand')){
 					var carbrand = uni.getStorageSync('carbrand').split(',');
 				}
+				this.publishObj.carType.map(items=>{
+				   items.checked = false
+				})
 				if(uni.getStorageSync('cartype')){
 					var cartype = uni.getStorageSync('cartype').split(',');
 				}
+				this.publishObj.power.map(items=>{
+				   items.checked = false
+				})
 				if(uni.getStorageSync('power')){
 					var power = uni.getStorageSync('power').split(',');
 				}

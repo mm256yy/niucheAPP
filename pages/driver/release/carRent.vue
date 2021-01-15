@@ -229,6 +229,12 @@
 			getDataType(obj) {
 				this.currentType = obj.index;
 				this.form.businessType = obj.index + 1;
+				if(this.currentType == 0){
+					this.radioType = 'wycList'
+				}
+				if(this.currentType == 1){
+					this.radioType = 'czcList'
+				}
 			},
 			getDataPublic(obj) {
 				this.currentPublic = obj.index;
