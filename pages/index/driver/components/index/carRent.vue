@@ -4,20 +4,20 @@
 		</u-mask>
 		<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
 		<list-tags v-show="showType" :list="selectType" :active="currentType" @onClick="getDataType"></list-tags>
-		<view class="middle-content">
-			<view style="height: 100rpx;padding-left: 34rpx;">
+		<view :class="['middle-content',!filterData.length?'active':'']">
+			<view style="width: 100%;height: 100rpx;padding-left: 34rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
-					background: #F8F9FB;border-radius: 4px;width: 108rpx;display: flex;" label="">
-					<view>杭州</view>
-					<u-image style="margin-top: -50rpx;margin-left: 2rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
+					background: #F8F9FB;border-radius: 4px;width: 124rpx;display: flex;"" label="">
+					<view style="float: left;">杭州</view>
+					<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
 					</u-form-item>
-					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
-				    background: #F8F9FB;border-radius: 4px;width: 134rpx;margin-right: 42rpx;margin-left: 42rpx;" label="">
+					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 112rpx;margin-left: 24rpx;" label="">
 					<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
 					<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
-					<u-form-item style="padding: 6rpx 21rpx;margin-top: -18rpx;float: left;
-				    background: #F8F9FB;border-radius: 4px;width: 180rpx;" label="">
+					<u-form-item style="padding: 0 16rpx;margin-left:24rpx;margin-top: -18rpx;float: left;
+				    background: #F8F9FB;border-radius: 4px;width: 182rpx;" label="">
 					<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
 					<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
 					</u-form-item>
@@ -26,18 +26,18 @@
 					float: right;margin-right: 2rpx;">更多</view>
 				</u-form>
 			</view>
-			<view style="margin-top: 30rpx;display: flex;padding-bottom: 20rpx;border-bottom: 1rpx solid rgba(0,0,0,0.05);padding-left: 34rpx;">
+			<view v-show="filterData.length" :class="filterData.length?'active':''" style="margin-top: 42rpx;display: flex;padding-bottom: 26rpx;padding-left: 34rpx;">
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
 					<view @click="close(index,item)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
-				<view @click="clear" v-show="filterData.length" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
+				<view @click="clear" style="width: 90rpx;margin-left: 30rpx;display: inline-block;margin-top: 8rpx;">清空</view>
 			</view>
 		</view>
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
-		style="margin-top: 100rpx;"
+		style="margin-top: 132rpx;"
 		  v-show="list.length"
 		  ref="loadRefresh"
 		  :pageNo='pageNum'
@@ -62,7 +62,7 @@
 		    				<view class="year">车龄≤{{item.carAge}}年/{{item.km}}万公里
 		    				</view>
 							<view class="price"><text>{{item.rentprice}}元</text></view>
-							<view v-show="item.carRentNum" class="numRenting">在租{{item.carRentNum}}辆</view>
+							<view class="numRenting">在租200辆</view>
 		    			</view>
 						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
 						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
@@ -606,8 +606,6 @@
 				this.$u.route("/pages/index/driver/components/index/filterRent")
 			},
 			clear(){
-				const token = uni.getStorageSync('token');
-				uni.removeStorageSync('carbrandDriver');
 				uni.removeStorageSync('cartypeDriver');
 				uni.removeStorageSync('powerDriver');
 				uni.removeStorageSync('businesstype');
@@ -621,6 +619,7 @@
 				this.form.startCarAge = '';
 				this.form.endCarAge = '';
 				this.form.km = '';
+				const token = uni.getStorageSync('token');
 				if(token) {
 					this.form.islogin = 1
 				}else{
@@ -658,6 +657,9 @@
 				float: right;
 			}
 		}
+		.active{
+			border-bottom: 1rpx solid rgba(0,0,0,0.08);
+		}
 		.null{
 			height: calc(73vh - var(--window-top));
 			display: flex;
@@ -693,6 +695,7 @@
 			left: 0;
 			z-index: 10;
 			background-color: #fff;
+			padding-left: 34rpx;
 			/deep/ .u-dropdown__content {
 			    overflow: visible;
 			}

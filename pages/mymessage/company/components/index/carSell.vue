@@ -6,7 +6,7 @@
 		<list-tags v-show="showPrice" :list="selectPrice" :active="currentPrice" @onClick="getDataPrice"></list-tags>
 		<list-tags v-show="showAge" :list="selectAge" :active="currentAge" @onClick="getDataAge"></list-tags>
 		<view :class="['middle-content',!filterData.length?'active':'']">
-			<view style="width: 100%;height: 100rpx;">
+			<view style="width: 100%;height: 100rpx;padding-left: 34rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
 					background: #F8F9FB;border-radius: 4px;width: 108rpx;display: flex;" label="">
@@ -32,7 +32,7 @@
 					float: right;margin-right: 2rpx;">更多</view>
 				</u-form>
 			</view>
-			<view v-show="filterData.length" :class="filterData.length?'active':''" style="margin-top: 42rpx;display: flex;padding-bottom: 26rpx;">
+			<view v-show="filterData.length" :class="filterData.length?'active':''" style="margin-top: 42rpx;display: flex;padding-bottom: 26rpx;padding-left: 34rpx;">
 				<scroll-view style="width: 572rpx;display: inline-block;" class="scroll-view_H" scroll-x="true" scroll-left="0">
 					<view @click="close(index,item)" class="scroll-view-item_H" v-for="(item, index) in filterData" :key="index">{{item}}</view>
 				</scroll-view>
