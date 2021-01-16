@@ -71,7 +71,7 @@
 		methods: {
 			neiClick(id) {
 				this.$u.route('/pages/driver/driverService/serviceText', {
-					id: id,
+					ids: id,
 					index: this.index
 				})
 			},

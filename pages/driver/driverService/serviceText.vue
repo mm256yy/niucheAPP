@@ -1,22 +1,28 @@
 <template>
 	<view class="">
 		<u-navbar back-icon-color="#333333" title-size="36" :title="title"  :background="background" title-color="#333333">
-			<view class="navber" slot="right" @click="share()">
-				<u-icon name="zhuanfa" color="#333333" size="44"></u-icon>
+			<view class="navber" slot="right" @click="share(content.titlePhoto)">
+				<u-icon name="zhuanfa" color="#333333" size="44"></u-icon>		
 			</view>
 		</u-navbar>
 		<view class="">
-			<!-- <view style="padding: 28rpx;">
-				<image style=" width:100%;height:100%;background-size:100% 100%;" :src="content.titlePhoto"></image>
-			</view> -->
 			<view class="box_1" v-html="content.text"></view>
 		</view>
+		<view class="">
+			<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
+		</view>
+		
 	</view>
 </template>
 
 <script>
+	import {shareUrl} from '@/utils/constant.js'
+	import ShareWX from '@/components/shareWx/shareWx.vue'
 	import {shareArticleUrl} from "@/utils/constant.js"
 	export default {
+		components:{
+			ShareWX
+		},
 		data() {
 			return {
 				background: {
@@ -26,41 +32,48 @@
 				title:'2',
 				content: {
 				},
-				index: ''
+				shareObj:{
+					href:'',
+					title:'赚租金上纽车APP',
+					summary:'注册认证就送100元，成为纽车推广人，赚租金，上不封顶！',
+					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
+				},
+				shareUrl:shareUrl,
+				value: false
 			}
 		},
 		onLoad(option) {
-			this.id = option.id;
 			this.index = option.index
+			let shareId = option.ids;
+			if (shareId) {
+				this.id = shareId;
+				this.shareObj.href = this.shareUrl + shareId;
+			}
 		},
 		onShow() {
 			this.driverContent()
 		},
 		methods: {
-			share() { // 分享的
+			share(url) { // 分享的
 				console.log('分享了')
-				if (!this.title) {
-					this.tiele = "我正在使用纽车App 赶紧跟我一起来领红包"
-				}
-				let titlePhoto = this.content.titlePhoto
-				if (!tielephoto) {
-					titlePhoto = "http://niuche-default.neocab.cn/256_256.png"
-				}
-				uni.share({
-					provider: "weixin",
-					scene: "WXSceneSession",
-					type: 0,
-					href: shareArticleUrl + this.id,
-					title: "看车租车上纽车APP",
-					summary: this.title,
-					imageUrl: titlePhoto,
-					success: function(res) {
-						console.log("success:" + JSON.stringify(res));
-					},
-					fail: function(err) {
-						console.log("fail:" + JSON.stringify(err));
+				 this.$refs.shareWx.shareShow()
+				 this.shareObj.title = this.title
+				 this.shareObj.imageUrl = url
+			},
+			// inviteFriends() {
+			// 	this.$refs.shareWx.shareShow()
+			// },
+			initId() {
+				this.$u.api.listUserMessage().then(res => {
+					if (res.code === 200) {
+						let data = res.object;
+						if (data.shareId) {
+							this.shareId = data.shareId;
+						}
+					} else {
+						this.$u.toast(res.msg);
 					}
-				});
+				})
 			},
 			driverContent() {
 				if (this.index == 1) {
