@@ -3,14 +3,21 @@
 	    <DriverIndex ref="driver" v-if='curThemeType ==="driver"'></DriverIndex>
 		<Company ref="driver" v-else></Company>
 		<OneTips ref="onetips"></OneTips>
-		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075">
+<!-- 		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075">
 			<view style="width: 580rpx;">
 				<u-image height="780rpx" mode="aspectFill" :src="data.photo" @click="toPage"></u-image>
 			</view>
 			<view class="close_btn" @click="show=false">
 				<img src="http://niuche-default.neocab.cn/guanbi.png" alt="">
 			</view>
-		</u-popup>
+		</u-popup> -->
+		<aui-poster
+		    ref="poster"
+		    :mask="auiPoster.mask"
+		    :maskTapClose="auiPoster.maskTapClose"
+		    :image="auiPoster.image"
+		    @callback="auiPosterCallback"
+		></aui-poster>
 	</view>
 </template>
 
@@ -18,6 +25,8 @@
 	import OneTips from '../../components/oneTips.vue'
 	import Company from '../index/company/company.vue'
 	import DriverIndex from './driverIndex.vue'
+	import {aui} from '@/components/aui-poster/common/aui/js/aui.js';
+	import auiPoster from '@/components/aui-poster/aui-poster.vue';
 	import {
 		dirverPages,
 		companyPages
@@ -26,7 +35,8 @@
 		components: {
 			Company,
 			DriverIndex,
-			OneTips
+			OneTips,
+			auiPoster
 		},
 		data() {
 			return {
@@ -34,6 +44,11 @@
 				downOption: {},
 				show: false,
 				data: {},
+				auiPoster: {
+					mask: true,
+					maskTapClose: false,
+					image: 'https://xbjz1.oss-cn-beijing.aliyuncs.com/upload/default/share.png'
+				  }
 			}
 		},
 		onShow() {
@@ -57,9 +72,6 @@
 			if (this.$refs.driver != undefined) {
 				this.$refs.driver.getList()
 			}
-		},
-		onHide() {
-			this.show = false
 		},
 		methods: {
 			tipsConfirm() {
@@ -116,28 +128,41 @@
 							data.forEach(item => {
 								if (item.param === "popup_isopen") {
 									if (item.result === 'open') {
-										this.show = true
+										// this.show = true
+										this.showPoster()
 									} else {
-										this.show = false
+										// this.show = false
 									}
 								}
 								if (item.param == param) {
 									this.data = JSON.parse(item.result)
+									this.auiPoster.image = this.data.photo;
 								}
 							})
 						} else {
-							this.show = false
+							// this.show = false
 						}
 					} else {
 						this.$u.toast(res.msg);
 					}
 				})
 			},
+			 showPoster(){
+			    this.$refs.poster.show();
+			},
+			auiPosterCallback(e){
+				var _this = this;
+				if(e.type === 'main'){
+					this.toPage()
+				}
+			}
 		}
 
 	};
 </script>
 <style lang="scss">
+	@import url("@/components/aui-poster/common/aui/css/aui.css");
+	@import url("@/components/aui-poster/common/aui/css/aui.iconfont.css");
 	page {
 		// background-color: #F5F5F8;
 	}

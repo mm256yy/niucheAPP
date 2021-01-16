@@ -5,7 +5,7 @@
 		<view class="" v-if="index == 1">
 			<view class="driverBox_1" v-for="(item, index) in driveList" :key="index" @click="toInvite(item.uuid, item.title)">
 				<view class="img_1">
-					<image :src="item.titlePhoto" mode="" style="width: 212rpx; height: 160rpx;"></image>
+					<image :src="item.titlePhoto" mode="" style="max-width: 100%;max-height: 100%;"></image>
 				</view>
 				<view class="driverText">
 					<view class="driverText_1">{{item.title}}</view>
@@ -62,8 +62,8 @@
 					<view class="content_text"> {{item.text}} </view>
 					<view class="contentImg">
 						<view class="" v-for="(items, indexs) in item.imgs" :key="indexs">
-							<view class="" @click="showImage(indexs,item.imgs)">
-								<image :src="items" style="width: 220rpx; height: 220rpx; border-radius: 8rpx;"></image>
+							<view class="content_img" @click="showImage(indexs,item.imgs)">
+								<image :src="items" style="width: 220rpx;height: 220rpx;"></image>
 							</view>
 						</view>
 					</view>
@@ -119,7 +119,8 @@
 				imags: '',
 				times: '',
 				creaTime: '',
-				imgs: []
+				imgs: [],
+				tupian: false
 			}
 		},
 		onLoad() {
@@ -130,13 +131,10 @@
 				this.shareList.forEach((item) => {
 					item.imgs = item.photoUrls.split(',')
 					this.ureTime(item)
-					let lent = item.imgs.length
-					item.imgs.forEach(items => {
-						if (lent == 2 || lent == 5 || lent == 8) {
-							console.log(111111)
-							item.imgs.push('')
-						}
-					})
+					let leng = item.imgs.length
+					if (leng == 2 || leng == 5 ||leng == 8) {
+						item.imgs.push('')
+					}
 				})
 			},
 			driveList: function() {
@@ -184,6 +182,8 @@
 			.img_1 {
 				width: 212rpx;
 				height: 160rpx;
+				border-radius: 8rpx;
+				overflow: hidden;
 			}
 
 			.driverText {
@@ -231,7 +231,7 @@
 
 			.activity_img {
 				height: 314rpx;
-				border-radius: 8rpx;
+				border-radius: 12rpx;
 				overflow: hidden;
 			}
 
@@ -255,7 +255,6 @@
 				margin-bottom: 20rpx;
 				justify-content: space-between;
 				align-items: center;
-
 				.driver_to {
 					display: flex;
 					align-items: center;
@@ -291,13 +290,12 @@
 
 			.contentImg {
 				display: flex;
+				margin-bottom: 20rpx;
 				justify-content: space-between;
 				flex-wrap: wrap;
 				.content_img {
-					width: 220rpx;
-					height: 220rpx;
-					margin-top: 16rpx;
-					// background-color: #303133;
+					border-radius: 8rpx;
+					overflow: hidden;
 				}
 			}
 		}
