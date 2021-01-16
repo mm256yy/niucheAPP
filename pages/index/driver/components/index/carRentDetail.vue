@@ -1,8 +1,8 @@
 <template>
 	<view class="detail">
-		<view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;display: flex;justify-content: center;align-items: center;font-weight: 900;">
-			<u-image style="position: absolute;top: 0;left: 0" width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
-			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;">租车详情</view>
+		<view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;font-weight: 900;line-height: 176rpx;text-align: center;">
+			<u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
+			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">租车详情</view>
 		</view>
 		<view class="wraps img">
 			<u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper>
@@ -47,19 +47,21 @@
 		  		<view>
 		  			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		  				<view style="float: left;">综合上牌时间</view>
-						<view v-show="detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}至{{detail.registrationtimeend}}</view>
-						<view v-show="!detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
+						<view v-show="detail.endtime" style="float: right;color: #353B3D;">{{detail.firsttime}}{{detail.firsttime&&detail.endtime?'至':''}}{{detail.endtime}}</view>
+						<view v-show="!detail.endtime" style="float: right;color: #353B3D;">{{detail.firsttime}}</view>
 		  				<view class="clear"></view>
 		  			</view>
 		  			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		  				<view style="float: left;">综合行驶里程</view>
-		  				<view style="float: right;color: #353B3D;">{{detail.carkm}}</view>
+						<view v-show="detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}{{detail.firstkm&&detail.endkm?'-':''}}{{detail.endkm}}万公里</view>
+						<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}</view>
 		  				<view class="clear"></view>
 		  			</view>
 		  		</view>
 		  		<view style="width: 684rpx;background: #FFEFE8;border-radius: 4rpx;padding: 16rpx;margin-top: 32rpx;">
 		  			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #FE5B00;">-车况描述-</view>
-		  			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">{{detail.cardescribe}}</view>
+		  			<view v-show="detail.cardescribe" style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">{{detail.cardescribe}}</view>
+					<view v-show="!detail.cardescribe" style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">未描述</view>
 		  		</view>
 		  		<view style="width: 684rpx;background: #FFEFE8;border-radius: 4rpx;padding: 16rpx;margin-top: 38rpx;">
 		  			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #FE5B00;">-购车流程-</view>

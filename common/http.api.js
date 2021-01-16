@@ -42,8 +42,6 @@ const install = (Vue, vm) => {
 	const saveMainBusiness = (params = {}) => vm.$u.post('/system/comparymain/mainbusiness', params);
 	//获取问题列表
 	const getQuestion = (params = {}) => vm.$u.get('/system/carmobancollect/CarMobanAlltext', params);
-	//保存问题
-	const saveAnswer = (params = {}) => vm.$u.post('/system/carmobancollect/CarMobanInsert', params);
 	//获取已有车辆
 	const getMyCar = (params = {}) => vm.$u.get('/system/comparymain/OneClickCachealreadHaveCar', params);
 	//保存购车需求
@@ -269,7 +267,6 @@ const install = (Vue, vm) => {
 		saveShoping,
 		getMyCar,
 		getQuestion,
-		saveAnswer,
 		saveMainBusiness,
 		getSystemTag,
 		getCarSystem,

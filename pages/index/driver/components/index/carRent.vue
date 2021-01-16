@@ -8,7 +8,7 @@
 			<view style="width: 100%;height: 100rpx;padding-left: 34rpx;">
 				<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
 					<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
-					background: #F8F9FB;border-radius: 4px;width: 124rpx;display: flex;" label="">
+					background: #F8F9FB;border-radius: 4px;width: 124rpx;display: flex;"" label="">
 					<view style="float: left;">杭州</view>
 					<u-image style="float: left;margin-top: -50rpx;margin-left: 14rpx;" width="18rpx" height="22rpx" src="@/static/city.png"></u-image>
 					</u-form-item>
@@ -56,12 +56,14 @@
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.id)">
 		    			<view class="right">
-		    				<view class="name u-line-2">
-		    				  <text v-show="item.businesstypetag == 1">[网约车]</text>
-		    				  <text v-show="item.businesstypetag == 2">[出租车]</text>
-		    				{{item.texttitle}}</view>
-		    				<view class="year">车龄≤{{item.carAge}}年/{{item.km}}万公里
-		    				</view>
+							<view style="height: 116rpx;">
+								<view class="name u-line-2">
+								  <text v-show="item.businesstypetag == 1">[网约车]</text>
+								  <text v-show="item.businesstypetag == 2">[出租车]</text>
+								{{item.texttitle}}</view>
+								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge&&item.km?'/':''}}{{item.km}}{{item.km?'万公里':''}}
+								</view>
+							</view>
 							<view class="price"><text>{{item.rentprice}}元</text></view>
 							<view class="numRenting">在租200辆</view>
 		    			</view>
@@ -747,6 +749,7 @@
 					float: left;
 					.price{
 						float: left;
+						margin-top: 40rpx;
 					}
 					.price text{
 						font-size: 36rpx;
@@ -764,6 +767,7 @@
 						color: #FF9B0D;
 						float: left;
 						margin-left: 34rpx;
+						margin-top: 40rpx;
 					}
 				}
 				.flex{
@@ -784,9 +788,8 @@
 					}
 				}
 				.name {
-					height: 88rpx;
 					font-weight: 900;
-					font-size: 34rpx;
+					font-size: 30rpx;
 					margin-top: 14rpx;
 				}
 				.year {

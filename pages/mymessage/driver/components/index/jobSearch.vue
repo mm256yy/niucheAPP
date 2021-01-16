@@ -1,6 +1,6 @@
 <template>
 	<view class="jobSearch">
-		<view class="middle-content">
+		<view>
 			<u-mask z-index="2" :show="showMask" @click="hideMask">
 			</u-mask>
 			<list-tags v-show="show" :list="select" :active="current" @onClick="getData"></list-tags>
@@ -30,7 +30,7 @@
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
 		<load-refresh
-		  style="margin-top: 100rpx;"
+		  style="margin-top: 118rpx;"
 		  v-show="list.length"
 		  :pageNo='pageNum'
 		  :totalPageNo='total'
@@ -55,9 +55,11 @@
 		    				<view class="right">
 		    					<!-- <view class="tag">付费标签</view> -->
 		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
-		    					<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
-								<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
-								<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
+								<view style="height: 116rpx;">
+									<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
+									<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
+									<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
+								</view>
 								<view class="price"><text>{{item.pay}}元</text></view>
 		    				</view>
 		    				<view class="clear"></view>
@@ -576,16 +578,14 @@
 				.left {
 					float: left;
 					margin-left: 19rpx;
-					margin-top: 20rpx;
 				}
 				.right{
 					width: 360rpx;
-					height: 226rpx;
 					background: #fff;
 					float: left;
 					padding-left: 30rpx;
 					.price{
-						margin-top: 28rpx;
+						margin-top: 34rpx;
 					}
 					.price text{
 						font-size: 36rpx;
@@ -611,10 +611,8 @@
 						}
 					}
 				.name {
-					height: 66rpx;
 					font-size: 34rpx;
 					color: #333;
-					margin-top: 20rpx;
 				}
 				.car {
 					float: left;
