@@ -38,7 +38,7 @@
 		methods: {
 			dial(){
 				uni.makePhoneCall({
-				    phoneNumber: '0571-878115287' 
+				    phoneNumber: '0571-87815287' 
 				});
 			},
 			copyd(){

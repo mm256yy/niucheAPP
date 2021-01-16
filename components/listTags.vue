@@ -35,7 +35,6 @@
 
 <style lang="scss" scoped>
 	.common_text {
-		min-width: 120rpx;
 		padding: 0 16rpx;
 		display: inline-block;
 		text-align: center;
@@ -52,6 +51,7 @@
 		background: #FFFFFF;
 	}
 .company-content{
+	width: 100%;
 	padding: 0 0 0 32rpx;
 	position: fixed;
 	top: 100rpx;
@@ -66,6 +66,7 @@
 	}
 }	
 .driver-content{
+	width: 100%;
 	padding: 0 0 0 32rpx;
 	position: fixed;
 	top: 100rpx;

@@ -351,6 +351,7 @@
 		font-size: 32rpx;
 		margin-right: 28rpx;
 		color: #fff;
+		position: fixed;
 	}
 	.publish{
 		width: 148rpx;
