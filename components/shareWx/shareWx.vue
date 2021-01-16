@@ -78,8 +78,7 @@
 				} else {//面对面
 					
 				}
-				console.log(shareObj)
-				// uni.share(shareObj);
+				uni.share(shareObj);
 			},
 			shareShow(){
 				this.showShare = !this.showShare
