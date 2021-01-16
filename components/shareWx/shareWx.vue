@@ -14,6 +14,36 @@
 
 <script>
 	export default {
+		props: {
+		  href: {//分享的链接
+		    type: String,
+		    required: true,
+			default: () => {
+				return '';
+			}
+		  },
+		  title:{//分享的标题
+			  type:String,
+			  required: true,
+			  default: () => {
+			  	return '';
+			  }
+		  },
+		  summary:{//分享的摘要
+			  type:String,
+			  required: true,
+			  default: () => {
+			  	return '';
+			  }
+		  },
+		  imageUrl:{//图片地址
+			  type:String,
+			  required: true,
+			  default: () => {
+			  	return '';
+			  }
+		  }
+		},
 		data() {
 			return {
 				 shareObject:[{
@@ -23,38 +53,8 @@
 				 },{
 					 method:'qq',icon:'http://image.neocab.cn/icon_qq.png',text:'QQ'
 				 }],
-				showShare:true
+				showShare:false
 			}
-		},
-		props: {
-		  href: {
-		    type: String,
-		    required: true,
-			default: () => {
-				return '';
-			}
-		  },
-		  title:{
-			  type:String,
-			  required: true,
-			  default: () => {
-			  	return '';
-			  }
-		  },
-		  summary:{
-			  type:String,
-			  required: true,
-			  default: () => {
-			  	return '';
-			  }
-		  },
-		  imageUrl:{
-			  type:String,
-			  required: true,
-			  default: () => {
-			  	return '';
-			  }
-		  }
 		},
 		methods: {
 			shared(scene){
