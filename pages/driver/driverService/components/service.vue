@@ -179,7 +179,7 @@
 		font-size: 32rpx;
 		color: #111111;
 		padding: 0 28rpx;
-
+		margin-top: 108rpx;
 		// 行业动态
 		.driverBox_1 {
 			height: 216rpx;

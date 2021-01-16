@@ -198,41 +198,38 @@
 	}
 
 	/* 切换栏样式 */
-	.serviceList_box {
+	.serviceList {
 		width: 100%;
+		position: fixed;
+		left: 0;
+		top: 0;
 		height: 108rpx;
-		.serviceList {
-			position: fixed;
-			left: 0;
-			top: 0;
-			height: 108rpx;
-			font-size: 32rpx;
-			background-color: #FFFFFF;
-			color: #999999;
-			border-bottom: 2rpx solid #DEDEDE;
-			margin-bottom: 20rpx;
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			z-index: 10;
-			.serviceList_1 {
-				position: relative;
-				font-weight: 700;
-				font-size: 36rpx;
-				color: #111111;
-		
-				.garden {
-					position: absolute;
-					left: 50%;
-					bottom: -14rpx;
-					width: 44rpx;
-					height: 44rpx;
-					border-radius: 22rpx;
-					transform: translate(-50%, 0);
-					background: linear-gradient(143deg, #FFFFFF 0%, #FF9500 100%);
-					opacity: 0.8;
-					z-index: -2;
-				}
+		font-size: 32rpx;
+		background-color: #FFFFFF;
+		color: #999999;
+		border-bottom: 2rpx solid #DEDEDE;
+		margin-bottom: 20rpx;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		z-index: 10;
+		.serviceList_1 {
+			position: relative;
+			font-weight: 700;
+			font-size: 36rpx;
+			color: #111111;
+
+			.garden {
+				position: absolute;
+				left: 50%;
+				bottom: -14rpx;
+				width: 44rpx;
+				height: 44rpx;
+				border-radius: 22rpx;
+				transform: translate(-50%, 0);
+				background: linear-gradient(143deg, #FFFFFF 0%, #FF9500 100%);
+				opacity: 0.8;
+				z-index: -2;
 			}
 		}
 	}
