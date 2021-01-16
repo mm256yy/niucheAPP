@@ -55,6 +55,8 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.id)">
+						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
 		    			<view class="right">
 							<view style="height: 116rpx;">
 								<view class="name u-line-2">
@@ -67,8 +69,6 @@
 							<view class="price"><text>{{item.rentprice}}元</text></view>
 							<view class="numRenting">在租200辆</view>
 		    			</view>
-						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
 		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 		    			<view class="clear"></view>
@@ -342,10 +342,13 @@
 				}
 				if(uni.getStorageSync('kmkey')){
 					kmkey = uni.getStorageSync('kmkey');
-					this.filterData.push(kmkey);
+					if(kmkey == '不限'){
+					}else{
+						this.filterData.push(kmkey);
+					}
 					this.objType[this.radioType].forEach(item=>{
 					   if(item.text == kmkey){
-						this.form.km = parseInt(item.id)
+						this.form.km = item.id == ''?'':parseInt(item.id)
 					   }
 					})
 				}
@@ -740,12 +743,12 @@
 				margin-bottom: 20rpx;
 				background: #fff;
 				.left {
-					float: right;
+					float: left;
 					margin-top: 20rpx;
 					margin-bottom: 6rpx;
 				}
 				.right{
-					width: 363rpx;
+					width: 388rpx;
 					height: 226rpx;
 					padding: 0 30rpx;
 					background: #fff;

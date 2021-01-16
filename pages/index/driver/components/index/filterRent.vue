@@ -244,7 +244,7 @@
 					this.objType[this.radioType].forEach(item=>{
 					   if(item.text == kmkey){
 						this.currentKm = item.id == ''?0:parseInt(item.id)+1
-						this.form.km = parseInt(item.id)
+						this.form.km = item.id == ''?'':parseInt(item.id)
 					   }
 					}) 
 				}

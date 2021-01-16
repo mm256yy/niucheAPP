@@ -105,7 +105,7 @@
 					color:'#000'
 				},
 				styleActive:{
-					color:'#40B26D'
+					color:'#FF9500'
 				},
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
@@ -181,6 +181,16 @@
 				pageNum: 1
 			}
 		},
+		filters:{
+				//取截单元,单位
+				moneyFormat:function(arg){
+					if(arg.toString().length>=4){
+						const moneys = arg/10000
+						const realVal = parseFloat(moneys).toFixed(2);
+						return realVal+"万"
+					}
+					}
+				},
 		mounted() {
 			const token = uni.getStorageSync('token');
 			if(token) {
@@ -236,6 +246,7 @@
 			},
 			getDataType(index) {
 				this.currentType = index;
+				this.businesstypekey = this.selectType[index].label;
 				this.businessType = this.selectType[index].value;
 				this.showType = false;
 				this.showMask = false;
@@ -389,7 +400,7 @@
 							    if (item.intentionBrand){
 							       item.intentionBrand = item.intentionBrand.split(',').join('/')
 							    }
-							 								
+							
 							 })
 		    			}else {
 		    				 this.$u.toast(res.msg);

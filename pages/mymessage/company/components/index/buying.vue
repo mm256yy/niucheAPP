@@ -5,7 +5,6 @@
 			</u-mask>
 			<list-tags v-show="showKm" :list="selectKm" :active="current" @onClick="getDataKm"></list-tags>
 			<list-tags v-show="showPrice" :list="selectPrice" :active="current" @onClick="getDataPrice"></list-tags>
-			<list-tags v-show="showAge" :list="selectAge" :active="current" @onClick="getDataAge"></list-tags>
 			<view class="middle-content active">
 				<view style="width: 100%;height: 100rpx;">
 					<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
@@ -121,7 +120,6 @@
 			return {
 				showKm:false,
 				showPrice:false,
-				showAge:false,
 				iconType: 'flower',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
@@ -311,22 +309,16 @@
 				this.showAge = false;
 			},
 			toggleKm(){
+				this.show = !this.showKm;
 				this.showKm = !this.showKm;
 				this.showPrice = false;
 				this.showAge = false;
-				this.show = true;
 			},
 			togglePrice(){
+				this.show = !this.showPrice;
 				this.showPrice = !this.showPrice;
 				this.showKm = false;
 				this.showAge = false;
-				this.show = true;
-			},
-			toggleAge(){
-				this.showAge = !this.showAge;
-				this.showPrice = false;
-				this.showKm = false;
-				this.show = true;
 			},
 			getDataKm(index) {
 				this.current = index;
