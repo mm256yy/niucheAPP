@@ -66,19 +66,20 @@
 					    imageUrl: this.imageUrl,
 						};
 				if (scene === 'qq') { //qq
-					shareObj =Object.assign({
+					shareObj =Object.assign(shareObj,{
 					    provider: 'qq',
 					    type: 1,
 					}) 
 				} else if (scene === 'WXSenceTimeline' || scene === 'WXSceneSession'){//wechat
-				    shareObj = Object.assign({
+				    shareObj = Object.assign(shareObj,{
 					    provider: 'weixin',
 					    type: 0,
 					})
 				} else {//面对面
 					
 				}
-				uni.share(shareObj);
+				console.log(shareObj)
+				// uni.share(shareObj);
 			},
 			shareShow(){
 				this.showShare = !this.showShare
