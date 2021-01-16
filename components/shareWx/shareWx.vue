@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="share_poper">
 		<u-popup v-model="showShare" mode="bottom">
 			<u-row justify="around" style="padding: 30rpx 0;">
 				<u-col span="4" style="text-align: center;" @click="shared(item.method)" v-for="(item,index) in shareObject" :key="index">
@@ -7,7 +7,7 @@
 					<view>{{item.text}}</view>
 				</u-col>
 			</u-row>
-			<!-- <view style="text-align: center;padding: 10rpx 0;">取消</view> -->
+			<view class="poper_bottom" @click="showShare = false">取消</view>
 		</u-popup>
 	</view>
 </template>
@@ -17,11 +17,11 @@
 		data() {
 			return {
 				 shareObject:[{
-					 method:'WXSceneSession',icon:'@/static/weixin.png',text:'微信好友'
+					 method:'WXSceneSession',icon:'http://image.neocab.cn/icon_weixin.png',text:'微信好友'
 				 },{
-					 method:'WXSenceTimeline',icon:'@/static/pengyouquan.png',text:'微信朋友圈'
+					 method:'WXSenceTimeline',icon:'http://image.neocab.cn/icon_pengyouquan.png',text:'微信朋友圈'
 				 },{
-					 method:'qq',icon:'@/static/fuzhi.png',text:'QQ'
+					 method:'qq',icon:'http://image.neocab.cn/icon_qq.png',text:'QQ'
 				 }],
 				showShare:true
 			}
@@ -31,42 +31,57 @@
 		    type: String,
 		    required: true,
 			default: () => {
-				return [];
+				return '';
 			}
 		  },
 		  title:{
 			  type:String,
 			  required: true,
 			  default: () => {
-			  	return [];
+			  	return '';
 			  }
 		  },
 		  summary:{
 			  type:String,
 			  required: true,
 			  default: () => {
-			  	return [];
+			  	return '';
 			  }
 		  },
+		  imageUrl:{
+			  type:String,
+			  required: true,
+			  default: () => {
+			  	return '';
+			  }
+		  }
 		},
 		methods: {
 			shared(scene){
-				let href = this.href;
-				uni.share({
-				    provider: "weixin",
-				    scene: scene,
-				    type: 0,
-				    href: href,
-				    title: this.title,
-				    // summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-				    imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
-				    success: function (res) {
-				        console.log("success:" + JSON.stringify(res));
-				    },
-				    fail: function (err) {
-				        console.log("fail:" + JSON.stringify(err));
-				    }
-				});
+				let shareObj = {
+					    scene: scene,
+					    href: this.href,
+					    title: this.title,
+					    summary: this.summary,
+					    imageUrl: this.imageUrl,
+						};
+				if (scene === 'qq') { //qq
+					shareObj =Object.assign({
+					    provider: 'qq',
+					    type: 1,
+					}) 
+				} else if (scene === 'WXSenceTimeline' || scene === 'WXSceneSession'){//wechat
+				    shareObj = Object.assign({
+					    provider: 'weixin',
+					    type: 0,
+					})
+				} else {//面对面
+					
+				}
+				uni.share(shareObj);
+			},
+			shareShow(){
+				this.showShare = !this.showShare
 			},
 			copyd(){
 				uni.setClipboardData({
@@ -80,6 +95,11 @@
 	}
 </script>
 
-<style>
-
+<style scoped class="less">
+ .poper_bottom{
+	 padding: 10px 0;
+	 border-top: 1px solid #C0C4CC;
+	 text-align: center;
+	 font-size: 14px;
+ }
 </style>

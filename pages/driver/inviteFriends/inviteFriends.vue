@@ -101,13 +101,18 @@
 				</view>
 			</view>
 		</u-popup>
+		<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
 	</view>
 </template>
 <script>
 	import {
 		shareUrl
 	} from '@/utils/constant.js'
+	import ShareWX from '@/components/shareWx/shareWx.vue'
 	export default {
+		components:{
+			ShareWX
+		},
 		data() {
 			return {
 				background: {
@@ -120,17 +125,28 @@
 					certAuthNum: 0,//资格证认证数量
 					driverAuthNum: 0,//驾照认证数量
 					inviteAccount: 0,//邀请账户金额
-				}
+				},
+				shareObj:{
+					href:'',
+					title:'赚租金上纽车APP',
+					summary:'注册认证就送100元，成为纽车推广人，赚租金，上不封顶！',
+					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
+				},
+				shareUrl:shareUrl
 			}
 		},
 		onLoad(option) {
 			let shareId = option.shareId;
 			if (shareId) {
 				this.shareId = shareId;
+				this.shareObj.href = this.shareUrl + shareId;
+				
 			} else {
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.initId()
+				} else{
+					this.shareObj.href = this.shareUrl;
 				}
 			}
 		},
@@ -150,21 +166,7 @@
 				}
 			},
 			inviteFriends() {
-				uni.share({
-					provider: "weixin",
-					scene: "WXSceneSession",
-					type: 0,
-					href: shareUrl + this.shareId,
-					title: "赚租金上纽车APP",
-					summary: "注册认证就送100元，成为纽车推广人，赚租金，上不封顶！",
-					imageUrl: "http://niuche-default.neocab.cn/256_256.png",
-					success: function(res) {
-						console.log("success:" + JSON.stringify(res));
-					},
-					fail: function(err) {
-						console.log("fail:" + JSON.stringify(err));
-					}
-				});
+				this.$refs.shareWx.shareShow()
 			},
 			getNumber() {
 				this.$u.api.statistics({
