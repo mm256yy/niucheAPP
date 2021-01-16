@@ -62,15 +62,17 @@
 					<view class="content_text"> {{item.text}} </view>
 					<view class="contentImg">
 						<view class="" v-for="(items, indexs) in item.imgs" :key="indexs">
-							<view class="content_img" @click="showImage(indexs,item.imgs)">
-								<image :src="items" style="width: 220rpx;height: 220rpx;"></image>
+							<view class="content_img" @click="showImage(item.imgs,indexs)">
+								<image v-if="item.imgs.length != 1" :src="items" style="width: 220rpx;height: 220rpx;"></image>
+								<image v-if="item.imgs.length == 1" :src="items" style="width: 464rpx; height: 344rpx;"></image>
 							</view>
+							
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<previewImage ref="previewImage" :imgs="imgs" :saveBtn="false" :rotateBtn="false"></previewImage>
+		<previewImage ref="previewImage" :imgs="img" :saveBtn="false" :rotateBtn="false"></previewImage>
 	</view>
 </template>
 <script>
@@ -116,11 +118,10 @@
 		data() {
 			return {
 				driverPub: {},
-				imags: '',
 				times: '',
 				creaTime: '',
-				imgs: [],
-				tupian: false
+				img: [],
+				leng: ''
 			}
 		},
 		onLoad() {
@@ -131,8 +132,8 @@
 				this.shareList.forEach((item) => {
 					item.imgs = item.photoUrls.split(',')
 					this.ureTime(item)
-					let leng = item.imgs.length
-					if (leng == 2 || leng == 5 ||leng == 8) {
+					item.leng = item.imgs.length
+					if (item.leng == 2 || item.leng == 5 ||item.leng	 == 8) {
 						item.imgs.push('')
 					}
 				})
@@ -152,8 +153,15 @@
 			toInvite(id, text) {
 				this.$emit("neiClick", id, text)
 			},
-			showImage(index, arr) {
-				this.imgs = arr
+			showImage(arr, index) {
+				this.img = arr.slice() // 利用浅拷贝 互不影响
+				this.img.forEach((item, index) => {
+					if (item == '') {
+						this.img.splice(index, 1)
+					} else {
+						this.img
+					}
+				})
 				this.$refs.previewImage.open(index)
 			},
 			ureTime(item) {
@@ -284,8 +292,10 @@
 				font-size: 32rpx;
 				color: #5E5E5E;
 				margin: 4rpx 0 8rpx 0;
-				display: flex;
-				flex-wrap: wrap;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
 			}
 
 			.contentImg {
@@ -293,7 +303,7 @@
 				margin-bottom: 20rpx;
 				justify-content: space-between;
 				flex-wrap: wrap;
-				.content_img {
+				.content_img image {
 					border-radius: 8rpx;
 					overflow: hidden;
 				}

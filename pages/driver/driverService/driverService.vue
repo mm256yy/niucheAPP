@@ -8,7 +8,7 @@
 				<load-refresh ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000" color="#FF9500"
 				 heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total" @refresh="xiaLa"
 				 @loadMore="loadMore">
-					<view slot="content-list">
+					<view slot="content-list" class="serviceList_box">
 						<!-- 导航栏切换 -->
 						<view class="serviceList">
 							<view :class="index == 1 ? 'serviceList_1' : ''" @click="tapSwitch(1)">
@@ -71,7 +71,7 @@
 		methods: {
 			neiClick(id) {
 				this.$u.route('/pages/driver/driverService/serviceText', {
-					id: id,
+					ids: id,
 					index: this.index
 				})
 			},
@@ -198,34 +198,41 @@
 	}
 
 	/* 切换栏样式 */
-	.serviceList {
+	.serviceList_box {
+		width: 100%;
 		height: 108rpx;
-		font-size: 32rpx;
-		font-family: Apple LiSung Light;
-		color: #999999;
-		border-bottom: 2rpx solid #DEDEDE;
-		margin-bottom: 20rpx;
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-
-		.serviceList_1 {
-			position: relative;
-			font-weight: 700;
-			font-size: 36rpx;
-			color: #111111;
-
-			.garden {
-				position: absolute;
-				left: 50%;
-				bottom: -14rpx;
-				width: 44rpx;
-				height: 44rpx;
-				border-radius: 22rpx;
-				transform: translate(-50%, 0);
-				background: linear-gradient(143deg, #FFFFFF 0%, #FF9500 100%);
-				opacity: 0.8;
-				z-index: -2;
+		.serviceList {
+			position: fixed;
+			left: 0;
+			top: 0;
+			height: 108rpx;
+			font-size: 32rpx;
+			background-color: #FFFFFF;
+			color: #999999;
+			border-bottom: 2rpx solid #DEDEDE;
+			margin-bottom: 20rpx;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			z-index: 10;
+			.serviceList_1 {
+				position: relative;
+				font-weight: 700;
+				font-size: 36rpx;
+				color: #111111;
+		
+				.garden {
+					position: absolute;
+					left: 50%;
+					bottom: -14rpx;
+					width: 44rpx;
+					height: 44rpx;
+					border-radius: 22rpx;
+					transform: translate(-50%, 0);
+					background: linear-gradient(143deg, #FFFFFF 0%, #FF9500 100%);
+					opacity: 0.8;
+					z-index: -2;
+				}
 			}
 		}
 	}
