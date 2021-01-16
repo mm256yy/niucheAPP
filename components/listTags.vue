@@ -35,8 +35,8 @@
 
 <style lang="scss" scoped>
 	.common_text {
-		width: 206rpx;
-		height: 76rpx;
+		min-width: 120rpx;
+		padding: 0 16rpx;
 		display: inline-block;
 		text-align: center;
 		line-height: 76rpx;

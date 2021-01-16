@@ -48,8 +48,8 @@
 
 <style lang="scss" scoped>
 	.common_text {
-		width: 156rpx;
-		height: 72rpx;
+		min-width: 120rpx;
+		padding: 0 16rpx;
 		display: inline-block;
 		text-align: center;
 		line-height: 68rpx;

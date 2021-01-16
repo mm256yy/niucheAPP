@@ -11,11 +11,7 @@
 		  	<view class="">
 		  		<view style="padding: 30rpx 40rpx;background: #fff;border-radius: 36rpx 36rpx 0px 0px;width: 100%;">
 		  			<!-- <view class="tag">付费标签</view> -->
-		  			<view class="name">{{detail.texttitle}}<view class="collect" v-if="token">
-		  				<u-icon v-show="detail.iscollect === 1" @click="cancel(detail,detail.comparymainid)" class="heart" name="heart-fill" color="#40B36C" size="40"></u-icon>
-		  				<u-icon v-show="detail.iscollect === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
-		  				<!-- <text>{{detail.collectnum}}</text> -->
-		  			</view></view>
+		  			<view class="name">{{detail.texttitle}}</view>
 		  			<view class="clear"></view>
 		  			<view v-for="(item, index) in detail.carRentPriceCollection" :key="item.id" class="" v-show="firstCurrent === index">
 		  				<view class="price"><text>￥{{item.carrentprice}}</text>/月起租</view>
@@ -95,6 +91,11 @@
 		 		<u-image width="42rpx" height="42rpx" src="@/static/shop.png"></u-image>
 		 		<view style="margin-top: 8rpx;">店铺</view>
 		 	</view>
+			<view v-if="token" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+				<u-image v-show="detail.iscollect === 2" @click="favorites(detail,detail.comparymainid)" width="42rpx" height="42rpx" src="@/static/favorite.png"></u-image>
+				<u-image v-show="detail.iscollect === 1" @click="cancel(detail,detail.comparymainid)" width="42rpx" height="42rpx" src="@/static/favoritedDri.png"></u-image>
+				<view style="margin-top: 8rpx;">收藏</view>
+			</view>
 		 	<view style="width: 412rpx;height: 100rpx;background: linear-gradient(270deg, #FFC500 0%, #FFAD00 50%, #FF9700 100%);border-radius: 16rpx;line-height: 100rpx;font-size: 36rpx;color: #fff;text-align: center;" @click="dial()">拨打电话</view>
 		 </view>
 		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>

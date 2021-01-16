@@ -310,7 +310,10 @@
 				}
 				if(uni.getStorageSync('caragekey')){
 					caragekey = uni.getStorageSync('caragekey');
-					this.filterData.push(caragekey);
+					if(caragekey == '不限'){
+					}else{
+						this.filterData.push(caragekey);
+					}
 					this.publishObj.ageList.map(item=>{
 					   if(item.text == caragekey){
 						const carage = parseInt(item.id);
