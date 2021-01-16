@@ -16,7 +16,6 @@
 </template>
 
 <script>
-	import {shareUrl} from '@/utils/constant.js'
 	import ShareWX from '@/components/shareWx/shareWx.vue'
 	import {shareArticleUrl} from "@/utils/constant.js"
 	export default {
@@ -38,7 +37,7 @@
 					summary:'注册认证就送100元，成为纽车推广人，赚租金，上不封顶！',
 					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
 				},
-				shareUrl:shareUrl,
+				shareArticleUrl:shareArticleUrl,
 				value: false
 			}
 		},
@@ -47,7 +46,8 @@
 			let shareId = option.ids;
 			if (shareId) {
 				this.id = shareId;
-				this.shareObj.href = this.shareUrl + shareId;
+				this.shareObj.href = this.shareArticleUrl + shareId;
+				
 			}
 		},
 		onShow() {
@@ -56,24 +56,9 @@
 		methods: {
 			share(url) { // 分享的
 				console.log('分享了')
-				 this.$refs.shareWx.shareShow()
-				 this.shareObj.title = this.title
-				 this.shareObj.imageUrl = url
-			},
-			// inviteFriends() {
-			// 	this.$refs.shareWx.shareShow()
-			// },
-			initId() {
-				this.$u.api.listUserMessage().then(res => {
-					if (res.code === 200) {
-						let data = res.object;
-						if (data.shareId) {
-							this.shareId = data.shareId;
-						}
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
+				this.shareObj.title = this.title
+				this.shareObj.imageUrl = url
+				this.$refs.shareWx.shareShow()
 			},
 			driverContent() {
 				if (this.index == 1) {
