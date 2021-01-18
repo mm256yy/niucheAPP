@@ -80,7 +80,7 @@
 				 style="height: 180px;">
 					<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 						<view style="display: flex;justify-content: space-around;padding: 0 10px;">
-							<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info)" style="" class="swiper_xcfl">
+							<view v-for="(info,i) in welfareList[index]" :key="info.comparymainid" @click="toView(info)" style="" class="swiper_xcfl">
 								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
 								<view class="swiper_price">¥{{info.packPrice}}/月</view>
 								<view class="bg_fff" style="padding:12px 4px 6px;">
@@ -103,17 +103,17 @@
 					</view>
 				</view>
 				<view class="driverTexts">
-					<view class="" @click="taPage(1)">
+					<view class="" @click="taPage(0)">
 						<image style="width: 107px; height: 106px;" src="../../static/siji_1.png"></image>
 					</view>
-					<view class="" @click="taPage(2)">
+					<view class="" @click="taPage(1)">
 						<image style="width: 107px; height: 106px;" src="../../static/siji_2.png"></image>
 					</view>
 					<view class="driverTexts_1">
-						<view class="" @click="taPage(3)">
+						<view class="" @click="taPage(2)">
 							<image style="width: 107px; height: 48px;" src="../../static/siji_3.png"></image>
 						</view>
-						<view class="" @click="taPage(4)">
+						<view class="" @click="taPage(3)">
 							<image style="width: 107px; height: 48px;" src="../../static/siji_4.png"></image>
 						</view>
 					</view>

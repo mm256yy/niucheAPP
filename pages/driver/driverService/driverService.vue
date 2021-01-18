@@ -1,37 +1,28 @@
 <template>
 	<!-- 司机服务页面 -->
 	<view class="">
-		<u-navbar back-icon-color="#333333" title="司机服务" title-size="36" :background="background" title-color="#333333"></u-navbar>
+		<view class="navbar">
+			<u-navbar back-icon-color="#333333" title="司机服务" title-size="36" :background="background" title-color="#333333"></u-navbar>
+			<!-- 导航栏切换 -->
+			<view class="serviceList">
+				<view v-for="(item,index) in valueList" :key="index">
+					<view class="" :class="indexs == index ? 'serviceList_1' : ''" @click="tapSwitch(index)">
+						<text> {{item}} </text>
+						<view class="garden" v-if="indexs == index"></view>
+					</view>
+				</view>
+			</view>
+		</view>
+
 		<!-- 下拉刷新的 -->
-		<view class="">
-			<scroll-view scroll-y style="height: 100%;width: 100%;">
+		<view style="margin-top: 108rpx;">
+			<scroll-view scroll-y="true" :scroll-top="scrollTop" @scroll="scroll">
 				<load-refresh ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000" color="#FF9500"
 				 heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total" @refresh="xiaLa"
 				 @loadMore="loadMore">
-					<view slot="content-list" class="serviceList_box">
-						<!-- 导航栏切换 -->
-						<view class="serviceList">
-							<view :class="index == 1 ? 'serviceList_1' : ''" @click="tapSwitch(1)">
-								<text>行业动态</text>
-								<view class="garden" v-if="index == 1"></view>
-							</view>
-							<view :class="index == 2 ?' serviceList_1' : ''" @click="tapSwitch(2)">
-								<text>活动大全</text>
-								<view class="garden" v-if="index == 2"></view>
-							</view>
-							<view :class="index == 3 ? 'serviceList_1' : ''" @click="tapSwitch(3)">
-								<text>接单分享</text>
-								<view class="garden" v-if="index == 3"></view>
-							</view>
-							<view :class="index == 4 ? 'serviceList_1' : ''" @click="tapSwitch(4)">
-								<text>大神分享</text>
-								<view class="garden" v-if="index == 4"></view>
-							</view>
-						</view>
-						<view>
-							<service :index="index" :driveList="driList" :activList="activList" :orderList="orderList" :shareList="shareList"
-							 @neiClick="neiClick"></service>
-						</view>
+					<view slot="content-list">
+						<service :index="indexs" :driveList="driList" :activList="activList" :orderList="orderList" :shareList="shareList"
+						 @neiClick="neiClick"></service>
 					</view>
 				</load-refresh>
 			</scroll-view>
@@ -52,27 +43,37 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				index: '',
-				driList: [], // 行业动态数据
+				valueList: ['行业动态', '活动大全', '接单分享', '大神分享'],
+				indexs: 0,
+				driList: [1], // 行业动态数据
 				shareList: [], // 大神接口数据
 				orderList: [], // 接单接口数据
 				activList: [], // 活接口数据
 				backgroundCover: '#FFFFFF',
 				pageNum: 1,
 				total: 0,
-				interface: '' ,// 接口的
-				obj:[{api:'driverDynamic',list:''}]
+				obj: [{
+					api: 'driverDynamic',
+					list: ''
+				}],
+				arrList: [],
+				scrollTop: 0,
+				oldScrollTop: 0
 			}
 		},
 		onLoad(option) {
-			this.index = parseInt(option.index);
+			this.indexs = parseInt(option.index);
 			this.getList(1);
 		},
 		methods: {
+			scroll(e) {
+				//记录scroll  位置
+				this.oldScrollTop = e.detail.scrollTop
+			},
 			neiClick(id) {
 				this.$u.route('/pages/driver/driverService/serviceText', {
 					ids: id,
-					index: this.index
+					index: this.indexs
 				})
 			},
 			// 上拉刷新
@@ -90,93 +91,61 @@
 				}, 700);
 			},
 			tapSwitch(e) {
-				this.index = e
+				this.indexs = e
+				this.scrollTop = this.oldScrollTop
+				this.$nextTick(() => {
+					this.scrollTop = 0
+				});
 				this.getList(1)
+
+			},
+			interface(pageNum, res) {
+				if (res.code === 200) { // 成功的动态码
+					this.total = Math.ceil(res.total / 10); // 数据的总页数
+					let arr = res.rows // 声明 arr 接收接口数据
+					if (pageNum === 1) {
+						this.arrList = res.rows
+					} else {
+						arr.forEach(item => { // 循环遍历 声明的 arr
+							this.arrList.push(item)
+						})
+						this.$refs.loadRefresh.loadOver() // 加载结束
+						this.pageNum = pageNum // 重新赋值页数
+					}
+					return this.arrList
+				} else {
+					this.$u.toast(res.msg);
+				}
 			},
 			getList(pageNum) {
-				if (this.index == 1) { // 行业动态接口
+				if (this.indexs == 0) { // 行业动态接口
 					this.$u.api.driverDynamic({ // driverActivitie 是 httpapi.js 的声明的样式
 						pageNum: pageNum,
 						pageSize: 10
 					}).then(res => {
-						if (res.code === 200) { // 成功的动态码
-							this.total = Math.ceil(res.total / 10); // 数据的总页数
-							let arr = res.rows // 声明 arr 接收接口数据
-							if (pageNum === 1) {
-								this.driList = res.rows
-							} else {
-								arr.forEach(item => { // 循环遍历 声明的 arr
-									this.driList.push(item)
-								})
-								this.$refs.loadRefresh.loadOver() // 加载结束
-								this.pageNum = pageNum // 重新赋值页数
-							}
-						} else {
-							this.$u.toast(res.msg);
-						}
+						console.log(pageNum)
+						this.driList = this.interface(pageNum, res)
 					})
-				} else if (this.index == 2) { // 活动大全接口
+				} else if (this.indexs == 1) { // 活动大全接口
 					this.$u.api.driverActivities({ // driverActivitie 是 httpapi.js 的声明的样式
 						pageNum: pageNum,
 						pageSize: 10
 					}).then(res => { // 成功调用的
-						if (res.code === 200) {
-							this.total = Math.ceil(res.total / 10); // 数据的总页数
-							let arr = res.rows
-							if (pageNum === 1) {
-								this.activList = res.rows
-							} else {
-								arr.forEach(item => { // 循环遍历 声明的 arr
-									this.activList.push(item)
-								})
-								this.$refs.loadRefresh.loadOver() // 加载结束
-								this.pageNum = pageNum // 重新赋值页数
-							}
-						} else {
-							this.$u.toast(res.msg);
-						}
+						this.activList = this.interface(pageNum, res)
 					})
-				} else if (this.index == 3) { // 接单分享接口
+				} else if (this.indexs == 2) { // 接单分享接口
 					this.$u.api.driverOrder({
 						pageNum: pageNum,
 						pageSize: 10
 					}).then(res => {
-						if (res.code === 200) {
-							this.total = Math.ceil(res.total / 10);
-							let arr = res.rows
-							if (pageNum === 1) {
-								this.orderList = res.rows
-							} else {
-								arr.forEach(item => {
-									this.orderList.push(item)
-								})
-								this.$refs.loadRefresh.loadOver()
-								this.pageNum = pageNum
-							}
-						} else {
-							this.$u.toast(res.msg);
-						}
+						this.orderList = this.interface(pageNum, res)
 					})
-				} else if (this.index == 4) { // 大神分享接口
+				} else if (this.indexs == 3) { // 大神分享接口
 					this.$u.api.driverShare({
 						pageNum: pageNum,
 						pageSize: 10
 					}).then(res => {
-						if (res.code === 200) {
-							this.total = Math.ceil(res.total / 10);
-							let arr = res.rows
-							if (pageNum === 1) {
-								this.shareList = res.rows
-							} else {
-								arr.forEach(item => {
-									this.shareList.push(item)
-								})
-								this.$refs.loadRefresh.loadOver()
-								this.pageNum = pageNum
-							}
-						} else {
-							this.$u.toast(res.msg);
-						}
+						this.shareList = this.interface(pageNum, res)
 					})
 				}
 			},
@@ -185,54 +154,40 @@
 </script>
 
 <style lang="scss" scoped>
-	.navbar-right {
-		margin-right: 24rpx;
-		display: flex;
-	}
-
-	.right-item {
-		margin: 0 12rpx;
-		position: relative;
-		// color: #ffffff;
-		display: flex;
-	}
-
 	/* 切换栏样式 */
-	.serviceList_box {
+	.serviceList {
 		width: 100%;
+		position: fixed;
+		left: 0;
+		top: 160rpx;
 		height: 108rpx;
-		.serviceList {
-			position: fixed;
-			left: 0;
-			top: 0;
-			height: 108rpx;
-			font-size: 32rpx;
-			background-color: #FFFFFF;
-			color: #999999;
-			border-bottom: 2rpx solid #DEDEDE;
-			margin-bottom: 20rpx;
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			z-index: 10;
-			.serviceList_1 {
-				position: relative;
-				font-weight: 700;
-				font-size: 36rpx;
-				color: #111111;
-		
-				.garden {
-					position: absolute;
-					left: 50%;
-					bottom: -14rpx;
-					width: 44rpx;
-					height: 44rpx;
-					border-radius: 22rpx;
-					transform: translate(-50%, 0);
-					background: linear-gradient(143deg, #FFFFFF 0%, #FF9500 100%);
-					opacity: 0.8;
-					z-index: -2;
-				}
+		font-size: 32rpx;
+		background-color: #FFFFFF;
+		color: #999999;
+		border-bottom: 2rpx solid #DEDEDE;
+		margin-bottom: 20rpx;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		z-index: 11;
+
+		.serviceList_1 {
+			position: relative;
+			font-weight: 700;
+			font-size: 36rpx;
+			color: #111111;
+
+			.garden {
+				position: absolute;
+				left: 50%;
+				bottom: -14rpx;
+				width: 44rpx;
+				height: 44rpx;
+				border-radius: 22rpx;
+				transform: translate(-50%, 0);
+				background: linear-gradient(143deg, #FFFFFF 0%, #FF9500 100%);
+				opacity: 0.8;
+				z-index: -2;
 			}
 		}
 	}
