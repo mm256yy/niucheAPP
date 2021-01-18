@@ -9,7 +9,7 @@
 				</view>
 			</view>
 		</u-navbar>
-		<scroll-view scroll-y style="height: 1000px;width: 100%;" @scroll="scrollView" @@scrolltoupper="scrollToupper">
+		<scroll-view scroll-y style="height: 1000px;width: 100%;" @scroll="scrollView" @scrolltoupper="scrollToupper">
 			<view class="wrap">
 				<u-swiper :list="list" height="500" mode="round" @click="toSwiperPage"></u-swiper>
 				 <transition name="fade">

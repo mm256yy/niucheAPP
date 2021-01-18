@@ -146,7 +146,7 @@
 				List:[{text:'A1'},{text:'A2'},{text:'A3'},{text:'B1'},{text:'B2'},{text:'C1'},{text:'C2'}],
 				show: false,
 				showEnd:false,
-				showTips:true,
+				showTips:false,
 				type:true,
 				stateType:false,
 				reason:'',
