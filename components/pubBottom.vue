@@ -36,7 +36,7 @@
 
 		},
 		props:{
-			id: {
+			ids: {
 			  type: String,
 			},
 			isopen:{
@@ -57,7 +57,7 @@
 				});
 			},
 			delConfirm(){
-				this.$u.api.MyIssueDelete({BusinessState:this.type,id:this.id}).then(res=>{
+				this.$u.api.MyIssueDelete({BusinessState:this.type,id:this.ids}).then(res=>{
 					if(res.code === 200){
 						 this.showTips = true;
 					}else {
@@ -67,7 +67,7 @@
 			},
 			opened(){
 				let isopen = this.isopen == 0 ?1:0;
-				this.$u.api.MyIssueHighLowLimit({BusinessState:this.type,id:this.id,isopen:isopen}).then(res=>{
+				this.$u.api.MyIssueHighLowLimit({BusinessState:this.type,id:this.ids,isopen:isopen}).then(res=>{
 					if(res.code === 200){
 						 this.showTips = true;
 					}else {
@@ -79,16 +79,16 @@
 				let type = this.type;
 				if(type === 1){
 					 uni.setStorageSync('carPubType',type);
-					 this.$u.route('/pages/company/lease/lease',{editId:this.id})
+					 this.$u.route('/pages/company/lease/lease',{editId:this.ids})
 				}else if(type ===3){
 					  uni.setStorageSync('carPubType',type);
 					  this.$u.route('/pages/company/lease/lease',{editId:this.editId})
 				} else if(type ===4){
 					 uni.setStorageSync('carPubType',4);
-					  this.$u.route('/pages/company/demand/demand',{AskToShopId :this.id})
+					  this.$u.route('/pages/company/demand/demand',{AskToShopId :this.ids})
 				} else {
 					uni.setStorageSync('carPubType',2);
-					this.$u.route('/pages/company/recruit/recruit',{editId:this.id})
+					this.$u.route('/pages/company/recruit/recruit',{editId:this.ids})
 				}
 			}
 		}

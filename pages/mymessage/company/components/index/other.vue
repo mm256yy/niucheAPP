@@ -29,12 +29,12 @@
 			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
-			 			<selling :id="driverDemandId" v-if="isChildUpdate1" ref="selling"></selling>
+			 			<selling :ids="driverDemandId" v-if="isChildUpdate1" ref="selling"></selling>
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
-			 			<buy :id="driverDemandId" v-if="isChildUpdate2" ref="buy"></buy>
+			 			<buy :ids="driverDemandId" v-if="isChildUpdate2" ref="buy"></buy>
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>

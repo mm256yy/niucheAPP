@@ -105,9 +105,9 @@
 			</view>
 			<view style="width: 412rpx;height: 100rpx;background: linear-gradient(270deg, #63D093 0%, #58C786 50%, #3DAF6A 100%);border-radius: 16rpx;line-height: 100rpx;font-size: 36rpx;color: #fff;text-align: center;" @click="dial()">拨打电话</view>
 		</view>
-		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :editId="driverDemandId" :id="detail.comparymainid" :type="3"></PubBottom>
+		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :editId="driverDemandId" :ids="detail.comparymainid" :type="3"></PubBottom>
 		<phone-auth :phone="detail.phone" :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
-		<phone-auth :id="detail.comparyid" :title="detail.titletext" :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
+		<phone-auth :ids="detail.comparyid" :title="detail.titletext" :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
 	</view>
 </template>
 

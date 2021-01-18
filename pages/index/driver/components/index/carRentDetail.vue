@@ -99,7 +99,7 @@
 		 	<view style="width: 412rpx;height: 100rpx;background: linear-gradient(270deg, #FFC500 0%, #FFAD00 50%, #FF9700 100%);border-radius: 16rpx;line-height: 100rpx;font-size: 36rpx;color: #fff;text-align: center;" @click="dial()">拨打电话</view>
 		 </view>
 		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>
-		<phone-auth :id="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
+		<phone-auth :ids="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
 	</view>
 </template>
 

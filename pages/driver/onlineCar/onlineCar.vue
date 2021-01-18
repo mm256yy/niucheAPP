@@ -57,12 +57,6 @@
 					<u-icon class="iconAbs" v-show='type' name="calendar" color="#FFA032" size="40"></u-icon>
 					<view class="type-right" v-show='!type'>{{form.beginTime}}</view>
 				</u-form-item>
-				<u-form-item label="准驾车型" :label-position="type?'top':''" prop="vehicleAge">
-					<u-radio-group v-model="form.vehicleAge" :active-color="'#FFA032'" style="text-align: right;" v-if="type">
-						<u-radio :name="item.text" style="margin-left: 10pt;" v-for="(item,index) in List" :key="index">{{item.text}}</u-radio>
-					</u-radio-group>
-					<view class="type-right" v-else>{{form.vehicleAge}}</view>
-				</u-form-item>
 			</u-form>
 			<view style="padding-top: 30pt;color:#E10000;">
 				*以上项目都是必填项，未完成不能提交！ 
@@ -110,7 +104,6 @@
 					licenseNumber:requiredRule,
 					issueDate:requiredRule,
 					beginTime:requiredRule,
-					vehicleAge:requiredRule,
                 },
 				pickerName:'',
 				List:[{text:'A1'},{text:'A2'},{text:'A3'},{text:'B1'},{text:'B2'},{text:'C1'},{text:'C2'}],

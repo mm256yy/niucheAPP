@@ -22,7 +22,7 @@
 								<view style="height: 120rpx;display: flex;flex-direction: column;justify-content: center;">
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;">{{companyName}}</view>
 									<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
-									<view style="color: #fff;font-size: 30rpx;" ?class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
+									<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
 								</view>
 								<view style="height: 120rpx;display: flex;align-items: center;margin-left: auto;">
 									<u-image v-show="tokenFlag" width="32" height="48" src="@/static/right.png"></u-image>
