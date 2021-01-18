@@ -27,7 +27,7 @@
 		<setting-parameter :detail="detail"></setting-parameter>
 		<view style="padding: 40rpx;">公司地址：{{detail.comparyarea}}</view>
 		<view style="width: 100%;height:144rpx"></view>
-		<PubBottom v-show="show" :isopen="detail.isopen" :id="driverDemandId" :type="type"></PubBottom>
+		<PubBottom v-show="show" :isopen="detail.isopen" :ids="driverDemandId" :type="type"></PubBottom>
 	</view>
 </template>
 

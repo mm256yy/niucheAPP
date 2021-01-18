@@ -39,7 +39,7 @@
 		 				<u-form-item label="行驶里程:">{{detail.driveKm}}</u-form-item>
 		 			 </u-form>
 		 </view>
-		 <PubBottom :isopen="detail.isopen" :id="AskToShopId" :type="4"></PubBottom>
+		 <PubBottom :isopen="detail.isopen" :ids="AskToShopId" :type="4"></PubBottom>
 	</view>
 </template>
 

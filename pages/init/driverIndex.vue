@@ -153,7 +153,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<phone-auth :id="comparyid" :status="4" v-show="openShow" ref="other"></phone-auth>
+		<phone-auth :ids="comparyid" :status="4" v-show="openShow" ref="other"></phone-auth>
 	</view>
 </template>
 
