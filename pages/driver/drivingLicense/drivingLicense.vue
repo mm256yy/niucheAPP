@@ -85,8 +85,11 @@
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
 			<u-button type="warning" shape='circle' class="btn-orange"  @click="toNext">提交</u-button>
 		</view>
-		<u-modal v-model="showTips" :show-confirm-button="false" title="认证提示">
+		<u-popup v-model="showTips" mode="center" length="80%">
+			<view style="text-align: right;padding-right: 15px;margin-top: 15px;"><u-icon name="close" @click="showTips = false"></u-icon></view>
+			<view style="text-align: center;font-weight: bold;">认证提示</view>
 			<view class="slot_content">
+				
 				<view class="slot_tips">
 					非常好，您的驾驶证认证已提交审核，建议继续从业资格认证：
 					<view style="padding: 5px 0;">
@@ -96,18 +99,12 @@
 						</u-radio-group>
 					</view>
 				</view>
-
 				<view style="display: flex;justify-content: space-around;padding: 10px 0 0;">
-					<view @click="confirm" class="slot_btn" style="background: #F2F2F2;color: #5F5E5F;">暂不认证</view>
-					<view class="slot_btn" @click="toNextRoute" style="background: linear-gradient(270deg, #FFC200 0%, #FFB900 41%, #FF9A00 100%);color: #FFFFFF;">继续认证</view>
+					<view @click="confirm" class="slot_btn" style="background: #F2F2F2;color: #5F5E5F;">取消</view>
+					<view class="slot_btn" @click="toNextRoute" style="background: linear-gradient(270deg, #FFC200 0%, #FFB900 41%, #FF9A00 100%);color: #FFFFFF;">下一步</view>
 				</view>
 			</view>
-		</u-modal>
-<!-- 		<u-modal v-model="showTips" @confirm="confirm" confirm-text="我知道了">
-			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
-				您的信息已提交审核
-			</view>
-		</u-modal> -->
+		</u-popup>
 	</view>
 </template>
 
@@ -150,7 +147,7 @@
 				List:[{text:'A1'},{text:'A2'},{text:'A3'},{text:'B1'},{text:'B2'},{text:'C1'},{text:'C2'}],
 				show: false,
 				showEnd:false,
-				showTips:false,
+				showTips:true,
 				type:true,
 				stateType:false,
 				reason:'',
