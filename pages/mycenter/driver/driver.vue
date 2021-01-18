@@ -72,7 +72,7 @@
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">求职需求</view>
 					</view>
 					<view style="display: flex;">
-						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.carNum == 0?'未发布':'已发布'}}</view>
+						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">{{driverPub.jobNum == 0?'未发布':'已发布'}}</view>
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>

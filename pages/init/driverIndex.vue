@@ -12,16 +12,20 @@
 		<scroll-view scroll-y style="height: 1000px;width: 100%;" @scroll="scrollView" @@scrolltoupper="scrollToupper">
 			<view class="wrap">
 				<u-swiper :list="list" height="500" mode="round" @click="toSwiperPage"></u-swiper>
-				<view style="position: absolute;top: 40px;left: 2%;color: #fff;font-size: 10pt;" v-show="!navBarShow">
+				 <transition name="fade">
+					 <view v-show="!navBarShow">
+				<view style="position: absolute;top: 40px;left: 2%;color: #fff;font-size: 10pt;" >
 					杭州
 					<!-- <u-icon name="arrow-down-fill" color="#ffffff" size="26" style="margin-left: 4px;"></u-icon> -->
 				</view>
-				<view style="position: absolute;top: 40px;right: 2%;" @click="message" v-show="!navBarShow">
+				<view style="position: absolute;top: 40px;right: 2%;" @click="message">
 					<view style="position: relative;">
 						<u-icon name="bell" color="#ffffff" size="38"></u-icon>
 						<u-badge size="mini" type="error" :count="num" :offset="[-10,-14]"></u-badge>
 					</view>
 				</view>
+				 </view>
+				</transition>
 			</view>
 			<view class="bg_btn">
 				<view style="width: 164px;" @click="toPage(1)">
@@ -564,6 +568,12 @@
 </script>
 
 <style lang="scss" scoped>
+	.fade-enter-active, .fade-leave-active {
+	  transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+	  opacity: 0;
+	}
 	.navbar-left {
 		margin-left: 24rpx;
 	}
