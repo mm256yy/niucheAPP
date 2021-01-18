@@ -66,7 +66,7 @@
 								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge&&item.km?'/':''}}{{item.km}}{{item.km?'万公里':''}}
 								</view>
 							</view>
-							<view class="price"><text>{{item.rentprice|moneyFormat}}元</text></view>
+							<view class="price"><text>{{item.rentprice}}元</text></view>
 							<view class="numRenting">在租200辆</view>
 		    			</view>
 		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
@@ -211,16 +211,6 @@
 				radioType:'wycList'
 			}
 		},
-		filters:{
-				//取截单元,单位
-				moneyFormat:function(arg){
-					if(arg.toString().length>=4){
-						const moneys = arg/10000
-						const realVal = parseFloat(moneys).toFixed(3);
-						return realVal+"万"
-					}
-					}
-				},
 		mounted() {
 			const token = uni.getStorageSync('token');
 			if(token) {

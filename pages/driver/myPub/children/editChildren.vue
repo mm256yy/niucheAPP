@@ -8,7 +8,7 @@
 		   			   border-bottom: 2rpx solid rgba(0,0,0,0.03);">
 		   			   	<view style="font-size: 32rpx;color: #333;">{{item.brandname}}</view>
 		   			   	<view style="width: 48rpx;height: 48rpx;border-radius: 50%;background: #4aba75;line-height: 48rpx;
-		   			   	text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandid,item.brandname)">十</view>
+		   			   	text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandname)">十</view>
 		   			   </view>
 		   </view>
 	   	  <u-form style="position: relative;" :error-type="errorType" :model="form" ref="uForm" label-width="320" :border-bottom="false">

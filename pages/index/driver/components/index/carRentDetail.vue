@@ -1,11 +1,17 @@
 <template>
 	<view class="detail">
+		<kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
 		<view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;font-weight: 900;line-height: 176rpx;text-align: center;">
 			<u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
 			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">租车详情</view>
 		</view>
 		<view class="wraps img">
-			<u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper>
+			<swiper style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
+			<swiper-item style="width: 100%;height: 582rpx;" v-for="(swiper, index) in detail.photourl" :key="index">
+			<image style="width: 100%;height: 582rpx;" :src="swiper" @click="preview(index)"></image>
+			</swiper-item>
+			</swiper>
+			<!-- <u-swiper @click="preview(index)" height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper> -->
 		</view>
 		 <view style="position: absolute;top: 556rpx;left: 0;margin-bottom: 140rpx;background: #f5f5f5;border-radius: 36rpx 36rpx 0px 0px;">
 		  	<view class="">
@@ -108,12 +114,14 @@
 	import rentcarIssue from './rentcarIssue'
 	import settingParameter from './settingParameter'
 	import phoneAuth from '@/components/phoneAuth.vue'
+	import kxjPreviewImage from '@/components/kxj-previewImage/kxj-previewImage.vue'
 	export default {
 		components: {
 		    rangePrice,
 			rentcarIssue,
 			settingParameter,
-			phoneAuth
+			phoneAuth,
+			kxjPreviewImage
 		  },
 		data() {
 			return {
@@ -157,6 +165,10 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			preview(e){
+				console.log(e)
+				this.$refs.previewImage.open(e)
+			},
 			setting(id) {
 				this.$u.route("/pages/mymessage/company/components/index/setting",{id:id})
 			},

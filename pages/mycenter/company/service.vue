@@ -14,7 +14,7 @@
 				font-size: 30rpx;color: #4aba75;margin-right: 36rpx;padding: 2rpx 16rpx;" @click="copyd()">复制加友</view>
 			</view>
 			<view style="display: flex;width: 680rpx;height: 140rpx;justify-content: space-between;align-items: center;">
-				<view style="margin-left: 36rpx;font-size: 30rpx;color: #333;">客服电话：0571-878115287</view>
+				<view style="margin-left: 36rpx;font-size: 30rpx;color: #333;">客服电话：0571-87815287</view>
 				<view @click="dial" style="border-radius: 12rpx;border: 1px solid #4ABA75;line-height: 62rpx;text-align: center;
 				font-size: 30rpx;color: #4aba75;margin-right: 36rpx;padding: 2rpx 16rpx;">拨打电话</view>
 			</view>

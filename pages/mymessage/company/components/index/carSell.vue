@@ -610,10 +610,12 @@
 				uni.removeStorageSync('cartype');
 				uni.removeStorageSync('power');
 				uni.removeStorageSync('businessType');
+				uni.removeStorageSync('carbrand');
 				this.filterData = [];
 				this.form.businessType = 0;
 				this.form.power = '';
 				this.form.cartype = '';
+				this.form.carbrand = '';
 				this.search()
 			}
 		}

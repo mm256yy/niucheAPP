@@ -11,8 +11,14 @@
 			 <u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
 			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">{{detail.carmodeltag}}</view>
 		 </view>
+		 <kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
 		 <view class="wraps img">
-		 	<u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper>
+			 <swiper style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
+			 <swiper-item style="width: 100%;height: 582rpx;" v-for="(swiper, index) in detail.photourl" :key="index">
+			 <image style="width: 100%;height: 582rpx;" :src="swiper" @click="preview(index)"></image>
+			 </swiper-item>
+			 </swiper>
+		 	<!-- <u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper> -->
 		 </view>
 		 <view style="position: absolute;top: 556rpx;left: 0;margin-bottom: 140rpx;background: #f5f5f5;border-radius: 36rpx 36rpx 0px 0px;">
 		 	<view class="">
@@ -50,7 +56,7 @@
 		 		<view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		 				<view style="float: left;">综合上牌时间</view>
-		 				<view v-show="detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}{{detail.firsttime&&detail.endtime?'至':''}}{{detail.registrationtimeend}}</view>
+		 				<view v-show="detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}{{detail.registrationtime&&detail.registrationtimeend?'至':''}}{{detail.registrationtimeend}}</view>
 						<view v-show="!detail.registrationtimeend" style="float: right;color: #353B3D;">{{detail.registrationtime}}</view>
 		 				<view class="clear"></view>
 		 			</view>
@@ -117,13 +123,15 @@
 	import carInstall from './carInstall'
 	import PubBottom from '@/components/pubBottom.vue'
 	import phoneAuth from '@/components/phoneAuth.vue'
+	import kxjPreviewImage from '@/components/kxj-previewImage/kxj-previewImage.vue'
 	export default {
 		components: {
 		    rangePrice,
 			rentcarIssue,
 			carInstall,
 			PubBottom,
-			phoneAuth
+			phoneAuth,
+			kxjPreviewImage
 		  },
 		data() {
 			return {
@@ -175,6 +183,10 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			preview(e){
+				console.log(e)
+				this.$refs.previewImage.open(e)
+			},
 			setting(id) {
 				this.$u.route("/pages/mymessage/company/components/index/setting",{id:id})
 			},

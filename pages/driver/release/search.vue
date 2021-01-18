@@ -12,6 +12,9 @@
 			  </u-form-item> -->
 			  <!-- <view class="public">*公开，则该条消息将被租车公司看到。</view>
 			  <view class="public">不公开，则隐藏该消息 租车公司不可见。</view> -->
+			  <u-form-item label="工作城市(必选)" label-position="top">
+			  	<search-tags :list="publishObj.cityList" :active="currentCity" :singleType="true"></search-tags>
+			  </u-form-item>
 	   	  	<u-form-item label="业务类型(必选)" prop="businessType" label-position="top">
 				<search-tags :list="publishObj.onLineList" :active="currentType" :singleType="true" @onClick="getDataType"></search-tags>
 				<!-- <u-radio-group v-model="form.businessType" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
@@ -20,9 +23,6 @@
 				</u-radio-group> -->
 				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
-			<u-form-item label="工作城市(必选)" label-position="top">
-				<search-tags :list="publishObj.cityList" :active="currentCity" :singleType="true"></search-tags>
-			</u-form-item>
 			<!-- <view class="rules">
 				<view>*以下设置项都可多选，至少完成其中1项才能发布</view>
 				<view>不选则代表此项“不限”</view>
@@ -189,6 +189,8 @@
 							           worktime:'',
 							           workCity: '杭州'
 						            };
+									this.currentSalary == -1;
+									this.currentHour == -1;
 								    this.benefitList.forEach(item => {
 									      item.checked=false;
 								    })

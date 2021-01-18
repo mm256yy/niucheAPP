@@ -319,13 +319,16 @@
 							        km:'',
 							        workCity: '杭州'
 						        };
+								this.currentAge == -1;
+								this.currentRent == -1;
+								this.currentKm == -1;
 								this.brandList.forEach(item => {
 								      item.checked=false;
 								})
-								this.modelList.forEach(item => {
+								this.publishObj.carType.forEach(item => {
 								      item.checked=false;
 								})
-								this.powerList.forEach(item => {
+								this.publishObj.power.forEach(item => {
 								      item.checked=false;
 								})
 							}else {
