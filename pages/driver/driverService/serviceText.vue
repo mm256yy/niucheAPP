@@ -16,8 +16,8 @@
 </template>
 
 <script>
-	import ShareWX from '@/components/shareWx/shareWx.vue'
-	import {shareArticleUrl} from "@/utils/constant.js"
+	import ShareWX from '@/components/shareWx/shareWx.vue' // 引入组件
+	import {shareArticleUrl} from "@/utils/constant.js" // 文章的 URL 地址
 	export default {
 		components:{
 			ShareWX
@@ -28,17 +28,17 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				id: '',
-				title:'2',
+				title:'',
 				content: {
 				},
 				shareObj:{
-					href:'',
-					title:'赚租金上纽车APP',
-					summary:'注册认证就送100元，成为纽车推广人，赚租金，上不封顶！',
+					href:'', // 地址
+					title:'赚租金上纽车APP', // 标题
+					summary:'注册认证就送100元，成为纽车推广人，赚租金，上不封顶！', // 分享部分内容
 					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
 				},
-				shareArticleUrl:shareArticleUrl,
-				value: false
+				shareArticleUrl:shareArticleUrl, // 存储地址
+				index: ''
 			}
 		},
 		onLoad(option) {
@@ -47,7 +47,6 @@
 			if (shareId) {
 				this.id = shareId;
 				this.shareObj.href = this.shareArticleUrl + shareId;
-				
 			}
 		},
 		onShow() {
@@ -60,50 +59,38 @@
 				this.shareObj.imageUrl = url
 				this.$refs.shareWx.shareShow()
 			},
+			interface(res) { // 接口数据
+				if (res.code === 200) {
+					this.content = res.object
+					this.title = res.object.title
+				} else {
+					this.$u.toast(res.msg);
+				}
+			},
 			driverContent() {
-				if (this.index == 1) {
+				if (this.index == 0) {
 					this.$u.api.contentDynamic({
 						uuid: this.id
 					}).then(res => {
-						if (res.code === 200) {
-							this.content = res.object
-							this.title = res.object.title;
-						} else {
-							this.$u.toast(res.msg);
-						}
+						this.interface(res)
 					})
-				} else if (this.index == 2) {
+				} else if (this.index == 1) {
 					this.$u.api.contentActivities({
 						uuid: this.id
 					}).then(res => {
-						if (res.code === 200) {
-							this.content = res.object
-							this.title = res.object.title;
-						} else {
-							this.$u.toast(res.msg);
-						}
+						this.interface(res)
 					})
-				} else if (this.index == 3) {
+				} else if (this.index == 2) {
 					this.$u.api.contentOrder({
 						uuid: this.id
 					}).then(res => {
-						if (res.code === 200) {
-							this.content = res.object
-							this.title = res.object.title;
-						} else {
-							this.$u.toast(res.msg);
-						}
+						this.interface(res)
 					})
-				} else if (this.index == 4) {
+				} else if (this.index == 3) {
 					this.$u.api.contentShare({
 						uuid: this.id
 					}).then(res => {
-						if (res.code === 200) {
-							this.content = res.object
-							this.title = res.object.title;
-						} else {
-							this.$u.toast(res.msg);
-						}
+						this.interface(res)
 					})
 				}
 			},

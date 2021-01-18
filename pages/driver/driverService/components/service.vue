@@ -2,8 +2,8 @@
 	<!-- 司机服务页面组件 -->
 	<view class="driverBox">
 		<!-- 行业动态 -->
-		<view class="" v-if="index == 1">
-			<view class="driverBox_1" v-for="(item, index) in driveList" :key="index" @click="toInvite(item.uuid, item.title)">
+		<view class="" v-if="index == 0">
+			<view class="driverBox_1" v-for="(item, index) in driveList" :key="index" @click="toInvite(item.uuid)">
 				<view class="img_1">
 					<image :src="item.titlePhoto" mode="" style="max-width: 100%;max-height: 100%;"></image>
 				</view>
@@ -19,8 +19,8 @@
 			</view>
 		</view>
 		<!-- 活动大全 -->
-		<view class="" v-if="index == 2">
-			<view class="driverBox_2" v-for="(item, index) in activList" :key="index" @click="toInvite(item.uuid, item.title)">
+		<view class="" v-if="index == 1">
+			<view class="driverBox_2" v-for="(item, index) in activList" :key="index" @click="toInvite(item.uuid)">
 				<view class="activity_text">{{item.title}}</view>
 				<view class="activity_img">
 					<u-image :src="item.titlePhoto" height="314rpx"></u-image>
@@ -31,8 +31,8 @@
 			</view>
 		</view>
 		<!-- 接单分享 -->
-		<view class="" v-if="index == 3">
-			<view class="driverBox_1" v-for="(item, index) in orderList" :key="index" @click="toInvite(item.uuid, item.title)">
+		<view class="" v-if="index == 2">
+			<view class="driverBox_1" v-for="(item, index) in orderList" :key="index" @click="toInvite(item.uuid)">
 				<view class="img_1">
 					<u-image :src="item.titlePhoto" height="160rpx"></u-image>
 				</view>
@@ -46,7 +46,7 @@
 			</view>
 		</view>
 		<!-- 大神分享 -->
-		<view class="" v-if="index == 4">
+		<view class="" v-if="index == 3">
 			<view class="driverBox_4" v-for="(item, index) in shareList" :key="index">
 				<view class="share-head">
 					<view class="driver_to">
@@ -121,7 +121,6 @@
 				times: '',
 				creaTime: '',
 				img: [],
-				leng: ''
 			}
 		},
 		onLoad() {
@@ -150,8 +149,8 @@
 			}
 		},
 		methods: {
-			toInvite(id, text) {
-				this.$emit("neiClick", id, text)
+			toInvite(id) {
+				this.$emit("neiClick", id)
 			},
 			showImage(arr, index) {
 				this.img = arr.slice() // 利用浅拷贝 互不影响
@@ -179,7 +178,7 @@
 		font-size: 32rpx;
 		color: #111111;
 		padding: 0 28rpx;
-		margin-top: 108rpx;
+		// margin-top: 100rpx;
 		// 行业动态
 		.driverBox_1 {
 			height: 216rpx;

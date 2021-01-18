@@ -103,17 +103,17 @@
 					</view>
 				</view>
 				<view class="driverTexts">
-					<view class="" @click="taPage(1)">
+					<view class="" @click="taPage(0)">
 						<image style="width: 107px; height: 106px;" src="../../static/siji_1.png"></image>
 					</view>
-					<view class="" @click="taPage(2)">
+					<view class="" @click="taPage(1)">
 						<image style="width: 107px; height: 106px;" src="../../static/siji_2.png"></image>
 					</view>
 					<view class="driverTexts_1">
-						<view class="" @click="taPage(3)">
+						<view class="" @click="taPage(2)">
 							<image style="width: 107px; height: 48px;" src="../../static/siji_3.png"></image>
 						</view>
-						<view class="" @click="taPage(4)">
+						<view class="" @click="taPage(3)">
 							<image style="width: 107px; height: 48px;" src="../../static/siji_4.png"></image>
 						</view>
 					</view>
