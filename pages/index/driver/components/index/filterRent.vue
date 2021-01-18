@@ -70,9 +70,9 @@
 	   </view>
 	   <view style="width: 100%;height: 140rpx;"></view>
 		<view class="bottom">
-			<view class="reset">
+			<view class="reset" @click="reset()">
 				<u-icon name="reload" color="#5D6671" size="28"></u-icon>
-				<view class="btn" @click="reset()">重置</view>
+				<view class="btn">重置</view>
 			</view>
 			<view class="total" @click="result()">查看{{total}}条车源></view>
 		</view>
@@ -335,8 +335,11 @@
 				this.add()
 			},
 			add() {
-				this.addkey = this.form.carbrand + (this.form.carbrand&&this.form.cartype?',':'') + this.form.cartype
-				+ (this.form.cartype&&this.form.power?',':'') + this.form.power + (this.form.power&&this.caragekey?',':'') + this.caragekey
+				const first = this.form.cartype||this.form.power||this.caragekey||this.kmkey;
+				const second = this.form.power||this.caragekey||this.kmkey;
+				const third = this.caragekey||this.kmkey;
+				this.addkey = this.form.carbrand + (this.form.carbrand&&first?',':'') + this.form.cartype
+				+ (this.form.cartype&&second?',':'') + this.form.power + (this.form.power&&third?',':'') + this.caragekey
 				+ (this.caragekey&&this.kmkey?',':'') + this.kmkey
 			},
 			reset() {

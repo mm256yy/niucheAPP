@@ -1,6 +1,6 @@
 <template>
 	<view class="buying">
-		<view class="middle-content">
+		<view>
 			<u-mask z-index="2" :show="show" @click="hideMask">
 			</u-mask>
 			<list-tags v-show="showKm" :list="selectKm" :active="current" @onClick="getDataKm"></list-tags>

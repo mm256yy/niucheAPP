@@ -14,11 +14,11 @@
 						<u-col span="8" v-if="!tokenFlag">
 							<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
 							  <view>登录注册</view>
-							  <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image>
+							  <!-- <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image> -->
 							</view>
 						</u-col>
 						<u-col span="8" v-else @click="toAuth">
-							<view style="height: 120rpx;display: flex;align-items: center;">
+							<view style="height: 120rpx;display: flex;align-items: center;width: 530rpx;">
 								<view style="height: 120rpx;display: flex;flex-direction: column;justify-content: center;">
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;">{{companyName}}</view>
 									<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
@@ -351,7 +351,7 @@
 		font-size: 32rpx;
 		margin-right: 28rpx;
 		color: #fff;
-		position: fixed;
+		// position: fixed;
 	}
 	.publish{
 		width: 148rpx;

@@ -51,12 +51,14 @@
 		  				<view style="float: left;">综合上牌时间</view>
 						<view v-show="detail.endtime" style="float: right;color: #353B3D;">{{detail.firsttime}}{{detail.firsttime&&detail.endtime?'至':''}}{{detail.endtime}}</view>
 						<view v-show="!detail.endtime" style="float: right;color: #353B3D;">{{detail.firsttime}}</view>
+						<view v-show="!detail.firsttime&&!detail.endtime" style="float: right;color: #353B3D;">暂无数据</view>
 		  				<view class="clear"></view>
 		  			</view>
 		  			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		  				<view style="float: left;">综合行驶里程</view>
 						<view v-show="detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}{{detail.firstkm&&detail.endkm?'-':''}}{{detail.endkm}}万公里</view>
 						<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}</view>
+						<view v-show="!detail.firstkm&&!detail.endkm" style="float: right;color: #353B3D;">暂无数据</view>
 		  				<view class="clear"></view>
 		  			</view>
 		  		</view>

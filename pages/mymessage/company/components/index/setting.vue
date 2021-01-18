@@ -6,75 +6,75 @@
 		<view class="content">
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 240rpx;margin-right: 50rpx;">车型名称</view>
-				<view>{{detail.carModelName}}</view>
+				<view>{{detail.carModelName||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 240rpx;margin-right: 50rpx;">厂商指导价(元)</view>
-				<view>{{detail.price}}</view>
+				<view>{{detail.price||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">厂商</view>
-				<view>{{detail.autoFactoryName}}</view>
+				<view>{{detail.autoFactoryName||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">级别</view>
-				<view>{{detail.sizetype}}</view>
+				<view>{{detail.sizetype||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">能源类型</view>
-				<view>{{detail.power}}</view>
+				<view>{{detail.power||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">环保标准</view>
-				<view>{{detail.environmental}}</view>
+				<view>{{detail.environmental||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">上市时间</view>
-				<view>{{detail.listdate}}</view>
+				<view>{{detail.listdate||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">最大功率(kw)</view>
-				<view>{{detail.maxpower}}</view>
+				<view>{{detail.maxpower||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">最大扭矩</view>
-				<view>{{detail.maxtorque}}</view>
+				<view>{{detail.maxtorque||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">发动机</view>
-				<view>{{detail.engine}}</view>
+				<view>{{detail.engine||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">变速箱</view>
-				<view>{{detail.variablebox}}</view>
+				<view>{{detail.variablebox||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">长*宽*高(mm)</view>
-				<view>{{detail.specification}}</view>
+				<view>{{detail.specification||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">车身结构</view>
-				<view>{{detail.bodytype}}</view>
+				<view>{{detail.bodytype||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">最高车速(km/h)</view>
-				<view>{{detail.maxspeed}}</view>
+				<view>{{detail.maxspeed||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">官方0-100km/h加速(s)</view>
-				<view>{{detail.officialaccelerationtimehundred}}</view>
+				<view>{{detail.officialaccelerationtimehundred||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">实测0-100km/h加速(s)</view>
-				<view>{{detail.accelerationtimehuntred}}</view>
+				<view>{{detail.accelerationtimehuntred||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">实测100-0km/h制动(m)</view>
-				<view>{{detail.brakingdistace}}</view>
+				<view>{{detail.brakingdistace||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">工信部综合油耗(L/100km)</view>
-				<view>{{detail.comfuelconsumption}}</view>
+				<view>{{detail.comfuelconsumption||'暂无数据'}}</view>
 			</view>
 		</view>
 		<!-- <view class="other">其他参数</view> -->

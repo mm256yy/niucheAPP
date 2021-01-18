@@ -14,11 +14,11 @@
 							<u-col span="8" v-if="!tokenFlag">
 								<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
 								  <view>登录注册</view>
-								  <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image>
+								  <!-- <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image> -->
 								</view>
 							</u-col>
 							<u-col span="8" v-show="tokenFlag" >
-								<view style="height: 120rpx;display: flex;align-items: center;" @click="toMyInfo">
+								<view style="height: 120rpx;display: flex;align-items: center;width: 500rpx;" @click="toMyInfo">
 									<view style="height: 96rpx;display: flex;flex-direction: column;justify-content: center;">
 										<view style="color: #fff;font-size: 36rpx;">{{driverPub.name}}</view>
 										<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>

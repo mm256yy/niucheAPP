@@ -237,8 +237,10 @@
 				this.add()
 			},
 			add() {
-				this.addkey = this.businessType +(this.form.cartype?',':'') + this.form.cartype
-				+ (this.form.power?',':'') + this.form.power
+				const first = this.businessType||this.form.cartype||this.form.power;
+				const second = this.form.cartype||this.form.power;
+				this.addkey = this.form.carbrand + (this.form.carbrand&&first?',':'') + this.businessType +(this.businessType&&second?',':'') + this.form.cartype
+				+ (this.form.cartype&&this.form.power?',':'') + this.form.power
 			},
 			reset() {
 				debugger

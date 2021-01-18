@@ -37,10 +37,10 @@
 		 			 			<u-form-item label="月薪:">{{form.monthprice}}</u-form-item>
 		 			 			<!-- <u-form-item label="押金:">{{form.myok}}</u-form-item> -->
 		 						<u-form-item label="能接受的工作时长:">{{form.worktime}}</u-form-item>
-		 						<u-form-item label="福利要求:">{{form.welfare}}</u-form-item>
+		 						<u-form-item label="福利要求:">{{form.welfare||'未填写'}}</u-form-item>
 		 						<u-form-item label="网约车工作年限:">{{form.workexperience}}&nbsp;年</u-form-item>
 		 						<u-form-item label="出租车工作年限:">{{form.taxiExperience}}&nbsp;年</u-form-item>
-		 						<u-form-item label="我的优势:">{{form.myok}}</u-form-item>
+		 						<u-form-item label="我的优势:">{{form.myok||'未填写'}}</u-form-item>
 		 			 </u-form>
 		 </view>
 		 <view class="fixed-btn" style="">
