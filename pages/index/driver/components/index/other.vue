@@ -11,7 +11,7 @@
 			<view class="top">
 						 <!-- <image class="left" :src="detail.comparylogophoto" mode="aspectFill"></image> -->
 				<!-- <u-image  :src="detail.comparylogophoto"></u-image> -->
-				<u-avatar :src="detail.comparylogophoto"" mode="circle" size="large" ></u-avatar>
+				<u-avatar :src="detail.comparylogophoto" mode="circle" size="large" ></u-avatar>
 						<!-- <img class="left" :src="detail.comparylogophoto" alt=""> -->
 				<view class="right">
 					<view class="name">{{detail.comparyname}}</view>
@@ -30,12 +30,12 @@
 			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
-			 			<renting v-if="isChildUpdate1" :id="driverDemandId" ref="renting"></renting>
+			 			<renting v-if="isChildUpdate1" :ids="driverDemandId" ref="renting"></renting>
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
-			 			<searching v-if="isChildUpdate2" :id="driverDemandId" ref="searching"></searching>
+			 			<searching v-if="isChildUpdate2" :ids="driverDemandId" ref="searching"></searching>
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>

@@ -80,7 +80,7 @@
 			}
 		},
 		props: {
-			id: {
+			ids: {
 			    type: String,
 			    default: ''
 			}
@@ -136,7 +136,7 @@
 			// },
 		    getList(){
 		        const params = {
-		    		id: this.id,
+		    		id: this.ids,
 					pageNum: 1,
 					pageSize: 10
 		    	}
@@ -172,7 +172,7 @@
 			getPage(){
 				this.pageNum = this.pageNum + 1;
 			    const params = {
-					id: this.id,
+					id: this.ids,
 					pageNum: this.pageNum,
 					pageSize: 10
 				}

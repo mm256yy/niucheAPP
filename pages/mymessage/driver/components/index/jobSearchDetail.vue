@@ -76,7 +76,7 @@
 			</view> -->
 		</view>
 		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>
-		<phone-auth :id="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
+		<phone-auth :ids="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
 	</view>
 </template>
 
