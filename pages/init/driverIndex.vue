@@ -80,7 +80,7 @@
 				 style="height: 180px;">
 					<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
 						<view style="display: flex;justify-content: space-around;padding: 0 10px;">
-							<view v-for="(info,index) in welfareList[index]" :key="info.comparymainid" @click="toView(info)" style="" class="swiper_xcfl">
+							<view v-for="(info,i) in welfareList[index]" :key="info.comparymainid" @click="toView(info)" style="" class="swiper_xcfl">
 								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
 								<view class="swiper_price">¥{{info.packPrice}}/月</view>
 								<view class="bg_fff" style="padding:12px 4px 6px;">
