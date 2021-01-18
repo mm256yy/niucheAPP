@@ -140,6 +140,17 @@
 			this.driverDemandId = option.id;
 		},
 		mounted() {
+			this.currentSalary == -1;
+			this.currentHour == -1;
+			this.publishObj.salaryList.forEach(item => {
+			      item.checked=false;
+			})
+			this.publishObj.hoursList.forEach(item => {
+			      item.checked=false;
+			})
+			this.publishObj.benefitList.forEach(item => {
+			      item.checked=false;
+			})
 			this.getDetail()
 		},
 		methods: {

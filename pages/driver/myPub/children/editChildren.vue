@@ -166,6 +166,18 @@
 			this.driverDemandId = option.id;
 		},
 		mounted() {
+			this.currentAge == -1;
+			this.currentRent == -1;
+			this.currentKm == -1;
+			this.brandList.forEach(item => {
+			      item.checked=false;
+			})
+			this.publishObj.carType.forEach(item => {
+			      item.checked=false;
+			})
+			this.publishObj.power.forEach(item => {
+			      item.checked=false;
+			})
 			this.getDetail()
 		},
 		methods: {
