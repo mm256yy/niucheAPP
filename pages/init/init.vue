@@ -2,7 +2,6 @@
 	<view>
 	    <DriverIndex ref="driver" v-if='curThemeType ==="driver"'></DriverIndex>
 		<Company ref="driver" v-else></Company>
-		<OneTips ref="onetips"></OneTips>
 <!-- 		<u-popup v-model="show" mode="center" border-radius="22" :mask-close-able='false' z-index="10075">
 			<view style="width: 580rpx;">
 				<u-image height="780rpx" mode="aspectFill" :src="data.photo" @click="toPage"></u-image>
@@ -22,7 +21,6 @@
 </template>
 
 <script>
-	import OneTips from '../../components/oneTips.vue'
 	import Company from '../index/company/company.vue'
 	import DriverIndex from './driverIndex.vue'
 	import {aui} from '@/components/aui-poster/common/aui/js/aui.js';
@@ -35,7 +33,6 @@
 		components: {
 			Company,
 			DriverIndex,
-			OneTips,
 			auiPoster
 		},
 		data() {
