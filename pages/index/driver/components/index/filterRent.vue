@@ -335,9 +335,9 @@
 				this.add()
 			},
 			add() {
-				this.addkey = this.form.cartype
-				+ (this.form.cartype?',':'') + this.form.power + (this.form.power?',':'') + this.caragekey
-				+ (this.caragekey?',':'') + this.kmkey
+				this.addkey = this.form.carbrand + (this.form.carbrand&&this.form.cartype?',':'') + this.form.cartype
+				+ (this.form.cartype&&this.form.power?',':'') + this.form.power + (this.form.power&&this.caragekey?',':'') + this.caragekey
+				+ (this.caragekey&&this.kmkey?',':'') + this.kmkey
 			},
 			reset() {
 				uni.removeStorageSync('cartypeDriver');

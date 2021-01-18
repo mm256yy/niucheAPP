@@ -212,12 +212,6 @@
 			}
 		},
 		mounted() {
-			const token = uni.getStorageSync('token');
-			if(token) {
-				this.form.islogin = 1
-			}else{
-				this.form.islogin = 0
-			}
 			this.transform()
 		},
 		methods: {
@@ -278,7 +272,7 @@
 							uni.setStorageSync('powerDriver', power.join(','));
 							this.form.power = uni.getStorageSync('powerDriver');
 						}else{
-							uni.removeStorageSync('power');
+							uni.removeStorageSync('powerDriver');
 							this.form.power = '';
 						}
 					   }
@@ -293,6 +287,24 @@
 				var caragekey = '';
 				var kmkey = '';
 				this.filterData = [];
+				this.form = {
+				  businesstype: '',
+				  carbrand: '',
+				  cartype: '',
+				  city: '杭州',
+				  startCarAge: '',
+				  endCarAge: '',
+				  startPriceid: '',
+				  endPriceid: '',
+				  km: '',
+				  power: ''
+				};
+				const token = uni.getStorageSync('token');
+				if(token) {
+					this.form.islogin = 1
+				}else{
+					this.form.islogin = 0
+				}
 				if(uni.getStorageSync('carbrandDriver')){
 					carbrand = uni.getStorageSync('carbrandDriver').split(',');
 					this.filterData = this.filterData.concat(carbrand);
