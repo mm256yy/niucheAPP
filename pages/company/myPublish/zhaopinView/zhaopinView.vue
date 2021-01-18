@@ -44,7 +44,7 @@
 			<view style="font-size: 10pt;padding: 20pt 5pt;">面试地址：{{obj.city}}</view>
 		  </scroll-view> 
 		</view>
-		 <PubBottom v-show="show" :isopen.sync="obj.isopen" :id="inviteid" :type="2"></PubBottom>
+		 <PubBottom v-show="show" :isopen.sync="obj.isopen" :ids="inviteid" :type="2"></PubBottom>
 	</view>
 </template>
 
