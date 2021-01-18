@@ -85,11 +85,10 @@
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
 			<u-button type="warning" shape='circle' class="btn-orange"  @click="toNext">提交</u-button>
 		</view>
-		<u-popup v-model="showTips" mode="center" length="80%">
-			<view style="text-align: right;padding-right: 15px;margin-top: 15px;"><u-icon name="close" @click="showTips = false"></u-icon></view>
-			<view style="text-align: center;font-weight: bold;">认证提示</view>
-			<view class="slot_content">
-				
+		<u-popup v-model="showTips" mode="center" length="80%" :closeable="true">
+			
+			<view class="slot_content" >
+				<view style="text-align: center;font-weight: bold;padding: 15px;">认证提示</view>
 				<view class="slot_tips">
 					非常好，您的驾驶证认证已提交审核，建议继续从业资格认证：
 					<view style="padding: 5px 0;">
