@@ -219,8 +219,7 @@
 				this.form.driverDemandId = this.driverDemandId
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
-						if(this.currentSalary == -1||this.currentHour == -1
-						||!this.form.taxiExperience||!this.form.workexperience){
+						if(this.currentSalary == -1||this.currentHour == -1){
 							this.$u.toast('请填写');
 							return;
 						}
@@ -232,8 +231,7 @@
 							           isOpen: 1,
 							           monthprice:'',
 							           myok:'',
-							           taxiExperience:'',
-							           workexperience:'',
+							           workingExperience:'',
 							           worktime:'',
 							           workCity: '杭州'
 						            };
