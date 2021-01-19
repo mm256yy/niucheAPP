@@ -63,7 +63,7 @@
 								  <text v-show="item.businesstypetag == 1">[网约车]</text>
 								  <text v-show="item.businesstypetag == 2">[出租车]</text>
 								{{item.texttitle}}</view>
-								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge&&item.km?'/':''}}{{item.km}}{{item.km?'万公里':''}}
+								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge?'/':''}}{{item.firstkm}}-{{item.km}}万公里
 								</view>
 							</view>
 							<view class="price"><text>{{item.rentprice}}元</text></view>
