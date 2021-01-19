@@ -38,7 +38,7 @@
 		  			<view class="box">
 		  				<view>{{detail.systemtag}}</view>
 		  			</view>
-		  			<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 23rpx;margin-left: 20rpx;">在售200辆/杭州</view>
+		  			<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 23rpx;margin-left: 20rpx;">在租{{detail.carnbumber}}辆/杭州</view>
 		  			<view class="clear"></view>
 		  	 	</view>
 		  	</view>

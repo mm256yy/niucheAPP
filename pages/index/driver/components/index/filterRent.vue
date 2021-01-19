@@ -335,11 +335,18 @@
 				this.add()
 			},
 			add() {
+				if(this.caragekey == '不限'){
+				}else{
+					this.filterData.push(caragekey);
+				}
+				debugger
+				this.caragekey = this.caragekey=='不限'?'':this.caragekey
+				this.kmkey = this.kmkey=='不限'?'':this.kmkey
 				const first = this.form.cartype||this.form.power||this.caragekey||this.kmkey;
 				const second = this.form.power||this.caragekey||this.kmkey;
 				const third = this.caragekey||this.kmkey;
 				this.addkey = this.form.carbrand + (this.form.carbrand&&first?',':'') + this.form.cartype
-				+ (this.form.cartype&&second?',':'') + this.form.power + (this.form.power&&third?',':'') + this.caragekey
+				+ (this.form.cartype&&second?',':'') + this.form.power + (this.form.power&&third?',':'') + this.caragekey=='不限'
 				+ (this.caragekey&&this.kmkey?',':'') + this.kmkey
 			},
 			reset() {
