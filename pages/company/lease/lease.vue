@@ -254,7 +254,6 @@
 					cartagid: this.editId
 				}).then(res => {
 					if (res.code === 200) {
-						this.form.isOneclickAndAdd = 3;
 						this.editSetStorage(res.object)
 					} else {
 						this.$u.toast(res.message);
@@ -263,6 +262,7 @@
 			},
 			editSetStorage(data) {
 				this.form = data;
+				this.form.isOneclickAndAdd = 3;
 				this.form.id = data.tagid;
 				this.form.comparyid = data.comparyinviteid;
 				this.form.cartagistag = data.tagistagid;
