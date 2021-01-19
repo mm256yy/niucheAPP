@@ -334,20 +334,27 @@
 				this.select()
 				this.add()
 			},
-			add() {
-				if(this.caragekey == '不限'){
-				}else{
-					this.filterData.push(caragekey);
-				}
-				debugger
-				this.caragekey = this.caragekey=='不限'?'':this.caragekey
-				this.kmkey = this.kmkey=='不限'?'':this.kmkey
+			add(){
 				const first = this.form.cartype||this.form.power||this.caragekey||this.kmkey;
 				const second = this.form.power||this.caragekey||this.kmkey;
 				const third = this.caragekey||this.kmkey;
 				this.addkey = this.form.carbrand + (this.form.carbrand&&first?',':'') + this.form.cartype
-				+ (this.form.cartype&&second?',':'') + this.form.power + (this.form.power&&third?',':'') + this.caragekey=='不限'
+				+ (this.form.cartype&&second?',':'') + this.form.power + (this.form.power&&third?',':'') + this.caragekey
 				+ (this.caragekey&&this.kmkey?',':'') + this.kmkey
+				this.addkey = this.addkey.split(',')
+				console.log(this.addkey)
+				this.addkey.forEach((item,index) => {
+				  if(item == '不限'){
+					 this.addkey.splice(index,1)
+					  this.addkey.forEach((items,index) => {
+					    if(items == '不限'){
+					  	 this.addkey.splice(index,1) 
+					    }
+					  });
+				  }
+				});
+				console.log(this.addkey)
+				this.addkey = this.addkey.join(',')
 			},
 			reset() {
 				uni.removeStorageSync('cartypeDriver');

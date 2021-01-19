@@ -38,7 +38,8 @@
 		 			 			<!-- <u-form-item label="押金:">{{form.myok}}</u-form-item> -->
 		 						<u-form-item label="能接受的工作时长:">{{form.worktime}}</u-form-item>
 		 						<u-form-item label="福利要求:">{{form.welfare||'未填写'}}</u-form-item>
-		 						<u-form-item label="从业经验:">{{form.workingExperience}}&nbsp;年</u-form-item>
+		 						<u-form-item v-show="form.workingExperience" label="从业经验:">{{form.workingExperience}}年</u-form-item>
+		 						<u-form-item v-show="!form.workingExperience" label="从业经验:">未填写</u-form-item>
 		 						<u-form-item label="我的优势:">{{form.myok||'未填写'}}</u-form-item>
 		 			 </u-form>
 		 </view>
