@@ -3,7 +3,7 @@
 	  <u-navbar back-text="返回" back-icon-size="0" title="求职发布" :background="backgroundDri" 
 	   :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
 	   <view class="view-content">
-	   	  <u-form :error-type="errorType" :model="form" ref="uForm" label-width="320" :border-bottom="false">
+	   	  <u-form :error-type="errorType" :model="form" ref="uForm" label-width="240" :border-bottom="false">
 			  <!-- <u-form-item label="是否公开我的求职信息?(必选)" label-position="top">
 			  	<u-radio-group v-model="form.isOpen" @change="radioGroupChange" :active-color="'#FFA032'" style="text-align: right;">
 			  		<u-radio name="1" style="margin-left: 10pt;">公开 </u-radio>
@@ -27,13 +27,13 @@
 				<view>*以下设置项都可多选，至少完成其中1项才能发布</view>
 				<view>不选则代表此项“不限”</view>
 			</view> -->
-			<u-form-item label="月薪" label-position="top" prop="monthprice">
+			<u-form-item label="月薪(必选)" label-position="top" prop="monthprice">
 				<search-tags :list="publishObj.salaryList" :active="currentSalary" :singleType="true" @onClick="getDataSalary"></search-tags>
 				<!-- <u-radio-group v-model="form.monthprice"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in salaryList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group> -->
 			</u-form-item>
-			<u-form-item label="能接受的工作时长" label-position="top" prop="worktime">
+			<u-form-item label="能接受的工作时长(必选)" label-position="top" prop="worktime">
 				<search-tags :list="publishObj.hoursList" :active="currentHour" :singleType="true" @onClick="getDataHour"></search-tags>
 				<!-- <u-radio-group v-model="form.worktime"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in hoursList" :key="index">{{item.text}}</u-radio>
@@ -47,13 +47,10 @@
 				</u-checkbox-group>
 			</u-form-item> -->
 			<!-- <view class="more">*以下为加分项，可以不设置。</view> -->
-			<u-form-item style="width: 670rpx;" label="网约车工作年限" prop="workexperience">
-				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.workexperience" />年
+			<u-form-item style="width: 670rpx;border-bottom: 1rpx solid rgba(0,0,0,0.08);" label="从业经验(选填)" prop="workexperience">
+				<u-input maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.workingExperience" />年
 			</u-form-item>
-			<u-form-item style="width: 670rpx;" label="出租车工作年限" prop="taxiExperience">
-				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.taxiExperience" />年
-			</u-form-item>
-			<u-form-item label="福利要求" label-position="top">
+			<u-form-item label="福利要求(选填)" label-position="top">
 				<search-tags :list="publishObj.benefitList" :active="currentBenefit" :singleType="false" @onClick="getDataBenefit"></search-tags>
 				<!-- <u-checkbox-group active-color="#FFA032" @change="benefitGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in benefitList" :key="index" :name="item.text">
@@ -61,7 +58,7 @@
 					</u-checkbox>
 				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="我的优势" label-position="top">
+			<u-form-item label="我的优势(选填)" label-position="top">
 				<u-input type="textarea" maxlength="50" style="width: 607rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;text-indent: 31rpx;" placeholder="退伍军人英语口语交际能力" v-model="form.myok" />
 			</u-form-item>
 			<u-form-item label="是否公开?(必选)" label-position="top">
@@ -100,7 +97,7 @@
 		data() {
 			return {
 				currentType: 0,
-				currentPublic: 0,
+				currentPublic: 1,
 				currentCity: 0,
 				currentSalary: -1,
 				currentHour: -1,
@@ -118,9 +115,8 @@
 					isOpen: 1,
 					monthprice:'',
 					myok:'',
-					taxiExperience:'',
+					workingExperience:'',
 					welfare:'',
-					workexperience:'',
 					worktime:'',
 					workCity: '杭州'
 				},
@@ -184,8 +180,7 @@
 			release(){
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
-						if(this.currentSalary == -1||this.currentHour == -1
-						||!this.form.taxiExperience||!this.form.workexperience){
+						if(this.currentSalary == -1||this.currentHour == -1){
 							this.$u.toast('请填写');
 							return;
 						}
@@ -197,8 +192,7 @@
 							           isOpen: 1,
 							           monthprice:'',
 							           myok:'',
-							           taxiExperience:'',
-							           workexperience:'',
+							           workingExperience:'',
 							           worktime:'',
 							           workCity: '杭州'
 						            };

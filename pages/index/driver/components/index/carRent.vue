@@ -72,11 +72,11 @@
 		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 		    			<view class="clear"></view>
-						<view class="flex">
+						<!-- <view class="flex">
 							<view class="company">{{item.comparyname}}</view>
 							<view class="area">{{item.comparyarea}}</view>
 							<view class="clear"></view>
-						</view>
+						</view> -->
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
@@ -750,6 +750,8 @@
 			.list{
 				width: 679rpx;
 				// height: 285rpx;
+				padding: 44rpx 0;
+				border-bottom: 1rpx solid rgba(0,0,0,0.08);
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;

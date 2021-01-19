@@ -24,7 +24,7 @@
 				</u-radio-group> -->
 				<!-- <text style="position: absolute;top: 8pt;left: 40pt;font-size: 10pt;color: #7E7E7E;">（必选一项）</text> -->
 	   	  	</u-form-item>
-			<u-form-item label="品牌选择" label-position="top">
+			<u-form-item label="品牌选择(至少一项)" label-position="top">
 				<search-tags v-show="!brandShow" :list="brandList" :active="currentBrand" :singleType="false" @onClick="getDataBrand"></search-tags>
 				<!-- <u-checkbox-group active-color="#6DD99C" @change="brandGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">
@@ -42,7 +42,7 @@
 					</u-checkbox>
 				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="车型(多选)" label-position="top" prop="carmodel">
+			<u-form-item label="车型(至少一项)" label-position="top" prop="carmodel">
 				<search-tags :list="publishObj.carType" :active="currentModel" :singleType="false" @onClick="getDataModel"></search-tags>
 				<!-- <u-checkbox-group active-color="#FFA032" @change="modelGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in modelList" :key="index" :name="item.name">
@@ -50,7 +50,7 @@
 					</u-checkbox>
 				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="动力(多选)" label-position="top" prop="power">
+			<u-form-item label="动力(至少一项)" label-position="top" prop="power">
 				<search-tags :list="publishObj.power" :active="currentPower" :singleType="false" @onClick="getDataPower"></search-tags>
 				<!-- <u-checkbox-group active-color="#FFA032" @change="powerGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in powerList" :key="index" :name="item.name">
@@ -58,19 +58,19 @@
 					</u-checkbox>
 				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="月租" label-position="top" prop="monthzu">
+			<u-form-item label="月租(必选)" label-position="top" prop="monthzu">
 				<search-tags :list="rentList" :active="currentRent" :singleType="true" @onClick="getDataRent"></search-tags>
 				<!-- <u-radio-group v-model="form.monthzu"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in rentList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group> -->
 			</u-form-item>
-			<u-form-item label="车龄" label-position="top" prop="carage">
+			<u-form-item label="车龄(必选)" label-position="top" prop="carage">
 				<search-tags :list="ageList" :active="currentAge" :singleType="true" @onClick="getDataAge"></search-tags>
 				<!-- <u-radio-group v-model="form.carage"  :active-color="'#FFA032'" style="text-align: right;">
 					<u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in ageList" :key="index">{{item.text}}</u-radio>
 				</u-radio-group> -->
 			</u-form-item>
-			<u-form-item label="行驶里程" label-position="top" prop="km">
+			<u-form-item label="行驶里程(必选)" label-position="top" prop="km">
 				<search-tags :list="objType[radioType]" :active="currentKm" :singleType="true" @onClick="getDataKm"></search-tags>
 				<!-- <u-radio-group v-model="form.km"  :active-color="'#FFA032'" style="text-align: right;">
 				  <u-radio :name="item.name" style="margin-left: 10pt;" v-for="(item,index) in objType[radioType]" :key="index">{{item.text}}</u-radio>
@@ -112,7 +112,7 @@
 		data() {
 			return {
 				currentType: 0,
-				currentPublic: 0,
+				currentPublic: 1,
 				currentCity: 0,
 				currentPower: -1,
 				currentAge: -1,

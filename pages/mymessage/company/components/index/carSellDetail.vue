@@ -27,7 +27,7 @@
 		 			<view class="name">{{detail.titletext}}</view>
 		 			<view class="clear"></view>
 		 			<view v-for="(item, index) in detail.pricesectionlist" :key="item.id" class="" v-show="firstCurrent === index">
-		 				<view class="price"><text>￥{{item.packprice}}</text>/月起售</view>
+		 				<view class="price"><text>￥{{item.packprice}}</text>/起售</view>
 		 				<view>
 		 					<view class="type">网约车</view>
 		 				</view>
