@@ -67,7 +67,8 @@
 		},
 		methods: {
 			scroll(e) {
-				//记录scroll  位置
+				console.log(e, '111111')
+				debugger
 				this.oldScrollTop = e.detail.scrollTop
 			},
 			neiClick(id) {
@@ -92,12 +93,8 @@
 			},
 			tapSwitch(e) {
 				this.indexs = e
-				this.scrollTop = this.oldScrollTop
-				this.$nextTick(() => {
-					this.scrollTop = 0
-				});
 				this.getList(1)
-
+				this.scrollTop = 0
 			},
 			interface(pageNum, res) {
 				if (res.code === 200) { // 成功的动态码
@@ -159,7 +156,7 @@
 		width: 100%;
 		position: fixed;
 		left: 0;
-		top: 160rpx;
+		top: 148rpx;
 		height: 108rpx;
 		font-size: 32rpx;
 		background-color: #FFFFFF;
