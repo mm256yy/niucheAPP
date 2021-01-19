@@ -263,7 +263,7 @@
 			},
 			getDataAge(obj) {
 				this.currentAge = obj.index;
-				this.form.carage = obj.index + 1;
+				this.form.carage = obj.index;
 			},
 			getDataKm(obj) {
 				this.currentKm = obj.index;

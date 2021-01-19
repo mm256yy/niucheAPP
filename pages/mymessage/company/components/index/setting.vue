@@ -38,7 +38,7 @@
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">最大扭矩</view>
-				<view>{{detail.maxtorque||'暂无数据'}}</view>
+				<view style="width: 400rpx;text-align: right;">{{detail.maxtorque||'暂无数据'}}</view>
 			</view>
 			<view style="display: flex;padding: 42rpx 0;border-bottom: 1rpx solid rgba(0,0,0,0.05);">
 				<view style="width: 200rpx;margin-right: 20rpx;">发动机</view>
