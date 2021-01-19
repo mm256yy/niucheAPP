@@ -324,7 +324,7 @@
 			},
 			onLineListChange(obj) {
 				this.activeOnLine = obj.index;
-				this.form.onlineistaxi = obj.id;
+				this.form.onlineistaxi = obj.index+1;
 			},
 			carTypeListChange(obj) {
 				this.activeCarType = obj.index;
