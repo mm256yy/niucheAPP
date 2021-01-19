@@ -346,12 +346,12 @@
 			carChange(obj) {
 				if (obj.type === 1) {
 					this.selectCarInfo = obj.carbrand;
-					this.form.carbrand = obj.text;
+					this.form.carbrand = obj.carbrand;
 					this.form.carmodel = '';
 					this.form.carxinghao = '';
 				} else if (obj.type === 2) {
 					this.selectCarInfo = obj.carbrand + '/' + obj.carmodel;
-					this.form.carbrand = obj.text;
+					this.form.carbrand = obj.carbrand;
 					this.form.carmodel = obj.carmodel;
 					this.form.carxinghao = '';
 				} else {

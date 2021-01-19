@@ -141,11 +141,11 @@
 			carChange(obj) {
 				if (obj.type === 1) {
 					this.selectCarInfo = obj.carbrand;
-					this.form.carbrand = obj.text;
+					this.form.carbrand = obj.carbrand;
 					this.form.carmodel = '';
 				} else {
 					this.selectCarInfo = obj.carbrand + '/' + obj.carmodel;
-					this.form.carbrand = obj.text;
+					this.form.carbrand = obj.carbrand;
 					this.form.carmodel = obj.carmodel;
 					this.showCar = false;
 				}
