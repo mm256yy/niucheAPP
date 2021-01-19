@@ -2,7 +2,7 @@
 	<view>
 		<u-navbar back-text="返回" back-icon-size="0" :background="background" title="邀请好友" height='44' title-color="#333333"></u-navbar>
 		<view class="" style="position: relative;">
-			<u-image height="580px" mode="scaleToFill" src="@/static/c@3x.png" @click="toPage"></u-image>
+			<u-image height="580px" mode="scaleToFill" src="@/static/c3x.png" @click="toPage"></u-image>
 			<view style="position: absolute;
 				right: 0;
 				width: 30px;
@@ -42,7 +42,7 @@
 
 					</view>
 					<view style="margin-top: 22px;">
-						<u-image src="@/static/ruhezhaunqushangjin2@3x.png" width="100%" height="470px"></u-image>
+						<u-image src="@/static/ruhezhaunqushangjin3x.png" width="100%" height="470px"></u-image>
 					</view>
 					<view style="margin-top: 22px;">
 						<u-image src="@/static/jianglimingxi@3x.png" width="100%" height="687px"></u-image>
