@@ -18,7 +18,7 @@
 								</view>
 							</u-col>
 							<u-col span="8" v-show="tokenFlag" >
-								<view style="height: 120rpx;display: flex;align-items: center;width: 500rpx;" @click="toMyInfo">
+								<view style="height: 120rpx;display: flex;align-items: center;width: 470rpx;" @click="toMyInfo">
 									<view style="height: 96rpx;display: flex;flex-direction: column;justify-content: center;">
 										<view style="color: #fff;font-size: 36rpx;">{{driverPub.name}}</view>
 										<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>

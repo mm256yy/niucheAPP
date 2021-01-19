@@ -10,6 +10,7 @@
 		 <view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;font-weight: 900;line-height: 176rpx;text-align: center;">
 			 <u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
 			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">{{detail.carmodeltag}}</view>
+			 <view style="font-size: 36rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;" @click="back()">返回</view>
 		 </view>
 		 <kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
 		 <view class="wraps img">
@@ -63,8 +64,8 @@
 		 			</view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		 				<view style="float: left;">综合行驶里程</view>
-		 				<view v-show="detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}{{detail.firstkm&&detail.endkm?'-':''}}{{detail.endkm}}</view>
-		 				<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}</view>
+		 				<view v-show="detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}{{detail.firstkm&&detail.endkm?'-':''}}{{detail.endkm}}万公里</view>
+		 				<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}万公里</view>
 						<view v-show="!detail.firstkm&&!detail.endkm" style="float: right;color: #353B3D;">暂无数据</view>
 		 				<view class="clear"></view>
 		 			</view>
@@ -185,6 +186,9 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			back(){
+				uni.navigateBack()
+			},
 			preview(e){
 				console.log(e)
 				this.$refs.previewImage.open(e)
@@ -238,7 +242,11 @@
 							    	this.detail.carkm = item.text;
 							    }
 							 })
-							 this.detail.systemtag = this.detail.systemtag.join('/')
+							 if(this.detail.systemtag){
+								 this.detail.systemtag.splice(1,1)
+								 this.detail.systemtag.push(this.detail.carage)
+								 this.detail.systemtag = this.detail.systemtag.join('/')
+							 }
 							 var text = '';
 							 if(this.detail.pricesectionlist) {
 								this.detail.pricesectionlist.forEach(item=>{

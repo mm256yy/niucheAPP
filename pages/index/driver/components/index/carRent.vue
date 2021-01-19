@@ -36,7 +36,7 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-show="!filterData.length" style="height: 132rpx;"></view>
+		<view v-show="!filterData.length" style="height: 116rpx;"></view>
 		<view v-show="filterData.length" style="height: 226rpx;"></view>
 		<load-refresh
 		  v-show="list.length"
@@ -750,12 +750,11 @@
 			.list{
 				width: 679rpx;
 				// height: 285rpx;
-				padding: 44rpx 0;
+				padding: 34rpx 0 44rpx 0;
 				border-bottom: 1rpx solid rgba(0,0,0,0.08);
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				margin-bottom: 20rpx;
 				background: #fff;
 				.left {
 					float: left;
