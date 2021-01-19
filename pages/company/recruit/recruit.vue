@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-text="返回" back-icon-size="0" title="招募发布" :background="backgroundCom" :back-text-style="backTextStyle"
+		<u-navbar back-text="返回" back-icon-size="0" title="招聘发布" :background="backgroundCom" :back-text-style="backTextStyle"
 		 height='44' title-color="#FFFFFF"></u-navbar>
 		<view style="padding: 0 10pt;">
 			<text style="font-size:10pt;">* 请注意本页内容都是必填项！未填写不能提交审核</text>
@@ -34,7 +34,7 @@
 						<u-input v-model="form.peoplenumber" maxlength="7" placeholder="请输入招聘人数" :border="false" />
 						<text>人</text>
 					</u-form-item>
-					<u-form-item label="车辆况描述" prop="worktext" label-position="top">
+					<u-form-item label="职位描述" prop="worktext" label-position="top">
 						<u-input v-model="form.worktext" class="input_textarea" type="textarea" maxlength="1000" :border="true"
 						 placeholder="请输入(字数1000字以内) " />
 					</u-form-item>
