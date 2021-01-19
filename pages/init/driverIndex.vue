@@ -53,7 +53,7 @@
 			<view class="djhc">
 				<view class="djhc_title">低价好车</view>
 				<view class="djhc_link" @click="toChild(1)">
-					<text>精选好车，价低质优</text>
+					<text>精选好车，价廉质优</text>
 					<view>
 						<u-icon name="arrow-right" color="#FF5A00" size="32"></u-icon>
 					</view>
@@ -66,8 +66,8 @@
 						</view>
 						<view class="bg_fff" style="padding: 4px 4px 0;">
 							<view class="djhc_model u-line-1">{{item.carname}}</view>
-							<view class="djhc_power u-line-1">{{item.power}}/{{item.carage}}</view>
-							<view class="djhc_money">{{item.lowprice}}元/月</view>
+							<view class="djhc_power u-line-1">{{item.power}}/≤{{item.carage}}年</view>
+							<view class="djhc_money">¥{{item.lowprice}}/月</view>
 						</view>
 					</view>
 				</scroll-view>
