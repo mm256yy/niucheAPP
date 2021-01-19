@@ -16,7 +16,7 @@
 					<u-icon v-show="detail.isCollection === 2" @click="favorites(detail,detail.comparymainid)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="40"></u-icon>
 					<!-- <text>{{detail.collectionum}}</text> -->
 				</view>
-				<view class="name">高薪招聘{{detail.texttitle}}</view>
+				<view class="name">{{detail.title}}</view>
 				<view class="price"><text>￥{{detail.pay}}</text>月薪</view>
 				<view style="font-size: 28rpx;margin-top: 20rpx;">招聘人数：{{detail.invitepeoplenum}}人</view>
 				<!-- <view style="font-size: 28rpx;" class="city">工作城市：{{detail.city}}</view> -->

@@ -56,7 +56,7 @@
 		    					<!-- <view class="tag">付费标签</view> -->
 		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
 								<view style="height: 116rpx;">
-									<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
+									<view class="name u-line-2">{{item.title}}</view>
 									<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
 									<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
 								</view>
@@ -596,7 +596,7 @@
 					float: left;
 					padding-left: 30rpx;
 					.price{
-						margin-top: 34rpx;
+						margin-top: 40rpx;
 					}
 					.price text{
 						font-size: 36rpx;
@@ -659,7 +659,7 @@
 					border: 1rpx solid #FF9500;
 					font-size: 24rpx;
 					color: #FF9500;
-					margin-top: 20rpx;
+					margin-top: 16rpx;
 				}
 				.box {
 					width: 679rpx;
