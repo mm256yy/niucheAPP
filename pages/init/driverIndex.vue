@@ -241,153 +241,11 @@
 				time: '',
 				swiperList: [],
 				navBarShow: false,
-				companyList: [{
-						"userMainId": "89521505788104704",
-						"createTime": "3/12/2020 16:21:50",
-						"companyName": "浙江车壹网络科技有限公司",
-						"companyAbbreviation": "车壹",
-						"companyCartag": ["荣威荣威ei6 插电混动", "荣威荣威ei6 插电混动"],
-						"companyPrice": "3900",
-						"area": "拱墅区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/90869528115941376",
-						"companyIntro": "网约车龙头企业"
-					},
-					{
-						"userMainId": "86890184045629440",
-						"createTime": "26/11/2020 11:01:59",
-						"companyName": "杭州俊程汽车服务有限公司",
-						"companyAbbreviation": "",
-						"companyCartag": ["吉利帝豪PHEV", "长安汽车长安CS15 EV"],
-						"companyPrice": "2800",
-						"area": "西湖区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/_20201230145621.jpg",
-						"companyIntro": "公司主要片"
-					},
-					{
-						"userMainId": "89487811903885312",
-						"createTime": "3/12/2020 13:54:29",
-						"companyName": "杭州御匾会汽车服务有限公司",
-						"companyAbbreviation": "杭州御匾会汽车服务有限公司",
-						"companyCartag": ["比亚迪比亚迪e5", "比亚迪元EV"],
-						"companyPrice": "2900",
-						"area": "萧山区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/89478461370011648",
-						"companyIntro": "公司于2015年03月03日成立。法定代表人张伟，公司经营范围包括：普通货运，汽车道路救援服务，汽车租赁、咨询服务，汽车代驾，汽车事务代理，二手车经营；停车软件开发；汽车销售；停车服务；房屋租赁；其他无需报经审批的一切合法项目。"
-					},
-					{
-						"userMainId": "89872153863917568",
-						"createTime": "4/12/2020 16:30:41",
-						"companyName": "浙江妙达新能源科技有限公司",
-						"companyAbbreviation": "妙达",
-						"companyCartag": ["力帆650EV", "奇瑞艾瑞泽5e"],
-						"companyPrice": "2400",
-						"area": "滨江区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/_20201230144031.png",
-						"companyIntro": "专业从事网约车租金，网约车销售，公司自建网约车出行平台，网约车售后维修厂，全方面服务每一个驾驶员。"
-					},
-					{
-						"userMainId": "89885300641370112",
-						"createTime": "4/12/2020 14:00:07",
-						"companyName": "杭州赢泰科技有限公司",
-						"companyAbbreviation": "逸乘出行",
-						"companyCartag": ["东风俊风ER30", "吉利帝豪EV"],
-						"companyPrice": "1500",
-						"area": "拱墅区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/89884174676267008",
-						"companyIntro": "高德打车平台——逸乘出行，招募自营司机，车辆免租金，代缴社保，底薪10500加提成加奖励！"
-					},
-					{
-						"userMainId": "91302989003886592",
-						"createTime": "8/12/2020 15:09:19",
-						"companyName": "杭州越途汽车服务有限公司",
-						"companyAbbreviation": "杭州越途汽车服务有限公司",
-						"companyCartag": ["长安欧尚欧尚EV"],
-						"companyPrice": "2500",
-						"area": "下城区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/yt_20201231151340.jpg",
-						"companyIntro": "杭州越途汽车服务有限公司是杭州时空电动旗下的全资子公司，有成熟的管理经验,配套专业的业务知识培训,专业及时有效的服务追踪体系,公司提供优势车辆给司机,方案灵活。目前拥有大约2000辆合规网约车。"
-					},
-					{
-						"userMainId": "92022474245541888",
-						"createTime": "10/12/2020 14:42:48",
-						"companyName": "杭州蓝鲸智享汽车科技有限公司",
-						"companyAbbreviation": "蓝鲸智享",
-						"companyCartag": ["长安汽车逸动EV", "长安汽车逸动EV"],
-						"companyPrice": "3171",
-						"area": "西湖区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/92017921487933440",
-						"companyIntro": "杭州蓝鲸智享汽车有限公司是T3出行旗下合资企业，专注于在出行领域提供专业化的网约车运力运营服务。公司秉承“服务第一，诚信至上”的管理理念，致力于为广大司机提供专业、优质的服务方案。\n作为杭州第一家T3出行落地运营服务商，蓝鲸智享团队凭借着在共享出行、车联网大数据、金融风控、汽车租赁等方面的积累和经验，打造了一支集司服运营、汽车租赁、维修保养、云计算、大数据风控等领域人才的专业团队，建立规范化的制度和完善的服务体系，为司机提供专业、系统的培训、具有竞争力的薪酬福利和个人职业发展规划。\n目前，蓝鲸智享在职司机700+，公司注重员工关怀和团队建设，定期组织团建文化活动、节日福利等，培养出一批优秀、专"
-					},
-					{
-						"userMainId": "92300933601562624",
-						"createTime": "11/12/2020 09:26:25",
-						"companyName": "杭州高佳汽车租赁有限公司",
-						"companyAbbreviation": "高佳汽车租赁",
-						"companyCartag": ["东风俊风E11K"],
-						"companyPrice": "2700",
-						"area": "西湖区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/91967899916439552",
-						"companyIntro": "我公司为杭州滴滴长期车辆供应伙伴，名下有200多台网约车可供司机选择。"
-					},
-					{
-						"userMainId": "94490448659353600",
-						"createTime": "17/12/2020 09:40:02",
-						"companyName": "杭州广途商务服务有限公司",
-						"companyAbbreviation": "广途",
-						"companyCartag": ["荣威荣威ei6 插电混动", "比亚迪元EV"],
-						"companyPrice": "2900",
-						"area": "余杭区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/gt_20201231151356.jpg",
-						"companyIntro": "杭州广途商务服务有限公司成立于2015年12月，总部位于浙江省杭州市。广途借鉴业内优秀公司的成功经验，提高专业性，公司配备对应的车管人员、司管人员以及司机培训讲师，打造专业的团队。同时积极实践互联网＋的理念，配合滴滴出行投身于网约车事业的推广并最终成为网约车行业领导者---滴滴出行的合作伙伴。\n公司坚持以人为本、服务至上的理念。对内不断完善企业内控制度，对外在遵守商业道德的前提下不断的发展经营。"
-					},
-					{
-						"userMainId": "95230589183070208",
-						"createTime": "18/12/2020 13:05:10",
-						"companyName": "杭州逸尘汽车服务有限责任公司",
-						"companyAbbreviation": "杭州逸尘汽车服务有限公司",
-						"companyCartag": ["东风风神风神E70"],
-						"companyPrice": "3600",
-						"area": "余杭区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/95230124714233856",
-						"companyIntro": "逸尘是杭州T3国企最新的UP网约车公司！欢迎各大网约车司机来公司发展！"
-					},
-					{
-						"userMainId": "96388201324875776",
-						"createTime": "22/12/2020 14:36:27",
-						"companyName": "杭州知行汽车服务有限公司",
-						"companyAbbreviation": "杭州知行汽车服务有限公司",
-						"companyCartag": ["吉利帝豪PHEV", "长安汽车逸动PHEV"],
-						"companyPrice": "2900",
-						"area": "经济技术开发区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/96387139608121344",
-						"companyIntro": "网约车租赁与销售"
-					},
-					{
-						"userMainId": "96757977708630016",
-						"createTime": "2/12/2020 15:47:50",
-						"companyName": "杭州乐腾新能源汽车服务有限公司",
-						"companyAbbreviation": "乐到新能源",
-						"companyCartag": ["长安欧尚欧力威EV", "东风风神风神E70"],
-						"companyPrice": "1980",
-						"area": "滨江区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/96756703512629248",
-						"companyIntro": "“乐到新能源”集团成立于2017年。早在2011年起乐到已携手上海创驱共同研发电车驱动系统，并拟定全国新能源汽车战略版图。公司专注于新能源汽车技术研发、\n   整车定制生产，并衍生开拓新商用租赁服务和互联网汽车新零售平台。乐到致力于成为产业链上下游一体化发展的新能源汽车综合运营服务商。浙江乐到在长达6年的技术\n   研发实践中稳步上行，联合多家知名车企推出数款电动车型，实现多区域联袂合作，共同发展。\n    截止目前，公司已在全国12座城市开展新能源汽车租赁、销售业务，上线运营车辆7000多台。2019年业务版图将在此基础上扩展至30座以上大中城市。"
-					},
-					{
-						"userMainId": "97070532972908544",
-						"createTime": "24/12/2020 13:15:20",
-						"companyName": "杭州瑾涵科技有限公司",
-						"companyAbbreviation": "杭州瑾涵",
-						"companyCartag": ["吉利帝豪EV", "吉利帝豪EV"],
-						"companyPrice": "2700",
-						"area": "经济技术开发区",
-						"companyLogoPhoto": "http://niuche-default.neocab.cn/_20201230144038.png",
-						"companyIntro": "公司目前主经营吉利帝豪EV300纯电车出租，公司目前跟曹操，携华，添猫，阳光，飞嘀，蓝色大道合作招募司机"
-					}
-				]
+				companyList: []
 			}
 		},
 		mounted() {
+			this.initBanner()
 			this.getList()
 		},
 		methods: {
@@ -400,6 +258,26 @@
 			},
 			scrollToupper() {
 				this.navBarShow = false
+			},
+			initBanner(){
+				this.$u.api.popupConfig({
+					function: 'banner_basicConf',
+					type: 'VISITOR'
+				}).then(res => {
+					if (res.code === 200) {
+						let data = res.object;
+						if (data) {
+							let imgList = JSON.parse(data[0].result)
+							let arr = []
+							imgList.forEach(item=>{
+								arr.push({image:item.photo,url:item.url})
+							})
+							this.list = arr;
+						}
+					} else {
+						this.$u.toast(res.msg);
+					}
+				})
 			},
 			toIndexId(id) {
 				if (id === 2) {
@@ -515,12 +393,9 @@
 				}
 			},
 			toSwiperPage(index) {
-				if (index === 0) {
-					this.toChild(1)
-				} else if (index === 1) {
-					this.toChild(2)
-				} else {
-					this.$u.route('/pages/driver/inviteFriends/inviteFriends')
+				let url = this.list[index].url;
+				if(url){
+					this.$u.route(url)
 				}
 			},
 			message() {
