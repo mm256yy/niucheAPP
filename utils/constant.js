@@ -11,7 +11,7 @@ export const baseUrl = ipconfig;
 export const shareUrl =shareIp+"?shareId=" //邀请好友
 export const shareArticleUrl = shareIp+"/driverServer/?id="//文章
 export const updateUrl =ipconfig+"/app/getUrl?version=" 
-export const version = '1.5.2.0'
+export const version = '1.5.2.1'
 export const publishObj = {
 	//form 验证方式
 	errorType:['message'],
