@@ -55,8 +55,8 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.id)">
-						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
 		    			<view class="right">
 							<view style="height: 116rpx;">
 								<view class="name u-line-2">
@@ -172,16 +172,16 @@
 				],
 				selectType: [
 					{
+						label: '不限',
+						value: ''
+					},
+					{
 						label: '网约车',
 						value: '1'
 					},
 					{
 						label: '出租车',
 						value: '2'
-					},
-					{
-						label: '不限',
-						value: ''
 					}
 				],
 				list: [],
@@ -305,6 +305,47 @@
 				}else{
 					this.form.islogin = 0
 				}
+				this.businesstypekey = '';
+				this.priceidkey = '';
+				this.form.businesstype = uni.getStorageSync('typeDri');
+				this.priceid = uni.getStorageSync('priceidDri');
+				this.currentType = this.form.businesstype == ''?0:parseInt(this.form.businesstype);
+				// this.currentKm = parseInt(this.form.km - 1)?parseInt(this.form.km - 1):0;
+				this.currentAge = parseInt(this.age)?parseInt(this.age):-1;
+				const priceid = this.priceid - 1
+				this.current = parseInt(priceid);
+				this.selectType.map(item=>{
+				   if(item.value == this.form.businesstype){
+				   	this.businesstypekey = item.label;
+				   }
+				})
+				this.businesstypekey = (this.businesstypekey == '不限')?'':this.businesstypekey
+				 this.select.map(item=>{
+				    if(item.value == this.priceid){
+				    	this.priceidkey = item.label;
+				    }
+				 })
+				 this.priceidkey = (this.priceidkey == '不限')?'':this.priceidkey
+				 if(this.priceid == 1) {
+				 	this.form.startPriceid = '';
+				 	this.form.endPriceid = '';
+				 }
+				 if(this.priceid == 2) {
+				 	this.form.startPriceid = '0';
+				 	this.form.endPriceid = '2000';
+				 }
+				 if(this.priceid == 3) {
+				 	this.form.startPriceid = '2000';
+				 	this.form.endPriceid = '3000';
+				 }
+				 if(this.priceid == 4) {
+				 	this.form.startPriceid = '3000';
+				 	this.form.endPriceid = '4000';
+				 }
+				 if(this.priceid == 5) {
+				 	this.form.startPriceid = '4000';
+				 	this.form.endPriceid = '-1';
+				 }
 				if(uni.getStorageSync('carbrandDriver')){
 					carbrand = uni.getStorageSync('carbrandDriver').split(',');
 					this.filterData = this.filterData.concat(carbrand);
@@ -385,6 +426,8 @@
 				this.current = index;
 				this.priceid = this.select[index].value;
 				this.priceidkey = this.select[index].label;
+				this.priceidkey = (this.priceidkey == '不限')?'':this.priceidkey
+				uni.setStorageSync('priceidDri', this.priceid);
 				if(this.priceid == 1) {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '';
@@ -412,7 +455,9 @@
 			getDataType(index) {
 				this.currentType = index;
 				this.businesstypekey = this.selectType[index].label;
+				this.businesstypekey = (this.businesstypekey == '不限')?'':this.businesstypekey
 				this.form.businesstype = this.selectType[index].value;
+				uni.setStorageSync('typeDri', this.form.businesstype);
 				this.showType = false;
 				this.showMask = false;
 				this.search()

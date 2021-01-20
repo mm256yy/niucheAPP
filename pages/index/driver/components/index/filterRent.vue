@@ -152,6 +152,28 @@
 		},
 		methods: {
 			transform() {
+				this.priceid = uni.getStorageSync('priceidDri');
+				if(this.priceid == 1) {
+					this.form.startPriceid = '';
+					this.form.endPriceid = '';
+				}
+				if(this.priceid == 2) {
+					this.form.startPriceid = '0';
+					this.form.endPriceid = '2000';
+				}
+				if(this.priceid == 3) {
+					this.form.startPriceid = '2000';
+					this.form.endPriceid = '3000';
+				}
+				if(this.priceid == 4) {
+					this.form.startPriceid = '3000';
+					this.form.endPriceid = '4000';
+				}
+				if(this.priceid == 5) {
+					this.form.startPriceid = '4000';
+					this.form.endPriceid = '-1';
+				}
+				this.form.businesstype = uni.getStorageSync('typeDri');
 				// const businessType = uni.getStorageSync('businesstype');
 				// this.businesstype = uni.getStorageSync('businesstype');
 				const caragekey = uni.getStorageSync('caragekey');
@@ -534,21 +556,31 @@
 			result() {
 				if(this.form.cartype){
 					uni.setStorageSync('cartypeDriver', this.form.cartype);
+				}else{
+					uni.removeStorageSync('cartypeDriver');
 				}
 				if(this.form.power){
 					uni.setStorageSync('powerDriver', this.form.power);
+				}else{
+					uni.removeStorageSync('powerDriver');
 				}
 				// if(this.businesstype){
 				// 	uni.setStorageSync('businesstype', this.businesstype);
 				// }
 				if(this.caragekey){
 					uni.setStorageSync('caragekey', this.caragekey);
+				}else{
+					uni.removeStorageSync('caragekey');
 				}
 				if(this.kmkey){
 					uni.setStorageSync('kmkey', this.kmkey);
+				}else{
+					uni.removeStorageSync('kmkey');
 				}
 				if(this.form.carbrand){
 					uni.setStorageSync('carbrandDriver', this.form.carbrand);
+				}else{
+					uni.removeStorageSync('carbrandDriver');
 				}
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 			}

@@ -87,6 +87,7 @@
 					endCarAge:''
 				},
 				carage: '',
+				age:'',
 				value:'',
 				total: '',
 				brandList:[{name: '比亚迪',checked: false},{name: '北汽新能源',checked: false},{name: '丰田',checked: false},
@@ -149,6 +150,29 @@
 				this.select()
 			},
 			transform() {
+				this.form.km = uni.getStorageSync('kmCom');
+				this.form.packprice = uni.getStorageSync('priceCom');
+				this.age = uni.getStorageSync('ageCom');
+				if(this.age == '0') {
+					this.form.startCarAge = '0';
+				    this.form.endCarAge = '1';
+				}
+				if(this.age == '1') {
+					this.form.startCarAge = '1';
+				    this.form.endCarAge = '3';
+				}
+				if(this.age == '2') {
+					this.form.startCarAge = '3';
+				    this.form.endCarAge = '5';
+				}
+				if(this.age == '3') {
+					this.form.startCarAge = '5';
+				    this.form.endCarAge = '';
+				}
+				if(this.age == '4') {
+					this.form.startCarAge = '';
+				    this.form.endCarAge = '';
+				}
 				const businessType = uni.getStorageSync('businessType');
 				this.businessType = uni.getStorageSync('businessType');
 				if(uni.getStorageSync('carbrand')){
@@ -379,15 +403,23 @@
 			result() {
 				if(this.form.cartype){
 					uni.setStorageSync('cartype', this.form.cartype);
+				}else{
+					uni.removeStorageSync('cartype');
 				}
 				if(this.form.power){
 					uni.setStorageSync('power', this.form.power);
+				}else{
+					uni.removeStorageSync('power');
 				}
 				if(this.form.businessType){
 					uni.setStorageSync('businessType', this.businessType);
+				}else{
+					uni.removeStorageSync('businessType');
 				}
 				if(this.form.carbrand){
 					uni.setStorageSync('carbrand', this.form.carbrand);
+				}else{
+					uni.removeStorageSync('carbrand');
 				}
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
 			}

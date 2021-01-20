@@ -47,9 +47,9 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.companyMainId)">
-						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
 						<!-- <img style="width: 264rpx;height: 199rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt=""> -->
-		    			 <u-image v-show="item.photoUrl" class="left" width="288rpx" height="196rpx" :src="item.photoUrl"></u-image>
+		    			 <u-image style="border-radius: 12rpx;" v-show="item.photoUrl" class="left" width="288rpx" height="196rpx" :src="item.photoUrl"></u-image>
 		    			<!--<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    				<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
 		    				<view class="right">
@@ -473,6 +473,9 @@
 
 <style lang="scss" scoped>
 	.jobSearch {
+		uni-image img{
+			border-radius: 12rpx;
+		} 
 		.tagBox{
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
