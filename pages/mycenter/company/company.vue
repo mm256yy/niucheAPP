@@ -267,17 +267,29 @@
 				 this.$u.route('/pages/login/login');
 			},
 			toShopPage(){
-				if (this.token){
-					 this.$u.route('/pages/company/shop/shop');
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route('/pages/company/shop/shop');
+					} else{
+						this.$u.toast('请先进行认证')
+					}
 				}else{
 					this.toLogin()
 				}
 			},
 			toPub(index){
-				if(this.token){
-					this.$u.route('/pages/company/myPublish/myPublish', {
-						index: index
-					});
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route('/pages/company/myPublish/myPublish', {
+							index: index
+						});
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
 				}
 			},
 			toPublishPage(){
