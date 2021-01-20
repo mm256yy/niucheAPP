@@ -420,7 +420,7 @@
 						} else {
 							obj.businesstype = 1;
 							obj.mainbusinesstype = 3;
-							type = 1
+							type = 2
 						}
 						this.$u.api.saveMainBusiness(obj).then(res => {
 							if (res.code === 200) {
