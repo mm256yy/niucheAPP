@@ -41,7 +41,7 @@
 					</u-radio-group>
 					<view class="type-right" v-else>{{form.sex === '0' ? "女":"男"}}</view>
 				</u-form-item>
-				<u-form-item label="驾驶证号" prop="licenseNumber">
+				<u-form-item label="证号" prop="licenseNumber">
 					<u-input class="input-radius" v-model="form.licenseNumber" maxlength="18" :border="true" v-if="type"/>
 					<view class="type-right" v-else>{{form.licenseNumber}}</view>
 				</u-form-item>

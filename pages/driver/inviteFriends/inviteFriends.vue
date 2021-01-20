@@ -38,14 +38,13 @@
 						</view>
 					</view>
 					<view class="">
-						<u-image src="@/static/ruhezhaunqushangjin@3x.png" width="100%" height="470px"></u-image>
-
+						<u-image src="@/static/ruhezhaunqushangjin@3x.png" width="100%" border-radius="8px" height="470px"></u-image>
 					</view>
 					<view style="margin-top: 22px;">
-						<u-image src="@/static/ruhezhaunqushangjin3x.png" width="100%" height="470px"></u-image>
+						<u-image src="@/static/ruhezhaunqushangjin3x.png" width="100%" border-radius="8px" height="470px"></u-image>
 					</view>
 					<view style="margin-top: 22px;">
-						<u-image src="@/static/jianglimingxi@3x.png" width="100%" height="687px"></u-image>
+						<u-image src="@/static/jianglimingxi@3x.png" width="100%"  border-radius="8px" height="687px"></u-image>
 					</view>
 
 				</view>
@@ -129,7 +128,7 @@
 				shareObj:{
 					href:'',
 					title:'赚租金上纽车APP',
-					summary:'注册认证就送100元，成为纽车推广人，赚租金，上不封顶！',
+					summary:'注册就送100元，成为纽车推广人，赚租金，上不封顶！',
 					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
 				},
 				shareUrl:shareUrl
@@ -235,6 +234,7 @@
 		left: 18.5%;
 		text-align: center;
 		line-height: 50px;
+		font-size: 16px;
 		color: #FB0F37;
 	}
 

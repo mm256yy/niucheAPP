@@ -424,7 +424,6 @@
 						}
 						this.$u.api.saveMainBusiness(obj).then(res => {
 							if (res.code === 200) {
-								
 								uni.reLaunch({
 									url: '/pages/company/myPublish/myPublish?index='+type
 								});
