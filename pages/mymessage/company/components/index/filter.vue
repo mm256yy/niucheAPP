@@ -138,10 +138,14 @@
 			},
 			get(text) {
 				this.addkey = this.addkey==''?text:(this.addkey+','+text);
+				let array = this.addkey.split(',');
+				array=Array.from(new Set(array));
+				this.addkey = array.join(',');
 				this.list=[];
 				this.value='';
 				this.arr.push(text);
-				this.form.carbrand = this.arr.join(',');
+				let arr=Array.from(new Set(this.arr));
+				this.form.carbrand = arr.join(',');
 				this.select()
 			},
 			transform() {
@@ -243,7 +247,6 @@
 				+ (this.form.cartype&&this.form.power?',':'') + this.form.power
 			},
 			reset() {
-				debugger
 				this.currentType = -1;
 				this.form.businessType = 0;
 				this.businessType = '';
