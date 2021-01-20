@@ -302,7 +302,11 @@
 			toMyPub(index){
 				let token = uni.getStorageSync('token')
 				if (token){
-					this.$u.route("/pages/driver/myPub/myPub",{index:index})
+					if(this.driverPub.driverState === 2){
+						this.$u.route("/pages/driver/myPub/myPub",{index:index})
+					} else{
+						this.$u.toast('请先进行认证')
+					}
 				}else{
 					this.toLogin()
 				}
