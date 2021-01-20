@@ -245,7 +245,7 @@
 			}
 		},
 		mounted() {
-			this.initBanner()
+			
 			this.getList()
 		},
 		methods: {
@@ -326,6 +326,7 @@
 						this.$u.toast(res.msg);
 					}
 				})
+				this.initBanner()
 				this.getWelfareList()
 				this.getMessageNum()
 				this.getYzsjList()
