@@ -1,5 +1,6 @@
 <template>
-	<view>
+	<view class="status_bar">
+		<u-navbar back-text="" back-icon-size="0" title="" :background="background"></u-navbar>
 		<view v-show="step===1">
 			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
 				<view v-for="(item,index) in list" :key="index" :id="item.letter == '#' ? 'indexed-list-YZ' :'indexed-list-' + item.letter">
@@ -32,6 +33,9 @@
 	export default {
 		data() {
 			return {
+				background: {
+					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
+				},
 				jumperIndex: 'A',
 				scrollViewId: '',
 				winHeight: 0,
@@ -144,6 +148,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.status_bar{
+		padding-top: calc(var(--window-top));
+	}
 	.letter-title {
 		padding: 5px 10px;
 		background: #f5f5f5;

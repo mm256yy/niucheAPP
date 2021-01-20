@@ -27,6 +27,10 @@
 				defult: true
 			}
 		},
+		mounted() {
+			let type = uni.getStorageSync('curThemeType');
+			this.curThemeType = type
+		},
 		data() {
 			return {
 
