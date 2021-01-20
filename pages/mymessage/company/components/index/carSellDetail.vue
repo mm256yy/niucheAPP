@@ -14,7 +14,10 @@
 		 </view>
 		 <kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
 		 <view class="wraps img">
-			 <swiper style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
+			 <view v-show="viewFlag&&detail.collectunit == 2" class="success">审核成功</view>
+			 <view v-show="viewFlag&&detail.collectunit == 1" class="auditing">审核中</view>
+			 <view v-show="viewFlag&&detail.collectunit == 3" class="refuse">审核驳回 原因：{{detail.autidchecktext}}</view>
+			 <swiper class="u-swiper-indicator" style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
 			 <swiper-item style="width: 100%;height: 582rpx;" v-for="(swiper, index) in detail.photourl" :key="index">
 			 <image style="width: 100%;height: 582rpx;" :src="swiper" @click="preview(index)"></image>
 			 </swiper-item>
@@ -344,11 +347,59 @@ page{
 		width: 100%;
 		background: rgba(0,0,0,0.02);
 	}
+	.wraps /deep/ .uni-swiper-dots-horizontal {
+	  bottom: 60rpx !important;
+	 }
 	.swiper-box {
 		flex: 1;
 	}
 	.swiper-item {
 		height: 100%;
+	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+	}
+	.refuse{
+		// width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding: 0 20rpx 0 50rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
 	}
 	.detail {
 		background-color: #F5F5F8;

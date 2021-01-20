@@ -1,7 +1,7 @@
 <template>
 	<view class="detail">
 		<kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
-		<view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;font-weight: 900;line-height: 176rpx;text-align: center;">
+		<view style="font-weight: 900;text-align: center;" class="top">
 			<u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
 			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">租车详情</view>
 			<view style="font-size: 36rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;" @click="back()">返回</view>
@@ -308,6 +308,9 @@ page{
 	.swiper-item {
 		height: 100%;
 	}
+	.wraps /deep/ .uni-swiper-dots-horizontal {
+	  bottom: 60rpx !important;
+	 }
 	.detail {
 		background-color: #F5F5F8;
 		.wraps{
@@ -317,6 +320,15 @@ page{
 		color: #7f7f7f;
 		.clear {
 			clear: both;
+		}
+		.top{
+			width: 100%;
+			height: calc(var(--status-bar-height)+180rpx);
+			line-height: calc(var(--status-bar-height)+180rpx);
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 20;
 		}
 		.tag {
 			width: 169rpx;

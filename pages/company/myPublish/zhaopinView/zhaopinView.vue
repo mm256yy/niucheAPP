@@ -16,7 +16,7 @@
 						   <text style="color:#3FB26C ;padding-left: 5px;">{{obj.collectionnum}}</text>
 					</u-col>
 					<u-col span="10">
-						<view style="font-size: 16pt;color: #000000;">{{obj.texttitle}}</view>
+						<view style="font-size: 16pt;color: #000000;">{{obj.title}}</view>
 					</u-col>
 					<u-col span="10" style="padding: 20rpx;">
 						<text style="color: #40B36C;font-size: 16pt;padding-right: 5pt;font-weight: bold;">¥{{obj.pay}} </text><text>月薪</text>

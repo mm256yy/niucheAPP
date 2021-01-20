@@ -22,9 +22,10 @@
 		    			<u-icon name="reload" color="#36AB62" size="40" @click="reload(item)"></u-icon>
 		    		</u-col>
 		    		<u-col span="12" @click="toView(item.inviteId)" style="border-top: 1px solid #E5E5E5;padding-top: 8pt;">
-		    			<view style="font-size: 12pt;font-weight: bold;">{{item.texttitle}}</view>
+		    			<view style="font-size: 12pt;font-weight: bold;">{{item.title}}</view>
 		    			<view>
 		    				<text style="">月薪：</text><text style="color: #3FB26C;font-size: 16pt;">¥{{item.monthprice}}</text>
+							<text style="float: right;">{{item.collectunit}}</text>
 		    			</view>
 		    		</u-col>
 		    	</u-row>
@@ -54,6 +55,20 @@
 				total:0,
 				status: 'loadmore',
 				iconType: 'flower',
+				auditOption: [
+					{
+						label: '待审核',
+						value: '1'
+					},
+					{
+						label: '审核通过',
+						value: '2'
+					},
+					{
+						label: '审核驳回',
+						value: '3'
+					}
+				],
 				loadText: {
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
@@ -94,6 +109,13 @@
 							this.$refs.loadRefresh.loadOver()
 							this.pageNum =pageNum
 						}
+						this.list.forEach(item=>{
+							this.auditOption.forEach(items=>{
+								if(items.value == item.collectunit){
+									item.collectunit = items.label
+								} 
+							}) 
+						})
 					}else {
 						 this.$u.toast(res.msg);
 					}

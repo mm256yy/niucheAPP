@@ -9,6 +9,9 @@
 		</u-navbar>
 		<view class="wraps img">
 			<u-swiper height="503" bg-color="#CDE5E3" mode="dot" :list="detail.photourl"></u-swiper>
+			<view v-show="detail.collectunit == 2" class="success">审核成功</view>
+			<view v-show="detail.collectunit == 1" class="auditing">审核中</view>
+			<view v-show="detail.collectunit == 3" class="refuse">审核驳回 原因：{{detail.autidchecktext}}</view>
 		</view>
 		 <view class="" style="padding: 40rpx;">
 			<view>
@@ -166,6 +169,51 @@ page{
 	.swiper-item {
 		height: 100%;
 	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+	}
+	.refuse{
+		// width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding: 0 20rpx 0 50rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+	}
 	.detail {
 		background: #F5F5F8;
 		.clear {
@@ -174,9 +222,6 @@ page{
 		.wraps{
 			width: 100%;
 			height: 503rpx;
-		}
-		.img{
-			margin-top: 40rpx;
 		}
 		.tag {
 			width: 169rpx;

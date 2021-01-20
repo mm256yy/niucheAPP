@@ -15,7 +15,10 @@
 		  <view slot="content-list">
 		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 		    	<u-row>
-		    		<u-col span="12" class="time">
+					<u-col span="5" class="time">
+						<view style="text-align: center;">{{item.collectunit}}</view>
+					</u-col>
+		    		<u-col span="7" class="time">
 		    			<view style="padding-right: 10pt;">{{item.refreshTime}}</view>
 		    		</u-col>
 		    		<u-col span="5" @click="toView(item.rentCarId)">
@@ -48,6 +51,20 @@ export default {
 				distance:'../../../static/distance.png',
 				list:[],
 				total:0,
+				auditOption: [
+					{
+						label: '待审核',
+						value: '1'
+					},
+					{
+						label: '审核通过',
+						value: '2'
+					},
+					{
+						label: '审核驳回',
+						value: '3'
+					}
+				],
 			}
 		},
 		mounted() {
@@ -82,6 +99,13 @@ export default {
 							this.$refs.loadRefresh.loadOver()
 							this.pageNum =pageNum
 						}
+						this.list.forEach(item=>{
+							this.auditOption.forEach(items=>{
+								if(items.value == item.collectunit){
+									item.collectunit = items.label
+								} 
+							}) 
+						})
 					}else {
 						 this.$u.toast(res.msg);
 					}
