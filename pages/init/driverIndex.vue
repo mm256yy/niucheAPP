@@ -89,7 +89,7 @@
 								<view class="swiper_price">¥{{info.packPrice}}/月</view>
 								<view class="bg_fff" style="padding:12px 4px 6px;">
 									<view class="djhc_model u-line-1">{{info.carBrand}} {{info.carText}}</view>
-									<view class="djhc_power u-line-1">{{info.companyNickName || info.companyName}}</view>
+									<view class="djhc_power u-line-1">{{info.companyName}}</view>
 								</view>
 							</view>
 						</view>
@@ -245,7 +245,7 @@
 			}
 		},
 		mounted() {
-			this.initBanner()
+			
 			this.getList()
 		},
 		methods: {
@@ -326,6 +326,7 @@
 						this.$u.toast(res.msg);
 					}
 				})
+				this.initBanner()
 				this.getWelfareList()
 				this.getMessageNum()
 				this.getYzsjList()
