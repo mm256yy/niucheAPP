@@ -412,17 +412,21 @@
 					if (res.code === 200) {
 						this.form.SystemTag = res.systemTagVo;
 						let obj = this.form;
+						let type = 0
 						if (this.carPubType === 1) {
 							obj.businesstype = 3;
 							obj.mainbusinesstype = 1;
+							type = 0
 						} else {
 							obj.businesstype = 1;
 							obj.mainbusinesstype = 3;
+							type = 1
 						}
 						this.$u.api.saveMainBusiness(obj).then(res => {
 							if (res.code === 200) {
+								
 								uni.reLaunch({
-									url: '/pages/company/myPublish/myPublish?index=0'
+									url: '/pages/company/myPublish/myPublish?index='+type
 								});
 							} else {
 								this.$u.toast(res.msg);
