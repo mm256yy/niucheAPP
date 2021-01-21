@@ -1,10 +1,10 @@
 <template>
 	<view class="share_poper">
 		<u-popup v-model="showShare" mode="bottom" :safe-area-inset-bottom="true">
-			<u-row justify="around" style="padding: 30rpx 0;">
+			<u-row justify="around" style="padding: 30rpx 0;background: #F4F5F7;color: #333333;">
 				<u-col span="4" style="text-align: center;" @click="shared(item.method)" v-for="(item,index) in shareObject" :key="index">
 					<view><u-icon :name="item.icon" size="120"></u-icon></view>
-					<view>{{item.text}}</view>
+					<view style="padding-top: 8px;">{{item.text}}</view>
 				</u-col>
 			</u-row>
 			<view class="poper_bottom" @click="showShare = false">取消</view>
@@ -97,9 +97,9 @@
 
 <style scoped class="less">
  .poper_bottom{
-	 padding: 12px 0;
-	 border-top: 1px solid #C0C4CC;
+	 padding: 16px 0;
 	 text-align: center;
-	 font-size: 14px;
+	 font-size: 16px;
+	 color: #5F5E5F;
  }
 </style>
