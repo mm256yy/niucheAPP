@@ -166,14 +166,15 @@
 				rentList:[{name: '0',text:'3000以内（含3000）' },{name: '1',text:'3000以上' }],
 				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				tagList:[],
-				firstCurrent:0
+				firstCurrent:0,
+				type:false
 			}
 		},
 		onLoad(option) {
 			let shareId = option.id;
 			if (shareId) {
 				this.shareId = shareId;
-				this.shareObj.href = this.shareUrl + shareId;
+				this.shareObj.href = this.shareUrl + shareId + '&type=' + this.type;
 				
 			}
 			let id = option.id;

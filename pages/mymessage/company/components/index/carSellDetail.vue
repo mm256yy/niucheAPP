@@ -180,6 +180,7 @@
 					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
 				},
 				shareUrl:shareViewUrl,
+				type:true,
 				background: {
 					'background-image': 'background: linear-gradient(270deg,rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);'
 				},
@@ -192,8 +193,7 @@
 			let shareId = option.id;
 			if (shareId) {
 				this.shareId = shareId;
-				this.shareObj.href = this.shareUrl + shareId;
-				
+				this.shareObj.href = this.shareUrl + shareId + '&type=' + this.type;
 			}
 			let id = option.id;
 			let flag = option.flag;
