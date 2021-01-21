@@ -123,9 +123,9 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "D:/APP发布资料/zhuceye_3.png",
-                    "xhdpi" : "D:/APP发布资料/zhuceye_3@2x.png",
-                    "xxhdpi" : "D:/APP发布资料/zhuceye_3@3x.png"
+                    "hdpi" : "D:/APP发布资料/kpy (1).png",
+                    "xhdpi" : "D:/APP发布资料/kpy (2).png",
+                    "xxhdpi" : "D:/APP发布资料/kpy (3).png"
                 }
             }
         },
