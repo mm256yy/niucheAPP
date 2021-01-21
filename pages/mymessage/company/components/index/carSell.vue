@@ -90,7 +90,7 @@
 								<view class="tag">{{item.carAge}}/{{item.km}}</view>
 							</view>
 		    				<view class="price">{{item.packPrice|moneyFormat}}元</view>
-							<view v-show="item.carnbumber" style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
+							<view v-show="item.carnbumber" style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: right;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
 		    			</view>
 		    			<view class="clear"></view>
 						<!-- <view class="flex">
@@ -792,7 +792,7 @@
 					float: left;
 				}
 				.right {
-					width: 380rpx;
+					width: 410rpx;
 					padding-left: 34rpx;
 				}
 				.name {
@@ -809,7 +809,7 @@
 					margin-top: 8rpx;
 				}
 				.price{
-					font-size: 18px;
+					font-size: 36rpx;
 					font-family: SourceHanSansCN-Bold, SourceHanSansCN;
 					font-weight: bold;
 					color: #FF5200;

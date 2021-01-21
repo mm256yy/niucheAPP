@@ -25,7 +25,9 @@
 		    			<view style="font-size: 12pt;font-weight: bold;">{{item.title}}</view>
 		    			<view>
 		    				<text style="">月薪：</text><text style="color: #3FB26C;font-size: 16pt;">¥{{item.monthprice}}</text>
-							<text style="float: right;">{{item.collectunit}}</text>
+							<text v-show="item.collectunit == 2" style="float: right;" class="success">审核成功</text>
+							<text v-show="item.collectunit == 1" style="float: right;" class="auditing">审核中</text>
+							<text v-show="item.collectunit == 3" style="float: right;" class="refuse">审核驳回</text>
 		    			</view>
 		    		</u-col>
 		    	</u-row>
@@ -57,7 +59,7 @@
 				iconType: 'flower',
 				auditOption: [
 					{
-						label: '待审核',
+						label: '审核中',
 						value: '1'
 					},
 					{
@@ -109,13 +111,6 @@
 							this.$refs.loadRefresh.loadOver()
 							this.pageNum =pageNum
 						}
-						this.list.forEach(item=>{
-							this.auditOption.forEach(items=>{
-								if(items.value == item.collectunit){
-									item.collectunit = items.label
-								} 
-							}) 
-						})
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -196,6 +191,48 @@
 		padding-left: 30rpx;
 		color: #7F7F7F;
 		font-size: 10pt;
+	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
+	}
+	.refuse{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding: 0 20rpx 0 50rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
 	}
 }
 

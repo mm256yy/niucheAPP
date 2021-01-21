@@ -158,16 +158,17 @@
 				shareId: '',
 				shareObj:{
 					href:'',
-					title:'赚租金上纽车APP',
-					summary:'注册就送100元，成为纽车推广人，赚租金，上不封顶！',
-					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
+					title:'',
+					summary:'',
+					imageUrl:''
 				},
 				shareUrl:shareViewUrl,
 				rentList:[{name: '0',text:'3000以内（含3000）' },{name: '1',text:'3000以上' }],
 				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				tagList:[],
 				firstCurrent:0,
-				type:false
+				type:false,
+				businesstype:''
 			}
 		},
 		onLoad(option) {
@@ -245,6 +246,15 @@
 				this.$u.api.detailRent({id:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.detail = res.object;
+						 if(this.detail.businesstype == 1){
+						 	this.businesstype="网约车"
+						 }
+						 if(this.detail.businesstype == 2){
+						 	this.businesstype="出租车"
+						 }
+						 this.shareObj.title = this.detail.texttitle;
+						 this.shareObj.summary = '￥' + this.detail.carrentprice + '/月起租|' + this.businesstype;
+						 this.shareObj.imageUrl = this.detail.photourl[0];
 						 if(this.detail.systemtag){
 						 	this.detail.systemtag.splice(1,1)
 						 	this.detail.systemtag.push('车龄≤'+this.detail.carage+'年')
@@ -355,6 +365,9 @@ page{
 			top: 0;
 			left: 0;
 			z-index: 20;
+			background-image: url(@/static/detailBg.png);
+			background-repeat: no-repeat;
+			background-size: cover;
 		}
 		.tag {
 			width: 169rpx;
