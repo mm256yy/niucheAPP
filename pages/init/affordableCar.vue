@@ -22,7 +22,7 @@
 										{{item.carname}} {{item.carxinghao}}
 									</view>
 									<view style="padding: 10px 5px;color: #666666;" class="u-line-2">
-									{{item.cartype}}·{{item.power}}·{{item.carage}}</view>
+									{{item.cartype}}·{{item.power}}·≤{{item.carage}}年</view>
 									<view style="padding: 0 5px 5px;color:#FF5A00;font-size: 12pt;">{{item.lowprice}}元/月</view>
 								</view>
 							</view>
