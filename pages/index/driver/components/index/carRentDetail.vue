@@ -94,10 +94,10 @@
 		  </view>
 		 <view style="width: 100%;height:140rpx"></view>
 		 <view class="phone" style="width: 100%;height: 140rpx;display: flex;justify-content: space-around;align-items: center;background: #fff;">
-		 	<view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+		 	<!-- <view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 		 		<u-image width="42rpx" height="42rpx" src="@/static/service.png"></u-image>
 		 		<view style="margin-top: 8rpx;">客服</view>
-		 	</view>
+		 	</view> -->
 		 	<view @click="other()" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 		 		<u-image width="42rpx" height="42rpx" src="@/static/shop.png"></u-image>
 		 		<view style="margin-top: 8rpx;">店铺</view>
@@ -253,7 +253,7 @@
 						 	this.businesstype="出租车"
 						 }
 						 this.shareObj.title = this.detail.texttitle;
-						 this.shareObj.summary = '￥' + this.detail.carrentprice + '/月起租|' + this.businesstype;
+						 this.shareObj.summary = '￥' + this.detail.rentprice + '/月起租|' + this.businesstype;
 						 this.shareObj.imageUrl = this.detail.photourl[0];
 						 if(this.detail.systemtag){
 						 	this.detail.systemtag.splice(1,1)

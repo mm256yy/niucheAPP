@@ -16,9 +16,9 @@
 		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 		    	<u-row>
 					<u-col span="5" class="time">
-						<view v-show="item.collectunit == 2" style="text-align: center;" class="success">审核成功</view>
-						<view v-show="item.collectunit == 1" style="text-align: center;" class="auditing">审核中</view>
-						<view v-show="item.collectunit == 3" style="text-align: center;" class="refuse">审核驳回</view>
+						<view v-show="item.collectunit == 2" class="success">审核成功</view>
+						<view v-show="item.collectunit == 1" class="auditing">审核中</view>
+						<view v-show="item.collectunit == 3" class="refuse">审核驳回</view>
 					</u-col>
 		    		<u-col span="7" class="time">
 		    			<view style="padding-right: 10pt;">{{item.refreshTime}}</view>
