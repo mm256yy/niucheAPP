@@ -272,7 +272,7 @@
 				moneyFormat:function(arg){
 					if(arg.toString().length>=4){
 						const moneys = arg/10000
-						const realVal = parseFloat(moneys);
+						const realVal = parseFloat(moneys).toFixed(2);
 						return realVal+"万"
 					}
 					}

@@ -10,6 +10,7 @@ export const actionJs = ipconfig+'/user/image/DriverCardLicense';
 export const baseUrl = ipconfig;
 export const shareUrl =shareIp+"?shareId=" //邀请好友
 export const shareArticleUrl = shareIp+"/driverServer/?id="//文章
+export const shareViewUrl = shareIp+"/pubilshDetails/?shareId="//详情
 export const updateUrl =ipconfig+"/app/getUrl?version=" 
 export const version = '1.5.2.1'
 export const publishObj = {

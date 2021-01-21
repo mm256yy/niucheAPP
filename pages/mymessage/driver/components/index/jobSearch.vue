@@ -570,6 +570,9 @@
 		.clear {
 			clear: both;
 		}
+		.last{
+			background: #fff;
+		}
 		.lists {
 			width: 679rpx;
 			position: relative;

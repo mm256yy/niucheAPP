@@ -9,19 +9,21 @@
 		 </u-navbar> -->
 		 <view style="font-weight: 900;text-align: center;" class="top">
 			 <u-image width="750" height="calc(var(--status-bar-height)+180rpx)" class="imgs" src="@/static/detailBg.png"></u-image>
-			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">{{detail.carmodeltag}}</view>
+			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">{{detail.carmodeltag}}
+			 </view>
 			 <view style="font-size: 28rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;" @click="back()">返回</view>
+			 <u-icon style="position: fixed;top: 80rpx;right: 20rpx;" @click="share()" name="zhuanfa" color="#ffffff" size="40"></u-icon>
 		 </view>
 		 <kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
 		 <view class="wraps img">
-			 <view v-show="viewFlag&&detail.collectunit == 2" class="success">审核成功</view>
-			 <view v-show="viewFlag&&detail.collectunit == 1" class="auditing">审核中</view>
-			 <view v-show="viewFlag&&detail.collectunit == 3" class="refuse">审核驳回 原因：{{detail.autidchecktext}}</view>
 			 <swiper class="u-swiper-indicator" style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
 			 <swiper-item style="width: 100%;height: 582rpx;" v-for="(swiper, index) in detail.photourl" :key="index">
 			 <image style="width: 100%;height: 582rpx;" :src="swiper" @click="preview(index)"></image>
 			 </swiper-item>
 			 </swiper>
+			 <view v-show="viewFlag&&detail.collectunit == 2" class="success">审核成功</view>
+			 <view v-show="viewFlag&&detail.collectunit == 1" class="auditing">审核中</view>
+			 <view v-show="viewFlag&&detail.collectunit == 3" class="refuse">审核驳回 原因：{{detail.autidchecktext}}</view>
 		 	<!-- <u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper> -->
 		 </view>
 		 <view style="position: absolute;top: 556rpx;left: 0;margin-bottom: 140rpx;background: #f5f5f5;border-radius: 36rpx 36rpx 0px 0px;">
@@ -33,7 +35,8 @@
 		 			<view v-for="(item, index) in detail.pricesectionlist" :key="item.id" class="" v-show="firstCurrent === index">
 		 				<view class="price"><text>￥{{item.packprice}}</text>/起售</view>
 		 				<view>
-		 					<view class="type">网约车</view>
+		 					<view v-show="detail.businesstype==1" class="type">网约车</view>
+							<view v-show="detail.businesstype==2" class="type">出租车</view>
 		 				</view>
 		 				<view class="startNum">{{item.lowprice}}辆起售</view>
 		 				<view class="clear"></view>
@@ -120,6 +123,7 @@
 		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :editId="driverDemandId" :ids="detail.comparymainid" :type="3"></PubBottom>
 		<phone-auth :phone="detail.phone" :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
 		<phone-auth :ids="detail.comparyid" :title="detail.titletext" :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
+		<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
 	</view>
 </template>
 
@@ -130,6 +134,10 @@
 	import PubBottom from '@/components/pubBottom.vue'
 	import phoneAuth from '@/components/phoneAuth.vue'
 	import kxjPreviewImage from '@/components/kxj-previewImage/kxj-previewImage.vue'
+	import {
+		shareViewUrl
+	} from '@/utils/constant.js'
+	import ShareWX from '@/components/shareWx/shareWx.vue'
 	export default {
 		components: {
 		    rangePrice,
@@ -137,7 +145,8 @@
 			carInstall,
 			PubBottom,
 			phoneAuth,
-			kxjPreviewImage
+			kxjPreviewImage,
+			ShareWX
 		  },
 		data() {
 			return {
@@ -163,6 +172,14 @@
 				open:false,
 				openShow:false,
 				firstCurrent:0,
+				shareId: '',
+				shareObj:{
+					href:'',
+					title:'赚租金上纽车APP',
+					summary:'注册就送100元，成为纽车推广人，赚租金，上不封顶！',
+					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
+				},
+				shareUrl:shareViewUrl,
 				background: {
 					'background-image': 'background: linear-gradient(270deg,rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);'
 				},
@@ -172,6 +189,27 @@
 			}
 		},
 		onLoad(option) {
+			let shareId = option.shareId;
+			if (shareId) {
+				this.shareId = shareId;
+				this.shareObj.href = this.shareUrl + shareId;
+				
+			} else {
+				let token = uni.getStorageSync('token')
+				if (token){
+					this.initId()
+				} else{
+					this.shareObj.href = this.shareUrl;
+				}
+			}
+		},
+		onLoad(option) {
+			let shareId = option.id;
+			if (shareId) {
+				this.shareId = shareId;
+				this.shareObj.href = this.shareUrl + shareId;
+				
+			}
 			let id = option.id;
 			let flag = option.flag;
 			if(id){
@@ -189,11 +227,13 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			share() {
+				this.$refs.shareWx.shareShow()
+			},
 			back(){
 				uni.navigateBack()
 			},
 			preview(e){
-				console.log(e)
 				this.$refs.previewImage.open(e)
 			},
 			setting(id) {
@@ -405,8 +445,8 @@ page{
 		background-color: #F5F5F8;
 		.top{
 			width: 100%;
-			height: calc(var(--status-bar-height)+180rpx);
-			line-height: calc(var(--status-bar-height)+180rpx);
+			height: 200rpx;
+			line-height: 200rpx;
 			position: fixed;
 			top: 0;
 			left: 0;

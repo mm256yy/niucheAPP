@@ -4,7 +4,7 @@
 		<view style="font-weight: 900;text-align: center;" class="top">
 			<u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
 			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">租车详情</view>
-			<view style="font-size: 36rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;" @click="back()">返回</view>
+			<view style="font-size: 36rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;font-size: 28rpx;" @click="back()">返回</view>
 		</view>
 		<view class="wraps img">
 			<swiper style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
@@ -23,7 +23,8 @@
 		  			<view v-for="(item, index) in detail.carRentPriceCollection" :key="item.id" class="" v-show="firstCurrent === index">
 		  				<view class="price"><text>￥{{item.carrentprice}}</text>/月起租</view>
 		  				<view>
-		  					<view class="type">网约车</view>
+		  					<view v-show="detail.businesstype==1" class="type">网约车</view>
+		  					<view v-show="detail.businesstype==2" class="type">出租车</view>
 		  				</view>
 		  				<view class="startNum">押金：{{detail.cashPrice}}</view>
 		  				<view class="clear"></view>
@@ -323,8 +324,8 @@ page{
 		}
 		.top{
 			width: 100%;
-			height: calc(var(--status-bar-height)+180rpx);
-			line-height: calc(var(--status-bar-height)+180rpx);
+			height: 200rpx;
+			line-height: 200rpx;
 			position: fixed;
 			top: 0;
 			left: 0;

@@ -28,6 +28,9 @@
 					<u-col span="12" style="margin-top: 10rpx;">
 						招聘人数：{{obj.invitepeoplenum}}人 
 					</u-col>
+					<view class="auditing" v-show="obj.collectunit == 1">审核中</view>
+					<view class="success" v-show="obj.collectunit == 2">审核通过</view>
+					<view class="refuse" v-show="obj.collectunit == 3">审核驳回 原因：{{obj.autidchecktext}}</view>
 				</u-row>
 		 	</view>
 			<view style="margin-top: 20pt;">
@@ -125,6 +128,45 @@ page{
 		position: relative;
 		color: #ffffff;
 		display: flex;
+	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+	}
+	.refuse{
+		// width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding: 0 20rpx 0 50rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
 	}
 </style>
 
