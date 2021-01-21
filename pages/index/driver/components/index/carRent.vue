@@ -67,7 +67,7 @@
 								</view>
 							</view>
 							<view class="price"><text>{{item.rentprice}}元</text></view>
-							<view v-show="item.carnbumber" class="numRenting">在租{{item.carnbumber}}辆</view>
+							<view v-show="item.carRentNum" class="numRenting">在租{{item.carRentNum}}辆</view>
 		    			</view>
 		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
