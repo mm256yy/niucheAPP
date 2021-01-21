@@ -8,11 +8,10 @@
 			</view>
 		 </u-navbar> -->
 		 <view style="font-weight: 900;text-align: center;" class="top">
-			 <u-image width="750" height="calc(var(--status-bar-height)+180rpx)" class="imgs" src="@/static/detailBg.png"></u-image>
-			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">{{detail.carmodeltag}}
+			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;" class="room">{{detail.carmodeltag}}
 			 </view>
-			 <view style="font-size: 28rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;" @click="back()">返回</view>
-			 <u-icon style="position: fixed;top: 80rpx;right: 20rpx;" @click="share()" name="zhuanfa" color="#ffffff" size="40"></u-icon>
+			 <view style="font-size: 28rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;" class="room" @click="back()">返回</view>
+			 <u-icon style="position: fixed;top: 80rpx;right: 20rpx;" class="room" @click="share()" name="zhuanfa" color="#ffffff" size="40"></u-icon>
 		 </view>
 		 <kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
 		 <view class="wraps img">
@@ -172,12 +171,13 @@
 				open:false,
 				openShow:false,
 				firstCurrent:0,
+				businesstype:'',
 				shareId: '',
 				shareObj:{
 					href:'',
-					title:'赚租金上纽车APP',
-					summary:'注册就送100元，成为纽车推广人，赚租金，上不封顶！',
-					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
+					title:'',
+					summary:'',
+					imageUrl:''
 				},
 				shareUrl:shareViewUrl,
 				type:true,
@@ -265,6 +265,15 @@
 					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
+							 if(this.detail.businesstype == 1){
+								 this.businesstype="网约车"
+							 }
+							 if(this.detail.businesstype == 2){
+							 	this.businesstype="出租车"
+							 }
+							 this.shareObj.title = this.detail.titletext;
+							 this.shareObj.summary = '￥' + this.detail.packprice + '/起售|' + this.businesstype;
+							 this.shareObj.imageUrl = this.detail.photourl[0];
 							 this.kmOption.forEach(item=>{
 							    if(item.value == this.detail.carkm){
 							    	this.detail.carkm = item.text;
@@ -412,11 +421,9 @@ page{
 		color: #fff;
 	}
 	.refuse{
-		// width: 162rpx;
+		width: 452rpx;
 		height: 54rpx;
-		text-align: right;
 		line-height: 54rpx;
-		padding: 0 20rpx 0 50rpx;
 		position: absolute;
 		top: 200rpx;
 		left: 28rpx;
@@ -425,6 +432,7 @@ page{
 		background-size: cover;
 		font-size: 26rpx;
 		color: #fff;
+		padding-left: 50rpx;
 	}
 	.detail {
 		background-color: #F5F5F8;
@@ -436,7 +444,13 @@ page{
 			top: 0;
 			left: 0;
 			z-index: 20;
+			background-image: url(@/static/detailBg.png);
+			background-repeat: no-repeat;
+			background-size: cover;
 		}
+		// .room{
+		// 	margin-top: calc(var(--status-bar-height) + 20rpx);
+		// }
 		.wraps{
 			width: 100%;
 			height: 494rpx;

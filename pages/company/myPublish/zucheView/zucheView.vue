@@ -200,11 +200,9 @@ page{
 		color: #fff;
 	}
 	.refuse{
-		// width: 162rpx;
+		width: 452rpx;
 		height: 54rpx;
-		text-align: right;
 		line-height: 54rpx;
-		padding: 0 20rpx 0 50rpx;
 		position: absolute;
 		top: 200rpx;
 		left: 28rpx;
@@ -213,6 +211,7 @@ page{
 		background-size: cover;
 		font-size: 26rpx;
 		color: #fff;
+		padding-left: 50rpx;
 	}
 	.detail {
 		background: #F5F5F8;

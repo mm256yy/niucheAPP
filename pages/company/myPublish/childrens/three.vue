@@ -16,7 +16,9 @@
 		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 		    	<u-row>
 					<u-col span="5" class="time">
-						<view style="text-align: center;">{{item.collectunit}}</view>
+						<view v-show="item.collectunit == 2" style="text-align: center;" class="success">审核成功</view>
+						<view v-show="item.collectunit == 1" style="text-align: center;" class="auditing">审核中</view>
+						<view v-show="item.collectunit == 3" style="text-align: center;" class="refuse">审核驳回</view>
 					</u-col>
 		    		<u-col span="7" class="time">
 		    			<view style="padding-right: 10pt;">{{item.refreshTime}}</view>
@@ -53,7 +55,7 @@ export default {
 				total:0,
 				auditOption: [
 					{
-						label: '待审核',
+						label: '审核中',
 						value: '1'
 					},
 					{
@@ -99,13 +101,6 @@ export default {
 							this.$refs.loadRefresh.loadOver()
 							this.pageNum =pageNum
 						}
-						this.list.forEach(item=>{
-							this.auditOption.forEach(items=>{
-								if(items.value == item.collectunit){
-									item.collectunit = items.label
-								} 
-							}) 
-						})
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -176,6 +171,48 @@ export default {
 		padding-left: 30rpx;
 		color: #7F7F7F;
 		font-size: 10pt;
+	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
+	}
+	.refuse{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding: 0 20rpx 0 50rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
 	}
 }
 

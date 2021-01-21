@@ -156,17 +156,18 @@ page{
 		margin-top: 20rpx;
 	}
 	.refuse{
-		// width: 162rpx;
+		width: 452rpx;
 		height: 54rpx;
-		text-align: right;
 		line-height: 54rpx;
-		padding: 0 20rpx 0 50rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
 		background-image: url(@/static/refuse.png);
 		background-repeat: no-repeat;
 		background-size: cover;
 		font-size: 26rpx;
 		color: #fff;
-		margin-top: 20rpx;
+		padding-left: 50rpx;
 	}
 </style>
 
