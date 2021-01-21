@@ -5,6 +5,7 @@
 			<u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
 			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">租车详情</view>
 			<view style="font-size: 36rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;font-size: 28rpx;" @click="back()">返回</view>
+			<u-icon style="position: fixed;top: 80rpx;right: 20rpx;" @click="share()" name="zhuanfa" color="#ffffff" size="40"></u-icon>
 		</view>
 		<view class="wraps img">
 			<swiper style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
@@ -110,6 +111,7 @@
 		 </view>
 		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>
 		<phone-auth :ids="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
+		<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
 	</view>
 </template>
 
@@ -119,13 +121,18 @@
 	import settingParameter from './settingParameter'
 	import phoneAuth from '@/components/phoneAuth.vue'
 	import kxjPreviewImage from '@/components/kxj-previewImage/kxj-previewImage.vue'
+	import {
+		shareViewUrl
+	} from '@/utils/constant.js'
+	import ShareWX from '@/components/shareWx/shareWx.vue'
 	export default {
 		components: {
 		    rangePrice,
 			rentcarIssue,
 			settingParameter,
 			phoneAuth,
-			kxjPreviewImage
+			kxjPreviewImage,
+			ShareWX
 		  },
 		data() {
 			return {
@@ -148,6 +155,14 @@
 				swiperCurrent: 0,
 				detail: {},
 				tab: [],
+				shareId: '',
+				shareObj:{
+					href:'',
+					title:'赚租金上纽车APP',
+					summary:'注册就送100元，成为纽车推广人，赚租金，上不封顶！',
+					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
+				},
+				shareUrl:shareViewUrl,
 				rentList:[{name: '0',text:'3000以内（含3000）' },{name: '1',text:'3000以上' }],
 				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				tagList:[],
@@ -155,6 +170,12 @@
 			}
 		},
 		onLoad(option) {
+			let shareId = option.id;
+			if (shareId) {
+				this.shareId = shareId;
+				this.shareObj.href = this.shareUrl + shareId;
+				
+			}
 			let id = option.id;
 			let tags = option.tags;
 			if(tags){
@@ -169,6 +190,9 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			share() {
+				this.$refs.shareWx.shareShow()
+			},
 			back(){
 				uni.navigateBack()
 			},

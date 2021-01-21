@@ -189,21 +189,6 @@
 			}
 		},
 		onLoad(option) {
-			let shareId = option.shareId;
-			if (shareId) {
-				this.shareId = shareId;
-				this.shareObj.href = this.shareUrl + shareId;
-				
-			} else {
-				let token = uni.getStorageSync('token')
-				if (token){
-					this.initId()
-				} else{
-					this.shareObj.href = this.shareUrl;
-				}
-			}
-		},
-		onLoad(option) {
 			let shareId = option.id;
 			if (shareId) {
 				this.shareId = shareId;
