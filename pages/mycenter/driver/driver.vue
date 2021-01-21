@@ -242,6 +242,18 @@
 						 this.$u.toast(res.msg);
 					}
 				})
+			  } else{
+				  this.driverPub = {
+					headPhoto:'../../static/driverSrc.png',
+					name:'',
+					telephone:'',
+					driverState:9,
+					postState:9,
+					jobNum:0,
+					carNum:0,
+					certificationType:"",
+					shareId:''
+				}
 			  }
 			  console.log(this.driverPub.shareId, '6666666')
 			},
