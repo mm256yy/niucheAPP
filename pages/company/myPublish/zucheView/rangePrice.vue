@@ -6,7 +6,7 @@
 			 <view style="width: 300rpx;height: 60rpx;background-color: #40B36C;line-height: 60rpx;text-align: center;color: #fff;" v-show="tab.length==1">{{tab[0]}}</view>
 			 <view v-for="(item, index) in detail.pricesectionlist" :key="index" class="" v-show="firstCurrent === index">
 			    <view class="bg">
-			        <view class="year">车龄：≤{{item.rentCarTime}}</view>
+			        <view class="year">租期：≤{{item.rentCarTime}}</view>
 			    	<view class="distance">{{detail.carkm}}万公里</view>
 			    	<view class="clear"></view>
 			    </view>
