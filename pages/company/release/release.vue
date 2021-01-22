@@ -25,7 +25,7 @@
 							<u-avatar :src="zlzmsrc" mode='square' size="50" class='vermiddle'></u-avatar>
 							<text class="border-dotted"></text>
 						</u-col>
-						<u-col span="7" @click="toPage(2)" class="fontbold">司机招募</u-col>
+						<u-col span="7" @click="toPage(2)" class="fontbold">司机招聘</u-col>
 					</u-row>
 				</view>
 				<view class="zlzl" >
