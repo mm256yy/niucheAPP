@@ -56,7 +56,8 @@
 		    					<!-- <view class="tag">付费标签</view> -->
 		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
 								<view style="height: 116rpx;">
-									<view class="name u-line-2">{{item.title}}</view>
+									<view v-show="item.title" class="name u-line-2">{{item.title}}</view>
+									<view v-show="!item.title" class="name u-line-2">高薪招聘{{item.texttitle}}</view>
 									<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
 									<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
 								</view>
@@ -220,6 +221,7 @@
 				this.current = index;
 				this.priceid = this.select[index].value;
 				this.priceidkey = this.select[index].label;
+				this.priceidkey = (this.priceidkey == '不限')?'':this.priceidkey
 				if(this.priceid == 1) {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '6000';
@@ -247,6 +249,7 @@
 			getDataType(index) {
 				this.currentType = index;
 				this.businesstypekey = this.selectType[index].label;
+				this.businesstypekey = (this.businesstypekey == '不限')?'':this.businesstypekey
 				this.businessType = this.selectType[index].value;
 				this.showType = false;
 				this.showMask = false;

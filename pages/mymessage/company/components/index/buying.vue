@@ -323,6 +323,7 @@
 			getDataKm(index) {
 				this.current = index;
 				this.kmkey = this.selectKm[index].label;
+				this.kmkey = (this.kmkey == '不限')?'':this.kmkey
 				this.form.km = this.selectKm[index].value;
 				this.showKm = false;
 				this.show = false;
@@ -331,6 +332,7 @@
 			getDataPrice(index) {
 				this.current = index;
 				this.packpricekey = this.selectPrice[index].label;
+				this.packpricekey = (this.packpricekey == '不限')?'':this.packpricekey
 				this.form.packprice = this.selectPrice[index].value;
 				this.showPrice = false;
 				this.show = false;
@@ -620,6 +622,9 @@
 		}
 		.clear {
 			clear: both;
+		}
+		.last{
+			background: #fff;
 		}
 		.lists {
 			width: 702rpx;
