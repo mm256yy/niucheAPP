@@ -42,7 +42,7 @@
 		 			</view>
 		 			<view>
 		 				<view style="margin-top: 20rpx;">
-		 					<text style="width: 156rpx;height: 60rpx;line-height: 54rpx;text-align: center;
+		 					<text style="width: 156rpx;height: 60rpx;line-height: 60rpx;text-align: center;
 		 					border-radius: 8rpx;display: inline-block;margin-right: 12rpx;" :class="{active:index===firstCurrent,inactive:index!=firstCurrent}" v-for="(item,index) in tab" :key="index" @click="change(index)">{{item}}</text>
 		 				</view>
 		 			</view>
@@ -280,8 +280,7 @@
 							    }
 							 })
 							 if(this.detail.systemtag){
-								 this.detail.systemtag.splice(1,1)
-								 this.detail.systemtag.push(this.detail.carage)
+								 this.detail.systemtag.splice(1,2)
 								 this.detail.systemtag = this.detail.systemtag.join('/')
 							 }
 							 var text = '';
