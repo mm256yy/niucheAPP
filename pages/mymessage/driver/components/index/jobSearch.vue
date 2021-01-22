@@ -15,8 +15,8 @@
 						</u-form-item>
 						<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
 				    background: #F8F9FB;border-radius: 4px;width: 202rpx;margin-left: 21rpx;" label="">
-						<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
-						<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
+						<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="月薪" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
+						<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="月薪" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
 						<u-form-item style="padding: 0 16rpx;margin-left:21rpx;margin-top: -18rpx;float: left;
 				    background: #F8F9FB;border-radius: 4px;width: 182rpx;" label="">
 						<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
