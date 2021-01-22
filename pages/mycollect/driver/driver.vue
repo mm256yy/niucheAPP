@@ -139,7 +139,7 @@
 				tablist: [{
 					name: '租车'
 				}, {
-					name: '招募'
+					name: '招聘'
 				}],
 				distance:'../../static/distance.png',
 			    current: 0,
