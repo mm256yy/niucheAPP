@@ -159,15 +159,13 @@ page{
 		width: 452rpx;
 		height: 54rpx;
 		line-height: 54rpx;
-		position: absolute;
-		top: 200rpx;
-		left: 28rpx;
 		background-image: url(@/static/refuse.png);
 		background-repeat: no-repeat;
 		background-size: cover;
 		font-size: 26rpx;
 		color: #fff;
 		padding-left: 50rpx;
+		margin-top: 20rpx;
 	}
 </style>
 
