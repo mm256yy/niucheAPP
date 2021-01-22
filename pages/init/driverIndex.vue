@@ -100,7 +100,7 @@
 			<!-- 司机服务 -->
 			<view class="xcfl">
 				<view class="xcfl_title">司机服务</view>
-				<view class="xcfl_link" @click="taPage(1)">
+				<view class="xcfl_link" @click="taPage(0)">
 					<text>用车 跑单 技巧 活动</text>
 					<view>
 						<u-icon name="arrow-right" color="#6D6D6D" size="32"></u-icon>
