@@ -298,8 +298,8 @@
 				color: #5E5E5E;
 				margin: 4rpx 0 8rpx 0;
 				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 2;
+				// -webkit-box-orient: vertical;
+				// -webkit-line-clamp: 2;
 				overflow: hidden;
 			}
 
