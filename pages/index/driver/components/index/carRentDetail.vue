@@ -15,9 +15,19 @@
 			</swiper>
 			<!-- <u-swiper @click="preview(index)" height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper> -->
 		</view>
-		 <view style="position: absolute;top: 556rpx;left: 0;margin-bottom: 140rpx;background: #f5f5f5;border-radius: 36rpx 36rpx 0px 0px;">
+		<view style="position: relative;top: 88rpx;left: 0;" v-if="tagList.length>0">
+						 <u-image src="@/static/dipian@2x.png" height="140rpx" border-radius="8"></u-image>
+						 <view style="position: absolute;top: 5px;left: 10px;color: #fff;" class="u-line-2">
+							 	<text class="list_tag" v-for="(tag,i) in tagList" :key="i">{{tag.tabValue}}</text>
+			<!-- 					 <view v-for="(tag,index) in tagList" :key="index" style="font-size: 14px;display: inline-block;">
+									 {{tag.tabValue}} 
+									 <text style="display: inline-block;padding:2px 5px;font-size: 14px;" v-show="index<tagList.length-1">•</text>
+								 </view> -->
+						 </view>
+					 </view>
+		 <view :class="{new:tagList.length,innew:!tagList.length}">
 		  	<view class="">
-		  		<view style="padding: 30rpx 40rpx;background: #fff;border-radius: 36rpx 36rpx 0px 0px;width: 100%;">
+		  		<view :class="{newActive:tagList.length,innewActive:!tagList.length}">
 		  			<!-- <view class="tag">付费标签</view> -->
 		  			<view class="name">{{detail.texttitle}}</view>
 		  			<view class="clear"></view>
@@ -488,6 +498,32 @@ page{
 			background-position: 50% 50%;
 			font-size: 26rpx;
 			color: #FF9500;
+		}
+		.new{
+			position: absolute;
+			top: 722rpx;
+			left: 0;
+			margin-bottom: 140rpx;
+			background: #f5f5f5;
+		}
+		.innew{
+			position: absolute;
+			top: 536rpx;
+			left: 0;
+			margin-bottom: 140rpx;
+			background: #f5f5f5;
+			border-radius: 36rpx 36rpx 0px 0px;
+		}
+		.newActive{
+			padding: 30rpx 40rpx;
+			background: #fff;
+			width: 100%;
+		}
+		.innewActive{
+			padding: 30rpx 40rpx;
+			background: #fff;
+			width: 100%;
+			border-radius: 36rpx 36rpx 0px 0px;
 		}
 	}
 </style>
