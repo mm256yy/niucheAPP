@@ -66,7 +66,7 @@
 								<image v-if="item.imgs.length != 1" :src="items" style="width: 220rpx;height: 220rpx;"></image>
 								<image v-if="item.imgs.length == 1" :src="items" style="width: 464rpx; height: 344rpx;"></image>
 							</view>
-							
+
 						</view>
 					</view>
 				</view>
@@ -129,10 +129,12 @@
 		watch: {
 			shareList: function() {
 				this.shareList.forEach((item) => {
-					item.imgs = item.photoUrls.split(',')
-					this.ureTime(item)
-					item.leng = item.imgs.length
-					if (item.leng == 2 || item.leng == 5 ||item.leng	 == 8) {
+					if (item.photoUrls) {
+						item.imgs = item.photoUrls.split(',')
+						this.ureTime(item)
+						item.leng = item.imgs.length
+					}
+					if (item.leng == 2 || item.leng == 5 || item.leng == 8) {
 						item.imgs.push('')
 					}
 				})
@@ -178,6 +180,7 @@
 		font-size: 32rpx;
 		color: #111111;
 		padding: 0 28rpx;
+
 		// margin-top: 100rpx;
 		// 行业动态
 		.driverBox_1 {
@@ -262,6 +265,7 @@
 				margin-bottom: 20rpx;
 				justify-content: space-between;
 				align-items: center;
+
 				.driver_to {
 					display: flex;
 					align-items: center;
@@ -302,6 +306,7 @@
 				margin-bottom: 20rpx;
 				justify-content: space-between;
 				flex-wrap: wrap;
+
 				.content_img image {
 					border-radius: 8rpx;
 					overflow: hidden;

@@ -16,16 +16,14 @@
 
 		<!-- 下拉刷新的 -->
 		<view style="margin-top: 108rpx;">
-			<scroll-view scroll-y="true" :scroll-top="scrollTop" @scroll="scroll">
-				<load-refresh ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000" color="#FF9500"
-				 heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total" @refresh="xiaLa"
-				 @loadMore="loadMore">
-					<view slot="content-list">
-						<service :index="indexs" :driveList="driList" :activList="activList" :orderList="orderList" :shareList="shareList"
-						 @neiClick="neiClick"></service>
-					</view>
-				</load-refresh>
-			</scroll-view>
+			<load-refresh :scroll-top="scrollTop" ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000"
+			 color="#FF9500" heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total"
+			 @refresh="xiaLa" @loadMore="loadMore">
+				<view slot="content-list">
+					<service :index="indexs" :driveList="driList" :activList="activList" :orderList="orderList" :shareList="shareList"
+					 @neiClick="neiClick"></service>
+				</view>
+			</load-refresh>
 		</view>
 	</view>
 </template>
@@ -57,7 +55,7 @@
 					list: ''
 				}],
 				arrList: [],
-				scrollTop: 0,
+				scrollTop: -1,
 				oldScrollTop: 0
 			}
 		},
@@ -66,10 +64,6 @@
 			this.getList(1);
 		},
 		methods: {
-			scroll(e) {
-				console.log(e, '111111')
-				this.oldScrollTop = e.detail.scrollTop
-			},
 			neiClick(id) {
 				this.$u.route('/pages/driver/driverService/serviceText', {
 					ids: id,
@@ -93,7 +87,7 @@
 			tapSwitch(e) {
 				this.indexs = e
 				this.getList(1)
-				this.scrollTop = 0
+				this.scrollTop = -1
 			},
 			interface(pageNum, res) {
 				if (res.code === 200) { // 成功的动态码

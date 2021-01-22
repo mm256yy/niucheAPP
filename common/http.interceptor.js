@@ -39,12 +39,9 @@ const install = (Vue, vm) => {
 				  	uni.removeStorageSync('token');
 			  }
 			 const token = uni.getStorageSync('token');
-				 if (token) {
-					config.header.Authorization = token;
-				 }  else {
-					 config.header = {}
-				 }
-			 console.log(config)
+			 if (token) {
+			 	config.header.Authorization = token;
+			 }  
 
 		
 		
