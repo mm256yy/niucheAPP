@@ -297,11 +297,7 @@
 			toCollect(){
 				let token = uni.getStorageSync('token')
 				if (token){
-					if(this.driverPub.driverState === 2){
-						this.$u.route("/pages/mycollect/mycollect")
-					} else{
-						this.$u.toast('请先进行认证')
-					}
+					this.$u.route("/pages/mycollect/mycollect")
 				}else{
 					this.toLogin()
 				}

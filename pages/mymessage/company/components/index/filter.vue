@@ -16,7 +16,7 @@
 	   	  <u-form style="position: relative;" :model="form" ref="uForm" label-width="280" :border-bottom="false">
 			  <u-form-item label="品牌选择" label-position="top">
 				  <u-row style="border-bottom: 2rpx solid rgba(0,0,0,0.06);padding-bottom: 10rpx;width: 680rpx;">
-				  	<u-col span="8"><u-input @input="keyup" v-model="value" maxlength="30" :border="false" placeholder="请选择品牌型号"/></u-col>
+				  	<u-col span="8"><u-input @input="keyup" v-model="value" maxlength="30" :border="false" placeholder="请输入品牌型号"/></u-col>
 				  </u-row>
 			  	<!-- <u-checkbox-group active-color="#6DD99C" @change="brandGroupChange" shape="circle">
 			  		<u-checkbox v-model="item.checked"  v-for="(item, index) in brandList" :key="index" :name="item.name">

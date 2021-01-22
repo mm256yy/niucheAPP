@@ -225,8 +225,8 @@
 		height: 54rpx;
 		text-align: right;
 		line-height: 54rpx;
-		padding: 0 20rpx 0 50rpx;
-		background-image: url(@/static/refuse.png);
+		padding-right: 10rpx;
+		background-image: url(@/static/refuseList.png);
 		background-repeat: no-repeat;
 		background-size: cover;
 		font-size: 26rpx;

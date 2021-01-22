@@ -122,7 +122,7 @@
 			</swiper-item>
 		</swiper>
 	</view>
-	<Auth></Auth>
+	<!-- <Auth></Auth> -->
 	</view>
 </template>
 
