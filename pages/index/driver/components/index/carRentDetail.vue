@@ -525,6 +525,15 @@ page{
 			width: 100%;
 			border-radius: 36rpx 36rpx 0px 0px;
 		}
+		.list_tag {
+			display: inline-block;
+			padding: 2px 4px;
+			font-size: 14px;
+			margin-right: 6px;
+			margin-bottom: 6px;
+			background: linear-gradient(270deg, #FFC400 0%, #FFB200 54%, #FF9900 100%);
+			color: #FFFFFF;
+		}
 	}
 </style>
 
