@@ -85,8 +85,10 @@
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
 			<u-button type="warning" shape='circle' class="btn-orange"  @click="toNext">提交</u-button>
 		</view>
-		<u-popup v-model="showTips" mode="center" length="80%" :closeable="true">
-			
+		<u-popup v-model="showTips" mode="center" length="80%" :mask-close-able="false">
+			<view class="" style="text-align: right;padding: 10px 10px 5px;">
+				<u-icon name="close" @click="confirm()"></u-icon>
+			</view>
 			<view class="slot_content" >
 				<view style="text-align: center;font-weight: bold;padding: 15px;">认证提示</view>
 				<view class="slot_tips">
@@ -98,8 +100,7 @@
 						</u-radio-group>
 					</view>
 				</view>
-				<view style="display: flex;justify-content: space-around;padding: 10px 0 0;">
-					<view @click="confirm" class="slot_btn" style="background: #F2F2F2;color: #5F5E5F;">取消</view>
+				<view style="display: flex;justify-content: center;padding: 10px 0 0;">
 					<view class="slot_btn" @click="toNextRoute" style="background: linear-gradient(270deg, #FFC200 0%, #FFB900 41%, #FF9A00 100%);color: #FFFFFF;">下一步</view>
 				</view>
 			</view>
@@ -333,7 +334,7 @@
 	  }
 	}
 	.slot_content {
-		padding: 15px 0;
+		padding-bottom: 15px;
 		.slot_tips {
 			color: #939393;
 			font-size: 14px;

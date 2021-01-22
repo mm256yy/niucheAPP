@@ -2,8 +2,8 @@
     "name" : "纽车",
     "appid" : "__UNI__A80C5DE",
     "description" : "",
-    "versionName" : "1.5.2.0",
-    "versionCode" : 112,
+    "versionName" : "1.5.2.1",
+    "versionCode" : 113,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -123,9 +123,9 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "D:/APP发布资料/zhuceye_3.png",
-                    "xhdpi" : "D:/APP发布资料/zhuceye_3@2x.png",
-                    "xxhdpi" : "D:/APP发布资料/zhuceye_3@3x.png"
+                    "hdpi" : "D:/APP发布资料/kpy (1).png",
+                    "xhdpi" : "D:/APP发布资料/kpy (2).png",
+                    "xxhdpi" : "D:/APP发布资料/kpy (3).png"
                 }
             }
         },

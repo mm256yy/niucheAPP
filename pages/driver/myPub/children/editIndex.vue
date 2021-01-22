@@ -47,13 +47,10 @@
 				</u-checkbox-group>
 			</u-form-item> -->
 			<!-- <view class="more">*以下为加分项，可以不设置。</view> -->
-			<u-form-item style="width: 670rpx;" label="网约车工作年限" prop="workexperience">
-				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.workexperience" />年
+			<u-form-item style="width: 670rpx;border-bottom: 1rpx solid rgba(0,0,0,0.08);" label="从业经验(选填)" prop="workingExperience">
+				<u-input maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.workingExperience" />年
 			</u-form-item>
-			<u-form-item style="width: 670rpx;" label="出租车工作年限" prop="taxiExperience">
-				<u-input class="inp" maxlength="2" type="number" style="width: 200rpx;height: 72rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;margin-right: 10rpx;text-indent: 31rpx;" placeholder="请输入" v-model="form.taxiExperience" />年
-			</u-form-item>
-			<u-form-item label="福利要求" label-position="top">
+			<u-form-item label="福利要求(选填)" label-position="top">
 				<search-tags :list="publishObj.benefitList" :active="currentBenefit" :singleType="false" @onClick="getDataBenefit"></search-tags>
 				<!-- <u-checkbox-group active-color="#FFA032" @change="benefitGroupChange" shape="circle">
 					<u-checkbox v-model="item.checked"  v-for="(item, index) in benefitList" :key="index" :name="item.text">
@@ -61,7 +58,7 @@
 					</u-checkbox>
 				</u-checkbox-group> -->
 			</u-form-item>
-			<u-form-item label="我的优势" label-position="top">
+			<u-form-item label="我的优势(选填)" label-position="top">
 				<u-input type="textarea" maxlength="50" style="width: 607rpx;line-height: 72rpx;border-radius: 30rpx;background: #fff;text-indent: 31rpx;" placeholder="退伍军人英语口语交际能力" v-model="form.myok" />
 			</u-form-item>
 			<u-form-item label="是否公开?(必选)" label-position="top">
@@ -222,8 +219,7 @@
 				this.form.driverDemandId = this.driverDemandId
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
-						if(this.currentSalary == -1||this.currentHour == -1
-						||!this.form.taxiExperience||!this.form.workexperience){
+						if(this.currentSalary == -1||this.currentHour == -1){
 							this.$u.toast('请填写');
 							return;
 						}
@@ -235,8 +231,7 @@
 							           isOpen: 1,
 							           monthprice:'',
 							           myok:'',
-							           taxiExperience:'',
-							           workexperience:'',
+							           workingExperience:'',
 							           worktime:'',
 							           workCity: '杭州'
 						            };

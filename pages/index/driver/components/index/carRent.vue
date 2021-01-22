@@ -36,7 +36,7 @@
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
-		<view v-show="!filterData.length" style="height: 132rpx;"></view>
+		<view v-show="!filterData.length" style="height: 116rpx;"></view>
 		<view v-show="filterData.length" style="height: 226rpx;"></view>
 		<load-refresh
 		  v-show="list.length"
@@ -55,28 +55,28 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.id)">
-						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
-						<img style="width: 288rpx;height: 196rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="item.photourl" class="left" :src="item.photourl" alt="">
 		    			<view class="right">
 							<view style="height: 116rpx;">
 								<view class="name u-line-2">
 								  <text v-show="item.businesstypetag == 1">[网约车]</text>
 								  <text v-show="item.businesstypetag == 2">[出租车]</text>
 								{{item.texttitle}}</view>
-								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge&&item.km?'/':''}}{{item.km}}{{item.km?'万公里':''}}
+								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge?'/':''}}{{item.firstkm}}-{{item.km}}万公里
 								</view>
 							</view>
 							<view class="price"><text>{{item.rentprice}}元</text></view>
-							<view class="numRenting">在租200辆</view>
+							<view v-show="item.carRentNum" class="numRenting">在租{{item.carRentNum}}辆</view>
 		    			</view>
 		    			<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    			<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 		    			<view class="clear"></view>
-						<view class="flex">
+						<!-- <view class="flex">
 							<view class="company">{{item.comparyname}}</view>
 							<view class="area">{{item.comparyarea}}</view>
 							<view class="clear"></view>
-						</view>
+						</view> -->
 		    			<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
 		    		</view>
 		    		<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
@@ -172,16 +172,16 @@
 				],
 				selectType: [
 					{
+						label: '不限',
+						value: ''
+					},
+					{
 						label: '网约车',
 						value: '1'
 					},
 					{
 						label: '出租车',
 						value: '2'
-					},
-					{
-						label: '不限',
-						value: ''
 					}
 				],
 				list: [],
@@ -305,6 +305,47 @@
 				}else{
 					this.form.islogin = 0
 				}
+				this.businesstypekey = '';
+				this.priceidkey = '';
+				this.form.businesstype = uni.getStorageSync('typeDri');
+				this.priceid = uni.getStorageSync('priceidDri');
+				this.currentType = this.form.businesstype == ''?0:parseInt(this.form.businesstype);
+				// this.currentKm = parseInt(this.form.km - 1)?parseInt(this.form.km - 1):0;
+				this.currentAge = parseInt(this.age)?parseInt(this.age):-1;
+				const priceid = this.priceid - 1
+				this.current = parseInt(priceid);
+				this.selectType.map(item=>{
+				   if(item.value == this.form.businesstype){
+				   	this.businesstypekey = item.label;
+				   }
+				})
+				this.businesstypekey = (this.businesstypekey == '不限')?'':this.businesstypekey
+				 this.select.map(item=>{
+				    if(item.value == this.priceid){
+				    	this.priceidkey = item.label;
+				    }
+				 })
+				 this.priceidkey = (this.priceidkey == '不限')?'':this.priceidkey
+				 if(this.priceid == 1) {
+				 	this.form.startPriceid = '';
+				 	this.form.endPriceid = '';
+				 }
+				 if(this.priceid == 2) {
+				 	this.form.startPriceid = '0';
+				 	this.form.endPriceid = '2000';
+				 }
+				 if(this.priceid == 3) {
+				 	this.form.startPriceid = '2000';
+				 	this.form.endPriceid = '3000';
+				 }
+				 if(this.priceid == 4) {
+				 	this.form.startPriceid = '3000';
+				 	this.form.endPriceid = '4000';
+				 }
+				 if(this.priceid == 5) {
+				 	this.form.startPriceid = '4000';
+				 	this.form.endPriceid = '-1';
+				 }
 				if(uni.getStorageSync('carbrandDriver')){
 					carbrand = uni.getStorageSync('carbrandDriver').split(',');
 					this.filterData = this.filterData.concat(carbrand);
@@ -385,6 +426,8 @@
 				this.current = index;
 				this.priceid = this.select[index].value;
 				this.priceidkey = this.select[index].label;
+				this.priceidkey = (this.priceidkey == '不限')?'':this.priceidkey
+				uni.setStorageSync('priceidDri', this.priceid);
 				if(this.priceid == 1) {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '';
@@ -412,7 +455,9 @@
 			getDataType(index) {
 				this.currentType = index;
 				this.businesstypekey = this.selectType[index].label;
+				this.businesstypekey = (this.businesstypekey == '不限')?'':this.businesstypekey
 				this.form.businesstype = this.selectType[index].value;
+				uni.setStorageSync('typeDri', this.form.businesstype);
 				this.showType = false;
 				this.showMask = false;
 				this.search()
@@ -750,10 +795,11 @@
 			.list{
 				width: 679rpx;
 				// height: 285rpx;
+				padding: 34rpx 0 44rpx 0;
+				border-bottom: 1rpx solid rgba(0,0,0,0.08);
 				color: #000;
 				font-size: 20rpx;
 				margin-left: 36rpx;
-				margin-bottom: 20rpx;
 				background: #fff;
 				.left {
 					float: left;

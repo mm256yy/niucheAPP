@@ -1,10 +1,10 @@
 <template>
 	<view class="share_poper">
-		<u-popup v-model="showShare" mode="bottom">
-			<u-row justify="around" style="padding: 30rpx 0;">
+		<u-popup v-model="showShare" mode="bottom" :safe-area-inset-bottom="true">
+			<u-row justify="around" style="padding: 30rpx 0;background: #F4F5F7;color: #333333;">
 				<u-col span="4" style="text-align: center;" @click="shared(item.method)" v-for="(item,index) in shareObject" :key="index">
-					<view><u-icon :name="item.icon" size="60"></u-icon></view>
-					<view>{{item.text}}</view>
+					<view><u-icon :name="item.icon" size="120"></u-icon></view>
+					<view style="padding-top: 8px;">{{item.text}}</view>
 				</u-col>
 			</u-row>
 			<view class="poper_bottom" @click="showShare = false">取消</view>
@@ -47,11 +47,11 @@
 		data() {
 			return {
 				 shareObject:[{
-					 method:'WXSceneSession',icon:'http://image.neocab.cn/icon_weixin.png',text:'微信好友'
+					 method:'WXSceneSession',icon:'http://image.neocab.cn/weixin%402x.png',text:'微信好友'
 				 },{
-					 method:'WXSenceTimeline',icon:'http://image.neocab.cn/icon_pengyouquan.png',text:'微信朋友圈'
+					 method:'WXSenceTimeline',icon:'http://image.neocab.cn/pengyouquan%402x.png',text:'微信朋友圈'
 				 },{
-					 method:'qq',icon:'http://image.neocab.cn/icon_qq.png',text:'QQ'
+					 method:'qq',icon:'http://image.neocab.cn/qq%402x.png',text:'QQ'
 				 }],
 				showShare:false
 			}
@@ -97,9 +97,9 @@
 
 <style scoped class="less">
  .poper_bottom{
-	 padding: 10px 0;
-	 border-top: 1px solid #C0C4CC;
+	 padding: 16px 0;
 	 text-align: center;
-	 font-size: 14px;
+	 font-size: 16px;
+	 color: #5F5E5F;
  }
 </style>

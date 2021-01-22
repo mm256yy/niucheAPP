@@ -47,16 +47,16 @@
 		    <view class="last">
 		    	<view class="lists" v-for="(item, index) in list" :key="index">
 		    		<view class="list" @click="detail(item.companyMainId)">
-						<img style="width: 288rpx;height: 196rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photoUrl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif" alt="">
 						<!-- <img style="width: 264rpx;height: 199rpx;" v-show="item.photoUrl" class="left" :src="item.photoUrl" alt=""> -->
-		    			 <u-image v-show="item.photoUrl" class="left" width="288rpx" height="196rpx" :src="item.photoUrl"></u-image>
+		    			 <u-image style="border-radius: 12rpx;" v-show="item.photoUrl" class="left" width="288rpx" height="196rpx" :src="item.photoUrl"></u-image>
 		    			<!--<u-image v-show="!item.photoUrl" class="left" width="264rpx" height="199rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
 		    				<!-- <u-image class="left" width="264rpx" height="199rpx" :src="item.photoUrl"></u-image> -->
 		    				<view class="right">
 		    					<!-- <view class="tag">付费标签</view> -->
 		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
 								<view style="height: 116rpx;">
-									<view class="name u-line-2">高薪招聘{{item.texttitle}}</view>
+									<view class="name u-line-2">{{item.title}}</view>
 									<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
 									<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
 								</view>
@@ -473,6 +473,9 @@
 
 <style lang="scss" scoped>
 	.jobSearch {
+		uni-image img{
+			border-radius: 12rpx;
+		} 
 		.tagBox{
 			width: 100%;
 			padding: 10rpx 100rpx 10rpx 80rpx;
@@ -567,6 +570,9 @@
 		.clear {
 			clear: both;
 		}
+		.last{
+			background: #fff;
+		}
 		.lists {
 			width: 679rpx;
 			position: relative;
@@ -596,7 +602,7 @@
 					float: left;
 					padding-left: 30rpx;
 					.price{
-						margin-top: 34rpx;
+						margin-top: 40rpx;
 					}
 					.price text{
 						font-size: 36rpx;
@@ -659,7 +665,7 @@
 					border: 1rpx solid #FF9500;
 					font-size: 24rpx;
 					color: #FF9500;
-					margin-top: 20rpx;
+					margin-top: 16rpx;
 				}
 				.box {
 					width: 679rpx;

@@ -16,7 +16,7 @@
 						   <text style="color:#3FB26C ;padding-left: 5px;">{{obj.collectionnum}}</text>
 					</u-col>
 					<u-col span="10">
-						<view style="font-size: 16pt;color: #000000;">{{obj.texttitle}}</view>
+						<view style="font-size: 16pt;color: #000000;">{{obj.title}}</view>
 					</u-col>
 					<u-col span="10" style="padding: 20rpx;">
 						<text style="color: #40B36C;font-size: 16pt;padding-right: 5pt;font-weight: bold;">¥{{obj.pay}} </text><text>月薪</text>
@@ -28,6 +28,9 @@
 					<u-col span="12" style="margin-top: 10rpx;">
 						招聘人数：{{obj.invitepeoplenum}}人 
 					</u-col>
+					<view class="auditing" v-show="obj.collectunit == 1">审核中</view>
+					<view class="success" v-show="obj.collectunit == 2">审核通过</view>
+					<view class="refuse" v-show="obj.collectunit == 3">审核驳回 原因：{{obj.autidchecktext}}</view>
 				</u-row>
 		 	</view>
 			<view style="margin-top: 20pt;">
@@ -125,6 +128,46 @@ page{
 		position: relative;
 		color: #ffffff;
 		display: flex;
+	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+	}
+	.refuse{
+		width: 452rpx;
+		height: 54rpx;
+		line-height: 54rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		padding-left: 50rpx;
 	}
 </style>
 

@@ -18,11 +18,11 @@
 							</view>
 						</u-col>
 						<u-col span="8" v-else @click="toAuth">
-							<view style="height: 120rpx;display: flex;align-items: center;width: 530rpx;">
+							<view style="height: 120rpx;display: flex;align-items: center;width: 500rpx;">
 								<view style="height: 120rpx;display: flex;flex-direction: column;justify-content: center;">
-									<view @click="toAuth" style="color: #fff;font-size: 36rpx;">{{companyName}}</view>
+									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
 									<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
-									<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-2" v-if="companyStatus === 3">原因 :{{reson}}</view>
+									<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-1" v-if="companyStatus === 3">原因 :{{reson}}</view>
 								</view>
 								<view style="height: 120rpx;display: flex;align-items: center;margin-left: auto;">
 									<u-image v-show="tokenFlag" width="32" height="48" src="@/static/right.png"></u-image>
@@ -125,13 +125,13 @@
 					</view>
 				</view>
 				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
-					<view style="font-size: 36rpx;color: #333;font-weight: 900;">其他</view>
+					<!-- <view style="font-size: 36rpx;color: #333;font-weight: 900;">其他</view> -->
 					<!-- <view @click="toShopPage" style="display: flex;">
 						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
 						<u-image style="margin-right: 60rpx;" width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view> -->
 				</view>
-				<view @click="toCollect()" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx">
+				<!-- <view @click="toCollect()" style="width: 678rpx;height: 120rpx;margin-left: 36rpx;display: flex;align-items: center;background: #fff;padding: 0 38rpx;justify-content: space-between;border-radius: 20rpx">
 					<view style="display: flex;">
 						<u-image width="48" height="48" src="@/static/collectCom.png"></u-image>
 						<view style="margin-left: 26rpx;font-size: 32rpx;color: #666;">收藏</view>
@@ -140,7 +140,7 @@
 						<view v-if="!tokenFlag" style="margin-right: 20rpx;font-size: 28rpx;color: #999;">不可见</view>
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
-				</view>
+				</view> -->
 				<view style="width: 100%;height: 280rpx;"></view>
 				<view class="publish" @click="toPublishPage">
 				</view>
@@ -267,17 +267,29 @@
 				 this.$u.route('/pages/login/login');
 			},
 			toShopPage(){
-				if (this.token){
-					 this.$u.route('/pages/company/shop/shop');
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route('/pages/company/shop/shop');
+					} else{
+						this.$u.toast('请先进行认证')
+					}
 				}else{
 					this.toLogin()
 				}
 			},
 			toPub(index){
-				if(this.token){
-					this.$u.route('/pages/company/myPublish/myPublish', {
-						index: index
-					});
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route('/pages/company/myPublish/myPublish', {
+							index: index
+						});
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
 				}
 			},
 			toPublishPage(){

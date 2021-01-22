@@ -1,9 +1,11 @@
 <template>
 	<view class="detail">
 		<kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
-		<view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;font-weight: 900;line-height: 176rpx;text-align: center;">
+		<view style="font-weight: 900;text-align: center;" class="top">
 			<u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
 			<view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">租车详情</view>
+			<view style="font-size: 36rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;font-size: 28rpx;" @click="back()">返回</view>
+			<u-icon style="position: fixed;top: 80rpx;right: 20rpx;" @click="share()" name="zhuanfa" color="#ffffff" size="40"></u-icon>
 		</view>
 		<view class="wraps img">
 			<swiper style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
@@ -22,7 +24,8 @@
 		  			<view v-for="(item, index) in detail.carRentPriceCollection" :key="item.id" class="" v-show="firstCurrent === index">
 		  				<view class="price"><text>￥{{item.carrentprice}}</text>/月起租</view>
 		  				<view>
-		  					<view class="type">网约车</view>
+		  					<view v-show="detail.businesstype==1" class="type">网约车</view>
+		  					<view v-show="detail.businesstype==2" class="type">出租车</view>
 		  				</view>
 		  				<view class="startNum">押金：{{detail.cashPrice}}</view>
 		  				<view class="clear"></view>
@@ -37,7 +40,7 @@
 		  			<view class="box">
 		  				<view>{{detail.systemtag}}</view>
 		  			</view>
-		  			<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 23rpx;margin-left: 20rpx;">在售200辆/杭州</view>
+		  			<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 23rpx;margin-left: 20rpx;">在租{{detail.carnbumber}}辆/杭州</view>
 		  			<view class="clear"></view>
 		  	 	</view>
 		  	</view>
@@ -57,7 +60,7 @@
 		  			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		  				<view style="float: left;">综合行驶里程</view>
 						<view v-show="detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}{{detail.firstkm&&detail.endkm?'-':''}}{{detail.endkm}}万公里</view>
-						<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}</view>
+						<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}万公里</view>
 						<view v-show="!detail.firstkm&&!detail.endkm" style="float: right;color: #353B3D;">暂无数据</view>
 		  				<view class="clear"></view>
 		  			</view>
@@ -91,10 +94,10 @@
 		  </view>
 		 <view style="width: 100%;height:140rpx"></view>
 		 <view class="phone" style="width: 100%;height: 140rpx;display: flex;justify-content: space-around;align-items: center;background: #fff;">
-		 	<view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+		 	<!-- <view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 		 		<u-image width="42rpx" height="42rpx" src="@/static/service.png"></u-image>
 		 		<view style="margin-top: 8rpx;">客服</view>
-		 	</view>
+		 	</view> -->
 		 	<view @click="other()" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 		 		<u-image width="42rpx" height="42rpx" src="@/static/shop.png"></u-image>
 		 		<view style="margin-top: 8rpx;">店铺</view>
@@ -108,6 +111,7 @@
 		 </view>
 		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>
 		<phone-auth :ids="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
+		<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
 	</view>
 </template>
 
@@ -117,13 +121,18 @@
 	import settingParameter from './settingParameter'
 	import phoneAuth from '@/components/phoneAuth.vue'
 	import kxjPreviewImage from '@/components/kxj-previewImage/kxj-previewImage.vue'
+	import {
+		shareViewUrl
+	} from '@/utils/constant.js'
+	import ShareWX from '@/components/shareWx/shareWx.vue'
 	export default {
 		components: {
 		    rangePrice,
 			rentcarIssue,
 			settingParameter,
 			phoneAuth,
-			kxjPreviewImage
+			kxjPreviewImage,
+			ShareWX
 		  },
 		data() {
 			return {
@@ -146,13 +155,29 @@
 				swiperCurrent: 0,
 				detail: {},
 				tab: [],
+				shareId: '',
+				shareObj:{
+					href:'',
+					title:'',
+					summary:'',
+					imageUrl:''
+				},
+				shareUrl:shareViewUrl,
 				rentList:[{name: '0',text:'3000以内（含3000）' },{name: '1',text:'3000以上' }],
 				ageList:[{name: '0',text:'1年内' },{name: '1',text:'1年-3年' },{name: '2',text:'3年-5年' },{name: '3',text:'5年以上' }],
 				tagList:[],
-				firstCurrent:0
+				firstCurrent:0,
+				type:false,
+				businesstype:''
 			}
 		},
 		onLoad(option) {
+			let shareId = option.id;
+			if (shareId) {
+				this.shareId = shareId;
+				this.shareObj.href = this.shareUrl + shareId + '&type=' + this.type;
+				
+			}
 			let id = option.id;
 			let tags = option.tags;
 			if(tags){
@@ -167,6 +192,12 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			share() {
+				this.$refs.shareWx.shareShow()
+			},
+			back(){
+				uni.navigateBack()
+			},
 			preview(e){
 				console.log(e)
 				this.$refs.previewImage.open(e)
@@ -215,7 +246,20 @@
 				this.$u.api.detailRent({id:this.driverDemandId}).then(res=>{
 					if(res.code === 200){
 						 this.detail = res.object;
-						 this.detail.systemtag = this.detail.systemtag.join('/')
+						 if(this.detail.businesstype == 1){
+						 	this.businesstype="网约车"
+						 }
+						 if(this.detail.businesstype == 2){
+						 	this.businesstype="出租车"
+						 }
+						 this.shareObj.title = this.detail.texttitle;
+						 this.shareObj.summary = '￥' + this.detail.rentprice + '/月起租|' + this.businesstype;
+						 this.shareObj.imageUrl = this.detail.photourl[0];
+						 if(this.detail.systemtag){
+						 	this.detail.systemtag.splice(1,1)
+						 	this.detail.systemtag.push('车龄≤'+this.detail.carage+'年')
+						 	this.detail.systemtag = this.detail.systemtag.join('/')					
+						 }
 						 var text = '';
 						 if(this.detail.carRentPriceCollection) {
 						   this.detail.carRentPriceCollection.forEach(item=>{
@@ -300,6 +344,9 @@ page{
 	.swiper-item {
 		height: 100%;
 	}
+	.wraps /deep/ .uni-swiper-dots-horizontal {
+	  bottom: 60rpx !important;
+	 }
 	.detail {
 		background-color: #F5F5F8;
 		.wraps{
@@ -309,6 +356,18 @@ page{
 		color: #7f7f7f;
 		.clear {
 			clear: both;
+		}
+		.top{
+			width: 100%;
+			height: 200rpx;
+			line-height: 200rpx;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 20;
+			background-image: url(@/static/detailBg.png);
+			background-repeat: no-repeat;
+			background-size: cover;
 		}
 		.tag {
 			width: 169rpx;

@@ -15,7 +15,12 @@
 		  <view slot="content-list">
 		    <view class="scroll-item" @click="toView(item.rentCarId)" v-for="(item,index) in list" :key="item.index">
 		    	<u-row>
-		    		<u-col span="12" class="time">
+					<u-col span="5" class="time">
+						<view v-show="item.collectunit == 2" class="success">审核成功</view>
+						<view v-show="item.collectunit == 1" class="auditing">审核中</view>
+						<view v-show="item.collectunit == 3" class="refuse">审核驳回</view>
+					</u-col>
+		    		<u-col span="7" class="time">
 		    			<view style="padding-right: 10pt;">{{item.refreshTime}}</view>
 		    		</u-col>
 		    		<u-col span="5" @click="toView(item.rentCarId)">
@@ -51,6 +56,20 @@
 				total:0,
 				status: 'loadmore',
 				iconType: 'flower',
+				auditOption: [
+					{
+						label: '审核中',
+						value: '1'
+					},
+					{
+						label: '审核通过',
+						value: '2'
+					},
+					{
+						label: '审核驳回',
+						value: '3'
+					}
+				],
 				loadText: {
 					loadmore: '轻轻上拉',
 					loading: '努力加载中',
@@ -171,6 +190,48 @@
 		padding-left: 30rpx;
 		color: #7F7F7F;
 		font-size: 10pt;
+	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
+	}
+	.refuse{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding: 0 20rpx 0 50rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		margin-top: 20rpx;
+		margin-left: 56rpx;
 	}
 }
 

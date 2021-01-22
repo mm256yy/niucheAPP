@@ -29,7 +29,7 @@
 			    type: String,
 			    default: ''
 			},
-			id: {
+			ids: {
 			    type: String,
 			    default: ''
 			},
@@ -77,13 +77,13 @@
 								}
 								if(this.status == 3){
 									this.$u.route('/pages/mymessage/company/components/index/other',{
-										id:this.id,
+										id:this.ids,
 										title:this.title
 										});
 								}
 								if(this.status == 4){
 									this.$u.route('/pages/index/driver/components/index/other',{
-										id:this.id,
+										id:this.ids,
 										});
 								}
 							} else if (flag === 3 ){

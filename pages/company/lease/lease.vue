@@ -67,19 +67,19 @@
 				<view class="label_title">综合行驶里程</view>
 				<u-row style="padding-top: 16rpx;">
 					<u-col span="4">
-						<u-input v-model="form.firstkm" :border="true" placeholder="" />
+						<u-input v-model="form.firstkm" :border="true" placeholder="单位万公里" />
 					</u-col>
 					<u-col span="4" style="padding: 0 40rpx;">
 						<view style="border-bottom: 1px solid #D9DEDF;"></view>
 					</u-col>
 					<u-col span="4">
-						<u-input v-model="form.endkm" :border="true" placeholder="" />
+						<u-input v-model="form.endkm" :border="true" placeholder="单位万公里" />
 					</u-col>
 					<u-col span="12" style="padding-top: 16rpx;">
 						<view class="line">请填该批次车辆公里数最少和公里数最多的一辆</view>
 					</u-col>
 				</u-row>
-				<view class="label_title">车辆况描述</view>
+				<view class="label_title">车况描述</view>
 				<view style="padding-top: 16rpx;">
 					<u-input type="textarea" v-model="form.cardescribe" :border="true" placeholder="" />
 				</view>
@@ -324,7 +324,7 @@
 			},
 			onLineListChange(obj) {
 				this.activeOnLine = obj.index;
-				this.form.onlineistaxi = obj.id;
+				this.form.onlineistaxi = obj.index+1;
 			},
 			carTypeListChange(obj) {
 				this.activeCarType = obj.index;
@@ -355,6 +355,7 @@
 					this.form.carmodel = obj.carmodel;
 					this.form.carxinghao = '';
 				} else {
+					this.selectCarInfo = obj.carbrand + '/' + obj.carmodel+obj.carxinghao;
 					this.showCar = false;
 					this.form = Object.assign(this.form, obj)
 				}
@@ -411,17 +412,20 @@
 					if (res.code === 200) {
 						this.form.SystemTag = res.systemTagVo;
 						let obj = this.form;
+						let type = 0
 						if (this.carPubType === 1) {
 							obj.businesstype = 3;
 							obj.mainbusinesstype = 1;
+							type = 0
 						} else {
 							obj.businesstype = 1;
 							obj.mainbusinesstype = 3;
+							type = 2
 						}
 						this.$u.api.saveMainBusiness(obj).then(res => {
 							if (res.code === 200) {
 								uni.reLaunch({
-									url: '/pages/company/myPublish/myPublish?index=0'
+									url: '/pages/company/myPublish/myPublish?index='+type
 								});
 							} else {
 								this.$u.toast(res.msg);

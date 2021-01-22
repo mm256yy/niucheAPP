@@ -7,17 +7,22 @@
 				</view>
 			</view>
 		 </u-navbar> -->
-		 <view style="width: 100%;height: 176rpx;top: 0;left: 0;position: fixed;z-index: 20;font-weight: 900;line-height: 176rpx;text-align: center;">
-			 <u-image width="750rpx" height="176rpx" src="@/static/detailBg.png"></u-image>
-			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;">{{detail.carmodeltag}}</view>
+		 <view style="font-weight: 900;text-align: center;" class="top">
+			 <view style="margin-bottom: -60rpx;font-size: 36rpx;color: #fff;position: absolute;top: 0;width: 750rpx;text-align: center;" class="room">{{detail.carmodeltag}}
+			 </view>
+			 <view style="font-size: 28rpx;width: 100rpx;position: fixed;top: 0;left: 0;color: #fff;" class="room" @click="back()">返回</view>
+			 <u-icon style="position: fixed;top: 80rpx;right: 20rpx;" class="room" @click="share()" name="zhuanfa" color="#ffffff" size="40"></u-icon>
 		 </view>
 		 <kxj-previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="detail.photourl"></kxj-previewImage>
 		 <view class="wraps img">
-			 <swiper style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
+			 <swiper class="u-swiper-indicator" style="width: 100%;height: 582rpx;" circular="true" autoplay="true" indicator-dots="true">
 			 <swiper-item style="width: 100%;height: 582rpx;" v-for="(swiper, index) in detail.photourl" :key="index">
 			 <image style="width: 100%;height: 582rpx;" :src="swiper" @click="preview(index)"></image>
 			 </swiper-item>
 			 </swiper>
+			 <view v-show="viewFlag&&detail.collectunit == 2" class="success">审核成功</view>
+			 <view v-show="viewFlag&&detail.collectunit == 1" class="auditing">审核中</view>
+			 <view v-show="viewFlag&&detail.collectunit == 3" class="refuse">审核驳回 原因：{{detail.autidchecktext}}</view>
 		 	<!-- <u-swiper height="582" bg-color="#CDE5E3" :list="detail.photourl"></u-swiper> -->
 		 </view>
 		 <view style="position: absolute;top: 556rpx;left: 0;margin-bottom: 140rpx;background: #f5f5f5;border-radius: 36rpx 36rpx 0px 0px;">
@@ -27,9 +32,10 @@
 		 			<view class="name">{{detail.titletext}}</view>
 		 			<view class="clear"></view>
 		 			<view v-for="(item, index) in detail.pricesectionlist" :key="item.id" class="" v-show="firstCurrent === index">
-		 				<view class="price"><text>￥{{item.packprice}}</text>/月起售</view>
+		 				<view class="price"><text>￥{{item.packprice}}</text>/起售</view>
 		 				<view>
-		 					<view class="type">网约车</view>
+		 					<view v-show="detail.businesstype==1" class="type">网约车</view>
+							<view v-show="detail.businesstype==2" class="type">出租车</view>
 		 				</view>
 		 				<view class="startNum">{{item.lowprice}}辆起售</view>
 		 				<view class="clear"></view>
@@ -44,7 +50,7 @@
 		 			<view class="box">
 		 				<view>{{detail.systemtag}}</view>
 		 			</view>
-		 			<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 23rpx;margin-left: 20rpx;">在售200辆/杭州</view>
+		 			<view style="font-size: 28rpx;color: #4aba75;float: left;margin-top: 23rpx;margin-left: 20rpx;">在售{{detail.carnbumber}}辆/杭州</view>
 		 			<view class="clear"></view>
 		 	 	</view>
 		 	</view>
@@ -63,8 +69,8 @@
 		 			</view>
 		 			<view style="width: 686rpx;height: 120rpx;line-height: 120rpx;font-size: 28rpx;color: #666;border-bottom: 2rpx solid #dedede;">
 		 				<view style="float: left;">综合行驶里程</view>
-		 				<view v-show="detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}{{detail.firstkm&&detail.endkm?'-':''}}{{detail.endkm}}</view>
-		 				<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}</view>
+		 				<view v-show="detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}{{detail.firstkm&&detail.endkm?'-':''}}{{detail.endkm}}万公里</view>
+		 				<view v-show="!detail.endkm" style="float: right;color: #353B3D;">{{detail.firstkm}}万公里</view>
 						<view v-show="!detail.firstkm&&!detail.endkm" style="float: right;color: #353B3D;">暂无数据</view>
 		 				<view class="clear"></view>
 		 			</view>
@@ -98,10 +104,10 @@
 		 </view>
 		<view style="width: 100%;height:140rpx"></view>
 		<view class="phone" style="width: 100%;height: 140rpx;display: flex;justify-content: space-around;align-items: center;background: #fff;" v-show="!viewFlag&&show">
-			<view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+			<!-- <view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 				<u-image width="42rpx" height="42rpx" src="@/static/service.png"></u-image>
 				<view style="margin-top: 8rpx;">客服</view>
-			</view>
+			</view> -->
 			<view @click="other()" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 				<u-image width="42rpx" height="42rpx" src="@/static/shop.png"></u-image>
 				<view style="margin-top: 8rpx;">店铺</view>
@@ -116,6 +122,7 @@
 		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :editId="driverDemandId" :ids="detail.comparymainid" :type="3"></PubBottom>
 		<phone-auth :phone="detail.phone" :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
 		<phone-auth :ids="detail.comparyid" :title="detail.titletext" :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
+		<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
 	</view>
 </template>
 
@@ -126,6 +133,10 @@
 	import PubBottom from '@/components/pubBottom.vue'
 	import phoneAuth from '@/components/phoneAuth.vue'
 	import kxjPreviewImage from '@/components/kxj-previewImage/kxj-previewImage.vue'
+	import {
+		shareViewUrl
+	} from '@/utils/constant.js'
+	import ShareWX from '@/components/shareWx/shareWx.vue'
 	export default {
 		components: {
 		    rangePrice,
@@ -133,7 +144,8 @@
 			carInstall,
 			PubBottom,
 			phoneAuth,
-			kxjPreviewImage
+			kxjPreviewImage,
+			ShareWX
 		  },
 		data() {
 			return {
@@ -159,6 +171,16 @@
 				open:false,
 				openShow:false,
 				firstCurrent:0,
+				businesstype:'',
+				shareId: '',
+				shareObj:{
+					href:'',
+					title:'',
+					summary:'',
+					imageUrl:''
+				},
+				shareUrl:shareViewUrl,
+				type:true,
 				background: {
 					'background-image': 'background: linear-gradient(270deg,rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);'
 				},
@@ -168,6 +190,11 @@
 			}
 		},
 		onLoad(option) {
+			let shareId = option.id;
+			if (shareId) {
+				this.shareId = shareId;
+				this.shareObj.href = this.shareUrl + shareId + '&type=' + this.type;
+			}
 			let id = option.id;
 			let flag = option.flag;
 			if(id){
@@ -185,8 +212,13 @@
 			this.token = uni.getStorageSync('token');
 		},
 		methods: {
+			share() {
+				this.$refs.shareWx.shareShow()
+			},
+			back(){
+				uni.navigateBack()
+			},
 			preview(e){
-				console.log(e)
 				this.$refs.previewImage.open(e)
 			},
 			setting(id) {
@@ -233,12 +265,25 @@
 					this.$u.api.detailSellCar({id: this.driverDemandId}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
+							 if(this.detail.businesstype == 1){
+								 this.businesstype="网约车"
+							 }
+							 if(this.detail.businesstype == 2){
+							 	this.businesstype="出租车"
+							 }
+							 this.shareObj.title = this.detail.titletext;
+							 this.shareObj.summary = '￥' + this.detail.packprice + '/起售|' + this.businesstype;
+							 this.shareObj.imageUrl = this.detail.photourl[0];
 							 this.kmOption.forEach(item=>{
 							    if(item.value == this.detail.carkm){
 							    	this.detail.carkm = item.text;
 							    }
 							 })
-							 this.detail.systemtag = this.detail.systemtag.join('/')
+							 if(this.detail.systemtag){
+								 this.detail.systemtag.splice(1,1)
+								 this.detail.systemtag.push(this.detail.carage)
+								 this.detail.systemtag = this.detail.systemtag.join('/')
+							 }
 							 var text = '';
 							 if(this.detail.pricesectionlist) {
 								this.detail.pricesectionlist.forEach(item=>{
@@ -336,14 +381,76 @@ page{
 		width: 100%;
 		background: rgba(0,0,0,0.02);
 	}
+	.wraps /deep/ .uni-swiper-dots-horizontal {
+	  bottom: 60rpx !important;
+	 }
 	.swiper-box {
 		flex: 1;
 	}
 	.swiper-item {
 		height: 100%;
 	}
+	.success{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 10rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/success.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+	}
+	.auditing{
+		width: 162rpx;
+		height: 54rpx;
+		text-align: right;
+		line-height: 54rpx;
+		padding-right: 20rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/auditing.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+	}
+	.refuse{
+		width: 452rpx;
+		height: 54rpx;
+		line-height: 54rpx;
+		position: absolute;
+		top: 200rpx;
+		left: 28rpx;
+		background-image: url(@/static/refuse.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 26rpx;
+		color: #fff;
+		padding-left: 50rpx;
+	}
 	.detail {
 		background-color: #F5F5F8;
+		.top{
+			width: 100%;
+			height: 200rpx;
+			line-height: 200rpx;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 20;
+			background-image: url(@/static/detailBg.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		// .room{
+		// 	margin-top: calc(var(--status-bar-height) + 20rpx);
+		// }
 		.wraps{
 			width: 100%;
 			height: 494rpx;

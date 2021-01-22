@@ -46,7 +46,7 @@
 			let shareId = option.ids;
 			if (shareId) {
 				this.id = shareId;
-				this.shareObj.href = this.shareArticleUrl + shareId;
+				this.shareObj.href = this.shareArticleUrl + shareId+'&index='+this.index;
 			}
 		},
 		onShow() {

@@ -56,7 +56,7 @@
 			<view v-show="kmkey||packpricekey" class="clearNull" @click="clear()">清空</view>
 			<view class="clear"></view>
 		</view> -->
-		<view v-show="kmkey||packpricekey" style="width: 100%;height: 50rpx;"></view>
+		<!-- <view v-show="kmkey||packpricekey" style="width: 100%;height: 50rpx;"></view> -->
 		<!-- <view class="wrap">
 			<u-swiper height="377" bg-color="#CDE5E3" mode="dot" :list="list"></u-swiper>
 		</view> -->
@@ -90,7 +90,7 @@
 								<view class="tag">{{item.carAge}}/{{item.km}}</view>
 							</view>
 		    				<view class="price">{{item.packPrice|moneyFormat}}元</view>
-							<view style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: left;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
+							<view v-show="item.carnbumber" style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: right;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
 		    			</view>
 		    			<view class="clear"></view>
 						<!-- <view class="flex">
@@ -134,6 +134,7 @@
 				showAge:false,
 				iconType: 'flower',
 				publishObj:publishObj,
+				age: '',
 				// list: [{
 				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -168,6 +169,10 @@
 				total: 0,
 				selectKm: [
 					{
+						label: '不限',
+						value: '0'
+					},
+					{
 						label: '0-2万公里',
 						value: '1'
 					},
@@ -198,10 +203,6 @@
 					{
 						label: '70万公里以上',
 						value: '8'
-					},
-					{
-						label: '不限',
-						value: '0'
 					}
 				],
 				selectPrice: [
@@ -271,7 +272,7 @@
 				moneyFormat:function(arg){
 					if(arg.toString().length>=4){
 						const moneys = arg/10000
-						const realVal = parseFloat(moneys);
+						const realVal = parseFloat(moneys).toFixed(2);
 						return realVal+"万"
 					}
 					}
@@ -340,6 +341,66 @@
 				this.search()
 			},
 			transform(){
+				this.form = {
+				  km: '',
+				  packprice: '',
+				  businessType:0,
+				  carbrand:'',
+				  cartype:'',
+				  power:'',
+				  packprice:'',
+				  startCarAge:'',
+				  endCarAge:''
+				};
+				this.kmkey = '';
+				this.packpricekey = '';
+				this.agekey = '';
+				this.form.km = uni.getStorageSync('kmCom');
+				this.form.packprice = uni.getStorageSync('priceCom');
+				this.age = uni.getStorageSync('ageCom');
+				this.currentKm = this.form.km == 0?0:parseInt(this.form.km);
+				// this.currentKm = parseInt(this.form.km - 1)?parseInt(this.form.km - 1):0;
+				this.currentAge = parseInt(this.age)?parseInt(this.age):-1;
+				const price = this.form.packprice - 1
+				this.currentPrice = parseInt(price)?parseInt(price):-1;
+				this.selectKm.map(item=>{
+				   if(item.value == this.form.km){
+				   	this.kmkey = item.label;
+				   }
+				})
+				 this.selectPrice.map(item=>{
+				    if(item.value == this.form.packprice){
+				    	this.packpricekey = item.label;
+				    }
+				 })
+				 this.selectAge.map(item=>{
+				    if(item.value == this.age){
+				    	this.agekey = item.label;
+				    }
+				 })
+				 this.kmkey = (this.kmkey == '不限')?'':this.kmkey
+				 this.packpricekey = (this.packpricekey == '不限')?'':this.packpricekey
+				 this.agekey = (this.agekey == '不限')?'':this.agekey
+				if(this.age == '0') {
+					this.form.startCarAge = '0';
+				    this.form.endCarAge = '1';
+				}
+				if(this.age == '1') {
+					this.form.startCarAge = '1';
+				    this.form.endCarAge = '3';
+				}
+				if(this.age == '2') {
+					this.form.startCarAge = '3';
+				    this.form.endCarAge = '5';
+				}
+				if(this.age == '3') {
+					this.form.startCarAge = '5';
+				    this.form.endCarAge = '';
+				}
+				if(this.age == '4') {
+					this.form.startCarAge = '';
+				    this.form.endCarAge = '';
+				}
 				var carbrand = [];
 				var cartype = [];
 				var power = [];
@@ -418,7 +479,9 @@
 			getDataKm(index) {
 				this.currentKm = index;
 				this.kmkey = this.selectKm[index].label;
+				this.kmkey = (this.kmkey == '不限')?'':this.kmkey
 				this.form.km = this.selectKm[index].value;
+				uni.setStorageSync('kmCom', this.form.km);
 				this.showKm = false;
 				this.show = false;
 				this.search()
@@ -426,7 +489,9 @@
 			getDataPrice(index) {
 				this.currentPrice = index;
 				this.packpricekey = this.selectPrice[index].label;
+				this.packpricekey = (this.packpricekey == '不限')?'':this.packpricekey
 				this.form.packprice = this.selectPrice[index].value;
+				uni.setStorageSync('priceCom', this.form.packprice);
 				this.showPrice = false;
 				this.show = false;
 				this.search()
@@ -434,30 +499,29 @@
 			getDataAge(index) {
 				this.currentAge = index;
 				this.agekey = this.selectAge[index].label;
-				this.form.age = this.selectAge[index].value;
-				if(this.form.age == '0') {
+				this.agekey = (this.agekey == '不限')?'':this.agekey
+				this.age = this.selectAge[index].value;
+				if(this.age == '0') {
 					this.form.startCarAge = '0';
 				    this.form.endCarAge = '1';
-					this.caragekey = '1年内';
 				}
-				if(this.form.age == '1') {
+				if(this.age == '1') {
 					this.form.startCarAge = '1';
 				    this.form.endCarAge = '3';
-					this.caragekey = '1年-3年';
 				}
-				if(this.form.age == '2') {
+				if(this.age == '2') {
 					this.form.startCarAge = '3';
 				    this.form.endCarAge = '5';
-					this.caragekey = '3年-5年';
 				}
-				if(this.carage == '3') {
+				if(this.age == '3') {
 					this.form.startCarAge = '5';
 				    this.form.endCarAge = '';
 				}
-				if(this.form.age == '4') {
+				if(this.age == '4') {
 					this.form.startCarAge = '';
 				    this.form.endCarAge = '';
 				}
+				uni.setStorageSync('ageCom', this.age);
 				this.showAge = false;
 				this.show = false;
 				this.search()
@@ -728,7 +792,7 @@
 					float: left;
 				}
 				.right {
-					width: 380rpx;
+					width: 410rpx;
 					padding-left: 34rpx;
 				}
 				.name {
@@ -745,7 +809,7 @@
 					margin-top: 8rpx;
 				}
 				.price{
-					font-size: 18px;
+					font-size: 36rpx;
 					font-family: SourceHanSansCN-Bold, SourceHanSansCN;
 					font-weight: bold;
 					color: #FF5200;

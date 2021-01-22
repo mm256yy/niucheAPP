@@ -64,11 +64,6 @@
 			this.getList(1);
 		},
 		methods: {
-			// scroll(e) {
-			// 	console.log(e, '111111')
-			// 	debugger
-			// 	this.oldScrollTop = e.detail.scrollTop
-			// },
 			neiClick(id) {
 				this.$u.route('/pages/driver/driverService/serviceText', {
 					ids: id,
@@ -114,7 +109,7 @@
 			},
 			getList(pageNum) {
 				if (this.indexs == 0) { // 行业动态接口
-					this.$u.api.driverDynamic({ // driverActivitie 是 httpapi.js 的声明的样式
+					this.$u.api.driverDynamic({ // driverActivitie 是 httpapi.js 的声明的接口
 						pageNum: pageNum,
 						pageSize: 10
 					}).then(res => {
@@ -122,7 +117,7 @@
 						this.driList = this.interface(pageNum, res)
 					})
 				} else if (this.indexs == 1) { // 活动大全接口
-					this.$u.api.driverActivities({ // driverActivitie 是 httpapi.js 的声明的样式
+					this.$u.api.driverActivities({ // driverActivitie 是 httpapi.js 的声明的接口
 						pageNum: pageNum,
 						pageSize: 10
 					}).then(res => { // 成功调用的

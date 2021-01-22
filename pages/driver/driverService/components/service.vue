@@ -224,7 +224,7 @@
 		// 活动大全
 		.driverBox_2 {
 			height: 466rpx;
-			padding: 16rpx 0;
+			padding: 24rpx 0;
 			border-bottom: 2rpx solid #E0E0E0;
 			display: flex;
 			flex-direction: column;
