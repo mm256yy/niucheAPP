@@ -123,9 +123,9 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "D:/APP发布资料/kpy (1).png",
-                    "xhdpi" : "D:/APP发布资料/kpy (2).png",
-                    "xxhdpi" : "D:/APP发布资料/kpy (3).png"
+                    "hdpi" : "static/build/kpy (1).png",
+                    "xhdpi" : "static/build/kpy (2).png",
+                    "xxhdpi" : "static/build/kpy (3).png"
                 }
             }
         },
