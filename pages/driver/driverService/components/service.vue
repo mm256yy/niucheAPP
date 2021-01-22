@@ -46,7 +46,7 @@
 			</view>
 		</view>
 		<!-- 大神分享 -->
-		<view class="" v-if="index == 3">
+		<view v-if="index == 3">
 			<view class="driverBox_4" v-for="(item, index) in shareList" :key="index">
 				<view class="share-head">
 					<view class="driver_to">
@@ -62,11 +62,10 @@
 					<view class="content_text"> {{item.text}} </view>
 					<view class="contentImg">
 						<view class="" v-for="(items, indexs) in item.imgs" :key="indexs">
-							<view class="content_img" @click="showImage(item.imgs,indexs)">
-								<image v-if="item.imgs.length != 1" :src="items" style="width: 220rpx;height: 220rpx;"></image>
-								<image v-if="item.imgs.length == 1" :src="items" style="width: 464rpx; height: 344rpx;"></image>
+							<view class="content_img">
+								<image @click="showImage(item.imgs, indexs)" v-if="item.imgs.length != 1" :src="items" style="width: 220rpx;height: 220rpx;"></image>
+								<image @click="showImage(item.imgs, indexs)" v-if="item.imgs.length == 1" :src="items" style="width: 464rpx; height: 344rpx;"></image>
 							</view>
-
 						</view>
 					</view>
 				</view>
@@ -156,14 +155,17 @@
 			},
 			showImage(arr, index) {
 				this.img = arr.slice() // 利用浅拷贝 互不影响
-				this.img.forEach((item, index) => {
+				this.img.forEach((item, indexs) => {
 					if (item == '') {
-						this.img.splice(index, 1)
+						this.img.splice(indexs, 1)
 					} else {
 						this.img
 					}
 				})
-				this.$refs.previewImage.open(index)
+				this.$nextTick(function(){
+					this.$refs.previewImage.open(index)
+				})
+				
 			},
 			ureTime(item) {
 				this.times = item.createTime.substring(0, 10)

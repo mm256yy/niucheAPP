@@ -15,7 +15,7 @@
 		</view>
 
 		<!-- 下拉刷新的 -->
-		<view style="margin-top: 108rpx;">
+		<view style="margin-top: 132rpx;">
 			<load-refresh :scroll-top="scrollTop" ref="loadRefresh" :isRefresh="true" refreshType="halfCircle" refreshTime="1000"
 			 color="#FF9500" heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total"
 			 @refresh="xiaLa" @loadMore="loadMore">
@@ -149,7 +149,7 @@
 		width: 100%;
 		position: fixed;
 		left: 0;
-		top: 148rpx;
+		top:  calc(0 var(--window-top)); // 自适应高度切换栏高度
 		height: 108rpx;
 		font-size: 32rpx;
 		background-color: #FFFFFF;
