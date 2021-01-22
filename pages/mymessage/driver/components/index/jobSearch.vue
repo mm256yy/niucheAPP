@@ -15,8 +15,8 @@
 						</u-form-item>
 						<u-form-item style="padding: 0 16rpx;margin-top: -18rpx;float: left;
 				    background: #F8F9FB;border-radius: 4px;width: 202rpx;margin-left: 21rpx;" label="">
-						<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
-						<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="租金" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
+						<u-input :custom-style="style" v-show="!show" disabled placeholder-style="color:#000;" placeholder="月薪" @click="toggle()"  v-model="priceidkey" /><text v-show="!show" class='triangle'></text>
+						<u-input :custom-style="styleActive" v-show="show" disabled placeholder-style="color:#FF9500;" placeholder="月薪" @click="toggle()"  v-model="priceidkey" /><text v-show="show" class='triangleActive'></text></u-form-item>
 						<u-form-item style="padding: 0 16rpx;margin-left:21rpx;margin-top: -18rpx;float: left;
 				    background: #F8F9FB;border-radius: 4px;width: 182rpx;" label="">
 						<u-input :custom-style="style" v-show="!showType" disabled placeholder-style="color:#000;" placeholder="业务类型" @click="toggleType()" v-model="businesstypekey" /><text v-show="!showType" class='triangle'></text>
@@ -56,7 +56,8 @@
 		    					<!-- <view class="tag">付费标签</view> -->
 		    					<!-- <u-icon class="heart" name="heart-fill" color="#FCD03C" width="19" height="18"></u-icon> -->
 								<view style="height: 116rpx;">
-									<view class="name u-line-2">{{item.title}}</view>
+									<view v-show="item.title" class="name u-line-2">{{item.title}}</view>
+									<view v-show="!item.title" class="name u-line-2">高薪招聘{{item.texttitle}}</view>
 									<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
 									<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
 								</view>
@@ -220,6 +221,7 @@
 				this.current = index;
 				this.priceid = this.select[index].value;
 				this.priceidkey = this.select[index].label;
+				this.priceidkey = (this.priceidkey == '不限')?'':this.priceidkey
 				if(this.priceid == 1) {
 					this.form.startPriceid = '';
 					this.form.endPriceid = '6000';
@@ -247,6 +249,7 @@
 			getDataType(index) {
 				this.currentType = index;
 				this.businesstypekey = this.selectType[index].label;
+				this.businesstypekey = (this.businesstypekey == '不限')?'':this.businesstypekey
 				this.businessType = this.selectType[index].value;
 				this.showType = false;
 				this.showMask = false;
