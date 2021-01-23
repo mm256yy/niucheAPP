@@ -144,9 +144,8 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.initId()
-				} else{
-					this.shareObj.href = this.shareUrl;
-				}
+				} 
+				this.shareObj.href = this.shareUrl;
 			}
 		},
 		onShow() {

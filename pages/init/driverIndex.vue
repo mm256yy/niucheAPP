@@ -82,7 +82,7 @@
 				</view>
 				<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#f5f5f5" indicator-active-color="#FF5A00"
 				 style="height: 180px;">
-					<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
+					<swiper-item class="swiper-item" v-for="(item, index) in lists" :key="index">
 						<view style="display: flex;justify-content: space-around;padding: 0 10px;">
 							<view v-for="(info,i) in welfareList[index]" :key="info.comparymainid" @click="toView(info)" style="" class="swiper_xcfl">
 								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
@@ -184,6 +184,7 @@
 				}, {
 					image: '../../static/banner_3@3x.png'
 				}],
+				lists:[2,3,4],
 				tuBiaoList: [{
 						url: '../../static/biyadi@2x.png',
 						text: '比亚迪'
