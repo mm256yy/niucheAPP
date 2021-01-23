@@ -37,7 +37,7 @@
 		  					<view v-show="detail.businesstype==1" class="type">网约车</view>
 		  					<view v-show="detail.businesstype==2" class="type">出租车</view>
 		  				</view>
-		  				<view class="startNum">押金：{{detail.cashPrice}}</view>
+		  				<view class="startNum">押金：{{detail.cashPrice}}元</view>
 		  				<view class="clear"></view>
 		  			</view>
 		  			<view>
