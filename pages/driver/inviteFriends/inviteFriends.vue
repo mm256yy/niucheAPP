@@ -136,7 +136,6 @@
 		},
 		onLoad(option) {
 			let shareId = option.shareId;
-			this.shareObj.href = this.shareUrl;
 			if (shareId) {
 				this.shareId = shareId;
 				this.shareObj.href = this.shareUrl + shareId;
