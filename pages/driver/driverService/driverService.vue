@@ -113,7 +113,6 @@
 						pageNum: pageNum,
 						pageSize: 10
 					}).then(res => {
-						console.log(pageNum)
 						this.driList = this.interface(pageNum, res)
 					})
 				} else if (this.indexs == 1) { // 活动大全接口
