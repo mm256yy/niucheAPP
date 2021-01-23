@@ -1,11 +1,12 @@
 <template>
 	<view class="">
-		<u-navbar back-icon-color="#333333" title-size="36" :title="title"  :background="background" title-color="#333333">
+		<u-navbar back-icon-color="#333333" title-size="36" :background="background" title-color="#333333">
 			<view class="navber" slot="right" @click="share(content.titlePhoto)">
 				<u-icon name="zhuanfa" color="#333333" size="44"></u-icon>		
 			</view>
 		</u-navbar>
 		<view class="">
+			<view class="box_tit">{{title}}</view>
 			<view class="box_1" v-html="content.text"></view>
 		</view>
 		<view class="">
@@ -111,6 +112,14 @@
 		margin-top: 30rpx;
 		font-size: 40rpx;
 		height: 88rpx;
+	}
+	.box_tit {
+		width: 100%;
+		font-size: 36rpx;
+		font-weight: 700;
+		padding: 0 28rpx;
+		display: flex;
+		flex-wrap: wrap;
 	}
 	.box_1 {
 		font-size: 32rpx;

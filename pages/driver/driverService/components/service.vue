@@ -288,19 +288,20 @@
 			}
 
 			.content_title {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
+				width: 100%;
+				font-size: 36rpx;
+				font-weight: 700;
+				display: flex;
+				flex-wrap: wrap;
 			}
 
 			.content_text {
+				width: 100%;
 				font-size: 32rpx;
 				color: #5E5E5E;
 				margin: 4rpx 0 8rpx 0;
-				display: -webkit-box;
-				// -webkit-box-orient: vertical;
-				// -webkit-line-clamp: 2;
-				overflow: hidden;
+				display: flex;
+				flex-wrap: wrap;
 			}
 
 			.contentImg {
