@@ -136,6 +136,7 @@
 		},
 		onLoad(option) {
 			let shareId = option.shareId;
+			this.shareObj.href = this.shareUrl;
 			if (shareId) {
 				this.shareId = shareId;
 				this.shareObj.href = this.shareUrl + shareId;
@@ -144,7 +145,6 @@
 				if (token){
 					this.initId()
 				} 
-				this.shareObj.href = this.shareUrl;
 			}
 		},
 		onShow() {
@@ -185,6 +185,7 @@
 						let data = res.object;
 						if (data.shareId) {
 							this.shareId = data.shareId;
+							this.shareObj.href = this.shareUrl + data.shareId;
 						}
 					} else {
 						this.$u.toast(res.msg);
