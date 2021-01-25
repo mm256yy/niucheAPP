@@ -4,7 +4,27 @@ import App from './App'
 import themeMixin from './utils/mixin.js'
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 Vue.config.productionTip = false
+let WebIM = require("utils/WebIM")["default"];
 
+let conn = {
+	closed: false,
+	curOpenOpt: {},
+	open(opt) {
+		this.curOpenOpt = opt;
+		WebIM.conn.open(opt);
+		this.closed = false;
+	},
+	reopen() {
+		if (this.closed) {
+			//this.open(this.curOpenOpt);
+			WebIM.conn.open(this.curOpenOpt);
+			this.closed = false;
+		}
+	}
+};
+
+Vue.prototype.$im = WebIM;
+Vue.prototype.$conn = conn;
 // Vue.prototype.$store = store
 App.mpType = 'app'
 // Vue.component("list",list) // 全局注册

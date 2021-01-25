@@ -726,6 +726,24 @@
 						"navigationStyle": "custom" 
 					}
 				}
+        ,{
+            "path" : "pages/chat/chat",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom" ,
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/chatroom/chatroom",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom" ,
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
