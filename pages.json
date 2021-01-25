@@ -743,6 +743,12 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/groupChatRoom/groupChatRoom",
+            "style" :  {
+              "navigationStyle": "custom" ,
+                "enablePullDownRefresh": false
+            }
         }
     ],
 	"globalStyle": {
