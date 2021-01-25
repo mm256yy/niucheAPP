@@ -69,11 +69,12 @@
 								this.showTips = false;
 								console.log(this.status)
 								if(this.status == 1){
-									if(this.phone){
-										uni.makePhoneCall({ phoneNumber: this.phone });
-									}else{
-										this.$u.toast('未获取到手机号');
-									}
+									this.chatYour()
+									// if(this.phone){
+									// 	uni.makePhoneCall({ phoneNumber: this.phone });
+									// }else{
+									// 	this.$u.toast('未获取到手机号');
+									// }
 								}
 								if(this.status == 3){
 									this.$u.route('/pages/mymessage/company/components/index/other',{
@@ -126,6 +127,23 @@
 			},
 			toIndex(){
 			   this.$u.route({url:'/pages/init/init',type:'switchTab'})	
+			},
+			chatYour(){
+				// let user = uni.getStorageSync('token');
+				this.$conn.open({
+					apiUrl: this.$im.config.apiURL,
+					user: 'pengtianfu',
+					pwd: 'pengtianfu',
+					grant_type: "password",
+					appKey: this.$im.config.appkey
+				});
+				uni.setStorageSync("myUsername",'pengtianfu');
+				var my = uni.getStorageSync("myUsername");
+				var nameList = {
+					myName: 'pengtianfu',
+					your: 'yangke'
+				};
+				this.$u.route("/pages/chatroom/chatroom?username=" + JSON.stringify(nameList))
 			}
 		}
 	}

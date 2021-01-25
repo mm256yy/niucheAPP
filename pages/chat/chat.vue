@@ -77,7 +77,6 @@
 			}
 		},
 		onLoad() {
-			
 			let me = this;
 			//监听加好友申请
 			disp.on("em.xmpp.subscribe", function(){
@@ -255,24 +254,24 @@
 					}
 				}
 				
-				//	测试列表
+					// 测试列表
 				
-				// for (let i = 0; i < 12; i++) {
-				// 	let newSESSION = {
-				// 		info: {from: "zdtest", to: "zdtest2"},
-				// 		mid: "txtWEBIM_427ab8b10c",
-				// 		unReadCount: 6,
-				// 		msg: {type: "txt", data: [{data: "丢晚高丢完", type: "txt"}]},
-				// 		style: "self",
-				// 		time: "2019-2-18 16:59:25",
-				// 		username: "zdtest" + i,
-				// 		yourname: "zdtest"
-				// 	}
-				// 	let dateArr = newSESSION.time.split(' ')[0].split('-')
-				// 	let timeArr = newSESSION.time.split(' ')[1].split(':')
-				// 	newSESSION.time = `${dateArr[1]}月${dateArr[2]}日 ${timeArr[0]}时${timeArr[1]}分`
-				// 	array.push(newSESSION)
-				// }
+				for (let i = 0; i < 12; i++) {
+					let newSESSION = {
+						info: {from: "zdtest", to: "zdtest2"},
+						mid: "txtWEBIM_427ab8b10c",
+						unReadCount: 6,
+						msg: {type: "txt", data: [{data: "丢晚高丢完", type: "txt"}]},
+						style: "self",
+						time: "2019-2-18 16:59:25",
+						username: "zdtest" + i,
+						yourname: "zdtest"
+					}
+					let dateArr = newSESSION.time.split(' ')[0].split('-')
+					let timeArr = newSESSION.time.split(' ')[1].split(':')
+					newSESSION.time = `${dateArr[1]}月${dateArr[2]}日 ${timeArr[0]}时${timeArr[1]}分`
+					array.push(newSESSION)
+				}
 				
 				array.sort((a, b) => {
 					return b.dateTimeNum - a.dateTimeNum

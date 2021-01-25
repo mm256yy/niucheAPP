@@ -27,7 +27,7 @@ let config = {
 	/*
 	 * Application AppKey
 	 */
-	appkey: "1110201016040548#tianfupeng",
+	appkey: "1110201016040548#demo",
 	/*
 	 * Whether to use HTTPS      '1177161227178308#xcx'
 	 * @parameter {Boolean} true or false

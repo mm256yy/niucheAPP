@@ -44,7 +44,6 @@ const install = (Vue, vm) => {
 				 }  else {
 					 config.header = {}
 				 }
-			 console.log(config)
 
 		
 		

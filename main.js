@@ -5,7 +5,7 @@ import themeMixin from './utils/mixin.js'
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 Vue.config.productionTip = false
 let WebIM = require("utils/WebIM")["default"];
-
+import helper from './helper/helper.js';
 let conn = {
 	closed: false,
 	curOpenOpt: {},
@@ -25,6 +25,7 @@ let conn = {
 
 Vue.prototype.$im = WebIM;
 Vue.prototype.$conn = conn;
+Vue.prototype.$helper = helper;
 // Vue.prototype.$store = store
 App.mpType = 'app'
 // Vue.component("list",list) // 全局注册
