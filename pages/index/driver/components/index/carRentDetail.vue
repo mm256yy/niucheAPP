@@ -204,6 +204,7 @@
 		methods: {
 			share() {
 				this.$refs.shareWx.shareShow()
+				this.$u.api.setEvent({eventId:"lease_content_share",type:3,params:{desc:'分享成功否'}})
 			},
 			back(){
 				uni.navigateBack()
@@ -211,11 +212,13 @@
 			preview(e){
 				console.log(e)
 				this.$refs.previewImage.open(e)
+				this.$u.api.setEvent({eventId:"lease_content_picture",type:3,params:{desc:'浏览banner'}})
 			},
 			setting(id) {
 				this.$u.route("/pages/mymessage/company/components/index/setting",{id:id})
 			},
 			change(index) {
+				this.$u.api.setEvent({eventId:"lease_content_price",type:3,params:{desc:'租赁价格切换'}})
 				this.firstCurrent = index;
 			},
 			favorites(item,id) {
@@ -309,6 +312,7 @@
 				this.open = false;
 				this.status = 4;
 				this.$refs.other.getStatus()
+				this.$u.api.setEvent({eventId:"lease_content_else",type:3})
 			},
 			dial() {
 			
