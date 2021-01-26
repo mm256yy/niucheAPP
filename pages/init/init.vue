@@ -102,6 +102,7 @@
 				let url = this.data.url;
 				if(url){
 					this.$u.route(url)
+					this.$u.api.setEvent({eventId:"sy-ggtc",type:3,params:{url:url}})
 				}
 			},
 			popupShow(type) {

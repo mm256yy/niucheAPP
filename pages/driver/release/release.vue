@@ -29,6 +29,9 @@
 				 }
 			}
 		},
+		onBackPress(event) {
+			 this.$u.api.setEvent({eventId:"hire_return",type:3})
+		},
 		methods: {
 			toPage(type){
 				let token = uni.getStorageSync('token');
@@ -36,8 +39,10 @@
 				if(token) {
 					if (isauthencation === 2) {
 						if(type ===1){
+						   this.$u.api.setEvent({eventId:"hire_issue",type:3})
 						   this.$u.route('/pages/driver/release/carRent')
 						} else {
+							this.$u.api.setEvent({eventId:"apply_issue",type:3})
 							this.$u.route('/pages/driver/release/search')
 						}
 					} else {

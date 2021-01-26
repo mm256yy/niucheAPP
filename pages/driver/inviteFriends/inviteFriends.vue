@@ -151,6 +151,7 @@
 			if (token){
 				this.getNumber()
 			}
+			this.$u.api.setEvent({eventId:"sy-tglx",type:3})
 		},
 		methods: {
 			toCashAccount(){
@@ -162,6 +163,7 @@
 				}
 			},
 			inviteFriends() {
+				this.$u.api.setEvent({eventId:"sy-tglxyq",type:3})
 				this.$refs.shareWx.shareShow()
 			},
 			getNumber() {

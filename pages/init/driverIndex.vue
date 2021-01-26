@@ -301,6 +301,7 @@
 					this.searchForm.endPriceid = '-1';
 					this.title = '不限/4000以上';
 				}
+				this.$u.api.setEvent({eventId:"sy-ayz",type:3,params:{'price':this.title}})
 				this.$u.route('/pages/index/driver/components/index/resultRent', {
 					form: JSON.stringify(this.searchForm),
 					title: this.title
@@ -309,10 +310,12 @@
 			toIndexCar(text) {
 				this.title = '不限/' + text;
 				this.searchForm.carbrand = text;
+				this.$u.api.setEvent({eventId:"sy-app",type:3,params:{'carBrand':text}})
 				this.$u.route('/pages/index/driver/components/index/resultRent', {
 					form: JSON.stringify(this.searchForm),
 					title: this.title
 				});
+				
 			},
 
 			//低价好车
@@ -398,6 +401,7 @@
 				let url = this.list[index].url;
 				if(url){
 					this.$u.route(url)
+					this.$u.api.setEvent({eventId:"sy-bn",type:3,params:{url:url}})
 				}
 			},
 			message() {
@@ -412,11 +416,14 @@
 			},
 			toPage(type) {
 				if (type === 1) {
+					this.$u.api.setEvent({eventId:"sy-zl",type:3})
 					this.$u.route({
 						url: '/pages/index/index',
 						type: 'switchTab'
 					})
+					
 				} else {
+					this.$u.api.setEvent({eventId:"sy-zp",type:3})
 					this.$u.route({
 						url: '/pages/mymessage/mymessage',
 						type: 'switchTab'
@@ -428,13 +435,20 @@
 					this.$u.route({
 						url: '/pages/init/affordableCar',
 					})
+					this.$u.api.setEvent({eventId:"sy-djli",type:3})
 				} else {
 					this.$u.route({
 						url: '/pages/init/newYearWelfare',
 					})
+					this.$u.api.setEvent({eventId:"sy-xcfl",type:3})
 				}
 			},
 			toView(item) {
+				if (item.params) {
+					this.$u.api.setEvent({eventId:"sy-xcfl-nysy",type:3})
+				} else {
+					this.$u.api.setEvent({eventId:"sy-djhcny-csy",type:3})
+				}
 				this.$u.route('/pages/index/driver/components/index/carRentDetail', {
 					id: item.comparymainid,
 					tags: item.params

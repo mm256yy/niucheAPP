@@ -132,6 +132,10 @@
 						{text: '月休4天',checked: false}]
 			}
 		},
+		onBackPress(event) {  
+			
+		 console.log(event)
+		},
 		mounted() {
 			this.currentSalary == -1;
 			this.currentHour == -1;
@@ -209,6 +213,7 @@
 				});
 			},
 			tipsConfirm(){
+				this.$u.api.setEvent({eventId:"apply_submit",type:3})
 				this.$u.route('/pages/driver/myPub/myPub', {index: 1});
 			}
 		}

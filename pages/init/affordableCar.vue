@@ -58,6 +58,7 @@
 			loadMoreList() {
 				let pageNo = this.pageNum + 1
 				this.getList(pageNo)
+				this.$u.api.setEvent({eventId:"sy-djhcny-la",type:3})
 			},
 			getList(pageNum) {
 				this.$u.api.driverSideHomePage({
@@ -82,9 +83,11 @@
 				})
 			},
 			refresh() {
+				this.$u.api.setEvent({eventId:"sy-djhcli-r",type:3})
 				this.getList(1)
 			},
 			toView(id){
+				this.$u.api.setEvent({eventId:"sy-djhcny-li",type:3})
 				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:id})
 			}
 		}

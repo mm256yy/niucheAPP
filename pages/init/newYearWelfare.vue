@@ -59,6 +59,7 @@
 			loadMoreList() {
 				let pageNo = this.pageNum + 1
 				this.getList(pageNo)
+				this.$u.api.setEvent({eventId:"sy-xcfl-lij",type:3})
 			},
 			getList(pageNum) {
 				this.$u.api.getYearWelfare({
@@ -98,9 +99,11 @@
 				})
 			},
 			refresh() {
+				this.$u.api.setEvent({eventId:"sy-xcfl-lir",type:3})
 				this.getList(1)
 			},
 			toView(item) {
+				this.$u.api.setEvent({eventId:"sy-xcfl-liny",type:3})
 				this.$u.route('/pages/index/driver/components/index/carRentDetail', {
 					id: item.comparymainid,
 					tags: item.params
