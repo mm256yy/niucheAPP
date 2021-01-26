@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<u-navbar back-text="" back-icon-color="#333333" :title="title" :background="background" title-color="#333333"></u-navbar>
 		<chat :username="username" chatType="chatRoom"></chat>
 	</view>
 </template>
@@ -16,6 +17,10 @@
 		},
 		data() {
 			return {
+				background: {
+					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
+				},
+				title:'',
 				username: {
 					your: "",
 				},
@@ -25,9 +30,10 @@
 			let username = JSON.parse(options.username);
 			console.log(username);
 			this.username = username;
-			uni.setNavigationBarTitle({
-				title: username.your
-			});
+			this.title = username.your
+			// uni.setNavigationBarTitle({
+			// 	title: username.your
+			// });
 		},
 		onUnload(){
 			disp.fire("em.chatroom.leave");

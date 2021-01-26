@@ -475,12 +475,20 @@
 					}
 					let priceList = this.form.rentCarPrice;
 					let flag = true;
+					let monthList=[];
 					priceList.forEach((item, index) => {
 						if (item.RentTime === '' || item.Rentprice === '') {
 							this.$u.toast('第' + (index + 1) + '条价数据为空或不完整,请删除后提交审核')
 							flag = false
 						}
+						monthList.push(item.RentTime)
 					})
+					let monthlistF =Array.from(new Set(monthList));
+					if (monthList.length >monthlistF.length){
+						this.$u.toast('租赁周期重复，请修改后提交审核')
+						flag = false
+					}
+					
 					if (!flag) {
 						return false
 					}

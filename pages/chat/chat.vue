@@ -25,7 +25,7 @@
 		</view>
 		
 		<view v-if="arr.length == 0" class="chat_noChat">
-			当前没有历史聊天，添加一个好友开始聊天吧
+			当前没有历史聊天
 		</view>
 
 		<view style="height: 1px;"></view>
