@@ -177,6 +177,10 @@
 			},
 			tabsChangeBottom(index) {
 				this.swiperCurrentBottom = index;
+				if (index === 1){
+					this.$u.api.setEvent({eventId:"job_content_introduce",type:3})
+				}
+				
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {

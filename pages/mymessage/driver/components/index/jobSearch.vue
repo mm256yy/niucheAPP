@@ -199,6 +199,7 @@
 			}else{
 				this.form.islogin = 0
 			}
+			this.$u.api.setEvent({eventId:"joblist_visit",type:3})
 			this.search()
 		},
 		methods: {
@@ -218,6 +219,7 @@
 				this.show = false;
 			},
 			getData(index) {
+				this.$u.api.setEvent({eventId:"joblist_monthly",type:3})
 				this.current = index;
 				this.priceid = this.select[index].value;
 				this.priceidkey = this.select[index].label;
@@ -247,6 +249,7 @@
 				this.search()
 			},
 			getDataType(index) {
+				this.$u.api.setEvent({eventId:"joblist_business",type:3})
 				this.currentType = index;
 				this.businesstypekey = this.selectType[index].label;
 				this.businesstypekey = (this.businesstypekey == '不限')?'':this.businesstypekey
@@ -261,6 +264,7 @@
 			// 上划加载更多
 			      loadMore() {
 			        this.getList()
+					this.$u.api.setEvent({eventId:"joblist_load",type:3})
 			        // 请求新数据完成后调用 组件内loadOver()方法
 			        // 注意更新当前页码 currPage
 			        this.$refs.loadRefresh.loadOver()
@@ -268,6 +272,7 @@
 			// 下拉刷新数据列表
 			refresh() {
 			    const token = uni.getStorageSync('token');
+				this.$u.api.setEvent({eventId:"joblist_refresh",type:3})
 			    if(token) {
 			    	this.form.islogin = 1
 			    }else{
@@ -449,6 +454,7 @@
 				}
 			},
 			detail(id) {
+				this.$u.api.setEvent({eventId:"joblist_visit",type:3})
 				this.$u.route("/pages/mymessage/driver/components/index/jobSearchDetail",{id:id})
 			},
 			filter() {
