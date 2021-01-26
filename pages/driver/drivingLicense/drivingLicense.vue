@@ -164,6 +164,9 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
+		onBackPress(event) {
+			 this.$u.api.setEvent({eventId:"attestation_Return",type:3,params:this.form})
+		},
 		mounted() {
 			let today = uni.getStorageSync('today');
 			if(today){
@@ -257,6 +260,7 @@
 					this.form.birthday = data.birthday;
 				}else if(res.code === 100){
 					this.form.driverPhoto = res.data;
+					 this.$u.api.setEvent({eventId:"attestation_entering",type:3,params:{info:'未识别',driverPhoto:res.data}})
 				}else {
 					this.$u.toast(res.msg)
 				}

@@ -29,9 +29,7 @@
 				 }
 			}
 		},
-		onBackPress(event) {
-			 this.$u.api.setEvent({eventId:"hire_return",type:3})
-		},
+
 		methods: {
 			toPage(type){
 				let token = uni.getStorageSync('token');

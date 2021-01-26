@@ -126,6 +126,9 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
+		onBackPress(event) {
+			 this.$u.api.setEvent({eventId:"attestation_Return_1",type:3,params:{souce:'网约车认证'}})
+		},
 		mounted() {
             let today = uni.getStorageSync('today');
 			if(today){
