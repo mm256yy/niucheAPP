@@ -29,7 +29,7 @@
 				<u-input :custom-style="styleActive" v-show="showType" disabled placeholder-style="color:#FF9500;" placeholder="业务类型"
 				 @click="toggleType()" v-model="businesstypekey" /><text v-show="showType" class='triangleActive'></text>
 			</u-form-item>
-			<u-image style="margin-left: 2rpx;float: right;margin-top: 4rpx;" width="32rpx" height="34rpx" src="@/static/filter.png"></u-image>
+			<u-image @click="filter()" style="margin-left: 2rpx;float: right;margin-top: 4rpx;" width="32rpx" height="34rpx" src="@/static/filter.png"></u-image>
 			<view @click="filter()" style="
 					float: right;margin-right: 2rpx;">更多</view>
 			</u-form>
@@ -276,6 +276,7 @@
 			}
 		},
 		mounted() {
+			this.$u.api.setEvent({eventId:"zc-visit",type:3})
 			this.transform()
 		},
 		methods: {
@@ -485,6 +486,7 @@
 				this.show = false;
 			},
 			getData(index) {
+				this.$u.api.setEvent({eventId:"lease_rent",type:3})
 				this.current = index;
 				this.priceid = this.select[index].value;
 				this.priceidkey = this.select[index].label;
@@ -515,6 +517,7 @@
 				this.search()
 			},
 			getDataType(index) {
+				this.$u.api.setEvent({eventId:"lease_business",type:3})
 				this.currentType = index;
 				this.businesstypekey = this.selectType[index].label;
 				this.businesstypekey = (this.businesstypekey == '不限') ? '' : this.businesstypekey
@@ -529,6 +532,7 @@
 			},
 			// 上划加载更多
 			loadMore() {
+				this.$u.api.setEvent({eventId:"lease_load",type:3})
 				const token = uni.getStorageSync('token');
 				if (token) {
 					this.form.islogin = 1
@@ -542,6 +546,7 @@
 			},
 			// 下拉刷新数据列表
 			refresh() {
+				this.$u.api.setEvent({eventId:"lease_refresh",type:3})
 				const token = uni.getStorageSync('token');
 				if (token) {
 					this.form.islogin = 1
@@ -712,11 +717,13 @@
 				}
 			},
 			detail(id) {
+				this.$u.api.setEvent({eventId:"lease_visit",type:3})
 				this.$u.route("/pages/index/driver/components/index/carRentDetail", {
 					id: id
 				})
 			},
 			filter() {
+				this.$u.api.setEvent({eventId:"lease_more",type:3})
 				this.$u.route("/pages/index/driver/components/index/filterRent")
 			},
 			clear() {
