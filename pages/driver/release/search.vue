@@ -133,8 +133,7 @@
 			}
 		},
 		onBackPress(event) {  
-			
-		 console.log(event)
+			 this.$u.api.setEvent({eventId:"apply_return",type:3})
 		},
 		mounted() {
 			this.currentSalary == -1;
@@ -213,7 +212,7 @@
 				});
 			},
 			tipsConfirm(){
-				this.$u.api.setEvent({eventId:"apply_submit",type:3})
+				// this.$u.api.setEvent({eventId:"apply_submit",type:3})
 				this.$u.route('/pages/driver/myPub/myPub', {index: 1});
 			}
 		}

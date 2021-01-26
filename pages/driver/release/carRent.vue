@@ -176,6 +176,9 @@
 			      item.checked=false;
 			})
 		},
+		onBackPress(event) {
+			 this.$u.api.setEvent({eventId:"hire_return",type:3})
+		},
 		methods: {
 			keyup() {
 				if(this.value != ''){
@@ -357,7 +360,7 @@
 				});
 			},
 			tipsConfirm(){
-				 this.$u.api.setEvent({eventId:"hire_submit",type:3})
+				 // this.$u.api.setEvent({eventId:"hire_submit",type:3})
 				this.$u.route('/pages/driver/myPub/myPub', {index: 0});
 			}
 		}
