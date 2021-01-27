@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<u-navbar back-text="" back-icon-color="#333333" title="聊天" :background="background" title-color="#333333"></u-navbar>
 		<view v-for="(item, index) in arr" :key="index" class="chat_list">
 			<uni-swipe-action :options="options" @click="action_click($event, item)">
 				<view class="tap_mask" @tap.stop.prevent="into_chatRoom(item)">
@@ -46,6 +47,9 @@
 		},
 		data() {
 			return {
+				background: {
+					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
+				},
 				focus: false,
 				search_btn: true,
 				search_chats: false,

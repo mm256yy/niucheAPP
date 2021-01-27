@@ -1,22 +1,30 @@
 <template>
 	
-	<form class="text-input">
-		<!-- <view class="f-row"> -->
-			<input
-				class="f news"
-				type="text"
-				v-model="inputMessage"
-				cursor-spacing="65"
-				confirm-type="send"
-				@confirm="sendMessage"
-				@input="bindMessage"
-				@tap="focus"
-				@focus="focus"
-				@blur="blur"
-				placeholder="输入新消息"
-				placeholder-style="color:#CFCFCF; padding-left:5px;"
-				 />
-	</form>
+ <form class="text-input">
+    <view class="f-row">
+      <input
+        class="f news"
+        type="text"
+        cursor-spacing="65"
+        confirm-type="send"
+        v-model="inputMessage"
+        @confirm="sendMessage"
+        @input="bindMessage"
+        @tap="focus"
+        @focus="focus"
+        @blur="blur"
+        :confirm-hold="isIPX ? true : false"
+        placeholder="输入新消息"
+        placeholder-style="color:#CFCFCF ;padding-left:5px"
+      />
+      <button 
+        class="send-btn-style send_btn" 
+        hover-class='hover'
+        @tap="sendMessage"
+        v-show="inputMessage" 
+      >发送</button>
+    </view>
+  </form>
 	
 </template>
 
@@ -142,6 +150,7 @@
 
 <style>
 	
+
 .text-input {
 	width: 100%;
 	height: 100rpx;
@@ -178,6 +187,15 @@
 	height:100rpx;
 	display:flex;
 	align-items:center;
+}
+.send-btn-style{
+	font-size: 10px;
+	background-color: #2196F3;
+	color: #fff;
+    margin-right: 10px;
+}
+.hover{
+	background-color:#075ca1
 }
 
 </style>
