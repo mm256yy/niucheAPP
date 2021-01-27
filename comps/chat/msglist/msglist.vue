@@ -4,8 +4,6 @@
 		:class="view"
 		class="wrap"
 		@tap="onTap"
-		@scroll="scrollmore"
-		@scrolltoupper="refresh"
 		upper-threshold='-50'
 		:scroll-into-view="toView">
 		<view class="message" v-for="item in chatMsg" :key="item.mid" :id="item.mid">
