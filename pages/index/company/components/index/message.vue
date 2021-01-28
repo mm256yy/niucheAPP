@@ -47,7 +47,7 @@
 				this.$u.route("/pages/index/company/components/index/letterStation")
 			},
 			listChat(){
-				this.$u.route("/pages/chat/chat")
+				this.$u.route("/pages/tim/record")
 			}
 	    },
 	}

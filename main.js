@@ -4,28 +4,17 @@ import App from './App'
 import themeMixin from './utils/mixin.js'
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 Vue.config.productionTip = false
-let WebIM = require("utils/WebIM")["default"];
-import helper from './helper/helper.js';
-let conn = {
-	closed: false,
-	curOpenOpt: {},
-	open(opt) {
-		this.curOpenOpt = opt;
-		WebIM.conn.open(opt);
-		this.closed = false;
-	},
-	reopen() {
-		if (this.closed) {
-			//this.open(this.curOpenOpt);
-			WebIM.conn.open(this.curOpenOpt);
-			this.closed = false;
-		}
-	}
-};
+import tim from '@/common/tim/tim.js'
+import commen from '@/common/commen.js'
+import TIM from 'tim-js-sdk'
+import store from './store/index.js'
 
-Vue.prototype.$im = WebIM;
-Vue.prototype.$conn = conn;
-Vue.prototype.$helper = helper;
+
+Vue.config.productionTip = false
+Vue.prototype.tim = tim.tim  			//tim sdk 引入后生成的tim服务
+Vue.prototype.$TIM = TIM				//tim 的状态/事件 常量
+Vue.prototype.$store = store
+Vue.prototype.$commen = commen
 // Vue.prototype.$store = store
 App.mpType = 'app'
 // Vue.component("list",list) // 全局注册

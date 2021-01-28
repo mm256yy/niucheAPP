@@ -10,6 +10,9 @@
 </template>
 
 <script>
+		import {
+			mapState
+		} from "vuex";
 	export default {
 		data() {
 			return {
@@ -150,21 +153,11 @@
 				})
 			},
 			chatYour() {
-				// let user = uni.getStorageSync('token');
-				this.$conn.open({
-					apiUrl: this.$im.config.apiURL,
-					user: 'pengtianfu',
-					pwd: 'pengtianfu',
-					grant_type: "password",
-					appKey: this.$im.config.appkey
-				});
-				uni.setStorageSync("myUsername", 'pengtianfu');
-				var my = uni.getStorageSync("myUsername");
-				var nameList = {
-					myName: 'pengtianfu',
-					your: 'yangke'
-				};
-				this.$u.route("/pages/chatroom/chatroom?username=" + JSON.stringify(nameList))
+				this.$store.commit('createConversationActive', 'yangke')
+				this.$u.route('/pages/tim/room')
+				// uni.navigateTo({
+				// 	url: './room'
+				// })
 			}
 		}
 	}

@@ -21,6 +21,10 @@
 </template>
 
 <script>
+	// chat
+	import userList from '@/common/tim/user.js';
+	import {mapState} from "vuex";
+	// 
 	import Company from '../index/company/company.vue'
 	import DriverIndex from './driverIndex.vue'
 	import {aui} from '@/components/aui-poster/common/aui/js/aui.js';
@@ -48,7 +52,15 @@
 				  }
 			}
 		},
+		computed:{
+			...mapState({
+				isLogin:state=>state.isLogin,
+				isSDKReady:state=>state.isSDKReady
+			})
+		},
 		onShow() {
+			// 
+			this.$store.commit('reset')
 			let type = uni.getStorageSync('curThemeType');
 			this.init()
 			if (type === 'company') {
@@ -69,8 +81,29 @@
 			if (this.$refs.driver != undefined) {
 				this.$refs.driver.getList()
 			}
+			this.initChat()
 		},
 		methods: {
+			initChat(){
+				let userInfo = userList[0]
+				let promise = this.tim.login({
+						userID: userInfo.userId,
+						userSig: userInfo.userSig
+					});
+					promise.then((res) => {
+						//登录成功后 更新登录状态
+						this.$store.commit("toggleIsLogin", true);
+						//自己平台的用户基础信息
+						uni.setStorageSync('userInfo', JSON.stringify(userInfo))
+						//tim 返回的用户信息
+						uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
+						// uni.reLaunch({
+						// 	url: '../tim/record'
+						// })
+					}).catch((err) => {
+						console.warn('login error:', err); // 登录失败的相关信息
+					});
+			},
 			tipsConfirm() {
 				let role = uni.getStorageSync('role');
 				if (role === 2) {

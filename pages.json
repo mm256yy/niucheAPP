@@ -749,7 +749,20 @@
               "navigationStyle": "custom" ,
                 "enablePullDownRefresh": false
             }
-        }
+        },{
+			"path": "pages/tim/record",
+			"style": {
+				"navigationStyle": "custom" ,
+				  "enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/tim/room",
+			"style": {
+				"navigationStyle": "custom" ,
+				  "enablePullDownRefresh": false
+			}
+		}
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
