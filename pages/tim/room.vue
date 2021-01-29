@@ -221,16 +221,16 @@
 			},
 		},
 		onLoad(option) {
-		
+			uni.setNavigationBarTitle({
+			  title: '聊天'
+			});
 			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 			this.toUserId = this.$store.state.toUserId
 			this.conversationActive = this.$store.state.conversationActive
 			console.log(this.conversationActive)
 			this.TIM = this.$TIM
 			console.log(this.toUserId,'获取聊天对象的用户信息')
-			uni.setNavigationBarTitle({
-			  title: '聊天'
-			});
+
 			this.toUserInfo = this.conversationActive.userProfile;
 			// //获取聊天对象的用户信息
 			// userList.forEach(item=>{

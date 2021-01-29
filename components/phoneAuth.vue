@@ -10,9 +10,9 @@
 </template>
 
 <script>
-		import {
-			mapState
-		} from "vuex";
+	import {
+		mapState
+	} from "vuex";
 	export default {
 		data() {
 			return {
@@ -160,8 +160,17 @@
 				}
 			},
 			toRoom(){
-				this.$store.commit('createConversationActive', 'yangke')
-				this.$u.route('/pages/tim/room')
+				let userID = 'yangke';
+				let promise = this.tim.getUserProfile({
+				  userIDList: [userID] 
+				});
+				promise.then((imResponse)=> {
+					let obj = {conversation:{}};
+					obj.conversation.conversationID = 'C2C'+userID;
+					obj.conversation.userProfile = imResponse.data[0];
+					this.$store.commit('updateConversationActive', obj)
+					this.$u.route('/pages/tim/room')
+				})
 			},
 			initLogin(){
 				

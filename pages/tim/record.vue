@@ -144,6 +144,7 @@
 				})
 			},
 			toRoom(item) {
+				debugger
 				this.$store.commit('updateConversationActive', item)
 				uni.navigateTo({
 					url: './room'
