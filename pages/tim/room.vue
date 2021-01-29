@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<u-navbar back-text="" back-icon-color="#333333" title="聊天" :background="background" title-color="#333333"></u-navbar>
+		<!-- <u-navbar back-text="" back-icon-color="#333333" title="聊天" :background="background" title-color="#333333"></u-navbar> -->
 		<view class="content" @touchstart="hideDrawer">
 			<scroll-view class="msg-list" scroll-y="true" :scroll-with-animation="scrollAnimation" :scroll-top="scrollTop"
-			 :scroll-into-view="scrollToView" @scrolltoupper="loadHistory" upper-threshold="50">
+			 :scroll-into-view="scrollToView" @scrolltoupper="loadHistory" upper-threshold="0">
 				<!-- 加载历史数据waitingUI -->
 				<view class="loading">
 					<view class="spinner">
@@ -35,12 +35,12 @@
 						<view class="other" v-else>
 							<!-- 左-头像 -->
 							<view class="left">
-								<image :src="toUserInfo.img"></image>
+								<image :src="toUserInfo.avatar"></image>
 							</view>
 							<!-- 右-用户名称-时间-消息 -->
 							<view class="right">
 								<view class="username">
-									<view class="name">{{toUserInfo.user}}</view>
+									<view class="name">{{toUserInfo.nick}}</view>
 									<view class="time">{{timeFliter(item.time)}}</view>
 								</view>
 
@@ -73,9 +73,9 @@
 					<view class="box" @tap="camera">
 						<view class="icon paizhao"></view>
 					</view>
-					<view class="box" @tap="handRedEnvelopes">
+<!-- 					<view class="box" @tap="handRedEnvelopes">
 						<view class="icon hongbao"></view>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -83,9 +83,9 @@
 		<view class="input-box" :class="popupLayerClass" @touchmove.stop.prevent="discard">
 			<!-- H5下不能录音，输入栏布局改动一下 -->
 			<!-- #ifndef H5 -->
-			<view class="voice">
+<!-- 			<view class="voice">
 				<view class="icon" :class="isVoice?'jianpan':'yuyin'" @tap="switchVoice"></view>
-			</view>
+			</view> -->
 			<!-- #endif -->
 			<!-- #ifdef H5 -->
 			<view class="more" @tap="showMore">
@@ -105,9 +105,9 @@
 				</view>
 			</view>
 			<!-- #ifndef H5 -->
-			<view class="more" @tap="showMore">
+	<!-- 		<view class="more" @tap="showMore">
 				<view class="icon add"></view>
-			</view>
+			</view> -->
 			<!-- #endif -->
 			<view class="send" :class="isVoice?'hidden':''" @tap="sendText">
 				<view class="btn">发送</view>
@@ -144,15 +144,10 @@
 	</view>
 </template>
 <script>
-	import userList from '@/common/tim/user.js'
 	import {mapState} from "vuex";
-	
 	export default {
 		data() {
 			return {
-				background: {
-					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
-				},
 				//TIM变量
 				conversationActive:null,
 				toUserId:'',
@@ -230,13 +225,19 @@
 			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 			this.toUserId = this.$store.state.toUserId
 			this.conversationActive = this.$store.state.conversationActive
+			console.log(this.conversationActive)
 			this.TIM = this.$TIM
-			//获取聊天对象的用户信息
-			userList.forEach(item=>{
-				if(this.toUserId == item.userId){
-					this.toUserInfo = item
-				}
-			})
+			console.log(this.toUserId,'获取聊天对象的用户信息')
+			uni.setNavigationBarTitle({
+			  title: '聊天'
+			});
+			this.toUserInfo = this.conversationActive.userProfile;
+			// //获取聊天对象的用户信息
+			// userList.forEach(item=>{
+			// 	if(this.toUserId == item.userId){
+			// 		this.toUserInfo = item
+			// 	}
+			// })
 			this.getMsgList();
 			//语音自然播放结束
 			this.AUDIO.onEnded((res)=>{

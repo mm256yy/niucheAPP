@@ -727,47 +727,22 @@
 					}
 				}
         ,{
-            "path" : "pages/chat/chat",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom" ,
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/chatroom/chatroom",
-            "style" :                                                                                    
-            {
-              "navigationStyle": "custom" ,
-                "enablePullDownRefresh": false
-            }
-            
-        },{
-            "path" : "pages/groupChatRoom/groupChatRoom",
-            "style" :  {
-              "navigationStyle": "custom" ,
-                "enablePullDownRefresh": false
-            }
-        },{
 			"path": "pages/tim/record",
 			"style": {
-				"navigationStyle": "custom" ,
-				  "enablePullDownRefresh": false
+				"navigationBarTitleText": "聊天记录"
 			}
 		},
 		{
 			"path": "pages/tim/room",
 			"style": {
-				"navigationStyle": "custom" ,
-				  "enablePullDownRefresh": false
+				"navigationBarTitleText": "聊天"
 			}
 		}
     ],
 	"globalStyle": {
-		// "navigationBarTextStyle": "white",
-		// "navigationBarTitleText": "",
-		// // "navigationBarBackgroundColor": "#FE9217",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#FE9217"
 	},
 	"tabBar": {
 		"height":"60",

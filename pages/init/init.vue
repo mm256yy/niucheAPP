@@ -59,10 +59,10 @@
 			})
 		},
 		onShow() {
-			// 
-			this.$store.commit('reset')
-			let type = uni.getStorageSync('curThemeType');
+			// this.$store.commit('reset')
+			this.initChat()
 			this.init()
+			let type = uni.getStorageSync('curThemeType');
 			if (type === 'company') {
 				companyPages.forEach(item => {
 					uni.setTabBarItem(item)
@@ -81,10 +81,18 @@
 			if (this.$refs.driver != undefined) {
 				this.$refs.driver.getList()
 			}
-			this.initChat()
+			
 		},
 		methods: {
 			initChat(){
+				let isLogin = this.$store.state.isLogin;
+				if (isLogin){
+					return
+				}
+				this.initLogin()
+			},
+			// 登录tim
+			initLogin(){
 				let userInfo = userList[0]
 				let promise = this.tim.login({
 						userID: userInfo.userId,
@@ -97,9 +105,6 @@
 						uni.setStorageSync('userInfo', JSON.stringify(userInfo))
 						//tim 返回的用户信息
 						uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
-						// uni.reLaunch({
-						// 	url: '../tim/record'
-						// })
 					}).catch((err) => {
 						console.warn('login error:', err); // 登录失败的相关信息
 					});

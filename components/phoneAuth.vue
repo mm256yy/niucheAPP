@@ -71,7 +71,6 @@
 								this.showTips = true;
 							} else if (flag === 2) {
 								this.showTips = false;
-								console.log(this.status)
 								if (this.status == 1) {
 									this.chatYour()
 									// if(this.phone){
@@ -153,11 +152,19 @@
 				})
 			},
 			chatYour() {
+				const isSDKReady = this.$store.state.isSDKReady;
+				if (isSDKReady){
+					this.toRoom()
+				} else {
+					this.initLogin()
+				}
+			},
+			toRoom(){
 				this.$store.commit('createConversationActive', 'yangke')
 				this.$u.route('/pages/tim/room')
-				// uni.navigateTo({
-				// 	url: './room'
-				// })
+			},
+			initLogin(){
+				
 			}
 		}
 	}

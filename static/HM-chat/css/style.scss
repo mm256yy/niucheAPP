@@ -57,11 +57,11 @@ page{
 	display: none !important;
 }
 .popup-layer{
-	&.showLayer{transform: translate3d(0,-42vw,0);}
+	&.showLayer{transform: translate3d(0,-43vw,0);}
 	transition: all .15s linear;
-	width: 96%;
-	height: 42vw;
-	padding: 20upx 2%;
+	width: 100%;
+	height: 43vw;
+	padding: 20upx 0;
 	background-color: #f3f3f3;
 	border-top: solid 1upx #ddd;
 	position: fixed;
@@ -110,15 +110,15 @@ page{
 	}
 }
 .input-box{
-	width: 98%;
+	width: 100%;
 	min-height: 100upx;
-	padding: 0 1%;
+	// padding: 0 1%;
 	background-color: #f2f2f2;
 	display: flex;
 	position: fixed;
 	z-index: 20;
 	bottom:-2upx;
-	&.showLayer{transform: translate3d(0,-42vw,0);}
+	&.showLayer{transform: translate3d(0,-43vw,0);}
 	transition: all .15s linear;
 	border-bottom: solid 1upx #ddd;
 	.voice,.more{
@@ -136,12 +136,12 @@ page{
 		margin-left: 20upx;
 		/* #endif */
 		flex-shrink: 0;
-		width: 100upx;
+		width: 120upx;
 		height: 100upx;
 		display: flex;
 		align-items: center;
 		.btn{
-			width: 90upx;
+			width: 110upx;
 			height: 56upx;
 			display: flex;
 			justify-content: center;

@@ -1,28 +1,27 @@
 <template>
 	<view>
-		<u-navbar back-text="" back-icon-color="#333333" title="聊天" :background="background" title-color="#333333"></u-navbar>
-		<view class="user-box">
+		<!-- <u-navbar back-text="" back-icon-color="#333333" title="聊天记录" :background="background" title-color="#333333"></u-navbar> -->
+<!-- 		<view class="user-box">
 			<view class="nav-tab">
 				<view :class="isActive ==0 ?'tab-item-active tab-item': 'tab-item'" @click="changeTabBtn(0)">聊天记录</view>
 				<view :class="isActive ==1 ?'tab-item-active tab-item1': 'tab-item1'" @click="changeTabBtn(1)">好友列表</view>
-				<!-- <view class="out-login" @click="outLoginBtn()"> 注 销</view> -->
+				<view class="out-login" @click="outLoginBtn()"> 注 销</view>
 				<view class="clear-box"></view>
 			</view>
-		</view>
+		</view> -->
 		<!-- 聊天记录 会话列表 -->
 		<view class="conversition-box" v-if="isActive ==0">
 			<view class="list-box" v-if="userAddConversationList.length>0">
 				<view class="item-box" v-for="(item,index) in userAddConversationList" :key="index" @click="toRoom(item)">
 					<view class="item-img">
-						<img :src="item.user.img" alt="">
+						<img :src="item.conversation.userProfile.avatar" alt="">
 					</view>
 					<view class="item-text">
 						<view class="item-user">
-							{{item.user.user}}
+							{{item.conversation.userProfile.nick}}
 						</view>
 						<view class="item-text-info">
 							<rich-text :nodes="nodesFliter(item.conversation.lastMessage.messageForShow)"></rich-text>
-							
 						</view>
 					</view>
 					<view class="item-msg">
@@ -31,11 +30,11 @@
 				</view>
 			</view>
 			<view class="list-box" v-else>
-				<span class="msg-box">暂无聊天记录，请选择好友进行聊天</span>
+				<span class="msg-box">暂无聊天记录</span>
 			</view>
 		</view>
 		<!-- 好友列表 -->
-		<view class="user-box" v-if="isActive ==1">
+		<!-- <view class="user-box" v-if="isActive ==1">
 			<view class="list-box">
 				<view class="user-item-box" v-for="(item,index) in friendList" :key="index" @click="checkUserToRoom(item)">
 					<view class="user-img">
@@ -46,13 +45,12 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 
 	</view>
 </template>
 
 <script>
-	import userList from '@/common/tim/user.js'
 	import {
 		mapState
 	} from "vuex";
@@ -64,7 +62,6 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				// conversationList: [],
-				userList: userList,
 				friendList:[],
 				isActive: 0, //默认聊天记录
 				userAddConversationList:[]
@@ -95,9 +92,7 @@
 				let promise = this.tim.logout();
 				promise.then(res=> {
 					this.$store.commit('reset')
-					uni.reLaunch({
-						url: '../index/index'
-					})
+					this.$u.route({url:'/pages/init/init',type:'switchTab'})
 				}).catch(err=> {
 				   console.log('退出失败')
 				});
@@ -119,10 +114,12 @@
 				// 拉取会话列表
 				let promise = this.tim.getConversationList();
 				promise.then((res) => {
+					console.log(res,'返回回话列表')
 					let conversationList = res.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
 					if (conversationList.length) {
 						//将返回的会话列表拼接上 用户的基本资料  
 						//说明：如果已经将用户信息 提交到tim服务端了 就不需要再次拼接
+						console.log(conversationList)
 						this.$store.commit("updateConversationList", conversationList);
 					}
 
@@ -134,14 +131,16 @@
 			getUserInfo(conversationList) {
 				 this.userAddConversationList = []
 				conversationList.forEach(item => {
+					if (item.type != "@TIM#SYSTEM"){
 					let obj = {}
-					obj.conversation = item
-					userList.forEach(item1 => {
-						if (item.toAccount == item1.userId) {
-							obj.user = item1
-						}
-					})
+					obj.conversation = item;
+					// userList.forEach(item1 => {
+					// 	if (item.toAccount == item1.userId) {
+					// 		obj.user = item1
+					// 	}
+					// })
 					this.userAddConversationList.push(JSON.parse(JSON.stringify(obj)))
+					} 
 				})
 			},
 			toRoom(item) {
@@ -151,12 +150,12 @@
 				})
 			},
 			//选择用户聊天
-			checkUserToRoom(toUserInfo) {
-				this.$store.commit('createConversationActive', toUserInfo.userId)
-				uni.navigateTo({
-					url: './room'
-				})
-			}
+			// checkUserToRoom(toUserInfo) {
+			// 	this.$store.commit('createConversationActive', toUserInfo.userId)
+			// 	uni.navigateTo({
+			// 		url: './room'
+			// 	})
+			// }
 
 		},
 		onShow() {
@@ -164,18 +163,17 @@
 				console.log('2222')
 				this.getConversationList()
 			}else{
-				console.log('333333')
+				console.log('sdk未准备好')
 			}
 		},
 		onLoad(){
 			let userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 			this.friendList = []
-			userList.forEach(item=>{
-				if(item.userId != userInfo.userId){
-					console.log(item)
-					this.friendList.push(item)
-				}
-			})
+			// userList.forEach(item=>{
+			// 	if(item.userId != userInfo.userId){
+			// 		this.friendList.push(item)
+			// 	}
+			// })
 			
 		}
 	}
@@ -285,10 +283,10 @@
 	}
 
 	.user-item-box {
-		padding: 20rpx 0;
+		padding: 0 0 10rpx;
 		width: auto;
-		height: 70rpx;
-		line-height: 70rpx;
+		height: 80rpx;
+		line-height: 80rpx;
 		cursor: pointer;
 		border-bottom: 1px solid #eee;
 	}
@@ -310,7 +308,7 @@
 	.user-name {
 		float: left;
 		margin-left: 20rpx;
-		width: 250rpx;
+		width: 300rpx;
 		height: 70rpx;
 		line-height: 70rpx;
 		color: #666;
