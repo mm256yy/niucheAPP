@@ -26,7 +26,7 @@
 					},
 					{
 						text: '使用手机号码进行注册登记',
-						url: '/static/helps/driver/zhuce//zhuce_diyibu_2.png'
+						url: '/static/helps/driver/zhuce/zhuce_diyibu_2.png'
 					},
 					{
 						text: '上传注册信息，网约车人证+驾驶证 ',

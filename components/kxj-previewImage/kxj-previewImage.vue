@@ -98,7 +98,6 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(this.imgs)
 	},
 	methods: {
 		//比例变化

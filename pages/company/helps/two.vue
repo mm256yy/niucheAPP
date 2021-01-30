@@ -2,54 +2,40 @@
 	<view>
 		<u-navbar back-text="返回" back-icon-size="0" title="车辆转卖教程" :background="backgroundCom"
 		 :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		 <view>
-			 <u-image :src="Url1" mode="widthFix" @tap="_previewImage(Url1)"></u-image>
-		 </view>
-		<view class="img_view">
-			<u-image :src="Url2" mode="widthFix" @tap="_previewImage(Url2)"></u-image>
+		<view v-for="(item,index) in list" :key="index" class="img_view">
+			<u-image :src="item" mode="widthFix" @click="open(index)"></u-image>
 		</view>
-		<view class="img_view">
-			<u-image :src="Url3" mode="widthFix" @tap="_previewImage(Url3)"></u-image>
-		</view>
-		<view class="img_view">
-			<u-image :src="Url4" mode="widthFix" @tap="_previewImage(Url4)"></u-image>
-		</view>
-		<view>
-			<u-image :src="Url5" mode="widthFix" @tap="_previewImage(Url5)"></u-image>
-		</view>
+		<previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="list"></previewImage>
 	</view>
 </template>
 
 <script>
+	import previewImage from '@/components/kxj-previewImage/kxj-previewImage.vue';
 	export default {
+		components: {
+			previewImage
+		}, //注册插件
 		data() {
 			return {
-				Url1:'/static/helps/zhuanmai_diyibu_1.png',
-				Url2:'/static/helps/zhuanmai_diyibu_2.png',
-				Url3:'/static/helps/zhuanmai_diyibu_3.png',
-				Url4:'/static/helps/zhuanmai_diyibu_4.png',
-				Url5:'/static/helps/zhuanmai_diyibu_5.png',
-				backTextStyle:{
-					'color':'#ffffff'
+				list: ['/static/helps/company/zhuanmai/zhuanmai_diyibu_1.png', '/static/helps/company/zhuanmai/zhuanmai_diyibu_2.png',
+					'/static/helps/company/zhuanmai/zhuanmai_diyibu_3.png', '/static/helps/company/zhuanmai/zhuanmai_diyibu_4.png',
+					 '/static/helps/company/zhuanmai/zhuanmai_diyibu_5.png','/static/helps/driver/zhuce/zhuce_diyibu_5.png'
+				],
+				backTextStyle: {
+					'color': '#ffffff'
 				},
 			}
 		},
 		methods: {
-			_previewImage(image) {
-					var imgArr = [];
-					imgArr.push(image);
-					//预览图片
-					uni.previewImage({
-						urls: imgArr,
-						current: imgArr[0]
-					});
-				},
+			open(e) {
+				this.$refs.previewImage.open(e)
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
- .img_view{
-	 padding: 10pt 0;
- }
+	.img_view {
+		padding-bottom: 40rpx;
+	}
 </style>
