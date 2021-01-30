@@ -133,8 +133,8 @@
 									<text style="padding-left: 15pt;">台</text>
 								</u-form-item>
 								<u-form-item label="价格">
-									<u-input v-model="item.packprice" type="number" :clearable="false" :border="true" placeholder="请输入" />
-									<text style="position: absolute;right: 10px;">元/台</text>
+									<u-input v-model="item.packprice" :clearable="false" :border="true" placeholder="请输入" />
+									<text style="position: absolute;right: 10px;">万元/台</text>
 								</u-form-item>
 							</u-form>
 						</view>
