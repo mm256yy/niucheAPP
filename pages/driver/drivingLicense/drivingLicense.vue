@@ -26,7 +26,7 @@
 			<view class="" v-else>
 				<u-image width="100%" height="240rpx" :src="form.driverPhoto"></u-image>
 			</view>
-			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过4M</view>
+			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为png,jpg格式,单张不得超过4M</view>
 			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
 		</view>
 		<view class="middle-content">

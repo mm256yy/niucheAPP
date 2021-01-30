@@ -26,6 +26,9 @@
 				<text class="middle-content-label">万元</text></u-form-item>
 				<u-form-item label="法人姓名" prop="legalPerson"><u-input v-model="form.legalPerson" :border="true" maxlength="30"/></u-form-item>
 				<u-form-item label="所在地区" prop="area"><u-input v-model="form.area" :border="true" maxlength="180"/></u-form-item>
+				<u-form-item label="经营所在地区" label-position="top">
+					<SearchTags :list="listCity" :active="activeCityType" :singleType="true" @onClick="cityTypeListChange"></SearchTags>
+				</u-form-item>
 			</u-form>
 			<view style="padding-top: 30pt;color:#E10000;">
 				*以上信息提交过审后不可更改
@@ -41,7 +44,11 @@
 <script>
 	import {requiredRule} from '@/common/rule.js'
 	import {actionJx} from '@/utils/constant.js'
+	import SearchTags from '@/components/searchTags.vue'
 	export default {
+		components:{
+			SearchTags
+		},
 		data() {
 			return {
 				labelStyle:{'color':'#7F7F7F'},
@@ -50,6 +57,10 @@
 				headerObj:{Authorization:''},
 				formDataObj:{phone:''},
 				fileList: [],
+				listCity:[
+					{id: '0',text: '杭州'},{id: '1',text: '宁波'},{id: '2',text: '温州'},{id: '3',text: '金华'}
+				],
+				activeCityType:0,
 				form: {
 					companyName: '',
 					socialCode: '',
@@ -57,7 +68,8 @@
 					registeredPrice: '',
 					legalPerson: '',
 					area: '',
-					businesscard:''
+					businesscard:'',
+					city:'杭州'
 				},
 				rules: {
 					companyName:requiredRule,
@@ -112,6 +124,10 @@
 				uni.setStorageSync('today',obj)
 				this.today = obj;
 			},
+			cityTypeListChange(obj){
+				this.form.city = obj.text;
+				this.activeCityType = obj.index;
+			},
 			getInfo(){
 				if(this.comparyid){
 					this.$u.api.getCompanyAll({comparyid:this.comparyid}).then(res => {
@@ -124,6 +140,9 @@
 							this.form.registeredPrice = data.registeredcapital;
 							this.form.legalPerson = data.faname;
 							this.form.area = data.area;
+							if (data.city){
+								this.form.city = data.city;
+							}
 							let obj = {
 								comparylogophoto:data.comparylogophoto,
 								companyEasyName: data.comparynickname,
