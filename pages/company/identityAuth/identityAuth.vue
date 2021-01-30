@@ -26,9 +26,10 @@
 				<text class="middle-content-label">万元</text></u-form-item>
 				<u-form-item label="法人姓名" prop="legalPerson"><u-input v-model="form.legalPerson" :border="true" maxlength="30"/></u-form-item>
 				<u-form-item label="所在地区" prop="area"><u-input v-model="form.area" :border="true" maxlength="180"/></u-form-item>
-				<u-form-item label="经营所在地区" label-position="top">
+				<u-form-item label="经营所在地" label-position="top">
 					<SearchTags :list="listCity" :active="activeCityType" :singleType="true" @onClick="cityTypeListChange"></SearchTags>
 				</u-form-item>
+				<view style="font-size: 12px;color: #f00;padding-top: 8px;">（*经营所在地须与所在地区一致,否则造成审核失败）</view>
 			</u-form>
 			<view style="padding-top: 30pt;color:#E10000;">
 				*以上信息提交过审后不可更改
