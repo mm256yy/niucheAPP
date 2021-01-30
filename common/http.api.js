@@ -213,7 +213,7 @@ const install = (Vue, vm) => {
 	//埋点统计统一接口
 	const setEvent = (params = {}) => vm.$u.get('/user/beahvior/event', params);
 	//获取sing
-	const getSing = (params = {}) => vm.$u.get('/user/beahvior/event', params);
+	const getSing = (params = {}) => vm.$u.get('/app/tencentChat/getChatSinger', params);
 	//根据公司获取sign
 	
 
