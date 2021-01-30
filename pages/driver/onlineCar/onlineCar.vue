@@ -110,7 +110,7 @@
 				show: false,
 				showEnd:false,
 				showTips:false,
-				type:true,
+				type:true,//切换修改
 				stateType:false,
 				reason:'',
 				params: {
@@ -161,8 +161,8 @@
 							this.reason ="驳回理由："+data.reason;
 						}else if (data.certificationstate === 2){
 							this.title = '证件已认证';
-							this.reason = "* 证件已认证，如有变更，请点击“变更”提交。 "
-							this.stateType = true;
+							this.reason = "* 证件已认证，不能更改 "
+							this.stateType = false;
 							this.type = false;
 						} else if(data.certificationstate ===1){
 							this.type = false;
