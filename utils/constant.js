@@ -4,14 +4,23 @@
 let ipconfig = 'http://server.neocab.cn'
 let shareIp = 'http://dev-share.neocab.cn' //分享测试
 // let shareIp = 'http://share.neocab.cn'
+
+//上传图片路径
 export const action =ipconfig+ "/sys/upload/uploadImage";
+//营业执照识别
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
+//驾照识别
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';
 export const baseUrl = ipconfig;
-export const shareUrl =shareIp+"?shareId=" //邀请好友
-export const shareArticleUrl = shareIp+"/driverServer/?id="//文章
-export const shareViewUrl = shareIp+"/pubilshDetails/?shareId="//详情
+//司机邀请好友
+export const shareUrl =shareIp+"?shareId=" 
+//司机服务分享文章
+export const shareArticleUrl = shareIp+"/driverServer/?id="
+//分享详情
+export const shareViewUrl = shareIp+"/pubilshDetails/?shareId="
+//获取版本
 export const updateUrl =ipconfig+"/app/getUrl?version=" 
+//发布版本号
 export const version = '1.5.2.2'
 export const publishObj = {
 	//form 验证方式
