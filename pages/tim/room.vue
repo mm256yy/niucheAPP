@@ -28,7 +28,7 @@
 							</view>
 							<!-- 右-头像 -->
 							<view class="right">
-								<image :src="userInfo.img"></image>
+								<image :src="userInfo.photoUrl"></image>
 							</view>
 						</view>
 						<!-- 别人发出的消息 -->

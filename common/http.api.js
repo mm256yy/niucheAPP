@@ -213,12 +213,13 @@ const install = (Vue, vm) => {
 	//埋点统计统一接口
 	const setEvent = (params = {}) => vm.$u.get('/user/beahvior/event', params);
 	//获取sing
-	const getSing = (params = {}) => vm.$u.get('/app/tencentChat/getChatSinger', params);
+	const getSing = (params = {}) => vm.$u.post('/app/tencentChat/getChatSinger', params);
 	//根据公司获取sign
 	
 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getSing,
 		setEvent,
 		contentShare, // 大神分享 内页
 		contentOrder, // 接单分享 内页

@@ -117,10 +117,10 @@
 				<u-image v-show="detail.iscollection === 1" @click="cancel(detail,detail.comparymainid)" width="42rpx" height="42rpx" src="@/static/favorited.png"></u-image>
 				<view style="margin-top: 8rpx;">收藏</view>
 			</view>
-			<view style="width: 412rpx;height: 100rpx;background: linear-gradient(270deg, #63D093 0%, #58C786 50%, #3DAF6A 100%);border-radius: 16rpx;line-height: 100rpx;font-size: 36rpx;color: #fff;text-align: center;" @click="dial()">拨打电话</view>
+			<view style="width: 412rpx;height: 100rpx;background: linear-gradient(270deg, #63D093 0%, #58C786 50%, #3DAF6A 100%);border-radius: 16rpx;line-height: 100rpx;font-size: 36rpx;color: #fff;text-align: center;" @click="dial()">在线沟通</view>
 		</view>
 		<PubBottom v-if="viewFlag" :isopen="detail.isopen" :editId="driverDemandId" :ids="detail.comparymainid" :type="3"></PubBottom>
-		<phone-auth :phone="detail.phone" :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
+		<phone-auth :phone="detail.phone" :adverseUsermainId="detail.adverseUsermainId" :status="status" v-show="!viewFlag&&show&&open" ref="phone"></phone-auth>
 		<phone-auth :ids="detail.comparyid" :title="detail.titletext" :status="status" v-show="!viewFlag&&show&&openShow" ref="other"></phone-auth>
 		<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
 	</view>

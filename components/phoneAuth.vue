@@ -40,6 +40,9 @@
 			title: {
 				type: String,
 				default: ''
+			},
+			adverseUsermainId:{
+				
 			}
 		},
 		methods: {
@@ -160,20 +163,45 @@
 				}
 			},
 			toRoom(){
-				let userID = 'yangke';
+				let userID = this.adverseUsermainId;
 				let promise = this.tim.getUserProfile({
 				  userIDList: [userID] 
 				});
 				promise.then((imResponse)=> {
-					let obj = {conversation:{}};
-					obj.conversation.conversationID = 'C2C'+userID;
-					obj.conversation.userProfile = imResponse.data[0];
-					this.$store.commit('updateConversationActive', obj)
-					this.$u.route('/pages/tim/room')
+					console.log(imResponse)
+					if (imResponse.data[0]){
+						let obj = {conversation:{}};
+						obj.conversation.conversationID = 'C2C'+userID;
+						obj.conversation.userProfile = imResponse.data[0];
+						this.$store.commit('updateConversationActive', obj)
+						this.$u.route('/pages/tim/room')	
+					} else{
+						this.$u.toast('对方未开通聊天')
+					}
 				})
 			},
 			initLogin(){
-				
+				this.$u.api.getSing().then(res=>{
+					if (res.code === 200){
+						let userInfo = res.object;
+						let promise = this.tim.login({userID: userInfo.userId,userSig: userInfo.singer});
+						promise.then((res) => {
+							//登录成功后 更新登录状态
+							this.$store.commit("toggleIsLogin", true);
+							//自己平台的用户基础信息
+							uni.setStorageSync('userInfo', JSON.stringify(userInfo))
+							//tim 返回的用户信息
+							uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
+							setTimeout(()=>{
+								this.toRoom()
+							},1000)
+						}).catch((err) => {
+							console.warn('login error:', err); // 登录失败的相关信息
+						});
+					}
+				}).catch((err) => {
+						console.log(err)
+				});
 			}
 		}
 	}

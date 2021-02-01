@@ -48,7 +48,7 @@
 		 </view>
 		 <view style="width: 100%;height: 124rpx;"></view>
 		 <view class="bottom" @click="dial()">
-			 <view>拨打电话</view>
+			 <view>在线沟通</view>
 		 </view>
 		 <phone-auth ref="phone" :phone="form.phone" :status="status"></phone-auth>
 	</view>

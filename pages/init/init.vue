@@ -22,7 +22,6 @@
 
 <script>
 	// chat
-	import userList from '@/common/tim/user.js';
 	import {mapState} from "vuex";
 	// 
 	import Company from '../index/company/company.vue'
@@ -93,21 +92,28 @@
 			},
 			// 登录tim
 			initLogin(){
-				let userInfo = userList[0]
-				let promise = this.tim.login({
-						userID: userInfo.userId,
-						userSig: userInfo.userSig
-					});
-					promise.then((res) => {
-						//登录成功后 更新登录状态
-						this.$store.commit("toggleIsLogin", true);
-						//自己平台的用户基础信息
-						uni.setStorageSync('userInfo', JSON.stringify(userInfo))
-						//tim 返回的用户信息
-						uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
-					}).catch((err) => {
-						console.warn('login error:', err); // 登录失败的相关信息
-					});
+			  let token = uni.getStorageSync('token');
+			  if (!token){
+				  return false
+			  }
+				this.$u.api.getSing().then(res=>{
+					if (res.code === 200){
+						let userInfo = res.object;
+						let promise = this.tim.login({userID: userInfo.userId,userSig: userInfo.singer});
+						promise.then((res) => {
+							//登录成功后 更新登录状态
+							this.$store.commit("toggleIsLogin", true);
+							//自己平台的用户基础信息
+							uni.setStorageSync('userInfo', JSON.stringify(userInfo))
+							//tim 返回的用户信息
+							uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
+						}).catch((err) => {
+							console.warn('login error:', err); // 登录失败的相关信息
+						});
+					}
+				}).catch((err) => {
+						console.log(err)
+				});
 			},
 			tipsConfirm() {
 				let role = uni.getStorageSync('role');
