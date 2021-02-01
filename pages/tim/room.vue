@@ -461,6 +461,11 @@
 			
 			// 发送消息
 			sendMsg(content,type){
+				console.log(content)
+				 if (this.$u.test.mobile(content.text)){
+					 content.text = content.text+"<div style='color:#000;'>请勿使用纽车之外的聊天工具，保证沟通、交易的安全</div>"
+				 }
+				
 				let message = this.tim.createTextMessage({
 				  to: this.toUserId,
 				  conversationType: 'C2C',
