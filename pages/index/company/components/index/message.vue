@@ -22,7 +22,7 @@
 						<view class="title">聊天记录</view>
 						<view class="time">{{time}}</view>
 					</view>
-					<view class="join">尊敬的用户，现在加入纽车网约车</view>
+					<view class="join">点击查看历史聊天记录</view>
 				</view>
 			</view>
 		</view>
@@ -42,11 +42,19 @@
 			 this.time = time;
 			}
 		},
+		onShow() {
+
+		},
 		methods: {
 			listMessage(){
 				this.$u.route("/pages/index/company/components/index/letterStation")
 			},
 			listChat(){
+				let token = uni.getStorageSync('token');
+				if (!token){
+					 this.$u.toast('请先登录')
+					 return false
+				}
 				this.$u.route("/pages/tim/record")
 			}
 	    },
