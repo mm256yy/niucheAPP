@@ -51,7 +51,7 @@
 		 <view class="bottom" @click="dial()">
 			 <view>在线沟通</view>
 		 </view>
-		 <phone-auth ref="phone" :phone="form.phone" :status="status"></phone-auth>
+		 <phone-auth ref="phone" :phone="form.phone" :adverseUsermainId="form.adverseUsermainId" :status="status"></phone-auth>
 	</view>
 </template>
 
