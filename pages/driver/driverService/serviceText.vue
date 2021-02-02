@@ -117,7 +117,8 @@
 		width: 100%;
 		font-size: 36rpx;
 		font-weight: 700;
-		padding: 0 28rpx;
+		padding:28rpx 0;
+		justify-content: center;
 		display: flex;
 		flex-wrap: wrap;
 	}

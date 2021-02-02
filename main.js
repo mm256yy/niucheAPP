@@ -15,9 +15,7 @@ Vue.prototype.tim = tim.tim  			//tim sdk 引入后生成的tim服务
 Vue.prototype.$TIM = TIM				//tim 的状态/事件 常量
 Vue.prototype.$store = store
 Vue.prototype.$commen = commen
-// Vue.prototype.$store = store
 App.mpType = 'app'
-// Vue.component("list",list) // 全局注册
 // 引入全局uView
 import uView from 'uview-ui'
 Vue.use(uView);
