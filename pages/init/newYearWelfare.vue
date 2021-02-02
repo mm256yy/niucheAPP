@@ -24,7 +24,7 @@
 										<text style="display: inline-block;margin-left: -6px;">【{{item.businesstype === 1 ?'网约车':'出租车'}}】</text>
 										{{item.carBrand}} {{item.carText}}
 									</view>
-									<view style="padding: 0 5px 5px;color: #FF5A00;font-size: 12pt;">{{item.packPrice}}元/月</view>
+									<view style="padding: 0 5px 5px;color: #FF5A00;font-size: 12pt;">¥{{item.packPrice}}/月</view>
 								</view>
 							</view>
 						</view>
