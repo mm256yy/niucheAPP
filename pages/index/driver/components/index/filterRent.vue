@@ -7,9 +7,9 @@
 	   		   <view class="name">{{addkey}}</view>
 	   		   <view style="width: 100%;height: 20rpx;background: #f5f5f5;"></view>
 	   		   <view style="position: absolute;top: 462rpx;left: 0;z-index: 100;width: 100%;">
-	   			   <view v-for="(item, index) in list" :key="index" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
+	   			   <view v-for="(item, index) in list" :key="index" @click="get(item.brandname)" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
 	   			   border-bottom: 2rpx solid rgba(0,0,0,0.03);">
-	   			   			   <view style="font-size: 32rpx;color: #333;">{{item.brandname}}</view>
+	   			   			   <view style="font-size: 32rpx;color: #333;" >{{item.brandname}}</view>
 	   			   			   <view style="width: 48rpx;height: 48rpx;border-radius: 50%;background: #4aba75;line-height: 48rpx;
 	   			   			   text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandname)">十</view>
 	   			   </view>

@@ -61,7 +61,7 @@
 									<view v-show="item.texttitle == '网约车司机'" class="type">网约车</view>
 									<view v-show="item.texttitle == '出租车司机'" class="type">出租车</view>
 								</view>
-								<view class="price"><text>{{item.pay}}元</text></view>
+								<view class="price"><text>¥{{item.pay}}</text></view>
 		    				</view>
 		    				<view class="clear"></view>
 							<!-- <view class="flex">

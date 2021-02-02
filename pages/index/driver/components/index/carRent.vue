@@ -46,10 +46,11 @@
 		</view> -->
 	<view v-show="!filterData.length" style="height: 116rpx;"></view>
 	<view v-show="filterData.length" style="height: 226rpx;"></view>
-	<load-refresh v-show="list.length" ref="loadRefresh" :pageNo='pageNum' :totalPageNo='total' :isRefresh="true"
+	<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
+<!-- 	<load-refresh v-show="list.length" ref="loadRefresh" :pageNo='pageNum' :totalPageNo='total' :isRefresh="true"
 	 refreshType="halfCircle" refreshTime="1000" color="#FF6501" heightReduce="10" backgroundCover="#F3F5F5" @loadMore="loadMore"
-	 @refresh="refresh">
-		<view slot="content-list">
+	 @refresh="refresh"> -->
+		<view >
 			<view class="last">
 				<view class="lists" v-for="(item, index) in list" :key="index">
 					<view class="list" @click="detail(item.id)">
@@ -66,7 +67,7 @@
 								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge?'/':''}}{{item.firstkm}}-{{item.km}}万公里
 								</view>
 							</view>
-							<view class="price"><text>{{item.rentprice}}元</text></view>
+							<view class="price"><text>¥{{item.rentprice}}</text></view>
 							<view v-show="item.carRentNum" class="numRenting">在租{{item.carRentNum}}辆</view>
 						</view>
 						<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
@@ -85,27 +86,24 @@
 				<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 			</view>
 		</view>
-	</load-refresh>
-	<view class="null" v-show="!list.length">
-		<view>
-			<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
-			<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
-		</view>
-	</view>
+	<!-- </load-refresh> -->
+	</mescroll-body>
 	</view>
 </template>
-
+ 
 <script>
-	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
+	// import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	import listTags from '@/components/listTags.vue'
+	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import {
 		publishObj
 	} from '@/utils/constant.js'
 	export default {
 		components: {
-			loadRefresh,
+			// loadRefresh,
 			listTags
 		},
+		mixins: [MescrollMixin],
 		data() {
 			return {
 				showMask: false,
@@ -113,19 +111,6 @@
 				showType: false,
 				iconType: 'flower',
 				publishObj: publishObj,
-				// list: [{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-				// 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-				// 					},
-				// 					{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-				// 						title: '身无彩凤双飞翼，心有灵犀一点通'
-				// 					},
-				// 					{
-				// 						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-				// 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-				// 					}
-				// 				],
 				form: {
 					businesstype: '',
 					carbrand: '',
@@ -140,9 +125,15 @@
 					islogin: ''
 				},
 				businesstype: 100,
-				pagination: {
-					pageNum: 1,
-					pageSize: 10
+				page: {
+					num:1,
+					size: 10 // 每页数据的数量,默认10
+				},
+				downOption: {
+					auto: false //是否在初始化后,自动执行downCallback; 默认true
+				},
+				up:{
+					textNoMore:'--没有更多了--'
 				},
 				priceid: '',
 				priceidkey: '',
@@ -527,25 +518,16 @@
 				this.showMask = false;
 				this.search()
 			},
-			page() {
-				this.pageNum = 1;
-			},
-			// 上划加载更多
-			loadMore() {
+			// page() {
+			// 	this.pageNum = 1;
+			// },
+			downCallback() {
 				this.$u.api.setEvent({eventId:"lease_load",type:3})
-				const token = uni.getStorageSync('token');
-				if (token) {
-					this.form.islogin = 1
-				} else {
-					this.form.islogin = 0
-				}
-				this.getList()
-				// 请求新数据完成后调用 组件内loadOver()方法
-				// 注意更新当前页码 currPage
-				this.$refs.loadRefresh.loadOver()
+				this.page.num = 1;
+				this.list = []
+				this.upCallback()
 			},
-			// 下拉刷新数据列表
-			refresh() {
+			upCallback() {
 				this.$u.api.setEvent({eventId:"lease_refresh",type:3})
 				const token = uni.getStorageSync('token');
 				if (token) {
@@ -553,8 +535,24 @@
 				} else {
 					this.form.islogin = 0
 				}
-				this.pageNum = 1;
-				this.search()
+				const params = Object.assign(this.form, {
+					pageNum: this.page.num,
+					pageSize: this.page.size,
+					isCount: 0,
+					orderByColumn: 'm.refreshtime',
+					isAsc: 'desc'
+				});
+				this.$u.api.homeRent(params).then(res => {
+					if (res.code === 200) {
+						this.total = res.total;
+						this.mescroll.endByPage(res.rows.length, res.total);
+						this.page.num = this.page.num+1
+						this.list=this.list.concat(res.rows);
+						console.log(this.list)
+					} else {
+						this.$u.toast(res.msg);
+					}
+				})
 			},
 			change() {
 				if (this.priceid == 1) {
@@ -596,87 +594,10 @@
 					}
 				})
 			},
-			// favorites(item,id) {
-			// 	const params = {
-			// 		BeCollectedId: id,
-			// 		isDriveAndCompary: 1,
-			// 		collectionstate: 1,
-			// 		iscollection: 1
-			// 	};
-			// 	item.iscollect = 1;
-			//     this.$u.api.collect(params).then(res=>{
-			//     	if(res.code === 200){
-			//     		 this.$u.toast('收藏成功');
-			//     	}else {
-			//     		 this.$u.toast(res.msg);
-			//     	}
-			//     })
-			// },
-			// cancel(item,id) {
-			// 	const params = {
-			// 		BeCollectedId: id,
-			// 		isDriveAndCompary: 1,
-			// 		collectionstate: 1,
-			// 		iscollection: 0
-			// 	};
-			// 	item.iscollect = 2;
-			//     this.$u.api.collect(params).then(res=>{
-			//     	if(res.code === 200){
-			//     		 this.$u.toast('取消收藏成功');
-			//     	}else {
-			//     		 this.$u.toast(res.msg);
-			//     	}
-			//     })
-			// },
-			getList() {
-				this.pageNum = this.pageNum + 1;
-				const params = Object.assign(this.form, {
-					pageNum: this.pageNum,
-					pageSize: 10,
-					isCount: 0,
-					orderByColumn: 'm.refreshtime',
-					isAsc: 'desc'
-				});
-				this.$u.api.homeRent(params).then(res => {
-					if (res.code === 200) {
-						this.total = Math.ceil(res.total / 10);
-						let arr = res.rows
-						arr.forEach(item => {
-							this.list.push(item)
-						})
-						let len = this.list.length;
-						if (len < this.total) {
-							this.status = 'loadmore'
-						} else {
-							this.status = 'nomore'
-						}
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
-			},
 			search() {
-				const params = Object.assign(this.form, {
-					pageNum: 1,
-					pageSize: 10,
-					isCount: 0,
-					orderByColumn: 'm.refreshtime',
-					isAsc: 'desc'
-				});
-				this.$u.api.homeRent(params).then(res => {
-					if (res.code === 200) {
-						this.list = res.rows;
-						this.total = Math.ceil(res.total / 10);
-						let len = this.list.length;
-						if (len < this.total) {
-							this.status = 'loadmore'
-						} else {
-							this.status = 'nomore'
-						}
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
+				this.page.num = 1;
+				this.page.size= 10;
+				this.list = []				this.upCallback()
 			},
 			confirm(arr) {
 				this.priceid = arr[0].label;
@@ -708,14 +629,14 @@
 				this.form.businesstype = arr[0].value;
 				this.search()
 			},
-			pull() {
-				let len = this.list.length;
-				if (len < this.total) {
-					this.getList()
-				} else {
-					this.status = 'nomore'
-				}
-			},
+			// pull() {
+			// 	let len = this.list.length;
+			// 	if (len < this.total) {
+			// 		this.getList()
+			// 	} else {
+			// 		this.status = 'nomore'
+			// 	}
+			// },
 			detail(id) {
 				this.$u.api.setEvent({eventId:"lease_visit",type:3})
 				this.$u.route("/pages/index/driver/components/index/carRentDetail", {
@@ -822,7 +743,7 @@
 		.middle-content {
 			width: 100%;
 			position: fixed;
-			top: 0;
+			top: 40px;
 			left: 0;
 			z-index: 10;
 			background-color: #fff;

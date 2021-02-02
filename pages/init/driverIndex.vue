@@ -281,40 +281,14 @@
 				})
 			},
 			toIndexId(id) {
-				if (id === 2) {
-					this.searchForm.startPriceid = '0';
-					this.searchForm.endPriceid = '2000';
-					this.title = '不限/2000以内';
-				}
-				if (id === 3) {
-					this.searchForm.startPriceid = '2000';
-					this.searchForm.endPriceid = '3000';
-					this.title = '不限/2000-3000';
-				}
-				if (id === 4) {
-					this.searchForm.startPriceid = '3000';
-					this.searchForm.endPriceid = '4000';
-					this.title = '不限/3000-4000';
-				}
-				if (id === 5) {
-					this.searchForm.startPriceid = '4000';
-					this.searchForm.endPriceid = '-1';
-					this.title = '不限/4000以上';
-				}
 				this.$u.api.setEvent({eventId:"sy-ayz",type:3,params:{'price':this.title}})
-				this.$u.route('/pages/index/driver/components/index/resultRent', {
-					form: JSON.stringify(this.searchForm),
-					title: this.title
-				});
+				uni.setStorageSync('priceidDri', id);
+				this.$u.route({url:'/pages/index/index',type:'switchTab'})
 			},
 			toIndexCar(text) {
-				this.title = '不限/' + text;
-				this.searchForm.carbrand = text;
+				uni.setStorageSync('carbrandDriver', text);
 				this.$u.api.setEvent({eventId:"sy-app",type:3,params:{'carBrand':text}})
-				this.$u.route('/pages/index/driver/components/index/resultRent', {
-					form: JSON.stringify(this.searchForm),
-					title: this.title
-				});
+				this.$u.route({url:'/pages/index/index',type:'switchTab'})
 				
 			},
 
