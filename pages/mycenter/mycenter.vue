@@ -91,6 +91,11 @@
 				}
 			}
 		},
+		onHide() {
+			if (this.$refs.searchDri){
+				this.$refs.searchDri.showTips = false
+			}
+		},
 		components:{
 			MyCompany,MyDriver
 		},
