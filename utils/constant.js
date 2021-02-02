@@ -1,5 +1,10 @@
+//
+//1.打正式包 请切换master分支 修改 <processEnvType> 为 true 即可
+//2.本地调试正式环境  修改 <processEnvType> 为 true 即可
+//2.其他情况此处不用修改，特殊情况除外
+
 //打包环境标识 true 正式
-const  processEnvType = false;
+const processEnvType = false;
 //测试
 let ipconfig = 'http://server.neocab.cn';
 let shareIp = 'http://dev-share.neocab.cn';
@@ -23,7 +28,6 @@ export const action =ipconfig+ "/sys/upload/uploadImage";
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
 //驾照识别
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';
-export const baseUrl = ipconfig;
 //司机邀请好友
 export const shareUrl =shareIp+"?shareId=" 
 //司机服务分享文章
@@ -35,7 +39,7 @@ export const updateUrl =ipconfig+"/app/getUrl?version="
 //tim SDKAPPID，SECRETKEY
 export const SDKAPPID = sdkAppid
 export const SECRETKEY = secretKey
-
+export const baseUrl = ipconfig;
 
 export const publishObj = {
 	//form 验证方式
