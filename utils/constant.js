@@ -1,9 +1,21 @@
+//打包环境标识 true 正式
+const  processEnvType = false;
+//测试
+let ipconfig = 'http://server.neocab.cn';
+let shareIp = 'http://dev-share.neocab.cn';
+let sdkAppid = 1400476242;
+let secretKey = '0f1e1e75ddf796ca30060a22af60418684d7ff344e062d7320668fe45e7b1213';
 
+//发布版本号
+export const version = '1.5.2.2'
 
-// let ipconfig = 'http://app-server.neocab.cn'//正式
-let ipconfig = 'http://server.neocab.cn'
-let shareIp = 'http://dev-share.neocab.cn' //分享测试
-// let shareIp = 'http://share.neocab.cn'
+if(process.env.NODE_ENV === 'production' && processEnvType){
+  //正式
+  let ipconfig = 'http://app-server.neocab.cn';
+  let shareIp = 'http://share.neocab.cn';
+  let sdkAppid = 1400481538;
+  let secretKey = '385b1c05040dfb8dd5d305d4f86f5aa0e037f58e189e9cea4ab706525b21e924';
+}
 
 //上传图片路径
 export const action =ipconfig+ "/sys/upload/uploadImage";
@@ -20,8 +32,11 @@ export const shareArticleUrl = shareIp+"/driverServer/?id="
 export const shareViewUrl = shareIp+"/pubilshDetails/?shareId="
 //获取版本
 export const updateUrl =ipconfig+"/app/getUrl?version=" 
-//发布版本号
-export const version = '1.5.2.2'
+//tim SDKAPPID，SECRETKEY
+export const SDKAPPID = sdkAppid
+export const SECRETKEY = secretKey
+
+
 export const publishObj = {
 	//form 验证方式
 	errorType:['message'],
