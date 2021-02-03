@@ -9,7 +9,7 @@ const processEnvType = false;
 let ipconfig = 'http://server.neocab.cn';
 let shareIp = 'http://dev-share.neocab.cn';
 let sdkAppid = 1400476242;
-let secretKey = '0f1e1e75ddf796ca30060a22af60418684d7ff344e062d7320668fe45e7b1213';
+let secretKey = '3d1dc9f13e2b0faf9b2d5e9ac485b153a2aa9513ecc0564c86a376364aea7e0b';
 
 //发布版本号
 export const version = '1.5.2.2'

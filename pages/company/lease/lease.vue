@@ -507,6 +507,11 @@
 							this.$u.toast('第' + (index + 1) + '条价格数据为空或不完整,请删除后提交审核')
 							flag = false
 						}
+						 let amountFlag = this.$u.test.amount(item.packprice*10000);
+						 if (!amountFlag){
+							this.$u.toast('第' + (index + 1) + '条价格有误,请修改后提交审核')
+							flag = false
+						  }
 					})
 					if (!flag) {
 						return false
