@@ -233,7 +233,7 @@
 			saveSubmit(){
 				let obj = {businesscard:'',comparyname:'',societyid:'',chuangjiantime:'',registeredcapital:'',faname:'',area:'',
 				comparylogophoto:'',comparynickname:'',comparypeoplenum:'',comparycarnum:'',mainbusiness:'',userid:'',
-				comparytext:'',idcardphoto:'',username:'',sex:'',birthday:'',idcardid:'',telephone:'',comparypeoplephoto:'',identifyCode:''};
+				comparytext:'',idcardphoto:'',username:'',sex:'',birthday:'',idcardid:'',telephone:'',comparypeoplephoto:'',identifyCode:'',city:''};
 				obj.businesscard = this.companyFirst.businesscard;//营业执照
 				obj.comparyname = this.companyFirst.companyName;//公司名称
 				obj.chuangjiantime = this.companyFirst.companyCreateTime;//成立日期
@@ -241,6 +241,7 @@
 				obj.registeredcapital = this.companyFirst.registeredPrice;//注册资本
 				obj.faname = this.companyFirst.legalPerson;//法人姓名
 				obj.area = this.companyFirst.area;//地区
+				obj.city = this.companyFirst.city;//经营地区
 				if (!this.companySecond){
 					this.companySecond = uni.getStorageSync('companySecond')
 				}
