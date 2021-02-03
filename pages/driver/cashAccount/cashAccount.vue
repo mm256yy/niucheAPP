@@ -18,11 +18,21 @@
 		</view>
 		<u-modal v-model="showTips" :show-confirm-button="false" title="">
 			<view class="slot_content">
-				<view class="slot_tips">
+				<view class="slot_tips" style="padding: 0 10px;">
 					{{tipsText}}
 				</view>
 				<view style="padding: 15px 20px 0;text-align: center;">
 					<u-button type="warning" shape='circle' class="btn_orange" @click="showTips=false">好的</u-button>
+				</view>
+			</view>
+		</u-modal>
+		<u-modal v-model="showTipsOne" :show-confirm-button="false" title="">
+			<view class="slot_content">
+				<view class="slot_tips">
+					当前账户金额仅限从纽车平台租赁的车辆进行抵扣，其他渠道途径无法申请提现。
+				</view>
+				<view style="padding: 15px 20px 0;text-align: center;">
+					<u-button type="warning" shape='circle' class="btn_orange" @click="showTipsOne=false">好的</u-button>
 				</view>
 			</view>
 		</u-modal>
@@ -38,6 +48,7 @@
 		},
 		data() {
 			return {
+				showTipsOne:false,
 				totalAssets: 0,
 				showTips: false,
 				tipsText: '您无余额可提现！',
@@ -57,8 +68,7 @@
 		},
 		methods: {
 			applyTest(){
-				this.showTips = true
-				this.tipsText = '当前账户金额仅限从纽车平台租赁的车辆进行抵扣，其他渠道途径无法申请提现。'
+				this.showTipsOne = true
 			},
 			billDetails() {
 				this.$u.route('/pages/driver/cashAccount/billDetails')
