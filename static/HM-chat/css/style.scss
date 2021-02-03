@@ -117,7 +117,8 @@ page{
 	display: flex;
 	position: fixed;
 	z-index: 20;
-	bottom:-2upx;
+	bottom:-1upx;
+	padding-bottom: 10px;
 	&.showLayer{transform: translate3d(0,-43vw,0);}
 	transition: all .15s linear;
 	border-bottom: solid 1upx #ddd;
@@ -136,13 +137,13 @@ page{
 		margin-left: 20upx;
 		/* #endif */
 		flex-shrink: 0;
-		width: 120upx;
-		height: 100upx;
+		width: 150upx;
+		height: 110upx;
 		display: flex;
 		align-items: center;
 		.btn{
-			width: 110upx;
-			height: 56upx;
+			width: 140upx;
+			height: 66upx;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -173,14 +174,14 @@ page{
 		}
 		.text-mode{
 			width: 100%;
-			min-height: 70upx;
+			min-height: 80upx;
 			display: flex;
 			background-color: #fff;
 			border-radius: 40upx;
 			.box{
 				width: 100%;
 				padding-left: 30upx;
-				min-height: 70upx;
+				min-height: 80upx;
 				display: flex;
 				align-items: center;
 				textarea{
@@ -191,7 +192,7 @@ page{
 				flex-shrink: 0;
 				width: 80upx;
 				padding-left: 10upx;
-				height: 70upx;
+				height: 90upx;
 				display: flex;
 				justify-content: center;
 				align-items: center;
