@@ -158,7 +158,7 @@
 					this.fileList= [{url:data.driverPhoto}]
 						if (data.certificationstate === 3){
 							this.type = true;
-							this.reason ="驳回理由："+data.reason;
+							this.reason ="驳回理由："+data.certificationrejectreason;
 						}else if (data.certificationstate === 2){
 							this.title = '证件已认证';
 							this.reason = "* 证件已认证，不能更改 "
