@@ -89,7 +89,7 @@
 								<view class="name u-line-2">{{item.carBrand}}{{item.carText}}</view>
 								<view class="tag">{{item.carAge}}/{{item.km}}</view>
 							</view>
-		    				<view class="price">{{item.packPrice|moneyFormat}}元</view>
+		    				<view class="price">{{item.packPrice}}万元</view>
 							<view v-show="item.carnbumber" style="width: 136rpx;height: 48rpx;line-height: 40rpx;text-align: center;border-radius: 8rpx;border: 2rpx solid #4aba75;color: #4aba75;float: right;margin-top: 30rpx;margin-left: 34rpx;">在售{{item.carnbumber}}辆</view>
 		    			</view>
 		    			<view class="clear"></view>
