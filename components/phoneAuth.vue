@@ -198,6 +198,8 @@
 						}).catch((err) => {
 							console.warn('login error:', err); // 登录失败的相关信息
 						});
+					} else {
+						this.$u.toast(res.message)
 					}
 				}).catch((err) => {
 						console.log(err)
