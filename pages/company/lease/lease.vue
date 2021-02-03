@@ -366,6 +366,7 @@
 					return
 				}
 				this.form.rentCarPrice.splice(index, 1)
+				
 			},
 			actionSheetCallback(index) {
 				let value = this.list[index].text;
@@ -394,6 +395,7 @@
 					return
 				}
 				this.form.sellCarPrice.splice(index, 1)
+				console.log(this.form)
 			},
 			submitForm() {
 				let flag = this.verifyForm();

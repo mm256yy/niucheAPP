@@ -13,7 +13,8 @@
 			<u-image src="@/static/accountIn.png" height="272rpx" width="96%" border-radius="0" @click="toInviteFri"></u-image>
 		</view>
 		<view style="padding: 15px 25px 0;text-align: center;margin-top: 20px;">
-			<u-button type="warning" shape='circle' class="btn_orange" @click="applyAccount">提现申请</u-button>
+			<!-- <u-button type="warning" shape='circle' class="btn_orange" @click="applyAccount">提现申请</u-button> -->
+			<u-button type="warning" shape='circle' class="btn_orange" @click="applyTest">提现申请</u-button>
 		</view>
 		<u-modal v-model="showTips" :show-confirm-button="false" title="">
 			<view class="slot_content">
@@ -55,6 +56,10 @@
             this.getAccount()
 		},
 		methods: {
+			applyTest(){
+				this.showTips = true
+				this.tipsText = '当前账户金额仅限从纽车平台租赁的车辆进行抵扣，其他渠道途径无法申请提现。'
+			},
 			billDetails() {
 				this.$u.route('/pages/driver/cashAccount/billDetails')
 			},
