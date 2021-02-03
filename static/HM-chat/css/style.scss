@@ -118,7 +118,7 @@ page{
 	position: fixed;
 	z-index: 20;
 	bottom:-1upx;
-	padding-bottom: 10px;
+	padding-bottom: 20upx;
 	&.showLayer{transform: translate3d(0,-43vw,0);}
 	transition: all .15s linear;
 	border-bottom: solid 1upx #ddd;
