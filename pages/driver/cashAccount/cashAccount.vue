@@ -26,14 +26,20 @@
 				</view>
 			</view>
 		</u-modal>
-		<u-modal v-model="showTipsOne" :show-confirm-button="false" title="">
+<!-- 		<u-modal v-model="showTipsOne" :show-confirm-button="false" title="">
 			<view class="slot_content">
 				<view class="slot_tips">
-					当前账户金额仅限从纽车平台租赁的车辆进行抵扣，其他渠道途径无法申请提现。
+					
 				</view>
 				<view style="padding: 15px 20px 0;text-align: center;">
 					<u-button type="warning" shape='circle' class="btn_orange" @click="showTipsOne=false">好的</u-button>
 				</view>
+			</view>
+		</u-modal> -->
+		
+		<u-modal v-model="showTipsOne" @confirm="showTipsOne=false" title="提示" @cancel="setNum">
+			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
+		      当前账户金额仅限从纽车平台租赁的车辆进行抵扣，其他渠道途径无法申请提现。
 			</view>
 		</u-modal>
 		<Auth ref="auth"></Auth>
