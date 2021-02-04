@@ -5,7 +5,7 @@
 			<scroll-view class="msg-list" scroll-y="true" :scroll-with-animation="scrollAnimation" :scroll-top="scrollTop"
 			 :scroll-into-view="scrollToView" @scrolltoupper="loadHistory" upper-threshold="0">
 				<!-- 加载历史数据waitingUI -->
-				<view class="loading">
+				<view class="loading" v-show="false">
 					<view class="spinner">
 						<view class="rect1"></view>
 						<view class="rect2"></view>
@@ -120,27 +120,6 @@
 			<view class="tis" :class="willStop?'change':''">{{recordTis}}</view>
 		</view>
 		<!-- 红包弹窗 -->
-		<view class="windows" :class="windowsState">
-			<!-- 遮罩层 -->
-			<view class="mask" @touchmove.stop.prevent="discard" @tap="closeRedEnvelope"></view>
-			<view class="layer" @touchmove.stop.prevent="discard">
-				<view class="open-redenvelope">
-					<view class="top">
-						<view class="close-btn">
-							<view class="icon close" @tap="closeRedEnvelope"></view>
-						</view>
-						<image src="/static/img/im/face/face_1.jpg"></image>
-					</view>
-					<view class="from">来自{{redenvelopeData.from}}</view>
-					<view class="blessing">{{redenvelopeData.blessing}}</view>
-					<view class="money">{{redenvelopeData.money}}</view>
-					<view class="showDetails" @tap="toDetails(redenvelopeData.rid)">
-						查看领取详情 <view class="icon to"></view>
-					</view>
-				</view>
-			</view>
-			
-		</view>
 	</view>
 </template>
 <script>
@@ -214,6 +193,9 @@
 				currentMessageList:state=>state.currentMessageList,
 			})
 		},
+		mounted() {
+			console.log(this.currentMessageList,'this.currentMessageList')
+		},
 		watch:{
 			currentMessageList(newVal,oldVal){
 				this.msgList = newVal
@@ -282,6 +264,9 @@
 			},
 			// 接受消息(定位消息)
 			screenMsg(newVal,oldVal){
+			    if (newVal.length==0 || oldVal.length==0){
+					return
+				}
 				if(newVal[0].ID && oldVal[0].ID){
 					if(newVal[0].ID != oldVal[0].ID && newVal.length>=this.count ){
 						this.$nextTick(()=> {this.scrollToView =oldVal[0].ID});
@@ -322,7 +307,9 @@
 						this.$store.commit('pushCurrentMessageList',  res.data.messageList)
 					  this.nextReqMessageID =  res.data.nextReqMessageID // 用于续拉，分页续拉时需传入该字段。
 					  this.isCompleted =  res.data.isCompleted
-					  this.scrollToView = res.data.messageList[res.data.messageList.length-1].ID
+					  if (res.data.messageList.length){
+						   this.scrollToView = res.data.messageList[res.data.messageList.length-1].ID
+					  }
 						console.log(this.nextReqMessageID)
 					});
 				// 滚动到底部
@@ -376,13 +363,6 @@
 			//拍照发送
 			camera(){
 				this.getImage('camera');
-			},
-			//发红包
-			handRedEnvelopes(){
-				uni.navigateTo({
-					url:'HM-hand/HM-hand'
-				});
-				this.hideDrawer();
 			},
 			//选照片 or 拍照
 			getImage(type){
@@ -504,67 +484,11 @@
 			addSystemTextMsg(msg){
 				this.msgList.push(msg);
 			},
-			// 添加系统红包消息到列表
-			addSystemRedEnvelopeMsg(msg){
-				this.msgList.push(msg);
-			},
-			// 打开红包
-			openRedEnvelope(msg,index){
-				let rid = msg.content.rid;
-				uni.showLoading({
-					title:'加载中...'
-				});
-				console.log("index: " + index);
-				//模拟请求服务器效果
-				setTimeout(()=>{
-					//加载数据
-					if(rid==0){
-						this.redenvelopeData={
-							rid:0,	//红包ID
-							from:"大黑哥",
-							face:"/static/img/im/face/face.jpg",
-							blessing:"恭喜发财，大吉大利",
-							money:"已领完"
-						}
-					}else{
-						this.redenvelopeData={
-							rid:1,	//红包ID
-							from:"售后客服008",
-							face:"/static/img/im/face/face_2.jpg",
-							blessing:"恭喜发财",
-							money:"0.01"
-						}
-						if(!msg.content.isReceived){
-							// {type:"system",msg:{id:8,type:"redEnvelope",content:{text:"你领取了售后客服008的红包"}}},
-							this.sendSystemMsg({text:"你领取了"+(msg.userinfo.uid==this.myuid?"自己":msg.userinfo.username)+"的红包"},'redEnvelope');
-							console.log("this.msgList[index]: " + JSON.stringify(this.msgList[index]));
-							this.msgList[index].msg.content.isReceived = true;
-						}
-					}
-					uni.hideLoading();
-					this.windowsState = 'show';
-					
-				},200)	
-			},
-			
-			// 关闭红包弹窗
-			closeRedEnvelope(){
-				this.windowsState = 'hide';
-				setTimeout(()=>{
-					this.windowsState = '';
-				},200)
-			},
 			sendSystemMsg(content,type){
 				let lastid = this.msgList[this.msgList.length-1].msg.id;
 				lastid++;
 				let row = {type:"system",msg:{id:lastid,type:type,content:content}};
 				this.screenMsg(row)
-			},
-			//领取详情
-			toDetails(rid){
-				uni.navigateTo({
-					url:'HM-details/HM-details?rid='+rid
-				})
 			},
 			// 预览图片
 			showPic(msg){

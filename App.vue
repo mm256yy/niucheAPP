@@ -70,10 +70,23 @@
 						confirmText: '查看',
 						success: sucRes => {
 							if (sucRes.confirm) {
-								this.$u.route('pages/tim/record')
+								this.topage()
 							}
 						} 
 					}) 
+				}
+			},
+			topage(){
+				var pages = getCurrentPages();
+				var page = pages[pages.length - 1];
+				let pageRouter = page.route
+				// #ifdef APP-PLUS
+				var currentWebview = page.$getAppWebview();
+				console.log(currentWebview.id);//获得当前webview的id
+				console.log(currentWebview.isVisible());//查询当前webview是否可见
+				// #endif
+				if (pageRouter !='pages/tim/room' && pageRouter!='pages/tim/record'){
+					this.$u.route('pages/tim/record')
 				}
 			},
 			initSystem() {
