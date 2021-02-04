@@ -46,42 +46,46 @@
 		</view> -->
 	<view v-show="!filterData.length" style="height: 116rpx;"></view>
 	<view v-show="filterData.length" style="height: 226rpx;"></view>
-	<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-		<view class="last">
-			<view class="lists" v-for="(item, index) in list" :key="index">
-				<view class="list" @click="detail(item.id)">
-					<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"
-					 alt="">
-					<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="item.photourl" class="left" :src="item.photourl"
-					 alt="">
-					<view class="right">
-						<view style="height: 116rpx;">
-							<view class="name u-line-2">
-								<text v-show="item.businesstypetag == 1">[网约车]</text>
-								<text v-show="item.businesstypetag == 2">[出租车]</text>
-								{{item.texttitle}}</view>
-							<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge?'/':''}}{{item.firstkm}}-{{item.km}}万公里
+	<load-refresh v-show="list.length" ref="loadRefresh" :pageNo='pageNum' :totalPageNo='total' :isRefresh="true"
+	 refreshType="halfCircle" refreshTime="1000" color="#FF6501" heightReduce="10" backgroundCover="#F3F5F5" @loadMore="loadMore"
+	 @refresh="refresh">
+		<view slot="content-list">
+			<view class="last">
+				<view class="lists" v-for="(item, index) in list" :key="index">
+					<view class="list" @click="detail(item.id)">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="!item.photourl" class="left" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"
+						 alt="">
+						<img style="width: 288rpx;height: 196rpx;border-radius: 12rpx;" v-show="item.photourl" class="left" :src="item.photourl"
+						 alt="">
+						<view class="right">
+							<view style="height: 116rpx;">
+								<view class="name u-line-2">
+									<text v-show="item.businesstypetag == 1">[网约车]</text>
+									<text v-show="item.businesstypetag == 2">[出租车]</text>
+									{{item.texttitle}}</view>
+								<view class="year">车龄≤{{item.carAge}}{{item.carAge?'年':''}}{{item.carAge?'/':''}}{{item.firstkm}}-{{item.km}}万公里
+								</view>
 							</view>
+							<view class="price"><text>{{item.rentprice}}元</text></view>
+							<view v-show="item.carRentNum" class="numRenting">在租{{item.carRentNum}}辆</view>
 						</view>
-						<view class="price"><text>¥{{item.rentprice}}</text></view>
-						<view v-show="item.carRentNum" class="numRenting">在租{{item.carRentNum}}辆</view>
-					</view>
-					<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
-					<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
-					<view class="clear"></view>
-					<!-- <view class="flex">
-						<view class="company">{{item.comparyname}}</view>
-						<view class="area">{{item.comparyarea}}</view>
+						<!-- <u-image v-show="!item.photourl" class="left" width="306rpx" height="226rpx" src="http://pic1.jisuapi.cn/car/static/images/logo/300/2982.gif"></u-image> -->
+						<!-- <u-image class="left" width="306rpx" height="226rpx" :src="item.photourl"></u-image> -->
 						<view class="clear"></view>
-					</view> -->
-					<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+						<!-- <view class="flex">
+							<view class="company">{{item.comparyname}}</view>
+							<view class="area">{{item.comparyarea}}</view>
+							<view class="clear"></view>
+						</view> -->
+						<!-- <u-icon class="heart" name="heart-fill" color="#3FB26C" size="28"></u-icon> -->
+					</view>
+					<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
+					<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
 				</view>
-				<!-- <u-icon v-show="item.iscollect === 1" @click="cancel(item,item.id)" class="heart" name="heart-fill" color="#FCD03C" size="28"></u-icon> -->
-				<!-- <u-icon v-show="item.iscollect === 2" @click="favorites(item,item.id)" class="heart" name="heart-fill" color="rgba(0,0,0,0.1)" size="28"></u-icon> -->
+				<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 			</view>
-			<!-- <u-loadmore :status="status" :icon-type="iconType" :load-text="loadText" /> -->
 		</view>
-	</mescroll-body>
+	</load-refresh>
 	<view class="null" v-show="!list.length">
 		<view>
 			<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
@@ -94,7 +98,6 @@
 <script>
 	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	import listTags from '@/components/listTags.vue'
-	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import {
 		publishObj
 	} from '@/utils/constant.js'
@@ -103,15 +106,8 @@
 			loadRefresh,
 			listTags
 		},
-		mixins: [MescrollMixin],
 		data() {
 			return {
-				downOption: {
-					auto: false //是否在初始化后,自动执行downCallback; 默认true
-				},
-				up:{
-					textNoMore:'--没有更多了--'
-				},
 				showMask: false,
 				show: false,
 				showType: false,
@@ -472,7 +468,7 @@
 						}
 					})
 				}
-				this.upCallback()
+				this.search()
 			},
 			hideMask() {
 				this.showMask = false;
@@ -632,31 +628,6 @@
 			//     	}
 			//     })
 			// },
-			/*下拉刷新的回调 */
-			downCallback() {
-				this.pagination.pageNum = 1;
-				this.list = []
-				this.upCallback()
-			},
-			upCallback() {
-				const params = Object.assign(this.form, {
-					pageNum: this.pagination.pageNum,
-					pageSize: 10,
-					isCount: 0,
-					orderByColumn: 'm.refreshtime',
-					isAsc: 'desc'
-				});
-				this.$u.api.homeRent(params).then(res => {
-					if (res.code === 200) {
-						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
-						this.pagination.pageNum = this.pagination.pageNum+1
-						this.list=this.list.concat(res.rows);
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
-			},
 			getList() {
 				this.pageNum = this.pageNum + 1;
 				const params = Object.assign(this.form, {
@@ -896,7 +867,6 @@
 
 		.last {
 			background-color: #fff;
-			margin-bottom: 1900rpx;
 		}
 
 		.lists {
