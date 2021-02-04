@@ -97,7 +97,7 @@
 				 @touchmove.stop.prevent="voiceIng" @touchend="voiceEnd" @touchcancel="voiceCancel">{{voiceTis}}</view>
 				<view class="text-mode" :class="isVoice?'hidden':''">
 					<view class="box">
-						<textarea auto-height="true" v-model="textMsg" @focus="textareaFocus" />
+						<textarea auto-height="true" style="padding: 7px 0;" cursor-spacing="10" v-model="textMsg" @focus="textareaFocus" />
 						</view>
 					<view class="em" @tap="chooseEmoji">
 						<view class="icon biaoqing"></view>
