@@ -14,12 +14,12 @@ let secretKey = '3d1dc9f13e2b0faf9b2d5e9ac485b153a2aa9513ecc0564c86a376364aea7e0
 //发布版本号
 export const version = '1.5.2.2'
 
-if(process.env.NODE_ENV === 'production' && processEnvType){
+if(processEnvType){
   //正式
-  let ipconfig = 'http://app-server.neocab.cn';
-  let shareIp = 'http://share.neocab.cn';
-  let sdkAppid = 1400481538;
-  let secretKey = '385b1c05040dfb8dd5d305d4f86f5aa0e037f58e189e9cea4ab706525b21e924';
+   ipconfig = 'http://app-server.neocab.cn';
+   shareIp = 'http://share.neocab.cn';
+   sdkAppid = 1400481538;
+   secretKey = '385b1c05040dfb8dd5d305d4f86f5aa0e037f58e189e9cea4ab706525b21e924';
 }
 
 //上传图片路径
