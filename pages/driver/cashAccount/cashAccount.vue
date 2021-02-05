@@ -13,11 +13,12 @@
 			<u-image src="@/static/accountIn.png" height="272rpx" width="96%" border-radius="0" @click="toInviteFri"></u-image>
 		</view>
 		<view style="padding: 15px 25px 0;text-align: center;margin-top: 20px;">
-			<u-button type="warning" shape='circle' class="btn_orange" @click="applyAccount">提现申请</u-button>
+			<!-- <u-button type="warning" shape='circle' class="btn_orange" @click="applyAccount">提现申请</u-button> -->
+			<u-button type="warning" shape='circle' class="btn_orange" @click="applyTest">提现申请</u-button>
 		</view>
 		<u-modal v-model="showTips" :show-confirm-button="false" title="">
 			<view class="slot_content">
-				<view class="slot_tips">
+				<view class="slot_tips" style="padding: 0 10px;">
 					{{tipsText}}
 				</view>
 				<view style="padding: 15px 20px 0;text-align: center;">
@@ -25,6 +26,8 @@
 				</view>
 			</view>
 		</u-modal>
+
+		
 		<Auth ref="auth"></Auth>
 	</view>
 </template>
@@ -55,6 +58,9 @@
             this.getAccount()
 		},
 		methods: {
+			applyTest(){
+				this.$u.toast('您当前未在纽车APP租赁任何车辆，暂不支持提现！')
+			},
 			billDetails() {
 				this.$u.route('/pages/driver/cashAccount/billDetails')
 			},

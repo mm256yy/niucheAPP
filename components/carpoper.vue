@@ -62,7 +62,7 @@
 		methods: {
 			getSelect(){
 				uni.request({
-					url: 'http://niuche-default.neocab.cn/carmodel', //接口地址
+					url: 'https://niuche-default.neocab.cn/carmodel', //接口地址
 					header: {
 						'content-type': 'application/x-www-form-urlencoded', //自定义请求头信息
 					},

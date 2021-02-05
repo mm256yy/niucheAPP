@@ -66,7 +66,18 @@
 					this.confirmText = '好的';
 					this.loginStatus = false;
 					this.showTips = true;
+					this.setEvent()
 				}
+			},
+			setEvent() {
+				try {
+					const res = uni.getSystemInfoSync();
+					this.$u.api.setEvent({
+						eventId: "Login_watch",
+						type: 3,
+						params:res
+					})
+				} catch (e) {}
 			},
 			tipsConfirm(){
 				let loginStatus = this.loginStatus;//登录状态 true 已登录 false 未登录
@@ -77,6 +88,11 @@
 					   if (role == 2) {
 							this.$u.route('/pages/company/identityAuth/identityAuth')
 						} else {
+							this.$u.api.setEvent({
+								eventId: "attestation_licence",
+								type: 3,
+								params:{soure:'权限认证'}
+							})
 							this.$u.route('/pages/driver/drivingLicense/drivingLicense')
 						}
 					} else if (flag === 1){

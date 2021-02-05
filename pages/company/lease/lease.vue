@@ -133,8 +133,8 @@
 									<text style="padding-left: 15pt;">台</text>
 								</u-form-item>
 								<u-form-item label="价格">
-									<u-input v-model="item.packprice" type="number" :clearable="false" :border="true" placeholder="请输入" />
-									<text style="position: absolute;right: 10px;">元/台</text>
+									<u-input v-model="item.packprice" :clearable="false" :border="true" placeholder="请输入" />
+									<text style="position: absolute;right: 10px;">万元/台</text>
 								</u-form-item>
 							</u-form>
 						</view>
@@ -366,6 +366,7 @@
 					return
 				}
 				this.form.rentCarPrice.splice(index, 1)
+				
 			},
 			actionSheetCallback(index) {
 				let value = this.list[index].text;
@@ -394,6 +395,7 @@
 					return
 				}
 				this.form.sellCarPrice.splice(index, 1)
+				console.log(this.form)
 			},
 			submitForm() {
 				let flag = this.verifyForm();
@@ -475,12 +477,20 @@
 					}
 					let priceList = this.form.rentCarPrice;
 					let flag = true;
+					let monthList=[];
 					priceList.forEach((item, index) => {
 						if (item.RentTime === '' || item.Rentprice === '') {
 							this.$u.toast('第' + (index + 1) + '条价数据为空或不完整,请删除后提交审核')
 							flag = false
 						}
+						monthList.push(item.RentTime)
 					})
+					let monthlistF =Array.from(new Set(monthList));
+					if (monthList.length >monthlistF.length){
+						this.$u.toast('租赁周期重复，请修改后提交审核')
+						flag = false
+					}
+					
 					if (!flag) {
 						return false
 					}
@@ -497,6 +507,11 @@
 							this.$u.toast('第' + (index + 1) + '条价格数据为空或不完整,请删除后提交审核')
 							flag = false
 						}
+						 let amountFlag = this.$u.test.amount(item.packprice*10000);
+						 if (!amountFlag){
+							this.$u.toast('第' + (index + 1) + '条价格有误,请修改后提交审核')
+							flag = false
+						  }
 					})
 					if (!flag) {
 						return false

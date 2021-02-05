@@ -176,6 +176,9 @@
 			      item.checked=false;
 			})
 		},
+		onBackPress(event) {
+			 this.$u.api.setEvent({eventId:"hire_return",type:3})
+		},
 		methods: {
 			keyup() {
 				if(this.value != ''){
@@ -322,6 +325,7 @@
 							this.$u.toast('请填写');
 							return;
 						}
+						
 						this.$u.api.releaseRent(this.form).then(res=>{
 							if(res.code === 200){
 								this.showTips = true;
@@ -356,6 +360,7 @@
 				});
 			},
 			tipsConfirm(){
+				 // this.$u.api.setEvent({eventId:"hire_submit",type:3})
 				this.$u.route('/pages/driver/myPub/myPub', {index: 0});
 			}
 		}

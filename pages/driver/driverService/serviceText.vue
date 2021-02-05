@@ -7,6 +7,7 @@
 		</u-navbar>
 		<view class="">
 			<view class="box_tit">{{title}}</view>
+			<view style="text-align: right;padding-right: 30px;">{{updateTime}}</view>
 			<view class="box_1" v-html="content.text"></view>
 		</view>
 		<view class="">
@@ -30,6 +31,7 @@
 				},
 				id: '',
 				title:'',
+				updateTime:'',
 				content: {
 				},
 				shareObj:{
@@ -64,6 +66,7 @@
 				if (res.code === 200) {
 					this.content = res.object
 					this.title = res.object.title
+					this.updateTime = res.object.updateTime;
 				} else {
 					this.$u.toast(res.msg);
 				}
@@ -117,8 +120,9 @@
 		width: 100%;
 		font-size: 36rpx;
 		font-weight: 700;
-		padding: 0 28rpx;
+		padding:28rpx;
 		display: flex;
+		justify-content: center;
 		flex-wrap: wrap;
 	}
 	.box_1 {

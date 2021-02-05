@@ -104,7 +104,7 @@
 		  </view>
 		 <view style="width: 100%;height:140rpx"></view>
 		 <view class="phone" style="width: 100%;height: 140rpx;display: flex;justify-content: space-around;align-items: center;background: #fff;">
-		 	<!-- <view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+<!-- 		 	<view style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 		 		<u-image width="42rpx" height="42rpx" src="@/static/service.png"></u-image>
 		 		<view style="margin-top: 8rpx;">客服</view>
 		 	</view> -->
@@ -117,9 +117,9 @@
 				<u-image v-show="detail.iscollect === 1" @click="cancel(detail,detail.comparymainid)" width="42rpx" height="42rpx" src="@/static/favoritedDri.png"></u-image>
 				<view style="margin-top: 8rpx;">收藏</view>
 			</view>
-		 	<view style="width: 412rpx;height: 100rpx;background: linear-gradient(270deg, #FFC500 0%, #FFAD00 50%, #FF9700 100%);border-radius: 16rpx;line-height: 100rpx;font-size: 36rpx;color: #fff;text-align: center;" @click="dial()">拨打电话</view>
+		 	<view style="width: 412rpx;height: 100rpx;background: linear-gradient(270deg, #FFC500 0%, #FFAD00 50%, #FF9700 100%);border-radius: 16rpx;line-height: 100rpx;font-size: 36rpx;color: #fff;text-align: center;" @click="dial()">在线沟通</view>
 		 </view>
-		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>
+		<phone-auth :phone="detail.phone" :adverseUsermainId="detail.adverseUsermainId" :status="status" v-show="open" ref="phone"></phone-auth>
 		<phone-auth :ids="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
 		<ShareWX ref="shareWx" :href="shareObj.href" :title="shareObj.title" :summary="shareObj.summary" :imageUrl ="shareObj.imageUrl"></ShareWX>
 	</view>
@@ -204,6 +204,7 @@
 		methods: {
 			share() {
 				this.$refs.shareWx.shareShow()
+				this.$u.api.setEvent({eventId:"lease_content_share",type:3,params:{desc:'分享成功否'}})
 			},
 			back(){
 				uni.navigateBack()
@@ -211,11 +212,13 @@
 			preview(e){
 				console.log(e)
 				this.$refs.previewImage.open(e)
+				this.$u.api.setEvent({eventId:"lease_content_picture",type:3,params:{desc:'浏览banner'}})
 			},
 			setting(id) {
 				this.$u.route("/pages/mymessage/company/components/index/setting",{id:id})
 			},
 			change(index) {
+				this.$u.api.setEvent({eventId:"lease_content_price",type:3,params:{desc:'租赁价格切换'}})
 				this.firstCurrent = index;
 			},
 			favorites(item,id) {
@@ -309,8 +312,10 @@
 				this.open = false;
 				this.status = 4;
 				this.$refs.other.getStatus()
+				this.$u.api.setEvent({eventId:"lease_content_else",type:3})
 			},
 			dial() {
+			
 				this.openShow = false;
 				this.open = true;
 				this.status = 1;

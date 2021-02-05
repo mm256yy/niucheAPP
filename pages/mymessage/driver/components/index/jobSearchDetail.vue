@@ -63,7 +63,7 @@
 			<view class="phone">
 				<view class="left" @click="other()">公司店铺</view>
 				<view style="height: 50rpx;width: 4rpx;background: #fff;"></view>
-				<view class="right" @click="dial()">拨打电话</view>
+				<view class="right" @click="dial()">在线沟通</view>
 			</view>
 			<view style="width: 100%;height:154rpx"></view>
 			<!-- <view class="last">
@@ -75,7 +75,7 @@
 				</view>
 			</view> -->
 		</view>
-		<phone-auth :phone="detail.phone" :status="status" v-show="open" ref="phone"></phone-auth>
+		<phone-auth :phone="detail.phone" :adverseUsermainId="detail.adverseUsermainId" :status="status" v-show="open" ref="phone"></phone-auth>
 		<phone-auth :ids="detail.comparyid" :status="status" v-show="openShow" ref="other"></phone-auth>
 	</view>
 </template>
@@ -177,6 +177,10 @@
 			},
 			tabsChangeBottom(index) {
 				this.swiperCurrentBottom = index;
+				if (index === 1){
+					this.$u.api.setEvent({eventId:"job_content_introduce",type:3})
+				}
+				
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {

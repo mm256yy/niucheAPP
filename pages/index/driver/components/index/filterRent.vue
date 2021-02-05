@@ -7,9 +7,9 @@
 	   		   <view class="name">{{addkey}}</view>
 	   		   <view style="width: 100%;height: 20rpx;background: #f5f5f5;"></view>
 	   		   <view style="position: absolute;top: 462rpx;left: 0;z-index: 100;width: 100%;">
-	   			   <view v-for="(item, index) in list" :key="index" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
+	   			   <view v-for="(item, index) in list" :key="index" @click="get(item.brandname)" style="display: flex;justify-content: space-between;align-items: center;padding: 24rpx 34rpx;background: #fff;
 	   			   border-bottom: 2rpx solid rgba(0,0,0,0.03);">
-	   			   			   <view style="font-size: 32rpx;color: #333;">{{item.brandname}}</view>
+	   			   			   <view style="font-size: 32rpx;color: #333;" >{{item.brandname}}</view>
 	   			   			   <view style="width: 48rpx;height: 48rpx;border-radius: 50%;background: #4aba75;line-height: 48rpx;
 	   			   			   text-align: center;font-size: 26rpx;color: #fff;font-weight: 900;" @click="get(item.brandname)">十</view>
 	   			   </view>
@@ -150,6 +150,9 @@
 		mounted() {
 			this.transform()
 		},
+		onBackPress(event) {
+			 this.$u.api.setEvent({eventId:"lease_return",type:3,params:event})
+		},
 		methods: {
 			transform() {
 				this.priceid = uni.getStorageSync('priceidDri');
@@ -279,6 +282,7 @@
 				this.select()
 			},
 			get(text) {
+				this.$u.api.setEvent({eventId:"lease_brand",type:3})
 				this.addkey = this.addkey==''?text:(this.addkey+','+text);
 				let array = this.addkey.split(',');
 				array=Array.from(new Set(array));
@@ -298,6 +302,7 @@
 			// 	this.add()
 			// },
 			getDataAge(obj) {
+				this.$u.api.setEvent({eventId:"lease_year",type:3})
 				this.currentAge = obj.index;
 				this.carage = obj.index + 1;
 				this.caragekey =  obj.text;
@@ -321,10 +326,12 @@
 					this.form.startCarAge = '5';
 					this.form.endCarAge = '';
 				}
+				this.$u.api.setEvent({eventId:"lease_year",type:3})
 				this.select()
 				this.add(obj.text)
 			},
 			getDataKm(obj) {
+				this.$u.api.setEvent({eventId:"lease_mileage",type:3})
 				this.currentKm = obj.index;
 				const index = obj.index-1;
 				this.form.km = index==-1?'':index;
@@ -333,6 +340,7 @@
 				this.add(obj.text)
 			},
 			getDataCar(item) {
+				this.$u.api.setEvent({eventId:"lease_type",type:3})
 				this.arrCar.push(item);
 				this.cartype = [];
 				this.arrCar.map(item=>{
@@ -347,6 +355,7 @@
 				this.add(item.text)
 			},
 			getDataPower(item) {
+				this.$u.api.setEvent({eventId:"lease_power",type:3})
 				this.arrPower.push(item);
 				this.power = [];
 				this.arrPower.map(item=>{
@@ -554,6 +563,7 @@
 				this.$u.route('/pages/index/driver/components/index/historyRent');
 			},
 			result() {
+				this.$u.api.setEvent({eventId:"lease_result",type:3})
 				if(this.form.cartype){
 					uni.setStorageSync('cartypeDriver', this.form.cartype);
 				}else{

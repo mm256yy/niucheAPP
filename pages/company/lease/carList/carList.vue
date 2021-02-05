@@ -57,7 +57,6 @@ import {list} from "@/utils/index.list.js";
 		},
 		methods:{
 			toNext(v){
-				debugger
 				if (this.source === '1') {
 					 this.$u.route('/pages/company/lease/lease',v)
 				} else if(this.source === '2'){

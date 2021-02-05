@@ -19,8 +19,8 @@
 		 <view class="content">
             <view class="content-view">
 			  <u-form :model="form" ref="uForm" label-width='60pt' :label-style="labelStyle">
-				<u-form-item label="公司简称">
-					<u-input v-model="form.companyEasyName" :disabled="true" :border="false" placeholder=""/>
+				<u-form-item label="公司名称">
+					<u-input v-model="form.comparyname" :disabled="true" :border="false" placeholder=""/>
 				</u-form-item>
 				<u-form-item label="公司成员">
 					<u-input v-model="form.memberNumber" :disabled="!form.memberNumberFlag" :border="form.memberNumberFlag" placeholder=""/> 
@@ -110,7 +110,7 @@
 				companyName:'',		
 				form:{
 					comparyid:'',
-					companyEasyName:'',
+					comparyname:'',
 					memberNumber:'',
 					memberNumberFlag:false,
 					carNum:'',
@@ -173,7 +173,7 @@
 								}
 								this.companyName = data.comparynickname;
 								this.form.comparyid = data.comparyid;
-								this.form.companyEasyName =data.comparyname;
+								this.form.comparyname =data.comparyname;
 								this.form.memberNumber = data.comparypeoplenum;
 								this.form.carNum = data.comparycarnum;
 								this.form.mainBusiness = data.mainbusiness;

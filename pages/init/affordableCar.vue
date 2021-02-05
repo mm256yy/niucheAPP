@@ -23,7 +23,7 @@
 									</view>
 									<view style="padding: 10px 5px;color: #666666;" class="u-line-2">
 									{{item.cartype}}·{{item.power}}·≤{{item.carage}}年</view>
-									<view style="padding: 0 5px 5px;color:#FF5A00;font-size: 12pt;">{{item.lowprice}}元/月</view>
+									<view style="padding: 0 5px 5px;color:#FF5A00;font-size: 12pt;">¥{{item.lowprice}}/月</view>
 								</view>
 							</view>
 						</view>
@@ -58,6 +58,7 @@
 			loadMoreList() {
 				let pageNo = this.pageNum + 1
 				this.getList(pageNo)
+				this.$u.api.setEvent({eventId:"sy-djhcny-la",type:3})
 			},
 			getList(pageNum) {
 				this.$u.api.driverSideHomePage({
@@ -82,9 +83,11 @@
 				})
 			},
 			refresh() {
+				this.$u.api.setEvent({eventId:"sy-djhcli-r",type:3})
 				this.getList(1)
 			},
 			toView(id){
+				this.$u.api.setEvent({eventId:"sy-djhcny-li",type:3})
 				this.$u.route('/pages/index/driver/components/index/carRentDetail',{id:id})
 			}
 		}

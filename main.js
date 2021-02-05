@@ -4,10 +4,18 @@ import App from './App'
 import themeMixin from './utils/mixin.js'
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 Vue.config.productionTip = false
+import tim from '@/common/tim/tim.js'
+import commen from '@/common/commen.js'
+import TIM from 'tim-js-sdk'
+import store from './store/index.js'
 
-// Vue.prototype.$store = store
+
+Vue.config.productionTip = false
+Vue.prototype.tim = tim.tim  			//tim sdk 引入后生成的tim服务
+Vue.prototype.$TIM = TIM				//tim 的状态/事件 常量
+Vue.prototype.$store = store
+Vue.prototype.$commen = commen
 App.mpType = 'app'
-// Vue.component("list",list) // 全局注册
 // 引入全局uView
 import uView from 'uview-ui'
 Vue.use(uView);

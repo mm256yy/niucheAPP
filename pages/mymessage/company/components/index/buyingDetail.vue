@@ -42,9 +42,9 @@
 		 </view>
          <view style="width: 100%;height: 124rpx;"></view>
 		 <view v-show="show" class="bottom" @click="dial()">
-		 	<view>拨打电话</view>
+		 	<view>在线沟通</view>
 		 </view>
-		 <phone-auth v-show="show" ref="phone" :phone="detail.phone" :status="status"></phone-auth>
+		 <phone-auth v-show="show" ref="phone" :adverseUsermainId="detail.adverseUsermainId" :phone="detail.phone" :status="status"></phone-auth>
 	</view>
 </template>
 

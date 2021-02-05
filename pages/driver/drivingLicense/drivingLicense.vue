@@ -26,7 +26,7 @@
 			<view class="" v-else>
 				<u-image width="100%" height="240rpx" :src="form.driverPhoto"></u-image>
 			</view>
-			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过4M</view>
+			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为png,jpg格式,单张不得超过4M</view>
 			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
 		</view>
 		<view class="middle-content">
@@ -164,6 +164,9 @@
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
+		onBackPress(event) {
+			 this.$u.api.setEvent({eventId:"attestation_Return",type:3,params:this.form})
+		},
 		mounted() {
 			let today = uni.getStorageSync('today');
 			if(today){
@@ -196,8 +199,8 @@
 							this.reason ="驳回理由："+data.reason;
 						}else if (data.state === 2){
 							this.title = '驾照已认证';
-							this.reason = "* 驾照已认证，如有变更，请点击“变更”提交。 "
-							this.stateType = true;
+							this.reason = "* 驾照已认证，不可更改。 "
+							this.stateType = false;
 							this.type = false;
 						} else if(data.state ===1){
 							this.type = false;
@@ -257,6 +260,7 @@
 					this.form.birthday = data.birthday;
 				}else if(res.code === 100){
 					this.form.driverPhoto = res.data;
+					 this.$u.api.setEvent({eventId:"attestation_entering",type:3,params:{info:'未识别',driverPhoto:res.data}})
 				}else {
 					this.$u.toast(res.msg)
 				}

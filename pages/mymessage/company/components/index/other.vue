@@ -8,7 +8,7 @@
 			</view>
 		 </u-navbar>
 		 <view class="top">
-			 <u-avatar :src="detail.comparylogophoto"" mode="circle" size="large" ></u-avatar>
+			 <u-avatar :src="detail.comparylogophoto" mode="circle" size="large" ></u-avatar>
 			 <!-- <img class="left" :src="detail.comparylogophoto" alt=""> -->
 		 	<!-- <u-image mode="aspectFill" shape="circle" class="left" :src="detail.comparylogophoto"></u-image> -->
 		 	<view class="right">

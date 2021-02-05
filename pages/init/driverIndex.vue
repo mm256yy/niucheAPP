@@ -82,7 +82,7 @@
 				</view>
 				<swiper :current="swiperCurrent" indicator-dots="true" indicator-color="#f5f5f5" indicator-active-color="#FF5A00"
 				 style="height: 180px;">
-					<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
+					<swiper-item class="swiper-item" v-for="(item, index) in lists" :key="index">
 						<view style="display: flex;justify-content: space-around;padding: 0 10px;">
 							<view v-for="(info,i) in welfareList[index]" :key="info.comparymainid" @click="toView(info)" style="" class="swiper_xcfl">
 								<u-image :src="info.photoUrl" height="168rpx" border-radius="8" class="border_radius"></u-image>
@@ -184,6 +184,7 @@
 				}, {
 					image: '../../static/banner_3@3x.png'
 				}],
+				lists:[2,3,4],
 				tuBiaoList: [{
 						url: '../../static/biyadi@2x.png',
 						text: '比亚迪'
@@ -280,38 +281,15 @@
 				})
 			},
 			toIndexId(id) {
-				if (id === 2) {
-					this.searchForm.startPriceid = '0';
-					this.searchForm.endPriceid = '2000';
-					this.title = '不限/2000以内';
-				}
-				if (id === 3) {
-					this.searchForm.startPriceid = '2000';
-					this.searchForm.endPriceid = '3000';
-					this.title = '不限/2000-3000';
-				}
-				if (id === 4) {
-					this.searchForm.startPriceid = '3000';
-					this.searchForm.endPriceid = '4000';
-					this.title = '不限/3000-4000';
-				}
-				if (id === 5) {
-					this.searchForm.startPriceid = '4000';
-					this.searchForm.endPriceid = '-1';
-					this.title = '不限/4000以上';
-				}
-				this.$u.route('/pages/index/driver/components/index/resultRent', {
-					form: JSON.stringify(this.searchForm),
-					title: this.title
-				});
+				this.$u.api.setEvent({eventId:"sy-ayz",type:3,params:{'price':this.title}})
+				uni.setStorageSync('priceidDri', id);
+				this.$u.route({url:'/pages/index/index',type:'switchTab'})
 			},
 			toIndexCar(text) {
-				this.title = '不限/' + text;
-				this.searchForm.carbrand = text;
-				this.$u.route('/pages/index/driver/components/index/resultRent', {
-					form: JSON.stringify(this.searchForm),
-					title: this.title
-				});
+				uni.setStorageSync('carbrandDriver', text);
+				this.$u.api.setEvent({eventId:"sy-app",type:3,params:{'carBrand':text}})
+				this.$u.route({url:'/pages/index/index',type:'switchTab'})
+				
 			},
 
 			//低价好车
@@ -397,6 +375,7 @@
 				let url = this.list[index].url;
 				if(url){
 					this.$u.route(url)
+					this.$u.api.setEvent({eventId:"sy-bn",type:3,params:{url:url}})
 				}
 			},
 			message() {
@@ -411,11 +390,14 @@
 			},
 			toPage(type) {
 				if (type === 1) {
+					this.$u.api.setEvent({eventId:"sy-zl",type:3})
 					this.$u.route({
 						url: '/pages/index/index',
 						type: 'switchTab'
 					})
+					
 				} else {
+					this.$u.api.setEvent({eventId:"sy-zp",type:3})
 					this.$u.route({
 						url: '/pages/mymessage/mymessage',
 						type: 'switchTab'
@@ -427,13 +409,20 @@
 					this.$u.route({
 						url: '/pages/init/affordableCar',
 					})
+					this.$u.api.setEvent({eventId:"sy-djli",type:3})
 				} else {
 					this.$u.route({
 						url: '/pages/init/newYearWelfare',
 					})
+					this.$u.api.setEvent({eventId:"sy-xcfl",type:3})
 				}
 			},
 			toView(item) {
+				if (item.params) {
+					this.$u.api.setEvent({eventId:"sy-xcfl-nysy",type:3})
+				} else {
+					this.$u.api.setEvent({eventId:"sy-djhcny-csy",type:3})
+				}
 				this.$u.route('/pages/index/driver/components/index/carRentDetail', {
 					id: item.comparymainid,
 					tags: item.params

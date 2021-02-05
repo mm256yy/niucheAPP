@@ -21,6 +21,9 @@
 </template>
 
 <script>
+	// chat
+	import {mapState} from "vuex";
+	// 
 	import Company from '../index/company/company.vue'
 	import DriverIndex from './driverIndex.vue'
 	import {aui} from '@/components/aui-poster/common/aui/js/aui.js';
@@ -48,9 +51,17 @@
 				  }
 			}
 		},
+		computed:{
+			...mapState({
+				isLogin:state=>state.isLogin,
+				isSDKReady:state=>state.isSDKReady
+			})
+		},
 		onShow() {
-			let type = uni.getStorageSync('curThemeType');
+			// this.$store.commit('reset')
+			this.initChat()
 			this.init()
+			let type = uni.getStorageSync('curThemeType');
 			if (type === 'company') {
 				companyPages.forEach(item => {
 					uni.setTabBarItem(item)
@@ -69,8 +80,41 @@
 			if (this.$refs.driver != undefined) {
 				this.$refs.driver.getList()
 			}
+			
 		},
 		methods: {
+			initChat(){
+				let isLogin = this.$store.state.isLogin;
+				if (isLogin){
+					return
+				}
+				this.initLogin()
+			},
+			// 登录tim
+			initLogin(){
+			  let token = uni.getStorageSync('token');
+			  if (!token){
+				  return false
+			  }
+				this.$u.api.getSing().then(res=>{
+					if (res.code === 200){
+						let userInfo = res.object;
+						let promise = this.tim.login({userID: userInfo.userId,userSig: userInfo.singer});
+						promise.then((res) => {
+							//登录成功后 更新登录状态
+							this.$store.commit("toggleIsLogin", true);
+							//自己平台的用户基础信息
+							uni.setStorageSync('userInfo', JSON.stringify(userInfo))
+							//tim 返回的用户信息
+							uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
+						}).catch((err) => {
+							console.warn('login error:', err); // 登录失败的相关信息
+						});
+					}
+				}).catch((err) => {
+						console.log(err)
+				});
+			},
 			tipsConfirm() {
 				let role = uni.getStorageSync('role');
 				if (role === 2) {
@@ -102,6 +146,7 @@
 				let url = this.data.url;
 				if(url){
 					this.$u.route(url)
+					this.$u.api.setEvent({eventId:"sy-ggtc",type:3,params:{url:url}})
 				}
 			},
 			popupShow(type) {

@@ -2,54 +2,40 @@
 	<view>
 		<u-navbar back-text="返回" back-icon-size="0" title="求购信息教程" :background="backgroundCom"
 		 :back-text-style="backTextStyle" height='44' title-color="#FFFFFF"></u-navbar>
-		 <view>
-			 <u-image :src="Url1" mode="widthFix" @tap="_previewImage(Url1)"></u-image>
-		 </view>
-		<view class="img_view">
-			<u-image :src="Url2" mode="widthFix" @tap="_previewImage(Url2)"></u-image>
+	<view v-for="(item,index) in list" :key="index" class="img_view">
+				<u-image :src="item" mode="widthFix" @click="open(index)"></u-image>
+			</view>
+			<previewImage ref="previewImage" :saveBtn="false" :rotateBtn="false" :imgs="list"></previewImage>
 		</view>
-		<view class="img_view">
-			<u-image :src="Url3" mode="widthFix" @tap="_previewImage(Url3)"></u-image>
-		</view>
-		<view class="img_view">
-			<u-image :src="Url4" mode="widthFix" @tap="_previewImage(Url4)"></u-image>
-		</view>
-		<view>
-			<u-image :src="Url5" mode="widthFix" @tap="_previewImage(Url5)"></u-image>
-		</view>
-	</view>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {
-				Url1:'/static/helps/xinxi_diyibu_1.png',
-				Url2:'/static/helps/xinxi_diyibu_2.png',
-				Url3:'/static/helps/xinxi_diyibu_3.png',
-				Url4:'/static/helps/xinxi_diyibu_4.png',
-				Url5:'/static/helps/xinxi_diyibu_5.png',
-				backTextStyle:{
-					'color':'#ffffff'
+	</template>
+	
+	<script>
+		import previewImage from '@/components/kxj-previewImage/kxj-previewImage.vue';
+		export default {
+			components: {
+				previewImage
+			}, //注册插件
+			data() {
+				return {
+					list: ['/static/helps/company/qiugou/xinxi_diyibu_1.png', '/static/helps/company/qiugou/xinxi_diyibu_2.png',
+						'/static/helps/company/qiugou/xinxi_diyibu_3.png', '/static/helps/company/qiugou/xinxi_diyibu_4.png',
+						'/static/helps/driver/zhuce/zhuce_diyibu_5.png'
+					],
+					backTextStyle: {
+						'color': '#ffffff'
+					},
+				}
+			},
+			methods: {
+				open(e) {
+					this.$refs.previewImage.open(e)
 				},
 			}
-		},
-		methods: {
-			_previewImage(image) {
-					var imgArr = [];
-					imgArr.push(image);
-					//预览图片
-					uni.previewImage({
-						urls: imgArr,
-						current: imgArr[0]
-					});
-				},
 		}
-	}
-</script>
-
-<style lang="scss" scoped>
- .img_view{
-	 padding: 15pt 0;
- }
-</style>
+	</script>
+	
+	<style lang="scss" scoped>
+		.img_view {
+			padding-bottom: 40rpx;
+		}
+	</style>

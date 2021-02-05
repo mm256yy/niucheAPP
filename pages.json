@@ -726,11 +726,23 @@
 						"navigationStyle": "custom" 
 					}
 				}
+        ,{
+			"path": "pages/tim/record",
+			"style": {
+				"navigationBarTitleText": "聊天记录"
+			}
+		},
+		{
+			"path": "pages/tim/room",
+			"style": {
+				"navigationBarTitleText": "聊天"
+			}
+		}
     ],
 	"globalStyle": {
-		// "navigationBarTextStyle": "white",
-		// "navigationBarTitleText": "",
-		// // "navigationBarBackgroundColor": "#FE9217",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#FE9217"
 	},
 	"tabBar": {
 		"height":"60",

@@ -126,7 +126,7 @@
 					inviteAccount: 0,//邀请账户金额
 				},
 				shareObj:{
-					href:'',
+					href:shareUrl,
 					title:'赚租金上纽车APP',
 					summary:'注册就送100元，成为纽车推广人，赚租金，上不封顶！',
 					imageUrl:'http://niuche-default.neocab.cn/256_256.png'
@@ -139,14 +139,11 @@
 			if (shareId) {
 				this.shareId = shareId;
 				this.shareObj.href = this.shareUrl + shareId;
-				
 			} else {
 				let token = uni.getStorageSync('token')
 				if (token){
 					this.initId()
-				} else{
-					this.shareObj.href = this.shareUrl;
-				}
+				} 
 			}
 		},
 		onShow() {
@@ -154,6 +151,7 @@
 			if (token){
 				this.getNumber()
 			}
+			this.$u.api.setEvent({eventId:"sy-tglx",type:3})
 		},
 		methods: {
 			toCashAccount(){
@@ -165,6 +163,7 @@
 				}
 			},
 			inviteFriends() {
+				this.$u.api.setEvent({eventId:"sy-tglxyq",type:3})
 				this.$refs.shareWx.shareShow()
 			},
 			getNumber() {
@@ -187,6 +186,7 @@
 						let data = res.object;
 						if (data.shareId) {
 							this.shareId = data.shareId;
+							this.shareObj.href = this.shareUrl + data.shareId;
 						}
 					} else {
 						this.$u.toast(res.msg);

@@ -18,7 +18,8 @@ module.exports = {
 				    "/sys" : target,
 					"/app":target,
 					"/BillingdetailsController":target,
-					"/share":target
+					"/share":target,
+					 "/popup":target
 					
 			　　　　}
 			　　}

@@ -147,8 +147,10 @@
 			refreshed() {
 			    if (this.current === 0){
 			    	this.getList(1)
+					this.$u.api.setEvent({eventId:"issue_refresh1",type:3})
 			    }else{
 			    	this.getPageList(1)
+					this.$u.api.setEvent({eventId:"issue_refresh2",type:3})
 			    }
 			},
 			loadMoreList(){

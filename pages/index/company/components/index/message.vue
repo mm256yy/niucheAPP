@@ -14,6 +14,17 @@
 					<view class="join">尊敬的用户，现在加入纽车网约车</view>
 				</view>
 			</view>
+			<view @click="listChat()" class="list">
+				<u-image class="img" width="104rpx" height="104rpx" shape="circle" src="@/static/logoIcon.png"></u-image>
+				<!-- <img style="width: 104rpx;height: 104rpx;border-radius: 50%;" src="@/static/logoIcon.png" alt=""> -->
+				<view class="box">
+					<view style="display:flex;">
+						<view class="title">聊天记录</view>
+						<view class="time">{{time}}</view>
+					</view>
+					<view class="join">点击查看历史聊天记录</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -31,9 +42,20 @@
 			 this.time = time;
 			}
 		},
+		onShow() {
+
+		},
 		methods: {
 			listMessage(){
 				this.$u.route("/pages/index/company/components/index/letterStation")
+			},
+			listChat(){
+				let token = uni.getStorageSync('token');
+				if (!token){
+					 this.$u.toast('请先登录')
+					 return false
+				}
+				this.$u.route("/pages/tim/record")
 			}
 	    },
 	}

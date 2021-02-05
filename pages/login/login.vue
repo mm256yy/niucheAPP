@@ -141,6 +141,7 @@
 			this.$refs.uFormPwd.setRules(this.rules1);
 		},
 		mounted() {
+			this.$u.api.setEvent({eventId:"Login_page",type:3})
 			let token = uni.getStorageSync('token')
 			let phone = uni.getStorageSync('telephone')
 			let role = uni.getStorageSync('role')
@@ -154,6 +155,23 @@
 			}
 			if (token){
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
+			}
+		},
+		onBackPress(event) {
+			try {
+				const res = uni.getSystemInfoSync();
+				let params = Object.assign(this.form,res)
+				this.$u.api.setEvent({
+					eventId: "Login_return",
+					type: 3,
+					params:params
+				})
+			} catch (e) {
+				this.$u.api.setEvent({
+					eventId: "Login_return",
+					type: 3,
+					params:this.form
+				})
 			}
 		},
 		methods: {
@@ -247,7 +265,7 @@
 									userInfo.token = res.token;
 									userInfo.isauthencation = res.isauthencation
 									this.setStorage(userInfo)
-								
+								this.$u.api.setEvent({eventId:"Login_success",type:3})
 									if(res.userrole === 1){//司机
 									    uni.setStorageSync('curThemeType', 'driver');
 										
@@ -265,9 +283,11 @@
 										// }
 									}
 								}else {
+									this.$u.api.setEvent({eventId:"Login_fail",type:3})
 									 this.$u.toast(res.msg);
 								}
 							}).catch(res=>{
+								this.$u.api.setEvent({eventId:"Login_fail",type:3})
 								 this.$u.toast(res.msg);
 							})} 
 				})
