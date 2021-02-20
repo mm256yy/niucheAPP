@@ -12,7 +12,7 @@ let sdkAppid = 1400476242;
 let secretKey = '3d1dc9f13e2b0faf9b2d5e9ac485b153a2aa9513ecc0564c86a376364aea7e0b';
 
 //发布版本号
-export const version = '1.5.2.2'
+export const version = '1.5.2.3'
 
 if(processEnvType){
   //正式
