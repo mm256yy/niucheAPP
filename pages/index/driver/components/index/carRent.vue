@@ -343,6 +343,7 @@
 						}
 					})
 				}
+				this.pageNum = 1;
 				this.search()
 			},
 			transform() {
@@ -468,6 +469,7 @@
 						}
 					})
 				}
+				this.pageNum = 1;
 				this.search()
 			},
 			hideMask() {
@@ -514,6 +516,8 @@
 				}
 				this.show = false;
 				this.showMask = false;
+				
+				this.pageNum = 1;
 				this.search()
 			},
 			getDataType(index) {
@@ -525,6 +529,7 @@
 				uni.setStorageSync('typeDri', this.form.businesstype);
 				this.showType = false;
 				this.showMask = false;
+				this.pageNum = 1;
 				this.search()
 			},
 			page() {
@@ -645,7 +650,7 @@
 							this.list.push(item)
 						})
 						let len = this.list.length;
-						if (len < this.total) {
+						if (len < res.total) {
 							this.status = 'loadmore'
 						} else {
 							this.status = 'nomore'
@@ -668,8 +673,9 @@
 						this.list = res.rows;
 						this.total = Math.ceil(res.total / 10);
 						let len = this.list.length;
-						if (len < this.total) {
+						if (len < res.total) {
 							this.status = 'loadmore'
+							this.getList()
 						} else {
 							this.status = 'nomore'
 						}
@@ -745,6 +751,7 @@
 				} else {
 					this.form.islogin = 0
 				}
+				this.pageNum = 1;
 				this.search()
 			}
 		}
@@ -867,13 +874,13 @@
 
 		.last {
 			background-color: #fff;
+			margin-bottom: 40rpx;
 		}
 
 		.lists {
 			width: 679rpx;
 			// height: 285rpx;
 			position: relative;
-
 			.heart {
 				position: absolute;
 				margin-top: 14rpx;
