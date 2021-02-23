@@ -107,7 +107,7 @@
 				})
 			},
 			toView(id) {
-				this.$u.route('/pages/driver/cashAccount/billDetailView', {
+				this.$u.route('/pages/driver/myOrder/orderView', {
 					id: id
 				})
 			}

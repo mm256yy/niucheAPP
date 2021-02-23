@@ -61,22 +61,22 @@
 					</view>
 					<view class="" slot="body" style="display: flex;justify-content: space-around;">
 						<view style="position: relative;">
-							<u-image width="52rpx" height="52rpx" src="@/static/yanche@2x.png"></u-image>
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/yanche@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
 							<view style="font-size: 28rpx;color: #333;">订单</view>
 						</view>
 						<view style="position: relative;">
-							<u-image width="52rpx" height="52rpx" src="@/static/qianyue@2x.png"></u-image>
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
 							<view style="font-size: 28rpx;color: #333;">签约</view>
 						</view>
 						<view style="position: relative;">
-							<u-image width="52rpx" height="52rpx" src="@/static/zhifu@2x.png"></u-image>
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
 							<view style="font-size: 28rpx;color: #333;">支付</view>
 						</view>
 						<view style="position: relative;">
-							<u-image width="52rpx" height="52rpx" src="@/static/tiche@2x.png"></u-image>
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
 							<view style="font-size: 28rpx;color: #333;">提车</view>
 						</view>
