@@ -593,6 +593,7 @@
 					uni.removeStorageSync('carbrandDriver');
 				}
 				this.$u.route({url:'/pages/index/index',type:'switchTab'});
+				uni.setStorageSync('tagId', 1);
 			}
 		}
 	}

@@ -72,8 +72,12 @@
 			},
 			getList() {
 				// this.$refs.rent.search()
-				this.$refs.rent.page()
-				this.$refs.rent.transform()
+				let tagId = uni.getStorageSync('tagId');
+				if(tagId){
+					this.$refs.rent.transform()
+					this.$refs.rent.toTop()
+					uni.removeStorageSync('tagId')
+				}
 				this.token = uni.getStorageSync('token');
 				if(this.token){
 					this.view()
