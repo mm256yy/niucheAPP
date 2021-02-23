@@ -49,6 +49,39 @@
 				<text v-show="tokenFlag" @click="account" class="text">余额：￥{{driverPub.account}}</text>
 				<text v-show="!tokenFlag" @click="account" class="text">余额：￥0</text>
 				<view @click="toInvite" class="invite">邀请好友</view>
+				<u-card>
+					<view slot="head" style="display: flex;justify-content: space-between;">
+						<view style="font-size: 36rpx;color: #333;font-weight: 900;">
+							我的订单
+						</view>
+						<view style="display: flex;" @click="toMyOrder">
+							<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">查看全部订单</view>
+							<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+						</view>
+					</view>
+					<view class="" slot="body" style="display: flex;justify-content: space-around;">
+						<view style="position: relative;">
+							<u-image width="52rpx" height="52rpx" src="@/static/yanche@2x.png"></u-image>
+							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
+							<view style="font-size: 28rpx;color: #333;">订单</view>
+						</view>
+						<view style="position: relative;">
+							<u-image width="52rpx" height="52rpx" src="@/static/qianyue@2x.png"></u-image>
+							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
+							<view style="font-size: 28rpx;color: #333;">签约</view>
+						</view>
+						<view style="position: relative;">
+							<u-image width="52rpx" height="52rpx" src="@/static/zhifu@2x.png"></u-image>
+							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
+							<view style="font-size: 28rpx;color: #333;">支付</view>
+						</view>
+						<view style="position: relative;">
+							<u-image width="52rpx" height="52rpx" src="@/static/tiche@2x.png"></u-image>
+							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
+							<view style="font-size: 28rpx;color: #333;">提车</view>
+						</view>
+					</view>
+				</u-card>
 				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
@@ -318,6 +351,19 @@
 				}else{
 					this.toLogin()
 				}
+			},
+			toMyOrder(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.driverPub.driverState === 2){
+						this.$u.route("/pages/driver/myOrder/myOrder")
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+				
 			},
 			account(){
 				let token = uni.getStorageSync('token')

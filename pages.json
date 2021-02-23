@@ -738,6 +738,24 @@
 				"navigationBarTitleText": "聊天"
 			}
 		}
+        ,{
+            "path" : "pages/driver/myOrder/myOrder",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/driver/myOrder/orderView",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
