@@ -738,7 +738,7 @@
 				"navigationBarTitleText": "聊天"
 			}
 		}
-        ,{
+        ,{//我的订单司机
             "path" : "pages/driver/myOrder/myOrder",
             "style" :                                                                                    
             {
@@ -747,11 +747,29 @@
             }
             
         }
-        ,{
+        ,{//订单内页
             "path" : "pages/driver/myOrder/orderView",
             "style" :                                                                                    
             {
                  "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//验车单
+            "path" : "pages/driver/myOrder/checkCar",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//验车单2
+            "path" : "pages/driver/myOrder/checkSingle",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
