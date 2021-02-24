@@ -89,3 +89,55 @@ export const publishObj = {
 			    {id:'3',text: '月休4天',checked: false}]
 	
 }
+export const checkCarObj = {
+	bumperList:[
+		{id: '0',text: '正常'},{id: '1',text: '破损'},{id: '2',text: '脱落'},{id: '4',text: '划痕'}
+	],
+	engineList:[
+		{id: '0',text: '正常'},{id: '1',text: '破损'},{id: '2',text: '划痕'}
+	],
+	brakingList:[
+		{id: '0',text: '正常'},{id: '1',text: '异常'}
+	],
+	ABSList:[
+		{id: '0',text: '正常'},{id: '1',text: '报故障'}
+	],
+	glassList:[
+		{id: '0',text: '完好'},{id: '1',text: '裂痕'}
+	],
+	skyList:[
+		{id: '0',text: '完好及功能正常'},{id: '1',text: '功能异常'},{id: '2',text: '裂痕'}
+	],
+	tyreList:[
+		{id: '0',text: '完好'},{id: '1',text: '裂痕'},{id: '2',text: '过度磨损'}
+	],
+	hubList:[
+		{id: '0',text: '完好'},{id: '1',text: '裂痕'},{id: '2',text: '变形'}
+	],
+	carDoorList:[
+		{id: '0',text: '开闭正常'},{id: '1',text: '异常'}
+	],
+	steeringWheelList:[
+		{id: '0',text: '功能正常'},{id: '1',text: '异常'}
+	],
+	interiorPanelList:[
+		{id: '0',text: '正常'},{id: '1',text: '污浊'},{id: '2',text: '脱落'},{id: '4',text: '缺失'}
+	],
+	faultLightList:[
+		{id: '0',text: '未报故障'},{id: '1',text: '异常'}
+	],
+	shakeList:[
+		{id: '0',text: '无'},{id: '1',text: '抖动'}
+	],
+	shakeList:[
+		{id: '0',text: '平稳'},{id: '1',text: '异常'}
+	],
+	shakeList:[
+		{id: '0',text: '平稳'},{id: '1',text: '异常'}
+	],
+	jackList:[
+		{id: '0',text: '有'},{id: '1',text: '无'}
+	]
+	
+	
+}
