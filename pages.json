@@ -121,6 +121,18 @@
 				"navigationStyle": "custom" 
 			}
         }
+		,{//公司我的订单管理
+		    "path" : "pages/company/order/order",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司我的订单详情
+		    "path" : "pages/company/order/orderDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
         ,{//租车价格
             "path" : "pages/company/lease/step/stepCost/stepCost",
             "style" : {
