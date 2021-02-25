@@ -27,7 +27,6 @@
 			};
 		},
 		mounted() {
-			console.log(this.active)
 		},
 		methods: {
 			onClick(index, item) {
