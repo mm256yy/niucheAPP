@@ -36,7 +36,7 @@
 				<view class="room"></view>
 				<view style="width: 678rpx;margin: 60rpx 20rpx 18rpx 52rpx;padding: 0 60rpx 0 20rpx;display: flex;justify-content: space-between;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的订单</view>
-					<view class="new">新建订单</view>
+					<view class="new" @click="toNew()">新建订单</view>
 				</view>
 				<view style="width: 678rpx;height: 168rpx;margin-left: 36rpx;background: #fff;padding: 0 38rpx;border-radius: 20rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view @click="toList()" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
@@ -306,6 +306,9 @@
 			},
 			toList(){
 				this.$u.route('/pages/company/order/order');
+			},
+			toNew(){
+				this.$u.route('/pages/company/order/newOrder');
 			},
 			toPub(index){
 				let token = uni.getStorageSync('token')

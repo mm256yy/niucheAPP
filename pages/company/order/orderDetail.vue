@@ -5,7 +5,7 @@
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right">
-				<view class="message-box right-item" @click="chargeback" v-if="status">退单</view>
+				<view class="message-box right-item" @click="chargeback" v-if="status">撤销</view>
 			</view>
 		</u-navbar>
 		<view class="content">
@@ -45,7 +45,7 @@
 							</template>
 							<template v-slot:content>
 								<view style="height: 60px;">
-									<view class="u-order-desc">提车</view>
+									<view class="u-order-desc">提车(待确认)</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -61,7 +61,7 @@
 							</template>
 							<template v-slot:content>
 								<view style="height: 60px;">
-									<view class="u-order-desc">支付租金和押金</view>
+									<view class="u-order-desc">租金与押金（待付）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -78,7 +78,7 @@
 							</template>
 							<template v-slot:content>
 								<view style="height: 60px;">
-									<view class="u-order-desc">合同签署</view>
+									<view class="u-order-desc">合同签署（未签）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -94,7 +94,7 @@
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">验车</view>
+									<view class="u-order-desc">商品信息登记（未登记）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -109,8 +109,8 @@
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="middle_content">
-			<view class="company_name">企业全称</view>
-			<view class="company_model">出租的品牌</view>
+			<view class="company_name">承租人姓名</view>
+			<view class="company_model">出租的品牌车系型号</view>
 			<view class="content_item">
 				<view class="item"><text class="title">租赁周期：</text><text>12个月（提车后开始计算）</text></view>
 				<view class="item"><text class="title">每月租金：</text><text>3000元</text></view>
@@ -122,10 +122,12 @@
 				<view class="item"><text class="title">订单时间：</text><text>3000元</text></view>
 				<view class="item"><text class="title">订单号：</text><text>3000元</text></view>
 			</view>
-			<view class="content_item" v-if="false">
+			<view class="company_model">订单支付费用明细</view>
+			<view class="content_item" v-if="true">
 				<view class="item"><text class="title">实付租金: </text><text>3000元</text></view>
 				<view class="item"><text class="title">实付押金：</text><text>3000元</text></view>
 				<view class="item"><text class="title">实际支付总和：</text><text>3000元</text></view>
+				<view class="item"><text class="title">支付时间：</text><text>2012.12.31 14:23:55</text></view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
@@ -138,7 +140,7 @@
 				<u-col span="6" style="border-right: 1px solid #E0E0E0;">
 					<view class="btn">
 						<u-image width="52" height="52" src="@/static/order/lianxichuzufang2x.png"></u-image>
-						<view class="text">联系出租方</view>
+						<view class="text">联系承租人</view>
 					</view>
 				</u-col>
 				<u-col span="6">
@@ -149,58 +151,23 @@
 				</u-col>
 			</u-row>
 		</view>
-		<view class="view_car">查看车辆信息</view>
+		<!-- <view class="view_car">查看车辆信息</view> -->
+		<view style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
+			<text style="padding: 6rpx;border-bottom: 2rpx solid #24ce8d;">查看合同范文</text>
+		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
-		<!-- 1 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;">
-			<view class="btn orange">确认验车和上传车辆信息</view>
-		</view>
-		<!-- 2 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;">
-			<view class="btn orange">签署《汽车租赁合同》</view>
-		</view>
-<!-- 		<view class="bottom_content" >	
-			<u-row>
-				<u-col span="5">
-					<view class="btn defult">查看验车信息</view>
-				</u-col>
-				<u-col span="7" style="text-align: center;">
-					<view class="btn orange">签署《汽车租赁合同》</view>
-				</u-col>
-			</u-row>
+		<!-- <view class="bottom_content" style="padding: 40rpx 60rpx;">
+			<view class="btn orange">《汽车租赁合同》锁定</view>
 		</view> -->
-        <!-- 3 -->
-		<view class="bottom_content" style="position: relative;">
-			<u-row>
-				<u-col span="7">
-					<view class="tips">*须商家签署合同才可支付</view>
-					<view class="">合计<text class="money">12000</text><text style="color:#FE3B31 ;">元</text> 
-					<text style="font-size: 24rpx;color: #1F87F2;padding-left: 10rpx;">明细</text>
-					<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="30" color="#1F87F2"></u-icon></view>
-					
-				</u-col>
-				<u-col span="5">
-					<view :class="['btn',openFlag?'orange':'defult']">支付</view>
-				</u-col>
-				<view class="money_abs" v-if="openFlag">月租金 <text>3000元</text> 押金 <text>10000元</text> 订金<text>-1000元</text> </view>
-			</u-row>
-			<view class="view_contract">
-				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
+		<view class="bottom">
+			<view>
+				<view class="check">查看验车信息</view>
+			</view>
+			<view>
+				<view class="sign">签署汽车租赁合同</view>
 			</view>
 		</view>
-		<!-- 4 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;">
-			<view class="btn orange padding30">确认提车</view>
-			<view class="view_contract">
-				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
-			</view>
-		</view>
-		<!-- 5 -->
-		<view class="bottom_content" style="padding: 60rpx 0;">
-			<view class="view_contract">
-				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
-			</view>
-		</view>
+		<view class="tip">*验车信息由承租人填写完成后才能查看</view>
 	</view>
 </template>
 
@@ -357,7 +324,9 @@
 	.bottom_content{
 		padding: 20rpx 20rpx 30rpx;
 		.btn{
-			padding: 24rpx 28rpx;
+			width: 600rpx;
+			height: 100rpx;
+			line-height: 100rpx;
 			font-size: 32rpx;
 			border-radius: 8rpx;
 			text-align: center;
@@ -370,7 +339,7 @@
 			color: #252825;
 		}
 		.orange{
-			background: linear-gradient(270deg, #FFC600 0%, #FFA900 47%, #FF9100 100%);
+			background: linear-gradient(270deg, #61CF92 0%, #41B26E 100%);
 			color: #FFFFFF;
 		}
 		.tips{
@@ -399,5 +368,39 @@
 				color: #FF9500;
 			}
 		}
+	}
+	.bottom{
+		padding: 18rpx 34rpx;
+		display: flex;
+		justify-content: space-between;
+		.check{
+			width: 232rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background: #F2F2F2;
+			border-radius: 8rpx;
+			font-size: 28rpx;
+			color: #252825;
+		}
+		.sign{
+			width: 428rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background: linear-gradient(270deg, #62CF93 0%, #57C584 47%, #3CAE69 100%);
+			border-radius: 8rpx;
+			font-size: 36rpx;
+			color: #fff;
+		}
+	}
+	.tip{
+		margin: 0 34rpx 18rpx 34rpx;
+		font-size: 22rpx;
+		color: #FE3B31;
+		text-align: center;
+	}
+	.text{
+		color: #24ce8d;
 	}
 </style>
