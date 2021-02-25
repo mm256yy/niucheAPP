@@ -5,6 +5,15 @@
 </template>
 
 <script>
+	/**
+	 * 
+	 * @property {Number} active 选中的下标
+	 * @property {Array} list 标签列表
+	 * @property {Number} forIndex 唯一标识
+	 * @property {Number} color = '#333' 默认颜色
+	 *
+	 * @event {Function()} onClick 改变标签触发
+	 */
 	export default {
 		props: {
 			list: {
@@ -19,6 +28,10 @@
 			forIndex:{
 				type: Number,
 				default: 0
+			},
+			listName:{
+				type: String,
+				default: ''
 			}
 		},
 		data() {
@@ -26,11 +39,9 @@
 
 			};
 		},
-		mounted() {
-		},
 		methods: {
 			onClick(index, item) {
-				this.$emit('onClick', {value:index,text:item,index:this.forIndex});
+				this.$emit('onClick', {value:index,text:item,index:this.forIndex,listName:this.listName});
 			},
 		}
 	}
@@ -38,8 +49,8 @@
 
 <style lang="scss" scoped>
 	.common_text {
-		min-width: 120rpx;
-		padding: 0 16rpx;
+		min-width: 140rpx;
+		padding: 4rpx 16rpx;
 		display: inline-block;
 		text-align: center;
 		line-height: 68rpx;

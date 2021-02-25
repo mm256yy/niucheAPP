@@ -129,10 +129,7 @@ export const checkCarObj = {
 	shakeList:[
 		{id: '0',text: '无'},{id: '1',text: '抖动'}
 	],
-	shakeList:[
-		{id: '0',text: '平稳'},{id: '1',text: '异常'}
-	],
-	shakeList:[
+	beginList:[
 		{id: '0',text: '平稳'},{id: '1',text: '异常'}
 	],
 	jackList:[

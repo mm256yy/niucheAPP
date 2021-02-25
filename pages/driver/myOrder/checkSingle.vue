@@ -11,13 +11,74 @@
 			<view class="collapse_content">
 				<view class="header">
 					<view class="label">一、外观漆面和碰撞登记</view>
-					<view @click="showOrHide"><u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+					<view @click="showOrHide('openFlag')"><u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
 				</view>
 				<view class="content" v-show="openFlag">
 					<view class="collapse_item" v-for="(item,index) in form.oneList">
 						<view class="label">{{item.name}}</view>
-						<CarTags :list="item.list" :forIndex="index" :active="item.value" @onClick="oneListChange"></CarTags>
-						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadChange" upload-text="" :file-list="item.photo"
+						<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'oneList'" @onClick="ListChange"></CarTags>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadChange"  @on-remove="removeOne" :file-list="item.photo"
+						 class="upload" upload-text="" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+				</view>
+			</view>
+			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+			<view class="collapse_content">
+				<view class="header">
+					<view class="label">二、常用功能登记 (如无该功能，留空)</view>
+					<view @click="showOrHide('twoFlag')"><u-icon :name="twoFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+				</view>
+				<view class="content" v-show="twoFlag">
+					<view class="label">安全系统</view>
+					<view class="collapse_item" v-for="(item,index) in form.safeList">
+						<view class="line_tags">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'safeList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadSafeChange" upload-text="" :file-list="item.photo"
+						 class="upload" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+					<view class="label borderT">外部配置</view>
+					<view class="collapse_item" v-for="(item,index) in form.outsideList">
+						<view :class="item.list.length<=2?'line_tags':''">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'outsideList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadOutsideChange" upload-text="" :file-list="item.photo"
+						 class="upload" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+					<view class="label borderT">内部配置</view>
+					<view class="collapse_item" v-for="(item,index) in form.insideList">
+						<view :class="item.list.length<=2?'line_tags':''">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'insideList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadInsideChange" upload-text="" :file-list="item.photo"
+						 class="upload" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+					<view class="label borderT">灯光系统</view>
+					<view class="collapse_item" v-for="(item,index) in form.lightList">
+						<view class="line_tags">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'lightList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadLightChange" upload-text="" :file-list="item.photo"
 						 class="upload" v-show="item.flag">
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
@@ -26,7 +87,78 @@
 					</view>
 				</view>
 			</view>
-			
+			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+			<view class="collapse_content">
+				<view class="header">
+					<view class="label">三、启动检测 (如无该功能，留空)</view>
+					<view @click="showOrHide('threeFlag')"><u-icon :name="threeFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+				</view>
+				<view class="content" v-show="threeFlag">
+					<view class="label">仪表台故障灯</view>
+					<view class="collapse_item" v-for="(item,index) in form.faultList">
+						<view class="line_tags">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'faultList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadFaultChange" upload-text="" :file-list="item.photo"
+						 class="upload" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+					<view class="label borderT">发动力状态</view>
+					<view class="collapse_item" v-for="(item,index) in form.powerStatusList">
+						<view class="line_tags">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'powerStatusList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadPowerChange" upload-text="" :file-list="item.photo"
+						 class="upload" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+					<view class="label borderT">变速箱及转向</view>
+					<view class="collapse_item" v-for="(item,index) in form.speedList">
+						<view class="line_tags">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'speedList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadSpeedChange" upload-text="" :file-list="item.photo"
+						 class="upload" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+				</view>
+			</view>
+			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+			<view class="collapse_content">
+				<view class="header">
+					<view class="label">四、随车工具</view>
+					<view @click="showOrHide('fourFlag')"><u-icon :name="fourFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+				</view>
+				<view class="content" v-show="fourFlag">
+					<view class="collapse_item" v-for="(item,index) in form.toolList">
+						<view class="line_tags">
+							<view class="label">{{item.name}}</view>
+							<CarTags :list="item.list" :forIndex="index" :active="item.value" :listName="'toolList'" @onClick="ListChange"></CarTags>
+						</view>
+						<u-upload :custom-btn="true" :action="action" :index="index" @on-success="uploadToolChange" upload-text="" :file-list="item.photo"
+						 class="upload" v-show="item.flag">
+							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+								<u-image width="260rpx" height="92rpx" src="@/static/order/tianjiazhaopian2x.png"></u-image>
+							</view>
+						</u-upload>
+					</view>
+				</view>
+			</view>
+			<view class="bottom_content">
+				<view class="btn orange" @click="toNext">提交及锁定验车信息</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -49,51 +181,133 @@
 				action: action,
 				form: {
 					oneList: [{name: '1.前保险杠',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-					     {name: '2.发动机盖',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						 {name: '3.右前翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						 {name: '4.右侧前门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '5.右A柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '6.右侧底大边',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '7.右侧顶边梁',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '8.右B柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '9.右侧后门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '10.右C柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '11.右后翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '12.后备箱盖',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '13.后保险杠',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '14.左后翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '15.左侧后门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '16.左C柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '17.左侧底大边',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '18.左侧顶边梁',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '19.左侧前门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '20.左A柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '21.左前翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
-						{name: '22.车顶',value: 10,text: '',photo: [],flag: false,list: checkCarObj.bumperList},
+					    {name: '2.发动机盖',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '3.右前翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '4.右侧前门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '5.右A柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '6.右侧底大边',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '7.右侧顶边梁',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '8.右B柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '9.右侧后门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '10.右C柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '11.右后翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '12.后备箱盖',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '13.后保险杠',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '14.左后翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '15.左侧后门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '16.左C柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '17.左侧底大边',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '18.左侧顶边梁',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '19.左侧前门',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '20.左A柱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '21.左前翼子板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+						{name: '22.车顶',value: 10,text: '',photo: [],flag: false,list: checkCarObj.engineList},
+					],
+					
+					safeList:[
+						{name: '1.刹车制动',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '2.ABS防抱死',value: 10,text: '',photo: [],flag: false,list: checkCarObj.ABSList},
+						{name: '3.安全气囊',value: 10,text: '',photo: [],flag: false,list: checkCarObj.ABSList},
+						{name: '4.胎压监测',value: 10,text: '',photo: [],flag: false,list: checkCarObj.ABSList},
+						{name: '5.中控锁(含门锁)',value: 10,text: '',photo: [],flag: false,list: checkCarObj.ABSList},
+						{name: '6.遥控钥匙',value: 10,text: '',photo: [],flag: false,list: checkCarObj.ABSList},
+					],
+					outsideList:[
+						{name: '1.刹车制动',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '2.前风挡玻璃',value: 10,text: '',photo: [],flag: false,list: checkCarObj.glassList},
+						{name: '3.后风挡玻璃',value: 10,text: '',photo: [],flag: false,list: checkCarObj.glassList},
+						{name: '4.天窗玻璃',value: 10,text: '',photo: [],flag: false,list: checkCarObj.skyList},
+						{name: '5.车门玻璃',value: 10,text: '',photo: [],flag: false,list: checkCarObj.skyList},
+						{name: '6.后视镜功能',value: 10,text: '',photo: [],flag: false,list: checkCarObj.skyList},
+						{name: '7.车轮轮胎',value: 10,text: '',photo: [],flag: false,list: checkCarObj.tyreList},
+						{name: '8.车轮轮毂',value: 10,text: '',photo: [],flag: false,list: checkCarObj.hubList},
+						{name: '9.车门功能',value: 10,text: '',photo: [],flag: false,list: checkCarObj.carDoorList},
+					],
+					insideList:[
+						{name: '1.刹车制动',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '2.多功能方向盘',value: 10,text: '',photo: [],flag: false,list: checkCarObj.steeringWheelList},
+						{name: '3.内饰板',value: 10,text: '',photo: [],flag: false,list: checkCarObj.interiorPanelList},
+						{name: '4.音响扬声器',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '5.中控/仪表',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '6.座椅及功能',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '7.多媒体功能',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '8.车载雷达',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '9.影像系统',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '10.空调状态',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+					],
+					lightList:[
+						{name: '1.大灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '2.尾灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '3.示宽灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '4.转向灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '5.刹车灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '6.雾灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '7.倒车灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '8.室内顶灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+					],
+					faultList:[
+						{name: '1.气囊故障灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '2.制动系统指示灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '3.安全系统指示灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '4.发动机工况指示灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '5.变速箱指示灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '6.车身稳定系统故障灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '7.机油压力指示灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '8.着车时电瓶灯',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+						{name: '9.水温',value: 10,text: '',photo: [],flag: false,list: checkCarObj.faultLightList},
+					],
+					powerStatusList:[
+						{name: '1.发动机异常抖动',value: 10,text: '',photo: [],flag: false,list: checkCarObj.shakeList},
+						{name: '2.怠速状态',value: 10,text: '',photo: [],flag: false,list: checkCarObj.beginList},
+						{name: '3.启动状态',value: 10,text: '',photo: [],flag: false,list: checkCarObj.beginList},
+						{name: '4.尾气',value: 10,text: '',photo: [],flag: false,list: checkCarObj.beginList},
+					],
+					speedList:[
+						{name: '1.变速箱',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '2.离合器',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '3.四驱系统功能',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '4.变速箱挂挡',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+						{name: '5.转向',value: 10,text: '',photo: [],flag: false,list: checkCarObj.brakingList},
+					],
+					toolList:[
+						{name: '1.千斤顶',value: 10,text: '',photo: [],flag: false,list: checkCarObj.jackList},
+						{name: '2.三角警示标',value: 10,text: '',photo: [],flag: false,list: checkCarObj.jackList},
+						{name: '3.维修工具包',value: 10,text: '',photo: [],flag: false,list: checkCarObj.jackList},
+						{name: '4.备胎',value: 10,text: '',photo: [],flag: false,list: checkCarObj.jackList},
 					]
 				},
 				openFlag:true,
+				twoFlag:false,
+				threeFlag:false,
+				fourFlag:false
 			}
 		},
 		methods: {
-			oneListChange(obj) {
+			ListChange(obj) {
+				/*
+				* obj.index  当前操作list索引
+				* obj.listName 当前操作的list
+				* obj.text 选中中文值
+				* obj.value 选中的索引
+				* 
+				*/
 				let forIndex = obj.index;
 				if (obj.value !== 0) {
-					this.form.oneList[forIndex].flag = true
+					this.form[obj.listName][forIndex].flag = true
 				} else {
-					this.form.oneList[forIndex].flag = false
+					this.form[obj.listName][forIndex].flag = false
 				}
 				if (obj.value === this.form.oneList[forIndex].value) {
-					this.form.oneList[forIndex].value = 100
-					this.form.oneList[forIndex].flag = false
+					this.form[obj.listName][forIndex].value = 100;
+					this.form[obj.listName][forIndex].text = "";
+					this.form[obj.listName][forIndex].flag = false
 				} else {
-					this.form.oneList[forIndex].value = obj.value;
-					this.form.oneList[forIndex].text = obj.text;
+					this.form[obj.listName][forIndex].value = obj.value;
+					this.form[obj.listName][forIndex].text = obj.text;
 				}
-				
 			},
-			showOrHide(){
-				this.openFlag = !this.openFlag;
+			showOrHide(name){
+				this[name] = !this[name];
 			},
 			uploadChange(data, index, lists, name) {
 				console.log(name)
@@ -136,12 +350,12 @@
 		padding: 20rpx 0 0;
 	}
 	.collapse_content{
-		padding: 26rpx 20rpx;
+		padding: 28rpx 24rpx;
 		.header{
 			display: flex;justify-content: space-between;
 			.label{
 				color: #111111;
-				font-size: 30rpx;
+				font-size: 32rpx;
 				font-weight: 700;
 			}
 		}
@@ -151,6 +365,7 @@
 				color: #111111;
 				font-size: 28rpx;
 				font-weight: 700;
+				
 			}
 		}
 	}
@@ -158,6 +373,32 @@
 		width: 100%;
 		justify-content: center;
 		align-items: center;
+		padding-top: 20rpx;
 		min-height: 180rpx;
+	}
+	.line_tags{
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+	}
+	.borderT{
+		margin-top: 40rpx;
+		font-size: 30rpx;
+		border-top: 1px solid #DEDEDE;
+	}
+	.bottom_content{
+		border-top: 1px solid #DEDEDE;
+		margin-top: 16rpx;
+		padding: 40rpx 60rpx;
+		.btn{
+			padding: 24rpx 28rpx;
+			font-size: 32rpx;
+			border-radius: 8rpx;
+			text-align: center;
+		}
+		.orange{
+			background: linear-gradient(270deg, #FFC600 0%, #FFA900 47%, #FF9100 100%);
+			color: #FFFFFF;
+		}
 	}
 </style>
