@@ -34,6 +34,32 @@
 					</u-row>
 				</view>
 				<view class="room"></view>
+				<view style="width: 678rpx;margin: 60rpx 20rpx 18rpx 52rpx;padding: 0 60rpx 0 20rpx;display: flex;justify-content: space-between;">
+					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的订单</view>
+					<view class="new">新建订单</view>
+				</view>
+				<view style="width: 678rpx;height: 168rpx;margin-left: 36rpx;background: #fff;padding: 0 38rpx;border-radius: 20rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view @click="toList()" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待付订金</view>
+					</view>
+					<view style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/yanche@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待验车</view>
+					</view>
+					<view style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待签约</view>
+					</view>
+					<view style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待提车</view>
+					</view>
+					<view style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/order.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">全部订单</view>
+					</view>
+				</view>
 				<view style="width: 100%;padding: 60rpx 20rpx 18rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
@@ -278,6 +304,9 @@
 					this.toLogin()
 				}
 			},
+			toList(){
+				this.$u.route('/pages/company/order/order');
+			},
 			toPub(index){
 				let token = uni.getStorageSync('token')
 				if (token){
@@ -371,5 +400,15 @@
 		position: fixed;
 		bottom: 20rpx;
 		left: 304rpx;
+	}
+	.new{
+		width: 160rpx;
+		height: 60rpx;
+		line-height: 60rpx;
+		text-align: center;
+		background: linear-gradient(270deg, #64D094 0%, #52C17D 41%, #3DAF6A 100%);
+		border-radius: 4px;
+		font-size: 24rpx;
+		color: #fff;
 	}
 </style>
