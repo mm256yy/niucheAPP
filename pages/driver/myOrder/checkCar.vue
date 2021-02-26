@@ -18,6 +18,35 @@
 						</view>
 					</u-upload>
 				</view>
+				<view>
+					<view class="parse_view">
+						<text class="label">号牌号码：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label">车辆类型：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label" style="letter-spacing: 28rpx;">住    址：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label">使用性质：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label">品牌型号：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label" style="letter-spacing: 1rpx;">车辆识别代号：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label" style="letter-spacing: 6rpx;">发动机号码：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label">注册日期：</text><text class="value">128281</text>
+					</view>
+					<view class="parse_view">
+						<text class="label">发证日期：</text><text class="value">128281</text>
+					</view>
+				</view>
 			</view>
 			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 			<view class="upload_content">
@@ -155,6 +184,17 @@
 		.orange{
 			background: linear-gradient(270deg, #FFC600 0%, #FFA900 47%, #FF9100 100%);
 			color: #FFFFFF;
+		}
+	}
+	.parse_view{
+		padding: 20rpx 0;
+		.label{
+			color: #939393;
+			display: inline-block;
+			letter-spacing: 14rpx;
+		}
+		.value{
+			color: #333333;
 		}
 	}
 </style>
