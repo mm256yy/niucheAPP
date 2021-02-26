@@ -1,194 +1,296 @@
 <template>
-	<view>
-		<u-navbar back-icon-color="#111111" title="我的订单" :background="background" title-color="#111111"></u-navbar>
-		<view class="list_content">
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" @click="toView()">
-					<view class="item_time">2021年3月18日 08点08分08秒</view>
-					<view class="item_content">
-						<view class="title u-line-2">
-							<text>车辆品牌车系年款型号</text>
-						</view>
-						<view class="money">
-							 <view class="title">{{index>5?'总计':'实付'}}</view>
-							 <view><text class="price">13000</text><text class="unit">元</text></view>
-						</view>
-						<view class="company">
-							<view><text style="color: #858585;padding-right: 10rpx;">承租人</text><text style="color: #424242;">姓名</text></view>
-							<view style="color: #BCBCBC;padding-top: 10rpx;">
-								<text>租期12个月</text> <text style="padding: 0 5px;">|</text>
-								<text>租期12个月</text> <text style="padding: 0 5px;">|</text>
-								<text>押金8000元</text>
-							</view>
-						</view>
-						<view class="order">
-							<view class="num">订单号：239888888888</view>
-							<view class="btn" :class="['btn',index>5?'active':'complete']">待验车</view>
-						</view>
-					</view>
-				</view>
-			</mescroll-body>
-		</view>
+	<view class="other">
+		<u-navbar back-icon-color="#111111" title="我的订单" :background="background" title-color="#111111">
+		</u-navbar>
+		 <view class="wrap">
+			 <view style="">
+			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
+			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
+			 	 swiperWidth="750"></u-tabs-swiper>
+			 </view>
+			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
+			 			<alling v-if="isChildUpdate1" ref="alling"></alling>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
+			 			<checking v-if="isChildUpdate2" ref="checking"></checking>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
+			 			<signing v-if="isChildUpdate3" ref="signing"></signing>
+			 		</scroll-view>
+			 	</swiper-item>
+			 	<swiper-item class="swiper-item">
+			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
+			 			<paying v-if="isChildUpdate4" ref="paying"></paying>
+			 		</scroll-view>
+			 	</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 100%;width: 100%;">
+						<invaliding v-if="isChildUpdate5" ref="invaliding"></invaliding>
+					</scroll-view>
+				</swiper-item>
+			 </swiper>
+		 </view>
 	</view>
 </template>
 
 <script>
-	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
+	import alling from './all'
+	import checking from './check'
+	import signing from './sign'
+	import paying from './pay'
+	import invaliding from './invalid'
 	export default {
-		mixins: [MescrollMixin],
+		components: {
+			alling,
+			checking,
+			signing,
+			paying,
+			invaliding
+		},
 		data() {
 			return {
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				dataList: [],
-				page: {
-					num: 1,
-					size: 10 // 每页数据的数量,默认10
+				backTextStyle:{
+					'color':'#ffffff'
 				},
-				downOption: {
-					auto: false //是否在初始化后,自动执行downCallback; 默认true
-				},
-				up: {
-					textNoMore: '--没有更多了--'
-				},
-				total: 0
-			}
-		},
-		filters: {
-			soureText: function(value) {
-				if (value === 'SOURCE_REGISTER_AUTH') {
-					return '注册-认证有礼'
-				} else if (value === 'SOURCE_INVITE') {
-					return '推广拉新'
-				} else if (value === 'SOURCE_WITHDRAW') {
-					return '提现'
-				} else if (value === 'SOURCE_REFUND') {
-					return '提现退款'
-				} else {
-					return ''
-				}
+				listTab: [{
+					name: '全部'
+				}, {
+					name: '待验车'
+				},{
+					name: '待签约'
+				}, {
+					name: '待支付'
+				}, {
+					name: '失效'
+				}],
+				current: 0, 
+				swiperCurrent: 0,
+				detail: {},
+				isChildUpdate1:true,
+				isChildUpdate2:false,
+				isChildUpdate3:false,
+				isChildUpdate4:false,
+				isChildUpdate5:false
 			}
 		},
 		mounted() {
-			// this.downCallback()
+			this.getDetail()
 		},
 		methods: {
-			showSelect() {
-				this.selectFlag = true;
+			getDetail(){
+				let token = uni.getStorageSync('token');
+				if(token){
+					this.$u.api.getMessageCompany().then(res=>{
+						if(res.code === 200){
+							 this.detail = res.object;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+				}
 			},
-			tapPopup(option) {
-				this.selectText = option.title;
-				this.selectValue = option.value;
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
+			create(index){
+				if(index == 0) {
+				    this.isChildUpdate1 = true;
+				    this.isChildUpdate2 = false;
+					this.isChildUpdate3 = false;
+					this.isChildUpdate4 = false;
+					this.isChildUpdate5 = false;
+				} else if(index == 1) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = true;
+				    this.isChildUpdate3 = false;
+				    this.isChildUpdate4 = false;
+					this.isChildUpdate5 = false;
+				}else if(index == 2) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = false;
+				    this.isChildUpdate3 = true;
+				    this.isChildUpdate4 = false;
+					this.isChildUpdate5 = false;
+				}else if(index == 3) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = false;
+				    this.isChildUpdate3 = false;
+				    this.isChildUpdate4 = true;
+					this.isChildUpdate5 = false;
+				}else if(index == 4) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = false;
+				    this.isChildUpdate3 = false;
+				    this.isChildUpdate4 = false;
+					this.isChildUpdate5 = true;
+				}
 			},
-			/*下拉刷新的回调 */
-			downCallback() {
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
+			// tabs通知swiper切换
+			tabsChange(index) {
+				this.swiperCurrent = index;
+				this.create(index)
 			},
-			upCallback() {
-				this.$u.api.getBillDetails({
-					pageNum: this.page.num,
-					pageSize: this.page.size,
-					type: this.selectValue
-				}).then(res => {
-					if (res.code === 200) {
-						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
-						this.page.num = this.page.num + 1
-						this.dataList = this.dataList.concat(res.rows);
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
+			// swiper-item左右移动，通知tabs的滑块跟随移动
+			transition(e) {
+				let dx = e.detail.dx;
+				this.$refs.uTabs.setDx(dx);
 			},
-			toView(id) {
-				this.$u.route('/pages/company/order/orderDetail', {
-					id: id
-				})
+			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
+			// swiper滑动结束，分别设置tabs和swiper的状态
+			animationfinish(e) {
+				let current = e.detail.current;
+				this.$refs.uTabs.setFinishCurrent(current);
+				this.swiperCurrent = current;
+				this.current = current;
+				this.create(current)
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	page {
-		background: #F5F5F5;
+	page{
+		background-color: #F5F5F8;
 	}
-
+	/deep/ .u-border-bottom:after{
+		border-bottom-width:0;
+	}
 	.navbar-right {
 		margin-right: 24rpx;
 		display: flex;
 	}
-
-	.right-item {
-		margin: 0 12rpx;
-		position: relative;
-		display: flex;
+	.u-tabs-box {
+		position:sticky;
+		top: 0;
+		left: 0;
 	}
-
-	.list_content {
-		margin: 0 20px;
-
-		.list_item {
-			padding: 15px 0 10px;
-			.item_time {
-				text-align: center;
-				padding-bottom: 9px;
+	.wrap {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - 400rpx);
+		width: 100%;
+	}
+	.swiper-box {
+		flex: 1;
+	}
+	.swiper-item {
+		height: 100%;
+	}
+	.other {
+		background-color: #F5F5F8;
+		.heart {
+			margin-top: 14rpx;
+			margin-right: 20rpx;
+			position: absolute;
+			top: 42rpx;
+		    right: 34rpx;
+		}
+		.tagBox{
+			margin-left: 36rpx;
+			margin-right: 36rpx;
+			.box {
+				padding: 8rpx;
+				border-radius: 10rpx;
+				background: rgba(0,0,0,0.1);
+				color: #7f7f7f;
+				float: left;
+				margin-right: 10rpx;
+				margin-bottom: 19rpx;
+				font-size: 20rpx;
 			}
-			.item_content {
-				padding: 10px 12px;
-				border-radius: 4px;
-				background-color: #FFFFFF;
-				.title{
-					color: #333333;
+		}
+		.top {
+			width: 666rpx;
+			margin-left: 42rpx;
+			margin-top: 40rpx;
+			display: flex;
+			align-items: center;
+			.left{
+				width: 186rpx;
+				height: 186rpx;
+				border-radius: 50%;
+			}
+			.right {
+				padding: 30rpx 42rpx;
+				font-size: 20rpx;
+				.name {
+					font-size: 36rpx;
+					font-weight: 900;
+					margin-bottom: 17rpx;
 				}
-				.money{
-					padding:80rpx 0 30rpx;
-					text-align: center;
-					.title{
-						font-size: 28rpx;
-						color: #C0C0C0;
-					}
-					.price{
-						font-size: 60rpx;
-					}
-					.unit{
-						padding-left: 8rpx;
-						font-size: 24rpx;
-					}
-				}
-				.company{
-					padding-bottom: 20rpx;
-				}
-				.order{
-					display: flex;
-					justify-content: space-between;
-					.num{
-						color: #BCBCBC;
-						font-size: 28rpx;
-					}
-					.btn{
-						width: 88px;
-						height: 30px;
-						line-height: 30px;
-						border-radius: 15px;
-						text-align: center;
-
-					}
-					.active{
-						color: #FE5B00;
-						border: 1px solid #FE5B00;
-					}
-					.complete{
-						color: #C2C2C2;
-						border: 1px solid #C2C2C2;
-					}
-				}
+			}
+		}
+		.clear {
+			clear: both;
+		}
+		.list {
+			width: 702rpx;
+			height: 308rpx;
+			padding: 38rpx;
+			margin-left: 24rpx;
+			margin-top: 24rpx;
+			font-size: 20rpx;
+			background-image: url(@/static/bgbuying.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+			.clear {
+				clear: both;
+			}
+			.left {
+				margin-top: 19rpx;
+			}
+			.left, .right {
+				float: left;
+			}
+			.right {
+				width: 494rpx;
+				padding-left: 34rpx;
+			}
+			.city {
+				width: 96rpx;
+				height: 40rpx;
+				line-height: 32rpx;
+				text-align: center;
+				font-size: 20rpx;
+				border-radius: 26rpx;
+				border: 1rpx solid rgba(0,0,0,0.3);
+				margin-top: 16rpx;
+				margin-right: 16rpx;
+				float: right;
+			}
+			.name {
+				font-size: 28rpx;
+				font-weight: 900;
+				margin-top: 20rpx;
+			}
+			.type {
+				font-size: 20rpx;
+				color: #7f7f7f;
+				margin-top: 8rpx;
+			}
+			.type span {
+				margin-left: 22rpx;
+			}
+			.price {
+				margin-top: 9rpx;
+			}
+			.price text {
+				font-size: 36rpx;
+				font-weight: 900;
+				color: #40B36C;
+				margin-left: 8rpx;
+			}
+			.year {
+				float: left;
+			}
+			.chat {
+				float: right;
 			}
 		}
 	}

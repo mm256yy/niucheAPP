@@ -89,7 +89,7 @@
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
-									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x.png"></u-image>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
@@ -109,31 +109,31 @@
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="middle_content">
-			<view class="company_name">承租人姓名</view>
-			<view class="company_model">出租的品牌车系型号</view>
+			<view class="company_name">承租人姓名{{detail.rentername}}</view>
+			<view class="company_model">出租的品牌车系型号{{detail.carname}}</view>
 			<view class="content_item">
-				<view class="item"><text class="title">租赁周期：</text><text>12个月（提车后开始计算）</text></view>
-				<view class="item"><text class="title">每月租金：</text><text>3000元</text></view>
-				<view class="item"><text class="title">车辆押金：</text><text>3000元</text></view>
+				<view class="item"><text class="title">租赁周期：</text><text>12{{detail.leasetime}}个月（提车后开始计算）</text></view>
+				<view class="item"><text class="title">每月租金：</text><text>3000{{detail.monthlyrent}}元</text></view>
+				<view class="item"><text class="title">车辆押金：</text><text>3000{{detail.deposit}}元</text></view>
 				<view style="padding: 8rpx 0;">
 					<text style="color: #999999;font-size: 24rpx;">押金还车后退，规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
 				</view>
-				<view class="item"><text class="title">订单时间：</text><text>3000元</text></view>
-				<view class="item"><text class="title">订单号：</text><text>3000元</text></view>
+				<view class="item"><text class="title">订单时间：</text><text>3000{{detail.createtime}}</text></view>
+				<view class="item"><text class="title">订单号：</text><text>3000{{detail.tradeid}}</text></view>
 			</view>
 			<view class="company_model">订单支付费用明细</view>
 			<view class="content_item" v-if="true">
-				<view class="item"><text class="title">实付租金: </text><text>3000元</text></view>
-				<view class="item"><text class="title">实付押金：</text><text>3000元</text></view>
-				<view class="item"><text class="title">实际支付总和：</text><text>3000元</text></view>
-				<view class="item"><text class="title">支付时间：</text><text>2012.12.31 14:23:55</text></view>
+				<view class="item"><text class="title">实付租金: </text><text>3000{{detail.monthlyrent}}元</text></view>
+				<view class="item"><text class="title">实付押金：</text><text>3000{{detail.deposit}}元</text></view>
+				<view class="item"><text class="title">实际支付总和：</text><text>3000{{detail.totalprice}}元</text></view>
+				<view class="item"><text class="title">支付时间：</text><text>2012.12.31 14:23:55{{detail.paytime}}</text></view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="tips_content">
 			<view style="font-size: 30rpx;">订单提示</view>
-			<view style="padding: 8rpx 20rpx 0 0;">订单提示订单提示订单提示订单提示示订单提示订单提示订单提示订单提示订单提示订单提示订单提示</view>
+			<view style="padding: 8rpx 20rpx 0 0;">订单提示订单提示订单提示订单提示示订单提示订单提示订单提示订单提示订单提示订单提示订单提示{{detail.carname}}</view>
 		</view>
 		<view class="chat_btn">
 			<u-row>
@@ -161,7 +161,19 @@
 		</view> -->
 		<view class="bottom">
 			<view>
+				<view class="checkActive">查看验车信息</view>
+			</view>
+			<view>
 				<view class="check">查看验车信息</view>
+			</view>
+			<view>
+				<view class="signActive">登记商品信息</view>
+			</view>
+			<view>
+				<view class="signActive">签署汽车租赁合同</view>
+			</view>
+			<view>
+				<view class="sign">登记商品信息</view>
 			</view>
 			<view>
 				<view class="sign">签署汽车租赁合同</view>
@@ -181,9 +193,24 @@
 				timestamp: 86399,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
+				detail:{}
 			}
 		},
 		methods: {
+			getDetail(){
+				let token = uni.getStorageSync('token');
+				if(token){
+					this.$u.api.orderDetail({
+						orderId:orderId
+					}).then(res=>{
+						if(res.code === 200){
+							 this.detail = res.object;
+						}else {
+							 this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
 			refreshView() {
 				console.log(222)
 			},
@@ -373,7 +400,7 @@
 		padding: 18rpx 34rpx;
 		display: flex;
 		justify-content: space-between;
-		.check{
+		.checkActive{
 			width: 232rpx;
 			height: 88rpx;
 			line-height: 88rpx;
@@ -383,12 +410,32 @@
 			font-size: 28rpx;
 			color: #252825;
 		}
-		.sign{
+		.check{
+			width: 232rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background: #E0E0E0;
+			border-radius: 8rpx;
+			font-size: 28rpx;
+			color: #252825;
+		}
+		.signActive{
 			width: 428rpx;
 			height: 88rpx;
 			line-height: 88rpx;
 			text-align: center;
 			background: linear-gradient(270deg, #62CF93 0%, #57C584 47%, #3CAE69 100%);
+			border-radius: 8rpx;
+			font-size: 36rpx;
+			color: #fff;
+		}
+		.sign{
+			width: 428rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background: #E0E0E0;
 			border-radius: 8rpx;
 			font-size: 36rpx;
 			color: #fff;

@@ -214,6 +214,16 @@ const install = (Vue, vm) => {
 	const setEvent = (params = {}) => vm.$u.get('/user/beahvior/event', params);
 	//获取sing
 	const getSing = (params = {}) => vm.$u.post('/app/tencentChat/getChatSinger', params);
+	//公司订单列表
+	const orderList = (params = {}) => vm.$u.post('/order/company/list', params);
+	//公司订单详情
+	const orderDetail = (params = {}) => vm.$u.post('/order/company/get', params);
+	//公司新建订单
+	const orderNew = (params = {}) => vm.$u.post('/order/add', params);
+	//公司查询验车单
+	const checkMessage = (params = {}) => vm.$u.post('/order/car/message/get', params);
+	//新增商品信息登记
+	const registerAdd = (params = {}) => vm.$u.post('/order/register/message/add', params);
 	//根据公司获取sign
 	
 
@@ -316,7 +326,12 @@ const install = (Vue, vm) => {
 		haveIs,
 		viewMessage,
 		setting,
-		brandList
+		brandList,
+		orderList,
+		orderDetail,
+		orderNew,
+		checkMessage,
+		registerAdd
 	};
 }
 

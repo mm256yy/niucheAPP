@@ -145,6 +145,12 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//公司商品信息登记
+		    "path" : "pages/company/order/registerMessage",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
         ,{//租车价格
             "path" : "pages/company/lease/step/stepCost/stepCost",
             "style" : {
