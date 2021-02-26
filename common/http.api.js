@@ -226,9 +226,12 @@ const install = (Vue, vm) => {
 	const registerAdd = (params = {}) => vm.$u.post('/order/register/message/add', params);
 	//根据公司获取sign
 	
+	//获取支付宝订单信息
+	const getOrderInfo = (params = {}) => vm.$u.post('/alipay/alipaydemo', params);
 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getOrderInfo,
 		getSing,
 		setEvent,
 		contentShare, // 大神分享 内页

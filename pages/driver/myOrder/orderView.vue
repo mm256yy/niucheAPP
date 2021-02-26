@@ -201,6 +201,64 @@
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
 		</view>
+		<!-- 取消订单 -->
+		<u-popup v-model="cancelOrder" mode="bottom" :closeable="true" close-icon-color="#333333" border-radius="14">
+			<view class="cancel_content">
+				<view class="title">订单取消</view>
+				<view class="item_list">
+					<view style="color: #999999;">请选择订单取消原因</view>
+					<view>
+						<view class="radio_list" v-for="i in 5">
+							<view class="radio_label">文案</view>
+							<view>
+								<view class="radio_defult" v-show="openFlag"></view>
+								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!openFlag"></u-icon>
+							</view>
+						</view>
+					</view>
+					<view style="padding-top: 30rpx;">
+						<u-input v-model="value" type="textarea" :border="true" height="140" />
+					</view>
+					<view class="btn_orange">
+						确定取消
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		<u-popup v-model="payOrder" mode="bottom" :closeable="true" close-icon-pos="top-left" close-icon-color="#333333" border-radius="14">
+			<view class="cancel_content">
+				<view class="money_item">
+					<view><text style="font-size: 60rpx;color: #333333;">12000</text><text style="padding-left: 6rpx;">元</text></view>
+					<view style="color: #999999;">支付总计</view>
+				</view>
+				<view class="total_item">
+					<u-checkbox-group active-color="#FF9F31" shape="circle">
+						<u-checkbox v-model="value" shape="circle"></u-checkbox>
+						<view style="margin-left: -20rpx;">
+							使用帐户余额支付 可用金额1000元
+						</view>
+					</u-checkbox-group>
+					<view style="padding-top: 16rpx;">帐户余额已抵<text>2222</text>元，仍须支付<text>2222</text>元:</view>
+				</view>
+				<view class="item_list">
+					<view>
+						<view class="radio_list">
+							<view class="radio_label" style="display: flex;align-items: center;">
+								<u-image width="52rpx" height="52rpx" src="@/static/order/zhifubao2x.png"></u-image>
+								<view style="color: #111111;padding-left: 20rpx;">支付宝</view>
+							</view>
+							<view>
+								<view class="radio_defult" v-show="openFlag"></view>
+								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!openFlag"></u-icon>
+							</view>
+						</view>
+					</view>
+					<view class="btn_orange">
+						立即支付
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -211,6 +269,8 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
+				cancelOrder:false,//取消订单
+				payOrder:false,//支付弹窗
 				timestamp: 86399,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
@@ -228,6 +288,9 @@
 			},
 			openFlow() {
 				this.openFlag = !this.openFlag
+			},
+			radioGroupChange(e){
+				console.log(e)
 			}
 		}
 	}
@@ -398,6 +461,56 @@
 			.contract{
 				color: #FF9500;
 			}
+		}
+	}
+	.cancel_content{
+		min-height: 300rpx;
+		.title{
+			padding: 30rpx 0;
+			text-align: center;
+			color: #333333;
+			font-weight: 700;
+		}
+		.money_item{
+			margin-top: 60rpx;
+			padding: 40rpx 0 30rpx;
+			border-bottom:1px solid #E0E0E0 ;
+			text-align: center;
+		}
+		.total_item{
+			padding:36rpx 30rpx 0;
+			color:#999999 ;
+		}
+		.item_list{
+			padding:26rpx 30rpx;
+			
+			.radio_list{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 20rpx 0;
+				border-bottom:1px solid #E0E0E0 ;
+			}
+			.radio_label{
+				color: #333330;
+				font-size: 30rpx;
+			}
+			.radio_defult{
+				width: 40rpx;
+				height: 40rpx;
+				border: 1px solid #E0E0E0;
+				border-radius: 50%;
+			}
+		}
+		.btn_orange{
+			margin-top: 30rpx;
+			background: linear-gradient(270deg, #FFC500 0%, #FFB600 44%, #FF9700 100%);
+			color: #FFFFFF;
+			font-size: 32rpx;
+			border-radius: 22px;
+			text-align: center;
+			line-height: 80rpx;
+			height: 80rpx;
 		}
 	}
 </style>
