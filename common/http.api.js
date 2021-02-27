@@ -224,13 +224,22 @@ const install = (Vue, vm) => {
 	const checkMessage = (params = {}) => vm.$u.post('/order/car/message/get', params);
 	//新增商品信息登记
 	const registerAdd = (params = {}) => vm.$u.post('/order/register/message/add', params);
-	//根据公司获取sign
-	
+	//新增验车单
+	const checkCarSave = (params = {}) => vm.$u.post('/order/car/message/add', params);
+	//查询验车单
+	const checkCarList = (params = {}) => vm.$u.post('/order/car/message/get', params);
+     //司机我的订单
+	const driverOrderList = (params = {}) => vm.$u.post('/order/driver/list', params);
+	//司机订单查询详情
+	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get', params);
 	//获取支付宝订单信息
 	const getOrderInfo = (params = {}) => vm.$u.post('/alipay/alipaydemo', params);
-
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		driverOrderView,
+		driverOrderList,
+		checkCarSave,
+		checkCarList,
 		getOrderInfo,
 		getSing,
 		setEvent,

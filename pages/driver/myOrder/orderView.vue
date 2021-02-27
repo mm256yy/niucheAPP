@@ -116,7 +116,7 @@
 				<view class="item"><text class="title">每月租金：</text><text>3000元</text></view>
 				<view class="item"><text class="title">车辆押金：</text><text>3000元</text></view>
 				<view style="padding: 8rpx 0;">
-					<text style="color: #999999;font-size: 24rpx;">押金还车后退，规则说明</text>
+					<text style="color: #999999;font-size: 24rpx;">押金退还规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
 				</view>
 				<view class="item"><text class="title">订单时间：</text><text>3000元</text></view>
@@ -278,9 +278,13 @@
 		},
 		methods: {
 			refreshView() {
-				console.log(222)
+				this.getInfo()
+			},
+			getInfo(){
+				//获取页面数据
 			},
 			chargeback() {
+				this.cancelOrder = true;
 				console.log('退单')
 			},
 			countEnd() {
@@ -291,6 +295,25 @@
 			},
 			radioGroupChange(e){
 				console.log(e)
+			},
+			pay(){
+				this.$u.api.getOrderInfo().then(res=>{
+					if (res.code === 200) {
+						console.log(res.object)
+						uni.requestPayment({
+						    provider: 'alipay',
+						    orderInfo:res.object , //微信、支付宝订单数据
+						    success: function (res) {
+						        this.$u.toast('success:' + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        this.$u.toast('fail:' + JSON.stringify(err));
+						    }
+						});
+					} else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			}
 		}
 	}
