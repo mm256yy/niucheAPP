@@ -11,40 +11,40 @@
 			<view class="upload_content">
 				<view class="title">上传车辆行驶证（必填）</view>
 				<view class="bg_idcard">
-					<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" upload-text="" :file-list="fileList"
+					<u-upload :custom-btn="true" :action="action" @on-success="uploadLicenseChange"  @on-remove="removeLicense" upload-text="" :file-list="uploadLicenseList"
 					 :max-size="8 * 1024 * 1024" max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
 						</view>
 					</u-upload>
 				</view>
-				<view>
+				<view v-show="flag">
 					<view class="parse_view">
-						<text class="label">号牌号码：</text><text class="value">128281</text>
+						<text class="label">号牌号码：</text><text class="value">{{form.number}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label">车辆类型：</text><text class="value">128281</text>
+						<text class="label">车辆类型：</text><text class="value">{{form.type}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label" style="letter-spacing: 28rpx;">住    址：</text><text class="value">128281</text>
+						<text class="label" style="letter-spacing: 28rpx;">住    址：</text><text class="value">{{form.address}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label">使用性质：</text><text class="value">128281</text>
+						<text class="label">使用性质：</text><text class="value">{{form.character}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label">品牌型号：</text><text class="value">128281</text>
+						<text class="label">品牌型号：</text><text class="value">{{form.model}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label" style="letter-spacing: 1rpx;">车辆识别代号：</text><text class="value">128281</text>
+						<text class="label" style="letter-spacing: 1rpx;">车辆识别代号：</text><text class="value">{{form.vin}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label" style="letter-spacing: 6rpx;">发动机号码：</text><text class="value">128281</text>
+						<text class="label" style="letter-spacing: 6rpx;">发动机号码：</text><text class="value">{{form.engine}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label">注册日期：</text><text class="value">128281</text>
+						<text class="label">注册日期：</text><text class="value">{{form.register_date}}</text>
 					</view>
 					<view class="parse_view">
-						<text class="label">发证日期：</text><text class="value">128281</text>
+						<text class="label">发证日期：</text><text class="value">{{form.issue_date}}</text>
 					</view>
 				</view>
 			</view>
@@ -53,7 +53,7 @@
 				<view class="title">车辆铭牌（1张）</view>
 				<view class="bg_min">
 					<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" upload-text="" :file-list="fileList"
-					 :max-size="8 * 1024 * 1024" max-count="1" class="upload">
+					 :max-size="8 * 1024 * 1024" index="nameplateImg" @on-remove="removeOne" max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
 						</view>
@@ -65,8 +65,8 @@
 			<view class="upload_content">
 				<view class="title">中控仪表盘（1张）</view>
 				<view class="bg_yibiao">
-					<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" upload-text="" :file-list="fileList"
-					 :max-size="8 * 1024 * 1024" max-count="1" class="upload">
+					<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" @on-remove="removeOne" upload-text="" :file-list="fileList1"
+					 :max-size="8 * 1024 * 1024"  index="meterImg" max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
 						</view>
@@ -86,9 +86,7 @@
 </template>
 
 <script>
-	import {
-		action
-	} from '@/utils/constant.js'
+	import {action} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
@@ -96,16 +94,76 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				action: action,
+				uploadLicenseList:[],
 				fileList: [],
+				fileList1:[],
 				form: {
-					licenseNumber: ''
-				}
+					orderId:'',
+					number: '',
+					type: '',
+					address: '',
+					character: '',
+					model: '',
+					vin: '',
+					engine: '',
+					register_date: '',
+					issue_date: '',
+					drivingImg:'',
+					nameplateImg:'',
+					meterImg:'',
+				},
+				flag:false, //解析标识
 
 			}
 		},
+		onLoad(option) {
+			let orderId = option.orderId;
+			this.form.orderId = orderId;
+		},
 		methods: {
+			uploadLicenseChange(data, index, lists){
+				if (res.code === 200) {
+					let data = res.object;
+					this.form.number = data.number;
+					this.form.type = data.type;
+					this.form.address = data.address;
+					this.form.character = data.character;
+					this.form.model = data.model;
+					this.form.vin = data.vin;
+					this.form.engine = data.engine;
+					this.form.issue_date = data.issue_date;
+					this.form.drivingImg = data.drivingImg;
+					this.flag = true;
+				} else {
+					this.$u.toast('识别失败')
+				}
+			},
+			removeLicense(){
+				this.form.number ="";
+				this.form.type ="";
+				this.form.address ="";
+				this.form.character ="";
+				this.form.model ="";
+				this.form.vin ="";
+				this.form.engine ="";
+				this.form.issue_date ="";
+				this.form.drivingImg ="";
+				this.flag = false
+			},
+			uploadChange(data, index, lists, name) {
+				this.form[name] =data.object;
+				this.$u.toast(data.msg);
+			},
+			removeOne(index, lists, name) {
+				this.form[name] = ""
+			},
             toNext(){
-				
+				console.log(this.form)
+				if (this.form.drivingImg === '' || this.form.nameplateImg === '' || this.form.meterImg === '' || !this.flag){
+					this.$u.toast("请上传图片")
+					return false
+				}
+				uni.setStorageSync('orderFirst', this.form);
 				this.$u.route('/pages/driver/myOrder/checkSingle')
 			}
 		}
@@ -138,6 +196,11 @@
 			justify-content: center;
 			align-items: center;
 			height: 386rpx;
+			/deep/.u-preview-wrap{
+				width: 100%!important;
+				height: 100%!important;
+				margin: 0;
+			}
 		}
 
 		.bg_idcard {
