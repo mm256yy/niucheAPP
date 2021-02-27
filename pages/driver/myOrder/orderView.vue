@@ -291,6 +291,25 @@
 			},
 			radioGroupChange(e){
 				console.log(e)
+			},
+			pay(){
+				this.$u.api.getOrderInfo().then(res=>{
+					if (res.code === 200) {
+						console.log(res.object)
+						uni.requestPayment({
+						    provider: 'alipay',
+						    orderInfo:res.object , //微信、支付宝订单数据
+						    success: function (res) {
+						        this.$u.toast('success:' + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        this.$u.toast('fail:' + JSON.stringify(err));
+						    }
+						});
+					} else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			}
 		}
 	}
