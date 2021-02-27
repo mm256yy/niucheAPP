@@ -116,17 +116,17 @@
 	}
 
 	.list_content {
-		margin: 0 40rpx;
+		margin: 0 20px;
 
 		.list_item {
-			padding: 30rpx 0 20rpx;
+			padding: 15px 0 10px;
 			.item_time {
 				text-align: center;
-				padding-bottom: 18rpx;
+				padding-bottom: 9px;
 			}
 			.item_content {
-				padding: 20rpx 24rpx;
-				border-radius: 8rpx;
+				padding: 10px 12px;
+				border-radius: 4px;
 				background-color: #FFFFFF;
 				.title{
 					color: #333333;
@@ -157,20 +157,20 @@
 						font-size: 28rpx;
 					}
 					.btn{
-						width: 176rpx;
-						height: 60rpx;
-						line-height: 60rpx;
-						border-radius: 30rpx;
+						width: 88px;
+						height: 30px;
+						line-height: 30px;
+						border-radius: 15px;
 						text-align: center;
 
 					}
 					.active{
 						color: #FE5B00;
-						border: 2rpx solid #FE5B00;
+						border: 1px solid #FE5B00;
 					}
 					.complete{
 						color: #C2C2C2;
-						border: 2rpx solid #C2C2C2;
+						border: 1px solid #C2C2C2;
 					}
 				}
 			}

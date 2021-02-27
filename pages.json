@@ -151,6 +151,30 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//公司对帐中心
+		    "path" : "pages/company/order/checkAccount",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司账单列表
+		    "path" : "pages/company/order/accountList",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司账单详情
+		    "path" : "pages/company/order/accountDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司支付宝账号绑定
+		    "path" : "pages/company/order/accountBind",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
         ,{//租车价格
             "path" : "pages/company/lease/step/stepCost/stepCost",
             "style" : {

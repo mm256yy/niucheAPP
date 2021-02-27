@@ -4,7 +4,7 @@
 			<view>
 				<view class="imgUrl">
 					<view class="about" @click="toAboutUs">关于</view>
-					<u-row style="padding:180rpx 36rpx 5pt; ">
+					<u-row style="padding:140rpx 36rpx 5pt; ">
 						<u-col span="3" v-show="!tokenFlag">
 							<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
 						</u-col>
@@ -32,6 +32,7 @@
 						
 						
 					</u-row>
+					<view @click="checkAccount" class="checkAccount">对账中心</view>
 				</view>
 				<view class="room"></view>
 				<view style="width: 678rpx;margin: 60rpx 20rpx 18rpx 52rpx;padding: 0 60rpx 0 20rpx;display: flex;justify-content: space-between;">
@@ -324,6 +325,18 @@
 					this.toLogin()
 				}
 			},
+			checkAccount(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route('/pages/company/order/checkAccount');
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
 			toPublishPage(){
 				let token = uni.getStorageSync('token');
 				   if (token){
@@ -357,7 +370,7 @@
 }
 	.imgUrl{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 304rpx);
+		height: calc(var(--status-bar-height) + 404rpx);
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -366,7 +379,7 @@
 	}
 	.room{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 304rpx);
+		height: calc(var(--status-bar-height) + 404rpx);
 	}
 	.colorF{
 		color: $common-FFF;
@@ -413,5 +426,17 @@
 		border-radius: 4px;
 		font-size: 24rpx;
 		color: #fff;
+	}
+	.checkAccount{
+		width: 682rpx;
+		height: 120rpx;
+		background-image: url(@/static/mycenter/bg.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 32rpx;
+		color: #FFDB00;
+		padding-left: 102rpx;
+		padding-top: 40rpx;
+		margin-left: 34rpx;
 	}
 </style>
