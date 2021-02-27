@@ -11,7 +11,7 @@
 			<view class="upload_content">
 				<view class="title">上传车辆行驶证（必填）</view>
 				<view class="bg_idcard">
-					<u-upload :custom-btn="true" :action="action" @on-success="uploadLicenseChange"  @on-remove="removeLicense" upload-text="" :file-list="uploadLicenseList"
+					<u-upload :custom-btn="true" :action="recognicedUrl" @on-success="uploadLicenseChange"  @on-remove="removeLicense" upload-text="" :file-list="uploadLicenseList"
 					 :max-size="8 * 1024 * 1024" max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-	import {action} from '@/utils/constant.js'
+	import {action,recognicedUrl} from '@/utils/constant.js'
 	export default {
 		data() {
 			return {
@@ -94,6 +94,7 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				action: action,
+				recognicedUrl:recognicedUrl,
 				uploadLicenseList:[],
 				fileList: [],
 				fileList1:[],

@@ -9,9 +9,9 @@
 				<view class="title">车况详细登记</view>
 			</view>
 			<view class="collapse_content">
-				<view class="header">
+				<view class="header" @click="showOrHide('openFlag')">
 					<view class="label">一、外观漆面和碰撞登记</view>
-					<view @click="showOrHide('openFlag')"><u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+					<view ><u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
 				</view>
 				<view class="content" v-show="openFlag">
 					<view class="collapse_item" v-for="(item,index) in form.oneList">
@@ -28,9 +28,9 @@
 			</view>
 			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 			<view class="collapse_content">
-				<view class="header">
+				<view class="header" @click="showOrHide('twoFlag')">
 					<view class="label">二、常用功能登记 (如无该功能，留空)</view>
-					<view @click="showOrHide('twoFlag')"><u-icon :name="twoFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+					<view ><u-icon :name="twoFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
 				</view>
 				<view class="content" v-show="twoFlag">
 					<view class="label">安全系统</view>
@@ -89,9 +89,9 @@
 			</view>
 			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 			<view class="collapse_content">
-				<view class="header">
+				<view class="header" @click="showOrHide('threeFlag')">
 					<view class="label">三、启动检测 (如无该功能，留空)</view>
-					<view @click="showOrHide('threeFlag')"><u-icon :name="threeFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+					<view ><u-icon :name="threeFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
 				</view>
 				<view class="content" v-show="threeFlag">
 					<view class="label">仪表台故障灯</view>
@@ -137,9 +137,9 @@
 			</view>
 			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 			<view class="collapse_content">
-				<view class="header">
+				<view class="header" @click="showOrHide('fourFlag')">
 					<view class="label">四、随车工具</view>
-					<view @click="showOrHide('fourFlag')"><u-icon :name="fourFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+					<view ><u-icon :name="fourFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
 				</view>
 				<view class="content" v-show="fourFlag">
 					<view class="collapse_item" v-for="(item,index) in form.toolList">

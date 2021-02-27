@@ -28,6 +28,9 @@ export const action =ipconfig+ "/sys/upload/uploadImage";
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
 //驾照识别
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';
+//行驶证
+export const recognicedUrl = ipconfig+'/user/image/recognicedrivecard';
+
 //司机邀请好友
 export const shareUrl =shareIp+"?shareId=" 
 //司机服务分享文章
