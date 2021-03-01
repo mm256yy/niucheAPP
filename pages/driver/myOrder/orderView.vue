@@ -184,20 +184,20 @@
 				</u-col>
 				<view class="money_abs" v-if="openFlag">月租金 <text>3000元</text> 押金 <text>10000元</text> 订金<text>-1000元</text> </view>
 			</u-row>
-			<view class="view_contract">
+			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
 		</view>
 		<!-- 4 -->
 		<view class="bottom_content" style="padding: 40rpx 60rpx;">
 			<view class="btn orange padding30">确认提车</view>
-			<view class="view_contract">
+			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
 		</view>
 		<!-- 5 -->
 		<view class="bottom_content" style="padding: 60rpx 0;">
-			<view class="view_contract">
+			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
 		</view>
@@ -318,6 +318,11 @@
 					} else {
 						this.reasonList[i].flag = true
 					}
+				})
+			},
+			viewContract(){
+				this.$u.route('/pages/driver/myOrder/contractPreview', {
+					src: 'http://www.baidu.com'
 				})
 			},
 			getInfo(){

@@ -828,6 +828,26 @@
             }
             
         }
+        ,{//合同预览
+            "path" : "pages/driver/myOrder/contractPreview",
+            "style" :                                                                                    
+            {
+				 "navigationStyle": "custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//合同签署
+            "path" : "pages/driver/myOrder/signContract",
+            "style" :                                                                                    
+            {
+				 "navigationStyle": "custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
