@@ -3,26 +3,27 @@
 		<u-navbar back-icon-color="#111111" title="我的订单" :background="background" title-color="#111111"></u-navbar>
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.billingDetailsid)">
-					<view class="item_time">2021年3月18日 08点08分08秒</view>
+				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.tradeid)">
+					<view class="item_time">2021年3月18日 08点08分08秒 {{item.createTime}}</view>
 					<view class="item_content">
 						<view class="title u-line-2">
-							<text>车辆品牌车辆品牌车系年款型号车辆品牌车系年款型号车系年款型号</text>
+							<text>{{item.carname}}</text>
 						</view>
 						<view class="money">
 							 <view class="title">{{index>5?'总计':'实付'}}</view>
-							 <view><text class="price">13000</text><text class="unit">元</text></view>
+							 <view><text class="price">{{item.totalprice}}</text><text class="unit">元</text></view>
 						</view>
 						<view class="company">
-							<view><text style="color: #858585;padding-right: 10rpx;">出租方</text><text style="color: #424242;">取发布企业全称</text></view>
+							<view class="u-line-1">
+								<text style="color: #858585;padding-right: 10rpx;">出租方</text><text style="color: #424242;">{{item.companyname}}</text></view>
 							<view style="color: #BCBCBC;padding-top: 10rpx;">
-								<text>租期12个月</text> <text style="padding: 0 5px;">|</text>
-								<text>租期12个月</text> <text style="padding: 0 5px;">|</text>
-								<text>押金8000元</text>
+								<text>租期{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
+								<text>月租金{{item.monthlyrent}}元</text> <text style="padding: 0 5px;">|</text>
+								<text>押金{{item.deposit}}元</text>
 							</view>
 						</view>
 						<view class="order">
-							<view class="num">订单号：239888888888</view>
+							<view class="num">订单号：{{item.tradeid}}</view>
 							<view class="btn" :class="['btn',index>5?'active':'complete']">待验车</view>
 						</view>
 					</view>
@@ -46,6 +47,7 @@
 					num: 1,
 					size: 10 // 每页数据的数量,默认10
 				},
+				orderByColumn:'',
 				downOption: {
 					auto: false //是否在初始化后,自动执行downCallback; 默认true
 				},
@@ -53,6 +55,14 @@
 					textNoMore: '--没有更多了--'
 				},
 				total: 0
+			}
+		},
+		onLoad(option) {
+			let orderByColumn = option.orderByColumn;
+			if (orderByColumn){
+				this.orderByColumn = orderByColumn
+			} else {
+				this.orderByColumn = ''
 			}
 		},
 		filters: {
@@ -74,16 +84,6 @@
 			// this.downCallback()
 		},
 		methods: {
-			showSelect() {
-				this.selectFlag = true;
-			},
-			tapPopup(option) {
-				this.selectText = option.title;
-				this.selectValue = option.value;
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
-			},
 			/*下拉刷新的回调 */
 			downCallback() {
 				this.page.num = 1;
@@ -108,7 +108,7 @@
 			},
 			toView(id) {
 				this.$u.route('/pages/driver/myOrder/orderView', {
-					id: id
+					tradeid: id
 				})
 			}
 		}

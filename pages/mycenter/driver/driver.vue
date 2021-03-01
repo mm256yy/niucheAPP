@@ -49,36 +49,34 @@
 				<text v-show="tokenFlag" @click="account" class="text">余额：￥{{driverPub.account}}</text>
 				<text v-show="!tokenFlag" @click="account" class="text">余额：￥0</text>
 				<view @click="toInvite" class="invite">邀请好友</view>
-				<u-card>
-					<view slot="head" style="display: flex;justify-content: space-between;">
-						<view style="font-size: 36rpx;color: #333;font-weight: 900;">
-							我的订单
-						</view>
+				<u-card class="order_content">
+					<view slot="head" class="head">
+						<view class="title">我的订单</view>
 						<view style="display: flex;" @click="toMyOrder">
 							<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">查看全部订单</view>
 							<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 						</view>
 					</view>
-					<view class="" slot="body" style="display: flex;justify-content: space-around;">
+					<view class="body" slot="body">
 						<view style="position: relative;">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/yanche@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
-							<view style="font-size: 28rpx;color: #333;">订单</view>
+							<view class="body_text">验车</view>
 						</view>
 						<view style="position: relative;">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
-							<view style="font-size: 28rpx;color: #333;">签约</view>
+							<view class="body_text">签约</view>
 						</view>
 						<view style="position: relative;">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
-							<view style="font-size: 28rpx;color: #333;">支付</view>
+							<view class="body_text">支付</view>
 						</view>
 						<view style="position: relative;">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
 							<u-badge size="small" type="error" count="2" :offset="[-10,-16]"></u-badge>
-							<view style="font-size: 28rpx;color: #333;">提车</view>
+							<view class="body_text">提车</view>
 						</view>
 					</view>
 				</u-card>
@@ -533,5 +531,20 @@
 		position: fixed;
 		bottom: 20rpx;
 		left: 304rpx;
+	}
+    .order_content{
+		.head{
+			display: flex;justify-content: space-between;
+			.title{
+				font-size: 36rpx;color: #333;font-weight: 900;
+			}
+		}
+		.body{
+			display: flex;justify-content: space-around;
+			.body_text{
+				padding-top: 8rpx;
+				font-size: 28rpx;color: #333;
+			}
+		}
 	}
 </style>
