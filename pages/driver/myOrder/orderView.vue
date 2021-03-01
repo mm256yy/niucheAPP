@@ -284,6 +284,7 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
+				tradeid:'',
 				cancelOrder:false,//取消订单
 				payOrder:false,//支付弹窗
 				timestamp: 86399,//倒计时
@@ -298,6 +299,12 @@
 				otherFlag:false,
 				value:'',
 				showTips:false
+			}
+		},
+		onLoad(option) {
+			let tradeid = option.tradeid;
+			if (tradeid){
+				this.tradeid =tradeid;
 			}
 		},
 		methods: {
