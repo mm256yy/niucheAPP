@@ -115,7 +115,7 @@
 				<view class="item"><text class="title">租赁周期：</text><text>12个月（提车后开始计算）</text></view>
 				<view class="item"><text class="title">每月租金：</text><text>3000元</text></view>
 				<view class="item"><text class="title">车辆押金：</text><text>3000元</text></view>
-				<view style="padding: 8rpx 0;">
+				<view style="padding: 8rpx 0;" @click="showTips = true">
 					<text style="color: #999999;font-size: 24rpx;">押金退还规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
 				</view>
@@ -208,15 +208,15 @@
 				<view class="item_list">
 					<view style="color: #999999;">请选择订单取消原因</view>
 					<view>
-						<view class="radio_list" v-for="i in 5">
-							<view class="radio_label">文案</view>
-							<view>
-								<view class="radio_defult" v-show="openFlag"></view>
-								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!openFlag"></u-icon>
+						<view class="radio_list" v-for="(item,index) in reasonList" :key="index">
+							<view class="radio_label">{{item.text}}</view>
+							<view @click="checkOr(index)">
+								<view class="radio_defult" v-show="item.flag"></view>
+								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!item.flag"></u-icon>
 							</view>
 						</view>
 					</view>
-					<view style="padding-top: 30rpx;">
+					<view style="padding-top: 30rpx;" v-show="otherFlag">
 						<u-input v-model="value" type="textarea" :border="true" height="140" />
 					</view>
 					<view class="btn_orange">
@@ -259,6 +259,21 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-modal v-model="showTips" :show-confirm-button="false" title="">
+			<view class="slot_content">
+				<view class="slot_tips" style="padding:0 20rpx 30rpx;">
+					<view>1. 押金会全额退还吗？什么情况下扣押金?</view>
+					<view class="tips_text">租赁过程中，若您有未缴纳的费用或者违约金，租赁公司会在还车后结算时从押金中扣除，剩余费用全额退还。</view>
+					<view>2. 押金什么时候退还?</view>
+					<view class="tips_text">还车后，押金将会有租赁公司根据实际结算情况在30个工作日内退还，具体的到账时间因支付渠道不同存在差异，预计1-7个工作日到账。</view>
+					<view>3. 押金是由谁收取和退还?</view>
+					<view class="tips_text">押金是租赁公司收取和退还，平台提供线上支付和退还的能力。</view>
+				</view>
+				<view style="padding: 15px 20px 0;text-align: center;">
+					<u-button type="warning" shape='circle' class="btn_orange" @click="showTips=false">好的</u-button>
+				</view>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -274,11 +289,36 @@
 				timestamp: 86399,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
+				reasonList:[
+					{text:'1. 车辆发生重大问题',flag:true},
+					{text:'2. 不想开了',flag:true},
+					{text:'3. 想换其他车开',flag:true},
+					{text:'4. 其他原因',flag:true}
+				],
+				otherFlag:false,
+				value:'',
+				showTips:false
 			}
 		},
 		methods: {
 			refreshView() {
 				this.getInfo()
+			},
+			checkOr(index){
+				if (index === 3){
+					console.log(this.reasonList[3].flag)
+					this.otherFlag = this.reasonList[3].flag
+				} else{
+					this.otherFlag = false;
+					
+				}
+				this.reasonList.forEach((item,i)=>{
+					if(index === i){
+						this.reasonList[i].flag =!this.reasonList[i].flag;
+					} else {
+						this.reasonList[i].flag = true
+					}
+				})
 			},
 			getInfo(){
 				//获取页面数据
@@ -519,8 +559,8 @@
 				font-size: 30rpx;
 			}
 			.radio_defult{
-				width: 40rpx;
-				height: 40rpx;
+				width: 48rpx;
+				height: 48rpx;
 				border: 1px solid #E0E0E0;
 				border-radius: 50%;
 			}
@@ -534,6 +574,18 @@
 			text-align: center;
 			line-height: 80rpx;
 			height: 80rpx;
+		}
+	}
+	.slot_content {
+		padding: 15px 0;
+		.slot_tips {
+			color: #333333;
+			font-size: 28rpx;
+			border-bottom: 1rpx solid #E0E0E0;
+			.tips_text{
+				padding: 10rpx 0;
+				text-indent: 20rpx;
+			}
 		}
 	}
 </style>

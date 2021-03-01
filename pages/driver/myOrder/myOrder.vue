@@ -11,10 +11,10 @@
 						</view>
 						<view class="money">
 							 <view class="title">{{index>5?'总计':'实付'}}</view>
-							 <view><text class="price">13000</text><text class="unit">元</text></view>
+							 <view><text class="price">{{item.totalprice}}</text><text class="unit">元</text></view>
 						</view>
 						<view class="company">
-							<view><text style="color: #858585;padding-right: 10rpx;">出租方</text><text style="color: #424242;">取发布企业全称</text></view>
+							<view><text style="color: #858585;padding-right: 10rpx;">出租方</text><text style="color: #424242;">{{item.companyname}}</text></view>
 							<view style="color: #BCBCBC;padding-top: 10rpx;">
 								<text>租期12个月</text> <text style="padding: 0 5px;">|</text>
 								<text>租期12个月</text> <text style="padding: 0 5px;">|</text>
@@ -74,16 +74,6 @@
 			// this.downCallback()
 		},
 		methods: {
-			showSelect() {
-				this.selectFlag = true;
-			},
-			tapPopup(option) {
-				this.selectText = option.title;
-				this.selectValue = option.value;
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
-			},
 			/*下拉刷新的回调 */
 			downCallback() {
 				this.page.num = 1;
