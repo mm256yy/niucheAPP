@@ -848,6 +848,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/driver/myOrder/chargeback",
+            "style" :                                                                                    
+            {
+				 "navigationStyle": "custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
