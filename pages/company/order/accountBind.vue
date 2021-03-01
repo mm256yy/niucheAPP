@@ -1,179 +1,126 @@
 <template>
 	<view>
-		<view class="list_content">
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView()">
-					<view class="item_time">2021年3月18日 08点08分08秒{{item.createtime}}</view>
-					<view class="item_content">
-						<view class="title u-line-2">
-							<text>车辆品牌车系年款型号{{item.carname}}</text>
-						</view>
-						<view class="money">
-							 <view class="title">{{index>5?'总计':'实付'}}</view>
-							 <view><text class="price">13000{{item.totalprice}}</text><text class="unit">元</text></view>
-						</view>
-						<view class="company">
-							<view><text style="color: #858585;padding-right: 10rpx;">承租人</text><text style="color: #424242;">姓名{{item.rentername}}</text></view>
-							<view style="color: #BCBCBC;padding-top: 10rpx;">
-								<text>租期12{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
-								<text>月租金3000{{item.monthlyrent}}元</text> <text style="padding: 0 5px;">|</text>
-								<text>押金8000{{item.deposit}}元</text>
-							</view>
-						</view>
-						<view class="order">
-							<view class="num">订单号：239888888888{{item.tradeid}}</view>
-							<view class="btn" :class="['btn',index>5?'active':'complete']">待验车{{item.state}}</view>
-						</view>
-					</view>
-				</view>
-			</mescroll-body>
+		<u-navbar back-icon-color="#111111" title="新建订单" :background="background" title-color="#111111"></u-navbar>
+		<view class="content">
+			<view style="margin-top: 20rpx;">订单信息</view>
+			<view style="margin-top: 20rpx;color: #bcbcbc;">订单号：2343434343</view>
+			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+				<u-form-item style="width:694rpx;margin-top: -18rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="租期:" @click="show = true" v-model="leasetime" type="select" /></u-form-item>
+				<u-form-item label="押金:" prop="deposit">
+					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="请输入"/>元
+				</u-form-item>
+				<u-form-item label="月租金:" prop="monthlyrent">
+					<u-input class="input-radius" v-model="form.monthlyrent" maxlength="10" placeholder="请输入"/>元/月
+				</u-form-item>
+			</u-form>
+			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
+			<view style="margin-top: 20rpx;">承租人信息</view>
+			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+				<u-form-item label="姓名:" prop="rentername">
+					<u-input class="input-radius" v-model="form.rentername" maxlength="10" placeholder="请输入"/>
+				</u-form-item>
+				<u-form-item label="身份证号:" prop="renteridcard">
+					<u-input class="input-radius" v-model="form.renteridcard" maxlength="10" placeholder="请输入"/>
+				</u-form-item>
+				<u-form-item label="手机号" prop="renteridphone" >
+					<u-input v-model="form.renteridphone" type="number" placeholder="请输入"/>
+				</u-form-item>
+			</u-form>
+		</view>
+		<view class="bottom">
+			<view class="submit">新建并发起订单</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default {
-		mixins: [MescrollMixin],
 		data() {
 			return {
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				dataList: [],
-				page: {
-					num: 1,
-					size: 10 // 每页数据的数量,默认10
+				show:false,
+				form: {
+				  leasetime: 0,
+				  monthlyrent: 0,
+				  deposit: 0,
+				  rentername: 0,
+				  renteridphone: 0,
+				  renteridcard: 0,
+				  carname: 0
 				},
-				downOption: {
-					auto: false //是否在初始化后,自动执行downCallback; 默认true
-				},
-				up: {
-					textNoMore: '--没有更多了--'
-				},
-				total: 0
+				leasetime: '',
+				select: [
+					{
+						label: '1个月',
+						value: '0'
+					},
+					{
+						label: '3个月',
+						value: '1'
+					},
+					{
+						label: '6个月',
+						value: '2'
+					},
+					{
+						label: '12个月',
+						value: '3'
+					},
+				],
 			}
 		},
 		mounted() {
-			// this.downCallback()
+			
 		},
 		methods: {
-			showSelect() {
-				this.selectFlag = true;
+			confirm(arr){
+				this.form.leasetime = arr[0].value;
+				this.leasetime = arr[0].label;
 			},
-			tapPopup(option) {
-				this.selectText = option.title;
-				this.selectValue = option.value;
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
-			},
-			/*下拉刷新的回调 */
-			downCallback() {
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
-			},
-			upCallback() {
-				this.$u.api.orderList({
-					pageNum: this.page.num,
-					pageSize: this.page.size,
-					type: this.selectValue
-				}).then(res => {
-					if (res.code === 200) {
-						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
-						this.page.num = this.page.num + 1
-						this.dataList = this.dataList.concat(res.rows);
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
-			},
-			toView(id) {
-				this.$u.route('/pages/company/order/orderDetail', {
-					id: id
-				})
+			submit(){
+				if(this.form.leasetime&&this.form.monthlyrent&&this.form.deposit&&this.form.rentername
+				&&this.form.renteridphone&&this.form.renteridcard&&this.form.carname){
+					this.$u.toast('请填写完整');
+					return false
+				}
+				this.$u.api.orderNew(this.form).then(res => {
+					if(res.code === 200){
+						this.$u.toast('新建订单成功');
+						this.$u.route('/pages/company/order/orderList')
+					 } else{
+						this.$u.toast(res.msg) 
+					 }
+				}).catch(res=>{this.$u.toast(res.msg)})
 			}
-		}
+		}	
 	}
 </script>
 
 <style lang="scss" scoped>
-	page {
-		background: #F5F5F5;
+	.content{
+		padding: 28rpx;
+		color: #111;
 	}
-
-	.navbar-right {
-		margin-right: 24rpx;
-		display: flex;
-	}
-
-	.right-item {
-		margin: 0 12rpx;
-		position: relative;
-		display: flex;
-	}
-
-	.list_content {
-		margin: 0 20px;
-
-		.list_item {
-			padding: 15px 0 10px;
-			.item_time {
-				text-align: center;
-				padding-bottom: 9px;
-			}
-			.item_content {
-				padding: 10px 12px;
-				border-radius: 4px;
-				background-color: #FFFFFF;
-				.title{
-					color: #333333;
-				}
-				.money{
-					padding:80rpx 0 30rpx;
-					text-align: center;
-					.title{
-						font-size: 28rpx;
-						color: #C0C0C0;
-					}
-					.price{
-						font-size: 60rpx;
-					}
-					.unit{
-						padding-left: 8rpx;
-						font-size: 24rpx;
-					}
-				}
-				.company{
-					padding-bottom: 20rpx;
-				}
-				.order{
-					display: flex;
-					justify-content: space-between;
-					.num{
-						color: #BCBCBC;
-						font-size: 28rpx;
-					}
-					.btn{
-						width: 88px;
-						height: 30px;
-						line-height: 30px;
-						border-radius: 15px;
-						text-align: center;
-
-					}
-					.active{
-						color: #FE5B00;
-						border: 1px solid #FE5B00;
-					}
-					.complete{
-						color: #C2C2C2;
-						border: 1px solid #C2C2C2;
-					}
-				}
-			}
+	.bottom{
+		width: 100%;
+		height: 140rpx;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		border-top: 2rpx solid rgba(0,0,0,0.08);
+		.submit{
+			width: 600rpx;
+			height: 100rpx;
+			line-height: 100rpx;
+			text-align: center;
+			background: linear-gradient(270deg, #63D094 0%, #5BC98A 49%, #3EB06B 100%);
+			border-radius: 12rpx;
+			margin-top: 20rpx;
+			margin-left: 75rpx;
+			font-size: 36rpx;
+			color: #fff;
 		}
 	}
 </style>
