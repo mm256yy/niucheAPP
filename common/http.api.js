@@ -220,7 +220,9 @@ const install = (Vue, vm) => {
 		+ '&state=' + params.state, {}
 	);
 	//公司订单详情
-	const orderDetail = (params = {}) => vm.$u.post('/order/company/get', params);
+	const orderDetail = (params = {}) => vm.$u.post(
+		'/order/company/get?orderId=' + params.orderId, {}
+	);
 	//公司新建订单
 	const orderNew = (params = {}) => vm.$u.post('/order/add', params);
 	//公司查询验车单

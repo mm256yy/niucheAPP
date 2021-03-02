@@ -89,12 +89,13 @@
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
-									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
+									<u-image v-show="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
+									<u-image v-show="detail.state=='REGISTER_CAR'" width="60rpx" height="60rpx" src="@/static/order/registerActive.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">商品信息登记（未登记）</view>
+									<view class="u-order-desc">商品信息登记</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -109,25 +110,25 @@
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="middle_content">
-			<view class="company_name">承租人姓名{{detail.rentername}}</view>
-			<view class="company_model">出租的品牌车系型号{{detail.carname}}</view>
+			<view class="company_name">{{detail.rentername}}</view>
+			<view class="company_model">{{detail.carname}}</view>
 			<view class="content_item">
-				<view class="item"><text class="title">租赁周期：</text><text>12{{detail.leasetime}}个月（提车后开始计算）</text></view>
-				<view class="item"><text class="title">每月租金：</text><text>3000{{detail.monthlyrent}}元</text></view>
-				<view class="item"><text class="title">车辆押金：</text><text>3000{{detail.deposit}}元</text></view>
+				<view class="item"><text class="title">租赁周期：</text><text>{{detail.leasetime}}个月（提车后开始计算）</text></view>
+				<view class="item"><text class="title">每月租金：</text><text>{{detail.monthlyrent}}元</text></view>
+				<view class="item"><text class="title">车辆押金：</text><text>{{detail.deposit}}元</text></view>
 				<view style="padding: 8rpx 0;">
 					<text style="color: #999999;font-size: 24rpx;">押金还车后退，规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
 				</view>
-				<view class="item"><text class="title">订单时间：</text><text>3000{{detail.createtime}}</text></view>
-				<view class="item"><text class="title">订单号：</text><text>3000{{detail.tradeid}}</text></view>
+				<view class="item"><text class="title">订单时间：</text><text>{{detail.createTime}}</text></view>
+				<view class="item"><text class="title">订单号：</text><text>{{detail.tradeid}}</text></view>
 			</view>
 			<view class="company_model">订单支付费用明细</view>
 			<view class="content_item" v-if="true">
-				<view class="item"><text class="title">实付租金: </text><text>3000{{detail.monthlyrent}}元</text></view>
-				<view class="item"><text class="title">实付押金：</text><text>3000{{detail.deposit}}元</text></view>
-				<view class="item"><text class="title">实际支付总和：</text><text>3000{{detail.totalprice}}元</text></view>
-				<view class="item"><text class="title">支付时间：</text><text>2012.12.31 14:23:55{{detail.paytime}}</text></view>
+				<view class="item"><text class="title">实付租金: </text><text>{{detail.monthlyrent}}元</text></view>
+				<view class="item"><text class="title">实付押金：</text><text>{{detail.deposit}}元</text></view>
+				<view class="item"><text class="title">实际支付总和：</text><text>{{detail.totalprice}}元</text></view>
+				<view class="item"><text class="title">支付时间：</text><text>{{detail.paytime}}</text></view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
@@ -196,12 +197,18 @@
 				detail:{}
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.getDetail(id)
+			}
+		},
 		methods: {
-			getDetail(){
+			getDetail(id){
 				let token = uni.getStorageSync('token');
 				if(token){
 					this.$u.api.orderDetail({
-						orderId:orderId
+						orderId:id
 					}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
