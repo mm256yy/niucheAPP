@@ -1,34 +1,25 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="新建订单" :background="background" title-color="#111111"></u-navbar>
+		<u-navbar back-icon-color="#111111" title="支付宝账号绑定" :background="background" title-color="#111111"></u-navbar>
 		<view class="content">
-			<view style="margin-top: 20rpx;">订单信息</view>
-			<view style="margin-top: 20rpx;color: #bcbcbc;">订单号：2343434343</view>
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:694rpx;margin-top: -18rpx;" label=""><u-input placeholder-style="color:#000;" placeholder="租期:" @click="show = true" v-model="leasetime" type="select" /></u-form-item>
-				<u-form-item label="押金:" prop="deposit">
-					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="请输入"/>元
+			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
+				<u-form-item label="支付宝账号:" prop="deposit">
+					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="输入你支付宝收款账号"/>
 				</u-form-item>
 				<u-form-item label="月租金:" prop="monthlyrent">
-					<u-input class="input-radius" v-model="form.monthlyrent" maxlength="10" placeholder="请输入"/>元/月
+					<u-input class="input-radius" v-model="form.monthlyrent" maxlength="10" placeholder="你在支付宝认证的姓名"/>
+				</u-form-item>
+				<view style="margin-top: 36rpx;">验证金额：</view>
+				<u-form-item label="￥" prop="deposit">
+					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="请输入"/>
+					<view class="get">获取验证金额</view>
 				</u-form-item>
 			</u-form>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<view style="margin-top: 20rpx;">承租人信息</view>
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item label="姓名:" prop="rentername">
-					<u-input class="input-radius" v-model="form.rentername" maxlength="10" placeholder="请输入"/>
-				</u-form-item>
-				<u-form-item label="身份证号:" prop="renteridcard">
-					<u-input class="input-radius" v-model="form.renteridcard" maxlength="10" placeholder="请输入"/>
-				</u-form-item>
-				<u-form-item label="手机号" prop="renteridphone" >
-					<u-input v-model="form.renteridphone" type="number" placeholder="请输入"/>
-				</u-form-item>
-			</u-form>
+			<view class="tip">*验证金额：是由纽车平台向你的支付宝账号随机汇的微小金额，仅做账号有效性验证，无须退还</view>
+			<view class="warn">*请如实填写信息，否则造成收款失败</view>
 		</view>
 		<view class="bottom">
-			<view class="submit">新建并发起订单</view>
+			<view class="submit">绑定</view>
 		</view>
 	</view>
 </template>
@@ -42,13 +33,8 @@
 				},
 				show:false,
 				form: {
-				  leasetime: 0,
-				  monthlyrent: 0,
-				  deposit: 0,
-				  rentername: 0,
-				  renteridphone: 0,
-				  renteridcard: 0,
-				  carname: 0
+				  monthlyrent: '',
+				  deposit: '',
 				},
 				leasetime: '',
 				select: [
@@ -102,6 +88,27 @@
 	.content{
 		padding: 28rpx;
 		color: #111;
+	}
+	.get{
+		width: 210rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		text-align: center;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		border: 2rpx solid #D9DEDF;
+		font-size: 28rpx;
+		color: #5BBF84;
+	}
+	.tip{
+		font-size: 22rpx;
+		color: #c7c7c7;
+		margin-top: 60rpx;
+	}
+	.warn{
+		font-size: 22rpx;
+		color: #FE3B31;
+		margin-top: 26rpx;
 	}
 	.bottom{
 		width: 100%;

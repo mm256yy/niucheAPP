@@ -4,7 +4,7 @@
 		</u-navbar>
 		 <view class="wrap">
 			 <view style="">
-			 	<u-tabs-swiper ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
+			 	<u-tabs-swiper style="position: fixed;background: #fff;" ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
 			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 	 swiperWidth="750"></u-tabs-swiper>
 			 </view>
@@ -16,7 +16,7 @@
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
-			 			<checking v-if="isChildUpdate2" ref="checking"></checking>
+			 			<registrationing v-if="isChildUpdate2" ref="registrationing"></registrationing>
 			 		</scroll-view>
 			 	</swiper-item>
 			 	<swiper-item class="swiper-item">
@@ -31,7 +31,12 @@
 			 	</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;">
-						<invaliding v-if="isChildUpdate5" ref="invaliding"></invaliding>
+						<mentioning v-if="isChildUpdate5" ref="mentioning"></mentioning>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 100%;width: 100%;">
+						<invaliding v-if="isChildUpdate6" ref="invaliding"></invaliding>
 					</scroll-view>
 				</swiper-item>
 			 </swiper>
@@ -41,16 +46,18 @@
 
 <script>
 	import alling from './all'
-	import checking from './check'
+	import registrationing from './registration'
 	import signing from './sign'
 	import paying from './pay'
+	import mentioning from './mention'
 	import invaliding from './invalid'
 	export default {
 		components: {
 			alling,
-			checking,
+			registrationing,
 			signing,
 			paying,
+			mentioning,
 			invaliding
 		},
 		data() {
@@ -64,11 +71,13 @@
 				listTab: [{
 					name: '全部'
 				}, {
-					name: '待验车'
+					name: '商品登记'
 				},{
 					name: '待签约'
 				}, {
 					name: '待支付'
+				}, {
+					name: '待提车'
 				}, {
 					name: '失效'
 				}],
@@ -79,25 +88,19 @@
 				isChildUpdate2:false,
 				isChildUpdate3:false,
 				isChildUpdate4:false,
-				isChildUpdate5:false
+				isChildUpdate5:false,
+				isChildUpdate6:false
 			}
 		},
-		mounted() {
-			this.getDetail()
+		onLoad(option) {
+			let index = option.index;
+			if(index){
+			 this.current = index;
+			 this.swiperCurrent = index;
+			 this.create(index)
+			}
 		},
 		methods: {
-			getDetail(){
-				let token = uni.getStorageSync('token');
-				if(token){
-					this.$u.api.getMessageCompany().then(res=>{
-						if(res.code === 200){
-							 this.detail = res.object;
-						}else {
-							 this.$u.toast(res.msg);
-						}
-					})
-				}
-			},
 			create(index){
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
@@ -105,30 +108,42 @@
 					this.isChildUpdate3 = false;
 					this.isChildUpdate4 = false;
 					this.isChildUpdate5 = false;
+					this.isChildUpdate6 = false;
 				} else if(index == 1) {
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = true;
 				    this.isChildUpdate3 = false;
 				    this.isChildUpdate4 = false;
 					this.isChildUpdate5 = false;
+					this.isChildUpdate6 = false;
 				}else if(index == 2) {
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = false;
 				    this.isChildUpdate3 = true;
 				    this.isChildUpdate4 = false;
 					this.isChildUpdate5 = false;
+					this.isChildUpdate6 = false;
 				}else if(index == 3) {
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = false;
 				    this.isChildUpdate3 = false;
 				    this.isChildUpdate4 = true;
 					this.isChildUpdate5 = false;
+					this.isChildUpdate6 = false;
 				}else if(index == 4) {
 				    this.isChildUpdate1 = false;
 				    this.isChildUpdate2 = false;
 				    this.isChildUpdate3 = false;
 				    this.isChildUpdate4 = false;
 					this.isChildUpdate5 = true;
+					this.isChildUpdate6 = false;
+				}else if(index == 5) {
+				    this.isChildUpdate1 = false;
+				    this.isChildUpdate2 = false;
+				    this.isChildUpdate3 = false;
+				    this.isChildUpdate4 = false;
+					this.isChildUpdate5 = false;
+					this.isChildUpdate6 = true;
 				}
 			},
 			// tabs通知swiper切换
@@ -173,11 +188,12 @@
 	.wrap {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - 400rpx);
+		height: calc(100vh - var(--window-top));
 		width: 100%;
 	}
 	.swiper-box {
 		flex: 1;
+		margin-top: 70rpx;
 	}
 	.swiper-item {
 		height: 100%;

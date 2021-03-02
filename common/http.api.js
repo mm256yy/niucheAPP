@@ -215,7 +215,10 @@ const install = (Vue, vm) => {
 	//获取sing
 	const getSing = (params = {}) => vm.$u.post('/app/tencentChat/getChatSinger', params);
 	//公司订单列表
-	const orderList = (params = {}) => vm.$u.post('/order/company/list', params);
+	const orderList = (params = {}) => vm.$u.post(
+		'/order/company/list?pageNum=' + params.pageNum + '&pageSize=' + params.pageSize
+		+ '&state=' + params.state, {}
+	);
 	//公司订单详情
 	const orderDetail = (params = {}) => vm.$u.post('/order/company/get', params);
 	//公司新建订单

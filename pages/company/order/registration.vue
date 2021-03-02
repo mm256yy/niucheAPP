@@ -3,26 +3,28 @@
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
 				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView()">
-					<view class="item_time">2021年3月18日 08点08分08秒{{item.createtime}}</view>
+					<view class="item_time">{{item.createTime}}</view>
 					<view class="item_content">
 						<view class="title u-line-2">
-							<text>车辆品牌车系年款型号{{item.carname}}</text>
+							<text>{{item.carname}}</text>
 						</view>
 						<view class="money">
-							 <view class="title">{{index>5?'总计':'实付'}}</view>
-							 <view><text class="price">13000{{item.totalprice}}</text><text class="unit">元</text></view>
+							 <view class="title">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?'实付':'总计'}}</view>
+							 <view><text class="price">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?item.totalprice:item.totalprice}}</text><text class="unit">元</text></view>
 						</view>
 						<view class="company">
-							<view><text style="color: #858585;padding-right: 10rpx;">承租人</text><text style="color: #424242;">姓名{{item.rentername}}</text></view>
+							<view><text style="color: #858585;padding-right: 10rpx;">承租人</text><text style="color: #424242;">{{item.rentername}}</text></view>
 							<view style="color: #BCBCBC;padding-top: 10rpx;">
-								<text>租期12{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
-								<text>月租金3000{{item.monthlyrent}}元</text> <text style="padding: 0 5px;">|</text>
-								<text>押金8000{{item.deposit}}元</text>
+								<text>租期{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
+								<text>月租金{{item.monthlyrent}}元</text> <text style="padding: 0 5px;">|</text>
+								<text>押金{{item.deposit}}元</text>
 							</view>
 						</view>
 						<view class="order">
-							<view class="num">订单号：239888888888{{item.tradeid}}</view>
-							<view class="btn" :class="['btn',index>5?'active':'complete']">待验车{{item.state}}</view>
+							<view class="num">订单号：{{item.tradeid}}</view>
+							<view class="btn" :class="['btn',item.state === 'ORDER_FAILED' || item.state === 'ORDER_FINISHED'?'complete':'active']">
+								{{item.state | soureText}}
+							</view>
 						</view>
 					</view>
 				</view>
@@ -54,6 +56,25 @@
 				total: 0
 			}
 		},
+		filters: {
+			soureText: function(value) {
+				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'VALIDATE_CAR') {
+					return '商品登记'
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
+					return '待签约'
+				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
+					return '待支付'
+				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
+					return '待提车'
+				} else if (value === 'ORDER_FINISHED') {
+					return '完成'
+				} else if (value === 'ORDER_FAILED') {
+					return '失效'
+				} else {
+					return ''
+				}
+			}
+		},
 		mounted() {
 			// this.downCallback()
 		},
@@ -78,7 +99,7 @@
 				this.$u.api.orderList({
 					pageNum: this.page.num,
 					pageSize: this.page.size,
-					type: this.selectValue
+					state: '0',
 				}).then(res => {
 					if (res.code === 200) {
 						this.total = res.total;
@@ -116,17 +137,17 @@
 	}
 
 	.list_content {
-		margin: 0 20px;
+		margin: 0 40rpx;
 
 		.list_item {
-			padding: 15px 0 10px;
+			padding: 30rpx 0 20rpx;
 			.item_time {
 				text-align: center;
-				padding-bottom: 9px;
+				padding-bottom: 18rpx;
 			}
 			.item_content {
-				padding: 10px 12px;
-				border-radius: 4px;
+				padding: 20rpx 24rpx;
+				border-radius: 8rpx;
 				background-color: #FFFFFF;
 				.title{
 					color: #333333;
@@ -157,20 +178,20 @@
 						font-size: 28rpx;
 					}
 					.btn{
-						width: 88px;
-						height: 30px;
-						line-height: 30px;
-						border-radius: 15px;
+						width: 176rpx;
+						height: 60rpx;
+						line-height: 60rpx;
+						border-radius: 30rpx;
 						text-align: center;
 
 					}
 					.active{
 						color: #FE5B00;
-						border: 1px solid #FE5B00;
+						border: 2rpx solid #FE5B00;
 					}
 					.complete{
 						color: #C2C2C2;
-						border: 1px solid #C2C2C2;
+						border: 2rpx solid #C2C2C2;
 					}
 				}
 			}

@@ -99,7 +99,7 @@
 				this.$u.api.orderList({
 					pageNum: this.page.num,
 					pageSize: this.page.size,
-					state: '',
+					state: '3',
 				}).then(res => {
 					if (res.code === 200) {
 						this.total = res.total;
@@ -174,8 +174,6 @@
 					display: flex;
 					justify-content: space-between;
 					.num{
-						height: 62rpx;
-						line-height: 62rpx;
 						color: #BCBCBC;
 						font-size: 28rpx;
 					}

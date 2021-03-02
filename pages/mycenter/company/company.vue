@@ -40,23 +40,23 @@
 					<view class="new" @click="toNew()">新建订单</view>
 				</view>
 				<view style="width: 678rpx;height: 168rpx;margin-left: 36rpx;background: #fff;padding: 0 38rpx;border-radius: 20rpx;display: flex;justify-content: space-between;align-items: center;">
-					<view @click="toList()" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(1)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
-						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待付订金</view>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">商品登记</view>
 					</view>
-					<view style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
-						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/yanche@2x.png"></u-image>
-						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待验车</view>
-					</view>
-					<view style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(2)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待签约</view>
 					</view>
-					<view style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(3)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待支付</view>
+					</view>
+					<view @click="toList(4)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待提车</view>
 					</view>
-					<view style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(0)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/order.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">全部订单</view>
 					</view>
@@ -305,8 +305,19 @@
 					this.toLogin()
 				}
 			},
-			toList(){
-				this.$u.route('/pages/company/order/order');
+			toList(index){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route('/pages/company/order/order', {
+							index: index
+						});
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
 			},
 			toNew(){
 				this.$u.route('/pages/company/order/newOrder');
@@ -370,7 +381,7 @@
 }
 	.imgUrl{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 404rpx);
+		height: calc(var(--status-bar-height) + 354rpx);
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -379,7 +390,7 @@
 	}
 	.room{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 404rpx);
+		height: calc(var(--status-bar-height) + 354rpx);
 	}
 	.colorF{
 		color: $common-FFF;
@@ -438,5 +449,6 @@
 		padding-left: 102rpx;
 		padding-top: 40rpx;
 		margin-left: 34rpx;
+		margin-top: 10rpx;
 	}
 </style>
