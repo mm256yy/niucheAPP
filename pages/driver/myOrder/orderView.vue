@@ -284,7 +284,7 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				tradeid:'',
+				id:'',
 				cancelOrder:false,//取消订单
 				payOrder:false,//支付弹窗
 				timestamp: 86399,//倒计时
@@ -305,10 +305,13 @@
 			}
 		},
 		onLoad(option) {
-			let tradeid = option.tradeid;
-			if (tradeid){
-				this.tradeid =tradeid;
+			let id = option.id;
+			if (id){
+				this.id =id;
 			}
+		},
+		onShow() {
+			this.getInfo()
 		},
 		methods: {
 			refreshView() {
@@ -325,7 +328,6 @@
 					this.otherFlag = this.reasonList[3].flag
 				} else{
 					this.otherFlag = false;
-					
 				}
 				this.reasonList.forEach((item,i)=>{
 					if(index === i){
@@ -342,6 +344,13 @@
 			},
 			getInfo(){
 				//获取页面数据
+				this.$u.api.driverOrderView({id:this.id}).then(res=>{
+					if (res.code === 200) {
+						console.log(res.object)
+					} else {
+						 this.$u.toast(res.msg);
+					}
+				})
 			},
 			chargeback() {
 				this.cancelOrder = true;
@@ -360,10 +369,10 @@
 						    provider: 'alipay',
 						    orderInfo:res.object , //微信、支付宝订单数据
 						    success: function (res) {
-						        this.$u.toast('success:' + JSON.stringify(res));
+						        alert('success:' + JSON.stringify(res));
 						    },
 						    fail: function (err) {
-						        this.$u.toast('fail:' + JSON.stringify(err));
+						        alert('fail:' + JSON.stringify(err));
 						    }
 						});
 					} else {

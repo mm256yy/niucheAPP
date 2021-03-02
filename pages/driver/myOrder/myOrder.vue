@@ -3,15 +3,19 @@
 		<u-navbar back-icon-color="#111111" title="我的订单" :background="background" title-color="#111111"></u-navbar>
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.tradeid)">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.id)">
 					<view class="item_time">{{item.createTime}}</view>
 					<view class="item_content">
 						<view class="title u-line-2">
 							<text>{{item.carname}}</text>
 						</view>
 						<view class="money">
-							 <view class="title">{{index>5?'总计':'实付'}}</view>
-							 <view><text class="price">{{item.totalprice}}</text><text class="unit">元</text></view>
+							<view class="title">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?'实付':'总计'}}</view>
+							<view>
+								<text class="price">
+									{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?item.totalprice:item.totalprice}}
+								</text><text class="unit">元</text>
+							</view>
 						</view>
 						<view class="company">
 							<view class="u-line-1">
@@ -25,7 +29,9 @@
 						</view>
 						<view class="order">
 							<view class="num">订单号：{{item.tradeid}}</view>
-							<view class="btn" :class="['btn',index>5?'active':'complete']">待验车</view>
+							<view class="btn" :class="['btn',item.state === 'ORDER_FAILED' || item.state === 'ORDER_FINISHED'?'complete':'active']">
+								{{item.state | soureText}}
+							</view>
 						</view>
 					</view>
 				</view>
@@ -48,7 +54,7 @@
 					num: 1,
 					size: 10 // 每页数据的数量,默认10
 				},
-				orderByColumn:'',
+				orderByColumn: '',
 				downOption: {
 					auto: false //是否在初始化后,自动执行downCallback; 默认true
 				},
@@ -60,7 +66,7 @@
 		},
 		onLoad(option) {
 			let orderByColumn = option.orderByColumn;
-			if (orderByColumn){
+			if (orderByColumn) {
 				this.orderByColumn = orderByColumn
 			} else {
 				this.orderByColumn = ''
@@ -68,14 +74,18 @@
 		},
 		filters: {
 			soureText: function(value) {
-				if (value === 'SOURCE_REGISTER_AUTH') {
-					return '注册-认证有礼'
-				} else if (value === 'SOURCE_INVITE') {
-					return '推广拉新'
-				} else if (value === 'SOURCE_WITHDRAW') {
-					return '提现'
-				} else if (value === 'SOURCE_REFUND') {
-					return '提现退款'
+				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'REGISTER_CAR') {
+					return '待验车'
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value === 'VALIDATE_CAR') {
+					return '待签约'
+				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
+					return '待支付'
+				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
+					return '待提车'
+				} else if (value === 'ORDER_FINISHED') {
+					return '完成'
+				} else if (value === 'ORDER_FAILED') {
+					return '失效'
 				} else {
 					return ''
 				}
@@ -92,11 +102,10 @@
 				this.upCallback()
 			},
 			upCallback() {
-				this.$u.api.getBillDetails({
+				this.$u.api.driverOrderList({
 					pageNum: this.page.num,
 					pageSize: this.page.size,
-					type: this.selectValue
-				}).then(res => {
+				},{}).then(res => {
 					if (res.code === 200) {
 						this.total = res.total;
 						this.mescroll.endByPage(res.rows.length, res.total);
@@ -109,7 +118,7 @@
 			},
 			toView(id) {
 				this.$u.route('/pages/driver/myOrder/orderView', {
-					tradeid: id
+					id: id
 				})
 			}
 		}
@@ -137,43 +146,55 @@
 
 		.list_item {
 			padding: 15px 0 10px;
+
 			.item_time {
 				text-align: center;
 				padding-bottom: 9px;
 			}
+
 			.item_content {
 				padding: 10px 12px;
 				border-radius: 4px;
 				background-color: #FFFFFF;
-				.title{
+
+				.title {
 					color: #333333;
 				}
-				.money{
-					padding:80rpx 0 30rpx;
+
+				.money {
+					padding: 80rpx 0 30rpx;
 					text-align: center;
-					.title{
+
+					.title {
 						font-size: 28rpx;
 						color: #C0C0C0;
 					}
-					.price{
+
+					.price {
 						font-size: 60rpx;
 					}
-					.unit{
+
+					.unit {
 						padding-left: 8rpx;
 						font-size: 24rpx;
 					}
 				}
-				.company{
+
+				.company {
 					padding-bottom: 20rpx;
 				}
-				.order{
+
+				.order {
 					display: flex;
 					justify-content: space-between;
-					.num{
+					align-items: baseline;
+
+					.num {
 						color: #BCBCBC;
 						font-size: 28rpx;
 					}
-					.btn{
+
+					.btn {
 						width: 88px;
 						height: 30px;
 						line-height: 30px;
@@ -181,11 +202,13 @@
 						text-align: center;
 
 					}
-					.active{
+
+					.active {
 						color: #FE5B00;
 						border: 1px solid #FE5B00;
 					}
-					.complete{
+
+					.complete {
 						color: #C2C2C2;
 						border: 1px solid #C2C2C2;
 					}

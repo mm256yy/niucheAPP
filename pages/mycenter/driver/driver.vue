@@ -272,12 +272,6 @@
 							let data = res.object;
 							this.order = data
 						} else {
-							this.order = {
-								waitCarMessageNum: 0,
-								waitDeliveryVehicleNum: 0,
-								waitPayNum: 0,
-								waitSignContractNum: 0
-							}
 							this.$u.toast(res.msg);
 						}
 					})

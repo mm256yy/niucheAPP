@@ -229,9 +229,10 @@ const install = (Vue, vm) => {
 	//查询验车单
 	const checkCarList = (params = {}) => vm.$u.post('/order/car/message/get', params);
      //司机我的订单
-	const driverOrderList = (params = {}) => vm.$u.post('/order/driver/list', params);
+	const driverOrderList = (params = {}) => vm.$u.post("/order/driver/list?pageNum=" + params.pageNum + "&pageSize=" +
+		params.pageSize, {});
 	//司机订单查询详情
-	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get', params);
+	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get?id='+params.id, {});
 	//获取支付宝订单信息
 	const getOrderInfo = (params = {}) => vm.$u.post('/alipay/alipaydemo', params);
 	//个人中心页统计订单
