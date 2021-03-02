@@ -234,8 +234,11 @@ const install = (Vue, vm) => {
 	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get', params);
 	//获取支付宝订单信息
 	const getOrderInfo = (params = {}) => vm.$u.post('/alipay/alipaydemo', params);
+	//个人中心页统计订单
+	const getCenterInfo = (params = {}) => vm.$u.post('/order/statistics/get', params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getCenterInfo,
 		driverOrderView,
 		driverOrderList,
 		checkCarSave,

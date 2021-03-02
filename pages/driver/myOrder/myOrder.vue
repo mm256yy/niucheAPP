@@ -4,7 +4,7 @@
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
 				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.tradeid)">
-					<view class="item_time">2021年3月18日 08点08分08秒 {{item.createTime}}</view>
+					<view class="item_time">{{item.createTime}}</view>
 					<view class="item_content">
 						<view class="title u-line-2">
 							<text>{{item.carname}}</text>
@@ -15,7 +15,8 @@
 						</view>
 						<view class="company">
 							<view class="u-line-1">
-								<text style="color: #858585;padding-right: 10rpx;">出租方</text><text style="color: #424242;">{{item.companyname}}</text></view>
+								<text style="color: #858585;padding-right: 10rpx;">出租方</text><text style="color: #424242;">{{item.companyname}}</text>
+							</view>
 							<view style="color: #BCBCBC;padding-top: 10rpx;">
 								<text>租期{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
 								<text>月租金{{item.monthlyrent}}元</text> <text style="padding: 0 5px;">|</text>

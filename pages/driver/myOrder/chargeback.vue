@@ -10,20 +10,20 @@
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="middle_content">
-			<view class="company_name">企业全称</view>
-			<view class="company_model">出租的品牌</view>
+			<view class="company_name">{{form.companyname}}</view>
+			<view class="company_model">{{form.carname}}</view>
 			<view class="content_item">
-				<view class="item"><text class="title">租赁周期：</text><text>12个月（提车后开始计算）</text></view>
-				<view class="item"><text class="title">订金费用：</text><text>3000元</text></view>
+				<view class="item"><text class="title">租赁周期：</text><text>{{form.leasetime}}个月（提车后开始计算）</text></view>
+				<view class="item"><text class="title">订金费用：</text><text>{{form.deposit}}元</text></view>
                 <view style="color: #333333;padding: 10rpx 0;">方案费用</view>
-				<view class="item"><text class="title">每月租金：</text><text>3000元</text></view>
-				<view class="item"><text class="title">车辆押金：</text><text>3000元</text></view>
+				<view class="item"><text class="title">每月租金：</text><text>{{form.monthlyrent}}元</text></view>
+				<view class="item"><text class="title">车辆押金：</text><text>{{form.deposit}}元</text></view>
 				<view style="padding: 8rpx 0;" @click="showTips = true">
 					<text style="color: #999999;font-size: 24rpx;">押金退还规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
 				</view>
-				<view class="item"><text class="title">订单时间：</text><text>3000元</text></view>
-				<view class="item"><text class="title">订单号：</text><text>3000元</text></view>
+				<view class="item"><text class="title">订单时间：</text><text>{{form.updateTime}}</text></view>
+				<view class="item"><text class="title">订单号：</text><text>{{form.tradeid}}</text></view>
 			</view>
 		</view>
 
@@ -55,7 +55,10 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				showTips: false
+				showTips: false,
+				form:{
+					
+				}
 			}
 		},
 		methods: {

@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="签署合同" :background="background" title-color="#111111"></u-navbar>
+		<!-- <u-navbar back-icon-color="#111111" title="" :background="background" title-color="#111111"></u-navbar> -->
 		<view>
-			<web-view :src="src"></web-view>
+			<web-view :src="src" @message="upCallback()"></web-view>
 		</view>
 	</view>
 </template>
@@ -17,11 +17,25 @@
 				src:''
 			}
 		},
-		onLoad(option) {
-			this.src = option.src;
+		mounted() {
+			let src = "http://www.baidu.com";
+			// this.src = encodeURI(src)
+			// console.log(this.src)
+			// this.upCallback()
 		},
 		methods: {
-			
+			upCallback() {
+				this.$u.api.getBillDetails({
+					pageNum: 1,
+					pageSize: 10,
+				}).then(res => {
+					if (res.code === 200) {
+
+					} else {
+						this.$u.toast(res.msg);
+					}
+				})
+			},
 		}
 	}
 </script>
