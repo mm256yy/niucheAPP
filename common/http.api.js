@@ -237,7 +237,7 @@ const install = (Vue, vm) => {
 	const driverOrderList = (params = {}) => vm.$u.post("/order/driver/list?pageNum=" + params.pageNum + "&pageSize=" +
 		params.pageSize, {});
 	//司机订单查询详情
-	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get?id='+params.id, {});
+	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get?orderId='+params.id, {});
 	//获取支付宝订单信息
 	const getOrderInfo = (params = {}) => vm.$u.post('/alipay/alipaydemo', params);
 	//个人中心页统计订单
