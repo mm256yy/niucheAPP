@@ -109,7 +109,7 @@
 				driverNumTextDis:false,
 				companyNumText:'一键获取本机号码',
 				companyNumTextDis:false,
-				current:1,
+				current:0,
 				list: [{name: '验证码登录'}],
 				form:{
 					telephone:'',
