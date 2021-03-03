@@ -19,7 +19,7 @@
 					<u-time-line-item nodeTop="2">
 						<template v-slot:node>
 							<view class="u-node">
-								<view class="time" v-if="form.state === 'ORDER_FINISHED'">
+								<view class="time" v-if="soureNum === 5">
 									<view>2020-09-28</view>
 									<view class="hour">11:15:33</view>
 								</view>
@@ -54,7 +54,7 @@
 						<u-time-line-item nodeTop="2" v-if="soureNum>4">
 							<template v-slot:node>
 								<view class="u-node">
-									<view class="time" v-if="form.state === 'ORDER_FINISHED'">
+									<view class="time" v-if="soureNum === 5">
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
@@ -70,7 +70,7 @@
 						<u-time-line-item nodeTop="2" v-if="soureNum>3">
 							<template v-slot:node>
 								<view class="u-node">
-									<view class="time" v-if="form.state === 'ORDER_FINISHED'">
+									<view class="time" v-if="soureNum === 5">
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
@@ -87,7 +87,7 @@
 						<u-time-line-item nodeTop="2" v-if="soureNum>2">
 							<template v-slot:node>
 								<view class="u-node">
-									<view class="time" v-if="form.state === 'ORDER_FINISHED'">
+									<view class="time" v-if="soureNum === 5">
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
@@ -103,7 +103,7 @@
 						<u-time-line-item nodeTop="2" style="margin: 0;" v-if="soureNum>1">
 							<template v-slot:node>
 								<view class="u-node">
-									<view class="time" v-if="form.state === 'ORDER_FINISHED'">
+									<view class="time" v-if="soureNum === 5">
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
@@ -170,11 +170,11 @@
 		<view class="view_car" @click="viewCar(form.id)">查看车辆信息</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<!-- 1 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="form.state === 'WAITTING_UPLOADING_MESSAGE' || form.state === 'REGISTER_CAR'">
-			<view class="btn orange">确认验车和上传车辆信息</view>
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 1">
+			<view class="btn orange" @click="uploadCar">确认验车和上传车辆信息</view>
 		</view>
 		<!-- 2 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="form.state === 'WAITTING_SIGN_CONTRACT' || form.state === 'VALIDATE_CAR' || form.state === 'DRIVER_SIGN_CONTRACT'">
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 2" @click="">
 			<view :class="['btn',form.state === 'VALIDATE_CAR'?'defult':'orange']">签署《汽车租赁合同》</view>
 		</view>
 <!-- 		<view class="bottom_content" >	
@@ -188,7 +188,7 @@
 			</u-row>
 		</view> -->
         <!-- 3 -->
-		<view class="bottom_content" style="position: relative;" v-if="form.state === 'COMPANY_SIGN_CONTRACT' || form.state ==='NO_PAYMENT'">
+		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3">
 			<u-row>
 				<u-col span="7">
 					<view class="tips">*须商家签署合同才可支付</view>
@@ -207,14 +207,14 @@
 			</view>
 		</view>
 		<!-- 4 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="form.state === 'WAITTING_DELIVERY_VEHICLE'">
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 4">
 			<view class="btn orange padding30">确认提车</view>
 			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
 		</view>
 		<!-- 5 -->
-		<view class="bottom_content" style="padding: 60rpx 0;" v-if="form.state === 'ORDER_FINISHED'">
+		<view class="bottom_content" style="padding: 60rpx 0;" v-if="soureNum === 5">
 			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
@@ -472,6 +472,11 @@
 			},
 			openFlow() {
 				this.openFlag = !this.openFlag
+			},
+			uploadCar(){
+				this.$u.route('/pages/driver/myOrder/checkCar', {
+					orderId: this.form.id
+				})
 			},
 			pay(){
 				this.$u.api.getOrderInfo().then(res=>{
