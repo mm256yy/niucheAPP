@@ -104,8 +104,8 @@
 				this.leasetime = arr[0].label;
 			},
 			submit(){
-				if(!this.form.leasetime||!this.form.monthlyrent||!this.form.deposit||!this.form.rentername
-				||!this.form.renteridphone||!this.form.renteridcard||!this.form.carname){
+				if(!this.form.leasetime&&!this.form.monthlyrent&&!this.form.deposit&&!this.form.rentername
+				&&!this.form.renteridphone&&!this.form.renteridcard&&!this.form.carname){
 					this.$u.toast('请填写完整');
 					return false
 				}

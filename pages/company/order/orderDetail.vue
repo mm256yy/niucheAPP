@@ -20,12 +20,12 @@
 									<view>2020-09-28</view>
 									<view class="hour">11:15:33</view>
 								</view>
-								<u-image width="60rpx" height="60rpx" src="@/static/order/wancheng2x.png"></u-image>
+								<u-image v-if="detail.state=='ORDER_FINISHED'" width="60rpx" height="60rpx" src="@/static/order/wancheng2x.png"></u-image>
 							</view>
 						</template>
 						<template v-slot:content>
 							<view style="height: 60px;">
-								<view class="u-order-title">完成</view>
+								<view v-if="detail.state=='ORDER_FINISHED'" class="u-order-title">完成</view>
 							</view>
 						</template>
 					</u-time-line-item>
@@ -40,12 +40,12 @@
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
-									<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
+									<u-image v-if="detail.state=='WAITTING_DELIVERY_VEHICLE'" width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
 								<view style="height: 60px;">
-									<view class="u-order-desc">提车(待确认)</view>
+									<view v-if="detail.state=='WAITTING_DELIVERY_VEHICLE'" class="u-order-desc">提车(待确认)</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -56,12 +56,14 @@
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
-									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
+									<u-image v-if="detail.state=='NO_PAYMENT'" width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
+									<u-image v-else width="60rpx" height="60rpx" src="@/static/order/zhifu2x_a.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
 								<view style="height: 60px;">
-									<view class="u-order-desc">租金与押金（待付）</view>
+									<view v-if="detail.state=='NO_PAYMENT'" class="u-order-desc">租金（待付）</view>
+									<view v-else class="u-order-desc">租金（已付）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -73,12 +75,16 @@
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
-									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
+									<u-image v-if="detail.state=='WAITTING_SIGN_CONTRACT'" width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
+									<view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="dot"></view>
+									<u-image v-else width="60rpx" height="60rpx" src="@/static/order/hetong2x_a.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
 								<view style="height: 60px;">
-									<view class="u-order-desc">合同签署（未签）</view>
+									<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'" class="u-order-desc">合同签署（未签）</view>
+									<view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view>
+									<view v-else class="u-order-desc">合同签署（双方已签）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -89,8 +95,8 @@
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
-									<u-image v-show="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
-									<u-image v-show="detail.state=='REGISTER_CAR'" width="60rpx" height="60rpx" src="@/static/order/registerActive.png"></u-image>
+									<u-image v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
+									<u-image v-else width="60rpx" height="60rpx" src="@/static/order/registerActive.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
@@ -162,13 +168,13 @@
 		</view> -->
 		<view class="bottom">
 			<view>
-				<view class="checkActive">查看验车信息</view>
+				<view @click="view()" class="checkActive">查看验车信息</view>
 			</view>
 			<view>
 				<view class="check">查看验车信息</view>
 			</view>
 			<view>
-				<view class="signActive">登记商品信息</view>
+				<view @click="shopMessage()" class="signActive">登记商品信息</view>
 			</view>
 			<view>
 				<view class="signActive">签署汽车租赁合同</view>
@@ -194,16 +200,30 @@
 				timestamp: 86399,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
-				detail:{}
+				detail:{},
+				id: '',
+				carname: ''
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
 			if(id){
+			 this.id = id;
 			 this.getDetail(id)
 			}
 		},
 		methods: {
+			view(){
+				this.$u.route('/pages/company/order/checkMessage', {
+					id: this.detail.tradeid
+				})
+			},
+			shopMessage(){
+				const detail = JSON.stringify(this.detail)
+				this.$u.route('/pages/company/order/registerMessage', {
+					detail: detail
+				})
+			},
 			getDetail(id){
 				let token = uni.getStorageSync('token');
 				if(token){
@@ -212,6 +232,7 @@
 					}).then(res=>{
 						if(res.code === 200){
 							 this.detail = res.object;
+							 this.carname = this.detail.carname;
 						}else {
 							 this.$u.toast(res.msg);
 						}
@@ -456,5 +477,11 @@
 	}
 	.text{
 		color: #24ce8d;
+	}
+	.dot{
+		width: 16rpx;
+		height: 16rpx;
+		border-radius: 50%;
+		background: #ddd;
 	}
 </style>

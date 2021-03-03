@@ -75,11 +75,28 @@
 				}
 			}
 		},
-		mounted() {
-			
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.getMessage(id)
+			}
 		},
 		methods: {
-
+          getMessage(id){
+          	let token = uni.getStorageSync('token');
+          	if(token){
+          		this.$u.api.checkCarList({
+          			orderId:id
+          		}).then(res=>{
+          			if(res.code === 200){
+          				 this.detail = res.object;
+          				 this.carname = this.detail.carname;
+          			}else {
+          				 this.$u.toast(res.msg);
+          			}
+          		})
+          	}
+          },
 		}	
 	}
 </script>
