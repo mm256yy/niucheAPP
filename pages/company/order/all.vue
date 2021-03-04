@@ -22,7 +22,7 @@
 						</view>
 						<view class="order">
 							<view class="num">订单号：{{item.tradeid}}</view>
-							<view class="btn" :class="['btn',item.state === 'ORDER_FAILED' || item.state === 'ORDER_FINISHED'?'complete':'active']">
+							<view class="btn" :class="['btn',item.state === 'ORDER_FINISHED' || item.state === 'ORDER_FAILED'?'complete':'active']">
 								{{item.state | soureText}}
 							</view>
 						</view>
@@ -188,8 +188,8 @@
 
 					}
 					.active{
-						color: #FE5B00;
-						border: 2rpx solid #FE5B00;
+						color: #24CE8D;
+						border: 2rpx solid #24CE8D;
 					}
 					.complete{
 						color: #C2C2C2;
