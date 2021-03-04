@@ -149,7 +149,7 @@
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="tips_content">
 			<view style="font-size: 30rpx;">订单提示</view>
-			<view style="padding: 8rpx 20rpx 0 0;">固定的</view>
+			<view style="padding: 8rpx 20rpx 0 0;">通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。<br/>注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287</view>
 		</view>
 		<view class="chat_btn">
 			<u-row>
@@ -177,16 +177,6 @@
 		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 2" @click="signContact">
 			<view :class="['btn',form.state === 'VALIDATE_CAR'?'defult':'orange']">签署《汽车租赁合同》</view>
 		</view>
-<!-- 		<view class="bottom_content" >	
-			<u-row>
-				<u-col span="5">
-					<view class="btn defult">查看验车信息</view>
-				</u-col>
-				<u-col span="7" style="text-align: center;">
-					<view class="btn orange">签署《汽车租赁合同》</view>
-				</u-col>
-			</u-row>
-		</view> -->
         <!-- 3 -->
 		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3">
 			<u-row>
@@ -198,7 +188,7 @@
 					
 				</u-col>
 				<u-col span="5">
-					<view :class="['btn',form.state === 'NO_PAYMENT'?'orange':'defult']">支付</view>
+					<view @click="payBefore" :class="['btn',form.state === 'NO_PAYMENT'?'orange':'defult']">支付</view>
 				</u-col>
 				<view class="money_abs" v-if="openFlag">月租金 <text>{{form.monthlyrent}}元</text> 押金 <text>{{form.deposit}}元</text></view>
 			</u-row>
@@ -377,6 +367,13 @@
 				this.initLogin()
 			},
 			signContact(){
+				if (this.form.state === 'VALIDATE_CAR'){
+					this.$u.api.getFdd({orderId: this.id}).then(res=>{
+						console.log(res)
+					})
+					this.$u.toast('出租方商品未登记,请联系出租方');
+					return 
+				}
 				this.$u.route('/pages/driver/myOrder/signContract')
 			},
 			// 登录tim
@@ -482,6 +479,14 @@
 				this.$u.route('/pages/driver/myOrder/checkCar', {
 					orderId: this.form.id
 				})
+			},
+			payBefore(){
+				let state = this.form.state;
+				if (state === 'NO_PAYMENT') {
+					this.payOrder = true;
+				} else{
+					this.$u.toast('待商家签署合同')
+				}
 			},
 			pay(){
 				this.$u.api.getOrderInfo().then(res=>{
