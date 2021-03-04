@@ -3,41 +3,43 @@
 		<u-navbar back-icon-color="#111111" title="商品信息登记" :background="background" title-color="#111111"></u-navbar>
 		<view class="content">
 			<view style="margin-top: 20rpx;">车辆信息</view>
-			<view style="margin-top: 20rpx;color: #bcbcbc;">车辆车型：新建订单所填车型</view>
+			<view style="margin-top: 20rpx;color: #bcbcbc;">{{detail.carname}}</view>
 			<u-form :model="form" ref="uForm" label-width="200" :border-bottom="false">
-				<u-form-item label="车身颜色:"><u-input class="input-radius" placeholder="请选择" @click="show = true" v-model="leasetime" type="select" /></u-form-item>
-				<u-form-item label="车牌号:"><u-input class="input-radius" placeholder="请选择" @click="show = true" v-model="leasetime" type="select" /></u-form-item>
+				<u-form-item label="车身颜色:"><u-input class="input-radius" placeholder="请输入" v-model="form.color" /></u-form-item>
+				<u-form-item label="车牌号:"><u-input class="input-radius" placeholder="请输入" v-model="form.numberPlate" /></u-form-item>
 				<u-form-item label="车架号:" prop="deposit">
-					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="请输入"/>元
+					<u-input class="input-radius" v-model="form.numberFrame" placeholder="请输入"/>
 				</u-form-item>
 				<u-form-item label="发动机号:" prop="monthlyrent">
-					<u-input class="input-radius" v-model="form.monthlyrent" maxlength="10" placeholder="请输入"/>元/月
+					<u-input class="input-radius" v-model="form.numberEngine" placeholder="请输入"/>
 				</u-form-item>
-				<u-form-item label="初次登记日期" prop="birthday">
-					<u-input v-model="form.birthday"
-					 class="input-radius" :disabled="true" @click="showPicker('birthday')" placeholder="请选择"/>
+				<u-form-item label="初次登记日期" prop="registration">
+					<u-input v-model="form.registration"
+					 class="input-radius" :disabled="true" @click="showPicker('registration')" placeholder="请选择"/>
 					<u-icon class="iconAbs" name="calendar" color="#FFA032" size="40"></u-icon>
 				</u-form-item>
-				<u-form-item label="表显里程:" prop="deposit">
-					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="请输入"/>KM
+				<u-form-item label="表显里程:" prop="km">
+					<u-input type="number" class="input-radius" v-model="form.km" placeholder="请输入"/>KM
 				</u-form-item>
 			</u-form>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
 			<u-picker v-model="show" mode="time" :end-year="today.year" :params="params" @confirm="dataChange"></u-picker>
 			<view style="margin-top: 30rpx;margin-bottom: 10rpx;">租赁及费用信息</view>
-			<view class="item"><text class="title">押金: </text><text>文案文案{{detail.monthlyrent}}</text></view>
-			<view class="item"><text class="title">固定月租: </text><text>文案文案{{detail.monthlyrent}}</text></view>
-			<view class="item"><text class="title">固定租期: </text><text>文案文案{{detail.monthlyrent}}</text></view>
-			<view class="item"><text class="title">付款方式: </text><text>按月支付{{detail.monthlyrent}}</text></view>
+			<view class="item"><text class="title">押金: </text><text>{{detail.deposit}}元</text></view>
+			<view class="item"><text class="title">固定月租: </text><text>{{detail.monthlyrent}}元</text></view>
+			<view class="item" v-show="detail.leasetime == 1"><text class="title">固定租期: </text><text>1个月</text></view>
+			<view class="item" v-show="detail.leasetime == 3"><text class="title">固定租期: </text><text>3个月</text></view>
+			<view class="item" v-show="detail.leasetime == 6"><text class="title">固定租期: </text><text>6个月</text></view>
+			<view class="item" v-show="detail.leasetime == 12"><text class="title">固定租期: </text><text>12个月</text></view>
+			<view class="item"><text class="title">付款方式: </text><text>按月支付</text></view>
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item label="起租日期" prop="birthday">
-					<u-input v-model="form.birthday"
-					 class="input-radius" :disabled="true" @click="showPicker('birthday')" placeholder="请选择"/>
+				<u-form-item label="起租日期" prop="startRentDate">
+					<u-input v-model="form.startRentDate"
+					 class="input-radius" :disabled="true" @click="showPicker('startRentDate')" placeholder="请选择"/>
 					<u-icon class="iconAbs" name="calendar" color="#FFA032" size="40"></u-icon>
 				</u-form-item>
-				<u-form-item label="到期日期" prop="birthday">
-					<u-input v-model="form.birthday"
-					 class="input-radius" :disabled="true" @click="showPicker('birthday')" placeholder="请选择"/>
+				<u-form-item label="到期日期" prop="endRentDate">
+					<u-input v-model="form.endRentDate"
+					 class="input-radius" :disabled="true" @click="showPicker('endRentDate')" placeholder="请选择"/>
 					<u-icon class="iconAbs" name="calendar" color="#FFA032" size="40"></u-icon>
 				</u-form-item>
 			</u-form>
@@ -46,7 +48,7 @@
 		<view class="room">
 		</view>
 		<view class="bottom">
-			<view class="submit">提交</view>
+			<view @click="submit()" class="submit">提交</view>
 		</view>
 	</view>
 </template>
@@ -60,13 +62,17 @@
 				},
 				show:false,
 				form: {
-				  leasetime: '',
-				  monthlyrent: '',
-				  deposit: '',
-				  rentername: '',
-				  renteridphone: '',
-				  renteridcard: '',
-				  carname: ''
+				  color: '',
+				  numberPlate: '',
+				  numberFrame: '',
+				  numberEngine: '',
+				  registration: '',
+				  km: '',
+				  endRentDate: '',
+				  orderId: '',
+				  startRentDate: '',
+				  orderId: '',
+				  registerInfo: ''
 				},
 				detail:{},
 				leasetime: '',
@@ -75,28 +81,16 @@
 					year: true,month: true,day: true,hour: false,minute: false,second: false
 				},
 				today:{},
-				select: [
-					{
-						label: '1个月',
-						value: '0'
-					},
-					{
-						label: '3个月',
-						value: '1'
-					},
-					{
-						label: '6个月',
-						value: '2'
-					},
-					{
-						label: '12个月',
-						value: '3'
-					},
-				],
+				detail: {}
 			}
 		},
-		mounted() {
-			
+		onLoad(option) {
+			let detail = JSON.parse(option.detail);
+			if(detail){
+			 this.detail = detail;
+			 this.form.orderId = this.detail.tradeid;
+			 this.form.registerInfo = this.detail.carname;
+			}
 		},
 		methods: {
 			showPicker(name){
@@ -107,19 +101,15 @@
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form[this.pickerName] = companyDate;
 			},
-			confirm(arr){
-				this.form.leasetime = arr[0].value;
-				this.leasetime = arr[0].label;
-			},
 			submit(){
-				if(this.form.leasetime&&this.form.monthlyrent&&this.form.deposit&&this.form.rentername
-				&&this.form.renteridphone&&this.form.renteridcard&&this.form.carname){
+				if(!this.form.color||!this.form.numberPlate||!this.form.numberFrame||!this.form.numberEngine
+				||!this.form.registration||!this.form.km||!this.form.endRentDate||!this.form.startRentDate){
 					this.$u.toast('请填写完整');
 					return false
 				}
-				this.$u.api.orderNew(this.form).then(res => {
+				this.$u.api.registerAdd(this.form).then(res => {
 					if(res.code === 200){
-						this.$u.toast('新建订单成功');
+						this.$u.toast('商品信息登记成功');
 						this.$u.route('/pages/company/order/orderList')
 					 } else{
 						this.$u.toast(res.msg) 

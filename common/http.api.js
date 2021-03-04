@@ -223,16 +223,18 @@ const install = (Vue, vm) => {
 	const orderDetail = (params = {}) => vm.$u.post(
 		'/order/company/get?orderId=' + params.orderId, {}
 	);
+	//校验身份信息
+	const verify = (params = {}) => vm.$u.post('/order/checkUser', params);
 	//公司新建订单
 	const orderNew = (params = {}) => vm.$u.post('/order/add', params);
-	//公司查询验车单
-	const checkMessage = (params = {}) => vm.$u.post('/order/car/message/get', params);
 	//新增商品信息登记
 	const registerAdd = (params = {}) => vm.$u.post('/order/register/message/add', params);
 	//新增验车单
 	const checkCarSave = (params = {}) => vm.$u.post('/order/car/message/add', params);
 	//查询验车单
-	const checkCarList = (params = {}) => vm.$u.post('/order/car/message/get', params);
+	const checkCarList = (params = {}) => vm.$u.post(
+		'/order/car/message/get?orderId=' + params.orderId, {}
+	);
      //司机我的订单
 	const driverOrderList = (params = {}) => vm.$u.post("/order/driver/list?pageNum=" + params.pageNum + "&pageSize=" +
 		params.pageSize, {});
@@ -355,8 +357,8 @@ const install = (Vue, vm) => {
 		orderList,
 		orderDetail,
 		orderNew,
-		checkMessage,
-		registerAdd
+		registerAdd,
+		verify
 	};
 }
 

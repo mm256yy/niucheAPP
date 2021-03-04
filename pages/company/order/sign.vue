@@ -60,9 +60,9 @@
 			soureText: function(value) {
 				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'VALIDATE_CAR') {
 					return '商品登记'
-				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'COMPANY_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
 					return '待签约'
-				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
+				} else if (value === 'NO_PAYMENT' || value === 'DRIVER_SIGN_CONTRACT') {
 					return '待支付'
 				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
 					return '待提车'
