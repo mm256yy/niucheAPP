@@ -247,8 +247,11 @@ const install = (Vue, vm) => {
 	const getCompanyOrder = (params = {}) => vm.$u.post('/order/statistics/get', params);
 	//司机
 	const getDriverOrder = (params = {}) => vm.$u.post('/order/statistics/driver/get', params);
+	
+	const getFdd = (params = {}) => vm.$u.get('/app/fdd/server/'+params.orderId+'/122039149376180224', {});
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		getFdd,
 		getDriverOrder,
 		getCompanyOrder,
 		driverOrderView,

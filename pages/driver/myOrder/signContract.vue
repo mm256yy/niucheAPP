@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="" :background="background" title-color="#111111"></u-navbar>
+		<!-- <u-navbar back-icon-color="#111111" title="" :background="background" title-color="#111111"></u-navbar> -->
 		<view>
 			<web-view :src="src" @message="upCallback()"></web-view>
 		</view>
@@ -14,11 +14,11 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				src:'http://www.baidu.com'
+				src:'http://dev-redircet.neocab.cn/url/?od=122385198464765952&id=122039149376180224'
 			}
 		},
 		mounted() {
-			let src = "http://www.baidu.com";
+			
 		},
 		methods: {
 			upCallback() {
