@@ -12,7 +12,7 @@
 				<view class="title">上传车辆行驶证（必填）</view>
 				<view class="bg_idcard">
 					<u-upload :custom-btn="true" :action="recognicedUrl" @on-success="uploadLicenseChange"  @on-remove="removeLicense" upload-text="" :file-list="uploadLicenseList"
-					 :max-size="8 * 1024 * 1024" max-count="1" class="upload">
+					  max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
 						</view>
@@ -53,7 +53,7 @@
 				<view class="title">车辆铭牌（1张）</view>
 				<view class="bg_min">
 					<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" upload-text="" :file-list="fileList"
-					 :max-size="8 * 1024 * 1024" index="nameplateImg" @on-remove="removeOne" max-count="1" class="upload">
+					  index="nameplateImg" @on-remove="removeOne" max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
 						</view>
@@ -66,7 +66,7 @@
 				<view class="title">中控仪表盘（1张）</view>
 				<view class="bg_yibiao">
 					<u-upload :custom-btn="true" :action="action" @on-success="uploadChange" @on-remove="removeOne" upload-text="" :file-list="fileList1"
-					 :max-size="8 * 1024 * 1024"  index="meterImg" max-count="1" class="upload">
+					  index="meterImg" max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
 						</view>

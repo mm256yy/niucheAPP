@@ -353,6 +353,7 @@
 				let data = Object.assign(obj,oneForm)
 				this.$u.api.checkCarSave({orderId:data.orderId,carInfo:JSON.stringify(obj)}).then(res=>{
 					if (res.code === 200) {
+						uni.removeStorageSync('orderFirst');
 						this.toView(data.orderId)
 					} else {
 						 this.$u.toast(res.msg);
