@@ -157,7 +157,7 @@
 				</view>
 			</view>
 			<view class="bottom_content">
-				<view class="btn orange" @click="toNext">提交及锁定验车信息</view>
+				<view class="btn orange" @click="saveSubmit">提交及锁定验车信息</view>
 			</view>
 		</view>
 	</view>

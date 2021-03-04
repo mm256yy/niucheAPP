@@ -149,7 +149,7 @@
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="tips_content">
 			<view style="font-size: 30rpx;">订单提示</view>
-			<view style="padding: 8rpx 20rpx 0 0;">{{form.carname}}</view>
+			<view style="padding: 8rpx 20rpx 0 0;">固定的</view>
 		</view>
 		<view class="chat_btn">
 			<u-row>
@@ -174,7 +174,7 @@
 			<view class="btn orange" @click="uploadCar">确认验车和上传车辆信息</view>
 		</view>
 		<!-- 2 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 2" @click="">
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 2" @click="signContact">
 			<view :class="['btn',form.state === 'VALIDATE_CAR'?'defult':'orange']">签署《汽车租赁合同》</view>
 		</view>
 <!-- 		<view class="bottom_content" >	
@@ -375,6 +375,9 @@
 					return
 				}
 				this.initLogin()
+			},
+			signContact(){
+				this.$u.route('/pages/driver/myOrder/signContract')
 			},
 			// 登录tim
 			initLogin(){

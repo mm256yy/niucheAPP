@@ -58,22 +58,22 @@
 						</view>
 					</view>
 					<view class="body" slot="body">
-						<view style="position: relative;">
+						<view style="position: relative;" @click="toMyOrder">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/yanche@2x.png"></u-image>
 							<u-badge size="small" type="error" :count="order.waitCarMessageNum" :offset="[-10,-16]"></u-badge>
 							<view class="body_text">验车</view>
 						</view>
-						<view style="position: relative;">
+						<view style="position: relative;" @click="toMyOrder">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
 							<u-badge size="small" type="error" :count="order.waitSignContractNum" :offset="[-10,-16]"></u-badge>
 							<view class="body_text">签约</view>
 						</view>
-						<view style="position: relative;">
+						<view style="position: relative;" @click="toMyOrder">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
 							<u-badge size="small" type="error" :count="order.waitPayNum" :offset="[-10,-16]"></u-badge>
 							<view class="body_text">支付</view>
 						</view>
-						<view style="position: relative;">
+						<view style="position: relative;" @click="toMyOrder">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
 							<u-badge size="small" type="error" :count="order.waitDeliveryVehicleNum" :offset="[-10,-16]"></u-badge>
 							<view class="body_text">提车</view>
@@ -267,7 +267,7 @@
 			getOrderInfo() {
 				this.token = uni.getStorageSync('token')
 				if (this.token) {
-					this.$u.api.getCenterInfo().then(res => {
+					this.$u.api.getDriverOrder().then(res => {
 						if (res.code === 200) {
 							let data = res.object;
 							this.order = data
