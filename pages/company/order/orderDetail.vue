@@ -5,7 +5,7 @@
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right">
-				<view class="message-box right-item" @click="chargeback" v-if="status">撤销</view>
+				<view class="message-box right-item" @click="chargeback" v-if="detail.state !== 'WAITTING_DELIVERY_VEHICLE' || detail.state !== 'ORDER_FINISHED' || detail.state !== 'ORDER_FAILED'">撤销</view>
 			</view>
 		</u-navbar>
 		<view class="content">
@@ -139,8 +139,9 @@
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="tips_content">
-			<view style="font-size: 30rpx;">订单提示</view>
-			<view style="padding: 8rpx 20rpx 0 0;">订单提示订单提示订单提示订单提示示订单提示订单提示订单提示订单提示订单提示订单提示订单提示{{detail.carname}}</view>
+			<view style="font-size: 32rpx;">订单提示</view>
+			<view style="padding: 8rpx 20rpx 0 0;color: #555;font-size: 28rpx;line-height: 42rpx;">通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。
+注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287</view>
 		</view>
 		<view class="chat_btn">
 			<u-row>
@@ -167,11 +168,11 @@
 			<view class="btn orange">《汽车租赁合同》锁定</view>
 		</view> -->
 		<view class="bottom">
-			<view>
-				<view @click="view()" class="checkActive">查看验车信息</view>
-			</view>
-			<view>
+			<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'">
 				<view class="check">查看验车信息</view>
+			</view>
+			<view v-else>
+				<view @click="soureNum()" class="checkActive">查看验车信息</view>
 			</view>
 			<view>
 				<view @click="shopMessage()" class="signActive">登记商品信息</view>
@@ -210,6 +211,43 @@
 			if(id){
 			 this.id = id;
 			 this.getDetail(id)
+			}
+		},
+		computed:{
+			soureNum() {
+				let value = this.form.state;
+				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'VALIDATE_CAR') {
+					return 1
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value === 'VALIDATE_CAR') {
+					return 2
+				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
+					return 3
+				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
+					return 4
+				} else if (value === 'ORDER_FINISHED') {
+					return 5
+				} else {
+					return ''
+				}
+			},
+		},
+		filters: {
+			soureText: function(value) {
+				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'VALIDATE_CAR') {
+					return '商品登记'
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'COMPANY_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
+					return '待签约'
+				} else if (value === 'NO_PAYMENT' || value === 'DRIVER_SIGN_CONTRACT') {
+					return '待支付'
+				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
+					return '待提车'
+				} else if (value === 'ORDER_FINISHED') {
+					return '完成'
+				} else if (value === 'ORDER_FAILED') {
+					return '失效'
+				} else {
+					return ''
+				}
 			}
 		},
 		methods: {
@@ -353,6 +391,7 @@
 
 	.tips_content {
 		padding: 40rpx 30rpx 20rpx;
+		color: #333;
 	}
 
 	.chat_btn {

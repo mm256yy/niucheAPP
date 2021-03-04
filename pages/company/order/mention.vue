@@ -2,7 +2,7 @@
 	<view>
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView()">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.id)">
 					<view class="item_time">{{item.createTime}}</view>
 					<view class="item_content">
 						<view class="title u-line-2">

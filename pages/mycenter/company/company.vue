@@ -40,21 +40,25 @@
 					<view class="new" @click="toNew()">新建订单</view>
 				</view>
 				<view style="width: 678rpx;height: 168rpx;margin-left: 36rpx;background: #fff;padding: 0 38rpx;border-radius: 20rpx;display: flex;justify-content: space-between;align-items: center;">
-					<view @click="toList(1)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(1)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">商品登记</view>
+						<view class="tip" v-show="order.waitCarMessageNum">{{order.waitCarMessageNum}}</view>
 					</view>
-					<view @click="toList(2)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(2)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待签约</view>
+						<view class="prompt" v-show="order.waitSignContractNum">{{order.waitSignContractNum}}</view>
 					</view>
-					<view @click="toList(3)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(3)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待支付</view>
+						<view class="tip" v-show="order.waitPayNum">{{order.waitPayNum}}</view>
 					</view>
-					<view @click="toList(4)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(4)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待提车</view>
+						<view class="prompt" v-show="order.waitDeliveryVehicleNum">{{order.waitDeliveryVehicleNum}}</view>
 					</view>
 					<view @click="toList(0)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/order.png"></u-image>
@@ -196,13 +200,21 @@
 				otherObj:{
 					sc:'不可见',xx:'不可见',qz:'不可见'
 				},
-				token:''
+				token:'',
+				order: {
+					waitCarMessageNum: 0,
+					waitDeliveryVehicleNum: 0,
+					waitPayNum: 0,
+					waitSignContractNum: 0
+				}
 			}
 		},
 		props:["authFlag","tokenFlag"],
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser();
+			
+			this.getOrder();
 
 		},
 		onShow() {
@@ -224,6 +236,18 @@
 		  }
 		},
 		methods: {
+			getOrder(){
+				let token =  uni.getStorageSync('token')
+				if (token) {
+					this.$u.api.getCompanyOrder({}).then(res=>{
+						if(res.code === 200){
+							this.order = res.object;
+						}else {
+							this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
 			toAboutUs(){
 				this.$u.route('/pages/aboutUs/aboutUs');
 			},
@@ -320,7 +344,16 @@
 				}
 			},
 			toNew(){
-				this.$u.route('/pages/company/order/newOrder');
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						this.$u.route('/pages/company/order/newOrder');
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
 			},
 			toPub(index){
 				let token = uni.getStorageSync('token')
@@ -450,5 +483,31 @@
 		padding-top: 40rpx;
 		margin-left: 34rpx;
 		margin-top: 10rpx;
+	}
+	.tip{
+		width: 36rpx;
+		height: 36rpx;
+		line-height: 36rpx;
+		text-align: center;
+		border-radius: 50%;
+		background: #FF3B30;
+		font-size: 24rpx;
+		color: #fff;
+		position: absolute;
+		top: -10rpx;
+		left: 54rpx;
+	}
+	.prompt{
+		width: 36rpx;
+		height: 36rpx;
+		line-height: 36rpx;
+		text-align: center;
+		border-radius: 50%;
+		background: #FF3B30;
+		font-size: 24rpx;
+		color: #fff;
+		position: absolute;
+		top: -10rpx;
+		left: 42rpx;
 	}
 </style>
