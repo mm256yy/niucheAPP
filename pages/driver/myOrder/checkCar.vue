@@ -122,9 +122,9 @@
 			this.form.orderId = orderId;
 		},
 		methods: {
-			uploadLicenseChange(data, index, lists){
+			uploadLicenseChange(res, index, lists){
 				if (res.code === 200) {
-					let data = res.object;
+					let data = res.data;
 					this.form.number = data.number;
 					this.form.type = data.type;
 					this.form.address = data.address;
@@ -133,6 +133,7 @@
 					this.form.vin = data.vin;
 					this.form.engine = data.engine;
 					this.form.issue_date = data.issue_date;
+					this.form.register_date = data.register_date;
 					this.form.drivingImg = data.drivingImg;
 					this.flag = true;
 				} else {
@@ -148,6 +149,7 @@
 				this.form.vin ="";
 				this.form.engine ="";
 				this.form.issue_date ="";
+				this.form.register_date ="";
 				this.form.drivingImg ="";
 				this.flag = false
 			},

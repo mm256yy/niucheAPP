@@ -351,8 +351,18 @@
 					obj.toolList.push({name: item.name,text: item.text,photo: item.photo})
 				})
 				let data = Object.assign(obj,oneForm)
-				console.log(data)
-				console.log(JSON.stringify(obj))
+				this.$u.api.checkCarSave({orderId:data.orderId,carInfo:JSON.stringify(obj)}).then(res=>{
+					if (res.code === 200) {
+						this.toView(data.orderId)
+					} else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
+			toView(id) {
+				this.$u.route('/pages/driver/myOrder/orderView', {
+					id: id
+				})
 			},
 			// 图片
 			uploadChange(data, index, lists, name) {

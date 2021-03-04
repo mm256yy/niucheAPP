@@ -167,7 +167,7 @@
 				</u-col>
 			</u-row>
 		</view>
-		<view class="view_car" @click="viewCar(form.id)">查看车辆信息</view>
+		<view class="view_car" @click="viewCar(form.id)" v-if="soureNum>1">查看车辆信息</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<!-- 1 -->
 		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 1">
@@ -457,9 +457,9 @@
 				this.$u.api.driverOrderView({id:this.id}).then(res=>{
 					if (res.code === 200) {
 						 this.form = res.object;
-						var arr = ['WAITTING_UPLOADING_MESSAGE','REGISTER_CAR','WAITTING_SIGN_CONTRACT','DRIVER_SIGN_CONTRACT','VALIDATE_CAR','NO_PAYMENT','COMPANY_SIGN_CONTRACT','WAITTING_DELIVERY_VEHICLE','ORDER_FINISHED'];
-						let rad = parseInt(Math.random()*10);
-						this.form.state = arr[rad];
+						// var arr = ['WAITTING_UPLOADING_MESSAGE','REGISTER_CAR','WAITTING_SIGN_CONTRACT','DRIVER_SIGN_CONTRACT','VALIDATE_CAR','NO_PAYMENT','COMPANY_SIGN_CONTRACT','WAITTING_DELIVERY_VEHICLE','ORDER_FINISHED'];
+						// let rad = parseInt(Math.random()*10);
+						// this.form.state = arr[rad];
 						console.log(this.form.state)
 						console.log(res.object)
 					} else {

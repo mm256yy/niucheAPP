@@ -4,8 +4,8 @@
 		<view class="head_content">
 			<u-image width="80rpx" height="80rpx" src="@/static/order/wancheng2x.png"></u-image>
 			<view style="padding-left: 20rpx;">
-				<view class="title">退单成功</view>
-				<view class="time">2020.12.31 14:23:55</view>
+				<view class="title">{{form.state === 'ORDER_FAILED' ?'失效订单':'退单成功'}}</view>
+				<view class="time">{{form.updateTime}}</view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
@@ -14,15 +14,13 @@
 			<view class="company_model">{{form.carname}}</view>
 			<view class="content_item">
 				<view class="item"><text class="title">租赁周期：</text><text>{{form.leasetime}}个月（提车后开始计算）</text></view>
-				<view class="item"><text class="title">订金费用：</text><text>{{form.deposit}}元</text></view>
-                <view style="color: #333333;padding: 10rpx 0;">方案费用</view>
 				<view class="item"><text class="title">每月租金：</text><text>{{form.monthlyrent}}元</text></view>
 				<view class="item"><text class="title">车辆押金：</text><text>{{form.deposit}}元</text></view>
 				<view style="padding: 8rpx 0;" @click="showTips = true">
 					<text style="color: #999999;font-size: 24rpx;">押金退还规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
 				</view>
-				<view class="item"><text class="title">订单时间：</text><text>{{form.updateTime}}</text></view>
+				<view class="item"><text class="title">订单时间：</text><text>{{form.createTime}}</text></view>
 				<view class="item"><text class="title">订单号：</text><text>{{form.tradeid}}</text></view>
 			</view>
 		</view>
@@ -55,18 +53,38 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
+				id:'',
 				showTips: false,
 				form:{
 					
 				}
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			if (id){
+				this.id =id;
+			}
+		},
+		onShow() {
+			this.getInfo()
+		},
 		methods: {
 			callPhone() {
 				uni.makePhoneCall({
 					phoneNumber: '0571-87815287'
 				});
-			}
+			},
+			getInfo(){
+				//获取页面数据
+				this.$u.api.driverOrderView({id:this.id}).then(res=>{
+					if (res.code === 200) {
+						 this.form = res.object;
+					} else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
 		}
 	}
 </script>

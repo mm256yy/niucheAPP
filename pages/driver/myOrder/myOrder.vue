@@ -3,7 +3,7 @@
 		<u-navbar back-icon-color="#111111" title="我的订单" :background="background" title-color="#111111"></u-navbar>
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.id)">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.id,item.state)">
 					<view class="item_time">{{item.createTime}}</view>
 					<view class="item_content">
 						<view class="title u-line-2">
@@ -116,10 +116,16 @@
 					}
 				})
 			},
-			toView(id) {
-				this.$u.route('/pages/driver/myOrder/orderView', {
-					id: id
-				})
+			toView(id,state) {
+				if (state === 'ORDER_FAILED'){
+					this.$u.route('/pages/driver/myOrder/chargeback', {
+						id: id
+					})
+				} else{
+					this.$u.route('/pages/driver/myOrder/orderView', {
+						id: id
+					})
+				}
 			}
 		}
 	}
