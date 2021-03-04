@@ -114,7 +114,7 @@
 				this.$u.api.orderNew(this.form).then(res => {
 					if(res.code === 200){
 						this.$u.toast('新建订单成功');
-						this.$u.route('/pages/company/order/orderList')
+						this.$u.route('/pages/company/order/order')
 					 } else{
 						this.$u.toast(res.msg) 
 					 }

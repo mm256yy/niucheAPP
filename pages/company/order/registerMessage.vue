@@ -50,6 +50,14 @@
 		<view class="bottom">
 			<view @click="submit()" class="submit">提交</view>
 		</view>
+		<view v-show="showMask" class="mask"></view>
+		<view v-show="showModal" class="modal">
+			<view class="prompt">请认真核实信息，提交后将以附件形式合并到租赁合同中，且不可更改！</view>
+			<view class="box">
+				<view class="cancel" @click="cancel()">取消</view>
+				<view class="confirm" @click="confirm()">确认</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -61,6 +69,8 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				show:false,
+				showMask:false,
+				showModal:false,
 				form: {
 				  color: '',
 				  numberPlate: '',
@@ -101,20 +111,32 @@
 				let companyDate = obj.year+"-"+obj.month+"-"+obj.day;
 				this.form[this.pickerName] = companyDate;
 			},
+			cancel(){
+				this.showMask = false;
+				this.showModal = false;
+			},
+			confirm(){
+				this.showMask = false;
+				this.showModal = false;
+				this.$u.api.registerAdd(this.form).then(res => {
+					if(res.code === 200){
+						this.$u.toast('商品信息登记成功');
+						this.$u.route('/pages/company/order/orderDetail', {
+							id: this.detail.tradeid
+						})
+					 } else{
+						this.$u.toast(res.msg) 
+					 }
+				}).catch(res=>{this.$u.toast(res.msg)})
+			},
 			submit(){
 				if(!this.form.color||!this.form.numberPlate||!this.form.numberFrame||!this.form.numberEngine
 				||!this.form.registration||!this.form.km||!this.form.endRentDate||!this.form.startRentDate){
 					this.$u.toast('请填写完整');
 					return false
 				}
-				this.$u.api.registerAdd(this.form).then(res => {
-					if(res.code === 200){
-						this.$u.toast('商品信息登记成功');
-						this.$u.route('/pages/company/order/orderList')
-					 } else{
-						this.$u.toast(res.msg) 
-					 }
-				}).catch(res=>{this.$u.toast(res.msg)})
+				this.showMask = true;
+				this.showModal = true;
 			}
 		}	
 	}
@@ -160,5 +182,58 @@
 	.room{
 		width: 100%;
 		height: 140rpx;
+	}
+	.mask{
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.36);
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+	}
+	.modal{
+		width: 660rpx;
+		border-radius: 12rpx;
+		background: #fff;
+		font-size: 36rpx;
+		color: #333;
+		font-weight: 900;
+		position: fixed;
+		top: 600rpx;
+		left: 50rpx;
+		z-index: 1000;
+		.prompt{
+			margin: 72rpx 40rpx 48rpx 40rpx;
+		}
+		.box{
+			width: 660rpx;
+			height: 160rpx;
+			border-top: 4rpx solid #E0E0E0;
+			display: flex;
+			padding: 40rpx 48rpx;
+			justify-content: space-between;
+			align-items: center;
+			.cancel{
+				width: 264rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: #F2F2F2;
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #5F5E5F;
+			}
+			.confirm{
+				width: 264rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: linear-gradient(270deg, #63D094 0%, #5FCD8F 41%, #3FB16C 100%);
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #fff;
+			}
+		}
 	}
 </style>
