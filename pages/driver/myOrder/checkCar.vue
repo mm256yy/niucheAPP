@@ -11,8 +11,8 @@
 			<view class="upload_content">
 				<view class="title">上传车辆行驶证（必填）</view>
 				<view class="bg_idcard">
-					<u-upload :custom-btn="true" :action="recognicedUrl" @on-success="uploadLicenseChange"  @on-remove="removeLicense" upload-text="" :file-list="uploadLicenseList"
-					  max-count="1" class="upload">
+					<u-upload :custom-btn="true" :action="recognicedUrl" @on-success="uploadLicenseChange"  @on-remove="removeLicense" 
+					upload-text="" :file-list="uploadLicenseList" max-count="1" class="upload">
 						<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 							<u-icon name="plus" size="160" color="#FFFFFF"></u-icon>
 						</view>
@@ -161,10 +161,13 @@
 				this.form[name] = ""
 			},
             toNext(){
-				console.log(this.form)
-				if (this.form.drivingImg === '' || this.form.nameplateImg === '' || this.form.meterImg === '' || !this.flag){
+				if (this.form.drivingImg === '' || this.form.nameplateImg === '' || this.form.meterImg === ''){
 					this.$u.toast("请上传图片")
 					return false
+				}
+				if (!this.flag){
+					this.$u.toast('未识别到行驶证信息,请重新上传');
+					return
 				}
 				uni.setStorageSync('orderFirst', this.form);
 				this.$u.route('/pages/driver/myOrder/checkSingle')

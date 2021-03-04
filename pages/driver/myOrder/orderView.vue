@@ -305,7 +305,7 @@
 				id:'',
 				cancelOrder:false,//取消订单
 				payOrder:false,//支付弹窗
-				timestamp: 6855,//倒计时
+				timestamp: 0,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
 				reasonList:[
@@ -457,11 +457,13 @@
 				this.$u.api.driverOrderView({id:this.id}).then(res=>{
 					if (res.code === 200) {
 						 this.form = res.object;
-						// var arr = ['WAITTING_UPLOADING_MESSAGE','REGISTER_CAR','WAITTING_SIGN_CONTRACT','DRIVER_SIGN_CONTRACT','VALIDATE_CAR','NO_PAYMENT','COMPANY_SIGN_CONTRACT','WAITTING_DELIVERY_VEHICLE','ORDER_FINISHED'];
-						// let rad = parseInt(Math.random()*10);
-						// this.form.state = arr[rad];
-						console.log(this.form.state)
-						console.log(res.object)
+						 let date = new Date();
+						 let startDate =this.form.updateTime;
+						     startDate= startDate.replace(new RegExp("-","gm"),"/");
+						 let startDateM = (new Date(startDate)).getTime();
+						 let Days = 86400000;
+						 let yesDay = (startDateM+Days)-date.getTime();
+						 this.timestamp = parseInt(yesDay/1000)
 					} else {
 						 this.$u.toast(res.msg);
 					}
