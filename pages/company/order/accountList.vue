@@ -11,7 +11,7 @@
 					</view>
 					<view class="flex">
 						<view class="num">订单号：2343434343</view>
-						<view class="price">12990</view>
+						<view class="price">+12990</view>
 					</view>
 				</view>
 			</mescroll-body>

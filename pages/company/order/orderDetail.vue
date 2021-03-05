@@ -5,89 +5,54 @@
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right">
-				<view class="message-box right-item" @click="chargeback" v-if="detail.state !== 'WAITTING_DELIVERY_VEHICLE' || detail.state !== 'ORDER_FINISHED' || detail.state !== 'ORDER_FAILED'">撤销</view>
+				<view class="message-box right-item" @click="revoke()" v-if="detail.state !== 'WAITTING_DELIVERY_VEHICLE'||detail.state !== 'ORDER_FINISHED'">撤销</view>
 			</view>
 		</u-navbar>
-		<view class="content">
+		<view class="content" v-if="detail.state == 'WAITTING_UPLOADING_MESSAGE' || detail.state == 'VALIDATE_CAR'">
 			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
 			</view>
 			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
 				<u-time-line>
+					<view>
+						<u-time-line-item nodeTop="2" style="margin: 0;">
+							<template v-slot:node>
+								<view class="u-node">
+									<u-image width="60rpx" height="60rpx" src="@/static/order/registerActive.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view style="color: #333;" class="u-order-desc">商品信息登记</view>
+								</view>
+							</template>
+						</u-time-line-item>
+					</view>
+				</u-time-line>
+			</view>
+		</view>
+		<view class="content" v-if="detail.state === 'WAITTING_SIGN_CONTRACT' || detail.state === 'COMPANY_SIGN_CONTRACT' || detail.state === 'REGISTER_CAR'">
+			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view>
+			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
+				<view style="width: 60%;;">
 					<u-time-line-item nodeTop="2">
 						<template v-slot:node>
 							<view class="u-node">
-								<view class="time">
-									<view>2020-09-28</view>
-									<view class="hour">11:15:33</view>
-								</view>
-								<u-image v-if="detail.state=='ORDER_FINISHED'" width="60rpx" height="60rpx" src="@/static/order/wancheng2x.png"></u-image>
+								<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x_a.png"></u-image>
 							</view>
 						</template>
 						<template v-slot:content>
-							<view style="height: 60px;">
-								<view v-if="detail.state=='ORDER_FINISHED'" class="u-order-title">完成</view>
+							<view>
+								<view style="color: #333;" v-if="detail.state=='WAITTING_SIGN_CONTRACT'" class="u-order-desc">合同签署</view>
+								<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
+								<view v-else-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view>
+								<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
 							</view>
 						</template>
 					</u-time-line-item>
-					<u-time-line-item v-show="!openFlag">
-
-					</u-time-line-item>
+				</view>
 					<view v-show="openFlag">
-						<u-time-line-item nodeTop="2">
-							<template v-slot:node>
-								<view class="u-node">
-									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
-									</view>
-									<u-image v-if="detail.state=='WAITTING_DELIVERY_VEHICLE'" width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
-								</view>
-							</template>
-							<template v-slot:content>
-								<view style="height: 60px;">
-									<view v-if="detail.state=='WAITTING_DELIVERY_VEHICLE'" class="u-order-desc">提车(待确认)</view>
-								</view>
-							</template>
-						</u-time-line-item>
-						<u-time-line-item nodeTop="2">
-							<template v-slot:node>
-								<view class="u-node">
-									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
-									</view>
-									<u-image v-if="detail.state=='NO_PAYMENT'" width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
-									<u-image v-else width="60rpx" height="60rpx" src="@/static/order/zhifu2x_a.png"></u-image>
-								</view>
-							</template>
-							<template v-slot:content>
-								<view style="height: 60px;">
-									<view v-if="detail.state=='NO_PAYMENT'" class="u-order-desc">租金（待付）</view>
-									<view v-else class="u-order-desc">租金（已付）</view>
-								</view>
-							</template>
-						</u-time-line-item>
-
-						<u-time-line-item nodeTop="2">
-							<template v-slot:node>
-								<view class="u-node">
-									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
-									</view>
-									<u-image v-if="detail.state=='WAITTING_SIGN_CONTRACT'" width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
-									<view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="dot"></view>
-									<u-image v-else width="60rpx" height="60rpx" src="@/static/order/hetong2x_a.png"></u-image>
-								</view>
-							</template>
-							<template v-slot:content>
-								<view style="height: 60px;">
-									<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'" class="u-order-desc">合同签署（未签）</view>
-									<view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view>
-									<view v-else class="u-order-desc">合同签署（双方已签）</view>
-								</view>
-							</template>
-						</u-time-line-item>
+		                <view class="line"></view>
 						<u-time-line-item nodeTop="2" style="margin: 0;">
 							<template v-slot:node>
 								<view class="u-node">
@@ -95,8 +60,7 @@
 										<view>2020-09-28</view>
 										<view class="hour">11:15:33</view>
 									</view>
-									<u-image v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
-									<u-image v-else width="60rpx" height="60rpx" src="@/static/order/registerActive.png"></u-image>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
@@ -107,7 +71,245 @@
 						</u-time-line-item>
 					</view>
 				</u-time-line>
-
+		
+			</view>
+			<view style="text-align: center;width: 90%;padding: 30rpx 0 20rpx;" @click="openFlow">
+				<text style="color: #333333;">{{openFlag?'收起':'展开'}}</text>
+				<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#C9C9C9"></u-icon>
+			</view>
+		</view>
+		<view class="content" v-if="detail.state === 'DRIVER_SIGN_CONTRACT' || detail.state === 'NO_PAYMENT'">
+			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view>
+			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
+				<view style="width: 60%;;">
+					<u-time-line-item nodeTop="2">
+						<template v-slot:node>
+							<view class="u-node">
+								<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x_a.png"></u-image>
+							</view>
+						</template>
+						<template v-slot:content>
+							<view>
+								<view style="color: #333;" class="u-order-desc">支付租金</view>
+								<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
+								<!-- <view v-else-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view> -->
+								<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
+							</view>
+						</template>
+					</u-time-line-item>
+				</view>
+					<view v-show="openFlag">
+						<view class="line"></view>
+						<u-time-line-item nodeTop="2">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">合同签署</view>
+									<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
+									<!-- <view v-else-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view> -->
+									<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
+								</view>
+							</template>
+						</u-time-line-item>
+		                <view class="line"></view>
+						<u-time-line-item nodeTop="2" style="margin: 0;">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">商品信息登记</view>
+								</view>
+							</template>
+						</u-time-line-item>
+					</view>
+				</u-time-line>
+		
+			</view>
+			<view style="text-align: center;width: 90%;padding: 30rpx 0 20rpx;" @click="openFlow">
+				<text style="color: #333333;">{{openFlag?'收起':'展开'}}</text>
+				<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#C9C9C9"></u-icon>
+			</view>
+		</view>
+		<view class="content" v-if="detail.state === 'WAITTING_DELIVERY_VEHICLE'">
+			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view>
+			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
+				<view style="width: 60%;;">
+	                <u-time-line-item nodeTop="2">
+	                	<template v-slot:node>
+	                		<view class="u-node">
+	                			<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x_a.png"></u-image>
+	                		</view>
+	                	</template>
+	                	<template v-slot:content>
+	                		<view>
+	                			<view style="color: #333;" class="u-order-desc">提车（待确认）</view>
+	                		</view>
+	                	</template>
+	                </u-time-line-item>
+				</view>
+					<view v-show="openFlag">
+						<view class="line"></view>
+						<u-time-line-item nodeTop="2">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">租金</view>
+								</view>
+							</template>
+						</u-time-line-item>
+						<view class="line"></view>
+						<u-time-line-item nodeTop="2">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">合同签署</view>
+								</view>
+							</template>
+						</u-time-line-item>
+		                <view class="line"></view>
+						<u-time-line-item nodeTop="2" style="margin: 0;">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">商品信息登记</view>
+								</view>
+							</template>
+						</u-time-line-item>
+					</view>
+				</u-time-line>
+		
+			</view>
+			<view style="text-align: center;width: 90%;padding: 30rpx 0 20rpx;" @click="openFlow">
+				<text style="color: #333333;">{{openFlag?'收起':'展开'}}</text>
+				<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#C9C9C9"></u-icon>
+			</view>
+		</view>
+		<view class="content" v-if="detail.state === 'ORDER_FINISHED'">
+			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view>
+			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
+				<view style="width: 60%;;">
+		            <u-time-line-item nodeTop="2">
+		            	<template v-slot:node>
+		            		<view class="u-node">
+		            			<view class="dot"></view>
+		            		</view>
+		            	</template>
+		            	<template v-slot:content>
+		            		<view>
+		            			<view style="color: #333;" class="u-order-desc">完成</view>
+		            		</view>
+		            	</template>
+		            </u-time-line-item>
+				</view>
+					<view v-show="openFlag">
+						<view class="line"></view>
+						<u-time-line-item nodeTop="2">
+							<template v-slot:node>
+								<view class="u-node">
+									<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">提车</view>
+								</view>
+							</template>
+						</u-time-line-item>
+						<u-time-line-item nodeTop="2">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">租金</view>
+								</view>
+							</template>
+						</u-time-line-item>
+						<view class="line"></view>
+						<u-time-line-item nodeTop="2">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">合同签署</view>
+								</view>
+							</template>
+						</u-time-line-item>
+		                <view class="line"></view>
+						<u-time-line-item nodeTop="2" style="margin: 0;">
+							<template v-slot:node>
+								<view class="u-node">
+									<view class="time">
+										<view>2020-09-28</view>
+										<view class="hour">11:15:33</view>
+									</view>
+									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
+								</view>
+							</template>
+							<template v-slot:content>
+								<view>
+									<view class="u-order-desc">商品信息登记</view>
+								</view>
+							</template>
+						</u-time-line-item>
+					</view>
+				</u-time-line>
+		
 			</view>
 			<view style="text-align: center;width: 90%;padding: 30rpx 0 20rpx;" @click="openFlow">
 				<text style="color: #333333;">{{openFlag?'收起':'展开'}}</text>
@@ -121,7 +323,7 @@
 			<view class="content_item">
 				<view class="item"><text class="title">租赁周期：</text><text>{{detail.leasetime}}个月（提车后开始计算）</text></view>
 				<view class="item"><text class="title">每月租金：</text><text>{{detail.monthlyrent}}元</text></view>
-				<view class="item"><text class="title">车辆押金：</text><text>{{detail.deposit}}元</text></view>
+				<view class="item"><text class="title">车辆押金：</text><text>{{detail.deposit}}元</text><text class="other">（另须线下支付）</text></view>
 				<view style="padding: 8rpx 0;">
 					<text style="color: #999999;font-size: 24rpx;">押金还车后退，规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
@@ -129,11 +331,11 @@
 				<view class="item"><text class="title">订单时间：</text><text>{{detail.createTime}}</text></view>
 				<view class="item"><text class="title">订单号：</text><text>{{detail.tradeid}}</text></view>
 			</view>
-			<view class="company_model">订单支付费用明细</view>
-			<view class="content_item" v-if="true">
+			<!-- <view class="company_model">订单支付费用明细</view> -->
+			<view class="content_item" v-if="detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'">
 				<view class="item"><text class="title">实付租金: </text><text>{{detail.monthlyrent}}元</text></view>
-				<view class="item"><text class="title">实付押金：</text><text>{{detail.deposit}}元</text></view>
-				<view class="item"><text class="title">实际支付总和：</text><text>{{detail.totalprice}}元</text></view>
+				<!-- <view class="item"><text class="title">实付押金：</text><text>{{detail.deposit}}元</text></view> -->
+				<!-- <view class="item"><text class="title">实际支付总和：</text><text>{{detail.totalprice}}元</text></view> -->
 				<view class="item"><text class="title">支付时间：</text><text>{{detail.paytime}}</text></view>
 			</view>
 		</view>
@@ -152,42 +354,40 @@
 					</view>
 				</u-col>
 				<u-col span="6">
-					<view class="btn">
+					<view class="btn" @click="dial()">
 						<u-image width="52" height="52" src="@/static/order/lianxipingtai2x.png"></u-image>
 						<view class="text">联系平台</view>
 					</view>
 				</u-col>
 			</u-row>
 		</view>
-		<!-- <view class="view_car">查看车辆信息</view> -->
-		<view style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
+		<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="view_cared">查看验车信息</view>
+		<view v-else @click="view()" class="view_car">查看验车信息</view>
+		<!-- <view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
 			<text style="padding: 6rpx;border-bottom: 2rpx solid #24ce8d;">查看合同范文</text>
-		</view>
+		</view> -->
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<!-- <view class="bottom_content" style="padding: 40rpx 60rpx;">
 			<view class="btn orange">《汽车租赁合同》锁定</view>
 		</view> -->
 		<view class="bottom">
-			<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'">
-				<view class="check">查看验车信息</view>
-			</view>
-			<view v-else>
-				<view @click="soureNum()" class="checkActive">查看验车信息</view>
+			<!-- <view>
+				<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="check">查看验车信息</view>
+				<view v-else @click="view()" class="checkActive">查看验车信息</view>
+			</view> -->
+			<view>
+				<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()" class="signActive">登记商品信息</view>
+				<!-- <view v-if="detail.state=='REGISTER_CAR'" class="sign">登记商品信息</view> -->
 			</view>
 			<view>
-				<view @click="shopMessage()" class="signActive">登记商品信息</view>
+				<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='COMPANY_SIGN_CONTRACT'" @click="shopMessage()" class="signActive">签署汽车租赁合同</view>
+				<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="sign">签署汽车租赁合同</view>
 			</view>
 			<view>
-				<view class="signActive">签署汽车租赁合同</view>
-			</view>
-			<view>
-				<view class="sign">登记商品信息</view>
-			</view>
-			<view>
-				<view class="sign">签署汽车租赁合同</view>
+				<view v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="shopMessage()" class="signActive">《汽车租赁合同》查看</view>
 			</view>
 		</view>
-		<view class="tip">*验车信息由承租人填写完成后才能查看</view>
+		<view v-if="!detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" class="tip">*验车信息由承租人填写完成后才能查看</view>
 	</view>
 </template>
 
@@ -251,6 +451,32 @@
 			}
 		},
 		methods: {
+			revoke(){
+				uni.showModal({
+				   title: '警告信息',
+				   content: '是否撤销？',
+				   success: function (res) {
+				       if (res.confirm) {
+				           this.$u.api.Invalidation({
+				           	orderId:this.detail.tradeid
+				           }).then(res=>{
+				           	if(res.code === 200){
+				           		 this.$u.toast(撤销成功);
+				           	}else {
+				           		 this.$u.toast(res.msg);
+				           	}
+				           })
+				       } else if (res.cancel) {
+				           
+				       }
+				   }         
+				});
+			},
+			dial(){
+				uni.makePhoneCall({
+				    phoneNumber: '0571-87815287' 
+				});
+			},
 			view(){
 				this.$u.route('/pages/company/order/checkMessage', {
 					id: this.detail.tradeid
@@ -307,7 +533,7 @@
 	}
 
 	.content {
-
+        padding-bottom: 40rpx;
 		.count_down {
 			text-align: center;
 			padding: 40rpx 0 20rpx;
@@ -415,6 +641,13 @@
 		font-size: 28rpx;
 		color: #252825;
 	}
+	.view_cared{
+		text-align: center;
+		height: 100rpx;
+		line-height: 100rpx;
+		font-size: 28rpx;
+		color: #939393;
+	}
 	.bottom_content{
 		padding: 20rpx 20rpx 30rpx;
 		.btn{
@@ -464,7 +697,7 @@
 		}
 	}
 	.bottom{
-		padding: 18rpx 34rpx;
+		padding: 20rpx 76rpx;
 		display: flex;
 		justify-content: space-between;
 		.checkActive{
@@ -488,7 +721,7 @@
 			color: #252825;
 		}
 		.signActive{
-			width: 428rpx;
+			width: 600rpx;
 			height: 88rpx;
 			line-height: 88rpx;
 			text-align: center;
@@ -498,14 +731,14 @@
 			color: #fff;
 		}
 		.sign{
-			width: 428rpx;
+			width: 600rpx;
 			height: 88rpx;
 			line-height: 88rpx;
 			text-align: center;
 			background: #E0E0E0;
 			border-radius: 8rpx;
 			font-size: 36rpx;
-			color: #fff;
+			color: #939393;
 		}
 	}
 	.tip{
@@ -522,5 +755,13 @@
 		height: 16rpx;
 		border-radius: 50%;
 		background: #ddd;
+	}
+	.other{
+		color: #FE3B31;
+	}
+	.line{
+		width: 4rpx;
+		height: 120rpx;
+		background: #c9c9c9;
 	}
 </style>
