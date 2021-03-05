@@ -4,17 +4,17 @@
 			<view slot="" @click="refreshView">
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
-			<view class="navbar-right" slot="right">
-				<view class="message-box right-item" @click="chargeback" v-if="form.state !== 'WAITTING_DELIVERY_VEHICLE' || form.state !== 'ORDER_FINISHED' || form.state !== 'ORDER_FAILED'">退单</view>
+			<view class="navbar-right" slot="right" v-if="form.state !=='ORDER_FAILED'">
+				<view class="message-box right-item" @click="chargeback" v-if="form.state !== 'WAITTING_DELIVERY_VEHICLE' || form.state !== 'ORDER_FINISHED'">退单</view>
 			</view>
 		</u-navbar>
-		<view class="content" style="padding-bottom: 20rpx;">
+		<view class="content" style="padding-bottom: 20rpx;" v-if="form.state !== 'ORDER_FAILED'">
 			<view class="count_down" v-if="form.state !== 'ORDER_FINISHED' || form.state !== 'ORDER_FAILED'">
 				剩余
-			<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
-					{{form.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
+				<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+				{{form.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
 			</view>
-			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
+			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;" >
 				<u-time-line>
 					<u-time-line-item nodeTop="2">
 						<template v-slot:node>
@@ -23,7 +23,7 @@
 									<view>2020-09-28</view>
 									<view class="hour">11:15:33</view>
 								</view>
-								<view v-if="soureNum === 1"> 
+								<view v-if="soureNum === 1">
 									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x_a.png"></u-image>
 								</view>
 								<view v-if="soureNum === 2">
@@ -38,7 +38,7 @@
 								<view v-if="soureNum === 5">
 									<u-image width="60rpx" height="60rpx" src="@/static/order/wancheng2x.png"></u-image>
 								</view>
-								
+
 							</view>
 						</template>
 						<template v-slot:content>
@@ -142,14 +142,14 @@
 			</view>
 			<view class="content_item" v-if="false">
 				<view class="item"><text class="title">实付租金: </text><text>{{form.carname}}元</text></view>
-<!-- 				<view class="item"><text class="title">实付押金：</text><text>{{form.carname}}元</text></view>
+				<!-- 				<view class="item"><text class="title">实付押金：</text><text>{{form.carname}}元</text></view>
 				<view class="item"><text class="title">实际支付总和：</text><text>{{form.carname}}元</text></view> -->
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="tips_content">
 			<view style="font-size: 30rpx;">订单提示</view>
-			<view style="padding: 8rpx 20rpx 0 0;">通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。<br/>注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287</view>
+			<view style="padding: 8rpx 20rpx 0 0;">通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。<br />注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287</view>
 		</view>
 		<view class="chat_btn">
 			<u-row>
@@ -161,7 +161,7 @@
 				</u-col>
 				<u-col span="6">
 					<view class="btn" @click="callPhone">
-						<u-image width="52" height="52"  src="@/static/order/lianxipingtai2x.png"></u-image>
+						<u-image width="52" height="52" src="@/static/order/lianxipingtai2x.png"></u-image>
 						<view class="text">联系平台</view>
 					</view>
 				</u-col>
@@ -177,15 +177,16 @@
 		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 2" @click="signContact">
 			<view :class="['btn',form.state === 'VALIDATE_CAR'?'defult':'orange']">签署《汽车租赁合同》</view>
 		</view>
-        <!-- 3 -->
+		<!-- 3 -->
 		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3">
 			<u-row>
 				<u-col span="7">
 					<view class="tips">*须商家签署合同才可支付</view>
-					<view class="">合计<text class="money">{{form.totalprice}}</text><text style="color:#FE3B31 ;">元</text> 
-					<text style="font-size: 24rpx;color: #1F87F2;padding-left: 10rpx;">明细</text>
-					<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="30" color="#1F87F2"></u-icon></view>
-					
+					<view class="">合计<text class="money">{{form.totalprice}}</text><text style="color:#FE3B31 ;">元</text>
+						<text style="font-size: 24rpx;color: #1F87F2;padding-left: 10rpx;">明细</text>
+						<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="30" color="#1F87F2"></u-icon>
+					</view>
+
 				</u-col>
 				<u-col span="5">
 					<view @click="payBefore" :class="['btn',form.state === 'NO_PAYMENT'?'orange':'defult']">支付</view>
@@ -233,7 +234,8 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-popup v-model="payOrder" mode="bottom" :closeable="true" close-icon-pos="top-left" close-icon-color="#333333" border-radius="14">
+		<u-popup v-model="payOrder" mode="bottom" :closeable="true" close-icon-pos="top-left" close-icon-color="#333333"
+		 border-radius="14">
 			<view class="cancel_content">
 				<view class="money_item">
 					<view><text style="font-size: 60rpx;color: #333333;">12000</text><text style="padding-left: 6rpx;">元</text></view>
@@ -292,37 +294,48 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				id:'',
-				cancelOrder:false,//取消订单
-				payOrder:false,//支付弹窗
-				timestamp: 0,//倒计时
+				id: '',
+				cancelOrder: false, //取消订单
+				payOrder: false, //支付弹窗
+				timestamp: 0, //倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
-				reasonList:[
-					{text:'1. 车辆发生重大问题',flag:true},
-					{text:'2. 不想开了',flag:true},
-					{text:'3. 想换其他车开',flag:true},
-					{text:'4. 其他原因',flag:true}
+				reasonList: [{
+						text: '1. 车辆发生重大问题',
+						flag: true
+					},
+					{
+						text: '2. 不想开了',
+						flag: true
+					},
+					{
+						text: '3. 想换其他车开',
+						flag: true
+					},
+					{
+						text: '4. 其他原因',
+						flag: true
+					}
 				],
-				form:{
-					companyname:'',
+				form: {
+					companyname: '',
 				},
-				otherFlag:false,
-				value:'',
-				showTips:false
+				otherFlag: false,
+				value: '',
+				showTips: false
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
-			if (id){
-				this.id =id;
+			if (id) {
+				this.id = id;
 			}
 		},
 		onShow() {
 			this.getInfo();
 			this.initChat();
 		},
-		computed:{
+		computed: {
 			soureNum() {
 				let value = this.form.state;
 				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'REGISTER_CAR') {
@@ -356,36 +369,39 @@
 					return ''
 				}
 			},
-			
+
 		},
 		methods: {
-			initChat(){
+			initChat() {
 				let isLogin = this.$store.state.isLogin;
-				if (isLogin){
+				if (isLogin) {
 					return
 				}
 				this.initLogin()
 			},
-			signContact(){
-				if (this.form.state === 'VALIDATE_CAR'){
-					this.$u.api.getFdd({orderId: this.id}).then(res=>{
-						console.log(res)
-					})
-					this.$u.toast('出租方商品未登记,请联系出租方');
-					return 
-				}
+			signContact() {
+				// if (this.form.state === 'VALIDATE_CAR'){
+				// 	this.$u.api.getFdd({orderId: this.id}).then(res=>{
+				// 		console.log(res)
+				// 	})
+				// 	this.$u.toast('出租方商品未登记,请联系出租方');
+				// 	return 
+				// }
 				this.$u.route('/pages/driver/myOrder/signContract')
 			},
 			// 登录tim
-			initLogin(){
-			  let token = uni.getStorageSync('token');
-			  if (!token){
-				  return false
-			  }
-				this.$u.api.getSing().then(res=>{
-					if (res.code === 200){
+			initLogin() {
+				let token = uni.getStorageSync('token');
+				if (!token) {
+					return false
+				}
+				this.$u.api.getSing().then(res => {
+					if (res.code === 200) {
 						let userInfo = res.object;
-						let promise = this.tim.login({userID: userInfo.userId,userSig: userInfo.singer});
+						let promise = this.tim.login({
+							userID: userInfo.userId,
+							userSig: userInfo.singer
+						});
 						promise.then((res) => {
 							//登录成功后 更新登录状态
 							this.$store.commit("toggleIsLogin", true);
@@ -398,25 +414,27 @@
 						});
 					}
 				}).catch((err) => {
-						console.log(err)
+					console.log(err)
 				});
 			},
 			refreshView() {
 				this.getInfo()
 			},
-			toRoom(userID){
+			toRoom(userID) {
 				let promise = this.tim.getUserProfile({
-				  userIDList: [userID] 
+					userIDList: [userID]
 				});
-				promise.then((imResponse)=> {
+				promise.then((imResponse) => {
 					console.log(imResponse)
-					if (imResponse.data[0]){
-						let obj = {conversation:{}};
-						obj.conversation.conversationID = 'C2C'+userID;
+					if (imResponse.data[0]) {
+						let obj = {
+							conversation: {}
+						};
+						obj.conversation.conversationID = 'C2C' + userID;
 						obj.conversation.userProfile = imResponse.data[0];
 						this.$store.commit('updateConversationActive', obj)
-						this.$u.route('/pages/tim/room')	
-					} else{
+						this.$u.route('/pages/tim/room')
+					} else {
 						this.$u.toast('对方未开通聊天')
 					}
 				})
@@ -426,43 +444,47 @@
 					phoneNumber: '0571-87815287'
 				});
 			},
-			viewCar(id){
-				this.$u.route('/pages/company/order/checkMessage', {orderId: id})
+			viewCar(id) {
+				this.$u.route('/pages/company/order/checkMessage', {
+					orderId: id
+				})
 			},
-			checkOr(index){
-				if (index === 3){
+			checkOr(index) {
+				if (index === 3) {
 					console.log(this.reasonList[3].flag)
 					this.otherFlag = this.reasonList[3].flag
-				} else{
+				} else {
 					this.otherFlag = false;
 				}
-				this.reasonList.forEach((item,i)=>{
-					if(index === i){
-						this.reasonList[i].flag =!this.reasonList[i].flag;
+				this.reasonList.forEach((item, i) => {
+					if (index === i) {
+						this.reasonList[i].flag = !this.reasonList[i].flag;
 					} else {
 						this.reasonList[i].flag = true
 					}
 				})
 			},
-			viewContract(){
+			viewContract() {
 				this.$u.route('/pages/driver/myOrder/contractPreview', {
 					src: 'http://www.baidu.com'
 				})
 			},
-			getInfo(){
+			getInfo() {
 				//获取页面数据
-				this.$u.api.driverOrderView({id:this.id}).then(res=>{
+				this.$u.api.driverOrderView({
+					id: this.id
+				}).then(res => {
 					if (res.code === 200) {
-						 this.form = res.object;
-						 let date = new Date();
-						 let startDate =this.form.updateTime;
-						     startDate= startDate.replace(new RegExp("-","gm"),"/");
-						 let startDateM = (new Date(startDate)).getTime();
-						 let Days = 86400000;
-						 let yesDay = (startDateM+Days)-date.getTime();
-						 this.timestamp = parseInt(yesDay/1000)
+						this.form = res.object;
+						let date = new Date();
+						let startDate = this.form.updateTime;
+						startDate = startDate.replace(new RegExp("-", "gm"), "/");
+						let startDateM = (new Date(startDate)).getTime();
+						let Days = 86400000;
+						let yesDay = (startDateM + Days) - date.getTime();
+						this.timestamp = parseInt(yesDay / 1000);
 					} else {
-						 this.$u.toast(res.msg);
+						this.$u.toast(res.msg);
 					}
 				})
 			},
@@ -470,40 +492,49 @@
 				this.cancelOrder = true;
 			},
 			countEnd() {
-				this.getInfo()
+				this.$u.api.orderEfficacy({
+					orderId: this.form.id
+				}).then(res => {
+					if (res.code === 200) {
+						this.$u.route('/pages/driver/myOrder/chargeback', {
+							id: this.form.id
+						})
+					}
+				})
+				// this.getInfo()
 			},
 			openFlow() {
 				this.openFlag = !this.openFlag
 			},
-			uploadCar(){
+			uploadCar() {
 				this.$u.route('/pages/driver/myOrder/checkCar', {
 					orderId: this.form.id
 				})
 			},
-			payBefore(){
+			payBefore() {
 				let state = this.form.state;
 				if (state === 'NO_PAYMENT') {
 					this.payOrder = true;
-				} else{
+				} else {
 					this.$u.toast('待商家签署合同')
 				}
 			},
-			pay(){
-				this.$u.api.getOrderInfo().then(res=>{
+			pay() {
+				this.$u.api.getOrderInfo().then(res => {
 					if (res.code === 200) {
 						console.log(res.object)
 						uni.requestPayment({
-						    provider: 'alipay',
-						    orderInfo:res.object , //微信、支付宝订单数据
-						    success: function (res) {
-						        alert('success:' + JSON.stringify(res));
-						    },
-						    fail: function (err) {
-						        alert('fail:' + JSON.stringify(err));
-						    }
+							provider: 'alipay',
+							orderInfo: res.object, //微信、支付宝订单数据
+							success: function(res) {
+								alert('success:' + JSON.stringify(res));
+							},
+							fail: function(err) {
+								alert('fail:' + JSON.stringify(err));
+							}
 						});
 					} else {
-						 this.$u.toast(res.msg);
+						this.$u.toast(res.msg);
 					}
 				})
 			}
@@ -620,46 +651,57 @@
 			justify-content: center;
 			align-items: center;
 			height: 110rpx;
-			.text{
-				color: #555555;padding-left: 10rpx;
+
+			.text {
+				color: #555555;
+				padding-left: 10rpx;
 			}
 		}
 	}
-	.view_car{
+
+	.view_car {
 		text-align: center;
 		height: 100rpx;
 		line-height: 100rpx;
 		font-size: 28rpx;
 		color: #252825;
 	}
-	.bottom_content{
+
+	.bottom_content {
 		padding: 20rpx 20rpx 30rpx;
-		.btn{
+
+		.btn {
 			padding: 24rpx 28rpx;
 			font-size: 32rpx;
 			border-radius: 8rpx;
 			text-align: center;
 		}
-		.padding30{
+
+		.padding30 {
 			padding: 30rpx;
 		}
-		.defult{
+
+		.defult {
 			background: #F2F2F2;
 			color: #252825;
 		}
-		.orange{
+
+		.orange {
 			background: linear-gradient(270deg, #FFC600 0%, #FFA900 47%, #FF9100 100%);
 			color: #FFFFFF;
 		}
-		.tips{
+
+		.tips {
 			font-size: 24rpx;
 			color: #FE3B31;
 		}
-		.money{
+
+		.money {
 			font-size: 36rpx;
 			color: #FE3B31;
 		}
-		.money_abs{
+
+		.money_abs {
 			color: #E8541E;
 			background: #FCEEE9;
 			position: absolute;
@@ -668,56 +710,69 @@
 			z-index: 20;
 			left: 60rpx;
 		}
-		.view_contract{
-			text-align: center;padding-top: 20rpx;font-size: 24rpx;
-			.label{
-				color:#C7C7C7
+
+		.view_contract {
+			text-align: center;
+			padding-top: 20rpx;
+			font-size: 24rpx;
+
+			.label {
+				color: #C7C7C7
 			}
-			.contract{
+
+			.contract {
 				color: #FF9500;
 			}
 		}
 	}
-	.cancel_content{
+
+	.cancel_content {
 		min-height: 300rpx;
-		.title{
+
+		.title {
 			padding: 30rpx 0;
 			text-align: center;
 			color: #333333;
 			font-weight: 700;
 		}
-		.money_item{
+
+		.money_item {
 			margin-top: 60rpx;
 			padding: 40rpx 0 30rpx;
-			border-bottom:1px solid #E0E0E0 ;
+			border-bottom: 1px solid #E0E0E0;
 			text-align: center;
 		}
-		.total_item{
-			padding:36rpx 30rpx 0;
-			color:#999999 ;
+
+		.total_item {
+			padding: 36rpx 30rpx 0;
+			color: #999999;
 		}
-		.item_list{
-			padding:26rpx 30rpx;
-			
-			.radio_list{
+
+		.item_list {
+			padding: 26rpx 30rpx;
+
+			.radio_list {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				padding: 20rpx 0;
-				border-bottom:1px solid #E0E0E0 ;
+				border-bottom: 1px solid #E0E0E0;
 			}
-			.radio_label{
+
+			.radio_label {
 				color: #333330;
 				font-size: 30rpx;
 			}
-			.radio_defult{
+
+			.radio_defult {
 				width: 48rpx;
 				height: 48rpx;
 				border: 1px solid #E0E0E0;
 				border-radius: 50%;
 			}
 		}
-		.btn_orange{
+
+		.btn_orange {
 			margin-top: 30rpx;
 			background: linear-gradient(270deg, #FFC500 0%, #FFB600 44%, #FF9700 100%);
 			color: #FFFFFF;
@@ -728,13 +783,16 @@
 			height: 80rpx;
 		}
 	}
+
 	.slot_content {
 		padding: 15px 0;
+
 		.slot_tips {
 			color: #333333;
 			font-size: 28rpx;
 			border-bottom: 1rpx solid #E0E0E0;
-			.tips_text{
+
+			.tips_text {
 				padding: 10rpx 0;
 				text-indent: 20rpx;
 			}

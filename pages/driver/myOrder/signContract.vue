@@ -1,8 +1,15 @@
 <template>
 	<view>
-		<!-- <u-navbar back-icon-color="#111111" title="" :background="background" title-color="#111111"></u-navbar> -->
+		<u-navbar back-icon-color="#111111" title="" :background="background" title-color="#111111"></u-navbar>
 		<view>
-			<web-view :src="src" @message="upCallback()"></web-view>
+			<!-- <web-view :src="src" @message="upCallback()"></web-view> -->
+			<web-view
+			  v-if="srcUrl"
+			  :src="srcUrl"
+			  @message="reciveMessage"
+			  @onPostMessage="recivePostMessage"
+			>
+			</web-view>
 		</view>
 	</view>
 </template>
@@ -21,18 +28,12 @@
 			
 		},
 		methods: {
-			upCallback() {
-				this.$u.api.getBillDetails({
-					pageNum: 1,
-					pageSize: 10,
-				}).then(res => {
-					if (res.code === 200) {
-
-					} else {
-						this.$u.toast(res.msg);
-					}
-				})
+			reciveMessage(data){
+				console.log(1111)
 			},
+			recivePostMessage(data){
+				console.log(data)
+			}
 		}
 	}
 </script>
