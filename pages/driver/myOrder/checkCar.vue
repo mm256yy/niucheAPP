@@ -134,7 +134,7 @@
 					this.form.engine = data.engine;
 					this.form.issue_date = data.issue_date;
 					this.form.register_date = data.register_date;
-					this.form.drivingImg = data.drivingImg;
+					this.form.drivingImg = data.photo;
 					this.flag = true;
 				} else {
 					this.$u.toast('识别失败')

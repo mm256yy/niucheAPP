@@ -132,7 +132,7 @@
 			<view class="content_item">
 				<view class="item"><text class="title">租赁周期：</text><text>{{form.leasetime}}个月（提车后开始计算）</text></view>
 				<view class="item"><text class="title">每月租金：</text><text>{{form.monthlyrent}}元</text></view>
-				<view class="item"><text class="title">车辆押金：</text><text>{{form.deposit}}元</text></view>
+				<view class="item"><text class="title">车辆押金：</text><text>{{form.deposit}}元</text> <text>（另须线下支付）</text></view>
 				<view style="padding: 8rpx 0;" @click="showTips = true">
 					<text style="color: #999999;font-size: 24rpx;">押金退还规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
@@ -140,10 +140,11 @@
 				<view class="item"><text class="title">订单时间：</text><text>{{form.createTime}}</text></view>
 				<view class="item"><text class="title">订单号：</text><text>{{form.tradeid}}</text></view>
 			</view>
-			<view class="content_item" v-if="false">
-				<view class="item"><text class="title">实付租金: </text><text>{{form.carname}}元</text></view>
-				<!-- 				<view class="item"><text class="title">实付押金：</text><text>{{form.carname}}元</text></view>
-				<view class="item"><text class="title">实际支付总和：</text><text>{{form.carname}}元</text></view> -->
+			<view class="content_item" v-if="soureNum>3">
+				<view class="item"><text class="title">首月租金: </text><text>{{form.monthlyrent}}元</text></view>
+				<view class="item"><text class="title">账户抵扣：</text><text>{{form.carname}}元</text></view>
+				<view class="item"><text class="title">实付：</text><text>{{form.carname}}元</text></view>
+				<view class="item"><text class="title">支付时间：</text><text>{{form.carname}}元</text></view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
@@ -178,20 +179,18 @@
 			<view :class="['btn',form.state === 'VALIDATE_CAR'?'defult':'orange']">签署《汽车租赁合同》</view>
 		</view>
 		<!-- 3 -->
-		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3">
+		<view class="bottom_content" style="position: relative;"  v-if="soureNum === 3">
 			<u-row>
 				<u-col span="7">
 					<view class="tips">*须商家签署合同才可支付</view>
-					<view class="">合计<text class="money">{{form.totalprice}}</text><text style="color:#FE3B31 ;">元</text>
-						<text style="font-size: 24rpx;color: #1F87F2;padding-left: 10rpx;">明细</text>
-						<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="30" color="#1F87F2"></u-icon>
+					<view class="">
+						月租金：<text class="money">{{form.totalprice}}</text><text style="color:#FE3B31 ;">元（首月）</text>
 					</view>
-
+					<view style="color:#FE3B31 ;font-size: 24rpx;">仅支持租金线上支付，押金另须线下支付</view>
 				</u-col>
 				<u-col span="5">
 					<view @click="payBefore" :class="['btn',form.state === 'NO_PAYMENT'?'orange':'defult']">支付</view>
 				</u-col>
-				<view class="money_abs" v-if="openFlag">月租金 <text>{{form.monthlyrent}}元</text> 押金 <text>{{form.deposit}}元</text></view>
 			</u-row>
 			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
@@ -199,7 +198,7 @@
 		</view>
 		<!-- 4 -->
 		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 4">
-			<view class="btn orange padding30">确认提车</view>
+			<view class="btn orange padding30" @click="pickCar">确认提车</view>
 			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
@@ -257,9 +256,9 @@
 								<u-image width="52rpx" height="52rpx" src="@/static/order/zhifubao2x.png"></u-image>
 								<view style="color: #111111;padding-left: 20rpx;">支付宝</view>
 							</view>
-							<view>
-								<view class="radio_defult" v-show="openFlag"></view>
-								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!openFlag"></u-icon>
+							<view @click="openPayFlag">
+								<view class="radio_defult" v-show="payCheckFlag"></view>
+								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!payCheckFlag"></u-icon>
 							</view>
 						</view>
 					</view>
@@ -322,7 +321,8 @@
 				},
 				otherFlag: false,
 				value: '',
-				showTips: false
+				showTips: false,
+				payCheckFlag:false
 			}
 		},
 		onLoad(option) {
@@ -380,14 +380,11 @@
 				this.initLogin()
 			},
 			signContact() {
-				// if (this.form.state === 'VALIDATE_CAR'){
-				// 	this.$u.api.getFdd({orderId: this.id}).then(res=>{
-				// 		console.log(res)
-				// 	})
-				// 	this.$u.toast('出租方商品未登记,请联系出租方');
-				// 	return 
-				// }
-				this.$u.route('/pages/driver/myOrder/signContract')
+				if (this.form.state === 'VALIDATE_CAR'){
+					this.$u.toast('出租方商品未登记,请联系出租方');
+					return 
+				}
+				this.$u.route('/pages/driver/myOrder/signContract',{id:this.id,userId:this.form.userid})
 			},
 			// 登录tim
 			initLogin() {
@@ -420,6 +417,19 @@
 			refreshView() {
 				this.getInfo()
 			},
+			//提车
+			pickCar(){
+				this.$u.api.orderDeliveryOfVehicle({
+					id: this.id
+				}).then(res => {
+					if (res.code === 200) {
+						this.refreshView()
+					} else {
+						this.$u.toast(res.msg);
+					}
+				})
+			},
+			//聊天
 			toRoom(userID) {
 				let promise = this.tim.getUserProfile({
 					userIDList: [userID]
@@ -444,11 +454,13 @@
 					phoneNumber: '0571-87815287'
 				});
 			},
+			//验车单
 			viewCar(id) {
 				this.$u.route('/pages/company/order/checkMessage', {
-					orderId: id
+					id: id
 				})
 			},
+			//筛选退单条件
 			checkOr(index) {
 				if (index === 3) {
 					console.log(this.reasonList[3].flag)
@@ -464,11 +476,13 @@
 					}
 				})
 			},
+			//查看合同
 			viewContract() {
 				this.$u.route('/pages/driver/myOrder/contractPreview', {
 					src: 'http://www.baidu.com'
 				})
 			},
+			//获取数据
 			getInfo() {
 				//获取页面数据
 				this.$u.api.driverOrderView({
@@ -488,9 +502,11 @@
 					}
 				})
 			},
+			//退单
 			chargeback() {
 				this.cancelOrder = true;
 			},
+			//倒计时
 			countEnd() {
 				this.$u.api.orderEfficacy({
 					orderId: this.form.id
@@ -501,16 +517,15 @@
 						})
 					}
 				})
-				// this.getInfo()
+				this.getInfo()
 			},
-			openFlow() {
-				this.openFlag = !this.openFlag
-			},
+			//上传验车单
 			uploadCar() {
 				this.$u.route('/pages/driver/myOrder/checkCar', {
 					orderId: this.form.id
 				})
 			},
+			//支付
 			payBefore() {
 				let state = this.form.state;
 				if (state === 'NO_PAYMENT') {
@@ -519,6 +534,13 @@
 					this.$u.toast('待商家签署合同')
 				}
 			},
+			openPayFlag(){
+				this.payCheckFlag = !this.payCheckFlag
+			},
+			openFlow(){
+				this.openFlag = !this.openFlag
+			},
+			//支付
 			pay() {
 				this.$u.api.getOrderInfo().then(res => {
 					if (res.code === 200) {
@@ -527,7 +549,9 @@
 							provider: 'alipay',
 							orderInfo: res.object, //微信、支付宝订单数据
 							success: function(res) {
-								alert('success:' + JSON.stringify(res));
+								this.payOrder = false;
+								this.getInfo()
+								this.$u.toast(JSON.stringify(res))
 							},
 							fail: function(err) {
 								alert('fail:' + JSON.stringify(err));
