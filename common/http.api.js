@@ -251,7 +251,7 @@ const install = (Vue, vm) => {
 	const orderEfficacy = (params = {}) => vm.$u.post('/order/lose/efficacy?orderId='+params.orderId, params);
 	//确认提车
 	const orderDeliveryOfVehicle = (params = {}) => vm.$u.post('/order/affirm/deliveryOfVehicle?orderId='+params.orderId, params);
-	//确认提车
+	//获取价格
 	const orderPrice = (params = {}) => vm.$u.post('/order/real/price/get?orderId='+params.orderId, params);
 	//法大大
 	const getFdd = (params = {}) => vm.$u.get('/app/fdd/server/'+params.orderId+'/122039149376180224', {});
