@@ -1,152 +1,176 @@
 <template>
-	<view>
-		<u-navbar back-icon-color="#111111" title="新建订单" :background="background" title-color="#111111"></u-navbar>
-		<view class="content">
-			<view style="margin-top: 20rpx;">订单信息</view>
-			<view style="margin-top: 20rpx;color: #bcbcbc;">订单号：2343434343</view>
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:694rpx;margin-top: -18rpx;" label="租期:"><u-input placeholder="请选择" @click="show = true" v-model="leasetime" type="select" /></u-form-item>
-				<u-form-item label="押金:" prop="deposit">
-					<u-input type="number" class="input-radius" v-model="form.deposit" placeholder="请输入"/>元
-				</u-form-item>
-				<u-form-item label="月租金:" prop="monthlyrent">
-					<u-input type="number" class="input-radius" v-model="form.monthlyrent" placeholder="请输入"/>元/月
-				</u-form-item>
-			</u-form>
-			<u-select v-model="show" mode="single-column" :list="select" @confirm="confirm"></u-select>
-			<view style="margin-top: 60rpx;">承租人信息</view>
-			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item label="姓名:" prop="rentername">
-					<u-input @blur="blur()" class="input-radius" v-model="form.rentername" placeholder="请输入"/>
-				</u-form-item>
-				<u-form-item label="身份证号:" prop="renteridcard">
-					<u-input @blur="blur()" class="input-radius" v-model="form.renteridcard" placeholder="请输入"/>
-				</u-form-item>
-				<u-form-item label="手机号" prop="renteridphone" >
-					<u-input @blur="blur()" v-model="form.renteridphone" type="number" placeholder="请输入"/>
-				</u-form-item>
-			</u-form>
+	<view class="selectBrand">
+		<u-navbar back-icon-color="#111111" title="选择品牌" :background="background" title-color="#111111"></u-navbar>
+		<view style="display: flex;">
+			<view style="width: 698rpx;">
+				<view class="title">输入自定义品牌型号</view>
+				<view v-for="(item,index) in list" :key="index">
+					<view class="letter">{{item.letter}}</view>
+					<view class="box">
+						<view @click="secondBrand(items)" v-for="(items,index) in item.data" :key="items.id" class="first">{{items.text}}</view>
+					</view>
+				</view>
+			</view>
+			<view style="width: 52rpx;margin-top: 102rpx;">
+				<view v-for="(item,index) in indexList" :key="index">
+					<view class="list">{{item}}</view>
+				</view>
+			</view>
 		</view>
-		<view class="bottom">
-			<view @click="submit()" class="submit">新建并发起订单</view>
+		<view v-show="show" style="position: fixed;top: 88rpx;right: 0;width: 448rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);">
+			<view>
+				<view style="display: flex;align-items: center;justify-content: space-between;width: 448rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
+					<view>{{text}}</view>
+					<u-image width="30" height="28" src="@/static/order/close.png"></u-image>
+				</view>
+				<view class="second" v-for="(item,index) in carmodelList" :key="index" @click="thirdBrand(item)">{{item.carseriesname}}</view>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {phoneRule,IDNumberRule} from '@/common/rule.js'
+	import {
+		list
+	} from "@/utils/index.list.js";
+	const letterArr = list.map(val => {
+		return val.letter;
+	})
 	export default {
 		data() {
 			return {
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
+				indexList: [],
+				list: [],
+				carmodelList: [],
 				show:false,
-				form: {
-				  leasetime: '',
-				  monthlyrent: '',
-				  deposit: '',
-				  rentername: '',
-				  renteridphone: '',
-				  renteridcard: '',
-				  carname: '奥迪'
-				},
-				rules:{
-					renteridphone:phoneRule,
-					renteridcard:IDNumberRule,
-				},
-				leasetime: '',
-				select: [
-					{
-						label: '1个月',
-						value: 1
-					},
-					{
-						label: '3个月',
-						value: 3
-					},
-					{
-						label: '6个月',
-						value: 6
-					},
-					{
-						label: '12个月',
-						value: 12
-					},
-				],
+				showBrand:false,
+				text:''
 			}
-		},
-		onReady() {
-		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-			
+			this.first()
 		},
 		methods: {
-			blur(){
-				if(this.form.rentername&&this.form.renteridphone&&this.form.renteridcard){
-					const params={
-						userName: this.form.rentername,
-						phone: this.form.renteridphone,
-						idCard: this.form.renteridcard
+			first(){
+				uni.request({
+					url: 'https://niuche-default.neocab.cn/carmodel', //接口地址
+					header: {
+						'content-type': 'application/x-www-form-urlencoded', //自定义请求头信息
+					},
+					success: (res) => {
+						if (res.statusCode === 200) {
+							this.list = res.data;
+							let arr = [];
+							res.data.forEach(item => {
+								arr.push(item.letter)
+							})
+							this.indexList = arr
+						} else {
+							this.list = list;
+							this.indexList = letterArr
+						}
 					}
-					this.$u.api.verify(params).then(res => {
-						if(res.code === 200){
-							
-						 } else{
-							this.$u.toast(res.msg) 
-						 }
-					}).catch(res=>{this.$u.toast(res.msg)})
-				}
+				});
 			},
-			confirm(arr){
-				this.form.leasetime = arr[0].value;
-				this.leasetime = arr[0].label;
-			},
-			submit(){
-				if(!this.form.leasetime&&!this.form.monthlyrent&&!this.form.deposit&&!this.form.rentername
-				&&!this.form.renteridphone&&!this.form.renteridcard&&!this.form.carname){
-					this.$u.toast('请填写完整');
-					return false
-				}
-				this.form.monthlyrent = Number(this.form.monthlyrent)
-				this.form.deposit = Number(this.form.deposit)
-				this.$u.api.orderNew(this.form).then(res => {
+			second(id){
+				this.$u.api.getCarSystem({carbrandid:id}).then(res=>{
 					if(res.code === 200){
-						this.$u.toast('新建订单成功');
-						this.$u.route('/pages/company/order/orderList')
-					 } else{
-						this.$u.toast(res.msg) 
-					 }
-				}).catch(res=>{this.$u.toast(res.msg)})
+						 let data = res.object;
+						 this.carmodelList = data;
+						 // this.form.carbrand = obj.text;
+						 // this.form.carmodel = '',
+						 // this.form.carxinghao = '',
+						 // this.form.type = 1
+						 // this.$emit("onClick",this.form)
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				}).catch(res=>{console.log(res)})
+				this.step = 2
+			},
+			third(obj){
+				this.$u.api.getCarModel({carseriesid:obj.carseriesid}).then(res=>{
+					if(res.code === 200){
+					  let data = res.object;
+					  this.carxinghaoList = data;
+					  this.form.carmodel = obj.carseriesname;
+					  this.form.carxinghao = '',
+					  this.form.type = 2
+					  this.$emit("onClick",this.form)
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+				if(this.max === 3) {
+					this.step = 3
+				}
+			},
+			secondBrand(items){
+				this.show = true;
+				this.text = items.text;
+				this.second(items.id)
 			}
-		}	
+			}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.content{
-		padding: 28rpx;
-		color: #111;
+	page{
+		background: #f5f5f5;
 	}
-	.bottom{
-		width: 100%;
-		height: 140rpx;
-		position: fixed;
-		left: 0;
-		bottom: 0;
-		border-top: 2rpx solid rgba(0,0,0,0.08);
-		.submit{
-			width: 600rpx;
-			height: 100rpx;
-			line-height: 100rpx;
+	.selectBrand{
+		.title{
+			padding: 42rpx 28rpx;
+			height: 128rpx;
+			font-size: 32rpx;
+			color: #1a2232;
+			background: #fff;
+		}
+		.letter{
+			padding: 0 28rpx;
+			height: 60rpx;
+			line-height: 60rpx;
+			font-size: 24rpx;
+			color: #a0a0a0;
+		}
+		.box{
+			.first{
+				padding: 0 28rpx;
+				height: 100rpx;
+				line-height: 100rpx;
+				font-size: 28rpx;
+				color: #1a2232;
+				background: #fff;
+				border-bottom: 2rpx solid rgba(0,0,0,0.08);
+			}
+			.first:last-child{
+				padding: 0 28rpx;
+				height: 100rpx;
+				line-height: 100rpx;
+				font-size: 28rpx;
+				color: #1a2232;
+				background: #fff;
+				border-bottom: 2rpx solid transparent;
+			}
+		}
+		.list{
+			width: 52rpx;
 			text-align: center;
-			background: linear-gradient(270deg, #63D094 0%, #5BC98A 49%, #3EB06B 100%);
-			border-radius: 12rpx;
+			font-size: 24rpx;
+			color: #1a2232;
 			margin-top: 20rpx;
-			margin-left: 75rpx;
-			font-size: 36rpx;
-			color: #fff;
+		}
+		.second{
+			padding: 0 26rpx;
+			height: 108rpx;
+			line-height: 108rpx;
+			font-size: 26rpx;
+			color: #1a2232;
+			background: #fff;
+			border-bottom: 2rpx solid rgba(0,0,0,0.08);
 		}
 	}
 </style>

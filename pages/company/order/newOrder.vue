@@ -5,6 +5,7 @@
 			<view style="margin-top: 20rpx;">订单信息</view>
 			<view style="margin-top: 20rpx;color: #bcbcbc;">订单号：2343434343</view>
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
+				<u-form-item style="width:694rpx;margin-top: -18rpx;" label="出租车辆:"><u-input placeholder="请选择" @click="toCarname()" v-model="form.carname" type="select" /></u-form-item>
 				<u-form-item style="width:694rpx;margin-top: -18rpx;" label="租期:"><u-input placeholder="请选择" @click="show = true" v-model="leasetime" type="select" /></u-form-item>
 				<u-form-item label="押金:" prop="deposit">
 					<u-input type="number" class="input-radius" v-model="form.deposit" placeholder="请输入"/>元
@@ -43,13 +44,13 @@
 				},
 				show:false,
 				form: {
+				  carname: '',
 				  leasetime: '',
 				  monthlyrent: '',
 				  deposit: '',
 				  rentername: '',
 				  renteridphone: '',
-				  renteridcard: '',
-				  carname: '奥迪'
+				  renteridcard: ''
 				},
 				rules:{
 					renteridphone:phoneRule,
@@ -83,6 +84,9 @@
 			
 		},
 		methods: {
+			toCarname(){
+				this.$u.route('/pages/company/order/selectBrand')
+			},
 			blur(){
 				if(this.form.rentername&&this.form.renteridphone&&this.form.renteridcard){
 					const params={

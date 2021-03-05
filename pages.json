@@ -145,6 +145,12 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//公司新建订单选择品牌
+		    "path" : "pages/company/order/selectBrand",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
 		,{//公司验车车辆信息浏览
 		    "path" : "pages/company/order/checkMessage",
 		    "style" : {
