@@ -517,7 +517,7 @@
 						})
 					}
 				})
-				// this.getInfo()
+				this.getInfo()
 			},
 			//上传验车单
 			uploadCar() {
@@ -540,6 +540,7 @@
 			openFlow(){
 				this.openFlag = !this.openFlag
 			},
+			//支付
 			pay() {
 				this.$u.api.getOrderInfo().then(res => {
 					if (res.code === 200) {
@@ -548,7 +549,9 @@
 							provider: 'alipay',
 							orderInfo: res.object, //微信、支付宝订单数据
 							success: function(res) {
-								alert('success:' + JSON.stringify(res));
+								this.payOrder = false;
+								this.getInfo()
+								this.$u.toast(JSON.stringify(res))
 							},
 							fail: function(err) {
 								alert('fail:' + JSON.stringify(err));
