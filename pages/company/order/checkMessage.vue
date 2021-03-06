@@ -43,17 +43,22 @@
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
 			<view style="margin-top: 20rpx;" class="title">车辆铭牌（1张）</view>
-			<u-image width="694rpx" height="386rpx" :src="detail.nameplateImg"></u-image>
+			<!-- <kxj-previewImage ref="previewFirst" :saveBtn="false" :rotateBtn="false" :imgs="arrFirst"></kxj-previewImage>
+			<u-image @click="previewFirst(index,'previewFirst')" width="694rpx" height="386rpx" v-for="(item,index) in arrFirst" :key="index" :src="item"></u-image> -->
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
 			<view style="margin-top: 20rpx;" class="title">中控仪表盘（必填）</view>
-			<u-image width="694rpx" height="386rpx" :src="detail.meterImg"></u-image>
+			<kxj-previewImage ref="previewSecond" :saveBtn="false" :rotateBtn="false" :imgs="arrSecond"></kxj-previewImage>
+			<u-image @click="previewSecond(index)" width="694rpx" height="386rpx" v-for="(item,index) in arrSecond" :key="index" :src="item"></u-image>
 			<!-- <view style="margin-top: 32rpx;">表显里程：12333333KM</view> -->
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
 			<view style="margin-top: 20rpx;" class="title">车况详细登记</view>
-			<view style="margin-top: 20rpx;" class="title">一.外观漆面和碰撞登记</view>
-			<view style="margin-top: 60rpx;" v-for="(item,index) in detail.oneList" :key="index">
+			<view style="display: flex;justify-content: space-between;align-items: center;">
+				<view style="margin-top: 20rpx;" class="title">一.外观漆面和碰撞登记</view>
+				<view @click="showOrHide('openFlag')"><u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+			</view>
+			<view v-show="openFlag" style="margin-top: 60rpx;" v-for="(item,index) in detail.oneList" :key="index">
 				<view style="display: flex;justify-content: space-between;">
 					<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
 					<view class="status" v-show='item.text'>{{item.text}}</view>
@@ -65,10 +70,52 @@
 			</view>
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
-			<view style="margin-top: 20rpx;" class="title">二.常用功能登记</view>
-			<view class="title">安全系统</view>
-			<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
-				<view style="margin-top: 60rpx;" v-for="(item,index) in detail.safeList" :key="index">
+			<view style="display: flex;justify-content: space-between;align-items: center;">
+				<view style="margin-top: 20rpx;" class="title">二.常用功能登记</view>
+				<view @click="showOrHide('twoFlag')"><u-icon :name="twoFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+			</view>
+			<view v-show="twoFlag">
+				<view class="title">安全系统</view>
+				<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
+					<view style="margin-top: 60rpx;" v-for="(item,index) in detail.safeList" :key="index">
+						<view style="display: flex;justify-content: space-between;">
+							<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
+							<view class="status" v-show='item.text'>{{item.text}}</view>
+							<view class="status" v-show='!item.text'>无</view>
+						</view>
+						<view style="display: flex;justify-content: space-between;">
+							<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
+						</view>
+					</view>
+				</view>
+				<view style="margin-top: 42rpx;" class="title">外部配置</view>
+				<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
+					<view style="margin-top: 60rpx;" v-for="(item,index) in detail.outsideList" :key="index">
+						<view style="display: flex;justify-content: space-between;">
+							<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
+							<view class="status" v-show='item.text'>{{item.text}}</view>
+							<view class="status" v-show='!item.text'>无</view>
+						</view>
+						<view style="display: flex;justify-content: space-between;">
+							<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
+						</view>
+					</view>
+				</view>
+				<view style="margin-top: 42rpx;" class="title">内部配置</view>
+				<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
+					<view style="margin-top: 60rpx;" v-for="(item,index) in detail.insideList" :key="index">
+						<view style="display: flex;justify-content: space-between;">
+							<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
+							<view class="status" v-show='item.text'>{{item.text}}</view>
+							<view class="status" v-show='!item.text'>无</view>
+						</view>
+						<view style="display: flex;justify-content: space-between;">
+							<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
+						</view>
+					</view>
+				</view>
+				<view style="margin-top: 42rpx;" class="title">灯光系统</view>
+				<view style="margin-top: 60rpx;" v-for="(item,index) in detail.lightList" :key="index">
 					<view style="display: flex;justify-content: space-between;">
 						<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
 						<view class="status" v-show='item.text'>{{item.text}}</view>
@@ -77,51 +124,43 @@
 					<view style="display: flex;justify-content: space-between;">
 						<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
 					</view>
-				</view>
-			</view>
-			<view style="margin-top: 42rpx;" class="title">外部配置</view>
-			<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
-				<view style="margin-top: 60rpx;" v-for="(item,index) in detail.outsideList" :key="index">
-					<view style="display: flex;justify-content: space-between;">
-						<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
-						<view class="status" v-show='item.text'>{{item.text}}</view>
-						<view class="status" v-show='!item.text'>无</view>
-					</view>
-					<view style="display: flex;justify-content: space-between;">
-						<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
-					</view>
-				</view>
-			</view>
-			<view style="margin-top: 42rpx;" class="title">内部配置</view>
-			<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
-				<view style="margin-top: 60rpx;" v-for="(item,index) in detail.insideList" :key="index">
-					<view style="display: flex;justify-content: space-between;">
-						<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
-						<view class="status" v-show='item.text'>{{item.text}}</view>
-						<view class="status" v-show='!item.text'>无</view>
-					</view>
-					<view style="display: flex;justify-content: space-between;">
-						<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
-					</view>
-				</view>
-			</view>
-			<view style="margin-top: 42rpx;" class="title">灯光系统</view>
-			<view style="margin-top: 60rpx;" v-for="(item,index) in detail.lightList" :key="index">
-				<view style="display: flex;justify-content: space-between;">
-					<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
-					<view class="status" v-show='item.text'>{{item.text}}</view>
-					<view class="status" v-show='!item.text'>无</view>
-				</view>
-				<view style="display: flex;justify-content: space-between;">
-					<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
 				</view>
 			</view>
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
-			<view style="margin-top: 20rpx;" class="title">三.启动检测</view>
-			<view class="title">仪表台故障灯</view>
-			<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
-				<view style="margin-top: 60rpx;" v-for="(item,index) in detail.faultList" :key="index">
+			<view style="display: flex;justify-content: space-between;align-items: center;">
+				<view style="margin-top: 20rpx;" class="title">三.启动检测</view>
+				<view @click="showOrHide('threeFlag')"><u-icon :name="threeFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+			</view>
+			<view v-show="threeFlag">
+				<view class="title">仪表台故障灯</view>
+				<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
+					<view style="margin-top: 60rpx;" v-for="(item,index) in detail.faultList" :key="index">
+						<view style="display: flex;justify-content: space-between;">
+							<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
+							<view class="status" v-show='item.text'>{{item.text}}</view>
+							<view class="status" v-show='!item.text'>无</view>
+						</view>
+						<view style="display: flex;justify-content: space-between;">
+							<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
+						</view>
+					</view>
+				</view>
+				<view style="margin-top: 42rpx;" class="title">发动力状态</view>
+				<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
+					<view style="margin-top: 60rpx;" v-for="(item,index) in detail.powerStatusList" :key="index">
+						<view style="display: flex;justify-content: space-between;">
+							<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
+							<view class="status" v-show='item.text'>{{item.text}}</view>
+							<view class="status" v-show='!item.text'>无</view>
+						</view>
+						<view style="display: flex;justify-content: space-between;">
+							<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
+						</view>
+					</view>
+				</view>
+				<view style="margin-top: 42rpx;" class="title">变速箱及转向</view>
+				<view style="margin-top: 60rpx;" v-for="(item,index) in detail.speedList" :key="index">
 					<view style="display: flex;justify-content: space-between;">
 						<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
 						<view class="status" v-show='item.text'>{{item.text}}</view>
@@ -130,36 +169,15 @@
 					<view style="display: flex;justify-content: space-between;">
 						<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
 					</view>
-				</view>
-			</view>
-			<view style="margin-top: 42rpx;" class="title">发动力状态</view>
-			<view style="padding-bottom: 42rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
-				<view style="margin-top: 60rpx;" v-for="(item,index) in detail.powerStatusList" :key="index">
-					<view style="display: flex;justify-content: space-between;">
-						<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
-						<view class="status" v-show='item.text'>{{item.text}}</view>
-						<view class="status" v-show='!item.text'>无</view>
-					</view>
-					<view style="display: flex;justify-content: space-between;">
-						<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
-					</view>
-				</view>
-			</view>
-			<view style="margin-top: 42rpx;" class="title">变速箱及转向</view>
-			<view style="margin-top: 60rpx;" v-for="(item,index) in detail.speedList" :key="index">
-				<view style="display: flex;justify-content: space-between;">
-					<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
-					<view class="status" v-show='item.text'>{{item.text}}</view>
-					<view class="status" v-show='!item.text'>无</view>
-				</view>
-				<view style="display: flex;justify-content: space-between;">
-					<u-image v-for="(items,index) in item.photo" :key="index" width="208rpx" height="208rpx" :src="items"></u-image>
 				</view>
 			</view>
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
-			<view style="margin-top: 20rpx;" class="title">四.随车工具</view>
-			<view style="margin-top: 60rpx;" v-for="(item,index) in detail.toolList" :key="index">
+			<view style="display: flex;justify-content: space-between;align-items: center;">
+				<view style="margin-top: 20rpx;" class="title">四.随车工具</view>
+				<view @click="showOrHide('fourFlag')"><u-icon :name="fourFlag?'arrow-up':'arrow-down'" size="36" color="#111111"></u-icon></view>
+			</view>
+			<view v-show="fourFlag" style="margin-top: 60rpx;" v-for="(item,index) in detail.toolList" :key="index">
 				<view style="display: flex;justify-content: space-between;">
 					<view style="margin-top: 20rpx;" class="title">{{item.name}}</view>
 					<view class="status" v-show='item.text'>{{item.text}}</view>
@@ -174,12 +192,22 @@
 </template>
 
 <script>
+	import kxjPreviewImage from '@/components/kxj-previewImage/kxj-previewImage.vue'
 	export default {
+		components: {
+			kxjPreviewImage
+		  },
 		data() {
 			return {
 				detail: {
 				  
-				}
+				},
+				openFlag:true,
+				twoFlag:true,
+				threeFlag:true,
+				fourFlag:true,
+				arrFirst:[],
+				arrSecond:[]
 			}
 		},
 		onLoad(option) {
@@ -189,6 +217,14 @@
 			}
 		},
 		methods: {
+			showOrHide(name){
+				this[name] = !this[name];
+			},
+			preview(e){
+				
+				this.$refs.previewImage.open(e)
+				this.$u.api.setEvent({eventId:"lease_content_picture",type:3,params:{desc:'浏览banner'}})
+			},
           getMessage(id){
           	let token = uni.getStorageSync('token');
           	if(token){
@@ -197,7 +233,8 @@
           		}).then(res=>{
           			if(res.code === 200){
           				 this.detail = JSON.parse(res.object);
-						 console.log(this.detail)
+						 this.arrFirst.push(this.detail.nameplateImg)
+						 this.arrSecond.push(this.detail.meterImg)
           			}else {
           				 this.$u.toast(res.msg);
           			}

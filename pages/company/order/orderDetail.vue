@@ -43,9 +43,9 @@
 						</template>
 						<template v-slot:content>
 							<view>
-								<view style="color: #333;" v-if="detail.state=='WAITTING_SIGN_CONTRACT'" class="u-order-desc">合同签署</view>
+								<view style="color: #333;" v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="u-order-desc">合同签署</view>
 								<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
-								<view v-else-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view>
+								<view v-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view>
 								<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
 							</view>
 						</template>
@@ -57,7 +57,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
+										<view>{{detail.registerTime}}</view>
 										<view class="hour">11:15:33</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
@@ -380,7 +380,7 @@
 				<!-- <view v-if="detail.state=='REGISTER_CAR'" class="sign">登记商品信息</view> -->
 			</view>
 			<view>
-				<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='COMPANY_SIGN_CONTRACT'" @click="shopMessage()" class="signActive">签署汽车租赁合同</view>
+				<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='COMPANY_SIGN_CONTRACT'" @click="signContact()" class="signActive">签署汽车租赁合同</view>
 				<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="sign">签署汽车租赁合同</view>
 			</view>
 			<view>
@@ -451,13 +451,20 @@
 			}
 		},
 		methods: {
+			signContact() {
+				if (this.detail.state === 'VALIDATE_CAR'||this.detail.state === 'WAITTING_UPLOADING_MESSAGE'){
+					this.$u.toast('出租方商品未登记,请联系出租方');
+					return 
+				}
+				this.$u.route('/pages/driver/myOrder/contractSign',{id:this.id,userId:this.detail.userid})
+			},
 			revoke(){
 				uni.showModal({
 				   title: '警告信息',
 				   content: '是否撤销？',
 				   success: function (res) {
 				       if (res.confirm) {
-				           this.$u.api.Invalidation({
+				           this.$u.api.orderEfficacy({
 				           	orderId:this.detail.tradeid
 				           }).then(res=>{
 				           	if(res.code === 200){
