@@ -256,7 +256,7 @@ const install = (Vue, vm) => {
 	//确认提车
 	const orderDeliveryOfVehicle = (params = {}) => vm.$u.post('/order/affirm/deliveryOfVehicle?orderId='+params.orderId, params);
 	//获取价格
-	const orderPrice = (params = {}) => vm.$u.post('/order/real/price/get?orderId='+params.orderId, params);
+	const orderPrice = (params = {}) => vm.$u.post('/order/real/price/get?orderId='+params.orderId+'&type='+params.type, params);
 	//法大大
 	const getFdd = (params = {}) => vm.$u.get('/app/fdd/server/'+params.orderId+'/'+params.userId, {});
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
