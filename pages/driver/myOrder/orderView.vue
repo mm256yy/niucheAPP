@@ -421,7 +421,7 @@
 			//提车
 			pickCar(){
 				this.$u.api.orderDeliveryOfVehicle({
-					id: this.id
+					orderId: this.id
 				}).then(res => {
 					if (res.code === 200) {
 						this.refreshView()
