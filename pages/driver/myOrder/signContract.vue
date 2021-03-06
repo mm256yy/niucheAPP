@@ -58,6 +58,8 @@
 				this.$u.api.getFdd({orderId: this.id,userId:this.userid}).then(res=>{
 					 if (res.code === 200){
 						 this.srcUrl = res.object
+					 } else {
+						 this.$u.toast(res.msg)
 					 }
 				})
 			}
