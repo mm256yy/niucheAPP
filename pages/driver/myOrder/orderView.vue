@@ -138,9 +138,9 @@
 			</view>
 			<view class="content_item" v-if="soureNum>3">
 				<view class="item"><text class="title">首月租金: </text><text>{{form.monthlyrent}}元</text></view>
-				<view class="item"><text class="title">账户抵扣：</text><text>{{form.carname}}元</text></view>
-				<view class="item"><text class="title">实付：</text><text>{{form.carname}}元</text></view>
-				<view class="item"><text class="title">支付时间：</text><text>{{form.carname}}元</text></view>
+				<view class="item"><text class="title">账户抵扣：</text><text>{{form.reducePrice}}元</text></view>
+				<view class="item"><text class="title">实付：</text><text>{{form.realPrice}}元</text></view>
+				<view class="item"><text class="title">支付时间：</text><text>{{form.paytime}}</text></view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
