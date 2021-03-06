@@ -482,6 +482,7 @@
 				this.$u.route('/pages/driver/myOrder/contractPreview', {
 					src: 'http://www.baidu.com'
 				})
+				// this.$u.route('/pages/driver/myOrder/contractPreview',{id:this.id,userId:this.form.userid})
 			},
 			//获取数据
 			getInfo() {

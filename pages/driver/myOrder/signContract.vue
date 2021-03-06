@@ -26,7 +26,7 @@
 		},
 		onLoad(option) {
 			let id = option.id;
-			let userid = option.userid;
+			let userid = option.userId;
 			if (id) {
 				this.id = id;
 			}
