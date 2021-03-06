@@ -235,10 +235,6 @@ const install = (Vue, vm) => {
 	const checkCarList = (params = {}) => vm.$u.post(
 		'/order/car/message/get?orderId=' + params.orderId, {}
 	);
-	//失效
-	const Invalidation = (params = {}) => vm.$u.post(
-		'/order/lose/efficacy?orderId=' + params.orderId, {}
-	);
      //司机我的订单
 	const driverOrderList = (params = {}) => vm.$u.post("/order/driver/list?pageNum=" + params.pageNum + "&pageSize=" +
 		params.pageSize, {});
@@ -374,8 +370,7 @@ const install = (Vue, vm) => {
 		orderDetail,
 		orderNew,
 		registerAdd,
-		verify,
-		Invalidation
+		verify
 	};
 }
 

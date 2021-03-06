@@ -2,7 +2,7 @@
 	<view>
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.id)">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item)">
 					<view class="item_time">{{item.createTime}}</view>
 					<view class="item_content">
 						<view class="title u-line-2">
@@ -76,7 +76,7 @@
 			}
 		},
 		mounted() {
-			// this.downCallback()
+			this.downCallback()
 		},
 		methods: {
 			showSelect() {
@@ -111,10 +111,16 @@
 					}
 				})
 			},
-			toView(id) {
-				this.$u.route('/pages/company/order/orderDetail', {
-					id: id
-				})
+			toView(item) {
+				if(item.state == 'ORDER_FAILED'){
+					this.$u.route('/pages/company/order/invalidation', {
+						id: item.id
+					})
+				}else{
+					this.$u.route('/pages/company/order/orderDetail', {
+						id: item.id
+					})
+				}
 			}
 		}
 	}

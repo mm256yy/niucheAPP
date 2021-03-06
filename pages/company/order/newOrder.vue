@@ -81,7 +81,10 @@
 		    this.$refs.uForm.setRules(this.rules);
 		},
 		mounted() {
-			
+			const obj = uni.getStorageSync('textSelect');
+			if(obj){
+				this.form.carname = obj.text + ' ' + obj.textBrand + ' ' + obj.textThird;
+			}
 		},
 		methods: {
 			toCarname(){
@@ -118,6 +121,7 @@
 				this.$u.api.orderNew(this.form).then(res => {
 					if(res.code === 200){
 						this.$u.toast('新建订单成功');
+						const obj = uni.removeStorageSync('textSelect');
 						this.$u.route('/pages/company/order/order')
 					 } else{
 						this.$u.toast(res.msg) 

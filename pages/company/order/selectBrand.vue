@@ -7,7 +7,7 @@
 				<view v-for="(item,index) in list" :key="index">
 					<view class="letter">{{item.letter}}</view>
 					<view class="box">
-						<view @click="secondBrand(items)" v-for="(items,index) in item.data" :key="items.id" class="first">{{items.text}}</view>
+						<view @click="firstBrand(items)" v-for="(items,index) in item.data" :key="items.id" :class="{ 'first':true,'active': items.text==text}">{{items.text}}</view>
 					</view>
 				</view>
 			</view>
@@ -17,13 +17,18 @@
 				</view>
 			</view>
 		</view>
-		<view v-show="show" style="position: fixed;top: 88rpx;right: 0;width: 448rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);">
+		<view v-show="show" style="position: fixed;top: 88rpx;right: 0;width: 480rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);">
 			<view>
-				<view style="display: flex;align-items: center;justify-content: space-between;width: 448rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
-					<view>{{text}}</view>
+				<view style="display: flex;align-items: center;justify-content: space-between;width: 480rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
+					<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
 					<u-image width="30" height="28" src="@/static/order/close.png"></u-image>
 				</view>
-				<view class="second" v-for="(item,index) in carmodelList" :key="index" @click="thirdBrand(item)">{{item.carseriesname}}</view>
+				<view :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">{{item.carseriesname}}</view>
+			</view>
+		</view>
+		<view v-show="showBrand" style="position: fixed;top: 224rpx;right: 0;width: 300rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);z-index: 100;">
+			<view>
+				<view class="second" v-for="(item,index) in carxinghaoList" :key="index" @click="thirdBrand(item)">{{item.carseriesname}}</view>
 			</view>
 		</view>
 	</view>
@@ -45,9 +50,12 @@
 				indexList: [],
 				list: [],
 				carmodelList: [],
+				carxinghaoList: [],
 				show:false,
 				showBrand:false,
-				text:''
+				text:'',
+				textBrand:'',
+				textThird:''
 			}
 		},
 		mounted() {
@@ -80,26 +88,17 @@
 					if(res.code === 200){
 						 let data = res.object;
 						 this.carmodelList = data;
-						 // this.form.carbrand = obj.text;
-						 // this.form.carmodel = '',
-						 // this.form.carxinghao = '',
-						 // this.form.type = 1
-						 // this.$emit("onClick",this.form)
 					}else {
 						 this.$u.toast(res.msg);
 					}
 				}).catch(res=>{console.log(res)})
 				this.step = 2
 			},
-			third(obj){
-				this.$u.api.getCarModel({carseriesid:obj.carseriesid}).then(res=>{
+			third(id){
+				this.$u.api.getCarModel({carseriesid:id}).then(res=>{
 					if(res.code === 200){
 					  let data = res.object;
 					  this.carxinghaoList = data;
-					  this.form.carmodel = obj.carseriesname;
-					  this.form.carxinghao = '',
-					  this.form.type = 2
-					  this.$emit("onClick",this.form)
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -108,12 +107,26 @@
 					this.step = 3
 				}
 			},
-			secondBrand(items){
+			firstBrand(items){
 				this.show = true;
 				this.text = items.text;
 				this.second(items.id)
+			},
+			secondBrand(item){
+				this.showBrand = true;
+				this.textBrand = item.carseriesname;
+				this.third(item.carseriesid)
+			},
+			thirdBrand(item){
+				this.textThird = item.carseriesname;
+				uni.setStorageSync('textSelect', {
+					text: this.text,
+					textBrand: this.textBrand,
+					textThird: this.textThird
+				});
+				this.$u.route('/pages/company/order/newOrder')
 			}
-			}
+		}
 	}
 </script>
 
@@ -135,6 +148,7 @@
 			line-height: 60rpx;
 			font-size: 24rpx;
 			color: #a0a0a0;
+			border-bottom: 2rpx solid rgba(0,0,0,0.08);
 		}
 		.box{
 			.first{
@@ -146,14 +160,8 @@
 				background: #fff;
 				border-bottom: 2rpx solid rgba(0,0,0,0.08);
 			}
-			.first:last-child{
-				padding: 0 28rpx;
-				height: 100rpx;
-				line-height: 100rpx;
-				font-size: 28rpx;
-				color: #1a2232;
-				background: #fff;
-				border-bottom: 2rpx solid transparent;
+			.active{
+				background: rgba(0,0,0,0.04);
 			}
 		}
 		.list{
@@ -164,13 +172,14 @@
 			margin-top: 20rpx;
 		}
 		.second{
-			padding: 0 26rpx;
-			height: 108rpx;
-			line-height: 108rpx;
+			padding: 32rpx 26rpx;
 			font-size: 26rpx;
 			color: #1a2232;
 			background: #fff;
 			border-bottom: 2rpx solid rgba(0,0,0,0.08);
+		}
+		.active{
+			background: rgba(0,0,0,0.04);
 		}
 	}
 </style>

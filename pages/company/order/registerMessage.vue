@@ -72,17 +72,10 @@
 				showMask:false,
 				showModal:false,
 				form: {
-				  color: '',
-				  numberPlate: '',
-				  numberFrame: '',
-				  numberEngine: '',
-				  registration: '',
-				  km: '',
-				  endRentDate: '',
 				  orderId: '',
 				  startRentDate: '',
-				  orderId: '',
-				  registerInfo: ''
+				  endRentDate: '',
+				  registerInfo: {}
 				},
 				detail:{},
 				leasetime: '',
@@ -99,7 +92,6 @@
 			if(detail){
 			 this.detail = detail;
 			 this.form.orderId = this.detail.tradeid;
-			 this.form.registerInfo = this.detail.carname;
 			}
 		},
 		methods: {
@@ -118,7 +110,22 @@
 			confirm(){
 				this.showMask = false;
 				this.showModal = false;
-				this.$u.api.registerAdd(this.form).then(res => {
+				this.form.registerInfo = {
+					carname: this.detail.carname,
+					color: this.form.color,
+					km: this.form.km,
+					numberEngine: this.form.numberEngine,
+					numberFrame: this.form.numberFrame,
+					numberPlate: this.form.numberPlate,
+					registration: this.form.registration
+				}
+				const params = {
+					orderId:this.form.orderId,
+					startRentDate:this.form.startRentDate,
+					endRentDate:this.form.endRentDate,
+					registerInfo:JSON.stringify(this.form.registerInfo)
+				}
+				this.$u.api.registerAdd(params).then(res => {
 					if(res.code === 200){
 						this.$u.toast('商品信息登记成功');
 						this.$u.route('/pages/company/order/orderDetail', {
