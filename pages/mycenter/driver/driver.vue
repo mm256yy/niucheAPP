@@ -257,7 +257,7 @@
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser()
-			this.getOrderInfo()
+			
 		},
 		onShow() {
 			console.log(this.driverPub.shareId, '6666666');
@@ -317,7 +317,7 @@
 						shareId: ''
 					}
 				}
-				console.log(this.driverPub.shareId, '6666666')
+				this.getOrderInfo()
 			},
 			toFeedback() {
 				this.$u.route('/pages/mycenter/driver/feedback');
