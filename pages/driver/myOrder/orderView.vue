@@ -262,7 +262,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="btn_orange">
+					<view class="btn_orange" @click="pay()">
 						立即支付
 					</view>
 				</view>
@@ -542,7 +542,13 @@
 			},
 			//支付
 			pay() {
-				this.$u.api.getOrderInfo().then(res => {
+				let data ={
+					  orderId: this.form.id,
+					  realPrice: 0.01,
+					  reducePrice: 0.01,
+					  type: 0
+					};
+				this.$u.api.getOrderInfo(data).then(res => {
 					if (res.code === 200) {
 						console.log(res.object)
 						uni.requestPayment({
