@@ -456,7 +456,7 @@
 					this.$u.toast('出租方商品未登记,请联系出租方');
 					return 
 				}
-				this.$u.route('/pages/driver/myOrder/contractSign',{id:this.id,userId:this.detail.userid})
+				this.$u.route('/pages/company/order/contractSign',{id:this.id,userid:this.detail.userid})
 			},
 			revoke(){
 				uni.showModal({

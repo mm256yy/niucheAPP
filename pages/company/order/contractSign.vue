@@ -57,7 +57,7 @@
 			getUrl(){
 				this.$u.api.getFdd({orderId: this.id,userId:this.userid}).then(res=>{
 					 if (res.code === 200){
-						 this.srcUrl = 'http://dev-redircet.neocab.cn/url/?od=122771272445857792&id=122039149376180224'
+						 this.srcUrl = res.object
 					 }
 				})
 			}
