@@ -11,7 +11,7 @@
 			<view class="top-content-upload" v-if="type">
 				<view></view>
 				<u-upload :custom-btn="true" :action="action" 
-				@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024"
+				@on-success='uploadChange' upload-text="" :file-list="fileList"
 				 max-count="1" style="width: 100%;justify-content: center;background-color: #FFFFFF;">
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -100,16 +100,16 @@
 				this.$u.route({url:'/pages/mycenter/mycenter',type:'switchTab'})
 			},
 			toNext(){
-				this.$refs.uForm.validate(valid=>{
-					if(valid) {
-						this.$u.api.addDrivingLicense(this.form).then(res => {
-							if(res.code === 200){
-								this.showTips =true;
-							 } else{
-								this.$u.toast(res.msg) 
-							 }
-						}).catch(res=>{this.$u.toast(res.msg)})
-					} 
+				if (this.form.driverPhoto === ''){
+					this.$u.toast('请上传图片');
+					return
+				}
+				this.$u.api.addDrivingLicense(this.form).then(res => {
+					if(res.code === 200){
+						this.showTips =true;
+					 } else{
+						this.$u.toast(res.msg) 
+					 }
 				})
 			},
 			uploadChange(res,index,lists,name){

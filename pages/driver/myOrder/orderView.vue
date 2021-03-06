@@ -20,8 +20,7 @@
 						<template v-slot:node>
 							<view class="u-node">
 								<view class="time" v-if="soureNum === 5">
-									<view>2020-09-28</view>
-									<view class="hour">11:15:33</view>
+									<view>{{form.finishedtime}}</view>
 								</view>
 								<view v-if="soureNum === 1">
 									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x_a.png"></u-image>
@@ -55,8 +54,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{form.takethecartime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
 								</view>
@@ -71,8 +69,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{form.paytime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
 								</view>
@@ -88,8 +85,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{form.signcontracttime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
 								</view>
@@ -104,8 +100,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{form.validatecartime}}</view>
+										<!-- <view class="hour">11:15:33</view> -->
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x.png"></u-image>
 								</view>
@@ -184,7 +180,7 @@
 				<u-col span="7">
 					<view class="tips">*须商家签署合同才可支付</view>
 					<view class="">
-						月租金：<text class="money">{{form.totalprice}}</text><text style="color:#FE3B31 ;">元（首月）</text>
+						月租金：<text class="money">{{form.monthlyrent}}</text><text style="color:#FE3B31 ;">元（首月）</text>
 					</view>
 					<view style="color:#FE3B31 ;font-size: 24rpx;">仅支持租金线上支付，押金另须线下支付</view>
 				</u-col>
@@ -225,7 +221,7 @@
 						</view>
 					</view>
 					<view style="padding-top: 30rpx;" v-show="otherFlag">
-						<u-input v-model="value" type="textarea" :border="true" height="140" />
+						<u-input v-model="reason" type="textarea" :border="true" height="140" />
 					</view>
 					<view class="btn_orange">
 						确定取消
@@ -237,17 +233,17 @@
 		 border-radius="14">
 			<view class="cancel_content">
 				<view class="money_item">
-					<view><text style="font-size: 60rpx;color: #333333;">12000</text><text style="padding-left: 6rpx;">元</text></view>
+					<view><text style="font-size: 60rpx;color: #333333;">{{form.monthlyrent}}</text><text style="padding-left: 6rpx;">元</text></view>
 					<view style="color: #999999;">支付总计</view>
 				</view>
 				<view class="total_item">
 					<u-checkbox-group active-color="#FF9F31" shape="circle">
-						<u-checkbox v-model="value" shape="circle"></u-checkbox>
+						<u-checkbox v-model="type" shape="circle"  @change="checkboxGroupChange"></u-checkbox>
 						<view style="margin-left: -20rpx;">
-							使用帐户余额支付 可用金额1000元
+							使用帐户余额抵扣 本次可用金额{{payForm.reducePrice}}元
 						</view>
 					</u-checkbox-group>
-					<view style="padding-top: 16rpx;">帐户余额已抵<text>2222</text>元，仍须支付<text>2222</text>元:</view>
+					<view style="padding-top: 16rpx;">帐户余额已抵<text>{{payForm.reducePrice}}</text>元，仍须支付<text>{{payForm.realPrice}}</text>元:</view>
 				</view>
 				<view class="item_list">
 					<view>
@@ -262,7 +258,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="btn_orange">
+					<view class="btn_orange" @click="pay()">
 						立即支付
 					</view>
 				</view>
@@ -299,6 +295,7 @@
 				timestamp: 0, //倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
+				reason:'',
 				reasonList: [{
 						text: '1. 车辆发生重大问题',
 						flag: true
@@ -320,9 +317,13 @@
 					companyname: '',
 				},
 				otherFlag: false,
-				value: '',
+				type: false,
 				showTips: false,
-				payCheckFlag:false
+				payCheckFlag:false,
+				payForm:{
+					reducePrice:0,
+					realPrice:0,
+				}
 			}
 		},
 		onLoad(option) {
@@ -481,6 +482,7 @@
 				this.$u.route('/pages/driver/myOrder/contractPreview', {
 					src: 'http://www.baidu.com'
 				})
+				// this.$u.route('/pages/driver/myOrder/contractPreview',{id:this.id,userId:this.form.userid})
 			},
 			//获取数据
 			getInfo() {
@@ -491,6 +493,7 @@
 					if (res.code === 200) {
 						this.form = res.object;
 						let date = new Date();
+						// this.form.state = 'NO_PAYMENT'
 						let startDate = this.form.updateTime;
 						startDate = startDate.replace(new RegExp("-", "gm"), "/");
 						let startDateM = (new Date(startDate)).getTime();
@@ -530,9 +533,27 @@
 				let state = this.form.state;
 				if (state === 'NO_PAYMENT') {
 					this.payOrder = true;
+					this.type = false;
+					this.computedPrice(0)
 				} else {
 					this.$u.toast('待商家签署合同')
 				}
+			},
+			checkboxGroupChange(e){
+				if (e.value){
+					this.computedPrice(1)
+				} else {
+					this.computedPrice(0)
+				}
+			},
+			computedPrice(type){
+				this.$u.api.orderPrice({orderId:this.id,type:type}).then(res=>{
+					if (res.code === 200){
+						this.payForm = res.object
+					} else {
+						this.$u.toast(res.msg)
+					}
+				})
 			},
 			openPayFlag(){
 				this.payCheckFlag = !this.payCheckFlag
@@ -542,16 +563,28 @@
 			},
 			//支付
 			pay() {
-				this.$u.api.getOrderInfo().then(res => {
+				let data ={
+					  orderId: this.form.id,
+					  realPrice: this.payForm.realPrice,
+					  reducePrice: this.payForm.reducePrice,
+					  type: this.type?1:0
+					};
+					console.log(data)
+				this.$u.api.getOrderInfo(data).then(res => {
 					if (res.code === 200) {
+						let that = this;
 						console.log(res.object)
+						setTimeout(()=>{
+							this.payOrder = false;
+						},2000)
 						uni.requestPayment({
 							provider: 'alipay',
 							orderInfo: res.object, //微信、支付宝订单数据
 							success: function(res) {
-								this.payOrder = false;
-								this.getInfo()
-								this.$u.toast(JSON.stringify(res))
+								alert(res)
+								that.payOrder = false;
+								that.getInfo()
+								that.$u.toast(JSON.stringify(res))
 							},
 							fail: function(err) {
 								alert('fail:' + JSON.stringify(err));

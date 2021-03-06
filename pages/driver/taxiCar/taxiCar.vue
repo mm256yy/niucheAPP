@@ -10,7 +10,7 @@
 			<view class="top-content-upload" v-if="type">
 				<view></view>
 				<u-upload :custom-btn="true" :action="action" 
-				@on-success='uploadChange' upload-text="" :file-list="fileList" :max-size="8 * 1024 * 1024"
+				@on-success='uploadChange' upload-text="" :file-list="fileList"
 				 max-count="1" style="width: 100%;justify-content: center;background-color: #FFFFFF;">
 					<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 						<u-icon name="plus" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -20,7 +20,7 @@
 			<view class="" v-else>
 				<u-image width="100%" height="240rpx" :src="form.driverPhoto"></u-image>
 			</view>
-			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过4M</view>
+			<view class="top-content-uploadTips" style="padding:10pt 0 5pt;">1.必须为jpg格式,单张不得超过8M</view>
 			<view class="top-content-uploadTips">2.上传后自动或手动识别文字信息</view>
 		</view>
 		<view style="text-align: center; padding: 5pt 30pt;" v-show="type">
@@ -106,16 +106,16 @@
 				this.type = true;
 			},
 			toNext(){
-				this.$refs.uForm.validate(valid=>{
-					if(valid) {
-						this.$u.api.addDrivingLicense(this.form).then(res => {
-							if(res.code === 200){
-								this.showTips =true;
-							 } else{
-								this.$u.toast(res.msg) 
-							 }
-						}).catch(res=>{this.$u.toast(res.msg)})
-					} 
+				if (this.form.driverPhoto === ''){
+					this.$u.toast('请上传图片');
+					return
+				}
+				this.$u.api.addDrivingLicense(this.form).then(res => {
+					if(res.code === 200){
+						this.showTips =true;
+					 } else{
+						this.$u.toast(res.msg) 
+					 }
 				})
 			},
 			uploadChange(res,index,lists,name){
