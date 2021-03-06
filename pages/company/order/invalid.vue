@@ -112,7 +112,7 @@
 				})
 			},
 			toView(id) {
-				this.$u.route('/pages/company/order/orderDetail', {
+				this.$u.route('/pages/company/order/invalidation', {
 					id: id
 				})
 			}

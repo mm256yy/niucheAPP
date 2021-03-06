@@ -133,8 +133,20 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//公司我的订单详情(失效)
+		    "path" : "pages/company/order/invalidation",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
 		,{//公司我的新建订单
 		    "path" : "pages/company/order/newOrder",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司新建订单选择品牌
+		    "path" : "pages/company/order/selectBrand",
 		    "style" : {
 				"navigationStyle": "custom" 
 			}
