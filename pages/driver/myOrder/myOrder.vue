@@ -130,11 +130,14 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss">
 	page {
 		background: #F5F5F5;
 	}
+
+</style>
+<style lang="scss" scoped>
+
 
 	.navbar-right {
 		margin-right: 24rpx;
