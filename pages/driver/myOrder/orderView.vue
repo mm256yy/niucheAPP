@@ -185,7 +185,7 @@
 				<u-col span="7">
 					<view class="tips">*须商家签署合同才可支付</view>
 					<view class="">
-						月租金：<text class="money">{{form.monthlyrent}}</text><text style="color:#FE3B31 ;">元（首月）</text>
+						月租金：<text class="money">{{form.monthlyrent |toMoney}}</text><text style="color:#FE3B31 ;">元（首月）</text>
 					</view>
 					<view style="color:#FE3B31 ;font-size: 24rpx;">仅支持租金线上支付，押金另须线下支付</view>
 				</u-col>
@@ -238,7 +238,7 @@
 			border-radius="14">
 			<view class="cancel_content">
 				<view class="money_item">
-					<view><text style="font-size: 60rpx;color: #333333;">{{form.monthlyrent}}</text><text
+					<view><text style="font-size: 60rpx;color: #333333;">{{form.monthlyrent | toMoney}}</text><text
 							style="padding-left: 6rpx;">元</text></view>
 					<view style="color: #999999;">支付总计</view>
 				</view>
@@ -380,6 +380,24 @@
 					return ''
 				}
 			},
+			toMoney:function(s,type){
+				    if (/[^0-9\.]/.test(s)) return "0";
+				    if (s == null || s == "") return "0";
+				    s = s.toString().replace(/^(\d*)$/, "$1.");
+				    s = (s + "00").replace(/(\d*\.\d\d)\d*/, "$1");
+				    s = s.replace(".", ",");
+				    var re = /(\d)(\d{3},)/;
+				    while (re.test(s))
+				        s = s.replace(re, "$1,$2");
+				    s = s.replace(/,(\d\d)$/, ".$1");
+				    if (type == 0) {// 不带小数位(默认是有小数位)
+				        var a = s.split(".");
+				        if (a[1] == "00") {
+				            s = a[0];
+				        }
+				    }
+				    return s;
+			}
 
 		},
 		methods: {
