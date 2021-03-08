@@ -13,7 +13,7 @@
 							<view class="title">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?'实付':'总计'}}</view>
 							<view>
 								<text class="price">
-									{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?item.totalprice:item.totalprice}}
+									{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?item.totalprice:item.totalprice |toMoney}}
 								</text><text class="unit">元</text>
 							</view>
 						</view>
@@ -24,7 +24,9 @@
 							<view style="color: #BCBCBC;padding-top: 10rpx;">
 								<text>租期{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
 								<text>月租金{{item.monthlyrent}}元</text> <text style="padding: 0 5px;">|</text>
-								<text>押金{{item.deposit}}元</text>
+								<text>押金{{item.deposit}}元
+								<!-- <text style="color:#FE3B31 ;">(需线下转账)</text> -->
+								</text>
 							</view>
 						</view>
 						<view class="order">
@@ -89,6 +91,24 @@
 				} else {
 					return ''
 				}
+			},
+			toMoney:function(s,type){
+				    if (/[^0-9\.]/.test(s)) return "0";
+				    if (s == null || s == "") return "0";
+				    s = s.toString().replace(/^(\d*)$/, "$1.");
+				    s = (s + "00").replace(/(\d*\.\d\d)\d*/, "$1");
+				    s = s.replace(".", ",");
+				    var re = /(\d)(\d{3},)/;
+				    while (re.test(s))
+				        s = s.replace(re, "$1,$2");
+				    s = s.replace(/,(\d\d)$/, ".$1");
+				    if (type == 0) {// 不带小数位(默认是有小数位)
+				        var a = s.split(".");
+				        if (a[1] == "00") {
+				            s = a[0];
+				        }
+				    }
+				    return s;
 			}
 		},
 		mounted() {
