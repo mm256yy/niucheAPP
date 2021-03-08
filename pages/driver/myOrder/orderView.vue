@@ -5,16 +5,18 @@
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right" v-if="form.state !=='ORDER_FAILED'">
-				<view class="message-box right-item" @click="chargeback" v-if="form.state !== 'WAITTING_DELIVERY_VEHICLE' || form.state !== 'ORDER_FINISHED'">退单</view>
+				<view class="message-box right-item" @click="chargeback"
+					v-if="form.state !== 'WAITTING_DELIVERY_VEHICLE' || form.state !== 'ORDER_FINISHED'">退单</view>
 			</view>
 		</u-navbar>
 		<view class="content" style="padding-bottom: 20rpx;" v-if="form.state !== 'ORDER_FAILED'">
 			<view class="count_down" v-if="form.state !== 'ORDER_FINISHED' || form.state !== 'ORDER_FAILED'">
 				剩余
-				<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+				<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd">
+				</u-count-down>
 				{{form.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
 			</view>
-			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;" >
+			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
 				<u-time-line>
 					<u-time-line-item nodeTop="2">
 						<template v-slot:node>
@@ -128,7 +130,8 @@
 			<view class="content_item">
 				<view class="item"><text class="title">租赁周期：</text><text>{{form.leasetime}}个月（提车后开始计算）</text></view>
 				<view class="item"><text class="title">每月租金：</text><text>{{form.monthlyrent}}元</text></view>
-				<view class="item"><text class="title">车辆押金：</text><text>{{form.deposit}}元</text> <text>（另须线下支付）</text></view>
+				<view class="item"><text class="title">车辆押金：</text><text>{{form.deposit}}元</text> <text>（另须线下支付）</text>
+				</view>
 				<view style="padding: 8rpx 0;" @click="showTips = true">
 					<text style="color: #999999;font-size: 24rpx;">押金退还规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
@@ -146,7 +149,9 @@
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="tips_content">
 			<view style="font-size: 30rpx;">订单提示</view>
-			<view style="padding: 8rpx 20rpx 0 0;">通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。<br />注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287</view>
+			<view style="padding: 8rpx 20rpx 0 0;">
+				通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。<br />注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287
+			</view>
 		</view>
 		<view class="chat_btn">
 			<u-row>
@@ -175,7 +180,7 @@
 			<view :class="['btn',form.state === 'VALIDATE_CAR'?'defult':'orange']">签署《汽车租赁合同》</view>
 		</view>
 		<!-- 3 -->
-		<view class="bottom_content" style="position: relative;"  v-if="soureNum === 3">
+		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3">
 			<u-row>
 				<u-col span="7">
 					<view class="tips">*须商家签署合同才可支付</view>
@@ -230,20 +235,22 @@
 			</view>
 		</u-popup>
 		<u-popup v-model="payOrder" mode="bottom" :closeable="true" close-icon-pos="top-left" close-icon-color="#333333"
-		 border-radius="14">
+			border-radius="14">
 			<view class="cancel_content">
 				<view class="money_item">
-					<view><text style="font-size: 60rpx;color: #333333;">{{form.monthlyrent}}</text><text style="padding-left: 6rpx;">元</text></view>
+					<view><text style="font-size: 60rpx;color: #333333;">{{form.monthlyrent}}</text><text
+							style="padding-left: 6rpx;">元</text></view>
 					<view style="color: #999999;">支付总计</view>
 				</view>
 				<view class="total_item">
 					<u-checkbox-group active-color="#FF9F31" shape="circle">
-						<u-checkbox v-model="type" shape="circle"  @change="checkboxGroupChange"></u-checkbox>
+						<u-checkbox v-model="type" shape="circle" @change="checkboxGroupChange"></u-checkbox>
 						<view style="margin-left: -20rpx;">
 							使用帐户余额抵扣 本次可用金额{{payForm.reducePrice}}元
 						</view>
 					</u-checkbox-group>
-					<view style="padding-top: 16rpx;">帐户余额已抵<text>{{payForm.reducePrice}}</text>元，仍须支付<text>{{payForm.realPrice}}</text>元:</view>
+					<view style="padding-top: 16rpx;">
+						帐户余额已抵<text>{{payForm.reducePrice}}</text>元，仍须支付<text>{{payForm.realPrice}}</text>元:</view>
 				</view>
 				<view class="item_list">
 					<view>
@@ -254,7 +261,8 @@
 							</view>
 							<view @click="openPayFlag">
 								<view class="radio_defult" v-show="payCheckFlag"></view>
-								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!payCheckFlag"></u-icon>
+								<u-icon name="checkmark-circle" color="#FF9F31" size="50" v-show="!payCheckFlag">
+								</u-icon>
 							</view>
 						</view>
 					</view>
@@ -295,7 +303,7 @@
 				timestamp: 0, //倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
-				reason:'',
+				reason: '',
 				reasonList: [{
 						text: '1. 车辆发生重大问题',
 						flag: true
@@ -319,10 +327,10 @@
 				otherFlag: false,
 				type: false,
 				showTips: false,
-				payCheckFlag:false,
-				payForm:{
-					reducePrice:0,
-					realPrice:0,
+				payCheckFlag: false,
+				payForm: {
+					reducePrice: 0,
+					realPrice: 0,
 				}
 			}
 		},
@@ -341,7 +349,8 @@
 				let value = this.form.state;
 				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'REGISTER_CAR') {
 					return 1
-				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value === 'VALIDATE_CAR') {
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value ===
+					'VALIDATE_CAR') {
 					return 2
 				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
 					return 3
@@ -358,7 +367,8 @@
 			soureText: function(value) {
 				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'REGISTER_CAR') {
 					return '待验车'
-				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value === 'VALIDATE_CAR') {
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value ===
+					'VALIDATE_CAR') {
 					return '待签约'
 				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
 					return '待支付'
@@ -381,11 +391,14 @@
 				this.initLogin()
 			},
 			signContact() {
-				if (this.form.state === 'VALIDATE_CAR'){
+				if (this.form.state === 'VALIDATE_CAR') {
 					this.$u.toast('出租方商品未登记,请联系出租方');
-					return 
+					return
 				}
-				this.$u.route('/pages/driver/myOrder/signContract',{id:this.id,userId:this.form.userid})
+				this.$u.route('/pages/driver/myOrder/signContract', {
+					id: this.id,
+					userId: this.form.userid
+				})
 			},
 			// 登录tim
 			initLogin() {
@@ -419,7 +432,7 @@
 				this.getInfo()
 			},
 			//提车
-			pickCar(){
+			pickCar() {
 				this.$u.api.orderDeliveryOfVehicle({
 					orderId: this.id
 				}).then(res => {
@@ -479,10 +492,7 @@
 			},
 			//查看合同
 			viewContract() {
-				this.$u.route('/pages/driver/myOrder/contractPreview', {
-					src: 'http://www.baidu.com'
-				})
-				// this.$u.route('/pages/driver/myOrder/contractPreview',{id:this.id,userId:this.form.userid})
+				this.$u.route('/pages/driver/myOrder/contractPreview',{id:this.id,userId:this.form.userid})
 			},
 			//获取数据
 			getInfo() {
@@ -493,7 +503,7 @@
 					if (res.code === 200) {
 						this.form = res.object;
 						let date = new Date();
-						// this.form.state = 'NO_PAYMENT'
+						this.form.state = 'NO_PAYMENT'
 						let startDate = this.form.updateTime;
 						startDate = startDate.replace(new RegExp("-", "gm"), "/");
 						let startDateM = (new Date(startDate)).getTime();
@@ -539,52 +549,58 @@
 					this.$u.toast('待商家签署合同')
 				}
 			},
-			checkboxGroupChange(e){
-				if (e.value){
+			checkboxGroupChange(e) {
+				if (e.value) {
 					this.computedPrice(1)
 				} else {
 					this.computedPrice(0)
 				}
 			},
-			computedPrice(type){
-				this.$u.api.orderPrice({orderId:this.id,type:type}).then(res=>{
-					if (res.code === 200){
+			computedPrice(type) {
+				this.$u.api.orderPrice({
+					orderId: this.id,
+					type: type
+				}).then(res => {
+					if (res.code === 200) {
 						this.payForm = res.object
 					} else {
 						this.$u.toast(res.msg)
 					}
 				})
 			},
-			openPayFlag(){
+			openPayFlag() {
 				this.payCheckFlag = !this.payCheckFlag
 			},
-			openFlow(){
+			openFlow() {
 				this.openFlag = !this.openFlag
 			},
 			//支付
 			pay() {
-				let data ={
-					  orderId: this.form.id,
-					  realPrice: this.payForm.realPrice,
-					  reducePrice: this.payForm.reducePrice,
-					  type: this.type?1:0
-					};
-					console.log(data)
+				// let data = {
+				// 	orderId: this.form.id,
+				// 	realPrice: this.form.realPrice,
+				// 	reducePrice: this.form.reducePrice,
+				// 	type: this.type ? 1 : 0
+				// };
+				let data = {
+					orderId: this.form.id,
+					realPrice: 0.01,
+					reducePrice: 0,
+					type: 0
+				};
 				this.$u.api.getOrderInfo(data).then(res => {
 					if (res.code === 200) {
 						let that = this;
-						console.log(res.object)
-						setTimeout(()=>{
-							this.payOrder = false;
-						},2000)
 						uni.requestPayment({
 							provider: 'alipay',
 							orderInfo: res.object, //微信、支付宝订单数据
 							success: function(res) {
-								alert(res)
 								that.payOrder = false;
 								that.getInfo()
-								that.$u.toast(JSON.stringify(res))
+								let obj = JSON.parse(obj.rawdata);
+								if (obj.resultStatus == '9000') {
+									this.$u.toast('支付成功')
+								}
 							},
 							fail: function(err) {
 								alert('fail:' + JSON.stringify(err));
