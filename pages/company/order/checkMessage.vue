@@ -199,6 +199,9 @@
 		  },
 		data() {
 			return {
+				background: {
+					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
+				},
 				detail: {
 				  
 				},

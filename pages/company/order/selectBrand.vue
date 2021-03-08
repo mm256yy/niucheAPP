@@ -1,21 +1,21 @@
 <template>
 	<view class="selectBrand">
 		<u-navbar back-icon-color="#111111" title="选择品牌" :background="background" title-color="#111111"></u-navbar>
-		<view style="display: flex;">
-			<view style="width: 698rpx;">
-				<view class="title">输入自定义品牌型号</view>
-				<view v-for="(item,index) in list" :key="index">
-					<view class="letter">{{item.letter}}</view>
-					<view class="box">
-						<view @click="firstBrand(items)" v-for="(items,index) in item.data" :key="items.id" :class="{ 'first':true,'active': items.text==text}">{{items.text}}</view>
+		<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
+			<view>
+				<view style="width: 698rpx;">
+					<view class="title">输入自定义品牌型号</view>
+					<view v-for="(item,index) in list" :key="index" :id="item.letter == '#' ? 'indexed-list-YZ' :'indexed-list-' + item.letter">
+						<view class="letter">{{item.letter}}</view>
+						<view class="box">
+							<view @click="firstBrand(items)" v-for="(items,index) in item.data" :key="items.id" :class="{ 'first':true,'active': items.text==text}">{{items.text}}</view>
+						</view>
 					</view>
 				</view>
 			</view>
-			<view style="width: 52rpx;margin-top: 102rpx;">
-				<view v-for="(item,index) in indexList" :key="index">
-					<view class="list">{{item}}</view>
-				</view>
-			</view>
+		</scroll-view>
+		<view style="width: 52rpx;position: fixed;top: 202rpx;right: 0;text-align: center;">
+			<view v-for="(i,index) in indexList" :key="index" @click="jumper(i,index)" :class="jumperIndex == i?'activeLetter':'letter-item'">{{i}}</view>
 		</view>
 		<view v-show="show" style="position: fixed;top: 88rpx;right: 0;width: 480rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);min-height: 100%;">
 			<view>
@@ -24,15 +24,6 @@
 					<u-image width="30" height="28" src="@/static/order/close.png"></u-image>
 				</view>
 				<view :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">{{item.carseriesname}}</view>
-			</view>
-		</view>
-		<view v-show="show&&showBrand" style="position: fixed;top: 88rpx;right: 0;width: 480rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);min-height: 100%;">
-			<view>
-				<view style="display: flex;align-items: center;justify-content: space-between;width: 480rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
-					<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
-					<u-image width="30" height="28" src="@/static/order/close.png"></u-image>
-				</view>
-				<view :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="hideBrand()">{{item.carseriesname}}</view>
 			</view>
 		</view>
 		<view v-show="showBrand" style="position: fixed;top: 224rpx;right: 0;width: 300rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);z-index: 100;min-height: 100%;">
@@ -60,20 +51,32 @@
 				list: [],
 				carmodelList: [],
 				carxinghaoList: [],
-				hide:true,
 				show:false,
 				showBrand:false,
 				text:'',
 				textBrand:'',
-				textThird:''
+				textThird:'',
+				jumperIndex: 'A',
+				scrollViewId: '',
+				winHeight: 0,
 			}
 		},
 		mounted() {
+			let winHeight = uni.getSystemInfoSync().windowHeight;
+			this.winHeight = winHeight;
 			this.first()
 		},
 		methods: {
-			hideBrand(){
-				this.hide = false;
+			jumper(event, i) {
+				this.jumperIndex = event;
+				let len = this.list[i].data.length;
+				if (event == '#') {
+					this.scrollViewId = 'indexed-list-YZ';
+					return
+				}
+				if (len > 0) {
+					this.scrollViewId = 'indexed-list-' + event;
+				}
 			},
 			first(){
 				uni.request({
@@ -105,7 +108,6 @@
 						 this.$u.toast(res.msg);
 					}
 				}).catch(res=>{console.log(res)})
-				this.step = 2
 			},
 			third(id){
 				this.$u.api.getCarModel({carseriesid:id}).then(res=>{
@@ -116,14 +118,19 @@
 						 this.$u.toast(res.msg);
 					}
 				})
-				if(this.max === 3) {
-					this.step = 3
-				}
 			},
 			firstBrand(items){
-				this.show = true;
-				this.text = items.text;
-				this.second(items.id)
+				if(this.show||this.showBrand){
+					this.show = false;
+					this.showBrand = false;
+					this.text = '';
+					this.textBrand = '';
+					this.textThird = '';
+				}else{
+					this.show = true;
+					this.text = items.text;
+					this.second(items.id)
+				}
 			},
 			secondBrand(item){
 				this.showBrand = true;
@@ -193,6 +200,15 @@
 		}
 		.active{
 			background: rgba(0,0,0,0.04);
+		}
+		.activeLetter{
+			font-size: 24rpx;
+			color: #4ABA75;
+			margin-top: 20rpx;
+		}
+		.letter-item{
+			font-size: 24rpx;
+			margin-top: 20rpx;
 		}
 	}
 </style>
