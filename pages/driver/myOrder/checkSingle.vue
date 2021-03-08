@@ -361,9 +361,12 @@
 				})
 			},
 			toView(id) {
-				this.$u.route('/pages/driver/myOrder/orderView', {
-					id: id
-				})
+				uni.redirectTo({
+				    url: '/pages/driver/myOrder/orderView?id='+id
+				});
+				// this.$u.route('/pages/driver/myOrder/orderView', {
+				// 	id: id
+				// })
 			},
 			// 图片
 			uploadChange(data, index, lists, name) {
