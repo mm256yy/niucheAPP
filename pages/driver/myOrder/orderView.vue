@@ -422,6 +422,9 @@
 			}
 
 		},
+		onBackPress(event) {
+			this.$u.route("/pages/driver/myOrder/myOrder")
+		},
 		methods: {
 			initChat() {
 				let isLogin = this.$store.state.isLogin;
