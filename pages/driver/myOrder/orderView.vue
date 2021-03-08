@@ -1,20 +1,32 @@
 <template>
 	<view>
 		<u-navbar back-icon-color="#111111" title="订单详情" :background="background" title-color="#111111">
-			<view slot="" @click="refreshView">
+			<view slot="" @click="refreshView" v-if="chargeFlag">
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
-			<view class="navbar-right" slot="right" v-if="form.state !=='ORDER_FAILED'">
+			<view class="navbar-right" slot="right" v-if="form.state !=='ORDER_FAILED' && chargeFlag">
 				<view class="message-box right-item" @click="chargeback"
 					v-if="form.state !== 'WAITTING_DELIVERY_VEHICLE' || form.state !== 'ORDER_FINISHED'">退单</view>
 			</view>
 		</u-navbar>
-		<view class="content" style="padding-bottom: 20rpx;" v-if="form.state !== 'ORDER_FAILED'">
+		<view class="head_content" v-if="!chargeFlag">
+			<u-image width="80rpx" height="80rpx" src="@/static/order/wancheng2x.png"></u-image>
+			<view style="padding-left: 20rpx;">
+				<view class="title">{{form.state === 'ORDER_FAILED' ?'失效订单':'退单成功'}}</view>
+				<view class="time">{{form.updateTime}}</view>
+			</view>
+		</view>
+		<view class="content" style="padding-bottom: 20rpx;" v-if="form.state !== 'ORDER_FAILED' && chargeFlag">
 			<view class="count_down" v-if="form.state !== 'ORDER_FINISHED' || form.state !== 'ORDER_FAILED'">
-				剩余
-				<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd">
-				</u-count-down>
-				{{form.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
+				<view v-if="form.state === 'VALIDATE_CAR' || form.state === 'COMPANY_SIGN_CONTRACT'  ">
+					等待计时
+				</view>
+				<view v-else>
+					剩余
+					<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd">
+					</u-count-down>
+					{{form.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
+				</view>
 			</view>
 			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
 				<u-time-line>
@@ -147,13 +159,13 @@
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
-		<view class="tips_content">
+		<view class="tips_content" v-if="chargeFlag">
 			<view style="font-size: 30rpx;">订单提示</view>
 			<view style="padding: 8rpx 20rpx 0 0;">
 				通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。<br />注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287
 			</view>
 		</view>
-		<view class="chat_btn">
+		<view class="chat_btn" v-if="chargeFlag">
 			<u-row>
 				<u-col span="6" style="border-right: 1px solid #E0E0E0;">
 					<view class="btn" @click="toRoom(form.companyid)">
@@ -169,18 +181,18 @@
 				</u-col>
 			</u-row>
 		</view>
-		<view class="view_car" @click="viewCar(form.id)" v-if="soureNum>1">查看车辆信息</view>
-		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+		<view class="view_car" @click="viewCar(form.id)" v-if="soureNum>1 && chargeFlag">查看车辆信息</view>
+		<u-gap height="20" bg-color="#F5F5F5" v-if="chargeFlag"></u-gap>
 		<!-- 1 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 1">
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 1 && chargeFlag">
 			<view class="btn orange" @click="uploadCar">确认验车和上传车辆信息</view>
 		</view>
 		<!-- 2 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 2" @click="signContact">
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 2 && chargeFlag" @click="signContact">
 			<view :class="['btn',form.state === 'VALIDATE_CAR'?'defult':'orange']">签署《汽车租赁合同》</view>
 		</view>
 		<!-- 3 -->
-		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3">
+		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3 && chargeFlag">
 			<u-row>
 				<u-col span="7">
 					<view class="tips">*须商家签署合同才可支付</view>
@@ -198,17 +210,21 @@
 			</view>
 		</view>
 		<!-- 4 -->
-		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 4">
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="soureNum === 4 && chargeFlag">
 			<view class="btn orange padding30" @click="pickCar">确认提车</view>
 			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
 		</view>
 		<!-- 5 -->
-		<view class="bottom_content" style="padding: 60rpx 0;" v-if="soureNum === 5">
+		<view class="bottom_content" style="padding: 60rpx 0;" v-if="soureNum === 5 && chargeFlag">
 			<view class="view_contract" @click="viewContract">
 				<text class="label">查阅</text><text class="contract">《汽车租赁合同》</text>
 			</view>
+		</view>
+		
+		<view class="bottom_content" style="padding: 40rpx 60rpx;" v-if="!chargeFlag">
+			<view class="btn orange" @click="callPhone">联系平台</view>
 		</view>
 		<!-- 取消订单 -->
 		<u-popup v-model="cancelOrder" mode="bottom" :closeable="true" close-icon-color="#333333" border-radius="14">
@@ -226,9 +242,9 @@
 						</view>
 					</view>
 					<view style="padding-top: 30rpx;" v-show="otherFlag">
-						<u-input v-model="reason" type="textarea" :border="true" height="140" />
+						<u-input v-model="cancelForm.cancelReason" type="textarea" maxlength="200" :border="true" height="140" />
 					</view>
-					<view class="btn_orange">
+					<view class="btn_orange" @click="orderCancel">
 						确定取消
 					</view>
 				</view>
@@ -331,6 +347,12 @@
 				payForm: {
 					reducePrice: 0,
 					realPrice: 0,
+				},
+				chargeFlag:true,
+				cancelForm:{
+					orderId:'',
+					cancelSort:'1',
+					cancelReason:'',
 				}
 			}
 		},
@@ -494,6 +516,7 @@
 			},
 			//筛选退单条件
 			checkOr(index) {
+				this.cancelForm.cancelSort = index+1;
 				if (index === 3) {
 					console.log(this.reasonList[3].flag)
 					this.otherFlag = this.reasonList[3].flag
@@ -508,6 +531,7 @@
 					}
 				})
 			},
+			
 			//查看合同
 			viewContract() {
 				this.$u.route('/pages/driver/myOrder/contractPreview',{id:this.id,userId:this.form.userid})
@@ -519,41 +543,93 @@
 					id: this.id
 				}).then(res => {
 					if (res.code === 200) {
-						this.form = res.object;
-						let date = new Date();
-						// this.form.state = 'NO_PAYMENT'
-						let startDate = this.form.updateTime;
-						startDate = startDate.replace(new RegExp("-", "gm"), "/");
-						let startDateM = (new Date(startDate)).getTime();
-						let Days = 86400000;
-						let yesDay = (startDateM + Days) - date.getTime();
-						let timestamp =  parseInt(yesDay / 1000);
-						if (timestamp<=0){
-							this.countEnd()
-						} else{
-							this.timestamp = timestamp
+						let data = res.object;
+						this.form = data;
+						if (data.state === 'WAITTING_UPLOADING_MESSAGE' || data.state === 'REGISTER_CAR' ){
+							this.timeE(data.createTime)
+						} else if (data.state === 'WAITTING_SIGN_CONTRACT' || data.state === 'DRIVER_SIGN_CONTRACT' ){
+							let registerTime = data.registerTime.replace(new RegExp("-", "gm"), "/");
+							let registerTimeM = (new Date(registerTime)).getTime();
+							let validatecartime = data.validatecartime.replace(new RegExp("-", "gm"), "/");
+							let validatecartimeM = (new Date(validatecartime)).getTime();
+							if (registerTimeM>validatecartimeM){
+								this.timeE(data.registerTime)
+							} else {
+								this.timeE(data.validatecartime)
+							}
+						} else if (data.state === 'NO_PAYMENT'){
+							this.timeE(data.signcontracttime)
+						} else if (data.state === 'WAITTING_DELIVERY_VEHICLE'){
+							this.timeE(data.paytime)
+						} else {
+							
 						}
 					} else {
 						this.$u.toast(res.msg);
 					}
 				})
 			},
+			timeE(times){
+				let date = new Date();
+				let startDate = times.replace(new RegExp("-", "gm"), "/");
+				let startDateM = (new Date(startDate)).getTime();
+				let Days = 86400000;
+				let yesDay = (startDateM + Days) - date.getTime();
+				let timestamp =  parseInt(yesDay / 1000);
+				if (timestamp<=0){
+					this.orderEfficacy()
+				} else{
+					this.timestamp = timestamp
+				}
+			},
 			//退单
 			chargeback() {
+				this.cancelForm = {
+					orderId:'',
+					cancelSort:'',
+					cancelReason:'',
+				};
 				this.cancelOrder = true;
 			},
 			//倒计时
 			countEnd() {
+				if (this.form.state !== 'WAITTING_DELIVERY_VEHICLE'){
+					this.orderEfficacy()
+				} else {
+					this.pickCar()
+				}
+			},
+			orderCancel(){
+				let data = this.cancelForm;
+				if (data.cancelSort === ''){
+					this.$u.toast('请选择退单原因');
+					return
+				}
+				if (data.cancelReason === '' && data.cancelSort == 4){
+					this.$u.toast("请填写退单原因");
+					return
+				}
+				data.orderId = this.form.id;
+				this.$u.api.orderCancel(data).then(res => {
+					if (res.code === 200) {
+						this.cancelOrder = false;
+						this.chargeFlag = false;
+					} else{
+						this.$u.toast(rees.msg)
+					}
+				})
+
+			},
+			orderEfficacy(){
 				this.$u.api.orderEfficacy({
 					orderId: this.form.id
 				}).then(res => {
 					if (res.code === 200) {
-						this.$u.route('/pages/driver/myOrder/chargeback', {
-							id: this.form.id
-						})
+						this.chargeFlag = false;
+					} else{
+						this.$u.toast(rees.msg)
 					}
 				})
-				this.getInfo()
 			},
 			//上传验车单
 			uploadCar() {
@@ -605,6 +681,7 @@
 				// 	reducePrice: this.form.reducePrice,
 				// 	type: this.type ? 1 : 0
 				// };
+				this.$u.toast('测试环境，支付时金额为1分线')
 				let data = {
 					orderId: this.form.id,
 					realPrice: 0.01,
@@ -650,7 +727,23 @@
 		color: #333333;
 		display: flex;
 	}
+	.head_content {
+		padding: 40rpx 30rpx;
+		display: flex;
+		align-items: center;
 
+		.title {
+			color: #111111;
+			font-size: 30rpx;
+			font-weight: 600;
+			padding-bottom: 10rpx;
+		}
+
+		.time {
+			font-size: 26rpx;
+			color: #C7C7C7;
+		}
+	}
 	.content {
 
 		.count_down {

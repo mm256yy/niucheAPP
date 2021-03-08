@@ -66,7 +66,7 @@
 				this.id =id;
 			}
 		},
-		onShow() {
+		mounted() {
 			this.getInfo()
 		},
 		methods: {

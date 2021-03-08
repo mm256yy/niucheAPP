@@ -111,8 +111,8 @@
 				    return s;
 			}
 		},
-		mounted() {
-			// this.downCallback()
+		onShow() {
+			this.downCallback()
 		},
 		methods: {
 			/*下拉刷新的回调 */
