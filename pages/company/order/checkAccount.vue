@@ -9,14 +9,10 @@
 		</u-navbar>
 		<view class="list_content">
 			<view class="accountBg">
-				<view style="display: flex;">
+				<view style="display: flex;justify-content: center;align-items: center;">
 					<view>
 						<view class="total">实际到账总计</view>
 						<view class="money">0.00</view>
-					</view>
-					<view>
-						<view class="deposit">租金总计<text>300.00</text></view>
-						<view class="deposit">押金总计<text>300.00</text></view>
 					</view>
 				</view>
 				<view @click="toAccount()" class="account">
@@ -29,20 +25,20 @@
 			</view>
 			<view class="title">途中金额</view>
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index">
 					<view class="order">
-						<view class="num">订单号：239888888888</view>
-						<view>12990.00</view>
+						<view class="num">订单号：{{item.orderId}}</view>
+						<view>+{{item.entryValue}}</view>
 					</view>
 					<view class="company">
 						<view style="color: #939393;padding-top: 10rpx;">
-							<text>押金：10000.00元</text><text style="padding: 0 5px;">|</text>
-							<text>月租金：3000.00元</text>
+							<!-- <text>押金：10000.00元</text><text style="padding: 0 5px;">|</text> -->
+							<text>月租金：{{item.rentMoney}}元</text>
 						</view>
 					</view>
 					<view style="display: flex;margin-top: 16rpx;justify-content: space-between;">
-						<view class="message">信息服务费：-10.00</view>
-						<view class="status">待验车</view>
+						<view class="message">信息服务费：-{{item.serviceMoney}}</view>
+						<view class="status">{{item.orderState | soureText}}</view>
 					</view>
 				</view>
 			</mescroll-body>
@@ -73,6 +69,43 @@
 				total: 0
 			}
 		},
+		filters: {
+			soureText: function(value) {
+				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'VALIDATE_CAR') {
+					return '商品登记'
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'COMPANY_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
+					return '待签约'
+				} else if (value === 'NO_PAYMENT' || value === 'DRIVER_SIGN_CONTRACT') {
+					return '待支付'
+				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
+					return '待提车'
+				} else if (value === 'ORDER_FINISHED') {
+					return '完成'
+				} else if (value === 'ORDER_FAILED') {
+					return '失效'
+				} else {
+					return ''
+				}
+			},
+			toMoney:function(s,type){
+			        if (/[^0-9\.]/.test(s)) return "0";
+			        if (s == null || s == "") return "0";
+			        s = s.toString().replace(/^(\d*)$/, "$1.");
+			        s = (s + "00").replace(/(\d*\.\d\d)\d*/, "$1");
+			        s = s.replace(".", ",");
+			        var re = /(\d)(\d{3},)/;
+			        while (re.test(s))
+			            s = s.replace(re, "$1,$2");
+			        s = s.replace(/,(\d\d)$/, ".$1");
+			        if (type == 0) {// 不带小数位(默认是有小数位)
+			            var a = s.split(".");
+			            if (a[1] == "00") {
+			                s = a[0];
+			            }
+			        }
+			        return s;
+			   }
+		},
 		mounted() {
 			// this.downCallback()
 		},
@@ -100,7 +133,7 @@
 				this.$u.api.orderList({
 					pageNum: this.page.num,
 					pageSize: this.page.size,
-					type: this.selectValue
+					billState: 1
 				}).then(res => {
 					if (res.code === 200) {
 						this.total = res.total;
@@ -154,6 +187,7 @@
 		font-size: 60rpx;
 		color: #fff;
 		margin-top: 20rpx;
+		text-align: center;
 	}
 	.deposit{
 		font-size: 24rpx;

@@ -4,7 +4,7 @@
 		</u-navbar>
 		<view class="accountList">
 			<view class="top">
-				<view>订单租金押金</view>
+				<view>订单租金</view>
 				<view class="price">12990</view>
 			</view>
 			<view class="flex">
@@ -39,9 +39,9 @@
 				<view class="key">入账时间：</view>
 				<view class="value">2020.09.28 11:15:33</view>
 			</view>
-			<view class="view">
+			<view class="view" @click="toDetail(item)">
 				<view>查看订单详情</view>
-				<u-image width="12" height="24" src="@/static/order/rightDark.png"></u-image>
+				<u-image width="18" height="28" src="@/static/order/rightDark.png"></u-image>
 			</view>
 		</view>
 	</view>
@@ -75,6 +75,11 @@
 					})
 				}
 			},
+			toDetail(item) {
+				this.$u.route('/pages/company/order/orderDetail', {
+					id: item.id
+				})
+			}
 		}
 	}
 </script>

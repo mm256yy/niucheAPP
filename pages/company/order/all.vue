@@ -95,7 +95,7 @@
 			   }
 		},
 		mounted() {
-			this.downCallback()
+			// this.downCallback()
 		},
 		methods: {
 			showSelect() {

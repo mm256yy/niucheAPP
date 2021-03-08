@@ -4,14 +4,14 @@
 		</u-navbar>
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="box" @click="toDetail()">
+				<view class="box" v-for="(item,index) in dataList" :key="index" @click="toDetail()">
 					<view class="flex">
 						<view class="order">租赁订单</view>
 						<view>2020年09月28日 11:15:33</view>
 					</view>
 					<view class="flex">
-						<view class="num">订单号：2343434343</view>
-						<view class="price">+12990</view>
+						<view class="num">订单号：{{item.orderId}}</view>
+						<view class="price">+{{item.entryValue}}</view>
 					</view>
 				</view>
 			</mescroll-body>

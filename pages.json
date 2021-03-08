@@ -169,6 +169,12 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//公司合同查看
+		    "path" : "pages/company/order/contractPreview",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
 		,{//公司对帐中心
 		    "path" : "pages/company/order/checkAccount",
 		    "style" : {

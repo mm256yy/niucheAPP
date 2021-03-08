@@ -384,7 +384,7 @@
 				<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="sign">签署汽车租赁合同</view>
 			</view>
 			<view>
-				<view v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="shopMessage()" class="signActive">《汽车租赁合同》查看</view>
+				<view v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()" class="signActive">《汽车租赁合同》查看</view>
 			</view>
 		</view>
 		<view v-if="!detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" class="tip">*验车信息由承租人填写完成后才能查看</view>
@@ -453,10 +453,14 @@
 		methods: {
 			signContact() {
 				if (this.detail.state === 'VALIDATE_CAR'||this.detail.state === 'WAITTING_UPLOADING_MESSAGE'){
-					this.$u.toast('出租方商品未登记,请联系出租方');
+					this.$u.toast('商品未登记');
 					return 
 				}
-				this.$u.route('/pages/company/order/contractSign',{id:this.id,userid:this.detail.userid})
+				this.$u.route('/pages/company/order/contractSign',{id:this.id,userid:this.detail.companyid})
+			},
+			//查看合同
+			viewContract() {
+				this.$u.route('/pages/company/order/contractPreview',{id:this.id,userId:this.detail.companyid})
 			},
 			revoke(){
 				uni.showModal({
