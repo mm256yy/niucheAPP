@@ -521,13 +521,18 @@
 					if (res.code === 200) {
 						this.form = res.object;
 						let date = new Date();
-						this.form.state = 'NO_PAYMENT'
+						// this.form.state = 'NO_PAYMENT'
 						let startDate = this.form.updateTime;
 						startDate = startDate.replace(new RegExp("-", "gm"), "/");
 						let startDateM = (new Date(startDate)).getTime();
 						let Days = 86400000;
 						let yesDay = (startDateM + Days) - date.getTime();
-						this.timestamp = parseInt(yesDay / 1000);
+						let timestamp =  parseInt(yesDay / 1000);
+						if (timestamp<=0){
+							this.countEnd()
+						} else{
+							this.timestamp = timestamp
+						}
 					} else {
 						this.$u.toast(res.msg);
 					}
