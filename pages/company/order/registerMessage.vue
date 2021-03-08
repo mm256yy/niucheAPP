@@ -128,6 +128,12 @@
 				this.$u.api.registerAdd(params).then(res => {
 					if(res.code === 200){
 						this.$u.toast('商品信息登记成功');
+						this.form = {
+						  orderId: '',
+						  startRentDate: '',
+						  endRentDate: '',
+						  registerInfo: {}
+						};
 						this.$u.route('/pages/company/order/orderDetail', {
 							id: this.detail.tradeid
 						})

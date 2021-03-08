@@ -9,21 +9,21 @@
 							<text>{{item.carname}}</text>
 						</view>
 						<view class="money">
-							 <view class="title">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?'实付':'总计'}}</view>
-							 <view><text class="price">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?item.totalprice:item.totalprice}}</text><text class="unit">元</text></view>
+							 <view class="title">总计</view>
+							 <view><text class="price">{{item.totalprice|toMoney}}</text><text class="unit">元</text></view>
 						</view>
 						<view class="company">
 							<view><text style="color: #858585;padding-right: 10rpx;">承租人</text><text style="color: #424242;">{{item.rentername}}</text></view>
 							<view style="color: #BCBCBC;padding-top: 10rpx;">
 								<text>租期{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
-								<text>月租金{{item.monthlyrent}}元</text> <text style="padding: 0 5px;">|</text>
-								<text>押金{{item.deposit}}元</text>
+								<text>月租金{{item.monthlyrent}}元</text>
+								<!-- <text>押金{{item.deposit}}元</text> -->
 							</view>
 						</view>
 						<view class="order">
 							<view class="num">订单号：{{item.tradeid}}</view>
-							<view class="btn" :class="['btn',item.state === 'ORDER_FAILED' || item.state === 'ORDER_FINISHED'?'complete':'active']">
-								{{item.state | soureText}}
+							<view class="btn active">
+								待签约
 							</view>
 						</view>
 					</view>
@@ -174,6 +174,8 @@
 					display: flex;
 					justify-content: space-between;
 					.num{
+						height: 62rpx;
+						line-height: 62rpx;
 						color: #BCBCBC;
 						font-size: 28rpx;
 					}
@@ -186,8 +188,8 @@
 
 					}
 					.active{
-						color: #FE5B00;
-						border: 2rpx solid #FE5B00;
+						color: #24CE8D;
+						border: 2rpx solid #24CE8D;
 					}
 					.complete{
 						color: #C2C2C2;

@@ -20,12 +20,15 @@
 				<u-form-item label="姓名:" prop="rentername">
 					<u-input @blur="blur()" class="input-radius" v-model="form.rentername" placeholder="请输入"/>
 				</u-form-item>
+				<view style="margin-top: 10rpx;color: #FE3B31;">{{warnName}}</view>
 				<u-form-item label="身份证号:" prop="renteridcard">
 					<u-input @blur="blur()" class="input-radius" v-model="form.renteridcard" placeholder="请输入"/>
 				</u-form-item>
+				<view style="margin-top: 10rpx;color: #FE3B31;">{{warnIdcard}}</view>
 				<u-form-item label="手机号" prop="renteridphone" >
 					<u-input @blur="blur()" v-model="form.renteridphone" type="number" placeholder="请输入"/>
 				</u-form-item>
+				<view style="margin-top: 10rpx;color: #FE3B31;">{{warn}}</view>
 			</u-form>
 		</view>
 		<view class="bottom">
@@ -43,6 +46,9 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				show:false,
+				warn:'',
+				warnName:'',
+				warnIdcard:'',
 				form: {
 				  carname: '',
 				  leasetime: '',
@@ -84,6 +90,7 @@
 			const obj = uni.getStorageSync('textSelect');
 			if(obj){
 				this.form.carname = obj.text + ' ' + obj.textBrand + ' ' + obj.textThird;
+				uni.removeStorageSync('textSelect');
 			}
 		},
 		methods: {
@@ -99,9 +106,29 @@
 					}
 					this.$u.api.verify(params).then(res => {
 						if(res.code === 200){
-							
-						 } else{
-							this.$u.toast(res.msg) 
+							this.warn = '';
+							this.warnName = '';
+							this.warnIdcard = '';
+						 }else if(res.code == 100104){
+							 this.warn = res.msg;
+							 this.warnName = '';
+							 this.warnIdcard = '';
+						 }else if(res.code == 100105){
+							 this.warn = res.msg;
+							 this.warnName = '';
+							 this.warnIdcard = '';
+						 }else if(res.code == 100106){
+							 this.warnName = res.msg;
+							 this.warn = '';
+							 this.warnIdcard = '';
+						 }else if(res.code == 100107){
+							 this.warnIdcard = res.msg;
+							 this.warn = '';
+							 this.warnName = '';
+						 }else if(res.code == 100108){
+							 this.warn = res.msg;
+							 this.warnName = '';
+							 this.warnIdcard = '';
 						 }
 					}).catch(res=>{this.$u.toast(res.msg)})
 				}
@@ -121,7 +148,16 @@
 				this.$u.api.orderNew(this.form).then(res => {
 					if(res.code === 200){
 						this.$u.toast('新建订单成功');
-						const obj = uni.removeStorageSync('textSelect');
+						this.form = {
+						  carname: '',
+						  leasetime: '',
+						  monthlyrent: '',
+						  deposit: '',
+						  rentername: '',
+						  renteridphone: '',
+						  renteridcard: ''
+						};
+						this.leasetime = '';
 						this.$u.route('/pages/company/order/order')
 					 } else{
 						this.$u.toast(res.msg) 
