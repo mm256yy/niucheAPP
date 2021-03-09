@@ -473,6 +473,7 @@
 			},
 			refreshView() {
 				this.getInfo()
+				this.$u.toast('刷新成功')
 			},
 			//提车
 			pickCar() {
