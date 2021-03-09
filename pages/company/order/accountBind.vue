@@ -3,16 +3,18 @@
 		<u-navbar back-icon-color="#111111" title="支付宝账号绑定" :background="background" title-color="#111111"></u-navbar>
 		<view class="content">
 			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
-				<u-form-item label="支付宝账号:" prop="deposit">
-					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="输入你支付宝收款账号"/>
+				<u-form-item label="支付宝账号:" prop="alipayAccount">
+					<u-input class="input-radius" v-model="form.alipayAccount" maxlength="10" placeholder="输入你支付宝收款账号"/>
+					<text>1/3</text>
 				</u-form-item>
 				<u-form-item label="月租金:" prop="monthlyrent">
 					<u-input class="input-radius" v-model="form.monthlyrent" maxlength="10" placeholder="你在支付宝认证的姓名"/>
+					<text>1/3</text>
 				</u-form-item>
 				<view style="margin-top: 36rpx;">验证金额：</view>
-				<u-form-item label="￥" prop="deposit">
-					<u-input class="input-radius" v-model="form.deposit" maxlength="10" placeholder="请输入"/>
-					<view class="get">获取验证金额</view>
+				<u-form-item label="￥" prop="money">
+					<u-input class="input-radius" v-model="form.money" maxlength="10" placeholder="请输入"/>
+					<view click="getMoney()" class="get">获取验证金额</view>
 				</u-form-item>
 			</u-form>
 			<view class="tip">*验证金额：是由纽车平台向你的支付宝账号随机汇的微小金额，仅做账号有效性验证，无须退还</view>
@@ -32,9 +34,12 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				show:false,
+				id:'',
+				BusinessName:'',
 				form: {
+				  alipayAccount:'',
 				  monthlyrent: '',
-				  deposit: '',
+				  money: '',
 				},
 				leasetime: '',
 				select: [
@@ -57,10 +62,34 @@
 				],
 			}
 		},
+		onLoad(option) {
+			let id = option.id;
+			let BusinessName = option.BusinessName;
+			if(id){
+			 this.id = id;
+			}
+			if(BusinessName){
+			 this.BusinessName = BusinessName;
+			}
+		},
 		mounted() {
 			
 		},
 		methods: {
+			getMoney(){
+				const params = Object.assign(this.form, {
+					id:id,
+					BusinessName:BusinessName
+				});
+				this.$u.api.orderNew(this.form).then(res => {
+					if(res.code === 200){
+						this.$u.toast('新建订单成功');
+						this.$u.route('/pages/company/order/orderList')
+					 } else{
+						this.$u.toast(res.msg) 
+					 }
+				})
+			},
 			confirm(arr){
 				this.form.leasetime = arr[0].value;
 				this.leasetime = arr[0].label;
@@ -78,7 +107,7 @@
 					 } else{
 						this.$u.toast(res.msg) 
 					 }
-				}).catch(res=>{this.$u.toast(res.msg)})
+				})
 			}
 		}	
 	}
@@ -99,6 +128,9 @@
 		border: 2rpx solid #D9DEDF;
 		font-size: 28rpx;
 		color: #5BBF84;
+	}
+	.disabled{
+		color: #959595;
 	}
 	.tip{
 		font-size: 22rpx;

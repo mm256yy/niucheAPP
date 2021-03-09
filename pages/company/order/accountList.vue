@@ -4,7 +4,7 @@
 		</u-navbar>
 		<view class="list_content">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="box" v-for="(item,index) in dataList" :key="index" @click="toDetail()">
+				<view class="box" v-for="(item,index) in dataList" :key="index" @click="toDetail(item.id)">
 					<view class="flex">
 						<view class="order">租赁订单</view>
 						<view>2020年09月28日 11:15:33</view>
@@ -81,13 +81,10 @@
 					}
 				})
 			},
-			toView(id) {
+			toDetail(id) {
 				this.$u.route('/pages/company/order/orderDetail', {
 					id: id
 				})
-			},
-			bind() {
-				this.$u.route('/pages/company/order/accountBind')
 			}
 		}
 	}

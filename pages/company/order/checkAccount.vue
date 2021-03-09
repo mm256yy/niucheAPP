@@ -151,7 +151,10 @@
 				})
 			},
 			bind() {
-				this.$u.route('/pages/company/order/accountBind')
+				this.$u.route('/pages/company/order/accountBind', {
+					id: '',
+					BusinessName:''
+				})
 			}
 		}
 	}
