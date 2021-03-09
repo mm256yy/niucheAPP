@@ -5,7 +5,7 @@
 			<u-image width="80rpx" height="80rpx" src="@/static/order/wancheng2x.png"></u-image>
 			<view style="padding-left: 20rpx;">
 				<view class="title">{{form.state === 'ORDER_FAILED' ?'失效订单':'退单成功'}}</view>
-				<view class="time">{{form.updateTime}}</view>
+				<view class="time">{{form.createTime}}</view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
