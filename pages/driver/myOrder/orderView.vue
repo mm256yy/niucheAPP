@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<u-navbar back-icon-color="#111111" title="订单详情" :background="background" title-color="#111111">
-			<view slot="" @click="refreshView" v-if="chargeFlag">
+			<view slot="" @click="refreshView" v-if="chargeFlag" style="padding-left: 6px;">
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right" v-if="form.state !=='ORDER_FAILED' && chargeFlag">
@@ -422,9 +422,9 @@
 			}
 
 		},
-		onBackPress(event) {
-			this.$u.route("/pages/driver/myOrder/myOrder")
-		},
+		// onBackPress(event) {
+		// 	this.$u.route("/pages/driver/myOrder/myOrder")
+		// },
 		methods: {
 			initChat() {
 				let isLogin = this.$store.state.isLogin;
@@ -473,6 +473,7 @@
 			},
 			refreshView() {
 				this.getInfo()
+				this.$u.toast('刷新成功')
 			},
 			//提车
 			pickCar() {

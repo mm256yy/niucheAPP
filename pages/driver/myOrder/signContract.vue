@@ -1,14 +1,11 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="" :background="background" title-color="#111111"></u-navbar>
-		<view>
 			<web-view
 			  :src="srcUrl"
 			  @message="reciveMessage"
 			  @onPostMessage="recivePostMessage"
 			>
 			</web-view>
-		</view>
 	</view>
 </template>
 
@@ -36,14 +33,14 @@
 		},
 		mounted() {
 			this.getUrl()
-				// #ifdef APP-PLUS
-				var wv;
-		        var currentWebview = this.$scope.$getAppWebview() 
-		        setTimeout(function() {
-		            wv = currentWebview.children()[0]
-		            wv.setStyle({top:50})
-		        }, 1000); //如果是页面初始化调用时，需要延时一下
-		        // #endif
+				// // #ifdef APP-PLUS
+				// var wv;
+		  //       var currentWebview = this.$scope.$getAppWebview() 
+		  //       setTimeout(function() {
+		  //           wv = currentWebview.children()[0]
+		  //           wv.setStyle({top:50})
+		  //       }, 1000); //如果是页面初始化调用时，需要延时一下
+		  //       // #endif
 		},
 		methods: {
 			reciveMessage(data){
