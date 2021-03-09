@@ -5,9 +5,20 @@
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right">
-				<view class="message-box right-item" @click="revoke()" v-if="detail.state !== 'WAITTING_DELIVERY_VEHICLE'||detail.state !== 'ORDER_FINISHED'">撤销</view>
+				<view class="message-box right-item" @click="invalidation()" v-if="detail.state !== 'WAITTING_DELIVERY_VEHICLE'||detail.state !== 'ORDER_FINISHED'">撤销</view>
 			</view>
 		</u-navbar>
+		<view class="count_down" v-if="detail.state !== 'ORDER_FINISHED' || detail.state !== 'ORDER_FAILED'">
+			<view v-if="detail.state === 'VALIDATE_CAR' || detail.state === 'DRIVER_SIGN_CONTRACT'  ">
+				等待计时
+			</view>
+			<view v-else>
+				剩余
+				<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd">
+				</u-count-down>
+				{{detail.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
+			</view>
+		</view>
 		<view class="content" v-if="detail.state == 'WAITTING_UPLOADING_MESSAGE' || detail.state == 'VALIDATE_CAR'">
 			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
 			</view>
@@ -58,7 +69,6 @@
 								<view class="u-node">
 									<view class="time">
 										<view>{{detail.registerTime}}</view>
-										<view class="hour">11:15:33</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
 								</view>
@@ -105,8 +115,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.signcontracttime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
 								</view>
@@ -125,8 +134,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.registerTime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
 								</view>
@@ -170,15 +178,14 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.paytime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">租金</view>
+									<view class="u-order-desc">支付租金</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -187,8 +194,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.signcontracttime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
 								</view>
@@ -204,8 +210,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.registerTime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
 								</view>
@@ -248,6 +253,9 @@
 						<u-time-line-item nodeTop="2">
 							<template v-slot:node>
 								<view class="u-node">
+									<view class="time">
+										<view>{{detail.takethecartime}}</view>
+									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
 								</view>
 							</template>
@@ -261,15 +269,14 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.paytime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
 								</view>
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">租金</view>
+									<view class="u-order-desc">支付租金</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -278,8 +285,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.signcontracttime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
 								</view>
@@ -295,8 +301,7 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
-										<view>2020-09-28</view>
-										<view class="hour">11:15:33</view>
+										<view>{{detail.registerTime}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/register.png"></u-image>
 								</view>
@@ -316,6 +321,14 @@
 				<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#C9C9C9"></u-icon>
 			</view>
 		</view>
+		<view v-if="detail.state === 'ORDER_FAILED'" class="head_content">
+			<u-image width="80rpx" height="80rpx" src="@/static/order/wancheng2x.png"></u-image>
+			<view style="padding-left: 20rpx;">
+				<view class="title">失效订单</view>
+				<view class="time">{{detail.createTime}}</view>
+			</view>
+		</view>
+		
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
 		<view class="middle_content">
 			<view class="company_name">{{detail.rentername}}</view>
@@ -339,55 +352,68 @@
 				<view class="item"><text class="title">支付时间：</text><text>{{detail.paytime}}</text></view>
 			</view>
 		</view>
-		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
-		<view class="tips_content">
-			<view style="font-size: 32rpx;">订单提示</view>
-			<view style="padding: 8rpx 20rpx 0 0;color: #555;font-size: 28rpx;line-height: 42rpx;">通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。
-注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287</view>
+		<view v-if="detail.state === 'ORDER_FAILED'" class="bottom_content" @click="dial()">
+			<view class="button contact">联系平台</view>
 		</view>
-		<view class="chat_btn">
-			<u-row>
-				<u-col span="6" style="border-right: 1px solid #E0E0E0;">
-					<view class="btn">
-						<u-image width="52" height="52" src="@/static/order/lianxichuzufang2x.png"></u-image>
-						<view class="text">联系承租人</view>
+		<view v-else>
+			<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+			<view class="tips_content">
+						<view style="font-size: 32rpx;">订单提示</view>
+						<view style="padding: 8rpx 20rpx 0 0;color: #555;font-size: 28rpx;line-height: 42rpx;">通过纽车APP-我的订单签署合同，并在24小时内完成支付，否则合同将自动解除。签约过程中，涉及签约、押金支付，需要通过纽车APP-我的订单线上完成。
+			注意：平台杜绝签署任何形式的线下组合合同和禁止线下签署定金等任何费用，在签约过程中，如发现要求线下签署合同和收取定金的行为，请联系客服热线：0571-87815287</view>
 					</view>
-				</u-col>
-				<u-col span="6">
-					<view class="btn" @click="dial()">
-						<u-image width="52" height="52" src="@/static/order/lianxipingtai2x.png"></u-image>
-						<view class="text">联系平台</view>
+					<view class="chat_btn">
+						<u-row>
+							<u-col span="6" style="border-right: 1px solid #E0E0E0;">
+								<view class="btn" @click="toRoom(detail.userid)">
+									<u-image width="52" height="52" src="@/static/order/lianxichuzufang2x.png"></u-image>
+									<view class="text">联系承租人</view>
+								</view>
+							</u-col>
+							<u-col span="6">
+								<view class="btn" @click="dial()">
+									<u-image width="52" height="52" src="@/static/order/lianxipingtai2x.png"></u-image>
+									<view class="text">联系平台</view>
+								</view>
+							</u-col>
+						</u-row>
 					</view>
-				</u-col>
-			</u-row>
+					<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="view_cared">查看验车信息</view>
+					<view v-else @click="view()" class="view_car">查看验车信息</view>
+					<!-- <view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
+						<text style="padding: 6rpx;border-bottom: 2rpx solid #24ce8d;">查看合同范文</text>
+					</view> -->
+					<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+					<!-- <view class="bottom_content" style="padding: 40rpx 60rpx;">
+						<view class="btn orange">《汽车租赁合同》锁定</view>
+					</view> -->
+					<view class="bottom">
+						<!-- <view>
+							<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="check">查看验车信息</view>
+							<view v-else @click="view()" class="checkActive">查看验车信息</view>
+						</view> -->
+						<view>
+							<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()" class="signActive">登记商品信息</view>
+							<!-- <view v-if="detail.state=='REGISTER_CAR'" class="sign">登记商品信息</view> -->
+						</view>
+						<view>
+							<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='COMPANY_SIGN_CONTRACT'" @click="signContact()" class="signActive">签署汽车租赁合同</view>
+							<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="sign">签署汽车租赁合同</view>
+						</view>
+						<view>
+							<view v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()" class="signActive">《汽车租赁合同》查看</view>
+						</view>
+					</view>
+					<view v-if="!detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" class="tip">*验车信息由承租人填写完成后才能查看</view>
 		</view>
-		<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="view_cared">查看验车信息</view>
-		<view v-else @click="view()" class="view_car">查看验车信息</view>
-		<!-- <view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
-			<text style="padding: 6rpx;border-bottom: 2rpx solid #24ce8d;">查看合同范文</text>
-		</view> -->
-		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
-		<!-- <view class="bottom_content" style="padding: 40rpx 60rpx;">
-			<view class="btn orange">《汽车租赁合同》锁定</view>
-		</view> -->
-		<view class="bottom">
-			<!-- <view>
-				<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="check">查看验车信息</view>
-				<view v-else @click="view()" class="checkActive">查看验车信息</view>
-			</view> -->
-			<view>
-				<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()" class="signActive">登记商品信息</view>
-				<!-- <view v-if="detail.state=='REGISTER_CAR'" class="sign">登记商品信息</view> -->
-			</view>
-			<view>
-				<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='COMPANY_SIGN_CONTRACT'" @click="signContact()" class="signActive">签署汽车租赁合同</view>
-				<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="sign">签署汽车租赁合同</view>
-			</view>
-			<view>
-				<view v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()" class="signActive">《汽车租赁合同》查看</view>
+		<view v-show="showMask" class="mask"></view>
+		<view v-show="showModal" class="modal">
+			<view class="prompt">是否撤销？</view>
+			<view class="box">
+				<view class="cancel" @click="cancel()">取消</view>
+				<view class="confirm" @click="confirm()">确认</view>
 			</view>
 		</view>
-		<view v-if="!detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" class="tip">*验车信息由承租人填写完成后才能查看</view>
 	</view>
 </template>
 
@@ -398,7 +424,9 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				timestamp: 86399,//倒计时
+				showMask:false,
+				showModal:false,
+				timestamp: 0,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
 				detail:{},
@@ -412,6 +440,7 @@
 			 this.id = id;
 			 this.getDetail(id)
 			}
+			this.initChat();
 		},
 		computed:{
 			soureNum() {
@@ -451,6 +480,81 @@
 			}
 		},
 		methods: {
+			invalidation(){
+				this.showMask = true;
+				this.showModal = true;
+			},
+			cancel(){
+				this.showMask = false;
+				this.showModal = false;
+			},
+			confirm(){
+				this.showMask = false;
+				this.showModal = false;
+				this.$u.api.orderEfficacy({
+					orderId:this.detail.tradeid
+				}).then(res=>{
+					if(res.code === 200){
+						 this.$u.toast(撤销成功);
+					}else {
+						 this.$u.toast(res.msg);
+					}
+				})
+			},
+			initChat() {
+				let isLogin = this.$store.state.isLogin;
+				if (isLogin) {
+					return
+				}
+				this.initLogin()
+			},
+			// 登录tim
+			initLogin() {
+				let token = uni.getStorageSync('token');
+				if (!token) {
+					return false
+				}
+				this.$u.api.getSing().then(res => {
+					if (res.code === 200) {
+						let userInfo = res.object;
+						let promise = this.tim.login({
+							userID: userInfo.userId,
+							userSig: userInfo.singer
+						});
+						promise.then((res) => {
+							//登录成功后 更新登录状态
+							this.$store.commit("toggleIsLogin", true);
+							//自己平台的用户基础信息
+							uni.setStorageSync('userInfo', JSON.stringify(userInfo))
+							//tim 返回的用户信息
+							uni.setStorageSync('userTIMInfo', JSON.stringify(res.data))
+						}).catch((err) => {
+							console.warn('login error:', err); // 登录失败的相关信息
+						});
+					}
+				}).catch((err) => {
+					console.log(err)
+				});
+			},
+			toRoom(userID) {
+				let promise = this.tim.getUserProfile({
+					userIDList: [userID]
+				});
+				promise.then((imResponse) => {
+					console.log(imResponse)
+					if (imResponse.data[0]) {
+						let obj = {
+							conversation: {}
+						};
+						obj.conversation.conversationID = 'C2C' + userID;
+						obj.conversation.userProfile = imResponse.data[0];
+						this.$store.commit('updateConversationActive', obj)
+						this.$u.route('/pages/tim/room')
+					} else {
+						this.$u.toast('对方未开通聊天')
+					}
+				})
+			},
 			signContact() {
 				if (this.detail.state === 'VALIDATE_CAR'||this.detail.state === 'WAITTING_UPLOADING_MESSAGE'){
 					this.$u.toast('商品未登记');
@@ -462,26 +566,22 @@
 			viewContract() {
 				this.$u.route('/pages/company/order/contractPreview',{id:this.id,userId:this.detail.companyid})
 			},
-			revoke(){
-				uni.showModal({
-				   title: '警告信息',
-				   content: '是否撤销？',
-				   success: function (res) {
-				       if (res.confirm) {
-				           this.$u.api.orderEfficacy({
-				           	orderId:this.detail.tradeid
-				           }).then(res=>{
-				           	if(res.code === 200){
-				           		 this.$u.toast(撤销成功);
-				           	}else {
-				           		 this.$u.toast(res.msg);
-				           	}
-				           })
-				       } else if (res.cancel) {
-				           
-				       }
-				   }         
-				});
+			orderEfficacy(){
+				this.$u.api.orderEfficacy({
+					orderId:this.detail.tradeid
+				}).then(res=>{
+					if(res.code === 200){
+
+					}else {
+						
+					}
+				})
+			},
+			//倒计时
+			countEnd() {
+				if (this.form.state !== 'WAITTING_DELIVERY_VEHICLE'){
+					this.orderEfficacy()
+				}
 			},
 			dial(){
 				uni.makePhoneCall({
@@ -508,10 +608,42 @@
 						if(res.code === 200){
 							 this.detail = res.object;
 							 this.carname = this.detail.carname;
+							 if (this.detail.state === 'WAITTING_UPLOADING_MESSAGE' || this.detail.state === 'VALIDATE_CAR' ){
+							 	this.timeE(this.detail.createTime)
+							 } else if (this.detail.state === 'WAITTING_SIGN_CONTRACT' || this.detail.state === 'COMPANY_SIGN_CONTRACT' ){
+							 	let registerTime = this.detail.registerTime.replace(new RegExp("-", "gm"), "/");
+							 	let registerTimeM = (new Date(registerTime)).getTime();
+							 	let validatecartime = this.detail.validatecartime.replace(new RegExp("-", "gm"), "/");
+							 	let validatecartimeM = (new Date(validatecartime)).getTime();
+							 	if (registerTimeM>validatecartimeM){
+							 		this.timeE(this.detail.registerTime)
+							 	} else {
+							 		this.timeE(this.detail.validatecartime)
+							 	}
+							 } else if (this.detail.state === 'NO_PAYMENT'){
+							 	this.timeE(this.detail.signcontracttime)
+							 } else if (this.detail.state === 'WAITTING_DELIVERY_VEHICLE'){
+							 	this.timeE(this.detail.paytime)
+							 } else {
+							 	
+							 }
 						}else {
 							 this.$u.toast(res.msg);
 						}
 					})
+				}
+			},
+			timeE(times){
+				let date = new Date();
+				let startDate = times.replace(new RegExp("-", "gm"), "/");
+				let startDateM = (new Date(startDate)).getTime();
+				let Days = 86400000;
+				let yesDay = (startDateM + Days) - date.getTime();
+				let timestamp =  parseInt(yesDay / 1000);
+				if (timestamp<=0){
+					this.orderEfficacy()
+				} else{
+					this.timestamp = timestamp
 				}
 			},
 			refreshView() {
@@ -542,7 +674,80 @@
 		color: #333333;
 		display: flex;
 	}
-
+	
+	.mask{
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.36);
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+	}
+	.modal{
+		width: 660rpx;
+		border-radius: 12rpx;
+		background: #fff;
+		font-size: 36rpx;
+		color: #333;
+		font-weight: 900;
+		position: fixed;
+		top: 600rpx;
+		left: 50rpx;
+		z-index: 1000;
+		.prompt{
+			margin: 72rpx 40rpx 48rpx 40rpx;
+			text-align: center;
+		}
+		.box{
+			width: 660rpx;
+			height: 160rpx;
+			border-top: 4rpx solid #E0E0E0;
+			display: flex;
+			padding: 40rpx 48rpx;
+			justify-content: space-between;
+			align-items: center;
+			.cancel{
+				width: 264rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: #F2F2F2;
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #5F5E5F;
+			}
+			.confirm{
+				width: 264rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: linear-gradient(270deg, #63D094 0%, #5FCD8F 41%, #3FB16C 100%);
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #fff;
+			}
+		}
+	}
+	
+	.head_content {
+		padding: 40rpx 30rpx;
+		display: flex;
+		align-items: center;
+	
+		.title {
+			color: #111111;
+			font-size: 30rpx;
+			font-weight: 600;
+			padding-bottom: 10rpx;
+		}
+	
+		.time {
+			font-size: 26rpx;
+			color: #C7C7C7;
+		}
+	}
+	
 	.content {
         padding-bottom: 40rpx;
 		.count_down {
@@ -774,5 +979,24 @@
 		width: 4rpx;
 		height: 120rpx;
 		background: #c9c9c9;
+	}
+	.bottom_content {
+		position: fixed;
+		bottom: 10rpx;
+		width: 100%;
+		border-top: 1px solid #E0E0E0;
+		padding: 40rpx 60rpx;
+	
+		.button {
+			padding: 24rpx 28rpx;
+			font-size: 32rpx;
+			border-radius: 8rpx;
+			text-align: center;
+		}
+	
+		.contact {
+			background: linear-gradient(270deg, #61CF92 0%, #41B26E 100%);
+			color: #FFFFFF;
+		}
 	}
 </style>

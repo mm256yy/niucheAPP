@@ -1,60 +1,80 @@
 <template>
 	<view>
 		<view class="list_content">
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item)">
-					<view class="item_time">{{item.createTime}}</view>
-					<view class="item_content">
-						<view class="title u-line-2">
-							<text>{{item.carname}}</text>
-						</view>
-						<view class="money">
-							 <view class="title">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?'实付':'总计'}}</view>
-							 <view v-if="item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'"><text class="price">{{item.totalprice|toMoney}}</text><text class="unit">元</text></view>
-							 <view v-else><text class="price">{{item.totalprice|toMoney}}</text><text class="unit">元</text></view>
-						</view>
-						<view class="company">
-							<view><text style="color: #858585;padding-right: 10rpx;">承租人</text><text style="color: #424242;">{{item.rentername}}</text></view>
-							<view style="color: #BCBCBC;padding-top: 10rpx;">
-								<text>租期{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
-								<text>月租金{{item.monthlyrent}}元</text>
-								<!-- <text>押金{{item.deposit}}元<text style="color: #FE3B31;font-size: 14rpx;">（须线下转账）</text></text> -->
-							</view>
-						</view>
-						<view class="order">
-							<view class="num">订单号：{{item.tradeid}}</view>
-							<view class="btn" :class="['btn',item.state === 'ORDER_FINISHED' || item.state === 'ORDER_FAILED'?'complete':'active']">
-								{{item.state | soureText}}
-							</view>
-						</view>
-					</view>
+			<load-refresh
+			  style="margin-top: 40rpx;"
+			  v-show="list.length"
+			  ref="loadRefresh"
+			  :pageNo='pageNum'
+			  :totalPageNo='total'
+			  :isRefresh="true"
+			  refreshType="halfCircle"
+			  refreshTime="1000"
+			  color="#04C4C4"
+			  heightReduce="10"
+			  backgroundCover="#F3F5F5"
+			  @loadMore="loadMore" 
+			  @refresh="refresh">
+			  <view slot="content-list">
+			    <view class="list_item" v-for="(item,index) in list" :key="index" @click="toView(item)">
+			    	<view class="item_time">{{item.createTime}}</view>
+			    	<view class="item_content">
+			    		<view class="title u-line-2">
+			    			<text>{{item.carname}}</text>
+			    		</view>
+			    		<view class="money">
+			    			 <view class="title">{{item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'?'实付':'总计'}}</view>
+			    			 <view v-if="item.state ==='WAITTING_DELIVERY_VEHICLE' || item.state === 'ORDER_FINISHED'"><text class="price">{{item.totalprice|toMoney}}</text><text class="unit">元</text></view>
+			    			 <view v-else><text class="price">{{item.totalprice|toMoney}}</text><text class="unit">元</text></view>
+			    		</view>
+			    		<view class="company">
+			    			<view><text style="color: #858585;padding-right: 10rpx;">承租人</text><text style="color: #424242;">{{item.rentername}}</text></view>
+			    			<view style="color: #BCBCBC;padding-top: 10rpx;">
+			    				<text>租期{{item.leasetime}}个月</text> <text style="padding: 0 5px;">|</text>
+			    				<text>月租金{{item.monthlyrent}}元</text>
+			    				<!-- <text>押金{{item.deposit}}元<text style="color: #FE3B31;font-size: 14rpx;">（须线下转账）</text></text> -->
+			    			</view>
+			    		</view>
+			    		<view class="order">
+			    			<view class="num">订单号：{{item.tradeid}}</view>
+			    			<view class="btn" :class="['btn',item.state === 'ORDER_FINISHED' || item.state === 'ORDER_FAILED'?'complete':'active']">
+			    				{{item.state | soureText}}
+			    			</view>
+			    		</view>
+			    	</view>
+			    </view>
+			  </view>
+			</load-refresh>
+			<view class="null" v-show="!list.length">
+				<view>
+					<u-image width="371" height="171rpx" src="@/static/null.png"></u-image>
+					<view style="width: 371rpx;text-align: center;margin-top: 20rpx;">亲，当前空空如也</view>
 				</view>
-			</mescroll-body>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default {
-		mixins: [MescrollMixin],
 		data() {
 			return {
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				dataList: [],
-				page: {
-					num: 1,
-					size: 10 // 每页数据的数量,默认10
-				},
+				list: [],
 				downOption: {
 					auto: false //是否在初始化后,自动执行downCallback; 默认true
 				},
 				up: {
 					textNoMore: '--没有更多了--'
 				},
-				total: 0
+				total: 0,
+				pageNum: 1,
+				pagination: {
+				  pageNum: 1, 
+				  pageSize: 10
+				}
 			}
 		},
 		filters: {
@@ -95,36 +115,64 @@
 			   }
 		},
 		mounted() {
-			// this.downCallback()
+			this.pageNum = 1;
+			this.search()
 		},
 		methods: {
-			showSelect() {
-				this.selectFlag = true;
+			page() {
+			    this.pageNum = 1;	
 			},
-			tapPopup(option) {
-				this.selectText = option.title;
-				this.selectValue = option.value;
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
+			// 上划加载更多
+			      loadMore() {
+			        this.getList()
+			        // 请求新数据完成后调用 组件内loadOver()方法
+			        // 注意更新当前页码 currPage
+			        this.$refs.loadRefresh.loadOver()
+			      },
+			// 下拉刷新数据列表
+			refresh() {
+				this.pageNum = 1;
+			    this.search()
 			},
-			/*下拉刷新的回调 */
-			downCallback() {
-				this.page.num = 1;
-				this.dataList = []
-				this.upCallback()
-			},
-			upCallback() {
+			getList(){
+				this.pageNum = this.pageNum + 1;
 				this.$u.api.orderList({
-					pageNum: this.page.num,
-					pageSize: this.page.size,
+					pageNum: this.pageNum,
+					pageSize: 10,
 					state: '',
 				}).then(res => {
 					if (res.code === 200) {
-						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
-						this.page.num = this.page.num + 1
-						this.dataList = this.dataList.concat(res.rows);
+						this.total = Math.ceil(res.total/10);
+						let arr = res.rows
+						arr.forEach(item=>{
+							this.list.push(item)
+						})
+						let len = this.list.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
+					} else {
+						this.$u.toast(res.msg);
+					}
+				})
+			},
+			search() {
+				this.$u.api.orderList({
+					pageNum: 1,
+					pageSize: 10,
+					state: '',
+				}).then(res => {
+					if (res.code === 200) {
+						this.list = res.rows;
+						this.total = Math.ceil(res.total/10);
+						let len = this.list.length;
+						if(len<this.total){
+							this.status = 'loadmore'
+						} else{
+							this.status = 'nomore'
+						}
 					} else {
 						this.$u.toast(res.msg);
 					}
@@ -222,6 +270,12 @@
 					}
 				}
 			}
+		}
+		.null{
+			height: calc(73vh - var(--window-top));
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	}
 </style>

@@ -1,11 +1,15 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="订单详情" :background="background" title-color="#111111"></u-navbar>
+		<u-navbar back-icon-color="#111111" title="订单详情" :background="background" title-color="#111111">
+			<view slot="" @click="refreshView">
+				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
+			</view>
+		</u-navbar>
 		<view class="head_content">
 			<u-image width="80rpx" height="80rpx" src="@/static/order/wancheng2x.png"></u-image>
 			<view style="padding-left: 20rpx;">
-				<view class="title">{{form.state === 'ORDER_FAILED' ?'失效订单':'退单成功'}}</view>
-				<view class="time">{{form.updateTime}}</view>
+				<view class="title">失效订单</view>
+				<view class="time">{{form.createTime}}</view>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5"></u-gap>
@@ -152,7 +156,7 @@
 		}
 
 		.orange {
-			background: linear-gradient(270deg, #FFC600 0%, #FFA900 47%, #FF9100 100%);
+			background: linear-gradient(270deg, #61CF92 0%, #41B26E 100%);
 			color: #FFFFFF;
 		}
 	}
