@@ -243,7 +243,6 @@ const install = (Vue, vm) => {
 	const getMoney = (params = {}) => vm.$u.post(
 		'/alipay/alipayTransferMerchant?payeeAccount=' + params.payeeAccount + "&realname=" +
 		params.realname + "&userName=" +
-		params.userName+ "&companyName=" +
 		params.companyName+ "&userMainId=" +
 		params.userMainId, {}
 	);
@@ -253,6 +252,10 @@ const install = (Vue, vm) => {
 		params.checkMoney + "&userMainId=" +
 		params.userMainId + "&userName=" +
 		params.userName, {}
+	);
+	//获取支付宝变更次数
+	const getNum = (params = {}) => vm.$u.post(
+		'/alipay/getAlipayIdNum', {}
 	);
 	//新增验车单
 	const checkCarSave = (params = {}) => vm.$u.post('/order/car/message/add', params);
@@ -404,7 +407,8 @@ const install = (Vue, vm) => {
 		accountList,
 		accountDetail,
 		getMoney,
-		accountBind
+		accountBind,
+		getNum
 	};
 }
 

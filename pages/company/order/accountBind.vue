@@ -4,7 +4,7 @@
 		<view class="content">
 			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
 				<u-form-item label="支付宝账号:" prop="aliPayId">
-					<u-input class="input-radius" v-model="form.aliPayId" maxlength="10" placeholder="输入你支付宝收款账号"/>
+					<u-input @input="input" class="input-radius" v-model="form.aliPayId" maxlength="10" placeholder="输入你支付宝收款账号"/>
 					<text>{{first}}/3</text>
 				</u-form-item>
 				<u-form-item label="姓名:" prop="userName">
@@ -12,16 +12,17 @@
 				</u-form-item>
 				<view style="margin-top: 36rpx;">验证金额：</view>
 				<u-form-item label="￥" prop="checkMoney">
-					<u-input @blur="" class="input-radius" v-model="form.checkMoney" maxlength="10" placeholder="请输入"/>
+					<u-input class="input-radius" v-model="form.checkMoney" maxlength="10" placeholder="请输入"/>
 					<view v-if="num" @click="getMoney()" class="get">获取验证金额</view>
-					<view v-else class="disabled">获取验证金额</view>
+					<view v-else class="disabled">已获取验证金额</view>
 				</u-form-item>
 			</u-form>
 			<view class="tip">*验证金额：是由纽车平台向你的支付宝账号随机汇的微小金额，仅做账号有效性验证，无须退还</view>
 			<view class="warn">*请如实填写信息，否则造成收款失败</view>
 		</view>
 		<view class="bottom">
-			<view class="submit">绑定</view>
+			<view v-if="disable" class="disable">绑定</view>
+			<view v-else class="submit">绑定</view>
 		</view>
 	</view>
 </template>
@@ -38,7 +39,7 @@
 				id:'',
 				BusinessName:'',
 				first:1,
-				second:1,
+				disable: false,
 				form: {
 				  aliPayId:'',
 				  userName: '',
@@ -79,6 +80,16 @@
 			
 		},
 		methods: {
+			input(){
+				if(this.first > 3){
+					this.$u.toast('支付宝账号24小时内最多可变更3次');
+					return false;
+				}
+				const aliPayId = uni.getStorageSync('aliPayId');
+				if(this.form.aliPayId !== aliPayId){
+					this.num = true;
+				}
+			},
 			getMoney(){
 				if(!this.form.aliPayId){
 					this.$u.toast('支付宝账号不能为空');
@@ -103,18 +114,25 @@
 				}).then(res => {
 							if(res.code === 200){
 								this.first = res.num;
+								uni.setStorageSync('aliPayId', this.form.aliPayId);
 							 } else{
 								this.$u.toast(res.msg) 
 							 }
 						})
 					 } else{
-						this.$u.toast(res.msg) 
+						this.$u.toast(res.msg)
+						 this.$u.api.getNum({
+						           payeeAccount:this.form.aliPayId
+						 }).then(res => {
+						 			if(res.code === 200){
+						 				this.first = res.num;
+										uni.setStorageSync('aliPayId', this.form.aliPayId);
+						 			 } else{
+						 				this.$u.toast(res.msg) 
+						 			 }
+						 		})
 					 }
 				})
-			},
-			confirm(arr){
-				this.form.leasetime = arr[0].value;
-				this.leasetime = arr[0].label;
 			},
 			submit(){
 				if(this.form.alipayAccount&&this.form.monthlyrent&&this.form.money){
@@ -128,7 +146,9 @@
 					if(res.code === 200){
 						this.$u.toast('支付宝绑定成功');
 						this.$u.route('/pages/company/order/checkAccount')
-					 } else{
+					 }else if(res.code === 100){
+						 this.$u.toast('验证金额错误3次，请明天重试');
+					 }else{
 						this.$u.toast(res.msg) 
 					 }
 				})

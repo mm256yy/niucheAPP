@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<u-navbar back-icon-color="#111111" title="订单详情" :background="background" title-color="#111111">
-			<view slot="" @click="refreshView">
+			<view slot="" @click="refreshView()">
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right">
@@ -20,8 +20,8 @@
 			</view>
 		</view>
 		<view class="content" v-if="detail.state == 'WAITTING_UPLOADING_MESSAGE' || detail.state == 'VALIDATE_CAR'">
-			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
-			</view>
+			<!-- <view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view> -->
 			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
 				<u-time-line>
 					<view>
@@ -42,8 +42,8 @@
 			</view>
 		</view>
 		<view class="content" v-if="detail.state === 'WAITTING_SIGN_CONTRACT' || detail.state === 'COMPANY_SIGN_CONTRACT' || detail.state === 'REGISTER_CAR'">
-			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
-			</view>
+			<!-- <view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
 				<view style="width: 60%;;">
 					<u-time-line-item nodeTop="2">
@@ -89,8 +89,8 @@
 			</view>
 		</view>
 		<view class="content" v-if="detail.state === 'DRIVER_SIGN_CONTRACT' || detail.state === 'NO_PAYMENT'">
-			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
-			</view>
+			<!-- <view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
 				<view style="width: 60%;;">
 					<u-time-line-item nodeTop="2">
@@ -155,8 +155,8 @@
 			</view>
 		</view>
 		<view class="content" v-if="detail.state === 'WAITTING_DELIVERY_VEHICLE'">
-			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
-			</view>
+			<!-- <view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
 				<view style="width: 60%;;">
 	                <u-time-line-item nodeTop="2">
@@ -231,8 +231,8 @@
 			</view>
 		</view>
 		<view class="content" v-if="detail.state === 'ORDER_FINISHED'">
-			<view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
-			</view>
+			<!-- <view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
+			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
 				<view style="width: 60%;;">
 		            <u-time-line-item nodeTop="2">
@@ -480,6 +480,10 @@
 			}
 		},
 		methods: {
+			refreshView() {
+				this.getDetail(this.id)
+				this.$u.toast('刷新成功')
+			},
 			invalidation(){
 				this.showMask = true;
 				this.showModal = true;
@@ -645,9 +649,6 @@
 				} else{
 					this.timestamp = timestamp
 				}
-			},
-			refreshView() {
-				console.log(222)
 			},
 			chargeback() {
 				console.log('退单')
