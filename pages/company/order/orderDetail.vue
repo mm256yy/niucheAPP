@@ -560,7 +560,7 @@
 					this.$u.toast('商品未登记');
 					return 
 				}
-				this.$u.route('/pages/company/order/contractSign',{id:this.id,userid:this.detail.companyid})
+				this.$u.route('/pages/company/order/contractSign',{id:this.id,userId:this.detail.companyid})
 			},
 			//查看合同
 			viewContract() {

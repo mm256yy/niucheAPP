@@ -12,7 +12,7 @@
 				<view style="display: flex;justify-content: center;align-items: center;">
 					<view>
 						<view class="total">实际到账总计</view>
-						<view class="money">0.00</view>
+						<view class="money">{{obj.totalPrice}}</view>
 					</view>
 				</view>
 				<view @click="toAccount()" class="account">
@@ -25,7 +25,7 @@
 			</view>
 			<view class="title">途中金额</view>
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index">
+				<view@click="toView(item.orderId)" class="list_item" v-for="(item,index) in dataList" :key="index">
 					<view class="order">
 						<view class="num">订单号：{{item.orderId}}</view>
 						<view>+{{item.entryValue}}</view>
@@ -66,7 +66,8 @@
 				up: {
 					textNoMore: '--没有更多了--'
 				},
-				total: 0
+				total: 0,
+				obj:{}
 			}
 		},
 		filters: {
@@ -130,30 +131,31 @@
 				this.upCallback()
 			},
 			upCallback() {
-				this.$u.api.orderList({
+				this.$u.api.accountList({
 					pageNum: this.page.num,
 					pageSize: this.page.size,
-					billState: 1
+					billstate: 6
 				}).then(res => {
 					if (res.code === 200) {
-						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
+						this.obj = res.object;
+						this.total = res.object.total;
+						this.mescroll.endByPage(res.object.comparyReconciliationVOList.length, this.total);
 						this.page.num = this.page.num + 1
-						this.dataList = this.dataList.concat(res.rows);
+						this.dataList = this.dataList.concat(res.object.comparyReconciliationVOList);
 					} else {
 						this.$u.toast(res.msg);
 					}
 				})
 			},
 			toView(id) {
-				this.$u.route('/pages/company/order/orderDetail', {
+				this.$u.route('/pages/company/order/accountDetail', {
 					id: id
 				})
 			},
 			bind() {
 				this.$u.route('/pages/company/order/accountBind', {
-					id: '',
-					BusinessName:''
+					id: this.obj.userMainId,
+					businessName: this.obj.businessName
 				})
 			}
 		}

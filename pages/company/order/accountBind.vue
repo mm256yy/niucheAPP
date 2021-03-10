@@ -3,17 +3,16 @@
 		<u-navbar back-icon-color="#111111" title="支付宝账号绑定" :background="background" title-color="#111111"></u-navbar>
 		<view class="content">
 			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
-				<u-form-item label="支付宝账号:" prop="alipayAccount">
-					<u-input class="input-radius" v-model="form.alipayAccount" maxlength="10" placeholder="输入你支付宝收款账号"/>
+				<u-form-item label="支付宝账号:" prop="aliPayId">
+					<u-input class="input-radius" v-model="form.aliPayId" maxlength="10" placeholder="输入你支付宝收款账号"/>
 					<text>{{first}}/3</text>
 				</u-form-item>
-				<u-form-item label="月租金:" prop="monthlyrent">
-					<u-input class="input-radius" v-model="form.monthlyrent" maxlength="10" placeholder="你在支付宝认证的姓名"/>
-					<text>{{second}}/3</text>
+				<u-form-item label="姓名:" prop="userName">
+					<u-input class="input-radius" v-model="form.userName" maxlength="10" placeholder="你在支付宝认证的姓名"/>
 				</u-form-item>
 				<view style="margin-top: 36rpx;">验证金额：</view>
-				<u-form-item label="￥" prop="money">
-					<u-input @blur="" class="input-radius" v-model="form.money" maxlength="10" placeholder="请输入"/>
+				<u-form-item label="￥" prop="checkMoney">
+					<u-input @blur="" class="input-radius" v-model="form.checkMoney" maxlength="10" placeholder="请输入"/>
 					<view v-if="num" @click="getMoney()" class="get">获取验证金额</view>
 					<view v-else class="disabled">获取验证金额</view>
 				</u-form-item>
@@ -41,9 +40,9 @@
 				first:1,
 				second:1,
 				form: {
-				  alipayAccount:'',
-				  monthlyrent: '',
-				  money: '',
+				  aliPayId:'',
+				  userName: '',
+				  checkMoney: '',
 				},
 				leasetime: '',
 				select: [
@@ -68,7 +67,7 @@
 		},
 		onLoad(option) {
 			let id = option.id;
-			let BusinessName = option.BusinessName;
+			let BusinessName = option.businessName;
 			if(id){
 			 this.id = id;
 			}
@@ -81,19 +80,33 @@
 		},
 		methods: {
 			getMoney(){
-				this.first = this.first + 1;
-				this.second = this.second + 1;
-				const params = Object.assign(this.form, {
-					id:this.id,
-					BusinessName:this.BusinessName
-				});
-				this.$u.api.orderNew(params).then(res => {
+				if(!this.form.aliPayId){
+					this.$u.toast('支付宝账号不能为空');
+					return false;
+				}
+				if(!this.form.userName){
+					this.$u.toast('姓名不能为空');
+					return false;
+				}
+				this.num = false;
+				const params = {
+					companyName:this.BusinessName,
+					payeeAccount:this.form.aliPayId,
+					realname:this.form.userName,
+					userMainId:this.id
+				};
+				this.$u.api.getMoney(params).then(res => {
 					if(res.code === 200){
-						this.num = false;
-						this.first = this.first + 1;
-						this.second = this.second + 1;
-						this.$u.toast('新建订单成功');
-						this.$u.route('/pages/company/order/orderList')
+						this.$u.toast('获取验证金额成功');
+						this.$u.api.getNum({
+		                  payeeAccount:this.form.aliPayId
+				}).then(res => {
+							if(res.code === 200){
+								this.first = res.num;
+							 } else{
+								this.$u.toast(res.msg) 
+							 }
+						})
 					 } else{
 						this.$u.toast(res.msg) 
 					 }
@@ -109,10 +122,9 @@
 					return false
 				}
 				const params = Object.assign(this.form, {
-					id:this.id,
-					BusinessName:this.BusinessName
+					userMainId:this.id
 				});
-				this.$u.api.orderNew(params).then(res => {
+				this.$u.api.accountBind(params).then(res => {
 					if(res.code === 200){
 						this.$u.toast('支付宝绑定成功');
 						this.$u.route('/pages/company/order/checkAccount')
@@ -142,6 +154,14 @@
 		color: #5BBF84;
 	}
 	.disabled{
+		width: 210rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		text-align: center;
+		background: #FFFFFF;
+		border-radius: 8rpx;
+		border: 2rpx solid #D9DEDF;
+		font-size: 28rpx;
 		color: #959595;
 	}
 	.tip{

@@ -229,6 +229,31 @@ const install = (Vue, vm) => {
 	const orderNew = (params = {}) => vm.$u.post('/order/add', params);
 	//新增商品信息登记
 	const registerAdd = (params = {}) => vm.$u.post('/order/register/message/add', params);
+	//对账中心列表 账单列表
+	const accountList = (params = {}) => vm.$u.post(
+		'/order/CheckForTheCenterList?billstate=' + params.billstate + "&pageNum=" +
+		params.pageNum + "&pageSize=" +
+		params.pageSize, {}
+	);
+	//账单详情
+	const accountDetail = (params = {}) => vm.$u.post(
+		'/order/CheckForTheCenterForOne?orderId=' + params.orderId, {}
+	);
+	//获取验证金额
+	const getMoney = (params = {}) => vm.$u.post(
+		'/alipay/alipayTransferMerchant?payeeAccount=' + params.payeeAccount + "&realname=" +
+		params.realname + "&userName=" +
+		params.userName+ "&companyName=" +
+		params.companyName+ "&userMainId=" +
+		params.userMainId, {}
+	);
+	//用户绑定支付宝账户
+	const accountBind = (params = {}) => vm.$u.get(
+		'/system/usercomparybasictext/userInsertAliPayID?aliPayId=' + params.aliPayId + "&checkMoney=" +
+		params.checkMoney + "&userMainId=" +
+		params.userMainId + "&userName=" +
+		params.userName, {}
+	);
 	//新增验车单
 	const checkCarSave = (params = {}) => vm.$u.post('/order/car/message/add', params);
 	//查询验车单
@@ -375,7 +400,11 @@ const install = (Vue, vm) => {
 		orderDetail,
 		orderNew,
 		registerAdd,
-		verify
+		verify,
+		accountList,
+		accountDetail,
+		getMoney,
+		accountBind
 	};
 }
 

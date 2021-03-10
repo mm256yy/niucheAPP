@@ -39,7 +39,8 @@
 				up: {
 					textNoMore: '--没有更多了--'
 				},
-				total: 0
+				total: 0,
+				obj:{}
 			}
 		},
 		mounted() {
@@ -66,16 +67,17 @@
 				this.upCallback()
 			},
 			upCallback() {
-				this.$u.api.orderList({
+				this.$u.api.accountList({
 					pageNum: this.page.num,
 					pageSize: this.page.size,
-					type: this.selectValue
+					billstate: 5
 				}).then(res => {
 					if (res.code === 200) {
-						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
+						this.obj = res.object;
+						this.total = res.object.total;
+						this.mescroll.endByPage(res.object.comparyReconciliationVOList.length, this.total);
 						this.page.num = this.page.num + 1
-						this.dataList = this.dataList.concat(res.rows);
+						this.dataList = this.dataList.concat(res.object.comparyReconciliationVOList);
 					} else {
 						this.$u.toast(res.msg);
 					}

@@ -21,9 +21,12 @@
 			<view>
 				<view style="display: flex;align-items: center;justify-content: space-between;width: 480rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border-bottom: 2rpx solid rgba(0,0,0,0.08);">
 					<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
-					<u-image width="30" height="28" src="@/static/order/close.png"></u-image>
+					<u-image @click="close()" width="30" height="28" src="@/static/order/close.png"></u-image>
 				</view>
-				<view :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">{{item.carseriesname}}</view>
+				<view style="display: flex;justify-content: space-between;" :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">
+					<view>{{item.carseriesname}}</view>
+					<view style="color: #959595;">|&nbsp;车型</view>
+				</view>
 			</view>
 		</view>
 		<view v-show="showBrand" style="position: fixed;top: 224rpx;right: 0;width: 300rpx;background: #fff;border: 2rpx solid rgba(0,0,0,0.08);z-index: 100;min-height: 100%;">
@@ -145,6 +148,13 @@
 					textThird: this.textThird
 				});
 				this.$u.route('/pages/company/order/newOrder')
+			},
+			close(){
+				this.text = '';
+				this.textBrand = '';
+				this.textThird = '';
+				this.show = false;
+				this.showBrand = false;
 			}
 		}
 	}
