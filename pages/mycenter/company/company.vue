@@ -213,9 +213,6 @@
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser();
-			
-			this.getOrder();
-
 		},
 		onShow() {
 			this.token = uni.getStorageSync('token')
@@ -293,6 +290,7 @@
 							 console.log(this.authFlag)
 						}
 					})
+					this.getOrder();
 				}
 			},
 			toAuth(){

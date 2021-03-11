@@ -114,6 +114,16 @@
 			        return s;
 			   }
 		},
+		onBackPress(e) {
+		
+		        uni.switchTab({
+		          url: '/pages/mycenter/mycenter'
+		
+		        });
+		
+		        return true
+		
+		},
 		mounted() {
 			this.pageNum = 1;
 			this.search()

@@ -4,7 +4,7 @@
 		</u-navbar>
 		 <view class="wrap">
 			 <view style="">
-			 	<u-tabs-swiper style="position: fixed;background: #fff;" ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
+			 	<u-tabs-swiper count="cate_count" style="position: fixed;background: #fff;" ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
 			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 	 swiperWidth="750"></u-tabs-swiper>
 			 </view>
@@ -73,15 +73,14 @@
 				}, {
 					name: '商品登记'
 				},{
-					name: '待签约',
-					count: 8
+					name: '待签约'
 				}, {
 					name: '待支付'
 				}, {
 					name: '待提车'
 				}, {
 					name: '失效',
-					count: 8
+					cate_count: 8
 				}],
 				current: 0, 
 				swiperCurrent: 0,

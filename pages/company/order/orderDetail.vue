@@ -337,7 +337,7 @@
 				<view class="item"><text class="title">租赁周期：</text><text>{{detail.leasetime}}个月（提车后开始计算）</text></view>
 				<view class="item"><text class="title">每月租金：</text><text>{{detail.monthlyrent}}元</text></view>
 				<view class="item"><text class="title">车辆押金：</text><text>{{detail.deposit}}元</text><text class="other">（另须线下支付）</text></view>
-				<view style="padding: 8rpx 0;">
+				<view style="padding: 8rpx 0;" @click="showTips = true">
 					<text style="color: #999999;font-size: 24rpx;">押金还车后退，规则说明</text>
 					<u-icon name="question-circle" color="#999999" size="32"></u-icon>
 				</view>
@@ -415,6 +415,21 @@
 				<view class="confirm" @click="confirm()">确认</view>
 			</view>
 		</view>
+		<u-modal v-model="showTips" :show-confirm-button="false" title="">
+			<view class="slot_content">
+				<view class="slot_tips" style="padding:0 20rpx 30rpx;">
+					<view>1. 押金会全额退还吗？什么情况下扣押金?</view>
+					<view class="tips_text">租赁过程中，若您有未缴纳的费用或者违约金，租赁公司会在还车后结算时从押金中扣除，剩余费用全额退还。</view>
+					<view>2. 押金什么时候退还?</view>
+					<view class="tips_text">还车后，押金将会有租赁公司根据实际结算情况在30个工作日内退还，具体的到账时间因支付渠道不同存在差异，预计1-7个工作日到账。</view>
+					<view>3. 押金是由谁收取和退还?</view>
+					<view class="tips_text">押金是租赁公司收取和退还，平台提供线上支付和退还的能力。</view>
+				</view>
+				<view style="padding: 15px 20px 0;text-align: center;">
+					<u-button type="warning" shape='circle' class="btn_orange" @click="showTips=false">好的</u-button>
+				</view>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -427,6 +442,7 @@
 				},
 				showMask:false,
 				showModal:false,
+				showTips:false,
 				timestamp: 0,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
@@ -434,6 +450,16 @@
 				id: '',
 				carname: ''
 			}
+		},
+		onBackPress(e) {
+		
+		        uni.navigateTo({
+		          url: '/pages/company/order/order?index=0'
+		
+		        });
+		
+		        return true
+		
 		},
 		onLoad(option) {
 			let id = option.id;
@@ -1006,6 +1032,20 @@
 		.contact {
 			background: linear-gradient(270deg, #61CF92 0%, #41B26E 100%);
 			color: #FFFFFF;
+		}
+	}
+	.slot_content {
+		padding: 15px 0;
+	
+		.slot_tips {
+			color: #333333;
+			font-size: 28rpx;
+			border-bottom: 1rpx solid #E0E0E0;
+	
+			.tips_text {
+				padding: 10rpx 0;
+				text-indent: 20rpx;
+			}
 		}
 	}
 </style>
