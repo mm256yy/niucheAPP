@@ -116,7 +116,9 @@
 				this.$u.api.driverOrderList({
 					pageNum: this.page.num,
 					pageSize: this.page.size,
-				},{}).then(res => {
+					orderByColumn:'createTime',
+					isAsc:'desc'
+				}).then(res => {
 					if (res.code === 200) {
 						this.total = res.total;
 						this.mescroll.endByPage(res.rows.length, res.total);

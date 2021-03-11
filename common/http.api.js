@@ -265,7 +265,7 @@ const install = (Vue, vm) => {
 	);
      //司机我的订单
 	const driverOrderList = (params = {}) => vm.$u.post("/order/driver/list?pageNum=" + params.pageNum + "&pageSize=" +
-		params.pageSize, {});
+		params.pageSize+ "&orderByColumn=" +params.orderByColumn+ "&isAsc=" +params.isAsc, {});
 	//司机订单查询详情
 	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get?orderId='+params.id, {});
 	//获取支付宝订单信息
