@@ -16,18 +16,18 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				id:'',
-				userid:'',
+				userId:'',
 				srcUrl:'',
 			}
 		},
 		onLoad(option) {
 			let id = option.id;
-			let userid = option.userId;
+			let userId = option.userId;
 			if (id) {
 				this.id = id;
 			}
-			if (userid) {
-				this.userid = userid;
+			if (userId) {
+				this.userId = userId;
 			}
 		},
 		mounted() {
@@ -37,13 +37,13 @@
 		        var currentWebview = this.$scope.$getAppWebview() 
 		        setTimeout(function() {
 		            wv = currentWebview.children()[0]
-		            wv.setStyle({top:50})
+		            wv.setStyle({top:80})
 		        }, 1000); //如果是页面初始化调用时，需要延时一下
 		        // #endif
 		},
 		methods: {
 			getUrl(){
-				this.$u.api.getFdd({orderId: this.id,userId:this.userid}).then(res=>{
+				this.$u.api.getFdd({orderId: this.id,userId:this.userId}).then(res=>{
 					 if (res.code === 200){
 						 this.srcUrl = res.object
 					 } else {
@@ -55,6 +55,3 @@
 	}
 </script>
 
-<style lang="scss" scoped>
-
-</style>

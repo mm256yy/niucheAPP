@@ -6,7 +6,7 @@
 			</view>
 			<view class="navbar-right" slot="right" v-if="form.state !=='ORDER_FAILED' && chargeFlag">
 				<view class="message-box right-item" @click="chargeback"
-					v-if="form.state !== 'WAITTING_DELIVERY_VEHICLE' || form.state !== 'ORDER_FINISHED'">退单</view>
+					v-if="form.state !== 'WAITTING_DELIVERY_VEHICLE' && form.state !== 'ORDER_FINISHED'">退单</view>
 			</view>
 		</u-navbar>
 		<view class="head_content" v-if="!chargeFlag">
@@ -16,8 +16,8 @@
 				<view class="time">{{form.updateTime}}</view>
 			</view>
 		</view>
-		<view class="content" style="padding-bottom: 20rpx;" v-if="form.state !== 'ORDER_FAILED' && chargeFlag">
-			<view class="count_down" v-if="form.state !== 'ORDER_FINISHED' || form.state !== 'ORDER_FAILED'">
+		<view class="content" style="padding-bottom: 20rpx;" v-if="form.state !== 'ORDER_FAILED' && chargeFlag ">
+			<view class="count_down" v-if="form.state !== 'ORDER_FINISHED' && form.state !== 'ORDER_FAILED'">
 				<view v-if="form.state === 'VALIDATE_CAR' || form.state === 'COMPANY_SIGN_CONTRACT'  ">
 					等待计时
 				</view>
@@ -355,6 +355,10 @@
 					cancelReason:'',
 				}
 			}
+		},
+		onBackPress(event) {
+			this.$u.route("/pages/driver/myOrder/myOrder");
+			 return true;
 		},
 		onLoad(option) {
 			let id = option.id;
