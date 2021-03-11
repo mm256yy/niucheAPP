@@ -56,7 +56,6 @@
 					num: 1,
 					size: 10 // 每页数据的数量,默认10
 				},
-				orderByColumn: '',
 				downOption: {
 					auto: false //是否在初始化后,自动执行downCallback; 默认true
 				},
@@ -64,14 +63,6 @@
 					textNoMore: '--没有更多了--'
 				},
 				total: 0
-			}
-		},
-		onLoad(option) {
-			let orderByColumn = option.orderByColumn;
-			if (orderByColumn) {
-				this.orderByColumn = orderByColumn
-			} else {
-				this.orderByColumn = ''
 			}
 		},
 		filters: {
@@ -112,7 +103,7 @@
 			}
 		},
 		onShow() {
-			this.downCallback()
+			// this.downCallback()
 		},
 		methods: {
 			/*下拉刷新的回调 */
