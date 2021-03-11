@@ -356,6 +356,10 @@
 				}
 			}
 		},
+		onBackPress(event) {
+			this.$u.route("/pages/driver/myOrder/myOrder");
+			 return true;
+		},
 		onLoad(option) {
 			let id = option.id;
 			if (id) {
