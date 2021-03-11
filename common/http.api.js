@@ -217,7 +217,7 @@ const install = (Vue, vm) => {
 	//公司订单列表
 	const orderList = (params = {}) => vm.$u.post(
 		'/order/company/list?pageNum=' + params.pageNum + '&pageSize=' + params.pageSize
-		+ '&state=' + params.state, {}
+		+ '&state=' + params.state + '&orderByColumn=' + params.orderByColumn + '&isAsc=' + params.isAsc, {}
 	);
 	//公司订单详情
 	const orderDetail = (params = {}) => vm.$u.post(

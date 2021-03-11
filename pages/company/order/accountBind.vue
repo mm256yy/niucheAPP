@@ -4,15 +4,15 @@
 		<view class="content">
 			<u-form :model="form" ref="uForm" label-width="180" :border-bottom="false">
 				<u-form-item label="支付宝账号:" prop="aliPayId">
-					<u-input @input="input" class="input-radius" v-model="form.aliPayId" maxlength="10" placeholder="输入你支付宝收款账号"/>
+					<u-input @input="input" class="input-radius" v-model="form.aliPayId" placeholder="输入你支付宝收款账号"/>
 					<text>{{first}}/3</text>
 				</u-form-item>
 				<u-form-item label="姓名:" prop="userName">
-					<u-input class="input-radius" v-model="form.userName" maxlength="10" placeholder="你在支付宝认证的姓名"/>
+					<u-input class="input-radius" v-model="form.userName" placeholder="你在支付宝认证的姓名"/>
 				</u-form-item>
 				<view style="margin-top: 36rpx;">验证金额：</view>
 				<u-form-item label="￥" prop="checkMoney">
-					<u-input class="input-radius" v-model="form.checkMoney" maxlength="10" placeholder="请输入"/>
+					<u-input class="input-radius" v-model="form.checkMoney" placeholder="请输入"/>
 					<view v-if="num" @click="getMoney()" class="get">获取验证金额</view>
 					<view v-else class="disabled">已获取验证金额</view>
 				</u-form-item>

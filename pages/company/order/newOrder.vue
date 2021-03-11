@@ -143,6 +143,9 @@
 					this.$u.toast('请填写完整');
 					return false
 				}
+				if(this.warn||this.warnName||this.warnIdcard){
+					return false;
+				}
 				this.form.monthlyrent = Number(this.form.monthlyrent)
 				this.form.deposit = Number(this.form.deposit)
 				this.$u.api.orderNew(this.form).then(res => {
@@ -158,7 +161,9 @@
 						  renteridcard: ''
 						};
 						this.leasetime = '';
-						this.$u.route('/pages/company/order/order')
+						this.$u.route('/pages/company/order/orderDetail', {
+							id: item.id
+						})
 					 } else{
 						this.$u.toast(res.msg) 
 					 }

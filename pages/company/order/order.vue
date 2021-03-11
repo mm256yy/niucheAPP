@@ -73,13 +73,15 @@
 				}, {
 					name: '商品登记'
 				},{
-					name: '待签约'
+					name: '待签约',
+					count: 8
 				}, {
 					name: '待支付'
 				}, {
 					name: '待提车'
 				}, {
-					name: '失效'
+					name: '失效',
+					count: 8
 				}],
 				current: 0, 
 				swiperCurrent: 0,

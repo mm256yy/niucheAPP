@@ -140,6 +140,8 @@
 					pageNum: this.pageNum,
 					pageSize: 10,
 					state: '',
+					orderByColumn: 'createTime',
+					isAsc: 'desc',
 				}).then(res => {
 					if (res.code === 200) {
 						this.total = Math.ceil(res.total/10);
@@ -163,6 +165,8 @@
 					pageNum: 1,
 					pageSize: 10,
 					state: '',
+					orderByColumn: 'createTime',
+					isAsc: 'desc',
 				}).then(res => {
 					if (res.code === 200) {
 						this.list = res.rows;

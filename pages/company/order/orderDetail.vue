@@ -387,6 +387,7 @@
 					<!-- <view class="bottom_content" style="padding: 40rpx 60rpx;">
 						<view class="btn orange">《汽车租赁合同》锁定</view>
 					</view> -->
+					<view style="width: 100%;height: 130rpx;"></view>
 					<view class="bottom">
 						<!-- <view>
 							<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="check">查看验车信息</view>
@@ -749,13 +750,15 @@
 		}
 	}
 	
+	.count_down {
+		width: 100%;
+		text-align: center;
+		padding: 40rpx 0 20rpx;
+		color: #FE5B00;
+	}
+	
 	.content {
         padding-bottom: 40rpx;
-		.count_down {
-			text-align: center;
-			padding: 40rpx 0 20rpx;
-			color: #FE5B00;
-		}
 
 		.u-node {
 			width: 60rpx;
@@ -917,6 +920,11 @@
 		padding: 20rpx 76rpx;
 		display: flex;
 		justify-content: space-between;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		background: #fff;
+		border-top: 2rpx solid rgba(0,0,0,0.1);
 		.checkActive{
 			width: 232rpx;
 			height: 88rpx;
