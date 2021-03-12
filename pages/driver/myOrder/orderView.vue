@@ -28,7 +28,7 @@
 					{{form.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
 				</view>
 			</view>
-			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
+			<view style="position: relative;left: 50%;padding-top: 40rpx;">
 				<u-time-line>
 					<u-time-line-item nodeTop="2">
 						<template v-slot:node>
@@ -130,7 +130,7 @@
 				</u-time-line>
 
 			</view>
-			<view style="text-align: center;width: 90%;padding: 30rpx 0 20rpx;" @click="openFlow" v-if="soureNum !==1">
+			<view style="text-align: center;width: 100%;padding: 30rpx 0 20rpx;" @click="openFlow" v-if="soureNum !==1">
 				<text style="color: #333333;">{{openFlag?'收起':'展开'}}</text>
 				<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#C9C9C9"></u-icon>
 			</view>
