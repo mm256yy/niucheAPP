@@ -5,7 +5,7 @@
 			<view style="margin-top: 20rpx;">订单信息</view>
 			<!-- <view style="margin-top: 20rpx;color: #bcbcbc;">订单号：2343434343</view> -->
 			<u-form :model="form" ref="uForm" label-width="150" :border-bottom="false">
-				<u-form-item style="width:694rpx;margin-top: -18rpx;" label="出租车辆:"><u-input placeholder="请选择" @click="toCarname()" v-model="form.carname" type="select" /></u-form-item>
+				<u-form-item style="width:694rpx;" label="出租车辆:"><u-input placeholder="请选择" @click="toCarname()" v-model="form.carname" type="select" /></u-form-item>
 				<u-form-item style="width:694rpx;margin-top: -18rpx;" label="租期:"><u-input placeholder="请选择" @click="show = true" v-model="leasetime" type="select" /></u-form-item>
 				<u-form-item label="押金:" prop="deposit">
 					<u-input type="number" class="input-radius" v-model="form.deposit" placeholder="请输入"/>元
@@ -83,6 +83,16 @@
 				],
 			}
 		},
+		onBackPress(e) {
+		
+		        uni.switchTab({
+		          url: '/pages/mycenter/mycenter'
+		
+		        });
+		
+		        return true
+		
+		},
 		onReady() {
 		    this.$refs.uForm.setRules(this.rules);
 		},
@@ -148,31 +158,64 @@
 					this.$u.toast('请填写完整');
 					return false
 				}
-				if(this.warn||this.warnName||this.warnIdcard){
-					return false;
+				if(this.form.rentername&&this.form.renteridphone&&this.form.renteridcard){
+					const params={
+						userName: this.form.rentername,
+						phone: this.form.renteridphone,
+						idCard: this.form.renteridcard
+					}
+					this.$u.api.verify(params).then(res => {
+						if(res.code === 200){
+							this.warn = '';
+							this.warnName = '';
+							this.warnIdcard = '';
+							if(this.warn === ''&& this.warnName === ''&&this.warnIdcard === ''){
+								this.form.monthlyrent = Number(this.form.monthlyrent)
+								this.form.deposit = Number(this.form.deposit)
+								this.$u.api.orderNew(this.form).then(res => {
+									if(res.code === 200){
+										this.$u.toast('新建订单成功');
+										this.form = {
+										  carname: '',
+										  leasetime: '',
+										  monthlyrent: '',
+										  deposit: '',
+										  rentername: '',
+										  renteridphone: '',
+										  renteridcard: ''
+										};
+										this.leasetime = '';
+										this.$u.route('/pages/company/order/orderDetail', {
+											id: res.object
+										})
+									 } else{
+										this.$u.toast(res.msg) 
+									 }
+								}).catch(res=>{this.$u.toast(res.msg)})
+							}
+						 }else if(res.code == 100104){
+							 this.warn = res.msg;
+							 this.warnName = '';
+							 this.warnIdcard = '';
+						 }else if(res.code == 100105){
+							 this.warn = res.msg;
+							 this.warnName = '';
+							 this.warnIdcard = '';
+						 }else if(res.code == 100106){
+							 this.warnName = res.msg;
+							 this.warn = '';
+							 this.warnIdcard = '';
+						 }else if(res.code == 100107){
+							 this.warnIdcard = res.msg;
+							 this.warn = '';
+							 this.warnName = '';
+						 }else if(res.code == 100108){
+							 this.warn = res.msg;
+							 this.warnName = '';
+							 this.warnIdcard = '';
+						 }
+					}).catch(res=>{this.$u.toast(res.msg)})
 				}
-				this.form.monthlyrent = Number(this.form.monthlyrent)
-				this.form.deposit = Number(this.form.deposit)
-				this.$u.api.orderNew(this.form).then(res => {
-					if(res.code === 200){
-						this.$u.toast('新建订单成功');
-						this.form = {
-						  carname: '',
-						  leasetime: '',
-						  monthlyrent: '',
-						  deposit: '',
-						  rentername: '',
-						  renteridphone: '',
-						  renteridcard: ''
-						};
-						this.leasetime = '';
-						this.$u.route('/pages/company/order/orderDetail', {
-							id: res.object
-						})
-					 } else{
-						this.$u.toast(res.msg) 
-					 }
-				}).catch(res=>{this.$u.toast(res.msg)})
 			}
 		}	
 	}

@@ -5,27 +5,32 @@
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right">
-				<view class="message-box right-item" @click="invalidation()" v-if="detail.state !== 'WAITTING_DELIVERY_VEHICLE'||detail.state !== 'ORDER_FINISHED'">撤销</view>
+				<view class="message-box right-item" @click="invalidation()" v-if="detail.state !== 'WAITTING_DELIVERY_VEHICLE'&&detail.state !== 'ORDER_FINISHED'&& detail.state !== 'ORDER_FAILED'">撤销</view>
 			</view>
 		</u-navbar>
-		<view class="count_down" v-if="detail.state !== 'ORDER_FINISHED' || detail.state !== 'ORDER_FAILED'">
-			<view v-if="detail.state === 'VALIDATE_CAR' || detail.state === 'DRIVER_SIGN_CONTRACT'  ">
-				等待计时
+		<view v-if="detail.state !== 'ORDER_FAILED' && chargeFlag ">
+			<view class="count_down" v-if="detail.state !== 'ORDER_FINISHED' || detail.state !== 'ORDER_FAILED'&& !chargeFlag">
+				<view v-if="detail.state === 'REGISTER_CAR' || detail.state === 'DRIVER_SIGN_CONTRACT'">
+					等待计时
+				</view>
+				<view v-else>
+					剩余
+					<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd">
+					</u-count-down>
+					{{detail.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
+				</view>
 			</view>
-			<view v-else>
-				剩余
-				<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd">
-				</u-count-down>
-				{{detail.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
-			</view>
+		</view>
+		<view class="count_down" v-if="detail.state === 'ORDER_FAILED'">
+			
 		</view>
 		<view class="content" v-if="detail.state == 'WAITTING_UPLOADING_MESSAGE' || detail.state == 'VALIDATE_CAR'">
 			<!-- <view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
 			</view> -->
-			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
+			<view style="margin:16rpx 24rpx 0;display: flex;justify-content:center;width: 90%;">
 				<u-time-line>
 					<view>
-						<u-time-line-item nodeTop="2" style="margin: 0;">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<u-image width="60rpx" height="60rpx" src="@/static/order/registerActive.png"></u-image>
@@ -45,8 +50,8 @@
 			<!-- <view class="count_down">剩余<u-count-down :timestamp="timestamp" color="#FE5B00" separator-color="#FE5B00" @end="countEnd"></u-count-down>
 			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
-				<view style="width: 60%;;">
-					<u-time-line-item nodeTop="2">
+				<view style="width: 60%;">
+					<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 						<template v-slot:node>
 							<view class="u-node">
 								<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x_a.png"></u-image>
@@ -64,7 +69,7 @@
 				</view>
 					<view v-show="openFlag">
 		                <view class="line"></view>
-						<u-time-line-item nodeTop="2" style="margin: 0;">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -93,8 +98,8 @@
 			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
 				<view style="width: 60%;;">
-					<u-time-line-item nodeTop="2">
-						<template v-slot:node>
+					<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
+						<template v-slot:node style="margin-bottom: 0;">
 							<view class="u-node">
 								<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x_a.png"></u-image>
 							</view>
@@ -111,7 +116,7 @@
 				</view>
 					<view v-show="openFlag">
 						<view class="line"></view>
-						<u-time-line-item nodeTop="2">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -130,7 +135,7 @@
 							</template>
 						</u-time-line-item>
 		                <view class="line"></view>
-						<u-time-line-item nodeTop="2" style="margin: 0;">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -159,7 +164,7 @@
 			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
 				<view style="width: 60%;;">
-	                <u-time-line-item nodeTop="2">
+	                <u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 	                	<template v-slot:node>
 	                		<view class="u-node">
 	                			<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x_a.png"></u-image>
@@ -174,7 +179,7 @@
 				</view>
 					<view v-show="openFlag">
 						<view class="line"></view>
-						<u-time-line-item nodeTop="2">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -190,7 +195,7 @@
 							</template>
 						</u-time-line-item>
 						<view class="line"></view>
-						<u-time-line-item nodeTop="2">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -206,7 +211,7 @@
 							</template>
 						</u-time-line-item>
 		                <view class="line"></view>
-						<u-time-line-item nodeTop="2" style="margin: 0;">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -235,10 +240,10 @@
 			</view> -->
 			<view style="margin:16rpx 330rpx 0;display: flex;justify-content:center;width: 90%;flex-direction: column;">
 				<view style="width: 60%;;">
-		            <u-time-line-item nodeTop="2">
+		            <u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 		            	<template v-slot:node>
 		            		<view class="u-node">
-		            			<view class="dot"></view>
+		            			<u-image width="60rpx" height="60rpx" src="@/static/order/wancheng2x.png"></u-image>
 		            		</view>
 		            	</template>
 		            	<template v-slot:content>
@@ -250,7 +255,7 @@
 				</view>
 					<view v-show="openFlag">
 						<view class="line"></view>
-						<u-time-line-item nodeTop="2">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -265,7 +270,8 @@
 								</view>
 							</template>
 						</u-time-line-item>
-						<u-time-line-item nodeTop="2">
+						<view class="line"></view>
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -281,7 +287,7 @@
 							</template>
 						</u-time-line-item>
 						<view class="line"></view>
-						<u-time-line-item nodeTop="2">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -297,7 +303,7 @@
 							</template>
 						</u-time-line-item>
 		                <view class="line"></view>
-						<u-time-line-item nodeTop="2" style="margin: 0;">
+						<u-time-line-item nodeTop="2" style="margin-bottom: 0;">
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time">
@@ -321,7 +327,7 @@
 				<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#C9C9C9"></u-icon>
 			</view>
 		</view>
-		<view v-if="detail.state === 'ORDER_FAILED'" class="head_content">
+		<view v-if="detail.state === 'ORDER_FAILED'&&chargeFlag" class="head_content">
 			<u-image width="80rpx" height="80rpx" src="@/static/order/wancheng2x.png"></u-image>
 			<view style="padding-left: 20rpx;">
 				<view class="title">失效订单</view>
@@ -446,6 +452,7 @@
 				timestamp: 0,//倒计时
 				status: true, //状态
 				openFlag: false, //展开 收起
+				chargeFlag:true,
 				detail:{},
 				id: '',
 				carname: ''
@@ -526,7 +533,9 @@
 					orderId:this.detail.tradeid
 				}).then(res=>{
 					if(res.code === 200){
-						 this.$u.toast(撤销成功);
+						 this.$u.toast("撤销成功");
+						 this.chargeFlag = false;
+						 this.getDetail(this.id)
 					}else {
 						 this.$u.toast(res.msg);
 					}
@@ -785,7 +794,7 @@
 	
 	.content {
         padding-bottom: 40rpx;
-
+        padding-left: 50rpx;
 		.u-node {
 			width: 60rpx;
 			height: 60rpx;
@@ -795,6 +804,7 @@
 			align-items: center;
 
 			.time {
+				width: 160rpx;
 				position: absolute;
 				left: -100px;
 				color: #000000;
@@ -1012,8 +1022,9 @@
 	}
 	.line{
 		width: 4rpx;
-		height: 120rpx;
+		height: 100rpx;
 		background: #c9c9c9;
+		margin-left: -40rpx;
 	}
 	.bottom_content {
 		position: fixed;

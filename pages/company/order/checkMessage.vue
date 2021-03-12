@@ -274,7 +274,7 @@
 		margin-bottom: 20rpx;
 	}
 	.status{
-		width: 156rpx;
+		min-width: 156rpx;
 		height: 72rpx;
 		line-height: 72rpx;
 		text-align: center;

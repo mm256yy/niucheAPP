@@ -205,7 +205,8 @@
 					waitCarMessageNum: 0,
 					waitDeliveryVehicleNum: 0,
 					waitPayNum: 0,
-					waitSignContractNum: 0
+					waitSignContractNum: 0,
+					failedNum: 0
 				}
 			}
 		},
@@ -329,10 +330,12 @@
 			},
 			toList(index){
 				let token = uni.getStorageSync('token')
+				const obj = JSON.stringify(this.order)
 				if (token){
 					if(this.companyStatus === 2){
 						this.$u.route('/pages/company/order/order', {
-							index: index
+							index: index,
+							obj: obj
 						});
 					} else{
 						this.$u.toast('请先进行认证')

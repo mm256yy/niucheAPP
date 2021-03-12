@@ -4,7 +4,7 @@
 		</u-navbar>
 		 <view class="wrap">
 			 <view style="">
-			 	<u-tabs-swiper count="cate_count" style="position: fixed;background: #fff;" ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
+			 	<u-tabs-swiper :offset="[4,0]" count="cate_count" style="position: fixed;background: #fff;" ref="uTabs" activeColor="#40B36C" :list="listTab" inactive-color="#000"
 			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 	 swiperWidth="750"></u-tabs-swiper>
 			 </view>
@@ -90,7 +90,12 @@
 				isChildUpdate3:false,
 				isChildUpdate4:false,
 				isChildUpdate5:false,
-				isChildUpdate6:false
+				isChildUpdate6:false,
+				failedNum:'',
+				waitCarMessageNum:'',
+				waitDeliveryVehicleNum:'',
+				waitPayNum:'',
+				waitSignContractNum:'',
 			}
 		},
 		onBackPress(e) {
@@ -105,10 +110,36 @@
 		},
 		onLoad(option) {
 			let index = option.index;
+			let obj = JSON.parse(option.obj);
 			if(index){
 			 this.current = index;
 			 this.swiperCurrent = index;
 			 this.create(index)
+			}
+			if(obj){
+			 this.waitCarMessageNum = obj.waitCarMessageNum;
+			 this.waitSignContractNum = obj.waitSignContractNum;
+			 this.waitPayNum = obj.waitPayNum;
+			 this.waitDeliveryVehicleNum = obj.waitDeliveryVehicleNum;
+			 this.failedNum = obj.failedNum;
+			 this.listTab = [{
+			 	name: '全部'
+			 }, {
+			 	name: '商品登记',
+				cate_count: this.waitCarMessageNum
+			 },{
+			 	name: '待签约',
+				cate_count: this.waitSignContractNum
+			 }, {
+			 	name: '待支付',
+				cate_count: this.waitPayNum
+			 }, {
+			 	name: '待提车',
+				cate_count: this.waitDeliveryVehicleNum
+			 }, {
+			 	name: '失效',
+			 	cate_count: this.failedNum
+			 }]
 			}
 		},
 		methods: {
