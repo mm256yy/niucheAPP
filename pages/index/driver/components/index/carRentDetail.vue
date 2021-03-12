@@ -81,7 +81,7 @@
 					<view v-show="!detail.cardescribe" style="width: 652rpx;border-radius: 4rpx;background: #fff;padding: 28rpx;font-size: 28rpx;color: #555;margin-top: 28rpx;">未描述</view>
 		  		</view>
 		  		<view style="width: 684rpx;background: #FFEFE8;border-radius: 4rpx;padding: 16rpx;margin-top: 38rpx;">
-		  			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #FE5B00;">-购车流程-</view>
+		  			<view style="margin-top: 10rpx;margin-left: 248rpx;font-size: 32rpx;color: #FE5B00;">-租车流程-</view>
 		  			<view style="width: 652rpx;border-radius: 4rpx;background: #fff;font-size: 26rpx;color: #333;margin-top: 28rpx;height: 274rpx;padding: 68rpx 32rpx;">
 		  				<view style="display: flex;justify-content: space-between;align-items: center;">
 		  					<u-image width="92rpx" height="92rpx" src="@/static/selectOnlineDriver.png"></u-image>

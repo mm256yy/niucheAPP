@@ -28,13 +28,14 @@
 					{{form.state !=='WAITTING_DELIVERY_VEHICLE' ?'失效':'自动确认'}}
 				</view>
 			</view>
-			<view style="margin:16rpx 80rpx 0;display: flex;justify-content:center;width: 90%;">
+			<view style="position: relative;left: 50%;padding-top: 40rpx;">
 				<u-time-line>
 					<u-time-line-item nodeTop="2">
 						<template v-slot:node>
 							<view class="u-node">
 								<view class="time" v-if="soureNum === 5">
-									<view>{{form.finishedtime}}</view>
+									<view>{{form.finishedtime.substring(0,10)}}</view>
+									<view class="hour">{{form.finishedtime.substring(10,20)}}</view>
 								</view>
 								<view v-if="soureNum === 1">
 									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x_a.png"></u-image>
@@ -68,7 +69,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.takethecartime}}</view>
+										<view>{{form.takethecartime.substring(0,10)}}</view>
+										<view class="hour">{{form.takethecartime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
 								</view>
@@ -83,7 +85,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.paytime}}</view>
+										<view>{{form.paytime.substring(0,10)}}</view>
+										<view class="hour">{{form.paytime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
 								</view>
@@ -99,7 +102,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.signcontracttime}}</view>
+										<view>{{form.signcontracttime.substring(0,10)}}</view>
+										<view class="hour">{{form.signcontracttime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
 								</view>
@@ -114,8 +118,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.validatecartime}}</view>
-										<!-- <view class="hour">11:15:33</view> -->
+										<view>{{form.validatecartime.substring(0,10)}}</view>
+										<view class="hour">{{form.validatecartime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x.png"></u-image>
 								</view>
@@ -130,7 +134,7 @@
 				</u-time-line>
 
 			</view>
-			<view style="text-align: center;width: 90%;padding: 30rpx 0 20rpx;" @click="openFlow" v-if="soureNum !==1">
+			<view style="text-align: center;width: 100%;padding: 30rpx 0 20rpx;" @click="openFlow" v-if="soureNum !==1">
 				<text style="color: #333333;">{{openFlag?'收起':'展开'}}</text>
 				<u-icon :name="openFlag?'arrow-up':'arrow-down'" size="36" color="#C9C9C9"></u-icon>
 			</view>
@@ -770,7 +774,7 @@
 
 			.time {
 				position: absolute;
-				left: -100px;
+				left: -80px;
 				color: #000000;
 				font-size: 28rpx;
 
