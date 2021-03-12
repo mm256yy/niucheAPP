@@ -93,6 +93,16 @@
 				isChildUpdate6:false
 			}
 		},
+		onBackPress(e) {
+		
+		        uni.switchTab({
+		          url: '/pages/mycenter/mycenter'
+		
+		        });
+		
+		        return true
+		
+		},
 		onLoad(option) {
 			let index = option.index;
 			if(index){
