@@ -34,7 +34,8 @@
 						<template v-slot:node>
 							<view class="u-node">
 								<view class="time" v-if="soureNum === 5">
-									<view>{{form.finishedtime}}</view>
+									<view>{{form.finishedtime.substring(0,10)}}</view>
+									<view class="hour">{{form.finishedtime.substring(10,20)}}</view>
 								</view>
 								<view v-if="soureNum === 1">
 									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x_a.png"></u-image>
@@ -68,7 +69,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.takethecartime}}</view>
+										<view>{{form.takethecartime.substring(0,10)}}</view>
+										<view class="hour">{{form.takethecartime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/tiche2x.png"></u-image>
 								</view>
@@ -83,7 +85,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.paytime}}</view>
+										<view>{{form.paytime.substring(0,10)}}</view>
+										<view class="hour">{{form.signcontracttime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
 								</view>
@@ -99,7 +102,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.signcontracttime}}</view>
+										<view>{{form.signcontracttime.substring(0,10)}}</view>
+										<view class="hour">{{form.signcontracttime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/hetong2x.png"></u-image>
 								</view>
@@ -114,8 +118,8 @@
 							<template v-slot:node>
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
-										<view>{{form.validatecartime}}</view>
-										<!-- <view class="hour">11:15:33</view> -->
+										<view>{{form.validatecartime.substring(0,10)}}</view>
+										<view class="hour">{{form.validatecartime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/yanche2x.png"></u-image>
 								</view>
@@ -770,7 +774,7 @@
 
 			.time {
 				position: absolute;
-				left: -100px;
+				left: -80px;
 				color: #000000;
 				font-size: 28rpx;
 
