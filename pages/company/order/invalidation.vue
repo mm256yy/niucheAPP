@@ -1,9 +1,6 @@
 <template>
 	<view>
 		<u-navbar back-icon-color="#111111" title="订单详情" :background="background" title-color="#111111">
-			<view slot="" @click="refreshView">
-				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
-			</view>
 		</u-navbar>
 		<view class="head_content">
 			<u-image width="80rpx" height="80rpx" src="@/static/order/wancheng2x.png"></u-image>

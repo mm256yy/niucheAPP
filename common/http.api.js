@@ -235,6 +235,10 @@ const install = (Vue, vm) => {
 		params.pageNum + "&pageSize=" +
 		params.pageSize, {}
 	);
+	//对账中心-实际到账总计
+	const total = (params = {}) => vm.$u.post(
+		'/order/checkForTheCenterPub', {}
+	);
 	//账单详情
 	const accountDetail = (params = {}) => vm.$u.post(
 		'/order/CheckForTheCenterForOne?orderId=' + params.orderId, {}
@@ -408,7 +412,8 @@ const install = (Vue, vm) => {
 		accountDetail,
 		getMoney,
 		accountBind,
-		getNum
+		getNum,
+		total
 	};
 }
 

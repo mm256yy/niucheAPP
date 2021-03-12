@@ -21,11 +21,14 @@
 							<view style="height: 120rpx;display: flex;align-items: center;width: 500rpx;">
 								<view style="height: 120rpx;display: flex;flex-direction: column;justify-content: center;">
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
-									<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
+									<view style="display: flex;justify-content: space-between;align-items: center;">
+										<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
+										<u-image width="246" height="48" src="@/static/mycenter/right.png"></u-image>
+									</view>
 									<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-1" v-if="companyStatus === 3">原因 :{{reson}}</view>
 								</view>
 								<view style="height: 120rpx;display: flex;align-items: center;margin-left: auto;">
-									<u-image v-show="tokenFlag" width="32" height="48" src="@/static/right.png"></u-image>
+									<u-image width="32" height="48" src="@/static/right.png"></u-image>
 								</view>
 							</view>
 						</u-col>
@@ -37,7 +40,10 @@
 				<view class="room"></view>
 				<view style="width: 678rpx;margin: 60rpx 20rpx 18rpx 52rpx;padding: 0 60rpx 0 20rpx;display: flex;justify-content: space-between;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的订单</view>
-					<view class="new" @click="toNew()">新建订单</view>
+					<view class="new" @click="toNew()">
+						<u-image width="26rpx" height="26rpx" src="@/static/mycenter/add.png"></u-image>
+						<view style="margin-left: 6rpx;">新建订单</view>
+					</view>
 				</view>
 				<view style="width: 678rpx;height: 168rpx;margin-left: 36rpx;background: #fff;padding: 0 38rpx;border-radius: 20rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view @click="toList(1)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
@@ -463,14 +469,14 @@
 		left: 304rpx;
 	}
 	.new{
-		width: 160rpx;
-		height: 60rpx;
-		line-height: 60rpx;
-		text-align: center;
+		padding: 16rpx;
 		background: linear-gradient(270deg, #64D094 0%, #52C17D 41%, #3DAF6A 100%);
 		border-radius: 4px;
 		font-size: 24rpx;
 		color: #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.checkAccount{
 		width: 682rpx;
@@ -482,8 +488,9 @@
 		color: #FFDB00;
 		padding-left: 102rpx;
 		padding-top: 40rpx;
-		margin-left: 34rpx;
-		margin-top: 10rpx;
+		position: fixed;
+		top: 292rpx;
+		left: 34rpx;
 	}
 	.tip{
 		width: 36rpx;

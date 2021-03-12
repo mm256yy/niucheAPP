@@ -109,8 +109,19 @@
 		},
 		mounted() {
 			// this.downCallback()
+			this.getTotal();
 		},
 		methods: {
+			getTotal(){
+				this.$u.api.total({
+				}).then(res=>{
+					if(res.code === 200){
+			            this.obj = res.object;
+					}else {
+						this.$u.toast(res.msg);
+					}
+				})
+			},
 			toAccount(){
 				this.$u.route('/pages/company/order/accountList')
 			},
@@ -137,11 +148,10 @@
 					billstate: 6
 				}).then(res => {
 					if (res.code === 200) {
-						this.obj = res.object;
-						this.total = res.object.total;
-						this.mescroll.endByPage(res.object.comparyReconciliationVOList.length, this.total);
+						this.total = res.total;
+						this.mescroll.endByPage(res.rows.length, res.total);
 						this.page.num = this.page.num + 1
-						this.dataList = this.dataList.concat(res.object.comparyReconciliationVOList);
+						this.dataList = this.dataList.concat(res.rows);
 					} else {
 						this.$u.toast(res.msg);
 					}
@@ -232,7 +242,6 @@
 		justify-content: space-between;
 		font-size: 36rpx;
 		color: #333;
-		font-weight: 700;
 	}
 	
 	.num{

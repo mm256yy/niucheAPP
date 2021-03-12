@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<u-navbar back-icon-color="#111111" title="订单详情" :background="background" title-color="#111111">
-			<view slot="" @click="refreshView()">
+			<view v-show="detail.state !== 'ORDER_FAILED'" slot="" @click="refreshView()">
 				<u-image width="30rpx" height="30rpx" src="@/static/order/reload2x.png"></u-image>
 			</view>
 			<view class="navbar-right" slot="right">

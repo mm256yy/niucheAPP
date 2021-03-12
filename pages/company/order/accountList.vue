@@ -39,8 +39,7 @@
 				up: {
 					textNoMore: '--没有更多了--'
 				},
-				total: 0,
-				obj:{}
+				total: 0
 			}
 		},
 		mounted() {
@@ -73,11 +72,10 @@
 					billstate: 5
 				}).then(res => {
 					if (res.code === 200) {
-						this.obj = res.object;
-						this.total = res.object.total;
-						this.mescroll.endByPage(res.object.comparyReconciliationVOList.length, this.total);
+						this.total = res.total;
+						this.mescroll.endByPage(res.rows.length, res.total);
 						this.page.num = this.page.num + 1
-						this.dataList = this.dataList.concat(res.object.comparyReconciliationVOList);
+						this.dataList = this.dataList.concat(res.rows);
 					} else {
 						this.$u.toast(res.msg);
 					}
