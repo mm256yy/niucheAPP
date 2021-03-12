@@ -86,7 +86,7 @@
 								<view class="u-node">
 									<view class="time" v-if="soureNum === 5">
 										<view>{{form.paytime.substring(0,10)}}</view>
-										<view class="hour">{{form.signcontracttime.substring(10,20)}}</view>
+										<view class="hour">{{form.paytime.substring(10,20)}}</view>
 									</view>
 									<u-image width="60rpx" height="60rpx" src="@/static/order/zhifu2x.png"></u-image>
 								</view>
