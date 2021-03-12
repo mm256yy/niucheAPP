@@ -5,11 +5,11 @@
 		<view class="accountList">
 			<view class="top">
 				<view>订单租金</view>
-				<view class="price">12990</view>
+				<view class="price">￥{{obj.rentMoney | toMoney}}</view>
 			</view>
 			<view class="flex">
 				<view class="key">当前状态：</view>
-				<view class="value">已入账</view>
+				<view class="value">{{obj.state | soureText}}</view>
 			</view>
 			<view class="flex">
 				<view class="key">来源：</view>
@@ -17,29 +17,29 @@
 			</view>
 			<view class="flex">
 				<view class="key">订单号：</view>
-				<view class="value">1234567890</view>
+				<view class="value">{{obj.orderId}}</view>
 			</view>
-			<view class="flex">
+			<!-- <view class="flex">
 				<view class="key">押金：</view>
 				<view class="value">￥10000.00</view>
-			</view>
+			</view> -->
 			<view class="flex">
 				<view class="key">月租金：</view>
-				<view class="value">￥3000.00</view>
+				<view class="value">￥{{obj.rentMoney}}</view>
 			</view>
 			<view class="flex">
 				<view class="key">信息服务费：</view>
-				<view class="value">-￥10.00</view>
+				<view class="value">-￥{{obj.serviceMoney}}</view>
 			</view>
 			<view class="flex">
 				<view class="key">对账单号：</view>
-				<view class="value">1234567890</view>
+				<view class="value">{{obj.reconciliationId}}</view>
 			</view>
 			<view class="flex">
 				<view class="key">入账时间：</view>
-				<view class="value">2020.09.28 11:15:33</view>
+				<view class="value">{{obj.inReconciliationTime}}</view>
 			</view>
-			<view class="view" @click="toDetail(item)">
+			<view class="view" @click="toDetail(obj.orderId)">
 				<view>查看订单详情</view>
 				<u-image width="18" height="28" src="@/static/order/rightDark.png"></u-image>
 			</view>
@@ -54,30 +54,70 @@
 				background: {
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
-				detail: {}
+				obj: {}
 			}
 		},
-		mounted() {
-			
+		filters: {
+			soureText: function(value) {
+				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'VALIDATE_CAR') {
+					return '商品登记'
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'COMPANY_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
+					return '待签约'
+				} else if (value === 'NO_PAYMENT' || value === 'DRIVER_SIGN_CONTRACT') {
+					return '待支付'
+				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
+					return '待提车'
+				} else if (value === 'ORDER_FINISHED') {
+					return '完成'
+				} else if (value === 'ORDER_FAILED') {
+					return '失效'
+				} else {
+					return ''
+				}
+			},
+			toMoney:function(s,type){
+			        if (/[^0-9\.]/.test(s)) return "0";
+			        if (s == null || s == "") return "0";
+			        s = s.toString().replace(/^(\d*)$/, "$1.");
+			        s = (s + "00").replace(/(\d*\.\d\d)\d*/, "$1");
+			        s = s.replace(".", ",");
+			        var re = /(\d)(\d{3},)/;
+			        while (re.test(s))
+			            s = s.replace(re, "$1,$2");
+			        s = s.replace(/,(\d\d)$/, ".$1");
+			        if (type == 0) {// 不带小数位(默认是有小数位)
+			            var a = s.split(".");
+			            if (a[1] == "00") {
+			                s = a[0];
+			            }
+			        }
+			        return s;
+			   }
+		},
+		onLoad(option) {
+			let id = option.id;
+			if(id){
+			 this.getDetail(id)
+			}
 		},
 		methods: {
-			getDetail(){
+			getDetail(id){
 				let token = uni.getStorageSync('token');
 				if(token){
-					this.$u.api.orderDetail({
-						orderId:orderId
+					this.$u.api.accountDetail({
+						orderId:id
 					}).then(res=>{
 						if(res.code === 200){
-							 this.detail = res.object;
+							 this.obj = res.object;
 						}else {
 							 this.$u.toast(res.msg);
 						}
 					})
 				}
 			},
-			toDetail(item) {
+			toDetail(id) {
 				this.$u.route('/pages/company/order/orderDetail', {
-					id: item.id
+					id: id
 				})
 			}
 		}

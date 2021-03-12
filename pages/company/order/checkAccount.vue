@@ -12,7 +12,7 @@
 				<view style="display: flex;justify-content: center;align-items: center;">
 					<view>
 						<view class="total">实际到账总计</view>
-						<view class="money">{{obj.totalPrice}}</view>
+						<view class="money">{{obj.totalPrice | toMoney}}</view>
 					</view>
 				</view>
 				<view @click="toAccount()" class="account">
