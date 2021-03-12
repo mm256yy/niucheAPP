@@ -105,6 +105,13 @@
 		onShow() {
 			// this.downCallback()
 		},
+		onBackPress(event) {
+			this.$u.route({
+				url: '/pages/mycenter/mycenter',
+				type: 'switchTab'
+			})
+			return true;
+		},
 		methods: {
 			/*下拉刷新的回调 */
 			downCallback() {
