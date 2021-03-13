@@ -388,7 +388,7 @@
 			toMyOrder() {
 				let token = uni.getStorageSync('token')
 				if (token) {
-					if (this.driverPub.driverState === 2) {
+					if (this.driverPub.driverState === 2 && this.driverPub.postState === 2) {
 						this.$u.route("/pages/driver/myOrder/myOrder")
 					} else {
 						this.$u.toast('请先进行认证')
