@@ -8,7 +8,7 @@
 			    bg-color="" :current="current" @change="tabsChange" :is-scroll="false"
 			 	 swiperWidth="750"></u-tabs-swiper>
 			 </view>
-			 <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			 <swiper class="swiper-box" :current="swiperCurrent" @animationfinish="animationfinish">
 			 	<swiper-item class="swiper-item">
 			 		<scroll-view scroll-y style="height: 100%;width: 100%;">
 			 			<alling v-if="isChildUpdate1" ref="alling"></alling>
@@ -76,11 +76,10 @@
 					name: '待签约'
 				}, {
 					name: '待支付'
-				}, {
+				},,{
 					name: '待提车'
 				}, {
-					name: '失效',
-					cate_count: 8
+					name: '失效'
 				}],
 				current: 0, 
 				swiperCurrent: 0,
@@ -194,10 +193,11 @@
 				this.create(index)
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
-			transition(e) {
-				let dx = e.detail.dx;
-				this.$refs.uTabs.setDx(dx);
-			},
+			// transition(e) {
+			// 	debugger
+			// 	let dx = e.detail.dx;
+			// 	this.$refs.uTabs.setDx(dx);
+			// },
 			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
 			// swiper滑动结束，分别设置tabs和swiper的状态
 			animationfinish(e) {

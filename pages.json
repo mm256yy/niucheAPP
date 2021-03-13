@@ -199,6 +199,12 @@
 				"navigationStyle": "custom" 
 			}
 		}
+		,{//公司授权页面
+		    "path" : "pages/company/order/right",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
         ,{//租车价格
             "path" : "pages/company/lease/step/stepCost/stepCost",
             "style" : {

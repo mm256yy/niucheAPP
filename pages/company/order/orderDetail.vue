@@ -455,15 +455,18 @@
 				chargeFlag:true,
 				detail:{},
 				id: '',
-				carname: ''
+				carname: '',
+				order: {
+					waitCarMessageNum: 0,
+					waitDeliveryVehicleNum: 0,
+					waitPayNum: 0,
+					waitSignContractNum: 0,
+					failedNum: 0
+				}
 			}
 		},
 		onBackPress(e) {
-		
-		        uni.navigateTo({
-		          url: '/pages/company/order/order?index=0'
-		
-		        });
+		        this.getOrder()
 		
 		        return true
 		
@@ -514,6 +517,23 @@
 			}
 		},
 		methods: {
+			getOrder(){
+				let token =  uni.getStorageSync('token')
+				if (token) {
+					this.$u.api.getCompanyOrder({}).then(res=>{
+						if(res.code === 200){
+							this.order = res.object;
+							const obj = JSON.stringify(this.order)
+							this.$u.route('/pages/company/order/order', {
+								index: 0,
+								obj: obj
+							});
+						}else {
+							this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
 			refreshView() {
 				this.getDetail(this.id)
 				this.$u.toast('刷新成功')
@@ -604,7 +624,7 @@
 			},
 			//查看合同
 			viewContract() {
-				this.$u.route('/pages/company/order/contractPreview',{id:this.id,userId:this.detail.companyid})
+				this.$u.route('/pages/driver/myOrder/contractPreview',{id:this.id,userId:this.detail.companyid})
 			},
 			orderEfficacy(){
 				this.$u.api.orderEfficacy({

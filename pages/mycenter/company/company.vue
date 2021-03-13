@@ -23,7 +23,11 @@
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
 									<view style="display: flex;justify-content: space-between;align-items: center;">
 										<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
-										<u-image width="246" height="48" src="@/static/mycenter/right.png"></u-image>
+										<view class="signNo" v-show="show" @click="toRight()">
+											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<view v-show="state==0" style="height: 26rpx;margin-left: 10rpx;">未授权</view>
+											<view v-show="state==1" style="height: 26rpx;margin-left: 10rpx;">已授权</view>
+										</view>
 									</view>
 									<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-1" v-if="companyStatus === 3">原因 :{{reson}}</view>
 								</view>
@@ -183,6 +187,17 @@
 				</view>
 			</view>
 		</view>
+		<view @click="close()" v-show="showMask" class="mask"></view>
+		<u-image v-show="showClose" @click="close()" class="close" width="58" height="58" src="@/static/mycenter/close.png"></u-image>
+		<view v-show="showModal" class="modal">
+			<view style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
+				<u-image width="76" height="90" src="@/static/mycenter/icon.png"></u-image>
+				<view class="warn">《汽车租赁合同》签约未授权，请你授权！</view>
+			</view>
+			<view class="box">
+				<view class="confirm" @click="confirm()">开始授权</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -190,6 +205,12 @@
 	export default {
 		data() {
 			return {
+				show:false,
+				showMask:false,
+				showModal:false,
+				showClose:false,
+				userId: '',
+				state:0,
 				companyName:'',
 				companyStatus:'',
 				reson:'',
@@ -240,6 +261,21 @@
 		  }
 		},
 		methods: {
+			toRight(){
+				this.showMask = true;
+				this.showModal = true;
+				this.showClose = true;
+			},
+			close(){
+				this.showMask = false;
+				this.showModal = false;
+				this.showClose = false;
+			},
+			confirm(){
+				this.$u.route('/pages/company/order/right',{
+					userId: this.userId
+				});
+			},
 			getOrder(){
 				let token =  uni.getStorageSync('token')
 				if (token) {
@@ -269,7 +305,25 @@
 								this.companyName = phone
 							}
 							this.companyStatus = data.state;
+							if(this.companyStatus === 2){
+								this.show = true;
+							}
 							this.reson = data.nostate;
+							this.userId = data.userMainId;
+							this.$u.api.stateRight({
+								userId:this.userId
+							}).then(res=>{
+								if(res.code === 200){
+									this.state = res.object;
+									if(this.companyStatus === 2&&this.state === 0){
+										this.showMask = true;
+										this.showModal = true;
+										this.showClose = true;
+									}
+								}else {
+									this.$u.toast(res.msg);
+								}
+							})
 							let strF ='已发布';
 							let strE = '条'
 							this.myPublishObj.zcxx =strF+data.zunum+strE;
@@ -478,6 +532,19 @@
 		justify-content: center;
 		align-items: center;
 	}
+	.signNo{
+		height: 46rpx;
+		line-height: 46rpx;
+		background: #ffe74a;
+		border-radius: 30rpx;
+		display: flex;
+		justify-content: space-between;
+		// align-items: center;
+		color: #333;
+		padding: 0 20rpx;
+		margin-left: 40rpx;
+		margin-top: 10rpx;
+	}
 	.checkAccount{
 		width: 682rpx;
 		height: 120rpx;
@@ -489,7 +556,7 @@
 		padding-left: 102rpx;
 		padding-top: 40rpx;
 		position: fixed;
-		top: 292rpx;
+		top: calc(var(--status-bar-height) + 236rpx);
 		left: 34rpx;
 	}
 	.tip{
@@ -517,5 +584,67 @@
 		position: absolute;
 		top: -10rpx;
 		left: 42rpx;
+	}
+	.mask{
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.36);
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+	}
+	.close{
+		position: fixed;
+		top: 400rpx;
+		right: 48rpx;
+		z-index: 1001;
+	}
+	.modal{
+		width: 654rpx;
+		border-radius: 12rpx;
+		background: #fff;
+		font-size: 36rpx;
+		color: #333;
+		font-weight: 900;
+		position: fixed;
+		top: 520rpx;
+		left: 50rpx;
+		z-index: 1000;
+		padding-top: 54rpx;
+		.warn{
+			width: 552rpx;
+			text-align: center;
+			margin: 44rpx 40rpx 48rpx 40rpx;
+		}
+		.box{
+			width: 654rpx;
+			height: 160rpx;
+			border-top: 4rpx solid rgba(0,0,0,0.05);
+			display: flex;
+			padding: 40rpx 48rpx;
+			justify-content: space-between;
+			align-items: center;
+			.cancel{
+				width: 264rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: #F2F2F2;
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #5F5E5F;
+			}
+			.confirm{
+				width: 558rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: linear-gradient(270deg, #63D094 0%, #5FCD8F 41%, #3FB16C 100%);
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #fff;
+			}
+		}
 	}
 </style>

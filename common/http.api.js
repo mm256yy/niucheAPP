@@ -261,6 +261,14 @@ const install = (Vue, vm) => {
 	const getNum = (params = {}) => vm.$u.post(
 		'/alipay/getAlipayIdNum', {}
 	);
+	//公司授权
+	const toRight = (params = {}) => vm.$u.get(
+		'/app/fdd/auth?userId=' + params.userId, {}
+	);
+	//查询公司授权状态
+	const stateRight = (params = {}) => vm.$u.get(
+		'/app/fdd/auth/check?userId=' + params.userId, {}
+	);
 	//新增验车单
 	const checkCarSave = (params = {}) => vm.$u.post('/order/car/message/add', params);
 	//查询验车单
@@ -413,7 +421,9 @@ const install = (Vue, vm) => {
 		getMoney,
 		accountBind,
 		getNum,
-		total
+		total,
+		toRight,
+		stateRight
 	};
 }
 

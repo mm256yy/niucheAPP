@@ -1,10 +1,11 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="合同预览" :background="background" title-color="#111111"></u-navbar>
-		<view>
-			<web-view :src="srcUrl">
+			<web-view
+			  :src="srcUrl"
+			  @message="reciveMessage"
+			  @onPostMessage="recivePostMessage"
+			>
 			</web-view>
-		</view>
 	</view>
 </template>
 
@@ -32,18 +33,24 @@
 		},
 		mounted() {
 			this.getUrl()
-				// #ifdef APP-PLUS
-				var wv;
-		        var currentWebview = this.$scope.$getAppWebview() 
-		        setTimeout(function() {
-		            wv = currentWebview.children()[0]
-		            wv.setStyle({top:80})
-		        }, 1000); //如果是页面初始化调用时，需要延时一下
-		        // #endif
+				// // #ifdef APP-PLUS
+				// var wv;
+		  //       var currentWebview = this.$scope.$getAppWebview() 
+		  //       setTimeout(function() {
+		  //           wv = currentWebview.children()[0]
+		  //           wv.setStyle({top:50})
+		  //       }, 1000); //如果是页面初始化调用时，需要延时一下
+		  //       // #endif
 		},
 		methods: {
+			reciveMessage(data){
+				console.log(1111)
+			},
+			recivePostMessage(data){
+				
+			},
 			getUrl(){
-				this.$u.api.getFdd({orderId: this.id,userId:this.userId}).then(res=>{
+				this.$u.api.toRight({userId:this.userId}).then(res=>{
 					 if (res.code === 200){
 						 this.srcUrl = res.object
 					 } else {
@@ -55,3 +62,6 @@
 	}
 </script>
 
+<style lang="scss" scoped>
+
+</style>
