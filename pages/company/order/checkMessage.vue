@@ -3,8 +3,7 @@
 		<u-navbar back-icon-color="#111111" title="验车车辆信息浏览" :background="background" title-color="#111111"></u-navbar>
 		<view class="content">
 			<view class="title">车辆行驶证</view>
-			<kxj-previewImage ref="preview" :saveBtn="false" :rotateBtn="false" :imgs="arr"></kxj-previewImage>
-			<u-image @click="preview(index,'preview')" width="694rpx" height="386rpx" v-for="(item,index) in arr" :key="index" :src="item"></u-image>
+			<u-image @click="preview(index,arr)" width="694rpx" height="386rpx" v-for="(item,index) in arr" :key="index" :src="item"></u-image>
 			<view style="display: flex;padding: 42rpx 0;">
 				<view style="width: 240rpx;margin-right: 50rpx;color: #bcbcbc;">号牌号码：</view>
 				<view style="width: 420rpx;text-align: right;">{{detail.number||'暂无数据'}}</view>
@@ -44,13 +43,11 @@
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
 			<view style="margin-top: 20rpx;" class="title">车辆铭牌（1张）</view>
-			<kxj-previewImage ref="previewFirst" :saveBtn="false" :rotateBtn="false" :imgs="arrFirst"></kxj-previewImage>
-			<u-image @click="preview(index,'previewFirst')" width="694rpx" height="386rpx" v-for="(item,index) in arrFirst" :key="index" :src="item"></u-image>
+			<u-image @click="preview(index,arrFirst)" width="694rpx" height="386rpx" v-for="(item,index) in arrFirst" :key="index" :src="item"></u-image>
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
 			<view style="margin-top: 20rpx;" class="title">中控仪表盘（必填）</view>
-			<kxj-previewImage ref="previewSecond" :saveBtn="false" :rotateBtn="false" :imgs="arrSecond"></kxj-previewImage>
-			<u-image @click="preview(index,'previewSecond')" width="694rpx" height="386rpx" v-for="(item,index) in arrSecond" :key="index" :src="item"></u-image>
+			<u-image @click="preview(index,arrSecond)" width="694rpx" height="386rpx" v-for="(item,index) in arrSecond" :key="index" :src="item"></u-image>
 			<!-- <view style="margin-top: 32rpx;">表显里程：12333333KM</view> -->
 		</view>
 		<view style="margin-top: 20rpx;" class="content">
@@ -66,8 +63,7 @@
 					<view class="status" v-show='!item.text'>无</view>
 				</view>
 				<view style="display: flex;justify-content: space-between;">
-					<kxj-previewImage ref="previewThird" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-					<u-image @click="preview(index,'previewThird')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+					<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 				</view>
 			</view>
 		</view>
@@ -86,8 +82,7 @@
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
 						<view style="display: flex;justify-content: space-between;">
-							<kxj-previewImage ref="previewOne" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-							<u-image @click="preview(index,'previewOne')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 						</view>
 					</view>
 				</view>
@@ -100,8 +95,7 @@
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
 						<view style="display: flex;justify-content: space-between;">
-							<kxj-previewImage ref="previewTwo" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-							<u-image @click="preview(index,'previewTwo')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 						</view>
 					</view>
 				</view>
@@ -114,8 +108,7 @@
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
 						<view style="display: flex;justify-content: space-between;">
-							<kxj-previewImage ref="previewThree" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-							<u-image @click="preview(index,'previewThree')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 						</view>
 					</view>
 				</view>
@@ -127,8 +120,7 @@
 						<view class="status" v-show='!item.text'>无</view>
 					</view>
 					<view style="display: flex;justify-content: space-between;">
-						<kxj-previewImage ref="previewFour" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-						<u-image @click="preview(index,'previewFour')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+						<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 					</view>
 				</view>
 			</view>
@@ -148,8 +140,8 @@
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
 						<view style="display: flex;justify-content: space-between;">
-							<kxj-previewImage ref="previewFive" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-							<u-image @click="preview(index,'previewFive')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+							
+							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 						</view>
 					</view>
 				</view>
@@ -162,8 +154,7 @@
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
 						<view style="display: flex;justify-content: space-between;">
-							<kxj-previewImage ref="previewSix" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-							<u-image @click="preview(index,'previewSix')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 						</view>
 					</view>
 				</view>
@@ -175,8 +166,7 @@
 						<view class="status" v-show='!item.text'>无</view>
 					</view>
 					<view style="display: flex;justify-content: space-between;">
-						<kxj-previewImage ref="previewSeven" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-						<u-image @click="preview(index,'previewSeven')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+						<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 					</view>
 				</view>
 			</view>
@@ -193,11 +183,11 @@
 					<view class="status" v-show='!item.text'>无</view>
 				</view>
 				<view style="display: flex;justify-content: space-between;">
-					<kxj-previewImage ref="previewEight" :saveBtn="false" :rotateBtn="false" :imgs="item.photo"></kxj-previewImage>
-					<u-image @click="preview(index,'previewEight')" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+					<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx" v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
 				</view>
 			</view>
 		</view>
+		<kxj-previewImage ref="preview" :saveBtn="false" :rotateBtn="false" :imgs="poslist"></kxj-previewImage>
 	</view>
 </template>
 
@@ -221,7 +211,8 @@
 				fourFlag:true,
 				arr:[],
 				arrFirst:[],
-				arrSecond:[]
+				arrSecond:[],
+				poslist:[]
 			}
 		},
 		onLoad(option) {
@@ -235,8 +226,8 @@
 				this[name] = !this[name];
 			},
 			preview(e,name){
-				this.$refs[name].open(e)
-				this.$u.api.setEvent({eventId:"lease_content_picture",type:3,params:{desc:'浏览banner'}})
+				this.poslist = name;
+				this.$refs.preview.open(e)
 			},
           getMessage(id){
           	let token = uni.getStorageSync('token');

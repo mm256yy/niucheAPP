@@ -50,7 +50,7 @@
 				
 			},
 			getUrl(){
-				this.$u.api.toRight({userId:this.userId}).then(res=>{
+				this.$u.api.getRight({userId:this.userId}).then(res=>{
 					 if (res.code === 200){
 						 this.srcUrl = res.object
 					 } else {

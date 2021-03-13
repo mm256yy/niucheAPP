@@ -246,13 +246,13 @@ const install = (Vue, vm) => {
 	//获取验证金额
 	const getMoney = (params = {}) => vm.$u.post(
 		'/alipay/alipayTransferMerchant?payeeAccount=' + params.payeeAccount + "&realname=" +
-		params.realname + "&userName=" +
+		params.realname + "&companyName=" +
 		params.companyName+ "&userMainId=" +
 		params.userMainId, {}
 	);
 	//用户绑定支付宝账户
 	const accountBind = (params = {}) => vm.$u.get(
-		'/system/usercomparybasictext/userInsertAliPayID?aliPayId=' + params.aliPayId + "&checkMoney=" +
+		'/alipay/userInsertAliPayID?aliPayId=' + params.aliPayId + "&checkMoney=" +
 		params.checkMoney + "&userMainId=" +
 		params.userMainId + "&userName=" +
 		params.userName, {}
@@ -260,10 +260,6 @@ const install = (Vue, vm) => {
 	//获取支付宝变更次数
 	const getNum = (params = {}) => vm.$u.post(
 		'/alipay/getAlipayIdNum', {}
-	);
-	//公司授权
-	const toRight = (params = {}) => vm.$u.get(
-		'/app/fdd/auth?userId=' + params.userId, {}
 	);
 	//查询公司授权状态
 	const stateRight = (params = {}) => vm.$u.get(
@@ -295,6 +291,8 @@ const install = (Vue, vm) => {
 	const orderPrice = (params = {}) => vm.$u.post('/order/real/price/get?orderId='+params.orderId+'&type='+params.type, params);
 	//法大大
 	const getFdd = (params = {}) => vm.$u.get('/app/fdd/server/'+params.orderId+'/'+params.userId, {});
+	//法大大-授权
+	const getRight = (params = {}) => vm.$u.get('/app/fdd/server/'+params.userId, {});
 	//退单
 	const orderCancel = (params = {}) => vm.$u.post('/order/cancel?orderId='+params.orderId+'&cancelSort='+params.cancelSort+'&cancelReason='+params.cancelReason, params);
 	
@@ -306,6 +304,7 @@ const install = (Vue, vm) => {
 		orderDeliveryOfVehicle,
 		orderEfficacy,
 		getFdd,
+		getRight,
 		getDriverOrder,
 		getCompanyOrder,
 		driverOrderView,
@@ -422,7 +421,6 @@ const install = (Vue, vm) => {
 		accountBind,
 		getNum,
 		total,
-		toRight,
 		stateRight
 	};
 }

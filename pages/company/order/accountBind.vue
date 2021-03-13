@@ -20,7 +20,7 @@
 			<view class="tip">*验证金额：是由纽车平台向你的支付宝账号随机汇的微小金额，仅做账号有效性验证，无须退还</view>
 			<view class="warn">*请如实填写信息，否则造成收款失败</view>
 		</view>
-		<view class="bottom">
+		<view class="bottom" @click="submit()">
 			<view v-if="disable" class="disable">绑定</view>
 			<view v-else class="submit">绑定</view>
 		</view>
@@ -77,7 +77,7 @@
 			}
 		},
 		mounted() {
-			
+			this.getNumber()
 		},
 		methods: {
 			input(){
@@ -109,30 +109,22 @@
 				this.$u.api.getMoney(params).then(res => {
 					if(res.code === 200){
 						this.$u.toast('获取验证金额成功');
-						this.$u.api.getNum({
-		                  payeeAccount:this.form.aliPayId
-				}).then(res => {
+						this.getNumber()
+					 } else{
+						this.$u.toast(res.msg)
+						this.getNumber()
+					 }
+				})
+			},
+			getNumber(){
+				this.$u.api.getNum({}).then(res => {
 							if(res.code === 200){
-								this.first = res.num;
-								uni.setStorageSync('aliPayId', this.form.aliPayId);
+								this.first = res.object;
+														uni.setStorageSync('aliPayId', this.form.aliPayId);
 							 } else{
 								this.$u.toast(res.msg) 
 							 }
 						})
-					 } else{
-						this.$u.toast(res.msg)
-						 this.$u.api.getNum({
-						           payeeAccount:this.form.aliPayId
-						 }).then(res => {
-						 			if(res.code === 200){
-						 				this.first = res.num;
-										uni.setStorageSync('aliPayId', this.form.aliPayId);
-						 			 } else{
-						 				this.$u.toast(res.msg) 
-						 			 }
-						 		})
-					 }
-				})
 			},
 			submit(){
 				if(this.form.alipayAccount&&this.form.monthlyrent&&this.form.money){

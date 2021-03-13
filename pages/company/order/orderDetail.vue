@@ -61,7 +61,7 @@
 							<view>
 								<view style="color: #333;" v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="u-order-desc">合同签署</view>
 								<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
-								<view v-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view>
+								<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view>
 								<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
 							</view>
 						</template>
@@ -403,10 +403,10 @@
 							<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()" class="signActive">登记商品信息</view>
 							<!-- <view v-if="detail.state=='REGISTER_CAR'" class="sign">登记商品信息</view> -->
 						</view>
-						<view>
+						<!-- <view>
 							<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='COMPANY_SIGN_CONTRACT'" @click="signContact()" class="signActive">签署汽车租赁合同</view>
 							<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="sign">签署汽车租赁合同</view>
-						</view>
+						</view> -->
 						<view>
 							<view v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()" class="signActive">《汽车租赁合同》查看</view>
 						</view>
@@ -455,6 +455,7 @@
 				chargeFlag:true,
 				detail:{},
 				id: '',
+				status: '',
 				carname: '',
 				order: {
 					waitCarMessageNum: 0,
@@ -473,9 +474,13 @@
 		},
 		onLoad(option) {
 			let id = option.id;
+			let status = option.status;
 			if(id){
 			 this.id = id;
 			 this.getDetail(id)
+			}
+			if(status){
+			 this.status = status;
 			}
 			this.initChat();
 		},
@@ -524,10 +529,16 @@
 						if(res.code === 200){
 							this.order = res.object;
 							const obj = JSON.stringify(this.order)
-							this.$u.route('/pages/company/order/order', {
-								index: 0,
-								obj: obj
-							});
+							if(this.status){
+								this.$u.route('/pages/company/order/accountDetail', {
+									id: this.id
+								});
+							}else{
+								this.$u.route('/pages/company/order/order', {
+									index: 0,
+									obj: obj
+								});
+							}
 						}else {
 							this.$u.toast(res.msg);
 						}

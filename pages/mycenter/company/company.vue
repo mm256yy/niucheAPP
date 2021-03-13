@@ -23,10 +23,13 @@
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
 									<view style="display: flex;justify-content: space-between;align-items: center;">
 										<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
-										<view class="signNo" v-show="show" @click="toRight()">
+										<view class="signNo" v-show="show&&state==0" @click="toRight()">
 											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
-											<view v-show="state==0" style="height: 26rpx;margin-left: 10rpx;">未授权</view>
-											<view v-show="state==1" style="height: 26rpx;margin-left: 10rpx;">已授权</view>
+											<view style="height: 26rpx;margin-left: 10rpx;">未授权</view>
+										</view>
+										<view class="signNo" v-show="show&&state==1">
+											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<view style="height: 26rpx;margin-left: 10rpx;">已授权</view>
 										</view>
 									</view>
 									<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-1" v-if="companyStatus === 3">原因 :{{reson}}</view>
@@ -319,6 +322,11 @@
 										this.showMask = true;
 										this.showModal = true;
 										this.showClose = true;
+									}
+									if(this.companyStatus === 2&&this.state === 1){
+										this.showMask = false;
+										this.showModal = false;
+										this.showClose = false;
 									}
 								}else {
 									this.$u.toast(res.msg);
