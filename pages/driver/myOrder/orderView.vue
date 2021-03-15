@@ -689,8 +689,8 @@
 			pay() {
 				let data = {
 					orderId: this.form.id,
-					realPrice: this.form.realPrice,
-					reducePrice: this.form.reducePrice,
+					realPrice: this.payForm.realPrice,
+					reducePrice: this.payForm.reducePrice,
 					type: this.type ? 1 : 0
 				};
 				// this.$u.toast('测试环境，支付时金额为1分线')
