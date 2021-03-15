@@ -1,11 +1,14 @@
 <template>
 	<view>
-			<web-view
-			  :src="srcUrl"
-			  @message="reciveMessage"
-			  @onPostMessage="recivePostMessage"
-			>
-			</web-view>
+		<view style="width: 100%;height: 60rpx;background: #000;"></view>
+		<view>
+				<web-view
+				  :src="srcUrl"
+				  @message="reciveMessage"
+				  @onPostMessage="recivePostMessage"
+				>
+				</web-view>
+		</view>
 	</view>
 </template>
 
@@ -33,14 +36,14 @@
 		},
 		mounted() {
 			this.getUrl()
-				// // #ifdef APP-PLUS
-				// var wv;
-		  //       var currentWebview = this.$scope.$getAppWebview() 
-		  //       setTimeout(function() {
-		  //           wv = currentWebview.children()[0]
-		  //           wv.setStyle({top:50})
-		  //       }, 1000); //如果是页面初始化调用时，需要延时一下
-		  //       // #endif
+				// #ifdef APP-PLUS
+				var wv;
+			    var currentWebview = this.$scope.$getAppWebview() 
+			    setTimeout(function() {
+			        wv = currentWebview.children()[0]
+			        wv.setStyle({top:20})
+			    }, 1000); //如果是页面初始化调用时，需要延时一下
+			    // #endif
 		},
 		methods: {
 			reciveMessage(data){
