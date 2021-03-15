@@ -94,6 +94,12 @@
 			        return s;
 			   }
 		},
+		onBackPress(e) {
+		        this.$u.route('/pages/company/order/accountList');
+		
+		        return true
+		
+		},
 		onLoad(option) {
 			let id = option.id;
 			if(id){
@@ -117,7 +123,8 @@
 			},
 			toDetail(id) {
 				this.$u.route('/pages/company/order/orderDetail', {
-					id: id
+					id: id,
+					status:'5'
 				})
 			}
 		}

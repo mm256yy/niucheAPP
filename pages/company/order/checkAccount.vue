@@ -25,7 +25,7 @@
 			</view>
 			<view class="title">途中金额</view>
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view@click="toView(item.orderId)" class="list_item" v-for="(item,index) in dataList" :key="index">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index">
 					<view class="order">
 						<view class="num">订单号：{{item.orderId}}</view>
 						<view>+{{item.entryValue}}</view>
@@ -106,6 +106,16 @@
 			        }
 			        return s;
 			   }
+		},
+		onBackPress(e) {
+		
+		        uni.switchTab({
+		          url: '/pages/mycenter/mycenter'
+		
+		        });
+		
+		        return true
+		
 		},
 		mounted() {
 			// this.downCallback()

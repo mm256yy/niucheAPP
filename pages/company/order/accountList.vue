@@ -42,13 +42,16 @@
 				total: 0
 			}
 		},
+		onBackPress(e) {
+		        this.$u.route('/pages/company/order/checkAccount');
+		
+		        return true
+		
+		},
 		mounted() {
 			// this.downCallback()
 		},
 		methods: {
-			toDetail(){
-				this.$u.route('/pages/company/order/accountDetail')
-			},
 			showSelect() {
 				this.selectFlag = true;
 			},
@@ -97,6 +100,7 @@
 			.box{
 				padding: 0 0 30rpx 0;
 				border-bottom: 2rpx solid rgba(0,0,0,0.1);
+				margin-bottom: 20rpx;
 				.flex{
 					display: flex;
 					justify-content: space-between;

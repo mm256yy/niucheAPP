@@ -297,5 +297,6 @@
 		border: 1px solid #FF9B0F;
 		font-size: 28rpx;
 		color: #FF9B0F;
+		padding: 0 20rpx;
 	}
 </style>
