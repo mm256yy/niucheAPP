@@ -489,7 +489,7 @@
 					orderId: this.id
 				}).then(res => {
 					if (res.code === 200) {
-						this.refreshView()
+						this.getInfo()
 					} else {
 						this.$u.toast(res.msg);
 					}
@@ -687,19 +687,19 @@
 			},
 			//支付
 			pay() {
-				// let data = {
-				// 	orderId: this.form.id,
-				// 	realPrice: this.form.realPrice,
-				// 	reducePrice: this.form.reducePrice,
-				// 	type: this.type ? 1 : 0
-				// };
-				this.$u.toast('测试环境，支付时金额为1分线')
 				let data = {
 					orderId: this.form.id,
-					realPrice: 0.01,
-					reducePrice: 0,
-					type: 0
+					realPrice: this.form.realPrice,
+					reducePrice: this.form.reducePrice,
+					type: this.type ? 1 : 0
 				};
+				// this.$u.toast('测试环境，支付时金额为1分线')
+				// let data = {
+				// 	orderId: this.form.id,
+				// 	realPrice: 0.01,
+				// 	reducePrice: 0,
+				// 	type: 0
+				// };
 				this.$u.api.getOrderInfo(data).then(res => {
 					if (res.code === 200) {
 						let that = this;
