@@ -37,7 +37,7 @@
 		        var currentWebview = this.$scope.$getAppWebview() 
 		        setTimeout(function() {
 		            wv = currentWebview.children()[0]
-		            wv.setStyle({top:80})
+		            wv.setStyle({top:150,height:300})
 		        }, 1000); //如果是页面初始化调用时，需要延时一下
 		        // #endif
 		},

@@ -21,9 +21,12 @@
 							<view style="height: 120rpx;display: flex;align-items: center;width: 500rpx;">
 								<view style="height: 120rpx;display: flex;flex-direction: column;justify-content: center;">
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
-									<view style="display: flex;justify-content: space-between;align-items: center;">
-										<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
-										<view class="signNo" v-show="show&&state==0" @click="toRight()">
+									<view style="display: flex;align-items: center;">
+										<view class="signNo">
+											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<view style="height: 26rpx;margin-left: 10rpx;">{{companyStatus | state}}</view>
+										</view>
+										<view class="signNo" v-show="show&&state==0">
 											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
 											<view style="height: 26rpx;margin-left: 10rpx;">未授权</view>
 										</view>
@@ -367,7 +370,10 @@
 				if (authFlag === 0){
 					this.$u.route('/pages/company/identityAuth/identityAuth')
 				} else{
-					this.$u.route('/pages/company/information/information')
+					this.$u.route('/pages/company/information/information',{
+						state: this.state,
+						userId: this.userId
+					})
 					
 				}
 				
@@ -401,11 +407,16 @@
 				const obj = JSON.stringify(this.order)
 				if (token){
 					if(this.companyStatus === 2){
-						this.$u.route('/pages/company/order/order', {
-							index: index,
-							obj: obj
-						});
-					} else{
+						if(this.state === 0){
+							this.$u.toast('请先授权')	
+						}
+						if(this.state === 1){
+							this.$u.route('/pages/company/order/order', {
+								index: index,
+								obj: obj
+							});	
+						}
+					} else {
 						this.$u.toast('请先进行认证')
 					}
 				}else{
@@ -416,8 +427,13 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					if(this.companyStatus === 2){
-						this.$u.route('/pages/company/order/newOrder');
-					} else{
+						if(this.state === 0){
+							this.$u.toast('请先授权')	
+						}
+						if(this.state === 1){
+							this.$u.route('/pages/company/order/newOrder');	
+						}
+					} else {
 						this.$u.toast('请先进行认证')
 					}
 				}else{
@@ -442,7 +458,12 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					if(this.companyStatus === 2){
-						this.$u.route('/pages/company/order/checkAccount');
+						if(this.state === 0){
+							this.$u.toast('请先授权')	
+						}
+						if(this.state === 1){
+							this.$u.route('/pages/company/order/checkAccount');	
+						}
 					} else{
 						this.$u.toast('请先进行认证')
 					}
@@ -550,7 +571,7 @@
 		// align-items: center;
 		color: #333;
 		padding: 0 20rpx;
-		margin-left: 40rpx;
+		margin-right: 20rpx;
 		margin-top: 10rpx;
 	}
 	.checkAccount{

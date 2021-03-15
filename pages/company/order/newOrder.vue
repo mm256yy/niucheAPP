@@ -32,7 +32,8 @@
 			</u-form>
 		</view>
 		<view class="bottom">
-			<view @click="submit()" class="submit">新建并发起订单</view>
+			<view v-show="disabled" @click="submit()" class="submit">新建并发起订单</view>
+			<view v-show="!disabled" class="submit">新建并发起订单</view>
 		</view>
 	</view>
 </template>
@@ -46,6 +47,7 @@
 					'background-image': 'linear-gradient(to bottom, #000000 39%,#ffffff 0%)'
 				},
 				show:false,
+				disabled:true,
 				warn:'',
 				warnName:'',
 				warnIdcard:'',
@@ -159,6 +161,7 @@
 					return false
 				}
 				if(this.form.rentername&&this.form.renteridphone&&this.form.renteridcard){
+					this.disabled = false;
 					const params={
 						userName: this.form.rentername,
 						phone: this.form.renteridphone,
@@ -185,10 +188,12 @@
 										  renteridcard: ''
 										};
 										this.leasetime = '';
+										this.disabled = true;
 										this.$u.route('/pages/company/order/orderDetail', {
 											id: res.object
 										})
 									 } else{
+										 this.disabled = true;
 										this.$u.toast(res.msg) 
 									 }
 								}).catch(res=>{this.$u.toast(res.msg)})

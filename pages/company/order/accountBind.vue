@@ -20,9 +20,12 @@
 			<view class="tip">*验证金额：是由纽车平台向你的支付宝账号随机汇的微小金额，仅做账号有效性验证，无须退还</view>
 			<view class="warn">*请如实填写信息，否则造成收款失败</view>
 		</view>
-		<view class="bottom" @click="submit()">
-			<view v-if="disable" class="disable">绑定</view>
-			<view v-else class="submit">绑定</view>
+		<view v-show="first<3" class="bottom">
+			<view v-show="disabled" class="submit" @click="submit()">绑定</view>
+			<view v-show="!disabled" class="disable">绑定</view>
+		</view>
+		<view v-show="first>=3" class="bottom">
+			<view class="disable">绑定</view>
 		</view>
 	</view>
 </template>
@@ -36,6 +39,7 @@
 				},
 				show:false,
 				num:true,
+				disabled:true,
 				id:'',
 				BusinessName:'',
 				first:1,
@@ -81,7 +85,7 @@
 		},
 		methods: {
 			input(){
-				if(this.first > 3){
+				if(this.first >= 3){
 					this.$u.toast('支付宝账号24小时内最多可变更3次');
 					return false;
 				}
@@ -91,6 +95,10 @@
 				}
 			},
 			getMoney(){
+				if(this.first >= 3){
+					this.$u.toast('支付宝账号24小时内最多可变更3次');
+					return false;
+				}
 				if(!this.form.aliPayId){
 					this.$u.toast('支付宝账号不能为空');
 					return false;
@@ -120,7 +128,7 @@
 				this.$u.api.getNum({}).then(res => {
 							if(res.code === 200){
 								this.first = res.object;
-														uni.setStorageSync('aliPayId', this.form.aliPayId);
+								uni.setStorageSync('aliPayId', this.form.aliPayId);
 							 } else{
 								this.$u.toast(res.msg) 
 							 }
@@ -131,16 +139,20 @@
 					this.$u.toast('请填写完整');
 					return false
 				}
+				this.disabled = false;
 				const params = Object.assign(this.form, {
 					userMainId:this.id
 				});
 				this.$u.api.accountBind(params).then(res => {
 					if(res.code === 200){
+						this.disabled = true;
 						this.$u.toast('支付宝绑定成功');
 						this.$u.route('/pages/company/order/checkAccount')
 					 }else if(res.code === 100){
+						 this.disabled = true;
 						 this.$u.toast('验证金额错误3次，请明天重试');
 					 }else{
+						 this.disabled = true;
 						this.$u.toast(res.msg) 
 					 }
 				})
@@ -178,7 +190,7 @@
 	}
 	.tip{
 		font-size: 22rpx;
-		color: #c7c7c7;
+		color: #151b33;
 		margin-top: 60rpx;
 	}
 	.warn{

@@ -15,6 +15,11 @@
 				<u-col span="8" class="auth-col" v-if="authFlag"> {{checkstate| state}}</u-col>
 				<u-col span="8" class="auth-col" @click="toAuth" v-else>去认证>></u-col>
 			</u-row>
+			<u-row style="padding: 8pt;background: #FFFFFF;">
+				<u-col span="5">租赁合同签约授权</u-col>
+				<u-col v-show="status == 0" span="7" class="auth-col" @click="toRight()">去授权>></u-col>
+				<u-col v-show="status == 1" span="7" class="auth-col">已授权>></u-col>
+			</u-row>
          </view>
 		 <view class="content">
             <view class="content-view">
@@ -125,7 +130,9 @@
 				resData:{},
 				authFlag:false,//认证状态
 				companySrc: '../../static/touxx.png',
-				token:''
+				token:'',
+				status:'',
+				userId:''
 			}
 		},
 		filters: {
@@ -143,11 +150,26 @@
 				}
 		  }
 		},
+		onLoad(option) {
+			let status = option.state;
+			let userId = option.userId;
+			if(status){
+			 this.status = status;
+			}
+			if(userId){
+			 this.userId = userId;
+			}
+		},
         mounted() {
 			this.initStorage()
         	this.getCompanyInfo()
         },
 		methods: {
+			toRight(){
+				this.$u.route('/pages/company/order/right',{
+					userId: this.userId
+				});
+			},
 			initStorage(){
 				this.token = uni.getStorageSync('token');
 			},

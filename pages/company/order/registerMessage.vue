@@ -55,7 +55,8 @@
 			<view class="prompt">请认真核实信息，提交后将以附件形式合并到租赁合同中，且不可更改！</view>
 			<view class="box">
 				<view class="cancel" @click="cancel()">取消</view>
-				<view class="confirm" @click="confirm()">确认</view>
+				<view v-show="disabled" class="confirm" @click="confirm()">确认</view>
+				<view v-show="!disabled" class="confirm">确认</view>
 			</view>
 		</view>
 	</view>
@@ -84,7 +85,8 @@
 					year: true,month: true,day: true,hour: false,minute: false,second: false
 				},
 				today:{},
-				detail: {}
+				detail: {},
+				disabled: true
 			}
 		},
 		onLoad(option) {
@@ -119,6 +121,7 @@
 					numberPlate: this.form.numberPlate,
 					registration: this.form.registration
 				}
+				this.disabled = false;
 				const params = {
 					orderId:this.form.orderId,
 					startRentDate:this.form.startRentDate,
@@ -127,6 +130,7 @@
 				}
 				this.$u.api.registerAdd(params).then(res => {
 					if(res.code === 200){
+						this.disabled = true;
 						this.$u.toast('商品信息登记成功');
 						this.form = {
 						  orderId: '',
@@ -138,6 +142,7 @@
 							id: this.detail.tradeid
 						})
 					 } else{
+						 this.disabled = true;
 						this.$u.toast(res.msg) 
 					 }
 				}).catch(res=>{this.$u.toast(res.msg)})
