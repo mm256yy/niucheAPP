@@ -32,8 +32,7 @@
 			</u-form>
 		</view>
 		<view class="bottom">
-			<view v-show="disabled" @click="submit()" class="submit">新建并发起订单</view>
-			<view v-show="!disabled" class="submit">新建并发起订单</view>
+			<view @click="btnBClick()" class="submit">新建并发起订单</view>
 		</view>
 	</view>
 </template>
@@ -153,6 +152,10 @@
 			confirm(arr){
 				this.form.leasetime = arr[0].value;
 				this.leasetime = arr[0].label;
+			},
+			btnBClick() {
+				// 此处用法为在js中调用，需要写this.$u.throttle()
+				this.$u.throttle(this.submit, 500)
 			},
 			submit(){
 				if(!this.form.leasetime||!this.form.monthlyrent||!this.form.deposit||!this.form.rentername
