@@ -136,6 +136,8 @@
 					this.form.register_date = data.register_date;
 					this.form.drivingImg = data.photo;
 					this.flag = true;
+				} else if(res.code === 100){
+					this.form.drivingImg = res.data;
 				} else {
 					this.$u.toast('识别失败')
 				}
