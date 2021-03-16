@@ -128,7 +128,7 @@
 				}).then(res => {
 					if (res.code === 200) {
 						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
+						this.mescroll.endBySize(res.rows.length, res.total);
 						this.page.num = this.page.num + 1
 						this.dataList = this.dataList.concat(res.rows);
 					} else {
