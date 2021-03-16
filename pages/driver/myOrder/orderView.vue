@@ -199,7 +199,7 @@
 		<view class="bottom_content" style="position: relative;" v-if="soureNum === 3 && chargeFlag">
 			<u-row>
 				<u-col span="7">
-					<view class="tips">*须商家签署合同才可支付</view>
+					<!-- <view class="tips">*须商家签署合同才可支付</view> -->
 					<view class="">
 						月租金：<text class="money">{{form.monthlyrent |toMoney}}</text><text style="color:#FE3B31 ;">元（首月）</text>
 					</view>
@@ -286,7 +286,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="btn_orange" @click="pay()">
+					<view class="btn_orange" style="border-radius: 4px;margin: 30rpx 30rpx 0;" @click="pay()">
 						立即支付
 					</view>
 				</view>
