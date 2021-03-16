@@ -56,27 +56,27 @@
 					</view>
 				</view>
 				<view style="width: 678rpx;height: 168rpx;margin-left: 36rpx;background: #fff;padding: 0 38rpx;border-radius: 20rpx;display: flex;justify-content: space-between;align-items: center;">
-					<view @click="toList(1)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+					<view @click="toList(1)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">商品登记</view>
 						<view class="tip" v-show="order.waitCarMessageNum">{{order.waitCarMessageNum}}</view>
 					</view>
-					<view @click="toList(2)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+					<view @click="toList(2)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待签约</view>
 						<view class="prompt" v-show="order.waitSignContractNum">{{order.waitSignContractNum}}</view>
 					</view>
-					<view @click="toList(3)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+					<view @click="toList(3)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待支付</view>
 						<view class="tip" v-show="order.waitPayNum">{{order.waitPayNum}}</view>
 					</view>
-					<view @click="toList(4)" style="width: 72rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+					<view @click="toList(4)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待提车</view>
 						<view class="prompt" v-show="order.waitDeliveryVehicleNum">{{order.waitDeliveryVehicleNum}}</view>
 					</view>
-					<view @click="toList(0)" style="width: 96rpx;display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+					<view @click="toList(0)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
 						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/order.png"></u-image>
 						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">全部订单</view>
 					</view>

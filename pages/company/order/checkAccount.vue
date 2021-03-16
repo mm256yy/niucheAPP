@@ -158,8 +158,8 @@
 					billstate: 6
 				}).then(res => {
 					if (res.code === 200) {
-						this.total = res.total;
-						this.mescroll.endByPage(res.rows.length, res.total);
+						this.total = Math.ceil(res.total/10);
+						this.mescroll.endByPage(res.rows.length, this.total);
 						this.page.num = this.page.num + 1
 						this.dataList = this.dataList.concat(res.rows);
 					} else {

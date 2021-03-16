@@ -120,7 +120,6 @@
 			 this.waitSignContractNum = obj.waitSignContractNum;
 			 this.waitPayNum = obj.waitPayNum;
 			 this.waitDeliveryVehicleNum = obj.waitDeliveryVehicleNum;
-			 this.failedNum = obj.failedNum;
 			 this.listTab = [{
 			 	name: '全部'
 			 }, {
@@ -136,8 +135,7 @@
 			 	name: '待提车',
 				cate_count: this.waitDeliveryVehicleNum
 			 }, {
-			 	name: '失效',
-			 	cate_count: this.failedNum
+			 	name: '失效'
 			 }]
 			}
 		},

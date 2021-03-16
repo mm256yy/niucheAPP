@@ -585,6 +585,7 @@
 		position: fixed;
 		bottom: 20rpx;
 		left: 304rpx;
+		z-index: 10;
 	}
 
 	.order_content {

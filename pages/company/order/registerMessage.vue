@@ -55,8 +55,7 @@
 			<view class="prompt">请认真核实信息，提交后将以附件形式合并到租赁合同中，且不可更改！</view>
 			<view class="box">
 				<view class="cancel" @click="cancel()">取消</view>
-				<view v-show="disabled" class="confirm" @click="confirm()">确认</view>
-				<view v-show="!disabled" class="confirm">确认</view>
+				<view class="confirm" @click="btnBClick()">确认</view>
 			</view>
 		</view>
 	</view>
@@ -108,6 +107,10 @@
 			cancel(){
 				this.showMask = false;
 				this.showModal = false;
+			},
+			btnBClick() {
+				// 此处用法为在js中调用，需要写this.$u.throttle()
+				this.$u.throttle(this.confirm, 500)
 			},
 			confirm(){
 				this.showMask = false;

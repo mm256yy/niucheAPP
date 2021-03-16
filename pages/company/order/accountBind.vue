@@ -21,8 +21,7 @@
 			<view class="warn">*请如实填写信息，否则造成收款失败</view>
 		</view>
 		<view v-show="first<3" class="bottom">
-			<view v-show="disabled" class="submit" @click="submit()">绑定</view>
-			<view v-show="!disabled" class="disable">绑定</view>
+			<view class="submit" @click="btnBClick()">绑定</view>
 		</view>
 		<view v-show="first>=3" class="bottom">
 			<view class="disable">绑定</view>
@@ -84,6 +83,10 @@
 			this.getNumber()
 		},
 		methods: {
+			btnBClick() {
+				// 此处用法为在js中调用，需要写this.$u.throttle()
+				this.$u.throttle(this.submit, 500)
+			},
 			input(){
 				if(this.first >= 3){
 					this.$u.toast('支付宝账号24小时内最多可变更3次');

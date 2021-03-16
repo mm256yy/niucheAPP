@@ -389,26 +389,19 @@
 					<!-- <view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
 						<text style="padding: 6rpx;border-bottom: 2rpx solid #24ce8d;">查看合同范文</text>
 					</view> -->
-					<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+					<u-gap v-if="soureNum!=2" height="20" bg-color="#F5F5F5"></u-gap>
 					<!-- <view class="bottom_content" style="padding: 40rpx 60rpx;">
 						<view class="btn orange">《汽车租赁合同》锁定</view>
 					</view> -->
-					<view style="width: 100%;height: 130rpx;"></view>
-					<view class="bottom">
-						<!-- <view>
-							<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="check">查看验车信息</view>
-							<view v-else @click="view()" class="checkActive">查看验车信息</view>
-						</view> -->
+					<view v-if="soureNum!=2" style="width: 100%;height: 124rpx;"></view>
+					<view class="bottom" v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()">
 						<view>
-							<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()" class="signActive">登记商品信息</view>
-							<!-- <view v-if="detail.state=='REGISTER_CAR'" class="sign">登记商品信息</view> -->
+							<view class="signActive">登记商品信息</view>
 						</view>
-						<!-- <view>
-							<view v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='COMPANY_SIGN_CONTRACT'" @click="signContact()" class="signActive">签署汽车租赁合同</view>
-							<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="sign">签署汽车租赁合同</view>
-						</view> -->
+					</view>
+					<view class="bottom" v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()">
 						<view>
-							<view v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()" class="signActive">《汽车租赁合同》查看</view>
+							<view class="signActive">《汽车租赁合同》查看</view>
 						</view>
 					</view>
 					<view v-if="!detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" class="tip">*验车信息由承租人填写完成后才能查看</view>
@@ -486,10 +479,10 @@
 		},
 		computed:{
 			soureNum() {
-				let value = this.form.state;
+				let value = this.detail.state;
 				if (value === 'WAITTING_UPLOADING_MESSAGE' || value === 'VALIDATE_CAR') {
 					return 1
-				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'DRIVER_SIGN_CONTRACT' || value === 'VALIDATE_CAR') {
+				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'COMPANY_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
 					return 2
 				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
 					return 3
