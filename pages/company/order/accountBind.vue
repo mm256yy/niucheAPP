@@ -13,8 +13,8 @@
 				<view style="margin-top: 36rpx;">验证金额：</view>
 				<u-form-item label="￥" prop="checkMoney">
 					<u-input class="input-radius" v-model="form.checkMoney" placeholder="请输入"/>
-					<view v-if="num" @click="getMoney()" class="get">获取验证金额</view>
-					<view v-else class="disabled">已获取验证金额</view>
+					<view v-show="num&&first<3" @click="getMoney()" class="get">获取验证金额</view>
+					<view v-show="!num||first==3" class="disabled">已获取验证金额</view>
 				</u-form-item>
 			</u-form>
 			<view class="tip">*验证金额：是由纽车平台向你的支付宝账号随机汇的微小金额，仅做账号有效性验证，无须退还</view>
@@ -23,7 +23,7 @@
 		<view v-show="first<3" class="bottom">
 			<view class="submit" @click="btnBClick()">绑定</view>
 		</view>
-		<view v-show="first>=3" class="bottom">
+		<view v-show="first==3" class="bottom">
 			<view class="disable">绑定</view>
 		</view>
 	</view>
@@ -38,11 +38,11 @@
 				},
 				show:false,
 				num:true,
-				disabled:true,
 				id:'',
 				BusinessName:'',
-				first:1,
+				first:0,
 				disable: false,
+				arr: [],
 				form: {
 				  aliPayId:'',
 				  userName: '',
@@ -80,7 +80,11 @@
 			}
 		},
 		mounted() {
-			this.getNumber()
+			const arr = uni.getStorageSync('aliPayId');
+			if(arr.length){
+				this.arr = arr;
+				this.first = this.arr.length;
+			} 
 		},
 		methods: {
 			btnBClick() {
@@ -88,13 +92,18 @@
 				this.$u.throttle(this.submit, 500)
 			},
 			input(){
-				if(this.first >= 3){
+				if(this.first == 3){
 					this.$u.toast('支付宝账号24小时内最多可变更3次');
 					return false;
 				}
 				const aliPayId = uni.getStorageSync('aliPayId');
-				if(this.form.aliPayId !== aliPayId){
-					this.num = true;
+				this.num = true;
+				if(aliPayId.length){
+					aliPayId.forEach(item => {
+						if(item == this.form.aliPayId){
+							this.num = false;
+						}
+					})
 				}
 			},
 			getMoney(){
@@ -119,11 +128,15 @@
 				};
 				this.$u.api.getMoney(params).then(res => {
 					if(res.code === 200){
+						this.arr.push(this.form.aliPayId)
+						uni.setStorageSync('aliPayId', this.arr);
 						this.$u.toast('获取验证金额成功');
-						this.getNumber()
+					    this.first = this.arr.length;
 					 } else{
+						this.arr.push(this.form.aliPayId)
+						uni.setStorageSync('aliPayId', this.arr);
 						this.$u.toast(res.msg)
-						this.getNumber()
+						this.first = this.arr.length;
 					 }
 				})
 			},
@@ -131,7 +144,6 @@
 				this.$u.api.getNum({}).then(res => {
 							if(res.code === 200){
 								this.first = res.object;
-								uni.setStorageSync('aliPayId', this.form.aliPayId);
 							 } else{
 								this.$u.toast(res.msg) 
 							 }
@@ -142,20 +154,16 @@
 					this.$u.toast('请填写完整');
 					return false
 				}
-				this.disabled = false;
 				const params = Object.assign(this.form, {
 					userMainId:this.id
 				});
 				this.$u.api.accountBind(params).then(res => {
 					if(res.code === 200){
-						this.disabled = true;
 						this.$u.toast('支付宝绑定成功');
 						this.$u.route('/pages/company/order/checkAccount')
 					 }else if(res.code === 100){
-						 this.disabled = true;
 						 this.$u.toast('验证金额错误3次，请明天重试');
 					 }else{
-						 this.disabled = true;
 						this.$u.toast(res.msg) 
 					 }
 				})
@@ -181,7 +189,6 @@
 		color: #5BBF84;
 	}
 	.disabled{
-		width: 210rpx;
 		height: 80rpx;
 		line-height: 80rpx;
 		text-align: center;
@@ -190,6 +197,7 @@
 		border: 2rpx solid #D9DEDF;
 		font-size: 28rpx;
 		color: #959595;
+		padding: 0 20rpx;
 	}
 	.tip{
 		font-size: 22rpx;
@@ -220,5 +228,17 @@
 			font-size: 36rpx;
 			color: #fff;
 		}
+	}
+	.disable{
+		width: 600rpx;
+		height: 100rpx;
+		line-height: 100rpx;
+		text-align: center;
+		background: #e0e0e0;
+		border-radius: 12rpx;
+		margin-top: 20rpx;
+		margin-left: 75rpx;
+		font-size: 36rpx;
+		color: #939393;
 	}
 </style>

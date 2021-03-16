@@ -389,22 +389,26 @@
 					<!-- <view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
 						<text style="padding: 6rpx;border-bottom: 2rpx solid #24ce8d;">查看合同范文</text>
 					</view> -->
-					<u-gap v-if="soureNum!=2" height="20" bg-color="#F5F5F5"></u-gap>
+					<u-gap height="20" bg-color="#F5F5F5"></u-gap>
+					<view v-if="soureNum==2" class="tip-text">*验车信息由承租人填写完成后才能查看</view>
 					<!-- <view class="bottom_content" style="padding: 40rpx 60rpx;">
 						<view class="btn orange">《汽车租赁合同》锁定</view>
 					</view> -->
-					<view v-if="soureNum!=2" style="width: 100%;height: 124rpx;"></view>
-					<view class="bottom" v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()">
-						<view>
-							<view class="signActive">登记商品信息</view>
+					<!-- <view v-if="soureNum!=2" style="width: 100%;height: 124rpx;"></view> -->
+					<view v-if="soureNum==1" style="width: 100%;height: 190rpx;"></view>
+					<view class="bottom-box">
+						<view class="bottom" v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()">
+							<view>
+								<view class="signActive">登记商品信息</view>
+							</view>
 						</view>
+						<view v-if="soureNum==1" class="tip">*验车信息由承租人填写完成后才能查看</view>
 					</view>
 					<view class="bottom" v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()">
 						<view>
 							<view class="signActive">《汽车租赁合同》查看</view>
 						</view>
 					</view>
-					<view v-if="!detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" class="tip">*验车信息由承租人填写完成后才能查看</view>
 		</view>
 		<view v-show="showMask" class="mask"></view>
 		<view v-show="showModal" class="modal">
@@ -976,13 +980,15 @@
 			}
 		}
 	}
+	.bottom-box{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	}
 	.bottom{
 		padding: 20rpx 76rpx;
 		display: flex;
 		justify-content: space-between;
-		position: fixed;
-		bottom: 0;
-		left: 0;
 		background: #fff;
 		border-top: 2rpx solid rgba(0,0,0,0.1);
 		.checkActive{
@@ -1027,10 +1033,22 @@
 		}
 	}
 	.tip{
-		margin: 0 34rpx 18rpx 34rpx;
+		width: 100%;
+		height: 60rpx;
+		line-height: 40rpx;
 		font-size: 22rpx;
 		color: #FE3B31;
 		text-align: center;
+		background: #fff;
+	}
+	.tip-text{
+		width: 100%;
+		height: 60rpx;
+		line-height: 60rpx;
+		font-size: 22rpx;
+		color: #FE3B31;
+		text-align: center;
+		background: #fff;
 	}
 	.text{
 		color: #24ce8d;

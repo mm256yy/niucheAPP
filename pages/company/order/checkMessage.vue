@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#111111" title="验车车辆信息浏览" :background="background" title-color="#111111"></u-navbar>
+		<u-navbar back-icon-color="#111111" title="验车信息" :background="background" title-color="#111111"></u-navbar>
 		<view class="content">
 			<view class="title">车辆行驶证</view>
 			<u-image @click="preview(index,arr)" width="694rpx" height="386rpx" v-for="(item,index) in arr" :key="index"

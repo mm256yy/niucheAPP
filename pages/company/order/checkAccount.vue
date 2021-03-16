@@ -9,21 +9,25 @@
 		</u-navbar>
 		<view class="list_content">
 			<view class="accountBg">
-				<view style="display: flex;justify-content: center;align-items: center;">
+				<view>
 					<view>
 						<view class="total">实际到账总计</view>
 						<view class="money">{{obj.totalPrice | toMoney}}</view>
 					</view>
 				</view>
 				<view @click="toAccount()" class="account">
-					<view style="display: flex;">
+					<view style="display: flex;align-items: center;">
 						<u-image width="32" height="34" src="@/static/order/bill.png"></u-image>
 						<view class="text">账单</view>
 					</view>
-					<u-image width="12" height="24" src="@/static/order/right.png"></u-image>
+					<view style="margin-top: -10rpx;">
+						<u-image width="12" height="24" src="@/static/order/right.png"></u-image>
+					</view>
 				</view>
 			</view>
-			<view class="title">途中金额</view>
+		</view>
+		<view class="title">途中金额</view>
+		<view style="margin: 0 30rpx;">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
 				<view class="list_item" v-for="(item,index) in dataList" :key="index">
 					<view class="order">
@@ -184,13 +188,13 @@
 
 <style lang="scss" scoped>
 	.accountBg{
-		width: 684rpx;
+		width: 720rpx;
 		height: 328rpx;
 		background-image: url(@/static/order/accountBg.png);
 		background-repeat: no-repeat;
 		background-size: cover;
 		color: #FFDB00;
-		padding: 54rpx 40rpx;
+		padding: 54rpx 60rpx;
 	}
 
 	.navbar-right {
@@ -212,7 +216,6 @@
 		font-size: 60rpx;
 		color: #fff;
 		margin-top: 20rpx;
-		text-align: center;
 	}
 	.deposit{
 		font-size: 24rpx;
@@ -245,6 +248,7 @@
 		color: #111;
 		margin-top: 50rpx;
 		font-weight: 700;
+		margin-left: 30rpx;
 	}
 	
 	.order{
@@ -276,7 +280,7 @@
 	}
 
 	.list_content {
-		margin: 18rpx 34rpx;
+		margin: 18rpx 16rpx;
 
 		.list_item {
 			.item_time {
