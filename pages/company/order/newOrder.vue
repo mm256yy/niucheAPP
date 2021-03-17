@@ -250,4 +250,7 @@
 			color: #fff;
 		}
 	}
+	/deep/ .uicon-arrow-down-fill[data-v-6e20bb40]:before{
+	  content: "\e605";
+	 }
 </style>

@@ -227,6 +227,8 @@ const install = (Vue, vm) => {
 	const verify = (params = {}) => vm.$u.post('/order/checkUser', params);
 	//公司新建订单
 	const orderNew = (params = {}) => vm.$u.post('/order/add', params);
+	//查看公司端是否绑定支付宝账户
+	const isBinDingAliPayID = (params = {}) => vm.$u.post('/system/usermain/comparyIsBinDingAliPayID', params);
 	//新增商品信息登记
 	const registerAdd = (params = {}) => vm.$u.post('/order/register/message/add', params);
 	//对账中心列表 账单列表
@@ -421,7 +423,8 @@ const install = (Vue, vm) => {
 		accountBind,
 		getNum,
 		total,
-		stateRight
+		stateRight,
+		isBinDingAliPayID
 	};
 }
 

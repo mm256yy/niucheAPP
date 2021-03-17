@@ -18,12 +18,12 @@
 			<view v-for="(i,index) in indexList" :key="index" @click="jumper(i,index)" :class="jumperIndex == i?'activeLetter':'letter-item'">{{i}}</view>
 		</view>
 		<view v-show="show" class="select">
+			<view style="display: flex;align-items: center;justify-content: space-between;width: 480rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border: 2rpx solid rgba(0,0,0,0.08);background: #fff;">
+				<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
+				<u-image @click="close()" width="30" height="28" src="@/static/order/close.png"></u-image>
+			</view>
 			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
 				<view>
-					<view style="display: flex;align-items: center;justify-content: space-between;width: 480rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border: 2rpx solid rgba(0,0,0,0.08);background: #fff;">
-						<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
-						<u-image @click="close()" width="30" height="28" src="@/static/order/close.png"></u-image>
-					</view>
 					<view style="display: flex;justify-content: space-between;" :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">
 						<view>{{item.carseriesname}}</view>
 						<view style="color: #959595;">|&nbsp;车型</view>
