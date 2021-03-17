@@ -59,7 +59,7 @@
 						</template>
 						<template v-slot:content>
 							<view>
-								<view style="color: #333;" v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="u-order-desc">合同签署</view>
+								<view style="color: #333;" v-if="detail.state=='WAITTING_SIGN_CONTRACT'||detail.state=='REGISTER_CAR'" class="u-order-desc">合同签署（未签）</view>
 								<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
 								<view v-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view>
 								<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
@@ -106,7 +106,7 @@
 						</template>
 						<template v-slot:content>
 							<view>
-								<view style="color: #333;" class="u-order-desc">支付租金</view>
+								<view style="color: #333;" class="u-order-desc">支付首月租金</view>
 								<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
 								<!-- <view v-else-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view> -->
 								<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
@@ -127,7 +127,7 @@
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">合同签署</view>
+									<view class="u-order-desc">合同签署（双方已签）</view>
 									<!-- <view v-else-if="detail.state=='DRIVER_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人未签）</view> -->
 									<!-- <view v-else-if="detail.state=='COMPANY_SIGN_CONTRACT'" class="u-order-desc">合同签署（承租人已签）</view> -->
 									<!-- <view v-else class="u-order-desc">合同签署（双方已签）</view> -->
@@ -190,7 +190,7 @@
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">支付租金</view>
+									<view class="u-order-desc">租金（已付）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -206,7 +206,7 @@
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">合同签署</view>
+									<view class="u-order-desc">合同签署（双方已签）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -282,7 +282,7 @@
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">支付租金</view>
+									<view class="u-order-desc">租金（已付）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -298,7 +298,7 @@
 							</template>
 							<template v-slot:content>
 								<view>
-									<view class="u-order-desc">合同签署</view>
+									<view class="u-order-desc">合同签署（双方已签）</view>
 								</view>
 							</template>
 						</u-time-line-item>
@@ -385,7 +385,10 @@
 						</u-row>
 					</view>
 					<view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" class="view_cared">查看验车信息</view>
-					<view v-else @click="view()" class="view_car">查看验车信息</view>
+					<view class="view_check" v-else>
+						<u-image width="38rpx" height="40rpx" src="@/static/order/xinxi@2x.png"></u-image>
+						<view @click="view()" class="view_car">查看验车信息</view>
+					</view>
 					<!-- <view v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='REGISTER_CAR'" style="color: #24ce8d;width: 100%;padding: 24rpx 0;text-align: center;">
 						<text style="padding: 6rpx;border-bottom: 2rpx solid #24ce8d;">查看合同范文</text>
 					</view> -->
@@ -396,6 +399,9 @@
 					</view> -->
 					<!-- <view v-if="soureNum!=2" style="width: 100%;height: 124rpx;"></view> -->
 					<view v-if="soureNum==1" style="width: 100%;height: 190rpx;"></view>
+					<view v-if="soureNum==3" style="width: 100%;height: 130rpx;"></view>
+					<view v-if="soureNum==4" style="width: 100%;height: 130rpx;"></view>
+					<view v-if="soureNum==5" style="width: 100%;height: 130rpx;"></view>
 					<view class="bottom-box">
 						<view class="bottom" v-if="detail.state=='WAITTING_UPLOADING_MESSAGE'||detail.state=='VALIDATE_CAR'" @click="shopMessage()">
 							<view>
@@ -404,7 +410,7 @@
 						</view>
 						<view v-if="soureNum==1" class="tip">*验车信息由承租人填写完成后才能查看</view>
 					</view>
-					<view class="bottom" v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()">
+					<view class="bottomView" v-if="detail.state=='NO_PAYMENT'||detail.state=='WAITTING_DELIVERY_VEHICLE'||detail.state=='ORDER_FINISHED'" @click="viewContract()">
 						<view>
 							<view class="signActive">《汽车租赁合同》查看</view>
 						</view>
@@ -488,7 +494,7 @@
 					return 1
 				} else if (value === 'WAITTING_SIGN_CONTRACT' || value === 'COMPANY_SIGN_CONTRACT' || value === 'REGISTER_CAR') {
 					return 2
-				} else if (value === 'NO_PAYMENT' || value === 'COMPANY_SIGN_CONTRACT') {
+				} else if (value === 'NO_PAYMENT') {
 					return 3
 				} else if (value === 'WAITTING_DELIVERY_VEHICLE') {
 					return 4
@@ -738,6 +744,12 @@
 		position: relative;
 		color: #333333;
 		display: flex;
+	}
+	
+	.view_check{
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	
 	.mask{
@@ -1030,6 +1042,26 @@
 			border-radius: 8rpx;
 			font-size: 36rpx;
 			color: #939393;
+		}
+	}
+	.bottomView{
+		padding: 20rpx 76rpx;
+		display: flex;
+		justify-content: space-between;
+		background: #fff;
+		border-top: 2rpx solid rgba(0,0,0,0.1);
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		.signActive{
+			width: 600rpx;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background: linear-gradient(270deg, #62CF93 0%, #57C584 47%, #3CAE69 100%);
+			border-radius: 8rpx;
+			font-size: 36rpx;
+			color: #fff;
 		}
 	}
 	.tip{

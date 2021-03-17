@@ -80,11 +80,7 @@
 			}
 		},
 		mounted() {
-			const arr = uni.getStorageSync('aliPayId');
-			if(arr.length){
-				this.arr = arr;
-				this.first = this.arr.length;
-			} 
+			this.getNumber() 
 		},
 		methods: {
 			btnBClick() {
@@ -128,15 +124,11 @@
 				};
 				this.$u.api.getMoney(params).then(res => {
 					if(res.code === 200){
-						this.arr.push(this.form.aliPayId)
-						uni.setStorageSync('aliPayId', this.arr);
+						this.getNumber()
 						this.$u.toast('获取验证金额成功');
-					    this.first = this.arr.length;
 					 } else{
-						this.arr.push(this.form.aliPayId)
-						uni.setStorageSync('aliPayId', this.arr);
+						this.getNumber()
 						this.$u.toast(res.msg)
-						this.first = this.arr.length;
 					 }
 				})
 			},

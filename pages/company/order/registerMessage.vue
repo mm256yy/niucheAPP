@@ -175,6 +175,7 @@
 		left: 0;
 		bottom: 0;
 		border-top: 2rpx solid rgba(0,0,0,0.08);
+		background: #fff;
 		.submit{
 			width: 600rpx;
 			height: 100rpx;
