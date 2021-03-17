@@ -27,7 +27,7 @@
 											<view style="height: 26rpx;margin-left: 10rpx;">{{companyStatus | state}}</view>
 										</view>
 										<view class="signNo" v-show="show&&stated==0">
-											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<!-- <u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image> -->
 											<view style="height: 26rpx;margin-left: 10rpx;">未授权</view>
 										</view>
 										<view class="signNo" v-show="show&&stated==1">

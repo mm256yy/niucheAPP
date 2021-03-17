@@ -150,7 +150,7 @@
 					this.$u.toast('姓名不能为空');
 					return false;
 				}
-				if(!this.form.money){
+				if(!this.form.checkMoney){
 					this.$u.toast('验证金额不能为空');
 					return false;
 				}
