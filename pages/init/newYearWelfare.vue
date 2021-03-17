@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar back-icon-color="#333333" title="新春福利" :background="background" title-color="#333333"></u-navbar>
+		<u-navbar back-icon-color="#333333" title="福利车型" :background="background" title-color="#333333"></u-navbar>
 		<view>
 			<view class="content">
 				<scroll-view scroll-y style="height: 100%;width: 100%;">

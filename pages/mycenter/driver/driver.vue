@@ -3,52 +3,83 @@
 		<view class="top">
 			<view>
 				<view class="imgUrl">
-						<view class="about" @click="toAboutUs">关于</view>
-						<u-row style="padding:48pt 36rpx 5pt;display: flex;justify-content: center;align-items: center; ">
-							<u-col span="3" v-show="!tokenFlag">
-								<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
-							</u-col>
-							<u-col span="3" v-show="tokenFlag" >
-								<u-avatar :src="driverPub.headPhoto" mode="circle" size="large" ></u-avatar>
-							</u-col>
-							<u-col span="8" v-if="!tokenFlag">
-								<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
-								  <view>登录注册</view>
-								  <!-- <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image> -->
-								</view>
-							</u-col>
-							<u-col span="8" v-show="tokenFlag" >
-								<view style="height: 120rpx;display: flex;align-items: center;width: 470rpx;" @click="toMyInfo">
-									<view style="height: 96rpx;display: flex;flex-direction: column;justify-content: center;">
-										<view style="color: #fff;font-size: 36rpx;">{{driverPub.name}}</view>
-										<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>
-									</view>
-									<view style="height: 96rpx;display: flex;align-items: center;margin-left: auto;">
-										<u-image @click="toMyInfo" v-show="tokenFlag" width="32" height="48" src="@/static/right.png"></u-image>
-									</view>
-								</view>
-							</u-col>	
-						</u-row>
-						<view class="case" @click="toLicense">
-							<view class="box">
-								<view class="name">驾照认证</view>
-								<view class="visible">{{driverPub.driverState | stateV}}</view>
+					<view class="about" @click="toAboutUs">关于</view>
+					<u-row style="padding:48pt 36rpx 5pt;display: flex;justify-content: center;align-items: center; ">
+						<u-col span="3" v-show="!tokenFlag">
+							<u-avatar src="../../static/notLogin.png" mode="circle" size="large"></u-avatar>
+						</u-col>
+						<u-col span="3" v-show="tokenFlag">
+							<u-avatar :src="driverPub.headPhoto" mode="circle" size="large"></u-avatar>
+						</u-col>
+						<u-col span="8" v-if="!tokenFlag">
+							<view @click="toLogin" style="color: #fff;font-size: 36rpx;display: flex;font-weight: 700;">
+								<view>登录注册</view>
+								<!-- <u-image style="margin-top: 4rpx;" width="32" height="48" src="@/static/right.png"></u-image> -->
 							</view>
-							<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
-						</view>
-						<view class="cases" @click="toCard">
-							<view class="box">
-								<view style="width: 200rpx;" class="name">从业资格认证</view>
-								<view class="visible">{{driverPub.postState | stateV}}</view>
+						</u-col>
+						<u-col span="8" v-show="tokenFlag">
+							<view style="height: 120rpx;display: flex;align-items: center;width: 470rpx;" @click="toMyInfo">
+								<view style="height: 96rpx;display: flex;flex-direction: column;justify-content: center;">
+									<view style="color: #fff;font-size: 36rpx;">{{driverPub.name}}</view>
+									<text style="color: #fff;font-size: 30rpx;">{{driverPub.telephone}}</text>
+								</view>
+								<view style="height: 96rpx;display: flex;align-items: center;margin-left: auto;">
+									<u-image @click="toMyInfo" v-show="tokenFlag" width="32" height="48" src="@/static/right.png"></u-image>
+								</view>
 							</view>
-							<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
+						</u-col>
+					</u-row>
+					<view class="case" @click="toLicense">
+						<view class="box">
+							<view class="name">驾照认证</view>
+							<view class="visible">{{driverPub.driverState | stateV}}</view>
 						</view>
+						<u-image style="margin-top: 36rpx;" width="54rpx" height="52rpx" src="@/static/license.png"></u-image>
+					</view>
+					<view class="cases" @click="toCard">
+						<view class="box">
+							<view style="width: 200rpx;" class="name">从业资格认证</view>
+							<view class="visible">{{driverPub.postState | stateV}}</view>
+						</view>
+						<u-image style="margin-top: 36rpx;" width="58rpx" height="56rpx" src="@/static/qualification.png"></u-image>
+					</view>
 				</view>
 				<view class="room"></view>
 				<u-image width="682" height="120" src="@/static/account.png" @click="account" class="account"></u-image>
 				<text v-show="tokenFlag" @click="account" class="text">余额：￥{{driverPub.account}}</text>
 				<text v-show="!tokenFlag" @click="account" class="text">余额：￥0</text>
 				<view @click="toInvite" class="invite">邀请好友</view>
+				<u-card class="order_content">
+					<view slot="head" class="head">
+						<view class="title">我的订单</view>
+						<view style="display: flex;" @click="toMyOrder">
+							<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">查看全部订单</view>
+							<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
+						</view>
+					</view>
+					<view class="body" slot="body">
+						<view style="position: relative;" @click="toMyOrder">
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/yanche@2x.png"></u-image>
+							<u-badge size="small" type="error" :count="order.waitCarMessageNum" :offset="[-10,-16]"></u-badge>
+							<view class="body_text">验车</view>
+						</view>
+						<view style="position: relative;" @click="toMyOrder">
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
+							<u-badge size="small" type="error" :count="order.waitSignContractNum" :offset="[-10,-16]"></u-badge>
+							<view class="body_text">签约</view>
+						</view>
+						<view style="position: relative;" @click="toMyOrder">
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
+							<u-badge size="small" type="error" :count="order.waitPayNum" :offset="[-10,-16]"></u-badge>
+							<view class="body_text">支付</view>
+						</view>
+						<view style="position: relative;" @click="toMyOrder">
+							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
+							<u-badge size="small" type="error" :count="order.waitDeliveryVehicleNum" :offset="[-10,-16]"></u-badge>
+							<view class="body_text">提车</view>
+						</view>
+					</view>
+				</u-card>
 				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
@@ -159,11 +190,11 @@
 			</view>
 		</view>
 		<u-modal v-model="showTips" :show-cancel-button="true" :mask-close-able="true" confirm-text="出租车驾驶证" cancel-text="网约车驾驶证"
-		 @confirm="tipsConfirm" @cancel="tipsCancel" >
+		 @confirm="tipsConfirm" @cancel="tipsCancel">
 			<view class="slot-content" style="padding: 10pt;font-size: 10pt;">
-		        <view class="">
-		        	请选择要上传的从业资格证件!
-		        </view>
+				<view class="">
+					请选择要上传的从业资格证件!
+				</view>
 			</view>
 		</u-modal>
 	</view>
@@ -173,210 +204,261 @@
 	export default {
 		data() {
 			return {
-				showTips:false,
-				jzrzSrc:'../../static/jiazhao.png',
-				zyzgSrc:'../../static/yingyezhizhao.png',
-				zcxuSrc:'../../static/zuche.png',
-				qzxuSrc:'../../static/qiuzhi-c.png',
-				wdpdSrc:"../../static/pindan.png",
-				scSrc:"../../static/shoucang.png",
-				xxSrc:"../../static/xiaoxi.png",
-				txlSrc:"../../static/tongxunlu.png",
-				state:'',
-				titleStyle:{'fontSize': '12pt','padding-left':'5pt','color':'#000000'},
-				driverPub:{
-					headPhoto:'../../static/driverSrc.png',
-					name:'',
-					telephone:'',
-					driverState:9,
-					postState:9,
-					jobNum:0,
-					carNum:0,
-					certificationType:"",
-					shareId:''
+				showTips: false,
+				jzrzSrc: '../../static/jiazhao.png',
+				zyzgSrc: '../../static/yingyezhizhao.png',
+				zcxuSrc: '../../static/zuche.png',
+				qzxuSrc: '../../static/qiuzhi-c.png',
+				wdpdSrc: "../../static/pindan.png",
+				scSrc: "../../static/shoucang.png",
+				xxSrc: "../../static/xiaoxi.png",
+				txlSrc: "../../static/tongxunlu.png",
+				state: '',
+				titleStyle: {
+					'fontSize': '12pt',
+					'padding-left': '5pt',
+					'color': '#000000'
 				},
-				token:''
+				driverPub: {
+					headPhoto: '../../static/driverSrc.png',
+					name: '',
+					telephone: '',
+					driverState: 9,
+					postState: 9,
+					jobNum: 0,
+					carNum: 0,
+					certificationType: "",
+					shareId: ''
+				},
+				token: '',
+				order: {
+					waitCarMessageNum: 0,
+					waitDeliveryVehicleNum: 0,
+					waitPayNum: 0,
+					waitSignContractNum: 0
+				}
 			}
 		},
 		filters: {
-		  stateV: function (value) {
-		    if (value === 2) {
-				return '已认证'
-			} else if (value === 0){
-				return '未认证'
-			} else if (value === 1){
-				return '审核中'
-			} else if (value === 3){
-				return '认证未通过'
-			}else {
-				return '不可见'
+			stateV: function(value) {
+				if (value === 2) {
+					return '已认证'
+				} else if (value === 0) {
+					return '未认证'
+				} else if (value === 1) {
+					return '审核中'
+				} else if (value === 3) {
+					return '认证未通过'
+				} else {
+					return '不可见'
+				}
 			}
-		  }
 		},
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser()
+			
 		},
 		onShow() {
 			console.log(this.driverPub.shareId, '6666666');
 		},
-		props:["authFlag","tokenFlag"],
+		props: ["authFlag", "tokenFlag"],
 		methods: {
-			toAboutUs(){
+			getOrderInfo() {
+				this.token = uni.getStorageSync('token')
+				if (this.token) {
+					this.$u.api.getDriverOrder().then(res => {
+						if (res.code === 200) {
+							let data = res.object;
+							this.order = data
+						} else {
+							this.$u.toast(res.msg);
+						}
+					})
+				} else {
+					this.order = {
+						waitCarMessageNum: 0,
+						waitDeliveryVehicleNum: 0,
+						waitPayNum: 0,
+						waitSignContractNum: 0
+					}
+				}
+			},
+			toAboutUs() {
 				this.$u.route('/pages/aboutUs/aboutUs');
 			},
-			toCustomer(){
+			toCustomer() {
 				this.$u.route('/pages/mycenter/company/service');
 			},
-			getUser(){
-			this.token = uni.getStorageSync('token')
-              if (this.token){
-				 this.$u.api.listUserMessage().then(res=>{
-					if(res.code === 200){
-						let data = res.object;
-						// uni.setStorageSync('isauthencation',data.driverState)
-						this.driverPub = data
-						this.driverPub.jobNum = this.driverPub.jobNum.toString()
-						this.driverPub.carNum = this.driverPub.carNum.toString()
-					}else {
-						 this.$u.toast(res.msg);
+			getUser() {
+				this.token = uni.getStorageSync('token')
+				if (this.token) {
+					this.$u.api.listUserMessage().then(res => {
+						if (res.code === 200) {
+							let data = res.object;
+							// uni.setStorageSync('isauthencation',data.driverState)
+							this.driverPub = data
+							this.driverPub.jobNum = this.driverPub.jobNum.toString()
+							this.driverPub.carNum = this.driverPub.carNum.toString()
+						} else {
+							this.$u.toast(res.msg);
+						}
+					})
+				} else {
+					this.driverPub = {
+						headPhoto: '../../static/driverSrc.png',
+						name: '',
+						telephone: '',
+						driverState: 9,
+						postState: 9,
+						jobNum: 0,
+						carNum: 0,
+						certificationType: "",
+						shareId: ''
 					}
-				})
-			  } else{
-				  this.driverPub = {
-					headPhoto:'../../static/driverSrc.png',
-					name:'',
-					telephone:'',
-					driverState:9,
-					postState:9,
-					jobNum:0,
-					carNum:0,
-					certificationType:"",
-					shareId:''
 				}
-			  }
-			  console.log(this.driverPub.shareId, '6666666')
+				this.getOrderInfo()
 			},
-			toFeedback(){
+			toFeedback() {
 				this.$u.route('/pages/mycenter/driver/feedback');
 			},
-			tohelps(){
+			tohelps() {
 				this.$u.route('/pages/driver/helps/helps')
 			},
-			toLogin(){
-				 this.$u.route('/pages/login/login');
+			toLogin() {
+				this.$u.route('/pages/login/login');
 			},
-			tipsConfirm(){
+			tipsConfirm() {
 				let token = uni.getStorageSync('token')
-				if (token){
+				if (token) {
 					this.$u.route("/pages/driver/taxiCar/taxiCar")
-				} 
+				}
 			},
-			tipsCancel(){
+			tipsCancel() {
 				let token = uni.getStorageSync('token')
-				if (token){
+				if (token) {
 					this.$u.route("/pages/driver/onlineCar/onlineCar")
 				}
 			},
-			toMyInfo(){
+			toMyInfo() {
 				let token = uni.getStorageSync('token')
-				if (token){
+				if (token) {
 					this.$u.route("/pages/driver/baseInfo/baseInfo")
-				}else{
+				} else {
 					this.toLogin()
 				}
 			},
-			toInvite(){
+			toInvite() {
 				let token = uni.getStorageSync('token')
-				if (token){
-					this.$u.route("/pages/driver/inviteFriends/inviteFriends",{shareId:this.driverPub.shareId})
-				}else{
+				if (token) {
+					this.$u.route("/pages/driver/inviteFriends/inviteFriends", {
+						shareId: this.driverPub.shareId
+					})
+				} else {
 					this.$u.route("/pages/driver/inviteFriends/inviteFriends")
 				}
 			},
-			toCollect(){
+			toCollect() {
 				let token = uni.getStorageSync('token')
-				if (token){
+				if (token) {
 					this.$u.route("/pages/mycollect/mycollect")
-				}else{
+				} else {
 					this.toLogin()
 				}
 			},
-			toLicense(){
-				   if (this.driverPub.driverState !==9){
-					   	this.$u.route("/pages/driver/drivingLicense/drivingLicense")
-				   }
+			toLicense() {
+				if (this.driverPub.driverState !== 9) {
+					this.$u.route("/pages/driver/drivingLicense/drivingLicense")
+				}
 			},
-			toMyPub(index){
+			toMyPub(index) {
 				let token = uni.getStorageSync('token')
-				if (token){
-					if(this.driverPub.driverState === 2){
-						this.$u.route("/pages/driver/myPub/myPub",{index:index})
-					} else{
+				if (token) {
+					if (this.driverPub.driverState === 2) {
+						this.$u.route("/pages/driver/myPub/myPub", {
+							index: index
+						})
+					} else {
 						this.$u.toast('请先进行认证')
 					}
-				}else{
+				} else {
 					this.toLogin()
 				}
 			},
-			account(){
+			toMyOrder() {
 				let token = uni.getStorageSync('token')
-				if (token){
-					if(this.driverPub.driverState === 2){
-						this.$u.route("/pages/driver/cashAccount/cashAccount",{money:this.driverPub.account})
-					} else{
+				if (token) {
+					if (this.driverPub.driverState === 2 && this.driverPub.postState === 2) {
+						this.$u.route("/pages/driver/myOrder/myOrder")
+					} else {
 						this.$u.toast('请先进行认证')
 					}
-				}else{
+				} else {
+					this.toLogin()
+				}
+
+			},
+			account() {
+				let token = uni.getStorageSync('token')
+				if (token) {
+					if (this.driverPub.driverState === 2) {
+						this.$u.route("/pages/driver/cashAccount/cashAccount", {
+							money: this.driverPub.account
+						})
+					} else {
+						this.$u.toast('请先进行认证')
+					}
+				} else {
 					this.toLogin()
 				}
 			},
-			toCard(){
+			toCard() {
 				let token = uni.getStorageSync('token')
-				if (token){
-					if(this.driverPub.driverState ===9 || this.driverPub.driverState === 0){
+				if (token) {
+					if (this.driverPub.driverState === 9 || this.driverPub.driverState === 0) {
 						this.$u.toast('请先认证驾照')
 						return
 					}
-				   if(this.driverPub.postState === 0 || this.driverPub.postState === 9){
-					     this.showTips = true
-				     } else {
-						 if(this.driverPub.certificationType === 0){
-						 	this.showTips = true
-						 }
-					  if(this.driverPub.certificationType === 1){
-						this.$u.route("/pages/driver/onlineCar/onlineCar")
-					  }
-					   if(this.driverPub.certificationType === 2){
-						this.$u.route("/pages/driver/taxiCar/taxiCar")
-					  }
-				  }
-			   }
+					if (this.driverPub.postState === 0 || this.driverPub.postState === 9) {
+						this.showTips = true
+					} else {
+						if (this.driverPub.certificationType === 0) {
+							this.showTips = true
+						}
+						if (this.driverPub.certificationType === 1) {
+							this.$u.route("/pages/driver/onlineCar/onlineCar")
+						}
+						if (this.driverPub.certificationType === 2) {
+							this.$u.route("/pages/driver/taxiCar/taxiCar")
+						}
+					}
+				}
 			},
-			toPublishPage(){
+			toPublishPage() {
 				let token = uni.getStorageSync('token');
-				   if (token){
-					   let role = uni.getStorageSync('role');
-						   uni.navigateTo({
-							   url: '/pages/driver/release/release'
-						   });
-				   } else {
-						uni.showToast({
-							title:"请先登录，认证" 
-						  })
-				   }
+				if (token) {
+					let role = uni.getStorageSync('role');
+					uni.navigateTo({
+						url: '/pages/driver/release/release'
+					});
+				} else {
+					uni.showToast({
+						title: "请先登录，认证"
+					})
+				}
 			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-.company-content{
-	.bg{
-		background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC),
+	.company-content {
+		.bg {
+			background: linear-gradient(55deg, $bg-grad-AB, $bg-grad-DDC),
+		}
 	}
-}
-	.imgUrl{
+
+	.imgUrl {
 		width: 100%;
 		height: calc(var(--status-bar-height) + 304rpx);
 		position: fixed;
@@ -385,35 +467,43 @@
 		z-index: 200;
 		background: linear-gradient(270deg, #FFC700 0%, #FF9000 100%);
 	}
-	.room{
+
+	.room {
 		width: 100%;
 		height: calc(var(--status-bar-height) + 304rpx);
 	}
-	.colorF{
+
+	.colorF {
 		color: $common-FFF;
 	}
-	/deep/ .bgf{
+
+	/deep/ .bgf {
 		background: $common-FFF;
 	}
-	.font-10pt{
+
+	.font-10pt {
 		font-size: 10pt;
 	}
-	.font-14pt{
+
+	.font-14pt {
 		font-weight: bold;
 		font-size: 12pt;
 	}
-	.top{
+
+	.top {
 		// height: calc(var(--status-bar-height) + 260rpx);
 		// background: linear-gradient(270deg, #64D095 0%, #51C07C 47%, #3AAD68 100%);
 	}
-	.about{
+
+	.about {
 		float: right;
 		margin-top: calc(var(--status-bar-height) + 20rpx);
 		font-size: 32rpx;
 		margin-right: 28rpx;
 		color: #fff;
 	}
-	.case{
+
+	.case {
 		width: 328rpx;
 		height: 120rpx;
 		padding: 20rpx 24rpx;
@@ -424,7 +514,8 @@
 		top: calc(var(--status-bar-height) + 244rpx);
 		left: 36rpx;
 	}
-	.cases{
+
+	.cases {
 		width: 328rpx;
 		height: 120rpx;
 		padding: 20rpx 24rpx;
@@ -435,27 +526,32 @@
 		top: calc(var(--status-bar-height) + 244rpx);
 		right: 36rpx;
 	}
-	.box{
+
+	.box {
 		width: 120rpx;
 		margin-right: 104rpx;
-		.name{
+
+		.name {
 			font-size: 30rpx;
 			font-weight: 900;
 			color: #333333;
 		}
-		.visible{
+
+		.visible {
 			font-size: 24rpx;
 			color: #666666;
 			margin-top: 12rpx;
 		}
 	}
-	.account{
+
+	.account {
 		margin-top: 110rpx;
 		margin-left: 36rpx;
 		position: absolute;
 		z-index: 100;
 	}
-	.text{
+
+	.text {
 		font-size: 32rpx;
 		color: #FFB100;
 		position: relative;
@@ -464,7 +560,8 @@
 		z-index: 100;
 		float: right;
 	}
-	.invite{
+
+	.invite {
 		width: 678rpx;
 		height: 128rpx;
 		background-image: url(@/static/inviteBg.png);
@@ -477,7 +574,8 @@
 		padding-left: 102rpx;
 		padding-top: 40rpx;
 	}
-	.publish{
+
+	.publish {
 		width: 148rpx;
 		height: 192rpx;
 		background-image: url(@/static/publish.png);
@@ -487,5 +585,30 @@
 		position: fixed;
 		bottom: 20rpx;
 		left: 304rpx;
+		z-index: 10;
+	}
+
+	.order_content {
+		.head {
+			display: flex;
+			justify-content: space-between;
+
+			.title {
+				font-size: 36rpx;
+				color: #333;
+				font-weight: 900;
+			}
+		}
+
+		.body {
+			display: flex;
+			justify-content: space-around;
+
+			.body_text {
+				padding-top: 8rpx;
+				font-size: 28rpx;
+				color: #333;
+			}
+		}
 	}
 </style>

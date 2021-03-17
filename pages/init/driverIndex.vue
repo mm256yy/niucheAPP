@@ -73,7 +73,7 @@
 				</scroll-view>
 			</view>
 			<view class="xcfl">
-				<view class="xcfl_title">新春福利</view>
+				<view class="xcfl_title">福利车型</view>
 				<view class="xcfl_link" @click="toChild(2)">
 					<text>送租期 送电费 送维修</text>
 					<view>
@@ -246,7 +246,6 @@
 			}
 		},
 		mounted() {
-			
 			this.getList()
 		},
 		methods: {

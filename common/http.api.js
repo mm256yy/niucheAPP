@@ -214,11 +214,104 @@ const install = (Vue, vm) => {
 	const setEvent = (params = {}) => vm.$u.get('/user/beahvior/event', params);
 	//获取sing
 	const getSing = (params = {}) => vm.$u.post('/app/tencentChat/getChatSinger', params);
-	//根据公司获取sign
+	//公司订单列表
+	const orderList = (params = {}) => vm.$u.post(
+		'/order/company/list?pageNum=' + params.pageNum + '&pageSize=' + params.pageSize
+		+ '&state=' + params.state + '&orderByColumn=' + params.orderByColumn + '&isAsc=' + params.isAsc, {}
+	);
+	//公司订单详情
+	const orderDetail = (params = {}) => vm.$u.post(
+		'/order/company/get?orderId=' + params.orderId, {}
+	);
+	//校验身份信息
+	const verify = (params = {}) => vm.$u.post('/order/checkUser', params);
+	//公司新建订单
+	const orderNew = (params = {}) => vm.$u.post('/order/add', params);
+	//新增商品信息登记
+	const registerAdd = (params = {}) => vm.$u.post('/order/register/message/add', params);
+	//对账中心列表 账单列表
+	const accountList = (params = {}) => vm.$u.post(
+		'/order/CheckForTheCenterList?billstate=' + params.billstate + "&pageNum=" +
+		params.pageNum + "&pageSize=" +
+		params.pageSize, {}
+	);
+	//对账中心-实际到账总计
+	const total = (params = {}) => vm.$u.post(
+		'/order/checkForTheCenterPub', {}
+	);
+	//账单详情
+	const accountDetail = (params = {}) => vm.$u.post(
+		'/order/CheckForTheCenterForOne?orderId=' + params.orderId, {}
+	);
+	//获取验证金额
+	const getMoney = (params = {}) => vm.$u.post(
+		'/alipay/alipayTransferMerchant?payeeAccount=' + params.payeeAccount + "&realname=" +
+		params.realname + "&companyName=" +
+		params.companyName+ "&userMainId=" +
+		params.userMainId, {}
+	);
+	//用户绑定支付宝账户
+	const accountBind = (params = {}) => vm.$u.get(
+		'/alipay/userInsertAliPayID?aliPayId=' + params.aliPayId + "&checkMoney=" +
+		params.checkMoney + "&userMainId=" +
+		params.userMainId + "&userName=" +
+		params.userName, {}
+	);
+	//获取支付宝变更次数
+	const getNum = (params = {}) => vm.$u.post(
+		'/alipay/getAlipayIdNum', {}
+	);
+	//查询公司授权状态
+	const stateRight = (params = {}) => vm.$u.get(
+		'/app/fdd/auth/check?userId=' + params.userId, {}
+	);
+	//新增验车单
+	const checkCarSave = (params = {}) => vm.$u.post('/order/car/message/add', params);
+	//查询验车单
+	const checkCarList = (params = {}) => vm.$u.post(
+		'/order/car/message/get?orderId=' + params.orderId, {}
+	);
+     //司机我的订单
+	const driverOrderList = (params = {}) => vm.$u.post("/order/driver/list?pageNum=" + params.pageNum + "&pageSize=" +
+		params.pageSize+ "&orderByColumn=" +params.orderByColumn+ "&isAsc=" +params.isAsc, {});
+	//司机订单查询详情
+	const driverOrderView = (params = {}) => vm.$u.post('/order/driver/get?orderId='+params.id, {});
+	//获取支付宝订单信息
+	const getOrderInfo = (params = {}) => vm.$u.post('/order/app/alipay', params);
+	//个人中心页统计订单
+	//公司
+	const getCompanyOrder = (params = {}) => vm.$u.post('/order/statistics/get', params);
+	//司机
+	const getDriverOrder = (params = {}) => vm.$u.post('/order/statistics/driver/get', params);
+	//失效
+	const orderEfficacy = (params = {}) => vm.$u.post('/order/lose/efficacy?orderId='+params.orderId, params);
+	//确认提车
+	const orderDeliveryOfVehicle = (params = {}) => vm.$u.post('/order/affirm/deliveryOfVehicle?orderId='+params.orderId, params);
+	//获取价格
+	const orderPrice = (params = {}) => vm.$u.post('/order/real/price/get?orderId='+params.orderId+'&type='+params.type, params);
+	//法大大
+	const getFdd = (params = {}) => vm.$u.get('/app/fdd/server/'+params.orderId+'/'+params.userId, {});
+	//法大大-授权
+	const getRight = (params = {}) => vm.$u.get('/app/fdd/server/'+params.userId, {});
+	//退单
+	const orderCancel = (params = {}) => vm.$u.post('/order/cancel?orderId='+params.orderId+'&cancelSort='+params.cancelSort+'&cancelReason='+params.cancelReason, params);
 	
-
+	
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		orderCancel,
+		orderPrice,
+		orderDeliveryOfVehicle,
+		orderEfficacy,
+		getFdd,
+		getRight,
+		getDriverOrder,
+		getCompanyOrder,
+		driverOrderView,
+		driverOrderList,
+		checkCarSave,
+		checkCarList,
+		getOrderInfo,
 		getSing,
 		setEvent,
 		contentShare, // 大神分享 内页
@@ -316,7 +409,19 @@ const install = (Vue, vm) => {
 		haveIs,
 		viewMessage,
 		setting,
-		brandList
+		brandList,
+		orderList,
+		orderDetail,
+		orderNew,
+		registerAdd,
+		verify,
+		accountList,
+		accountDetail,
+		getMoney,
+		accountBind,
+		getNum,
+		total,
+		stateRight
 	};
 }
 

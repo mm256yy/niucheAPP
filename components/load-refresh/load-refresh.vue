@@ -190,6 +190,7 @@
 			.list{
 				width: 100%;
 				.load-more{
+					height: 200rpx;
 					font-size: 20rpx;
 					text-align: center;
 					color: #AAAAAA;

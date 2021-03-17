@@ -4,7 +4,7 @@
 			<view>
 				<view class="imgUrl">
 					<view class="about" @click="toAboutUs">关于</view>
-					<u-row style="padding:180rpx 36rpx 5pt; ">
+					<u-row style="padding:140rpx 36rpx 5pt; ">
 						<u-col span="3" v-show="!tokenFlag">
 							<u-avatar src="../../static/notLogin.png" mode="circle" size="large" ></u-avatar>
 						</u-col>
@@ -21,19 +21,66 @@
 							<view style="height: 120rpx;display: flex;align-items: center;width: 500rpx;">
 								<view style="height: 120rpx;display: flex;flex-direction: column;justify-content: center;">
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
-									<view style="color: #fff;font-size: 30rpx;" class="colorF">{{companyStatus | state}}</view>
+									<view style="display: flex;align-items: center;">
+										<view class="signNo">
+											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<view style="height: 26rpx;margin-left: 10rpx;">{{companyStatus | state}}</view>
+										</view>
+										<view class="signNo" v-show="show&&state==0">
+											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<view style="height: 26rpx;margin-left: 10rpx;">未授权</view>
+										</view>
+										<view class="signNo" v-show="show&&state==1">
+											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<view style="height: 26rpx;margin-left: 10rpx;">已授权</view>
+										</view>
+									</view>
 									<view style="color: #fff;font-size: 30rpx;" class="colorF u-line-1" v-if="companyStatus === 3">原因 :{{reson}}</view>
 								</view>
 								<view style="height: 120rpx;display: flex;align-items: center;margin-left: auto;">
-									<u-image v-show="tokenFlag" width="32" height="48" src="@/static/right.png"></u-image>
+									<u-image width="32" height="48" src="@/static/right.png"></u-image>
 								</view>
 							</view>
 						</u-col>
 						
 						
 					</u-row>
+					<view @click="checkAccount" class="checkAccount">对账中心</view>
 				</view>
 				<view class="room"></view>
+				<view style="width: 678rpx;margin: 60rpx 20rpx 18rpx 52rpx;padding: 0 60rpx 0 20rpx;display: flex;justify-content: space-between;">
+					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的订单</view>
+					<view class="new" @click="toNew()">
+						<u-image width="26rpx" height="26rpx" src="@/static/mycenter/add.png"></u-image>
+						<view style="margin-left: 6rpx;">新建订单</view>
+					</view>
+				</view>
+				<view style="width: 678rpx;height: 168rpx;margin-left: 36rpx;background: #fff;padding: 0 38rpx;border-radius: 20rpx;display: flex;justify-content: space-between;align-items: center;">
+					<view @click="toList(1)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">商品登记</view>
+						<view class="tip" v-show="order.waitCarMessageNum">{{order.waitCarMessageNum}}</view>
+					</view>
+					<view @click="toList(2)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/qianyue@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待签约</view>
+						<view class="prompt" v-show="order.waitSignContractNum">{{order.waitSignContractNum}}</view>
+					</view>
+					<view @click="toList(3)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/zhifu@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待支付</view>
+						<view class="tip" v-show="order.waitPayNum">{{order.waitPayNum}}</view>
+					</view>
+					<view @click="toList(4)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;position: relative;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/tiche@2x.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">待提车</view>
+						<view class="prompt" v-show="order.waitDeliveryVehicleNum">{{order.waitDeliveryVehicleNum}}</view>
+					</view>
+					<view @click="toList(0)" style="display: flex;justify-content: space-between;align-items: center;flex-direction: column;">
+						<u-image width="52rpx" height="52rpx" src="@/static/mycenter/order.png"></u-image>
+						<view style="font-size: 24rpx;color: #333;margin-top: 10rpx;">全部订单</view>
+					</view>
+				</view>
 				<view style="width: 100%;padding: 60rpx 20rpx 18rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
@@ -146,6 +193,17 @@
 				</view>
 			</view>
 		</view>
+		<view @click="close()" v-show="showMask" class="mask"></view>
+		<u-image v-show="showClose" @click="close()" class="close" width="58" height="58" src="@/static/mycenter/close.png"></u-image>
+		<view v-show="showModal" class="modal">
+			<view style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
+				<u-image width="76" height="90" src="@/static/mycenter/icon.png"></u-image>
+				<view class="warn">《汽车租赁合同》签约未授权，请你授权！</view>
+			</view>
+			<view class="box">
+				<view class="confirm" @click="confirm()">开始授权</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -153,6 +211,12 @@
 	export default {
 		data() {
 			return {
+				show:false,
+				showMask:false,
+				showModal:false,
+				showClose:false,
+				userId: '',
+				state:0,
 				companyName:'',
 				companyStatus:'',
 				reson:'',
@@ -169,14 +233,20 @@
 				otherObj:{
 					sc:'不可见',xx:'不可见',qz:'不可见'
 				},
-				token:''
+				token:'',
+				order: {
+					waitCarMessageNum: 0,
+					waitDeliveryVehicleNum: 0,
+					waitPayNum: 0,
+					waitSignContractNum: 0,
+					failedNum: 0
+				}
 			}
 		},
 		props:["authFlag","tokenFlag"],
 		mounted() {
 			this.token = uni.getStorageSync('token')
 			this.getUser();
-
 		},
 		onShow() {
 			this.token = uni.getStorageSync('token')
@@ -197,6 +267,33 @@
 		  }
 		},
 		methods: {
+			toRight(){
+				this.showMask = true;
+				this.showModal = true;
+				this.showClose = true;
+			},
+			close(){
+				this.showMask = false;
+				this.showModal = false;
+				this.showClose = false;
+			},
+			confirm(){
+				this.$u.route('/pages/company/order/right',{
+					userId: this.userId
+				});
+			},
+			getOrder(){
+				let token =  uni.getStorageSync('token')
+				if (token) {
+					this.$u.api.getCompanyOrder({}).then(res=>{
+						if(res.code === 200){
+							this.order = res.object;
+						}else {
+							this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
 			toAboutUs(){
 				this.$u.route('/pages/aboutUs/aboutUs');
 			},
@@ -214,7 +311,30 @@
 								this.companyName = phone
 							}
 							this.companyStatus = data.state;
+							if(this.companyStatus === 2){
+								this.show = true;
+							}
 							this.reson = data.nostate;
+							this.userId = data.userMainId;
+							this.$u.api.stateRight({
+								userId:this.userId
+							}).then(res=>{
+								if(res.code === 200){
+									this.state = res.object;
+									if(this.companyStatus === 2&&this.state === 0){
+										this.showMask = true;
+										this.showModal = true;
+										this.showClose = true;
+									}
+									if(this.companyStatus === 2&&this.state === 1){
+										this.showMask = false;
+										this.showModal = false;
+										this.showClose = false;
+									}
+								}else {
+									this.$u.toast(res.msg);
+								}
+							})
 							let strF ='已发布';
 							let strE = '条'
 							this.myPublishObj.zcxx =strF+data.zunum+strE;
@@ -242,6 +362,7 @@
 							 console.log(this.authFlag)
 						}
 					})
+					this.getOrder();
 				}
 			},
 			toAuth(){
@@ -249,7 +370,10 @@
 				if (authFlag === 0){
 					this.$u.route('/pages/company/identityAuth/identityAuth')
 				} else{
-					this.$u.route('/pages/company/information/information')
+					this.$u.route('/pages/company/information/information',{
+						state: this.state,
+						userId: this.userId
+					})
 					
 				}
 				
@@ -278,6 +402,44 @@
 					this.toLogin()
 				}
 			},
+			toList(index){
+				let token = uni.getStorageSync('token')
+				const obj = JSON.stringify(this.order)
+				if (token){
+					if(this.companyStatus === 2){
+						if(this.state === 0){
+							this.$u.toast('请先授权')	
+						}
+						if(this.state === 1){
+							this.$u.route('/pages/company/order/order', {
+								index: index,
+								obj: obj
+							});	
+						}
+					} else {
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
+			toNew(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						if(this.state === 0){
+							this.$u.toast('请先授权')	
+						}
+						if(this.state === 1){
+							this.$u.route('/pages/company/order/newOrder');	
+						}
+					} else {
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
 			toPub(index){
 				let token = uni.getStorageSync('token')
 				if (token){
@@ -285,6 +447,23 @@
 						this.$u.route('/pages/company/myPublish/myPublish', {
 							index: index
 						});
+					} else{
+						this.$u.toast('请先进行认证')
+					}
+				}else{
+					this.toLogin()
+				}
+			},
+			checkAccount(){
+				let token = uni.getStorageSync('token')
+				if (token){
+					if(this.companyStatus === 2){
+						if(this.state === 0){
+							this.$u.toast('请先授权')	
+						}
+						if(this.state === 1){
+							this.$u.route('/pages/company/order/checkAccount');	
+						}
 					} else{
 						this.$u.toast('请先进行认证')
 					}
@@ -325,7 +504,7 @@
 }
 	.imgUrl{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 304rpx);
+		height: calc(var(--status-bar-height) + 354rpx);
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -334,7 +513,7 @@
 	}
 	.room{
 		width: 100%;
-		height: calc(var(--status-bar-height) + 304rpx);
+		height: calc(var(--status-bar-height) + 354rpx);
 	}
 	.colorF{
 		color: $common-FFF;
@@ -371,5 +550,130 @@
 		position: fixed;
 		bottom: 20rpx;
 		left: 304rpx;
+	}
+	.new{
+		padding: 16rpx;
+		background: linear-gradient(270deg, #64D094 0%, #52C17D 41%, #3DAF6A 100%);
+		border-radius: 4px;
+		font-size: 24rpx;
+		color: #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.signNo{
+		height: 46rpx;
+		line-height: 46rpx;
+		background: #ffe74a;
+		border-radius: 30rpx;
+		display: flex;
+		justify-content: space-between;
+		// align-items: center;
+		color: #333;
+		padding: 0 20rpx;
+		margin-right: 20rpx;
+		margin-top: 10rpx;
+	}
+	.checkAccount{
+		width: 682rpx;
+		height: 120rpx;
+		background-image: url(@/static/mycenter/bg.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		font-size: 32rpx;
+		color: #FFDB00;
+		padding-left: 102rpx;
+		padding-top: 40rpx;
+		position: fixed;
+		top: calc(var(--status-bar-height) + 236rpx);
+		left: 34rpx;
+	}
+	.tip{
+		width: 36rpx;
+		height: 36rpx;
+		line-height: 36rpx;
+		text-align: center;
+		border-radius: 50%;
+		background: #FF3B30;
+		font-size: 24rpx;
+		color: #fff;
+		position: absolute;
+		top: -10rpx;
+		left: 54rpx;
+	}
+	.prompt{
+		width: 36rpx;
+		height: 36rpx;
+		line-height: 36rpx;
+		text-align: center;
+		border-radius: 50%;
+		background: #FF3B30;
+		font-size: 24rpx;
+		color: #fff;
+		position: absolute;
+		top: -10rpx;
+		left: 42rpx;
+	}
+	.mask{
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.36);
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+	}
+	.close{
+		position: fixed;
+		top: 400rpx;
+		right: 48rpx;
+		z-index: 1001;
+	}
+	.modal{
+		width: 654rpx;
+		border-radius: 12rpx;
+		background: #fff;
+		font-size: 36rpx;
+		color: #333;
+		font-weight: 900;
+		position: fixed;
+		top: 520rpx;
+		left: 50rpx;
+		z-index: 1000;
+		padding-top: 54rpx;
+		.warn{
+			width: 552rpx;
+			text-align: center;
+			margin: 44rpx 40rpx 48rpx 40rpx;
+		}
+		.box{
+			width: 654rpx;
+			height: 160rpx;
+			border-top: 4rpx solid rgba(0,0,0,0.05);
+			display: flex;
+			padding: 40rpx 48rpx;
+			justify-content: space-between;
+			align-items: center;
+			.cancel{
+				width: 264rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: #F2F2F2;
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #5F5E5F;
+			}
+			.confirm{
+				width: 558rpx;
+				height: 76rpx;
+				line-height: 76rpx;
+				text-align: center;
+				background: linear-gradient(270deg, #63D094 0%, #5FCD8F 41%, #3FB16C 100%);
+				border-radius: 8rpx;
+				font-size: 32rpx;
+				color: #fff;
+			}
+		}
 	}
 </style>

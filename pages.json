@@ -121,6 +121,90 @@
 				"navigationStyle": "custom" 
 			}
         }
+		,{//公司我的订单管理
+		    "path" : "pages/company/order/order",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司我的订单详情
+		    "path" : "pages/company/order/orderDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司我的订单详情(失效)
+		    "path" : "pages/company/order/invalidation",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司我的新建订单
+		    "path" : "pages/company/order/newOrder",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司新建订单选择品牌
+		    "path" : "pages/company/order/selectBrand",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司验车车辆信息浏览
+		    "path" : "pages/company/order/checkMessage",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司商品信息登记
+		    "path" : "pages/company/order/registerMessage",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司签署合同
+		    "path" : "pages/company/order/contractSign",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司合同查看
+		    "path" : "pages/company/order/contractPreview",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司对帐中心
+		    "path" : "pages/company/order/checkAccount",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司账单列表
+		    "path" : "pages/company/order/accountList",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司账单详情
+		    "path" : "pages/company/order/accountDetail",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司支付宝账号绑定
+		    "path" : "pages/company/order/accountBind",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
+		,{//公司授权页面
+		    "path" : "pages/company/order/right",
+		    "style" : {
+				"navigationStyle": "custom" 
+			}
+		}
         ,{//租车价格
             "path" : "pages/company/lease/step/stepCost/stepCost",
             "style" : {
@@ -738,6 +822,72 @@
 				"navigationBarTitleText": "聊天"
 			}
 		}
+        ,{//我的订单司机
+            "path" : "pages/driver/myOrder/myOrder",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//订单内页
+            "path" : "pages/driver/myOrder/orderView",
+            "style" :                                                                                    
+            {
+                 "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//验车单
+            "path" : "pages/driver/myOrder/checkCar",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//验车单2
+            "path" : "pages/driver/myOrder/checkSingle",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//合同预览
+            "path" : "pages/driver/myOrder/contractPreview",
+            "style" :                                                                                    
+            {
+				 "navigationStyle": "custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{//合同签署
+            "path" : "pages/driver/myOrder/signContract",
+            "style" :                                                                                    
+            {
+				 "navigationStyle": "custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/driver/myOrder/chargeback",
+            "style" :                                                                                    
+            {
+				 "navigationStyle": "custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

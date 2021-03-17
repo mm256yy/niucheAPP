@@ -2,8 +2,8 @@
     "name" : "纽车",
     "appid" : "__UNI__A80C5DE",
     "description" : "",
-    "versionName" : "1.5.2.2",
-    "versionCode" : 115,
+    "versionName" : "1.5.2.3",
+    "versionCode" : 116,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -24,7 +24,8 @@
         /* 模块配置 */
         "modules" : {
             "Share" : {},
-            "UIWebview" : {}
+            "UIWebview" : {},
+            "Payment" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -62,7 +63,6 @@
                     "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>"
                 ],
                 "autoSdkPermissions" : false
@@ -84,9 +84,10 @@
                 "ad" : {},
                 "payment" : {
                     "alipay" : {
-                        "__platform__" : [ "ios", "android" ]
+                        "__platform__" : [ "android" ]
                     }
-                }
+                },
+                "geolocation" : {}
             },
             "icons" : {
                 "android" : {

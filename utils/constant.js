@@ -12,7 +12,7 @@ let sdkAppid = 1400476242;
 let secretKey = '3d1dc9f13e2b0faf9b2d5e9ac485b153a2aa9513ecc0564c86a376364aea7e0b';
 
 //发布版本号
-export const version = '1.5.2.2'
+export const version = '1.5.2.3'
 
 if(processEnvType){
   //正式
@@ -28,6 +28,9 @@ export const action =ipconfig+ "/sys/upload/uploadImage";
 export const actionJx =ipconfig+ "/user/image/BusinessImagedemo";
 //驾照识别
 export const actionJs = ipconfig+'/user/image/DriverCardLicense';
+//行驶证
+export const recognicedUrl = ipconfig+'/user/image/recognicedrivecard';
+
 //司机邀请好友
 export const shareUrl =shareIp+"?shareId=" 
 //司机服务分享文章
@@ -87,5 +90,54 @@ export const publishObj = {
 	//福利要求		   
 	benefitList:[{id:'0',text: '有3险',checked: false},{id:'1',text: '有5险',checked: false},{id:'2',text: '无责任底薪',checked: false},
 			    {id:'3',text: '月休4天',checked: false}]
+	
+}
+export const checkCarObj = {
+	bumperList:[
+		{id: '0',text: '正常'},{id: '1',text: '破损'},{id: '2',text: '脱落'},{id: '4',text: '划痕'}
+	],
+	engineList:[
+		{id: '0',text: '正常'},{id: '1',text: '破损'},{id: '2',text: '划痕'}
+	],
+	brakingList:[
+		{id: '0',text: '正常'},{id: '1',text: '异常'}
+	],
+	ABSList:[
+		{id: '0',text: '正常'},{id: '1',text: '报故障'}
+	],
+	glassList:[
+		{id: '0',text: '完好'},{id: '1',text: '裂痕'}
+	],
+	skyList:[
+		{id: '0',text: '完好及功能正常'},{id: '1',text: '功能异常'},{id: '2',text: '裂痕'}
+	],
+	tyreList:[
+		{id: '0',text: '完好'},{id: '1',text: '裂痕'},{id: '2',text: '过度磨损'}
+	],
+	hubList:[
+		{id: '0',text: '完好'},{id: '1',text: '裂痕'},{id: '2',text: '变形'}
+	],
+	carDoorList:[
+		{id: '0',text: '开闭正常'},{id: '1',text: '异常'}
+	],
+	steeringWheelList:[
+		{id: '0',text: '功能正常'},{id: '1',text: '异常'}
+	],
+	interiorPanelList:[
+		{id: '0',text: '正常'},{id: '1',text: '污浊'},{id: '2',text: '脱落'},{id: '4',text: '缺失'}
+	],
+	faultLightList:[
+		{id: '0',text: '未报故障'},{id: '1',text: '异常'}
+	],
+	shakeList:[
+		{id: '0',text: '无'},{id: '1',text: '抖动'}
+	],
+	beginList:[
+		{id: '0',text: '平稳'},{id: '1',text: '异常'}
+	],
+	jackList:[
+		{id: '0',text: '有'},{id: '1',text: '无'}
+	]
+	
 	
 }
