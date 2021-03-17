@@ -8,7 +8,7 @@
 					 heightReduce="10" :backgroundCover="backgroundCover" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
 					 @refresh="refresh">
 						<view slot="content-list">
-							<u-image src="../../static/xcfl.png" height="66vh" border-radius="0" width="100%"></u-image>
+							<u-image src="../../static/flcx.png" height="66vh" border-radius="0" width="100%"></u-image>
 							<view @click="toView(item)" v-for="(item,index) in list" :key="index" class="list">
 								<view class="list_head">
 									<text>{{item.companyName}}</text>
