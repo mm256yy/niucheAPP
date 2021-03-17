@@ -227,7 +227,7 @@
 
 <style lang="scss" scoped>
 	.content{
-		padding: 28rpx;
+		padding: 28rpx 28rpx 160rpx;
 		color: #111;
 	}
 	.bottom{
