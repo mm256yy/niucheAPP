@@ -7,7 +7,7 @@
 				<view class="box" v-for="(item,index) in dataList" :key="index" @click="toView(item.orderId)">
 					<view class="flex">
 						<view class="order">租赁订单</view>
-						<view>2020年09月28日 11:15:33</view>
+						<view>{{item.updateTime}}</view>
 					</view>
 					<view class="flex">
 						<view class="num">订单号：{{item.orderId}}</view>
