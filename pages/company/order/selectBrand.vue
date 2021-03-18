@@ -170,7 +170,7 @@
 	}
 	.select{
 		position: fixed;
-		top: calc(var(--status-bar-height) + 88rpx);
+		top: calc(var(--status-bar-height) + 44rpx);
 		right: 0;
 		width: 480rpx;
 		background: #fff;
@@ -195,7 +195,7 @@
 			background: #fff;
 		}
 		.letter{
-			padding: 0 28rpx;
+			padding: 0 20rpx;
 			height: 60rpx;
 			line-height: 60rpx;
 			font-size: 24rpx;
