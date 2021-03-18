@@ -80,7 +80,7 @@
 						</view>
 					</view>
 				</u-card>
-				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+				<view style="width: 100%;padding: 20rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">我的发布</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
 						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
@@ -130,7 +130,7 @@
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view> -->
-				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+				<view style="width: 100%;padding: 20rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">用户中心</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
 						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
@@ -167,7 +167,7 @@
 						<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 					</view>
 				</view>
-				<view style="width: 100%;padding: 54rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
+				<view style="width: 100%;padding: 20rpx 20rpx 36rpx 72rpx;display: flex;justify-content: space-between;align-items: center;">
 					<view style="font-size: 36rpx;color: #333;font-weight: 900;">其他</view>
 					<!-- <view @click="toShopPage" style="display: flex;">
 						<view style="margin-right: 20rpx;font-size: 28rpx;color: #999;">店铺首页</view>
