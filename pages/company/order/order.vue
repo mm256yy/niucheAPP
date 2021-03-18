@@ -140,6 +140,22 @@
 			}
 		},
 		methods: {
+			getOrder(){
+				let token =  uni.getStorageSync('token')
+				if (token) {
+					this.$u.api.getCompanyOrder({}).then(res=>{
+						if(res.code === 200){
+							let obj = res.object;
+							this.waitCarMessageNum = obj.waitCarMessageNum;
+							this.waitSignContractNum = obj.waitSignContractNum;
+							this.waitPayNum = obj.waitPayNum;
+							this.waitDeliveryVehicleNum = obj.waitDeliveryVehicleNum;
+						}else {
+							this.$u.toast(res.msg);
+						}
+					})
+				}
+			},
 			create(index){
 				if(index == 0) {
 				    this.isChildUpdate1 = true;
@@ -189,6 +205,7 @@
 			tabsChange(index) {
 				this.swiperCurrent = index;
 				this.create(index)
+				this.getOrder()
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			// transition(e) {
