@@ -23,7 +23,7 @@
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
 									<view style="display: flex;align-items: center;">
 										<view class="signNo">
-											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<u-image v-show="companyStatus" width="22" height="26" src="@/static/mycenter/right.png"></u-image>
 											<view style="height: 26rpx;margin-left: 10rpx;">{{companyStatus | state}}</view>
 										</view>
 										<view class="signNo" v-show="show&&stated==0">
@@ -219,7 +219,7 @@
 				userId: '',
 				stated:0,
 				companyName:'',
-				companyStatus:'',
+				companyStatus:0,
 				reson:'',
 				imageURL:'../../static/gongsi@2x.png',
 				titleStyle:{'fontSize': '12pt','padding-left':'5pt','color':'#000000'},
@@ -268,6 +268,29 @@
 		  }
 		},
 		methods: {
+			stateRight(){
+				this.$u.api.stateRight({
+					userId:this.userId
+				}).then(res=>{
+					if(res.code === 200){
+						this.stated = res.object;
+						if(this.companyStatus === 2&&this.stated === 0){
+							this.show = true;
+							this.showMask = true;
+							this.showModal = true;
+							this.showClose = true;
+						}
+						if(this.companyStatus === 2&&this.stated === 1){
+							this.show = true;
+							this.showMask = false;
+							this.showModal = false;
+							this.showClose = false;
+						}
+					}else {
+						this.$u.toast(res.msg);
+					}
+				})
+			},
 			toRight(){
 				this.showMask = true;
 				this.showModal = true;
@@ -316,6 +339,8 @@
 				if (token) {
 					this.$u.api.getUserInfo({}).then(res=>{
 						if(res.code === 200){
+							this.show = false;
+							this.stated = 0;
 							let data = res.personalVo;
 							this.comnpanySrc =data.comparylogophoto;
 							if (data.comparynickname){
@@ -327,27 +352,7 @@
 							this.companyStatus = data.state;
 							this.reson = data.nostate;
 							this.userId = data.userMainId;
-							this.$u.api.stateRight({
-								userId:this.userId
-							}).then(res=>{
-								if(res.code === 200){
-									this.stated = res.object;
-									if(this.companyStatus === 2&&this.stated === 0){
-										this.show = true;
-										this.showMask = true;
-										this.showModal = true;
-										this.showClose = true;
-									}
-									if(this.companyStatus === 2&&this.stated === 1){
-										this.show = true;
-										this.showMask = false;
-										this.showModal = false;
-										this.showClose = false;
-									}
-								}else {
-									this.$u.toast(res.msg);
-								}
-							})
+							this.stateRight();
 							let strF ='已发布';
 							let strE = '条'
 							this.myPublishObj.zcxx =strF+data.zunum+strE;
@@ -359,6 +364,8 @@
 							this.otherObj.qz = data.groupmessagenum;
 							// uni.setStorageSync('isauthencation',1)
 						}else {
+							this.show = false;
+							this.stated = 0;
 							let phone = uni.getStorageSync('telephone')
 							this.companyName = phone
 							this.myPublishObj ={
@@ -384,7 +391,7 @@
 					this.$u.route('/pages/company/identityAuth/identityAuth')
 				} else{
 					this.$u.route('/pages/company/information/information',{
-						state: this.state,
+						state: this.stated,
 						userId: this.userId
 					})
 					
