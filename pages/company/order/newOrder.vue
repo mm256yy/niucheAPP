@@ -31,6 +31,7 @@
 				<view style="margin-top: 10rpx;color: #FE3B31;">{{warn}}</view>
 			</u-form>
 		</view>
+		<view class="room"></view>
 		<view class="bottom">
 			<view @click="btnBClick()" class="submit">新建并发起订单</view>
 		</view>
@@ -227,7 +228,8 @@
 
 <style lang="scss" scoped>
 	.content{
-		padding: 28rpx 28rpx 160rpx;
+		height: 100%;
+		padding: 28rpx;
 		color: #111;
 	}
 	.bottom{
@@ -249,6 +251,10 @@
 			font-size: 36rpx;
 			color: #fff;
 		}
+	}
+	.room{
+		width: 100%;
+		height: 200rpx;
 	}
 	/deep/ .uicon-arrow-down-fill[data-v-6e20bb40]:before{
 	  content: "\e605";

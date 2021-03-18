@@ -14,7 +14,20 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view style="width: 52rpx;position: fixed;top: 202rpx;right: 0;text-align: center;">
+		<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
+			<view>
+				<view style="width: 698rpx;">
+					<!-- <view class="title">输入自定义品牌型号</view> -->
+					<view v-for="(item,index) in list" :key="index" :id="item.letter == '#' ? 'indexed-list-YZ' :'indexed-list-' + item.letter">
+						<view class="letter">{{item.letter}}</view>
+						<view class="box">
+							<view @click="firstBrand(items)" v-for="(items,index) in item.data" :key="items.id" :class="{ 'first':true,'active': items.text==text}">{{items.text}}</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</scroll-view>
+		<view style="width: 52rpx;position: fixed;top: 88rpx;right: 0;text-align: center;">
 			<view v-for="(i,index) in indexList" :key="index" @click="jumper(i,index)" :class="jumperIndex == i?'activeLetter':'letter-item'">{{i}}</view>
 		</view>
 		<view v-show="show" class="select">
@@ -22,7 +35,7 @@
 				<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
 				<u-image @click="close()" width="30" height="28" src="@/static/order/close.png"></u-image>
 			</view>
-			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
+			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
 				<view>
 					<view style="display: flex;justify-content: space-between;" :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">
 						<view>{{item.carseriesname}}</view>
@@ -32,7 +45,7 @@
 			</scroll-view>
 		</view>
 		<view v-show="showBrand" class="selectTag">
-			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
+			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
 				<view>
 					<view class="second" v-for="(item,index) in carxinghaoList" :key="index" @click="thirdBrand(item)">{{item.carseriesname}}</view>
 				</view>
@@ -66,11 +79,13 @@
 				jumperIndex: 'A',
 				scrollViewId: '',
 				winHeight: 0,
+				height: 0,
 			}
 		},
 		mounted() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.winHeight = winHeight;
+			this.height = winHeight - 118;
 			this.first()
 		},
 		methods: {
@@ -170,7 +185,7 @@
 	}
 	.select{
 		position: fixed;
-		top: calc(var(--status-bar-height) + 44rpx);
+		top: calc(var(--status-bar-height) + 88rpx);
 		right: 0;
 		width: 480rpx;
 		background: #fff;
