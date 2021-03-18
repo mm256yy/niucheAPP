@@ -14,16 +14,16 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view style="width: 52rpx;position: fixed;top: 202rpx;right: 0;text-align: center;">
+		<view style="width: 52rpx;position: fixed;top: 140rpx;right: 0;text-align: center;">
 			<view v-for="(i,index) in indexList" :key="index" @click="jumper(i,index)" :class="jumperIndex == i?'activeLetter':'letter-item'">{{i}}</view>
 		</view>
 		<view v-show="show" class="select">
-			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
-				<view>
-					<view style="display: flex;align-items: center;justify-content: space-between;width: 480rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border: 2rpx solid rgba(0,0,0,0.08);background: #fff;">
-						<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
-						<u-image @click="close()" width="30" height="28" src="@/static/order/close.png"></u-image>
-					</view>
+			<view style="display: flex;align-items: center;justify-content: space-between;width: 480rpx;height: 136rpx;padding: 0 40rpx 0 90rpx;border: 2rpx solid rgba(0,0,0,0.08);background: #fff;">
+				<view>{{text}}&nbsp;{{textBrand}}&nbsp;{{textThird}}</view>
+				<u-image @click="close()" width="30" height="28" src="@/static/order/close.png"></u-image>
+			</view>
+			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
+				<view style="padding: 0 0 60rpx 0;">
 					<view style="display: flex;justify-content: space-between;" :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">
 						<view>{{item.carseriesname}}</view>
 						<view style="color: #959595;">|&nbsp;车型</view>
@@ -32,8 +32,8 @@
 			</scroll-view>
 		</view>
 		<view v-show="showBrand" class="selectTag">
-			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
-				<view>
+			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
+				<view style="padding: 0 0 60rpx 0;">
 					<view class="second" v-for="(item,index) in carxinghaoList" :key="index" @click="thirdBrand(item)">{{item.carseriesname}}</view>
 				</view>
 			</scroll-view>
@@ -66,11 +66,13 @@
 				jumperIndex: 'A',
 				scrollViewId: '',
 				winHeight: 0,
+				height: 0,
 			}
 		},
 		mounted() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.winHeight = winHeight;
+			this.height = winHeight - 118;
 			this.first()
 		},
 		methods: {
@@ -175,6 +177,7 @@
 		width: 480rpx;
 		background: #fff;
 		border: 2rpx solid rgba(0,0,0,0.08);
+		margin-bottom: 40rpx;
 	}
 	.selectTag{
 		position: fixed;
@@ -185,6 +188,7 @@
 		border: 2rpx solid rgba(0,0,0,0.08);
 		z-index: 100;
 		min-height: 100%;
+		margin-bottom: 80rpx;
 	}
 	.selectBrand{
 		.title{
@@ -195,7 +199,7 @@
 			background: #fff;
 		}
 		.letter{
-			padding: 0 28rpx;
+			padding: 0 20rpx;
 			height: 60rpx;
 			line-height: 60rpx;
 			font-size: 24rpx;
@@ -240,7 +244,7 @@
 		}
 		.letter-item{
 			font-size: 24rpx;
-			margin-top: 20rpx;
+			margin-top: 10rpx;
 		}
 	}
 </style>

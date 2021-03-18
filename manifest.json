@@ -124,9 +124,9 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "static/build/kpy (1).png",
-                    "xhdpi" : "static/build/kpy (2).png",
-                    "xxhdpi" : "static/build/kpy (3).png"
+                    "hdpi" : "static/build/kjp.png",
+                    "xhdpi" : "static/build/kjp.png",
+                    "xxhdpi" : "static/build/kjp.png"
                 }
             }
         },

@@ -186,7 +186,7 @@
 			</u-row>
 		</view>
 		<view class="view_car" @click="viewCar(form.id)" v-if="soureNum>1 && chargeFlag">
-			<u-image width="52" height="62" src="@/static/order/xinxi@2x.png"></u-image>
+			<u-image width="52" height="52" src="@/static/order/xinxi@2x.png"></u-image>
 			<view style="padding-left: 10rpx;">查看车辆信息</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5" v-if="chargeFlag"></u-gap>
@@ -868,7 +868,7 @@
 		justify-content: center;
 		align-items: center;
 		height: 100rpx;
-		line-height: 100rpx;
+		// line-height: 100rpx;
 		font-size: 28rpx;
 		color: #252825;
 	}

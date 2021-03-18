@@ -936,6 +936,7 @@
 		line-height: 100rpx;
 		font-size: 28rpx;
 		color: #252825;
+		margin-left: 6rpx;
 	}
 	.view_cared{
 		text-align: center;

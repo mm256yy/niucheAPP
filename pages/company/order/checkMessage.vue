@@ -67,8 +67,8 @@
 					<view class="status" v-show='item.text'>{{item.text}}</view>
 					<view class="status" v-show='!item.text'>无</view>
 				</view>
-				<view style="display: flex;justify-content: space-between;">
-					<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+				<view style="display: flex;flex-wrap: wrap;">
+					<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
 						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 				</view>
 			</view>
@@ -89,8 +89,8 @@
 							<view class="status" v-show='item.text'>{{item.text}}</view>
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
-						<view style="display: flex;justify-content: space-between;">
-							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+						<view style="display: flex;flex-wrap: wrap;">
+							<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
 						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 						</view>
 					</view>
@@ -103,8 +103,8 @@
 							<view class="status" v-show='item.text'>{{item.text}}</view>
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
-						<view style="display: flex;justify-content: space-between;">
-							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+						<view style="display: flex;flex-wrap: wrap;">
+							<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
 						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 						</view>
 					</view>
@@ -117,8 +117,8 @@
 							<view class="status" v-show='item.text'>{{item.text}}</view>
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
-						<view style="display: flex;justify-content: space-between;">
-							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+						<view style="display: flex;flex-wrap: wrap;">
+							<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
 						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 						</view>
 					</view>
@@ -130,9 +130,9 @@
 						<view class="status" v-show='item.text'>{{item.text}}</view>
 						<view class="status" v-show='!item.text'>无</view>
 					</view>
-					<view style="display: flex;justify-content: space-between;">
-						<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
-							v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+					<view style="display: flex;flex-wrap: wrap;">
+						<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+							v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 					</view>
 				</view>
 			</view>
@@ -153,9 +153,9 @@
 							<view class="status" v-show='item.text'>{{item.text}}</view>
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
-						<view style="display: flex;justify-content: space-between;">
+						<view style="display: flex;flex-wrap: wrap;">
 
-							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+							<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
 						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 						</view>
 					</view>
@@ -168,8 +168,8 @@
 							<view class="status" v-show='item.text'>{{item.text}}</view>
 							<view class="status" v-show='!item.text'>无</view>
 						</view>
-						<view style="display: flex;justify-content: space-between;">
-							<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+						<view style="display: flex;flex-wrap: wrap;">
+							<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
 						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 						</view>
 					</view>
@@ -181,9 +181,9 @@
 						<view class="status" v-show='item.text'>{{item.text}}</view>
 						<view class="status" v-show='!item.text'>无</view>
 					</view>
-					<view style="display: flex;justify-content: space-between;">
-						<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
-							v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+					<view style="display: flex;flex-wrap: wrap;">
+						<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+							v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 					</view>
 				</view>
 			</view>
@@ -201,9 +201,9 @@
 					<view class="status" v-show='item.text'>{{item.text}}</view>
 					<view class="status" v-show='!item.text'>无</view>
 				</view>
-				<view style="display: flex;justify-content: space-between;">
-					<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
-						v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+				<view style="display: flex;flex-wrap: wrap;">
+					<u-image style="padding: 4rpx;" @click="preview(index,item.photo)" width="208rpx" height="208rpx"
+						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 				</view>
 			</view>
 		</view>

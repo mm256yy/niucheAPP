@@ -20,7 +20,7 @@
 			<u-row style="padding: 0 8pt;background: #FFFFFF;padding-bottom: 36rpx;border-radius: 0 0 8pt 8pt;">
 				<u-col span="5">租赁合同签约授权</u-col>
 				<u-col v-show="status == 0" span="7" class="auth-col" @click="toRight()">去授权>></u-col>
-				<u-col v-show="status == 1" span="7" class="auth-col">已授权>></u-col>
+				<u-col v-show="status == 1" span="7" class="auth-col">已授权</u-col>
 			</u-row>
          </view>
 		 <view class="content">

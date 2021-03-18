@@ -20,10 +20,10 @@
 			<view class="tip">*验证金额：是由纽车平台向你的支付宝账号随机汇的微小金额，仅做账号有效性验证，无须退还</view>
 			<view class="warn">*请如实填写信息，否则造成收款失败</view>
 		</view>
-		<view v-show="first<3" class="bottom">
+		<view v-show="first<=3" class="bottom">
 			<view class="submit" @click="btnBClick()">绑定</view>
 		</view>
-		<view v-show="first==3" class="bottom">
+		<view v-show="first>3" class="bottom">
 			<view class="disable">绑定</view>
 		</view>
 	</view>
@@ -142,9 +142,17 @@
 						})
 			},
 			submit(){
-				if(this.form.alipayAccount&&this.form.monthlyrent&&this.form.money){
-					this.$u.toast('请填写完整');
-					return false
+				if(!this.form.aliPayId){
+					this.$u.toast('支付宝账号不能为空');
+					return false;
+				}
+				if(!this.form.userName){
+					this.$u.toast('姓名不能为空');
+					return false;
+				}
+				if(!this.form.checkMoney){
+					this.$u.toast('验证金额不能为空');
+					return false;
 				}
 				const params = Object.assign(this.form, {
 					userMainId:this.id

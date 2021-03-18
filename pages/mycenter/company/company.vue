@@ -23,14 +23,14 @@
 									<view @click="toAuth" style="color: #fff;font-size: 36rpx;margin-top: -10rpx;" class="u-line-1">{{companyName}}</view>
 									<view style="display: flex;align-items: center;">
 										<view class="signNo">
-											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+											<u-image v-show="companyStatus" width="22" height="26" src="@/static/mycenter/right.png"></u-image>
 											<view style="height: 26rpx;margin-left: 10rpx;">{{companyStatus | state}}</view>
 										</view>
-										<view class="signNo" v-show="show&&state==0">
-											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
+										<view class="signNo" v-show="show&&stated==0">
+											<!-- <u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image> -->
 											<view style="height: 26rpx;margin-left: 10rpx;">未授权</view>
 										</view>
-										<view class="signNo" v-show="show&&state==1">
+										<view class="signNo" v-show="show&&stated==1">
 											<u-image width="22" height="26" src="@/static/mycenter/right.png"></u-image>
 											<view style="height: 26rpx;margin-left: 10rpx;">已授权</view>
 										</view>
@@ -215,10 +215,11 @@
 				showMask:false,
 				showModal:false,
 				showClose:false,
+				isSuccess:false,
 				userId: '',
-				state:0,
+				stated:0,
 				companyName:'',
-				companyStatus:'',
+				companyStatus:0,
 				reson:'',
 				imageURL:'../../static/gongsi@2x.png',
 				titleStyle:{'fontSize': '12pt','padding-left':'5pt','color':'#000000'},
@@ -267,6 +268,29 @@
 		  }
 		},
 		methods: {
+			stateRight(){
+				this.$u.api.stateRight({
+					userId:this.userId
+				}).then(res=>{
+					if(res.code === 200){
+						this.stated = res.object;
+						if(this.companyStatus === 2&&this.stated === 0){
+							this.show = true;
+							this.showMask = true;
+							this.showModal = true;
+							this.showClose = true;
+						}
+						if(this.companyStatus === 2&&this.stated === 1){
+							this.show = true;
+							this.showMask = false;
+							this.showModal = false;
+							this.showClose = false;
+						}
+					}else {
+						this.$u.toast(res.msg);
+					}
+				})
+			},
 			toRight(){
 				this.showMask = true;
 				this.showModal = true;
@@ -294,6 +318,19 @@
 					})
 				}
 			},
+			isBinDingAliPayID(){
+				let token =  uni.getStorageSync('token')
+				if (token) {
+					this.$u.api.isBinDingAliPayID({}).then(res=>{
+						if(res.code === 200){
+							this.isSuccess = true;
+						}
+						if(res.code === 0){
+							this.isSuccess = false;
+						}
+					})
+				}
+			},
 			toAboutUs(){
 				this.$u.route('/pages/aboutUs/aboutUs');
 			},
@@ -302,6 +339,8 @@
 				if (token) {
 					this.$u.api.getUserInfo({}).then(res=>{
 						if(res.code === 200){
+							this.show = false;
+							this.stated = 0;
 							let data = res.personalVo;
 							this.comnpanySrc =data.comparylogophoto;
 							if (data.comparynickname){
@@ -311,30 +350,9 @@
 								this.companyName = phone
 							}
 							this.companyStatus = data.state;
-							if(this.companyStatus === 2){
-								this.show = true;
-							}
 							this.reson = data.nostate;
 							this.userId = data.userMainId;
-							this.$u.api.stateRight({
-								userId:this.userId
-							}).then(res=>{
-								if(res.code === 200){
-									this.state = res.object;
-									if(this.companyStatus === 2&&this.state === 0){
-										this.showMask = true;
-										this.showModal = true;
-										this.showClose = true;
-									}
-									if(this.companyStatus === 2&&this.state === 1){
-										this.showMask = false;
-										this.showModal = false;
-										this.showClose = false;
-									}
-								}else {
-									this.$u.toast(res.msg);
-								}
-							})
+							this.stateRight();
 							let strF ='已发布';
 							let strE = '条'
 							this.myPublishObj.zcxx =strF+data.zunum+strE;
@@ -346,6 +364,8 @@
 							this.otherObj.qz = data.groupmessagenum;
 							// uni.setStorageSync('isauthencation',1)
 						}else {
+							this.show = false;
+							this.stated = 0;
 							let phone = uni.getStorageSync('telephone')
 							this.companyName = phone
 							this.myPublishObj ={
@@ -359,10 +379,10 @@
 							this.comnpanySrc='../../static/notLogin.png';
 							// uni.setStorageSync('isauthencation',0)
 							 // this.$u.toast(res.message);
-							 console.log(this.authFlag)
 						}
 					})
 					this.getOrder();
+					this.isBinDingAliPayID();
 				}
 			},
 			toAuth(){
@@ -371,7 +391,7 @@
 					this.$u.route('/pages/company/identityAuth/identityAuth')
 				} else{
 					this.$u.route('/pages/company/information/information',{
-						state: this.state,
+						state: this.stated,
 						userId: this.userId
 					})
 					
@@ -407,10 +427,10 @@
 				const obj = JSON.stringify(this.order)
 				if (token){
 					if(this.companyStatus === 2){
-						if(this.state === 0){
+						if(this.stated === 0){
 							this.$u.toast('请先授权')	
 						}
-						if(this.state === 1){
+						if(this.stated === 1){
 							this.$u.route('/pages/company/order/order', {
 								index: index,
 								obj: obj
@@ -427,11 +447,15 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					if(this.companyStatus === 2){
-						if(this.state === 0){
-							this.$u.toast('请先授权')	
+						if(this.stated === 0){
+							this.$u.toast('请先授权')
 						}
-						if(this.state === 1){
-							this.$u.route('/pages/company/order/newOrder');	
+						if(this.stated === 1){
+							if(this.isSuccess){
+								this.$u.route('/pages/company/order/newOrder');
+							}else{
+								this.$u.toast('请去对账中心完成支付宝账号绑定！');
+							}	
 						}
 					} else {
 						this.$u.toast('请先进行认证')
@@ -458,10 +482,10 @@
 				let token = uni.getStorageSync('token')
 				if (token){
 					if(this.companyStatus === 2){
-						if(this.state === 0){
+						if(this.stated === 0){
 							this.$u.toast('请先授权')	
 						}
-						if(this.state === 1){
+						if(this.stated === 1){
 							this.$u.route('/pages/company/order/checkAccount');	
 						}
 					} else{
