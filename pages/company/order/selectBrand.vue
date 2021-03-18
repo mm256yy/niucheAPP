@@ -14,7 +14,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:winHeight + 'px'}">
+		<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
 			<view>
 				<view style="width: 698rpx;">
 					<!-- <view class="title">输入自定义品牌型号</view> -->
@@ -36,7 +36,7 @@
 				<u-image @click="close()" width="30" height="28" src="@/static/order/close.png"></u-image>
 			</view>
 			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
-				<view>
+				<view style="padding: 0 0 60rpx 0;">
 					<view style="display: flex;justify-content: space-between;" :class="{ 'second':true,'active': item.carseriesname==textBrand}" v-for="(item,index) in carmodelList" :key="index" @click="secondBrand(item)">
 						<view>{{item.carseriesname}}</view>
 						<view style="color: #959595;">|&nbsp;车型</view>
@@ -46,7 +46,7 @@
 		</view>
 		<view v-show="showBrand" class="selectTag">
 			<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
-				<view>
+				<view style="padding: 0 0 60rpx 0;">
 					<view class="second" v-for="(item,index) in carxinghaoList" :key="index" @click="thirdBrand(item)">{{item.carseriesname}}</view>
 				</view>
 			</scroll-view>
