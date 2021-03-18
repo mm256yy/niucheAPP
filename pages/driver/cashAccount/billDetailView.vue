@@ -47,7 +47,7 @@
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F5F5F5" v-if="flag"></u-gap>
-		<view class="view_content" style="padding-bottom: 12px;" v-if="flag">
+		<view class="view_content" style="padding-bottom: 12px;" v-if="flag && form.source !=='SOURCE_DISCOUNT'">
 			<view style="padding: 10px 0;font-size: 16px;">车辆租赁合同照片</view>
 			<u-row :gutter="20">
 				<u-col span="6" v-for="(item,index) in form.vehicleLeaseContract" :key="index" style="margin-bottom: 5px;">
@@ -112,6 +112,8 @@
 					return '提现'
 				} else if (value === 'SOURCE_REFUND') {
 					return '提现退款'
+				}  else if (value === 'SOURCE_DISCOUNT') {
+					return '租车抵扣'
 				} else {
 					return ''
 				}
