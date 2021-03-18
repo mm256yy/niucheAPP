@@ -29,7 +29,7 @@
 			</view>
 			<view class="flex">
 				<view class="key">信息服务费：</view>
-				<view class="value">-￥{{obj.serviceMoney}}</view>
+				<view class="value">-{{obj.serviceMoney}}</view>
 			</view>
 			<view class="flex">
 				<view class="key">对账单号：</view>

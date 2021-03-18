@@ -27,7 +27,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view style="width: 52rpx;position: fixed;top: 88rpx;right: 0;text-align: center;">
+		<view style="width: 52rpx;position: fixed;top: 140rpx;right: 0;text-align: center;">
 			<view v-for="(i,index) in indexList" :key="index" @click="jumper(i,index)" :class="jumperIndex == i?'activeLetter':'letter-item'">{{i}}</view>
 		</view>
 		<view v-show="show" class="select">
@@ -190,6 +190,7 @@
 		width: 480rpx;
 		background: #fff;
 		border: 2rpx solid rgba(0,0,0,0.08);
+		margin-bottom: 40rpx;
 	}
 	.selectTag{
 		position: fixed;
@@ -200,6 +201,7 @@
 		border: 2rpx solid rgba(0,0,0,0.08);
 		z-index: 100;
 		min-height: 100%;
+		margin-bottom: 80rpx;
 	}
 	.selectBrand{
 		.title{
@@ -255,7 +257,7 @@
 		}
 		.letter-item{
 			font-size: 24rpx;
-			margin-top: 20rpx;
+			margin-top: 10rpx;
 		}
 	}
 </style>
