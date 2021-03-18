@@ -132,7 +132,7 @@
 					</view>
 					<view style="display: flex;justify-content: space-between;">
 						<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
-							v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+							v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 					</view>
 				</view>
 			</view>
@@ -183,7 +183,7 @@
 					</view>
 					<view style="display: flex;justify-content: space-between;">
 						<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
-							v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+							v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 					</view>
 				</view>
 			</view>
@@ -203,7 +203,7 @@
 				</view>
 				<view style="display: flex;justify-content: space-between;">
 					<u-image @click="preview(index,item.photo)" width="208rpx" height="208rpx"
-						v-for="(item,index) in item.photo" :key="index" :src="item"></u-image>
+						v-for="(obj,index) in item.photo" :key="index" :src="obj"></u-image>
 				</view>
 			</view>
 		</view>
