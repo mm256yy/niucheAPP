@@ -49,7 +49,7 @@
 				<text v-show="tokenFlag" @click="account" class="text">余额：￥{{driverPub.account}}</text>
 				<text v-show="!tokenFlag" @click="account" class="text">余额：￥0</text>
 				<view @click="toInvite" class="invite">邀请好友</view>
-				<u-card class="order_content">
+				<u-card class="order_content" style="border-radius: 20rpx;">
 					<view slot="head" class="head">
 						<view class="title">我的订单</view>
 						<view style="display: flex;" @click="toMyOrder">
@@ -57,7 +57,7 @@
 							<u-image width="12" height="24" src="@/static/rightIcon.png"></u-image>
 						</view>
 					</view>
-					<view class="body" slot="body">
+					<view class="body" slot="body" style="border-radius: 20rpx;">
 						<view style="position: relative;" @click="toMyOrder">
 							<u-image width="52rpx" height="52rpx" src="@/static/mycenter/yanche@2x.png"></u-image>
 							<u-badge size="small" type="error" :count="order.waitCarMessageNum" :offset="[-10,-16]"></u-badge>
