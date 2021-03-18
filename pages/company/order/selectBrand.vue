@@ -14,19 +14,6 @@
 				</view>
 			</view>
 		</scroll-view>
-		<scroll-view class="scroll-list" :scroll-into-view="scrollViewId" scroll-y="true" scroll-with-animation :style="{height:height + 'px'}">
-			<view>
-				<view style="width: 698rpx;">
-					<!-- <view class="title">输入自定义品牌型号</view> -->
-					<view v-for="(item,index) in list" :key="index" :id="item.letter == '#' ? 'indexed-list-YZ' :'indexed-list-' + item.letter">
-						<view class="letter">{{item.letter}}</view>
-						<view class="box">
-							<view @click="firstBrand(items)" v-for="(items,index) in item.data" :key="items.id" :class="{ 'first':true,'active': items.text==text}">{{items.text}}</view>
-						</view>
-					</view>
-				</view>
-			</view>
-		</scroll-view>
 		<view style="width: 52rpx;position: fixed;top: 140rpx;right: 0;text-align: center;">
 			<view v-for="(i,index) in indexList" :key="index" @click="jumper(i,index)" :class="jumperIndex == i?'activeLetter':'letter-item'">{{i}}</view>
 		</view>
