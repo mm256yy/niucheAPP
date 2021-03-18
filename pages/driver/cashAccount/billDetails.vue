@@ -17,7 +17,7 @@
 					 heightReduce="60" :pageNo="pageNum" :totalPageNo="total" @loadMore="loadMoreList"
 					 @refresh="refresh"> -->
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" :down="downOption" @down="downCallback" @up="upCallback" :up="up">
-				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item.billingDetailsid)">
+				<view class="list_item" v-for="(item,index) in dataList" :key="index" @click="toView(item)">
 					<view class="item">
 						<text class="item_title">{{item.source | soureText}}</text>
 						<text class="item_money" :style="{color:item.incomingAndOutgoingState === 'ADD'?'#FFA000':'#333333'}">
@@ -81,6 +81,8 @@
 					return '提现'
 				} else if (value === 'SOURCE_REFUND') {
 					return '提现退款'
+				} else if (value === 'SOURCE_DISCOUNT') {
+					return '租车抵扣'
 				} else {
 					return ''
 				}
@@ -122,10 +124,15 @@
 					}
 				})
 			},
-			toView(id) {
-				this.$u.route('/pages/driver/cashAccount/billDetailView', {
-					id: id
-				})
+			toView(item) {
+				let id = item.billingDetailsid;
+				if (item.source !== 'SOURCE_DISCOUNT'){
+					this.$u.route('/pages/driver/cashAccount/billDetailView', {
+						id: id
+					})
+				} else {
+					this.$u.toast('暂无详细内容')
+				}
 			}
 		}
 	}
