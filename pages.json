@@ -888,6 +888,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/aboutUs/cancellation",
+            "style" :                                                                                    
+            {
+				 "navigationStyle": "custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

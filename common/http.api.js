@@ -298,9 +298,11 @@ const install = (Vue, vm) => {
 	//退单
 	const orderCancel = (params = {}) => vm.$u.post('/order/cancel?orderId='+params.orderId+'&cancelSort='+params.cancelSort+'&cancelReason='+params.cancelReason, params);
 	
-	
+	//注销
+	const cancelAccount = (params = {}) => vm.$u.get('/system/usermain/cancel', params);
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
+		cancelAccount,
 		orderCancel,
 		orderPrice,
 		orderDeliveryOfVehicle,

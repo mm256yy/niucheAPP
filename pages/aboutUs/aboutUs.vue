@@ -7,12 +7,13 @@
 			<view class="company-name">纽  车  科  技 </view>
 			<view class="company-yw" :class="curThemeType ==='driver'?'driver-color':'company-color'">网约车  |  租车  |  招聘  |  卖车</view>
 			<view class="company-phone">服务电话:0571-87815287</view>
+			 <view class="login-out" style="font-size: 12pt;" v-show="curThemeType ==='company' && tokenFlag" @click="showLogut=true">退出</view>
 		 </view>
 		 <view class="company-version">
 			 <view style="padding: 5pt 0;">
 				 <text @click="toYs" style="color: #0873DE;">《隐私政策》</text>
 			 <text @click="toXy" style="color: #0873DE;padding-left: 8pt;">《用户协议》</text></view>
-			 <view class="login-out" v-show="curThemeType ==='company' && tokenFlag" @click="showLogut=true">退出</view>
+			 <view class="login-out" v-show="tokenFlag" @click="toLoginOut">注销账号</view>
 			 <view>当前版本 {{version}}</view>
 		 </view>
 		 <u-modal v-model="showLogut" title="提示" :show-cancel-button="true" confirm-text="是" cancel-text="否"
@@ -51,6 +52,9 @@
 			},
 			toYs(){
 				this.$u.route('/pages/driver/agreement/agreement')
+			},
+			toLoginOut(){
+				this.$u.route('/pages/aboutUs/cancellation')
 			},
 			loginOut(){
 				this.$u.api.logout({}).then(res=>{
@@ -115,6 +119,6 @@
 	  z-index: 2;
   }
   .login-out{
-	  color: #C0C4CC;padding-bottom: 30rpx;font-size: 12pt;
+	  color: #C0C4CC;padding-bottom: 30rpx;font-size: 12px;
   }
 </style>
